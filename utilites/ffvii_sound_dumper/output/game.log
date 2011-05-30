@@ -1,0 +1,170 @@
+Loading file: data/INSTR.ALL
+Loading file: data/INSTR.DAT
+Loading file: data/music/aeris_theme.snd
+Init channel 0 with offset to AKAO 0x0032
+Init channel 1 with offset to AKAO 0x00bf
+Init channel 2 with offset to AKAO 0x0126
+Init channel 3 with offset to AKAO 0x01fa
+Init channel 4 with offset to AKAO 0x0262
+Init channel 5 with offset to AKAO 0x02c1
+Init channel 6 with offset to AKAO 0x032e
+Init channel 7 with offset to AKAO 0x0390
+Init channel 8 with offset to AKAO 0x0412
+Init channel 9 with offset to AKAO 0x0480
+Init channel 10 with offset to AKAO 0x05a1
+Init channel 11 with offset to AKAO 0x066f
+Init channel 12 with offset to AKAO 0x0771
+Init channel 13 with offset to AKAO 0x0818
+Init channel 14 with offset to AKAO 0x08a2
+UpdateSequence for channel 0
+    0xE8 set tempo to "0x3be20000"
+    0xFD [UNIMPLEMENTED] reset timers that can be readed in field with 0xF7 CHMPH. Values Upper(0x04) Lower(0x30)
+    0xFE [UNIMPLEMENTED] reset main timer than increment when all lower and upper timers counted. Can be readed in field with 0xF7 CHMPH. Value(0x0001)
+    0xEA [UNIMPLEMENTED] set reverb depth to "0x32000000"
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x3400"
+    0xA1 [NOT COMPLETE] load instrument "46"
+    0xB4 [UNIMPLEMENTED] set wave data
+    0xB5 [UNIMPLEMENTED]
+    0xFD [UNIMPLEMENTED] reset timers that can be readed in field with 0xF7 CHMPH. Values Upper(0x04) Lower(0x30)
+    0xFE [UNIMPLEMENTED] reset main timer than increment when all lower and upper timers counted. Can be readed in field with 0xF7 CHMPH. Value(0x0001)
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x18800000"
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 1
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x3e00"
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x13800000"
+    0xA1 [NOT COMPLETE] load instrument "46"
+    0xB4 [UNIMPLEMENTED] set wave data
+    0xB5 [UNIMPLEMENTED]
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x18800000"
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 2
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x4b00"
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x13800000"
+    0xA1 [NOT COMPLETE] load instrument "31"
+    0xB4 [UNIMPLEMENTED] set wave data
+    0xB5 [UNIMPLEMENTED]
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 3
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x2d00"
+    0xA1 [NOT COMPLETE] load instrument "48"
+    0xB4 [UNIMPLEMENTED] set wave data
+    0xB5 [UNIMPLEMENTED]
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 4
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x5500"
+    0xA1 [NOT COMPLETE] load instrument "32"
+    0xB4 [UNIMPLEMENTED] set wave data
+    0xB5 [UNIMPLEMENTED]
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 5
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x2300"
+    0xA1 [NOT COMPLETE] load instrument "34"
+    0xAD [UNIMPLEMENTED]
+    0xB4 [UNIMPLEMENTED] set wave data
+    0xB5 [UNIMPLEMENTED]
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 6
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x2300"
+    0xA1 [NOT COMPLETE] load instrument "34"
+    0xAD [UNIMPLEMENTED]
+    0xB4 [UNIMPLEMENTED] set wave data
+    0xB5 [UNIMPLEMENTED]
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 7
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x5f00"
+    0xA1 [NOT COMPLETE] load instrument "33"
+    0xAD [UNIMPLEMENTED]
+    0xB4 [UNIMPLEMENTED] set wave data
+    0xB5 [UNIMPLEMENTED]
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x0e800000"
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 8
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x5f00"
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x0e800000"
+    0xA1 [NOT COMPLETE] load instrument "33"
+    0xAD [UNIMPLEMENTED]
+    0xB4 [UNIMPLEMENTED] set wave data
+    0xB5 [UNIMPLEMENTED]
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 9
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x4000"
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x13800000"
+    0xA1 [NOT COMPLETE] load instrument "52"
+    0xAD [UNIMPLEMENTED]
+    0xB1 [UNIMPLEMENTED]
+    0xE8 set tempo to "0x3be20000"
+    0xA5 set pitch correction to "0x0005"
+    0x45 [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 10
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x4000"
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x13800000"
+    0xA1 [NOT COMPLETE] load instrument "52"
+    0xAD [UNIMPLEMENTED]
+    0xB1 [UNIMPLEMENTED]
+    0xA5 set pitch correction to "0x0005"
+    0x2c [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 11
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x4000"
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x13800000"
+    0xA1 [NOT COMPLETE] load instrument "52"
+    0xAD [UNIMPLEMENTED]
+    0xB1 [UNIMPLEMENTED]
+    0xA5 set pitch correction to "0x0004"
+    0x63 [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 12
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x4000"
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x13800000"
+    0xA1 [NOT COMPLETE] load instrument "52"
+    0xAD [UNIMPLEMENTED]
+    0xB1 [UNIMPLEMENTED]
+    0xA5 set pitch correction to "0x0004"
+    0x16 [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 13
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x7300"
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x13800000"
+    0xA1 [NOT COMPLETE] load instrument "84"
+    0xAD [UNIMPLEMENTED]
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 14
+    0xA3 set volume multiplier to "0x7f"
+    0xC2 [UNIMPLEMENTED] turn reverb on
+    0xAA [UNIMPLEMENTED] set volume pan to "0x1e00"
+    0xA8 [UNIMPLEMENTED] set channel volume to "0x13800000"
+    0xA1 [NOT COMPLETE] load instrument "47"
+    0x8f [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 9
+    0x66 [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 9
+    0xA6 [UNIMPLEMENTED]
+    0x17 [UNIMPLEMENTED] UpdateSequence end
+UpdateSequence for channel 9
+    0xE8 set tempo to "0x379b0000"
+    0x86 [UNIMPLEMENTED] UpdateSequence end

@@ -1,0 +1,22 @@
++0 []       something. 0-70 or we not initialize animations.
++1 []       something.
+
+
+
+
+
+
+
+
+
+
+
+animation file 2202_0_0_0 - 2202_0_0_X
+
++0 [][]     bone count
++4 [][]     flags
+            0x01 - use rotation
+            0x02 - use translation
++6 [][]
++c [][]     number of rotations
++e [][]     number of translations

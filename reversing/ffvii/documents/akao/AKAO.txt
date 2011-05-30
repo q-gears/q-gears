@@ -1,0 +1,45 @@
+﻿Akao header:
+/-------------------+-----------------------------------------------------------\
+|                   |   0x47  |         |   0x03  |                   |0x46|0x05| - ASERI2.SND
+|      "AKAO"       |   0x3b  |         |   0x04  |     0x22181296    |0x45|0x55| -  OVER2.SND
+|                   |   0x59  |         |   0x04  |                   |0x46|0x28| - SENSUI.SND
++----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+| 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 |
++----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+|                   |         |         |         |                   |    |    |
+|   magic string    |  frame  | frame   |   ??    |      *magic2*?    | ?? | ?? |
+|                   |  id     | length  |         |  all this data are skipped  |
+\-------------------------------------------------------------------------------/
+
+after header there is <frame_length> bytes of music data.
+
+
+
+All sound samples is in SOUND directory on cd's. For all 3 cd's contents all the same.
+INSTR.ALL  - 92 main samples from game
+INSTR2.ALL - 6 voice samples from One Winged Angel
+
+INSTR*.ALL format is known to me (32-byte header with offset of first sample, maybe. after this there are 16-byte ADPCM encoded frames 22100Hz, mono, between sample frame groups there are 16 bytes of zero's (but there are exceptions))
+
+EFFECT.ALL - for now totally unknown
+
+INSTR*.DAT - some data for INSTR*.ALL
+INSTR*.DAT contains <INSTR*.ALL sample count> 64-byte frames with some offsets for every sample and 60 bytes of other data, mostly 16-bit numbers.
+
+
+
+assembler notes:
+0x8002db80-0x8002dbb8   checking AKAO magic
+
+80038A9C: load channel address 0x1F801C00 to v0
+
+80038AA8-80038AB4: loading of address 0x1F801DAA to v1 (SPU Control Register sp0)
+next IRQ bit is set to 0 (disable interrupts SPU), and write back
+
+80038E50,80038E54: some initialization of SPU (1F801D8C, 1F801D8E)
+
+80037A80: - another SPU init 1F801D90
+
+80029B78 - copy function for AKAO frame to another memory region
+
+80030EC8: akao sequence parser

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<players>
+    <player
+        id="0"
+
+        model="cloud.mesh"
+
+        script_file="cloud.lua"
+        script="cloud"
+        action_idle="action_idle"
+        action_hurt="action_hurt"
+
+    >
+        <action attack_id="1000" action="action_attack" />
+    </player>
+
+    <player
+        id="1"
+
+        model="barret.mesh"
+
+        script_file="barret.lua"
+        script="barret"
+        action_idle="action_idle"
+        action_hurt="action_hurt"
+    >
+    </player>
+</players>

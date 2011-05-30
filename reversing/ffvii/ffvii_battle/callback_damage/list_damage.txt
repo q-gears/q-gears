@@ -1,0 +1,3 @@
+0x800ce970
+
+0x800d5350 call given function for all units in target mask. There is posibility to specify number of frames between call function for different units.

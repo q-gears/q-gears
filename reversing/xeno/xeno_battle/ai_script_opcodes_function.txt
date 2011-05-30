@@ -1,0 +1,443 @@
+//////////////////////////////////////////////////////////
+// 0x01
+// func7ae9c
+address = w[A0];
+param1 = bu[address + 1];
+param2 = bu[address + 2];
+[800D257C + A1 * 8 + param1] = b(param2);
+
+if (param1 == 0)
+{
+    A1 = A1 + 1;
+}
+
+return A1 & FF;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x02
+// func7aee8
+address = w[A0];
+unit_id = A1;
+
+V0 = bu[address + 1];
+V1 = bu[address + 2];
+[800D257C + A2 * 8 + V0] = b(bu[800D2B20 + 20 + unit_id * 40 + 10 + V1]);
+return;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x0C
+// battle_ai_0C_mod
+address = A0;
+unit_id = A1;
+
+A0 = w[address];
+A1 = bu[A0 + 1];
+V1 = bu[A0 + 2];
+
+V0 = bu[800D2B40 + unit_id * 40 + 10 + A1];
+V1 = V0 % V1;
+[800D2B40 + unit_id * 40 + 10 + A1] = b(V1);
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x3E
+// battle_ai_3E_get_random
+address = A0;
+unit_id = A1;
+
+V1 = w[address];
+
+A0 = 0;
+A1 = bu[V1 + 2];
+battle_get_random_value_from_to;
+
+V1 = bu[V1 + 1];
+[800D2B40 + unit_id * 40 + 10 + V1] = b(V0);
+return;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x40
+// func7c3d0
+address = A0;
+unit_id = A1;
+[SP + 12] = b(0);
+[SP + 11] = b(0);
+[SP + 10] = b(0);
+
+V0 = w[address];
+V1 = bu[V0 + 1]; // read 1st argument
+[800D2B40 + unit_id * 40 + V1 * 2] = h(0);
+
+V1 = bu[SP + 10];
+A0 = bu[SP + 11];
+V0 = bu[SP + 12];
+
+V0 = V1 & V0 & A0;
+if (V0 == 0)
+{
+    loop7c5a8:	; 8007C5A8
+    A0 = 0;
+    A1 = 2;
+    battle_get_random_value_from_to;
+    random = V0;
+
+    V0 = bu[SP + 10 + random];
+    if (V0 == 0)
+    {
+        V0 = w[address];
+
+        A0 = random;
+        A1 = bu[V0 + 2]; // get second argument
+        battle_get_targetable_unit;
+
+        if (V0 != 0 &&
+            bu[800D29C1 + random * 8] == 0)
+        {
+            A0 = random;
+            battle_unit_id_to_bit_mask;
+
+            V1 = w[address];
+            A0 = bu[V1 + 1];
+            [800D2B40 + unit_id * 40 + A0 * 2] = h(V0);
+            return;
+        }
+
+        [SP + 10 + random] = b(1);
+    }
+
+    V0 = bu[SP + 10];
+    A0 = bu[SP + 11];
+    V1 = bu[SP + 12];
+    V1 = V1 & V0 & A0;
+    8007C684	beq    v1, zero, loop7c5a8 [$8007c5a8]
+}
+
+return;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x41
+// func7c51c
+address = A0;
+unit_id = A1;
+[SP + 12] = b(0);
+[SP + 11] = b(0);
+[SP + 10] = b(0);
+
+V0 = w[address];
+V1 = bu[V0 + 1]; // read 1st argument
+[800D2B20 + 20 + unit_id * 40 + V1 * 2] = h(0);
+
+V1 = bu[SP + 10];
+A0 = bu[SP + 11];
+V0 = bu[SP + 12];
+
+V0 = V1 & V0 & A0;
+if (V0 == 0)
+{
+    loop7c5a8:	; 8007C5A8
+    A0 = 0;
+    A1 = 2;
+    battle_get_random_value_from_to;
+    random = V0;
+
+    V0 = bu[SP + 10 + random];
+    if (V0 == 0)
+    {
+        V0 = w[address];
+
+        A0 = random;
+        A1 = bu[V0 + 2]; // get second argument
+        battle_get_targetable_unit;
+
+        if (V0 != 0 &&
+            bu[800C35D4 + (unit_id + 3) * 1C] == bu[800C35D4 + random * 1C] &&
+            bu[800D29C1 + random * 8] == 0)
+        {
+            A0 = random;
+            battle_unit_id_to_bit_mask;
+
+            V1 = w[address];
+            A0 = bu[V1 + 1];
+            [800D2B40 + unit_id * 40 + A0 * 2] = h(V0);
+            return;
+        }
+
+        [SP + 10 + random] = b(1);
+    }
+
+    V0 = bu[SP + 10];
+    A0 = bu[SP + 11];
+    V1 = bu[SP + 12];
+    V1 = V1 & V0 & A0;
+    8007C684	beq    v1, zero, loop7c5a8 [$8007c5a8]
+}
+
+return;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x4A
+// func7d048
+address = A0;
+unit_id = A1;
+[SP + 12] = b(0);
+[SP + 11] = b(0);
+[SP + 10] = b(0);
+
+V0 = w[address];
+V1 = bu[V0 + 1]; // read 1st argument
+[800D2B40 + unit_id * 40 + V1 * 2] = h(0);
+
+V1 = bu[SP + 10];
+A0 = bu[SP + 11];
+V0 = bu[SP + 12];
+
+V0 = V1 & V0 & A0;
+if (V0 == 0)
+{
+    loop7c5a8:	; 8007C5A8
+    A0 = 0;
+    A1 = 2;
+    battle_get_random_value_from_to;
+    random = V0;
+
+    V0 = bu[SP + 10 + random];
+    if (V0 == 0)
+    {
+        V0 = w[address];
+
+        A0 = random;
+        A1 = bu[V0 + 2]; // get second argument
+        battle_get_targetable_unit;
+
+        if (V0 != 0 &&
+            bu[800D29C1 + random * 8] != 0)
+        {
+            A0 = random;
+            battle_unit_id_to_bit_mask;
+
+            V1 = w[address];
+            A0 = bu[V1 + 1];
+            [800D2B40 + unit_id * 40 + A0 * 2] = h(V0);
+            return;
+        }
+
+        [SP + 10 + random] = b(1);
+    }
+
+    V0 = bu[SP + 10];
+    A0 = bu[SP + 11];
+    V1 = bu[SP + 12];
+    V1 = V1 & V0 & A0;
+    8007C684	beq    v1, zero, loop7c5a8 [$8007c5a8]
+}
+
+return;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x50
+// func7d62c
+address = A0;
+unit_id = A1;
+
+mach = 0;
+S0 = 3;
+
+loop7d674:	; 8007D674
+    A0 = S0;
+    A1 = 0;
+    battle_get_targetable_unit;
+
+    if (V0 != 0)
+    {
+        V0 = w[address];
+        V0 = bu[V0 + 2];
+        A0 = hu[800D2B40 + unit_id * 40 + V0 * 2];
+        func7a4f0;
+
+        A0 = bu[800C35D4 + S0 * 1C];
+        V0 = bu[800C35D4 + V0 * 1C];
+
+        if (A0 == V0)
+        {
+            mach = mach + 1;
+        }
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < B;
+8007D6EC	bne    v0, zero, loop7d674 [$8007d674]
+
+V1 = w[address];
+V1 = bu[V1 + 1];
+[800D2B40 + unit_id * 40 + 10 + V1] = b(mach);
+return;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x52
+// func7d7bc
+address = w[A0];
+unit_id = A1;
+V1 = bu[address + 2];
+V0 = bu[address + 1];
+
+V1 = hu[800D2B40 + unit_id * 40 + V1 * 2];
+
+[800D257C + A2 * 8 + V0] = b(V1);
+V1 = V1 >> 8;
+[800D257C + A2 * 8 + V0 + 1] = b(V1);
+return;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x64
+// func7e844
+address = A0;
+unit_id = A1;
+
+A0 = unit_id + 3;
+battle_unit_id_to_bit_mask;
+
+V1 = w[address];
+V1 = bu[V1 + 1];
+[800D2B40 + unit_id * 40 + V1 * 2] = h(V0);
+return;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x82
+// func7f000
+address = w[A0];
+unit_id = A1;
+
+V0 = bu[address + 1];
+V1 = hu[address + 2];
+
+V0 = hu[800D2B40 + unit_id * 40 + V0 * 2];
+return (V0 XOR V1) == 0;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x83
+// func7f044
+address = w[A0];
+unit_id = A1;
+
+V1 = bu[address + 1];
+V0 = bu[address + 2];
+
+V1 = bu[800D2B40 + unit_id * 40 + 10 + V1];
+return V1 <= V0;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// battle_get_targetable_unit
+V0 = bu[800D24EC + A0];
+
+A2 = 0;
+
+if (V0 != 0)
+{
+    V0 = bu[800C35D7 + A0 * 1C];
+
+    if (V0 == 0)
+    {
+        V0 = bu[800CC484 + A0 * 170];
+        V0 = V0 & C002;
+
+        if (V0 == 0)
+        {
+            if (A1 != 0)
+            {
+                return 1;
+            }
+
+            V0 = hu[800CC48C + A0 * 170];
+            V0 = V0 & 0020;
+            V0 = V0 < 1;
+            A2 = V0;
+        }
+    }
+}
+
+return A2;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// battle_unit_id_to_bit_mask
+V0 = hu[800C1788 + A0 * 2];
+return V0;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// func7a4f0
+unit_mask = A0;
+S0 = 0;
+
+loop7a50c:	; 8007A50C
+A0 = unit_mask;
+A1 = S0 & FF;
+battle_unit_id_mask_match;
+
+V0 = V0 & FFFF;
+if (V0 == 0)
+{
+    S0 = S0 + 1;
+    V0 = S0 < B;
+    8007A528	bne    v0, zero, loop7a50c [$8007a50c]
+}
+
+return S0;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// battle_unit_id_mask_match
+unit_mask = A0;
+unit_id   = A1;
+
+if (unit_id < 10)
+{
+    V0 = hu[800C1788 + unit_id * 2];
+    return V0 & unit_mask;
+}
+else
+{
+    return 0;
+}
+//////////////////////////////////////////////////////////

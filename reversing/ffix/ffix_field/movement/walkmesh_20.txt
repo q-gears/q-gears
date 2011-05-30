@@ -1,0 +1,91 @@
++00 ADDEDCAC
+
+
+
+header
++08 [][]     X global positioning in world.
++0a [][]     Y global positioning in world.
++0c [][]     Z global positioning in world.
++24 [][]     number of triangles.
+
+E40022FB00001801
+22FB X
+0000 Y
+1801 Z
+22FB00001801 E30A00000F0F9E00 0000CC0500000000
+
+0200 3C00 triangles
+0600 8C00 access
+0000 A400
+0100 A400 triangle groups
+0000 C400
+0400 C400 vertexes
+
+
+
+triangles
++00 [][]     some flags.
+0x02 : ХЗ
++04 [][]     triangle group id.
+0x06 : ХЗ
+0x08 : ХЗ
+0x0A : ХЗ
++0c [][]     1st vertex id.
++0e [][]     2nd vertex id.
++10 [][]     3rd vertex id.
+0x12 : ХЗ
+0x14 : ХЗ
+0x16 : ХЗ
++18 [][]     access for side CA.
++1a [][]     access for side AB.
++1c [][]     access for side BC.
+0x1E : ХЗ
+0x20 : ХЗ
+0x22 : ХЗ
+0x24 : ХЗ
+0x26 : ХЗ
+
+010100000000FFFF00000000 0000 0100 0200  000001000200 0100 FFFF FFFF 7C050000B40400000000
+010100000000FFFF00000000 0000 0200 0300  030004000500 FFFF 0000 FFFF 050900004E0900000000
+
+
+
+access
+00000100
+0000FFFF
+0000FFFF
+0000FFFF
+00000000
+0000FFFF
+
+something
+
+triangle groups
++04 : смещение группы треугольников по x
++06 : смещение группы треугольников по y
++08 : смещение группы треугольников по z
++0a [][]     triangle group X offset.
++0c [][]     triangle group Y offset.
++0e [][]     triangle group Z offset.
+
+00000000 0000 0000 0000 0000 000000000000000000000000000000000200DC00
+
+
+
+
+something
+
+
+
+vertexes
++00 [][]     X.
++02 [][]     Y.
++14 [][]     Z.
+
+00000000F70D
+260500002600
+500B00000000
+C10F0000F40D
+
+
+

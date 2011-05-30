@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<languages>
+    <language name="English">
+        <root path="text/english/" />
+    </language>
+
+    <language name="Russian">
+        <root path="text/russian/" />
+    </language>
+
+    <language name="Japanese">
+        <root path="text/japanese/" />
+    </language>
+</languages>

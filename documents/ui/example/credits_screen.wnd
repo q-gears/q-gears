@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+	Ýêðàí ãëàâíîãî ìåíþ
+-->
+<window>
+	<params 
+		name = "credits_screen" 
+		rect = "0 0 1024 768"
+	/>
+	
+	<!--Èåðàðõèÿ îáúåêòîâ-->
+	<object name = "hierarchy" type = "objects">
+		<object name = "credits_anim" type = "multi_object_anim" effect = "objects\screens\main_menu\gui_effects\credits" x = "0" y = "0" time_scale = "1"/>
+	</object>
+	
+	
+	<!--Îïèñàíèå ïîâåäåíèé-->
+	<behaviors>
+		<behavior name = "Init">
+			<start>
+			</start>
+			<stop/>
+		</behavior>
+
+
+		<!-- íà÷àëî -->
+		<behavior name = "StartScreen" >
+			<do command = "SetLock" param = "1"/>
+			<do command = "Show"/>
+
+			<start>
+				<do object = "global" command = "PlaySoundSample" param = "gui_menu_show" instant = "1"/>
+				<do command = "SetLock" param = "1"/>
+				<!--do object = "show_anim" command = "Restart" param = "Buttons"/-->
+				<do object = "credits_anim" command = "Start" param = "start" />
+				<do object = "credits_anim" command = "Start" param = "credits" />
+				<do command = "StopScreen"/>
+			</start>
+			<stop/>
+			
+			<events>
+				<event name = "OnLMouseDown">
+					<do command = "StopScreen"/>
+				</event>
+				<event name = "OnEnterDown">
+					<do command = "StopScreen"/>
+				</event>
+				<event name = "OnEscDown">
+					<do command = "StopScreen"/>
+				</event>
+				<event name = "OnSpaceDown">
+					<do command = "StopScreen"/>
+				</event>
+			</events>
+		</behavior>
+
+
+		<!-- êîíåö -->
+		<behavior name = "StopScreen" >
+			<start>
+				<do object = "global" command = "PlaySoundSample" param = "gui_menu_show" instant = "1"/>
+				<do object = "credits_anim" command = "Start" param = "stop" />
+				<do object = "global" command = "PlaySoundSample" param = "gui_menu_hide" instant = "1"/>	
+				<!--do object = "hide_anim" command = "Restart" param = "Buttons"/-->
+				<do command = "Hide"/>
+				<do command = "SetLock" param = "0"/>
+				<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuScreen" />
+
+			</start>
+			<stop/>
+		</behavior>
+	</behaviors>
+</window>

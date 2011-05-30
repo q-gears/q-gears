@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Q-Gears" />
+		<Option pch_mode="0" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release">
+				<Option output="output\q-gears.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="output" />
+				<Option object_output="compile" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectResourceIncludeDirsRelation="1" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="mingw32" />
+					<Add library="..\..\..\..\..\..\Program Files\mingw\lib\zdll.lib" />
+					<Add library="OgreMain" />
+					<Add library="ois" />
+					<Add directory="$(OGRE_HOME)\lib\opt\release" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="$(OGRE_HOME)\include" />
+			<Add directory="$(OGRE_HOME)\include\opt" />
+			<Add directory="$(OGRE_HOME)\Samples\include" />
+		</Compiler>
+		<Linker>
+			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+			<Add directory="$(OGRE_HOME)\lib" />
+		</Linker>
+		<Unit filename="..\common\File.cpp" />
+		<Unit filename="..\common\File.h" />
+		<Unit filename="..\common\FileSystem.cpp" />
+		<Unit filename="..\common\FileSystem.h" />
+		<Unit filename="..\common\Logger.cpp" />
+		<Unit filename="..\common\Logger.h" />
+		<Unit filename="..\common\LzsFile.cpp" />
+		<Unit filename="..\common\LzsFile.h" />
+		<Unit filename="..\common\Vram.cpp" />
+		<Unit filename="..\common\Vram.h" />
+		<Unit filename="src\DatFile.cpp" />
+		<Unit filename="src\DatFile.h" />
+		<Unit filename="src\Main.cpp" />
+		<Unit filename="src\Main.h" />
+		<Unit filename="src\MimFile.cpp" />
+		<Unit filename="src\MimFile.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

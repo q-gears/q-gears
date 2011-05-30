@@ -1,0 +1,104 @@
+8004f4f4 data for load 3d data.
+// load_poly functions
+//                                                         18       1c       20       24
+//00 48DE0280 30EB0280 80E20280 ECE60280 48DE0280 48DE0280 DCCB0280 08000000 04000000 14000000
+//01 5CDE0280 F0F00280 94E20280 00E70280 1CED0280 F4EE0280 24D60280 08000000 08000000 20000000 textured monochrome triangle (with lighting calculation)
+//02 34DE0280 C4F40280 6CE20280 D8E60280 34DE0280 34DE0280 BCD40280 08000000 04000000 1C000000
+//03 20DE0280 C4F20280 58E20280 C4E60280 20DE0280 20DE0280 24D80280 08000000 08000000 28000000 textured gourad triangle (with lighting calculation)
+//04 48DE0280 48DE0280 80E20280 ECE60280 48DE0280 48DE0280 44CD0280 08000000 04000000 14000000 monochrome triangle
+//05 5CDE0280 5CDE0280 94E20280 00E70280 1CED0280 F4EE0280 94D70280 08000000 08000000 20000000 textured monochrome triangle
+//06 34DE0280 34DE0280 6CE20280 D8E60280 34DE0280 34DE0280 8CD50280 08000000 04000000 1C000000
+//07 20DE0280 20DE0280 58E20280 C4E60280 20DE0280 20DE0280 24D80280 08000000 08000000 28000000
+//08 64E00280 E0F60280 84E40280 F0E80280 64E00280 64E00280 68CD0280 08000000 04000000 18000000
+//09 78E00280 F8F80280 98E40280 04E90280 0CFB0280 1CFD0280 40D30280 08000000 0C000000 28000000 textured monochrome quad (with lighting calculation)
+//0a 50E00280 50E00280 70E40280 DCE80280 50E00280 50E00280 90CF0280 08000000 04000000 24000000
+//0b 3CE00280 3CE00280 5CE40280 C8E80280 3CE00280 3CE00280 54D00280 08000000 0C000000 34000000
+//0c 64E00280 64E00280 84E40280 F0E80280 64E00280 64E00280 D0CE0280 08000000 04000000 18000000 monochrome quad
+//0d 78E00280 78E00280 98E40280 04E90280 0CFB0280 1CFD0280 F4CE0280 08000000 0C000000 28000000 textured monochrome quad
+//0e 50E00280 50E00280 70E40280 DCE80280 50E00280 50E00280 90CF0280 08000000 04000000 24000000
+//0f 3CE00280 3CE00280 5CE40280 C8E80280 3CE00280 3CE00280 54D00280 08000000 0C000000 34000000
++18 - function to fill the packet.
++1c - size of polygon data.
++20 - size of tex data.
++24 - size of packets data.
+
+8004f7ac [][][][] some tex page global setting. If 1 or 2 we use some default values.
+8004f7b0 [][][][] some clut global setting. If 0 then we use some default values.
+
+8004ff84 [][][][] address of SPU registers 0x1f801c00.
+
+800560a0 square root data (0x2 each). 12bit fixed point.
+
+80056234
+
+800566d0          rotation for angle 0 - 45 (each 2 bytes)
+
+80058810 GP
++1ac [][]     store 4 here when we start parse model and animation.
++1c0 [][][][] store 0 here when we start parse model and animation.
+
+
+800589a8 [][]     store tex page setting here during initialization.
+800589ac [][]     store here clut setting during initialization.
+800589b0 [][][][] we get here default tex page setting and store it to 800589a8 if 8004f7ac == 2, in case of 1 we load only tex X and Y from here.
+800589b4 [][][][] we get here default clut Y setting and store it to 800589ac if 8004f7ac == 0.
+
+80058aa0 [][][][] number of channels to activate. Store 2 here when starting new sound.
+
+80058adc [][][][] pointer to some SED file (0391.sed).
+80058ac0 [][][][] store here pointer to place for packets.
+
+80058b34 [][][][] store here pointer to precalculated normal for polygon lighting. Allocated memory from +18 in model data file.
+
+80058b98 [][][][] flags for turning SPU Voice ON.
+
+80058bc8 [][][][] we store here +0c [][][][] from model parts header. Maybe for futher use in inner functions.
+
+80058bd8 [][][][] pointer to vertex block in model data file.
+
+80058bf0 [][][][] some channel mask. Add bit here when start play sound in channel.
+80058bf4 [][][][] pointer to SND file (with wds signature).
+
+80058c18 [][]     if this is 0x0800 then we start new sound.
+
+80058c5c [][][][] we add here number of polygons for which we create packets.
+
+80058c74 [][][][] offset to 80061bbc SPU channel structures.
+
+80061bbc array of 4 bytes offsets to SPU channel structure at 80065270. We store 0 in appropriate channel when run this channel.
+
+80065270 SPU channel structure (0x158 size).
++048 [][][][] in very first channel here some mask. We remove bit from here when start new sound (in +9a bit index to remove)
++027 []       channel id.
++094 [][]     some mask. If 0x0001 is set then we execute sound at this channel and set this to 0x0000.
++09a []       index of bit to remove or add from +48 mask in first channel when start new sound.
+// c4
++002 [][]     effect flags.
+                0x0010 - this channel used in Channel FM (pitch lfo) mode.
+                0x0020 - this channel used in Channel Noise mode.
+                0x0040 - this channel used in Channel Reverb mode.
++006 [][]     update flags.
+                0x0001 - update left and right volume.
+                0x0004 - update pitch.
+                0x0008 - update start and loop sound address.
+                0x0010 - update attack mode and attack rate.
+                0x0020 - update decay rate.
+                0x0040 - update sustain mode and sustain rate.
+                0x0080 - update release mode and release rate.
+                0x0100 - update sustain level.
+                0x1000 - update Channel FM (pitch lfo) mode.
+                0x2000 - update Channel Noise mode.
+                0x4000 - update Channel Reverb mode.
++008 [][]     left volume.
++00a [][]     right volume.
++014 [][]     pitch.
++01c [][][][] full start address.
++020 [][][][] full loop address.
++024 []       this >> 2 - attack mode.
++025 []       this >> 1 - sustain mode.
++026 []       this >> 2 - release mode.
++027 []       attack rate.
++028 []       decay rate.
++029 []       sustain rate.
++02a []       release rate.
++02b []       sustain level.

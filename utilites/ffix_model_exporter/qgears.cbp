@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Q-Gears" />
+		<Option pch_mode="0" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release">
+				<Option output="output\q-gears.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="output" />
+				<Option object_output="compile" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectResourceIncludeDirsRelation="1" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="mingw32" />
+					<Add library="zdll" />
+					<Add library="OgreMain" />
+					<Add library="ois" />
+					<Add directory="$(OGRE_HOME)\lib\opt\release" />
+				</Linker>
+			</Target>
+			<Target title="Debug">
+				<Option output="output\q-gears" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="output" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="$(OGRE_HOME)\include" />
+			<Add directory="$(OGRE_HOME)\include\opt" />
+			<Add directory="$(OGRE_HOME)\Samples\include" />
+		</Compiler>
+		<Linker>
+			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+			<Add directory="$(OGRE_HOME)\lib" />
+		</Linker>
+		<Unit filename="src\Define.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\Main.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\Main.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\TypeDefine.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\3dTypes.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\actor\Actor.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\actor\Actor.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\math\Box.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\math\Matrix.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\math\Matrix.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\math\MatrixMath.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\math\MatrixMath.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\math\Vector.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\math\VectorMath.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\math\VectorMath.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\surface\Surface.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\surface\Surface.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\surface\SurfaceLoad.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\surface\SurfaceLoad.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\surface\SurfaceLoadBmp.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\surface\SurfaceLoadBmp.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\surface\SurfaceSaveBmp.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\display\surface\SurfaceSaveBmp.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\FileSystem.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\FileSystem.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\GameFileSystem.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\GameFileSystem.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\RealFileSystem.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\RealFileSystem.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\driver\FileDriver.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\driver\FileDriver.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\driver\NullFileDriver.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\driver\NullFileDriver.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\driver\RealFileDriver.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\filesystem\driver\RealFileDriver.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\utilites\Logger.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\utilites\Logger.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\utilites\NoCopy.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\utilites\StdString.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\utilites\Utilites.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\common\utilites\Utilites.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\game\field\FieldFile.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\game\field\FieldFile.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\game\field\ModelFile.cpp" />
+		<Unit filename="src\game\field\ModelFile.h" />
+		<Unit filename="src\game\filesystem\File.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\game\filesystem\File.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\game\filetypes\TimFile.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\game\filetypes\TimFile.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\game\filetypes\image\Vram.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\game\filetypes\image\Vram.h">
+			<Option target="Release" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

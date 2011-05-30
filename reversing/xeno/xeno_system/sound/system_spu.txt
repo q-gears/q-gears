@@ -1,0 +1,186 @@
+﻿////////////////////////////////
+// func3e7a8
+T2 = 0;
+
+T6 = 0;
+T5 = 0;
+T4 = 0;
+
+T0 = w[8004ff84];
+
+T1 = 0;
+L3e7d0:	; 8003E7D0
+    A1 = w[80061bbc + T1 * 4];
+    if (A1 != 0)
+    {
+        A3 = hu[A1 + 6];
+
+        if (A3 != 0)
+        {
+            if (A3 & 0001)
+            {
+                [T0 + T1 * 10 + 0] = h(hu[A1 + 8]); // left volume
+                [T0 + T1 * 10 + 2] = h(hu[A1 + a]); // right volume
+            }
+
+            if (A3 & 0004)
+            {
+                [T0 + T1 * 10 + 4] = h(hu[A1 + 14]); // pitch
+            }
+
+            if (A3 & 0008)
+            {
+                [T0 + T1 * 10 + 6] = h(w[A1 + 1c] >>> 3); // start address of sound / 8
+                [T0 + T1 * 10 + e] = h(w[A1 + 20] >>> 3); // loop address of sound / 8
+            }
+
+            if (A3 & 0010)
+            {
+                // +24 >> 2 attack mode
+                // +27 attack rate
+                [T0 + T1 * 10 + 8] = h(bu[T0 + T1 * 10 + 8] + (bu[A1 + 27] << 8) + ((bu[A1 + 24] >> 2) << f)); // attack mode and rate
+            }
+
+            if (A3 & 0020)
+            {
+                [T0 + T1 * 10 + 8] = h((hu[T0 + T1 * 10 + 8] & ff0f) + (bu[A1 + 28] << 4)); // decay rate
+            }
+
+            if (A3 & 0040)
+            {
+                // +25 >> 1 sustain mode
+                // +29 sustain rate
+                [T0 + T1 * 10 + a] = h((hu[T0 + T1 * 10 + a] & 003f) + (bu[A1 + 29] << 6) + ((bu[A1 + 25] >> 1) << e)); // sustain mode and rate
+            }
+
+            if (A3 & 0080)
+            {
+                [T0 + T1 * 10 + a] = h((hu[T0 + T1 * 10 + a] & ffc0) + bu[A1 + 2a] + ((bu[A1 + 26] >> 2) << 5)); // release mode and rate
+            }
+
+            if (A3 & 0100)
+            {
+                [T0 + T1 * 10 + 8] = h((hu[T0 + T1 * 10 + 8] & fff0) + bu[A1 + 2b]); // sustain level
+            }
+
+            T2 = T2 | A3 & 7000;
+            [A1 + 6] = h(0);
+        }
+
+        V0 = hu[A1 + 2];
+        T4 = T4 | (((V0 >> 4) & 1) << T1);
+        T5 = T5 | (((V0 >> 5) & 1) << T1);
+        T6 = T6 | (((V0 >> 6) & 1) << T1);
+    }
+
+    T1 = T1 + 1;
+    V0 = T1 < 18;
+8003E980	bne    v0, zero, L3e7d0 [$8003e7d0]
+
+
+
+if (T2 & ffff)
+{
+    if (T2 & 1000)
+    {
+        [T0 + 190] = h(T4);       // Channel FM (pitch lfo) mode (0-15)
+        [T0 + 192] = h(T4 >> 10); // Channel FM (pitch lfo) mode (16-23)
+    }
+
+    if (T2 & 2000)
+    {
+        [T0 + 194] = h(T5);       // Channel Noise mode (0-15)
+        [T0 + 196] = h(T5 >> 10); // Channel Noise mode (16-23)
+    }
+
+    if (T2 & 4000)
+    {
+        [T0 + 198] = h(T6);       // Channel Reverb mode (0-15)
+        [T0 + 19a] = h(T6 >> 10); // Channel Reverb mode (16-23)
+    }
+}
+
+V0 = w[80058b98];
+if (V0 != 0)
+{
+    [T0 + 188] = h(V0);       // Voice ON (0-15)
+    [T0 + 18a] = h(V0 >> 10); // Voice ON (16-23)
+    [80058b98] = w(0);
+}
+////////////////////////////////
+
+
+
+8003e800 : SH      00000000 (v0), 0000 (1f801d60 (t0)) [1f801d60] // left volume to ch 0x16
+8003e80c : SH      00000000 (v0), fffa (1f801d68 (a2)) [1f801d62] // right volume to ch 0x16
+8003e824 : SH      000002a8 (v0), fffc (1f801d68 (a2)) [1f801d64] // pitch to ch 0x16
+8003e840 : SH      00000202 (v0), fffe (1f801d68 (a2)) [1f801d66] // start address of sound / 8 to ch 0x16
+8003e850 : SH      00000004 (v0), 0006 (1f801d68 (a2)) [1f801d6e] // loop address of sound / 8 to ch 0x16
+8003e880 : SH      00000000 (a0), 0000 (1f801d68 (a2)) [1f801d68] // attack mode and rate to ch 0x16
+8003e8a4 : SH      000000f0 (a0), 0000 (1f801d68 (a2)) [1f801d68] // decay rate to ch 0x16
+8003e8d8 : SH      00005fc6 (a0), 0002 (1f801d68 (a2)) [1f801d6a] // sustain mode and rate to ch 0x16
+8003e908 : SH      00005fc4 (a0), 0002 (1f801d68 (a2)) [1f801d6a] // release mode and rate to ch 0x16
+8003e928 : SH      000000ff (a0), 0000 (1f801d68 (a2)) [1f801d68] // sustain level to ch 0x16
+8003e800 : SH      00002139 (v0), 0000 (1f801d70 (t0)) [1f801d70] // left volume to ch 0x17
+8003e80c : SH      00002139 (v0), fffa (1f801d78 (a2)) [1f801d72] // right volume to ch 0x17
+8003e824 : SH      00000168 (v0), fffc (1f801d78 (a2)) [1f801d74] // pitch to ch 0x17
+8003e840 : SH      00000202 (v0), fffe (1f801d78 (a2)) [1f801d76] // start address of sound / 8 to ch 0x17
+8003e850 : SH      00000004 (v0), 0006 (1f801d78 (a2)) [1f801d7e] // loop address of sound / 8 t0 ch 0x17
+8003e880 : SH      00000000 (a0), 0000 (1f801d78 (a2)) [1f801d78] // attack mode and rate to ch 0x17
+8003e8a4 : SH      000000f0 (a0), 0000 (1f801d78 (a2)) [1f801d78] // decay rate to ch 0x17
+8003e8d8 : SH      00005fc6 (a0), 0002 (1f801d78 (a2)) [1f801d7a] // sustain mode and rate to ch 0x17
+8003e908 : SH      00005fc4 (a0), 0002 (1f801d78 (a2)) [1f801d7a] // release mode and rate to ch 0x17
+8003e928 : SH      000000ff (a0), 0000 (1f801d78 (a2)) [1f801d78] // sustain level to ch 0x17
+
+8003e9a4 : SH      00000000 (t4), 0190 (1f801c00 (t0)) [1f801d90] // Channel FM (pitch lfo) mode (0-15)
+8003e9a8 : SH      00000000 (v0), 0192 (1f801c00 (t0)) [1f801d92] // Channel FM (pitch lfo) mode (16-23)
+8003e9b8 : SH      00000000 (t5), 0194 (1f801c00 (t0)) [1f801d94] // Channel Noise mode (0-15)
+8003e9bc : SH      00000000 (v0), 0196 (1f801c00 (t0)) [1f801d96] // Channel Noise mode (16-23)
+8003e9cc : SH      00000000 (t6), 0198 (1f801c00 (t0)) [1f801d98] // Channel Reverb mode (0-15)
+8003e9d0 : SH      00000000 (v0), 019a (1f801c00 (t0)) [1f801d9a] // Channel Reverb mode (16-23)
+
+8003ea48 : SH      00005fc6 (v0), 0000 (1f801d6a (a0)) [1f801d6a]
+8003ea48 : SH      00005fc6 (v0), 0000 (1f801d7a (a0)) [1f801d7a]
+8003ea78 : SH      00c00000 (v1), 018c (1f801c00 (a2)) [1f801d8c] // Voice OFF (0-15)
+8003ea7c : SH      000000c0 (v0), 018e (1f801c00 (a2)) [1f801d8e] // Voice OFF (16-23)
+
+8003e800 : SH      00002139 (v0), 0000 (1f801d60 (t0)) [1f801d60] // left volume to ch 0x16
+8003e80c : SH      00002139 (v0), fffa (1f801d68 (a2)) [1f801d62] // right volume to ch 0x16
+8003e800 : SH      00002139 (v0), 0000 (1f801d70 (t0)) [1f801d70] // left volume to ch 0x17
+8003e80c : SH      00002139 (v0), fffa (1f801d78 (a2)) [1f801d72] // right volume to ch 0x17
+8003e800 : SH      00000000 (v0), 0000 (1f801d60 (t0)) [1f801d60] // left volume to ch 0x16
+8003e80c : SH      00000000 (v0), fffa (1f801d68 (a2)) [1f801d62] // right volume to ch 0x16
+8003e824 : SH      000002a8 (v0), fffc (1f801d68 (a2)) [1f801d64] // pitch to ch 0x16
+8003e840 : SH      00001fc0 (v0), fffe (1f801d68 (a2)) [1f801d66] // start address of sound / 8 to ch 0x16
+8003e850 : SH      00001dc0 (v0), 0006 (1f801d68 (a2)) [1f801d6e] // loop address of sound / 8 t0 ch 0x16
+8003e880 : SH      00002500 (a0), 0000 (1f801d68 (a2)) [1f801d68] // attack mode and rate to ch 0x16
+8003e8a4 : SH      000025f0 (a0), 0000 (1f801d68 (a2)) [1f801d68] // decay rate to ch 0x16
+8003e8d8 : SH      00005fc6 (a0), 0002 (1f801d68 (a2)) [1f801d6a] // sustain mode and rate to ch 0x16
+8003e908 : SH      00005fc4 (a0), 0002 (1f801d68 (a2)) [1f801d6a] // release mode and rate to ch 0x16
+8003e928 : SH      000025ff (a0), 0000 (1f801d68 (a2)) [1f801d68] // sustain level to ch 0x16
+8003e800 : SH      00002139 (v0), 0000 (1f801d70 (t0)) [1f801d70] // left volume to ch 0x17
+8003e80c : SH      00002139 (v0), fffa (1f801d78 (a2)) [1f801d72] // right volume to ch 0x17
+8003e824 : SH      00000168 (v0), fffc (1f801d78 (a2)) [1f801d74] // pitch to ch 0x17
+8003e840 : SH      000019f2 (v0), fffe (1f801d78 (a2)) [1f801d76] // start address of sound / 8 to ch 0x17
+8003e850 : SH      000017f4 (v0), 0006 (1f801d78 (a2)) [1f801d7e] // loop address of sound / 8 t0 ch 0x17
+8003e880 : SH      00002700 (a0), 0000 (1f801d78 (a2)) [1f801d78] // attack mode and rate to ch 0x17
+8003e8a4 : SH      000027f0 (a0), 0000 (1f801d78 (a2)) [1f801d78] // decay rate to ch 0x17
+8003e8d8 : SH      00004b46 (a0), 0002 (1f801d78 (a2)) [1f801d7a] // sustain mode and rate to ch 0x17
+8003e908 : SH      00004b44 (a0), 0002 (1f801d78 (a2)) [1f801d7a] // release mode and rate to ch 0x17
+8003e928 : SH      000027ff (a0), 0000 (1f801d78 (a2)) [1f801d78] // sustain level to ch 0x17
+
+8003e9a4 : SH      00800000 (t4), 0190 (1f801c00 (t0)) [1f801d90] // Channel FM (pitch lfo) mode (0-15)
+8003e9a8 : SH      00000080 (v0), 0192 (1f801c00 (t0)) [1f801d92] // Channel FM (pitch lfo) mode (16-23)
+8003e9b8 : SH      00000000 (t5), 0194 (1f801c00 (t0)) [1f801d94] // Channel Noise mode (0-15)
+8003e9bc : SH      00000000 (v0), 0196 (1f801c00 (t0)) [1f801d96] // Channel Noise mode (16-23)
+8003e9cc : SH      00000000 (t6), 0198 (1f801c00 (t0)) [1f801d98] // Channel Reverb mode (0-15)
+8003e9d0 : SH      00000000 (v0), 019a (1f801c00 (t0)) [1f801d9a] // Channel Reverb mode (16-23)
+8003e9e8 : SH      00c00000 (v0), 0188 (1f801c00 (t0)) [1f801d88] // Voice ON (0-15)
+8003e9f0 : SH      000000c0 (v0), 018a (1f801c00 (t0)) [1f801d8a] // Voice ON (16-23)
+
+8003ea78 : SH      00c00000 (v1), 018c (1f801c00 (a2)) [1f801d8c]
+8003ea7c : SH      000000c0 (v0), 018e (1f801c00 (a2)) [1f801d8e] // Voice OFF (16-23)
+8003ea48 : SH      00005fc6 (v0), 0000 (1f801d6a (a0)) [1f801d6a]
+8003ea48 : SH      00004b46 (v0), 0000 (1f801d7a (a0)) [1f801d7a]
+8003ea78 : SH      00c00000 (v1), 018c (1f801c00 (a2)) [1f801d8c]
+8003ea7c : SH      000000c0 (v0), 018e (1f801c00 (a2)) [1f801d8e] // Voice OFF (16-23)

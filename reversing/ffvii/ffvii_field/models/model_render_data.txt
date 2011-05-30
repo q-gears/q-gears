@@ -1,0 +1,874 @@
+////////////////////////////////////////////////////////
+// funcb0fb0
+T8 = A0;
+T0 = w[T8 + 1c];
+T1 = w[T8 + 18] + hu[T8 + e];
+if (bu[800df114] != 0)
+{
+    T0 = T0 + hu[T8 + 16];
+}
+
+800B0FE4	ori    t9, zero, $0010
+800B0FE8	mtc2   t9,l11l12
+
+T3 = (A1 << 10) >> c;
+T2 = (A2 << 10) >> c;
+V1 = (A3 << 10) >> c;
+
+if (w[1f800200] & 1)
+{
+    T7 = w[T8 + 4];
+
+    // set colour to drafts
+    A3 = T7 & ff;
+    if (A3 != 0)
+    {
+        A0 = 0;
+        loopb1030:	; 800B1030
+            A2 = bu[T0 + 7];
+
+            800B1034	mtc2   t3,ofy
+            800B1038	mtc2   t2,h
+            800B103C	mtc2   v1,dqa
+
+            T4 = bu[T1 + 4];
+            T5 = bu[T1 + 5];
+            T6 = bu[T1 + 6];
+            800B1050	mtc2   t4,l13l21
+            800B1054	mtc2   t5,l22l23
+            800B1058	mtc2   t6,l31l32
+            800B1064	gte_func29zero,r11r12
+            800B1068	mtc2   t3,ofy
+            800B106C	mtc2   t2,h
+            800B1070	mtc2   v1,dqa
+
+            T4 = bu[T1 + 8];
+            T5 = bu[T1 + 9];
+            T6 = bu[T1 + a];
+            800B1084	mtc2   t4,l13l21
+            800B1088	mtc2   t5,l22l23
+            800B108C	mtc2   t6,l31l32
+            800B1098	gte_func29zero,r11r12
+            800B109C	mtc2   t3,ofy
+            800B10A0	mtc2   t2,h
+            800B10A4	mtc2   v1,dqa
+
+            T4 = bu[T1 + c];
+            T5 = bu[T1 + d];
+            T6 = bu[T1 + e];
+            800B10B8	mtc2   t4,l13l21
+            800B10BC	mtc2   t5,l22l23
+            800B10C0	mtc2   t6,l31l32
+            800B10CC	gte_func29zero,r11r12
+            800B10D4	swc2   s4, $0000(T0 + 4)
+            800B10DC	swc2   s5, $0000(T0 + 10)
+            800B10E4	swc2   s6, $0000(T0 + 1c)
+            800B10E8	mtc2   t3,ofy
+            800B10EC	mtc2   t2,h
+            800B10F0	mtc2   v1,dqa
+
+            T4 = bu[T1 + 10];
+            T5 = bu[T1 + 11];
+            T6 = bu[T1 + 12];
+            800B1104	mtc2   t4,l13l21
+            800B1108	mtc2   t5,l22l23
+            800B110C	mtc2   t6,l31l32
+            800B1118	gte_func29zero,r11r12
+            800B1120	swc2   s6, $0000(T0 + 28)
+
+            [T0 + 7] = b(A2);
+            A0 = A0 + 1;
+            T0 = T0 + 34;
+            T1 = T1 + 18;
+            V0 = A0 < A3;
+
+        800B1138	bne    v0, zero, loopb1030 [$800b1030]
+    }
+
+    800B1140	andi   v0, t7, $ff00
+    800B1144	srl    a3, v0, $08
+    800B1148	beq    a3, zero, Lb1228 [$800b1228]
+    800B114C	addu   a0, zero, zero
+    800B1150	addiu  a1, t0, $0007
+
+    loopb1154:	; 800B1154
+    800B1154	lbu    a2, $0000(a1)
+    800B1158	mtc2   t3,ofy
+    800B115C	mtc2   t2,h
+    800B1160	mtc2   v1,dqa
+    800B1164	addiu  v0, t1, $0004
+    800B1168	lbu    t4, $0000(v0)
+    800B116C	lbu    t5, $0001(v0)
+    800B1170	lbu    t6, $0002(v0)
+    800B1174	mtc2   t4,l13l21
+    800B1178	mtc2   t5,l22l23
+    800B117C	mtc2   t6,l31l32
+    800B1180	nop
+    800B1184	nop
+    800B1188	gte_func29zero,r11r12
+    800B118C	mtc2   t3,ofy
+    800B1190	mtc2   t2,h
+    800B1194	mtc2   v1,dqa
+    800B1198	addiu  v0, t1, $0008
+    800B119C	lbu    t4, $0000(v0)
+    800B11A0	lbu    t5, $0001(v0)
+    800B11A4	lbu    t6, $0002(v0)
+    800B11A8	mtc2   t4,l13l21
+    800B11AC	mtc2   t5,l22l23
+    800B11B0	mtc2   t6,l31l32
+    800B11B4	nop
+    800B11B8	nop
+    800B11BC	gte_func29zero,r11r12
+    800B11C0	mtc2   t3,ofy
+    800B11C4	mtc2   t2,h
+    800B11C8	mtc2   v1,dqa
+    800B11CC	addiu  v0, t1, $000c
+    800B11D0	lbu    t4, $0000(v0)
+    800B11D4	lbu    t5, $0001(v0)
+    800B11D8	lbu    t6, $0002(v0)
+    800B11DC	mtc2   t4,l13l21
+    800B11E0	mtc2   t5,l22l23
+    800B11E4	mtc2   t6,l31l32
+    800B11E8	nop
+    800B11EC	nop
+    800B11F0	gte_func29zero,r11r12
+    800B11F4	addiu  v0, t0, $0004
+    800B11F8	swc2   s4, $0000(v0)
+    800B11FC	addiu  v0, t0, $0010
+    800B1200	swc2   s5, $0000(v0)
+    800B1204	addiu  v0, t0, $001c
+    800B1208	swc2   s6, $0000(v0)
+    800B120C	addiu  a0, a0, $0001
+    800B1210	addiu  t0, t0, $0028
+    800B1214	addiu  t1, t1, $0014
+    800B1218	sltu   v0, a0, a3
+    800B121C	sb     a2, $0000(a1)
+    800B1220	bne    v0, zero, loopb1154 [$800b1154]
+    800B1224	addiu  a1, a1, $0028
+
+    Lb1228:	; 800B1228
+    800B1228	srl    v0, t7, $10
+    800B122C	andi   a3, v0, $00ff
+    800B1230	beq    a3, zero, Lb1298 [$800b1298]
+    800B1234	addu   a0, zero, zero
+    800B1238	addiu  a1, t0, $0007
+
+    loopb123c:	; 800B123C
+    800B123C	lbu    a2, $0000(a1)
+    800B1240	mtc2   t3,ofy
+    800B1244	mtc2   t2,h
+    800B1248	mtc2   v1,dqa
+    800B124C	addiu  v0, t1, $0004
+    800B1250	lbu    t4, $0000(v0)
+    800B1254	lbu    t5, $0001(v0)
+    800B1258	lbu    t6, $0002(v0)
+    800B125C	mtc2   t4,l13l21
+    800B1260	mtc2   t5,l22l23
+    800B1264	mtc2   t6,l31l32
+    800B1268	nop
+    800B126C	nop
+    800B1270	gte_func29zero,r11r12
+    800B1274	addiu  v0, t0, $0004
+    800B1278	swc2   s6, $0000(v0)
+    800B127C	addiu  a0, a0, $0001
+    800B1280	addiu  t0, t0, $0028
+    800B1284	addiu  t1, t1, $000c
+    800B1288	sltu   v0, a0, a3
+    800B128C	sb     a2, $0000(a1)
+    800B1290	bne    v0, zero, loopb123c [$800b123c]
+    800B1294	addiu  a1, a1, $0028
+
+    Lb1298:	; 800B1298
+    800B1298	srl    a3, t7, $18
+    800B129C	beq    a3, zero, Lb1304 [$800b1304]
+    800B12A0	addu   a0, zero, zero
+    800B12A4	addiu  a1, t0, $0007
+
+    loopb12a8:	; 800B12A8
+    800B12A8	lbu    a2, $0000(a1)
+    800B12AC	mtc2   t3,ofy
+    800B12B0	mtc2   t2,h
+    800B12B4	mtc2   v1,dqa
+    800B12B8	addiu  v0, t1, $0004
+    800B12BC	lbu    t4, $0000(v0)
+    800B12C0	lbu    t5, $0001(v0)
+    800B12C4	lbu    t6, $0002(v0)
+    800B12C8	mtc2   t4,l13l21
+    800B12CC	mtc2   t5,l22l23
+    800B12D0	mtc2   t6,l31l32
+    800B12D4	nop
+    800B12D8	nop
+    800B12DC	gte_func29zero,r11r12
+    800B12E0	addiu  v0, t0, $0004
+    800B12E4	swc2   s6, $0000(v0)
+    800B12E8	addiu  a0, a0, $0001
+    800B12EC	addiu  t0, t0, $0020
+    800B12F0	addiu  t1, t1, $000c
+    800B12F4	sltu   v0, a0, a3
+    800B12F8	sb     a2, $0000(a1)
+    800B12FC	bne    v0, zero, loopb12a8 [$800b12a8]
+    800B1300	addiu  a1, a1, $0020
+
+    Lb1304:	; 800B1304
+    800B1304	lw     t7, $0008(t8)
+    800B1308	nop
+    800B130C	andi   a3, t7, $00ff
+    800B1310	beq    a3, zero, Lb1378 [$800b1378]
+    800B1314	addu   a0, zero, zero
+    800B1318	addiu  a1, t0, $0007
+
+    loopb131c:	; 800B131C
+    800B131C	lbu    a2, $0000(a1)
+    800B1320	mtc2   t3,ofy
+    800B1324	mtc2   t2,h
+    800B1328	mtc2   v1,dqa
+    800B132C	addiu  v0, t1, $0004
+    800B1330	lbu    t4, $0000(v0)
+    800B1334	lbu    t5, $0001(v0)
+    800B1338	lbu    t6, $0002(v0)
+    800B133C	mtc2   t4,l13l21
+    800B1340	mtc2   t5,l22l23
+    800B1344	mtc2   t6,l31l32
+    800B1348	nop
+    800B134C	nop
+    800B1350	gte_func29zero,r11r12
+    800B1354	addiu  v0, t0, $0004
+    800B1358	swc2   s6, $0000(v0)
+    800B135C	addiu  a0, a0, $0001
+    800B1360	addiu  t0, t0, $0014
+    800B1364	addiu  t1, t1, $0008
+    800B1368	sltu   v0, a0, a3
+    800B136C	sb     a2, $0000(a1)
+    800B1370	bne    v0, zero, loopb131c [$800b131c]
+    800B1374	addiu  a1, a1, $0014
+
+    Lb1378:	; 800B1378
+    800B1378	andi   v0, t7, $ff00
+    800B137C	srl    a3, v0, $08
+    800B1380	beq    a3, zero, Lb13e8 [$800b13e8]
+    800B1384	addu   a0, zero, zero
+    800B1388	addiu  a1, t0, $0007
+
+    loopb138c:	; 800B138C
+    800B138C	lbu    a2, $0000(a1)
+    800B1390	mtc2   t3,ofy
+    800B1394	mtc2   t2,h
+    800B1398	mtc2   v1,dqa
+    800B139C	addiu  v0, t1, $0004
+    800B13A0	lbu    t4, $0000(v0)
+    800B13A4	lbu    t5, $0001(v0)
+    800B13A8	lbu    t6, $0002(v0)
+    800B13AC	mtc2   t4,l13l21
+    800B13B0	mtc2   t5,l22l23
+    800B13B4	mtc2   t6,l31l32
+    800B13B8	nop
+    800B13BC	nop
+    800B13C0	gte_func29zero,r11r12
+    800B13C4	addiu  v0, t0, $0004
+    800B13C8	swc2   s6, $0000(v0)
+    800B13CC	addiu  a0, a0, $0001
+    800B13D0	addiu  t0, t0, $0018
+    800B13D4	addiu  t1, t1, $0008
+    800B13D8	sltu   v0, a0, a3
+    800B13DC	sb     a2, $0000(a1)
+    800B13E0	bne    v0, zero, loopb138c [$800b138c]
+    800B13E4	addiu  a1, a1, $0018
+
+    Lb13e8:	; 800B13E8
+    800B13E8	srl    v0, t7, $10
+    800B13EC	andi   a3, v0, $00ff
+    800B13F0	beq    a3, zero, Lb14d0 [$800b14d0]
+    800B13F4	addu   a0, zero, zero
+    800B13F8	addiu  a1, t0, $0007
+
+    loopb13fc:	; 800B13FC
+    800B13FC	lbu    a2, $0000(a1)
+    800B1400	mtc2   t3,ofy
+    800B1404	mtc2   t2,h
+    800B1408	mtc2   v1,dqa
+    800B140C	addiu  v0, t1, $0004
+    800B1410	lbu    t4, $0000(v0)
+    800B1414	lbu    t5, $0001(v0)
+    800B1418	lbu    t6, $0002(v0)
+    800B141C	mtc2   t4,l13l21
+    800B1420	mtc2   t5,l22l23
+    800B1424	mtc2   t6,l31l32
+    800B1428	nop
+    800B142C	nop
+    800B1430	gte_func29zero,r11r12
+    800B1434	mtc2   t3,ofy
+    800B1438	mtc2   t2,h
+    800B143C	mtc2   v1,dqa
+    800B1440	addiu  v0, t1, $0008
+    800B1444	lbu    t4, $0000(v0)
+    800B1448	lbu    t5, $0001(v0)
+    800B144C	lbu    t6, $0002(v0)
+    800B1450	mtc2   t4,l13l21
+    800B1454	mtc2   t5,l22l23
+    800B1458	mtc2   t6,l31l32
+    800B145C	nop
+    800B1460	nop
+    800B1464	gte_func29zero,r11r12
+    800B1468	mtc2   t3,ofy
+    800B146C	mtc2   t2,h
+    800B1470	mtc2   v1,dqa
+    800B1474	addiu  v0, t1, $000c
+    800B1478	lbu    t4, $0000(v0)
+    800B147C	lbu    t5, $0001(v0)
+    800B1480	lbu    t6, $0002(v0)
+    800B1484	mtc2   t4,l13l21
+    800B1488	mtc2   t5,l22l23
+    800B148C	mtc2   t6,l31l32
+    800B1490	nop
+    800B1494	nop
+    800B1498	gte_func29zero,r11r12
+    800B149C	addiu  v0, t0, $0004
+    800B14A0	swc2   s4, $0000(v0)
+    800B14A4	addiu  v0, t0, $000c
+    800B14A8	swc2   s5, $0000(v0)
+    800B14AC	addiu  v0, t0, $0014
+    800B14B0	swc2   s6, $0000(v0)
+    800B14B4	addiu  a0, a0, $0001
+    800B14B8	addiu  t0, t0, $001c
+    800B14BC	addiu  t1, t1, $0010
+    800B14C0	sltu   v0, a0, a3
+    800B14C4	sb     a2, $0000(a1)
+    800B14C8	bne    v0, zero, loopb13fc [$800b13fc]
+    800B14CC	addiu  a1, a1, $001c
+
+    Lb14d0:	; 800B14D0
+    800B14D0	srl    a3, t7, $18
+    800B14D4	beq    a3, zero, Lb1c70 [$800b1c70]
+    800B14D8	addu   a0, zero, zero
+    800B14DC	addiu  a1, t0, $0007
+
+    loopb14e0:	; 800B14E0
+    800B14E0	lbu    a2, $0000(a1)
+    800B14E4	mtc2   t3,ofy
+    800B14E8	mtc2   t2,h
+    800B14EC	mtc2   v1,dqa
+    800B14F0	addiu  v0, t1, $0004
+    800B14F4	lbu    t4, $0000(v0)
+    800B14F8	lbu    t5, $0001(v0)
+    800B14FC	lbu    t6, $0002(v0)
+    800B1500	mtc2   t4,l13l21
+    800B1504	mtc2   t5,l22l23
+    800B1508	mtc2   t6,l31l32
+    800B150C	nop
+    800B1510	nop
+    800B1514	gte_func29zero,r11r12
+    800B1518	mtc2   t3,ofy
+    800B151C	mtc2   t2,h
+    800B1520	mtc2   v1,dqa
+    800B1524	addiu  v0, t1, $0008
+    800B1528	lbu    t4, $0000(v0)
+    800B152C	lbu    t5, $0001(v0)
+    800B1530	lbu    t6, $0002(v0)
+    800B1534	mtc2   t4,l13l21
+    800B1538	mtc2   t5,l22l23
+    800B153C	mtc2   t6,l31l32
+    800B1540	nop
+    800B1544	nop
+    800B1548	gte_func29zero,r11r12
+    800B154C	mtc2   t3,ofy
+    800B1550	mtc2   t2,h
+    800B1554	mtc2   v1,dqa
+    800B1558	addiu  v0, t1, $000c
+    800B155C	lbu    t4, $0000(v0)
+    800B1560	lbu    t5, $0001(v0)
+    800B1564	lbu    t6, $0002(v0)
+    800B1568	mtc2   t4,l13l21
+    800B156C	mtc2   t5,l22l23
+    800B1570	mtc2   t6,l31l32
+    800B1574	nop
+    800B1578	nop
+    800B157C	gte_func29zero,r11r12
+    800B1580	addiu  v0, t0, $0004
+    800B1584	swc2   s4, $0000(v0)
+    800B1588	addiu  v0, t0, $000c
+    800B158C	swc2   s5, $0000(v0)
+    800B1590	addiu  v0, t0, $0014
+    800B1594	swc2   s6, $0000(v0)
+    800B1598	mtc2   t3,ofy
+    800B159C	mtc2   t2,h
+    800B15A0	mtc2   v1,dqa
+    800B15A4	addiu  v0, t1, $0010
+    800B15A8	lbu    t4, $0000(v0)
+    800B15AC	lbu    t5, $0001(v0)
+    800B15B0	lbu    t6, $0002(v0)
+    800B15B4	mtc2   t4,l13l21
+    800B15B8	mtc2   t5,l22l23
+    800B15BC	mtc2   t6,l31l32
+    800B15C0	nop
+    800B15C4	nop
+    800B15C8	gte_func29zero,r11r12
+    800B15CC	addiu  v0, t0, $001c
+    800B15D0	swc2   s6, $0000(v0)
+    800B15D4	addiu  a0, a0, $0001
+    800B15D8	addiu  t0, t0, $0024
+    800B15DC	addiu  t1, t1, $0014
+    800B15E0	sltu   v0, a0, a3
+    800B15E4	sb     a2, $0000(a1)
+    800B15E8	bne    v0, zero, loopb14e0 [$800b14e0]
+    800B15EC	addiu  a1, a1, $0024
+}
+else
+{
+    T7 = w[T8 + 4];
+
+    // set colour to drafts
+    number_of_tex_quad = bu[T8 + 4];
+    if (number_of_tex_quad != 0)
+    {
+        A1 = T0 + 7;
+        A0 = 0;
+        loopb1610:	; 800B1610
+            if ((w[T0 + 0] << 8) != 0)
+            {
+                800B1624	lbu    a2, $0000(a1)
+                800B1628	mtc2   t3,ofy
+                800B162C	mtc2   t2,h
+                800B1630	mtc2   v1,dqa
+                800B1634	addiu  v0, t1, $0004
+                800B1638	lbu    t4, $0000(v0)
+                800B163C	lbu    t5, $0001(v0)
+                800B1640	lbu    t6, $0002(v0)
+                800B1644	mtc2   t4,l13l21
+                800B1648	mtc2   t5,l22l23
+                800B164C	mtc2   t6,l31l32
+                800B1658	gte_func29zero,r11r12
+                800B165C	mtc2   t3,ofy
+                800B1660	mtc2   t2,h
+                800B1664	mtc2   v1,dqa
+                800B1668	addiu  v0, t1, $0008
+                800B166C	lbu    t4, $0000(v0)
+                800B1670	lbu    t5, $0001(v0)
+                800B1674	lbu    t6, $0002(v0)
+                800B1678	mtc2   t4,l13l21
+                800B167C	mtc2   t5,l22l23
+                800B1680	mtc2   t6,l31l32
+                800B168C	gte_func29zero,r11r12
+                800B1690	mtc2   t3,ofy
+                800B1694	mtc2   t2,h
+                800B1698	mtc2   v1,dqa
+                800B169C	addiu  v0, t1, $000c
+                800B16A0	lbu    t4, $0000(v0)
+                800B16A4	lbu    t5, $0001(v0)
+                800B16A8	lbu    t6, $0002(v0)
+                800B16AC	mtc2   t4,l13l21
+                800B16B0	mtc2   t5,l22l23
+                800B16B4	mtc2   t6,l31l32
+                800B16C0	gte_func29zero,r11r12
+                800B16C4	addiu  v0, t0, $0004
+                800B16C8	swc2   s4, $0000(v0)
+                800B16CC	addiu  v0, t0, $0010
+                800B16D0	swc2   s5, $0000(v0)
+                800B16D4	addiu  v0, t0, $001c
+                800B16D8	swc2   s6, $0000(v0)
+                800B16DC	mtc2   t3,ofy
+                800B16E0	mtc2   t2,h
+                800B16E4	mtc2   v1,dqa
+                800B16E8	addiu  v0, t1, $0010
+                800B16EC	lbu    t4, $0000(v0)
+                800B16F0	lbu    t5, $0001(v0)
+                800B16F4	lbu    t6, $0002(v0)
+                800B16F8	mtc2   t4,l13l21
+                800B16FC	mtc2   t5,l22l23
+                800B1700	mtc2   t6,l31l32
+                800B170C	gte_func29zero,r11r12
+                800B1710	addiu  v0, t0, $0028
+                800B1714	swc2   s6, $0000(v0)
+                800B1718	sb     a2, $0000(a1)
+            }
+
+            A0 = A0 + 1;
+            A1 = A1 + 34;
+            T0 = T0 + 34;
+            T1 = T1 + 18;
+            V0 = A0 < number_of_tex_quad;
+        800B172C	bne    v0, zero, loopb1610 [$800b1610]
+    }
+
+
+
+    800B1734	andi   v0, t7, $ff00
+    800B1738	srl    a3, v0, $08
+    800B173C	beq    a3, zero, Lb1830 [$800b1830]
+    800B1740	addu   a0, zero, zero
+    800B1744	addiu  a1, t0, $0007
+
+    loopb1748:	; 800B1748
+    800B1748	lw     v0, $0000(t0)
+    800B174C	nop
+    800B1750	sll    v0, v0, $08
+    800B1754	beq    v0, zero, Lb1818 [$800b1818]
+    800B1758	nop
+    800B175C	lbu    a2, $0000(a1)
+    800B1760	mtc2   t3,ofy
+    800B1764	mtc2   t2,h
+    800B1768	mtc2   v1,dqa
+    800B176C	addiu  v0, t1, $0004
+    800B1770	lbu    t4, $0000(v0)
+    800B1774	lbu    t5, $0001(v0)
+    800B1778	lbu    t6, $0002(v0)
+    800B177C	mtc2   t4,l13l21
+    800B1780	mtc2   t5,l22l23
+    800B1784	mtc2   t6,l31l32
+    800B1788	nop
+    800B178C	nop
+    800B1790	gte_func29zero,r11r12
+    800B1794	mtc2   t3,ofy
+    800B1798	mtc2   t2,h
+    800B179C	mtc2   v1,dqa
+    800B17A0	addiu  v0, t1, $0008
+    800B17A4	lbu    t4, $0000(v0)
+    800B17A8	lbu    t5, $0001(v0)
+    800B17AC	lbu    t6, $0002(v0)
+    800B17B0	mtc2   t4,l13l21
+    800B17B4	mtc2   t5,l22l23
+    800B17B8	mtc2   t6,l31l32
+    800B17BC	nop
+    800B17C0	nop
+    800B17C4	gte_func29zero,r11r12
+    800B17C8	mtc2   t3,ofy
+    800B17CC	mtc2   t2,h
+    800B17D0	mtc2   v1,dqa
+    800B17D4	addiu  v0, t1, $000c
+    800B17D8	lbu    t4, $0000(v0)
+    800B17DC	lbu    t5, $0001(v0)
+    800B17E0	lbu    t6, $0002(v0)
+    800B17E4	mtc2   t4,l13l21
+    800B17E8	mtc2   t5,l22l23
+    800B17EC	mtc2   t6,l31l32
+    800B17F0	nop
+    800B17F4	nop
+    800B17F8	gte_func29zero,r11r12
+    800B17FC	addiu  v0, t0, $0004
+    800B1800	swc2   s4, $0000(v0)
+    800B1804	addiu  v0, t0, $0010
+    800B1808	swc2   s5, $0000(v0)
+    800B180C	addiu  v0, t0, $001c
+    800B1810	swc2   s6, $0000(v0)
+    800B1814	sb     a2, $0000(a1)
+
+    Lb1818:	; 800B1818
+    800B1818	addiu  a0, a0, $0001
+    800B181C	addiu  a1, a1, $0028
+    800B1820	addiu  t0, t0, $0028
+    800B1824	sltu   v0, a0, a3
+    800B1828	bne    v0, zero, loopb1748 [$800b1748]
+    800B182C	addiu  t1, t1, $0014
+
+    Lb1830:	; 800B1830
+    800B1830	srl    v0, t7, $10
+    800B1834	andi   a3, v0, $00ff
+    800B1838	beq    a3, zero, Lb18b4 [$800b18b4]
+    800B183C	addu   a0, zero, zero
+    800B1840	addiu  a1, t0, $0007
+
+    loopb1844:	; 800B1844
+    800B1844	lw     v0, $0000(t0)
+    800B1848	nop
+    800B184C	sll    v0, v0, $08
+    800B1850	beq    v0, zero, Lb189c [$800b189c]
+    800B1854	nop
+    800B1858	lbu    a2, $0000(a1)
+    800B185C	mtc2   t3,ofy
+    800B1860	mtc2   t2,h
+    800B1864	mtc2   v1,dqa
+    800B1868	addiu  v0, t1, $0004
+    800B186C	lbu    t4, $0000(v0)
+    800B1870	lbu    t5, $0001(v0)
+    800B1874	lbu    t6, $0002(v0)
+    800B1878	mtc2   t4,l13l21
+    800B187C	mtc2   t5,l22l23
+    800B1880	mtc2   t6,l31l32
+    800B1884	nop
+    800B1888	nop
+    800B188C	gte_func29zero,r11r12
+    800B1890	addiu  v0, t0, $0004
+    800B1894	swc2   s6, $0000(v0)
+    800B1898	sb     a2, $0000(a1)
+
+    Lb189c:	; 800B189C
+    800B189C	addiu  a0, a0, $0001
+    800B18A0	addiu  a1, a1, $0028
+    800B18A4	addiu  t0, t0, $0028
+    800B18A8	sltu   v0, a0, a3
+    800B18AC	bne    v0, zero, loopb1844 [$800b1844]
+    800B18B0	addiu  t1, t1, $000c
+
+    Lb18b4:	; 800B18B4
+    800B18B4	srl    a3, t7, $18
+    800B18B8	beq    a3, zero, Lb1934 [$800b1934]
+    800B18BC	addu   a0, zero, zero
+    800B18C0	addiu  a1, t0, $0007
+
+    loopb18c4:	; 800B18C4
+    800B18C4	lw     v0, $0000(t0)
+    800B18C8	nop
+    800B18CC	sll    v0, v0, $08
+    800B18D0	beq    v0, zero, Lb191c [$800b191c]
+    800B18D4	nop
+    800B18D8	lbu    a2, $0000(a1)
+    800B18DC	mtc2   t3,ofy
+    800B18E0	mtc2   t2,h
+    800B18E4	mtc2   v1,dqa
+    800B18E8	addiu  v0, t1, $0004
+    800B18EC	lbu    t4, $0000(v0)
+    800B18F0	lbu    t5, $0001(v0)
+    800B18F4	lbu    t6, $0002(v0)
+    800B18F8	mtc2   t4,l13l21
+    800B18FC	mtc2   t5,l22l23
+    800B1900	mtc2   t6,l31l32
+    800B1904	nop
+    800B1908	nop
+    800B190C	gte_func29zero,r11r12
+    800B1910	addiu  v0, t0, $0004
+    800B1914	swc2   s6, $0000(v0)
+    800B1918	sb     a2, $0000(a1)
+
+    Lb191c:	; 800B191C
+    800B191C	addiu  a0, a0, $0001
+    800B1920	addiu  a1, a1, $0020
+    800B1924	addiu  t0, t0, $0020
+    800B1928	sltu   v0, a0, a3
+    800B192C	bne    v0, zero, loopb18c4 [$800b18c4]
+    800B1930	addiu  t1, t1, $000c
+
+    Lb1934:	; 800B1934
+    800B1934	lw     t7, $0008(t8)
+    800B1938	nop
+    800B193C	andi   a3, t7, $00ff
+    800B1940	beq    a3, zero, Lb19bc [$800b19bc]
+    800B1944	addu   a0, zero, zero
+    800B1948	addiu  a1, t0, $0007
+
+    loopb194c:	; 800B194C
+    800B194C	lw     v0, $0000(t0)
+    800B1950	nop
+    800B1954	sll    v0, v0, $08
+    800B1958	beq    v0, zero, Lb19a4 [$800b19a4]
+    800B195C	nop
+    800B1960	lbu    a2, $0000(a1)
+    800B1964	mtc2   t3,ofy
+    800B1968	mtc2   t2,h
+    800B196C	mtc2   v1,dqa
+    800B1970	addiu  v0, t1, $0004
+    800B1974	lbu    t4, $0000(v0)
+    800B1978	lbu    t5, $0001(v0)
+    800B197C	lbu    t6, $0002(v0)
+    800B1980	mtc2   t4,l13l21
+    800B1984	mtc2   t5,l22l23
+    800B1988	mtc2   t6,l31l32
+    800B198C	nop
+    800B1990	nop
+    800B1994	gte_func29zero,r11r12
+    800B1998	addiu  v0, t0, $0004
+    800B199C	swc2   s6, $0000(v0)
+    800B19A0	sb     a2, $0000(a1)
+
+    Lb19a4:	; 800B19A4
+    800B19A4	addiu  a0, a0, $0001
+    800B19A8	addiu  a1, a1, $0014
+    800B19AC	addiu  t0, t0, $0014
+    800B19B0	sltu   v0, a0, a3
+    800B19B4	bne    v0, zero, loopb194c [$800b194c]
+    800B19B8	addiu  t1, t1, $0008
+
+    Lb19bc:	; 800B19BC
+    800B19BC	andi   v0, t7, $ff00
+    800B19C0	srl    a3, v0, $08
+    800B19C4	beq    a3, zero, Lb1a40 [$800b1a40]
+    800B19C8	addu   a0, zero, zero
+    800B19CC	addiu  a1, t0, $0007
+
+    loopb19d0:	; 800B19D0
+    800B19D0	lw     v0, $0000(t0)
+    800B19D4	nop
+    800B19D8	sll    v0, v0, $08
+    800B19DC	beq    v0, zero, Lb1a28 [$800b1a28]
+    800B19E0	nop
+    800B19E4	lbu    a2, $0000(a1)
+    800B19E8	mtc2   t3,ofy
+    800B19EC	mtc2   t2,h
+    800B19F0	mtc2   v1,dqa
+    800B19F4	addiu  v0, t1, $0004
+    800B19F8	lbu    t4, $0000(v0)
+    800B19FC	lbu    t5, $0001(v0)
+    800B1A00	lbu    t6, $0002(v0)
+    800B1A04	mtc2   t4,l13l21
+    800B1A08	mtc2   t5,l22l23
+    800B1A0C	mtc2   t6,l31l32
+    800B1A10	nop
+    800B1A14	nop
+    800B1A18	gte_func29zero,r11r12
+    800B1A1C	addiu  v0, t0, $0004
+    800B1A20	swc2   s6, $0000(v0)
+    800B1A24	sb     a2, $0000(a1)
+
+    Lb1a28:	; 800B1A28
+    800B1A28	addiu  a0, a0, $0001
+    800B1A2C	addiu  a1, a1, $0018
+    800B1A30	addiu  t0, t0, $0018
+    800B1A34	sltu   v0, a0, a3
+    800B1A38	bne    v0, zero, loopb19d0 [$800b19d0]
+    800B1A3C	addiu  t1, t1, $0008
+
+    Lb1a40:	; 800B1A40
+    800B1A40	srl    v0, t7, $10
+    800B1A44	andi   a3, v0, $00ff
+    800B1A48	beq    a3, zero, Lb1b3c [$800b1b3c]
+    800B1A4C	addu   a0, zero, zero
+    800B1A50	addiu  a1, t0, $0007
+
+    loopb1a54:	; 800B1A54
+    800B1A54	lw     v0, $0000(t0)
+    800B1A58	nop
+    800B1A5C	sll    v0, v0, $08
+    800B1A60	beq    v0, zero, Lb1b24 [$800b1b24]
+    800B1A64	nop
+    800B1A68	lbu    a2, $0000(a1)
+    800B1A6C	mtc2   t3,ofy
+    800B1A70	mtc2   t2,h
+    800B1A74	mtc2   v1,dqa
+    800B1A78	addiu  v0, t1, $0004
+    800B1A7C	lbu    t4, $0000(v0)
+    800B1A80	lbu    t5, $0001(v0)
+    800B1A84	lbu    t6, $0002(v0)
+    800B1A88	mtc2   t4,l13l21
+    800B1A8C	mtc2   t5,l22l23
+    800B1A90	mtc2   t6,l31l32
+    800B1A94	nop
+    800B1A98	nop
+    800B1A9C	gte_func29zero,r11r12
+    800B1AA0	mtc2   t3,ofy
+    800B1AA4	mtc2   t2,h
+    800B1AA8	mtc2   v1,dqa
+    800B1AAC	addiu  v0, t1, $0008
+    800B1AB0	lbu    t4, $0000(v0)
+    800B1AB4	lbu    t5, $0001(v0)
+    800B1AB8	lbu    t6, $0002(v0)
+    800B1ABC	mtc2   t4,l13l21
+    800B1AC0	mtc2   t5,l22l23
+    800B1AC4	mtc2   t6,l31l32
+    800B1AC8	nop
+    800B1ACC	nop
+    800B1AD0	gte_func29zero,r11r12
+    800B1AD4	mtc2   t3,ofy
+    800B1AD8	mtc2   t2,h
+    800B1ADC	mtc2   v1,dqa
+    800B1AE0	addiu  v0, t1, $000c
+    800B1AE4	lbu    t4, $0000(v0)
+    800B1AE8	lbu    t5, $0001(v0)
+    800B1AEC	lbu    t6, $0002(v0)
+    800B1AF0	mtc2   t4,l13l21
+    800B1AF4	mtc2   t5,l22l23
+    800B1AF8	mtc2   t6,l31l32
+    800B1AFC	nop
+    800B1B00	nop
+    800B1B04	gte_func29zero,r11r12
+    800B1B08	addiu  v0, t0, $0004
+    800B1B0C	swc2   s4, $0000(v0)
+    800B1B10	addiu  v0, t0, $000c
+    800B1B14	swc2   s5, $0000(v0)
+    800B1B18	addiu  v0, t0, $0014
+    800B1B1C	swc2   s6, $0000(v0)
+    800B1B20	sb     a2, $0000(a1)
+
+    Lb1b24:	; 800B1B24
+    800B1B24	addiu  a0, a0, $0001
+    800B1B28	addiu  a1, a1, $001c
+    800B1B2C	addiu  t0, t0, $001c
+    800B1B30	sltu   v0, a0, a3
+    800B1B34	bne    v0, zero, loopb1a54 [$800b1a54]
+    800B1B38	addiu  t1, t1, $0010
+
+    Lb1b3c:	; 800B1B3C
+    800B1B3C	srl    a3, t7, $18
+    800B1B40	beq    a3, zero, Lb1c70 [$800b1c70]
+    800B1B44	addu   a0, zero, zero
+    800B1B48	addiu  a1, t0, $0007
+
+    loopb1b4c:	; 800B1B4C
+    800B1B4C	lw     v0, $0000(t0)
+    800B1B50	nop
+    800B1B54	sll    v0, v0, $08
+    800B1B58	beq    v0, zero, Lb1c58 [$800b1c58]
+    800B1B5C	nop
+    800B1B60	lbu    a2, $0000(a1)
+    800B1B64	mtc2   t3,ofy
+    800B1B68	mtc2   t2,h
+    800B1B6C	mtc2   v1,dqa
+    800B1B70	addiu  v0, t1, $0004
+    800B1B74	lbu    t4, $0000(v0)
+    800B1B78	lbu    t5, $0001(v0)
+    800B1B7C	lbu    t6, $0002(v0)
+    800B1B80	mtc2   t4,l13l21
+    800B1B84	mtc2   t5,l22l23
+    800B1B88	mtc2   t6,l31l32
+    800B1B8C	nop
+    800B1B90	nop
+    800B1B94	gte_func29zero,r11r12
+    800B1B98	mtc2   t3,ofy
+    800B1B9C	mtc2   t2,h
+    800B1BA0	mtc2   v1,dqa
+    800B1BA4	addiu  v0, t1, $0008
+    800B1BA8	lbu    t4, $0000(v0)
+
+    Lb1bac:	; 800B1BAC
+    800B1BAC	lbu    t5, $0001(v0)
+    800B1BB0	lbu    t6, $0002(v0)
+    800B1BB4	mtc2   t4,l13l21
+    800B1BB8	mtc2   t5,l22l23
+    800B1BBC	mtc2   t6,l31l32
+    800B1BC0	nop
+    800B1BC4	nop
+    800B1BC8	gte_func29zero,r11r12
+    800B1BCC	mtc2   t3,ofy
+    800B1BD0	mtc2   t2,h
+    800B1BD4	mtc2   v1,dqa
+    800B1BD8	addiu  v0, t1, $000c
+    800B1BDC	lbu    t4, $0000(v0)
+    800B1BE0	lbu    t5, $0001(v0)
+    800B1BE4	lbu    t6, $0002(v0)
+    800B1BE8	mtc2   t4,l13l21
+    800B1BEC	mtc2   t5,l22l23
+    800B1BF0	mtc2   t6,l31l32
+    800B1BF4	nop
+    800B1BF8	nop
+    800B1BFC	gte_func29zero,r11r12
+    800B1C00	addiu  v0, t0, $0004
+    800B1C04	swc2   s4, $0000(v0)
+    800B1C08	addiu  v0, t0, $000c
+    800B1C0C	swc2   s5, $0000(v0)
+    800B1C10	addiu  v0, t0, $0014
+    800B1C14	swc2   s6, $0000(v0)
+    800B1C18	mtc2   t3,ofy
+    800B1C1C	mtc2   t2,h
+    800B1C20	mtc2   v1,dqa
+    800B1C24	addiu  v0, t1, $0010
+    800B1C28	lbu    t4, $0000(v0)
+    800B1C2C	lbu    t5, $0001(v0)
+    800B1C30	lbu    t6, $0002(v0)
+    800B1C34	mtc2   t4,l13l21
+    800B1C38	mtc2   t5,l22l23
+    800B1C3C	mtc2   t6,l31l32
+    800B1C40	nop
+    800B1C44	nop
+    800B1C48	gte_func29zero,r11r12
+    800B1C4C	addiu  v0, t0, $001c
+    800B1C50	swc2   s6, $0000(v0)
+    800B1C54	sb     a2, $0000(a1)
+
+    Lb1c58:	; 800B1C58
+    800B1C58	addiu  a0, a0, $0001
+    800B1C5C	addiu  a1, a1, $0024
+    800B1C60	addiu  t0, t0, $0024
+    800B1C64	sltu   v0, a0, a3
+    800B1C68	bne    v0, zero, loopb1b4c [$800b1b4c]
+    800B1C6C	addiu  t1, t1, $0014
+}
+
+Lb1c70:	; 800B1C70
+////////////////////////////////////////////////////////

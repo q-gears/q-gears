@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="src\Main.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="561" topLine="3" />
+	</File>
+	<File name="src\common\TypeDefine.h" open="0" top="0" tabpos="0">
+		<Cursor position="249" topLine="0" />
+	</File>
+	<File name="src\common\filesystem\driver\NullFileDriver.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="520" topLine="9" />
+	</File>
+	<File name="src\common\filesystem\driver\RealFileDriver.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="892" topLine="28" />
+	</File>
+	<File name="src\game\field\FieldModule.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="575" topLine="9" />
+	</File>
+	<File name="src\game\field\ScriptFile.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="11206" topLine="317" />
+	</File>
+	<File name="src\game\field\ScriptFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="600" topLine="0" />
+	</File>
+	<File name="src\game\filesystem\File.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="628" topLine="7" />
+	</File>
+</CodeBlocks_layout_file>

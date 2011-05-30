@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<field>
+    <!-- sector 1 -->
+    <script file_name="md1stin.lua" />
+    <texts>
+        <text file_name="dialogs_mission1.xml" />
+        <text file_name="receiving.xml" />
+    </texts>
+    <!-- //////// -->
+
+
+
+    <!-- sector 2 -->
+    <walk_mesh file_name="md1stin_wm.xml" />
+    <!-- //////// -->
+
+
+
+
+    <!-- sector 3 -->
+    <background file_name="md1stin_bg.xml" />
+    <!-- //////// -->
+
+
+
+
+    <!-- sector 4 -->
+    <camera position="365 -3279 27031" distance="386" matrix="0.992676 0 -0.12085 -357.660156 0.012939 0.994629 0.10498 -3281.374023 -0.119873 0.105713 -0.987061 27026.480469 0 0 0 1"/>
+    <!-- //////// -->
+
+
+
+    <!-- sector 5 -->
+    <movement rotation="31744" />
+    <screen_range max_x="256" max_y="256" min_x="-256" min_y="-256" />
+
+
+    <gateways>
+        <gateway point1="3661 353 29256" point2="3669 353 29368" position="3655 310 27432" map_id="117" direction="58" show_mark_triangle="true" />
+    </gateways>
+    <background_triggers>
+        <trigger point1="3661 353 29256" point2="3669 353 29368" group="1" index="1" behavior="5" sound_id="10" />
+    </background_triggers>
+    <mark_triangles>
+        <triangle pos="0 0 0" color="red" />
+    </mark_triangles>
+    <!-- //////// -->
+
+
+
+    <!-- sector 6 -->
+    <encounters set_active="0">
+        <set rate="128">
+            <standart>
+                <encounter rate="24" scene="301" />
+                <encounter rate="22" scene="302" />
+                <encounter rate="18" scene="303" />
+            </standart>
+
+            <special>
+                <encounter rate="4" scene="304" />
+                <encounter rate="4" scene="304" />
+            </special>
+        </set>
+    </encounters>
+    <!-- //////// -->
+
+
+
+    <!-- BSX -->
+    <model_setting>
+        <model name="Cloud" character_id="1" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+        <model name="Barret" character_id="2" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+        <model name="Biggs" character_id="21" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+        <model name="Wedge" character_id="22" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+        <model name="Jessie" character_id="20" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+        <model name="Guard1" character_id="30" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+        <model name="Guard2" character_id="30" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+        <model name="Hei1" character_id="31" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+        <model name="Hei2" character_id="31" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+        <model name="HeiAdd" character_id="31" scale="0.125" ambient="255 255 255" light1_pos="0 0 0" light1_color="255 255 255" light2_pos="0 0 0" light2_color="255 255 255" light3_pos="0 0 0" light3_color="255 255 255" />
+    </model_setting>
+    <!-- //////// -->
+</field>

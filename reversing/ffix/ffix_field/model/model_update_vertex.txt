@@ -1,0 +1,678 @@
+////////////////////////////////
+// funcb61a4
+a0=80093EB0 a1=00000000 a2=00000F9C a3=801FFF5C 
+v0=00000000 v1=00000001 at=80000000 ra=800AB874 sp=1F8003F0
+
+A2 = w[A0 + 8]; // pointer to model file
+A1 = w[A2 + 10] + A1 * 28; // pointer to objects data
+
+V1 = w[8006794c];
+V0 = w[V1 + 1c];
+V0 = hu[V0 + a];
+H = V0; // Projection plane distance
+
+number_of_bones = bu[A2 + 2];
+if (number_of_bones != 0)
+{
+    T1 = w[A0 + 20];
+    bone_id = 0;
+    vertex_id = 0;
+
+    Lb6208:	; 800B6208
+        V1 = w[A1 + 14];
+        A2 = hu[V1 + bone_id * 2];
+        if (A2 != 0)
+        {
+            V0 = w[8006794c];
+            V0 = w[V0 + 1c];
+            V0 = V0 + 18;
+
+            R11R12 = w[V0 + 18];
+            R13R21 = w[V0 + 1c];
+            R22R23 = w[V0 + 20];
+            R31R32 = w[V0 + 24];
+            R33 = w[V0 + 28];
+            TRX = w[V0 + 2c];
+            TRY = w[V0 + 30];
+            TRZ = w[V0 + 34];
+
+            IR1 = hu[T1 + bone_id * 20 + 0];
+            IR2 = hu[T1 + bone_id * 20 + 6];
+            IR3 = hu[T1 + bone_id * 20 + c];
+            gte_rtir12; // ir * rotmatrix.
+            [SP + 0] = h(IR1);
+            [SP + 6] = h(IR2);
+            [SP + c] = h(IR3);
+
+            IR1 = hu[T1 + bone_id * 20 + 2];
+            IR2 = hu[T1 + bone_id * 20 + 8];
+            IR3 = hu[T1 + bone_id * 20 + e];
+            gte_rtir12; // ir * rotmatrix.
+            [SP + 2] = h(IR1);
+            [SP + 8] = h(IR2);
+            [SP + e] = h(IR3);
+
+            IR1 = hu[T1 + bone_id * 20 + 4];
+            IR2 = hu[T1 + bone_id * 20 + a];
+            IR3 = hu[T1 + bone_id * 20 + 10];
+            gte_rtir12; // ir * rotmatrix.
+            [SP + 4] = h(IR1);
+            [SP + a] = h(IR2);
+            [SP + 10] = h(IR3);
+
+            VXY0 = (hu[T1 + bone_id * 20 + 18] << 10) | hu[T1 + bone_id * 20 + 14];
+            VZ0 = w[T1 + bone_id * 20 + 1c];
+            gte_rtv0tr; // v0 * rotmatrix + tr vector.
+            [SP + 14] = w(MAC1);
+            [SP + 18] = w(MAC2);
+            [SP + 1c] = w(MAC3);
+
+
+
+            R11R12 = w[SP + 0];
+            R13R21 = w[SP + 4];
+            R22R23 = w[SP + 8];
+            R31R32 = w[SP + c];
+            R33 = w[SP + 10];
+            TRX = w[SP + 14];
+            TRY = w[SP + 18];
+            TRZ = w[SP + 1c];
+
+            V1 = w[A1 + 18] + vertex_id * 8; // offset ot vertex block for this abject + offset ot vertex
+            T0 = 800711a8 + vertex_id * 4;
+            A3 = 80070520 + V0;
+            vertex_id = vertex_id + A2;
+
+            loopb63dc:	; 800B63DC
+                VXY0 = w[V1 + 0];
+                VZ0  = w[V1 + 4];
+                VXY1 = w[V1 + 8];
+                VZ1  = w[V1 + c];
+                VXY2 = w[V1 + 10];
+                VZ2  = w[V1 + 14];
+                gte_RTPT; // Perspective transform on 3 points.
+                [T0 + 0] = w(SXY0);
+                [T0 + 4] = w(SXY1);
+                [T0 + 8] = w(SXY2);
+                [A3 + 0] = w(SZ1);
+                [A3 + 4] = w(SZ2);
+                [A3 + 8] = w(SZ3);
+
+                V1 = V1 + 18;
+                T0 = T0 + c;
+                A3 = A3 + c;
+                A2 = A2 - 3;
+            800B641C	bgtz   a2, loopb63dc [$800b63dc]
+        }
+
+        bone_id = bone_id + 1;
+        V0 = bone_id < number_of_bones;
+    800B6428	bne    v0, zero, Lb6208 [$800b6208]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb5958
+object_id = A1;
+T8 = w[A0 + 44];
+A0 = w[A0 + 8]; // pointer to model file
+A2 = w[T8 + A1 * c + 4];
+T8 = w[A0 + 10] + A1 * 28; // pointer to object
+T3 = 800711a8; // screen coords
+T4 = 80070520; // depth
+
+800B59C4	lui    v0, $8006
+800B59C8	addiu  v0, v0, $794c
+800B59CC	lw     v0, $0000(v0)
+800B59D0	nop
+800B59D4	lw     v0, $001c(v0)
+800B59D8	nop
+800B59DC	lbu    v1, $0008(v0)
+800B59E0	addiu  v0, v0, $0010
+800B59E4	sll    v1, v1, $02
+800B59E8	addu   v0, v0, v1
+800B59EC	lw     s3, $0000(v0)
+V0 = hu[T8 + 0];
+if (V0 != 0)
+{
+    A2 = A2 + V0;
+}
+
+S3 = S3 + b[T8 + 13] * 4;
+
+A1 = w[T8 + 1c]; // pointer to mesh block
+
+number_of_quads = hu[T8 + 2]; // number of quads
+if (number_of_quads != 0)
+{
+    loopb5a18:	; 800B5A18
+        S0 = w[A1 + 0];
+        S2 = w[A1 + 4];
+        vertex1 = S0 & ffff;
+        vertex2 = S0 >> 10;
+        vertex3 = S2 & ffff;
+        vertex4 = S2 >> 10;
+
+        T5 = w[T3 + vertex1 * 4];
+        T6 = w[T3 + vertex2 * 4];
+        T7 = w[T3 + vertex3 * 4];
+
+        if ((bu[A1 + 15] & 2) == 0)
+        {
+            SXY0 = T5;
+            SXY1 = T6;
+            SXY2 = T7;
+
+            [A2 + 0] = w(09000000);
+
+            gte_NCLIP; // Normal clipping.
+            if (MAC0 <= 0)
+            {
+                continue;
+            }
+        }
+
+        [A2 + 8] = w(w[T3 + vertex1 * 4]);
+        [A2 + 10] = w(w[T3 + vertex2 * 4]);
+        [A2 + 18] = w(w[T3 + vertex3 * 4]);
+        [A2 + 20] = w(w[T3 + vertex4 * 4]);
+
+        A3 = w[T4 + vertex1 * 4] + w[T4 + vertex2 * 4] + w[T4 + vertex3 * 4] + w[T4 + vertex4 * 4];
+        A3 = A3 >> 4;
+        A3 = A3 << 2;
+        A3 = A3 + S3;
+
+        S4 = w[A3];
+        V0 = A2 << 8;
+        V0 = V0 >> 8;
+        [A2 + 0] = w(09000000 | S4);
+        [A3] = w(V0);
+
+        A2 = A2 + 28;
+        A1 = A1 + 18;
+        number_of_quads = number_of_quads - 1;
+    800B5AFC	bgtz   t2, loopb5a18 [$800b5a18]
+}
+
+
+
+T2 = hu[T8 + 4];
+if (T2 != 0)
+{
+    loopb5b10:	; 800B5B10
+        800B5B10	lw     s0, $0000(a1)
+        800B5B14	lhu    s1, $0004(a1)
+        800B5B18	andi   t9, s0, $ffff
+        800B5B1C	srl    s0, s0, $10
+        800B5B20	lbu    s5, $0012(a1)
+        800B5B24	sll    t9, t9, $02
+        800B5B28	addu   v0, t3, t9
+        800B5B2C	lw     t5, $0000(v0)
+        800B5B30	sll    s0, s0, $02
+        800B5B34	addu   v0, t3, s0
+        800B5B38	lw     t6, $0000(v0)
+        800B5B3C	sll    s1, s1, $02
+        800B5B40	addu   v0, t3, s1
+        800B5B44	andi   v1, s5, $0002
+        800B5B48	bne    v1, zero, Lb5b74 [$800b5b74]
+        800B5B4C	lw     t7, $0000(v0)
+        800B5B50	mtc2   t5,l33
+        800B5B54	mtc2   t6,rbk
+        800B5B58	mtc2   t7,gbk
+        800B5B5C	lui    s4, $0700
+        800B5B60	sw     s4, $0000(a2)
+        800B5B64	gte_func26zero,r11r12
+        800B5B68	mfc2   v0,ofx
+        800B5B6C	nop
+        800B5B70	blez   v0, Lb5bd0 [$800b5bd0]
+
+        Lb5b74:	; 800B5B74
+        800B5B74	addu   v0, t4, t9
+        800B5B78	lw     a3, $0000(v0)
+        800B5B7C	addu   v0, t4, s0
+        800B5B80	lw     t1, $0000(v0)
+        800B5B84	addu   v0, t4, s1
+        800B5B88	lw     s6, $0000(v0)
+        800B5B8C	mtc2   a3,lr3lg1
+        800B5B90	mtc2   t1,lg2lg3
+        800B5B94	mtc2   s6,lb1lb2
+        800B5B98	sw     t5, $0008(a2)
+        800B5B9C	sw     t6, $0010(a2)
+        800B5BA0	gte_func26t8,r11r12
+        800B5BA4	mfc2   a3,trz
+        800B5BA8	sw     t7, $0018(a2)
+        800B5BAC	sll    a3, a3, $02
+        800B5BB0	addu   a3, a3, s3
+        800B5BB4	lw     s4, $0000(a3)
+        800B5BB8	sll    v0, a2, $08
+        800B5BBC	srl    v0, v0, $08
+        800B5BC0	lui    at, $0700
+        800B5BC4	or     s4, s4, at
+        800B5BC8	sw     s4, $0000(a2)
+        800B5BCC	sw     v0, $0000(a3)
+
+        Lb5bd0:	; 800B5BD0
+        800B5BD0	addiu  a2, a2, $0020
+        800B5BD4	addi   t2, t2, $ffff (=-$1)
+        800B5BDC	addi   a1, a1, $0014
+    800B5BD8	bgtz   t2, loopb5b10 [$800b5b10]
+
+}
+
+
+
+T2 = hu[T8 + 6];
+if (T2 != 0)
+{
+    loopb5bf0:	; 800B5BF0
+        800B5BF0	lw     s0, $0000(a1)
+        800B5BF4	lw     s2, $0004(a1)
+        800B5BF8	andi   t9, s0, $ffff
+        800B5BFC	srl    s0, s0, $10
+        800B5C00	andi   s1, s2, $ffff
+        800B5C04	lbu    s5, $001c(a1)
+        800B5C08	sll    t9, t9, $02
+        800B5C0C	addu   v0, t3, t9
+        800B5C10	lw     t5, $0000(v0)
+        800B5C14	sll    s0, s0, $02
+        800B5C18	addu   v0, t3, s0
+        800B5C1C	lw     t6, $0000(v0)
+        800B5C20	sll    s1, s1, $02
+        800B5C24	addu   v0, t3, s1
+        800B5C28	lw     t7, $0000(v0)
+        800B5C2C	andi   v1, s5, $0002
+        800B5C30	bne    v1, zero, Lb5c5c [$800b5c5c]
+        800B5C34	srl    s2, s2, $10
+        800B5C38	mtc2   t5,l33
+        800B5C3C	mtc2   t6,rbk
+        800B5C40	mtc2   t7,gbk
+        800B5C44	lui    s4, $0c00
+        800B5C48	sw     s4, $0000(a2)
+        800B5C4C	gte_func26zero,r11r12
+        800B5C50	mfc2   v0,ofx
+        800B5C54	nop
+        800B5C58	blez   v0, Lb5ccc [$800b5ccc]
+
+        Lb5c5c:	; 800B5C5C
+        800B5C5C	sll    s2, s2, $02
+        800B5C60	addu   v0, t3, s2
+        800B5C64	lw     v0, $0000(v0)
+        800B5C68	sw     t5, $0008(a2)
+        800B5C6C	sw     t6, $0014(a2)
+        800B5C70	sw     t7, $0020(a2)
+        800B5C74	sw     v0, $002c(a2)
+        800B5C78	addu   v0, t4, t9
+        800B5C7C	lw     a3, $0000(v0)
+        800B5C80	addu   v0, t4, s0
+        800B5C84	lw     t1, $0000(v0)
+        800B5C88	addu   v0, t4, s1
+        800B5C8C	lw     s6, $0000(v0)
+        800B5C90	addu   v0, t4, s2
+        800B5C94	lw     v0, $0000(v0)
+        800B5C98	addu   a3, a3, t1
+        800B5C9C	addu   a3, a3, s6
+        800B5CA0	addu   a3, a3, v0
+        800B5CA4	srl    a3, a3, $04
+        800B5CA8	sll    a3, a3, $02
+        800B5CAC	addu   a3, a3, s3
+        800B5CB0	lw     s4, $0000(a3)
+        800B5CB4	sll    v0, a2, $08
+        800B5CB8	srl    v0, v0, $08
+        800B5CBC	lui    at, $0c00
+        800B5CC0	or     s4, s4, at
+        800B5CC4	sw     s4, $0000(a2)
+        800B5CC8	sw     v0, $0000(a3)
+
+        Lb5ccc:	; 800B5CCC
+        800B5CCC	addiu  a2, a2, $0034
+        800B5CD8	addi   a1, a1, $0020
+        800B5CD0	addi   t2, t2, $ffff (=-$1)
+    800B5CD4	bgtz   t2, loopb5bf0 [$800b5bf0]
+}
+
+
+
+T2 = hu[T8 + 8];
+if (T2 != 0)
+{
+    loopb5cec:	; 800B5CEC
+        800B5CEC	lw     s0, $0000(a1)
+        800B5CF0	lhu    s1, $0004(a1)
+        800B5CF4	andi   t9, s0, $ffff
+        800B5CF8	srl    s0, s0, $10
+        800B5CFC	lbu    s5, $000f(a1)
+        800B5D00	sll    t9, t9, $02
+        800B5D04	addu   v0, t3, t9
+        800B5D08	lw     t5, $0000(v0)
+        800B5D0C	sll    s0, s0, $02
+        800B5D10	addu   v0, t3, s0
+        800B5D14	lw     t6, $0000(v0)
+        800B5D18	sll    s1, s1, $02
+        800B5D1C	addu   v0, t3, s1
+        800B5D20	andi   v1, s5, $0002
+        800B5D24	bne    v1, zero, Lb5d50 [$800b5d50]
+        800B5D28	lw     t7, $0000(v0)
+        800B5D2C	mtc2   t5,l33
+        800B5D30	mtc2   t6,rbk
+        800B5D34	mtc2   t7,gbk
+        800B5D38	lui    s4, $0900
+        800B5D3C	sw     s4, $0000(a2)
+        800B5D40	gte_func26zero,r11r12
+        800B5D44	mfc2   v0,ofx
+        800B5D48	nop
+        800B5D4C	blez   v0, Lb5dac [$800b5dac]
+
+        Lb5d50:	; 800B5D50
+        800B5D50	addu   v0, t4, t9
+        800B5D54	lw     a3, $0000(v0)
+
+        Lb5d58:	; 800B5D58
+        800B5D58	addu   v0, t4, s0
+        800B5D5C	lw     t1, $0000(v0)
+        800B5D60	addu   v0, t4, s1
+        800B5D64	lw     s6, $0000(v0)
+        800B5D68	mtc2   a3,lr3lg1
+        800B5D6C	mtc2   t1,lg2lg3
+        800B5D70	mtc2   s6,lb1lb2
+        800B5D74	sw     t5, $0008(a2)
+        800B5D78	sw     t6, $0014(a2)
+
+        Lb5d7c:	; 800B5D7C
+        800B5D7C	gte_func26t8,r11r12
+        800B5D80	mfc2   a3,trz
+        800B5D84	sw     t7, $0020(a2)
+        800B5D88	sll    a3, a3, $02
+        800B5D8C	addu   a3, a3, s3
+        800B5D90	lw     s4, $0000(a3)
+        800B5D94	sll    v0, a2, $08
+        800B5D98	srl    v0, v0, $08
+        800B5D9C	lui    at, $0900
+        800B5DA0	or     s4, s4, at
+        800B5DA4	sw     s4, $0000(a2)
+        800B5DA8	sw     v0, $0000(a3)
+
+        Lb5dac:	; 800B5DAC
+        800B5DAC	addiu  a2, a2, $0028
+        800B5DB8	addi   a1, a1, $0018
+        800B5DB0	addi   t2, t2, $ffff (=-$1)
+    800B5DB4	bgtz   t2, loopb5cec [$800b5cec]
+
+}
+
+
+
+T2 = hu[T8 + a];
+if (T2 != 0)
+{
+    loopb5dcc:	; 800B5DCC
+        800B5DCC	lw     s0, $0000(a1)
+        800B5DD0	lw     s2, $0004(a1)
+        800B5DD4	lbu    s5, $0014(a1)
+        800B5DD8	andi   t9, s0, $ffff
+        800B5DDC	srl    s0, s0, $10
+        800B5DE0	andi   s1, s2, $ffff
+        800B5DE4	sll    t9, t9, $02
+        800B5DE8	addu   v0, t3, t9
+        800B5DEC	lw     t5, $0000(v0)
+        800B5DF0	sll    s0, s0, $02
+        800B5DF4	addu   v0, t3, s0
+        800B5DF8	lw     t6, $0000(v0)
+        800B5DFC	sll    s1, s1, $02
+        800B5E00	addu   v0, t3, s1
+        800B5E04	lw     t7, $0000(v0)
+        800B5E08	andi   v1, s5, $0002
+        800B5E0C	bne    v1, zero, Lb5e38 [$800b5e38]
+        800B5E10	srl    s2, s2, $10
+        800B5E14	mtc2   t5,l33
+        800B5E18	mtc2   t6,rbk
+        800B5E1C	mtc2   t7,gbk
+        800B5E20	lui    s4, $0800
+        800B5E24	sw     s4, $0000(a2)
+        800B5E28	gte_func26zero,r11r12
+        800B5E2C	mfc2   v0,ofx
+        800B5E30	nop
+        800B5E34	blez   v0, Lb5ea8 [$800b5ea8]
+
+        Lb5e38:	; 800B5E38
+        800B5E38	sll    s2, s2, $02
+        800B5E3C	addu   v0, t3, s2
+        800B5E40	lw     v0, $0000(v0)
+        800B5E44	sw     t5, $0008(a2)
+        800B5E48	sw     t6, $0010(a2)
+        800B5E4C	sw     t7, $0018(a2)
+        800B5E50	sw     v0, $0020(a2)
+        800B5E54	addu   v0, t4, t9
+        800B5E58	lw     a3, $0000(v0)
+        800B5E5C	addu   v0, t4, s0
+        800B5E60	lw     t1, $0000(v0)
+        800B5E64	addu   v0, t4, s1
+        800B5E68	lw     s6, $0000(v0)
+
+        Lb5e6c:	; 800B5E6C
+        800B5E6C	addu   v0, t4, s2
+        800B5E70	lw     v0, $0000(v0)
+        800B5E74	addu   a3, a3, t1
+        800B5E78	addu   a3, a3, s6
+        800B5E7C	addu   a3, a3, v0
+        800B5E80	srl    a3, a3, $04
+        800B5E84	sll    a3, a3, $02
+        800B5E88	addu   a3, a3, s3
+        800B5E8C	lw     s4, $0000(a3)
+        800B5E90	sll    v0, a2, $08
+        800B5E94	srl    v0, v0, $08
+        800B5E98	lui    at, $0800
+        800B5E9C	or     s4, s4, at
+        800B5EA0	sw     s4, $0000(a2)
+        800B5EA4	sw     v0, $0000(a3)
+
+        Lb5ea8:	; 800B5EA8
+        800B5EA8	addiu  a2, a2, $0024
+        800B5EB4	addi   a1, a1, $0018
+        800B5EAC	addi   t2, t2, $ffff (=-$1)
+    800B5EB0	bgtz   t2, loopb5dcc [$800b5dcc]
+
+}
+
+
+
+T2 = hu[T8 + c];
+if (T2 != 0)
+{
+    loopb5ec8:	; 800B5EC8
+        800B5EC8	lw     s0, $0000(a1)
+        800B5ECC	lhu    s1, $0004(a1)
+        800B5ED0	lbu    s5, $0013(a1)
+        800B5ED4	andi   t9, s0, $ffff
+        800B5ED8	srl    s0, s0, $10
+        800B5EDC	sll    t9, t9, $02
+        800B5EE0	addu   v0, t3, t9
+        800B5EE4	lw     t5, $0000(v0)
+        800B5EE8	sll    s0, s0, $02
+        800B5EEC	addu   v0, t3, s0
+        800B5EF0	lw     t6, $0000(v0)
+        800B5EF4	sll    s1, s1, $02
+        800B5EF8	addu   v0, t3, s1
+        800B5EFC	andi   v1, s5, $0002
+        800B5F00	bne    v1, zero, Lb5f2c [$800b5f2c]
+        800B5F04	lw     t7, $0000(v0)
+        800B5F08	mtc2   t5,l33
+        800B5F0C	mtc2   t6,rbk
+        800B5F10	mtc2   t7,gbk
+        800B5F14	lui    s4, $0600
+        800B5F18	sw     s4, $0000(a2)
+        800B5F1C	gte_func26zero,r11r12
+        800B5F20	mfc2   v0,ofx
+        800B5F24	nop
+        800B5F28	blez   v0, Lb5f88 [$800b5f88]
+
+        Lb5f2c:	; 800B5F2C
+        800B5F2C	addu   v0, t4, t9
+        800B5F30	lw     a3, $0000(v0)
+        800B5F34	addu   v0, t4, s0
+        800B5F38	lw     t1, $0000(v0)
+        800B5F3C	addu   v0, t4, s1
+        800B5F40	lw     s6, $0000(v0)
+        800B5F44	mtc2   a3,lr3lg1
+        800B5F48	mtc2   t1,lg2lg3
+        800B5F4C	mtc2   s6,lb1lb2
+        800B5F50	sw     t5, $0008(a2)
+        800B5F54	sw     t6, $0010(a2)
+        800B5F58	gte_func26t8,r11r12
+        800B5F5C	mfc2   a3,trz
+        800B5F60	sw     t7, $0018(a2)
+
+        Lb5f64:	; 800B5F64
+        800B5F64	sll    a3, a3, $02
+        800B5F68	addu   a3, a3, s3
+        800B5F6C	lw     s4, $0000(a3)
+        800B5F70	sll    v0, a2, $08
+        800B5F74	srl    v0, v0, $08
+        800B5F78	lui    at, $0600
+        800B5F7C	or     s4, s4, at
+        800B5F80	sw     s4, $0000(a2)
+        800B5F84	sw     v0, $0000(a3)
+
+        Lb5f88:	; 800B5F88
+        800B5F88	addiu  a2, a2, $001c
+        800B5F94	addi   a1, a1, $0014
+        800B5F8C	addi   t2, t2, $ffff (=-$1)
+    800B5F90	bgtz   t2, loopb5ec8 [$800b5ec8]
+}
+
+
+
+T2 = hu[T8 + e];
+if (T2 != 0)
+{
+    loopb5fa8:	; 800B5FA8
+        800B5FA8	lw     s0, $0000(a1)
+        800B5FAC	lw     s2, $0004(a1)
+        800B5FB0	lbu    s5, $000d(a1)
+        800B5FB4	andi   t9, s0, $ffff
+        800B5FB8	srl    s0, s0, $10
+        800B5FBC	andi   s1, s2, $ffff
+        800B5FC0	sll    t9, t9, $02
+        800B5FC4	addu   v0, t3, t9
+        800B5FC8	lw     t5, $0000(v0)
+        800B5FCC	sll    s0, s0, $02
+        800B5FD0	addu   v0, t3, s0
+        800B5FD4	lw     t6, $0000(v0)
+        800B5FD8	sll    s1, s1, $02
+        800B5FDC	addu   v0, t3, s1
+        800B5FE0	lw     t7, $0000(v0)
+        800B5FE4	andi   v1, s5, $0002
+        800B5FE8	bne    v1, zero, Lb6014 [$800b6014]
+        800B5FEC	srl    s2, s2, $10
+        800B5FF0	mtc2   t5,l33
+        800B5FF4	mtc2   t6,rbk
+        800B5FF8	mtc2   t7,gbk
+        800B5FFC	lui    s4, $0500
+        800B6000	sw     s4, $0000(a2)
+        800B6004	gte_func26zero,r11r12
+        800B6008	mfc2   v0,ofx
+        800B600C	nop
+        800B6010	blez   v0, Lb6084 [$800b6084]
+
+        Lb6014:	; 800B6014
+        800B6014	sll    s2, s2, $02
+        800B6018	addu   v0, t3, s2
+        800B601C	lw     v0, $0000(v0)
+        800B6020	sw     t5, $0008(a2)
+        800B6024	sw     t6, $000c(a2)
+        800B6028	sw     t7, $0010(a2)
+        800B602C	sw     v0, $0014(a2)
+        800B6030	addu   v0, t4, t9
+        800B6034	lw     a3, $0000(v0)
+        800B6038	addu   v0, t4, s0
+        800B603C	lw     t1, $0000(v0)
+        800B6040	addu   v0, t4, s1
+        800B6044	lw     s6, $0000(v0)
+        800B6048	addu   v0, t4, s2
+        800B604C	lw     v0, $0000(v0)
+        800B6050	addu   a3, a3, t1
+        800B6054	addu   a3, a3, s6
+        800B6058	addu   a3, a3, v0
+        800B605C	srl    a3, a3, $04
+        800B6060	sll    a3, a3, $02
+        800B6064	addu   a3, a3, s3
+        800B6068	lw     s4, $0000(a3)
+        800B606C	sll    v0, a2, $08
+        800B6070	srl    v0, v0, $08
+        800B6074	lui    at, $0500
+        800B6078	or     s4, s4, at
+        800B607C	sw     s4, $0000(a2)
+        800B6080	sw     v0, $0000(a3)
+
+        Lb6084:	; 800B6084
+        800B6084	addiu  a2, a2, $0018
+        800B6090	addi   a1, a1, $0010
+        800B6088	addi   t2, t2, $ffff (=-$1)
+    800B608C	bgtz   t2, loopb5fa8 [$800b5fa8]
+}
+
+
+
+T2 = hu[T8 + 10];
+if (T2 != 0)
+{
+    loopb60a4:	; 800B60A4
+        800B60A4	lw     s0, $0000(a1)
+        800B60A8	lhu    s1, $0004(a1)
+        800B60AC	lbu    s5, $000b(a1)
+        800B60B0	andi   t9, s0, $ffff
+        800B60B4	srl    s0, s0, $10
+        800B60B8	sll    t9, t9, $02
+        800B60BC	addu   v0, t3, t9
+        800B60C0	lw     t5, $0000(v0)
+        800B60C4	sll    s0, s0, $02
+        800B60C8	addu   v0, t3, s0
+        800B60CC	lw     t6, $0000(v0)
+        800B60D0	sll    s1, s1, $02
+        800B60D4	addu   v0, t3, s1
+        800B60D8	andi   v1, s5, $0002
+        800B60DC	bne    v1, zero, Lb6108 [$800b6108]
+        800B60E0	lw     t7, $0000(v0)
+        800B60E4	mtc2   t5,l33
+        800B60E8	mtc2   t6,rbk
+        800B60EC	mtc2   t7,gbk
+        800B60F0	lui    s4, $0400
+        800B60F4	sw     s4, $0000(a2)
+        800B60F8	gte_func26zero,r11r12
+        800B60FC	mfc2   v0,ofx
+        800B6100	nop
+        800B6104	blez   v0, Lb6164 [$800b6164]
+
+        Lb6108:	; 800B6108
+        800B6108	addu   v0, t4, t9
+        800B610C	lw     a3, $0000(v0)
+        800B6110	addu   v0, t4, s0
+        800B6114	lw     t1, $0000(v0)
+        800B6118	addu   v0, t4, s1
+        800B611C	lw     s6, $0000(v0)
+        800B6120	mtc2   a3,lr3lg1
+        800B6124	mtc2   t1,lg2lg3
+        800B6128	mtc2   s6,lb1lb2
+        800B612C	sw     t5, $0008(a2)
+        800B6130	sw     t6, $000c(a2)
+        800B6134	gte_func26t8,r11r12
+        800B6138	mfc2   a3,trz
+        800B613C	sw     t7, $0010(a2)
+        800B6140	sll    a3, a3, $02
+        800B6144	addu   a3, a3, s3
+        800B6148	lw     s4, $0000(a3)
+        800B614C	sll    v0, a2, $08
+        800B6150	srl    v0, v0, $08
+        800B6154	lui    at, $0400
+        800B6158	or     s4, s4, at
+        800B615C	sw     s4, $0000(a2)
+        800B6160	sw     v0, $0000(a3)
+
+        Lb6164:	; 800B6164
+        800B6164	addiu  a2, a2, $0014
+        800B6170	addi   a1, a1, $000c
+        800B6168	addi   t2, t2, $ffff (=-$1)
+    800B616C	bgtz   t2, loopb60a4 [$800b60a4]
+}
+////////////////////////////////

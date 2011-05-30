@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<enemies>
+    <enemy
+        id="0"
+
+        max_hp="9999"
+        current_hp="9999"
+        max_mp="999"
+        current_mp="999"
+
+        attack="255"
+        defense="255"
+        magic_attack="255"
+        magic_defense="255"
+        speed="255"
+
+        model="test_pyramid.mesh"
+
+        script="test_pyramid"
+        script_file="test_pyramid.lua"
+    >
+    </enemy>
+
+    <enemy
+        id="16"
+
+        level="2"
+
+        max_hp="30"
+        current_hp="30"
+        max_mp="0"
+        current_mp="0"
+
+        attack="6"
+        defense="2"
+        magic_attack="0"
+        magic_defense="0"
+        speed="50"
+
+        status_death="false"
+        status_death_immunity="false"
+        status_darkness="false"
+        status_darkness_immunity="false"
+
+        model="mp.mesh"
+
+        script_file="mp.lua"
+        script="mp"
+        action_idle="action_idle"
+        action_hurt="action_hurt"
+    >
+        <action attack_id="272" action="action_machine_gun" />
+        <action attack_id="273" action="action_tonfa" />
+    </enemy>
+
+    <enemy
+        id="17"
+
+        level="3"
+
+        max_hp="42"
+        current_hp="42"
+        max_mp="0"
+        current_mp="0"
+
+        attack="8"
+        defense="2"
+        magic_attack="2"
+        magic_defense="1"
+        speed="64"
+
+        status_death="false"
+        status_death_immunity="false"
+        status_darkness="false"
+        status_darkness_immunity="false"
+
+        model="guard_hound.mesh"
+
+        script_file="guard_hound.lua"
+        script="guard_hound"
+        action_idle="action_idle"
+        action_hurt="action_hurt"
+    >
+        <action attack_id="274" action="action_bite" />
+        <action attack_id="275" action="action_tentacle" />
+    </enemy>
+
+    <enemy
+        id="18"
+
+        level="2"
+
+        max_hp="28"
+        current_hp="28"
+        max_mp="28"
+        current_mp="28"
+
+        attack="3"
+        defense="3"
+        magic_attack="3"
+        magic_defense="2"
+        speed="49"
+
+        status_death="false"
+        status_death_immunity="false"
+        status_darkness="false"
+        status_darkness_immunity="false"
+
+        model="mono_drive.mesh"
+
+        script_file="mono_drive.lua"
+        script="mono_drive"
+        action_idle="action_idle"
+        action_hurt="action_hurt"
+    >
+        <action attack_id="276" action="action_drilldrive" />
+        <action attack_id="27" action="action_fire" />
+    </enemy>
+
+    <enemy
+        id="19"
+
+        level="7"
+
+        max_hp="40"
+        current_hp="40"
+        max_mp="0"
+        current_mp="0"
+
+        attack="12"
+        defense="5"
+        magic_attack="2"
+        magic_defense="1"
+        speed="58"
+
+        status_death="false"
+        status_death_immunity="false"
+        status_darkness="false"
+        status_darkness_immunity="false"
+
+        model="grunt.mesh"
+
+        script_file="grunt.lua"
+        script="grunt"
+        action_idle="action_idle"
+        action_hurt="action_hurt"
+    >
+        <action attack_id="277" action="action_handclaw" />
+        <action attack_id="278" action="action_beam_gun" />
+    </enemy>
+
+    <enemy
+        id="20"
+
+        level="4"
+
+        max_hp="28"
+        current_hp="28"
+        max_mp="28"
+        current_mp="28"
+
+        attack="10"
+        defense="1"
+        magic_attack="0"
+        magic_defense="0"
+        speed="40"
+
+        status_death="false"
+        status_death_immunity="false"
+        status_darkness="false"
+        status_darkness_immunity="false"
+
+        model="1st_ray.mesh"
+
+        script_file="1st_ray.lua"
+        script="first_ray"
+        action_idle="action_idle"
+        action_hurt="action_hurt"
+    >
+        <action attack_id="279" action="action_laser_cannon" />
+    </enemy>
+
+    <enemy
+        id="21"
+
+        level="8"
+
+        max_hp="140"
+        current_hp="140"
+        max_mp="0"
+        current_mp="0"
+
+        attack="18"
+        defense="10"
+        magic_attack="0"
+        magic_defense="2"
+        speed="48"
+
+        status_death="false"
+        status_death_immunity="false"
+        status_darkness="false"
+        status_darkness_immunity="false"
+
+        model="sweeper.mesh"
+
+        script_file="sweeper.lua"
+        script="sweeper"
+        action_idle="action_idle"
+        action_hurt="action_hurt"
+    >
+        <action attack_id="272" action="action_machine_gun" />
+        <action attack_id="280" action="action_w_machine_gun" />
+        <action attack_id="281" action="action_smoke_shot" />
+    </enemy>
+
+    <enemy
+        id="22"
+
+        level="12"
+
+        max_hp="800"
+        current_hp="800"
+        max_mp="0"
+        current_mp="0"
+
+        attack="30"
+        defense="20"
+        magic_attack="15"
+        magic_defense="255"
+        speed="60"
+
+        status_death="false"
+        status_death_immunity="false"
+        status_darkness="false"
+        status_darkness_immunity="false"
+
+        model="guard_scorpion.mesh"
+
+        script_file="guard_scorpion.lua"
+        script="guard_scorpion"
+        action_idle="action_idle_stance_0"
+        action_hurt="action_hurt_stance_0"
+    >
+        <action attack_id="282" action="action_rifle_1" />
+        <action attack_id="283" action="action_scorpion_tail" />
+        <action attack_id="284" action="action_search_scope" />
+        <action attack_id="285" action="action_rifle_2" />
+        <action attack_id="286" action="action_tail_laser" />
+        <action attack_id="287" action="action_go_to_stance_1" />
+        <action attack_id="288" action="action_go_to_stance_0" />
+    </enemy>
+</enemies>

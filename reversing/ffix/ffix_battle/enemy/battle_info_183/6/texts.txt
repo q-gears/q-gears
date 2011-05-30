@@ -1,0 +1,20 @@
+00: Masked Man
+01: Baku's Mask (Right)
+02: Baku's Mask (Left)
+03: Get some!
+04: Gwahaha!
+05: Oww!
+06: ARGHHH
+07: No action
+08: Mask Jump
+09: No action
+0a: Mask Jump
+0b: Think fast!
+0c: UGHUUA!
+0d: Oh, my head!
+0e: Go easy, you Guys!
+0f: Ouch!
+10: Annihilated...
+11: Back attack!
+12: Gained more Attack Pwr!
+13: Masked Man<new line> “Use a Potion to restore HP!”

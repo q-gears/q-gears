@@ -1,0 +1,75 @@
+material console/background
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture console.png
+                filtering point point none
+            }
+        }
+    }
+}
+
+
+
+material field/dialog
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            alpha_rejection greater 0
+            cull_hardware none
+
+            texture_unit
+            {
+                texture system.png
+                filtering point point none
+            }
+        }
+    }
+}
+
+
+
+material fade_colour_blend
+{
+    technique
+    {
+        pass
+        {
+            scene_blend colour_blend 
+            cull_hardware none
+
+            texture_unit
+            {
+                texture system.png
+                filtering point point none
+            }
+        }
+    }
+}
+
+
+
+material fade_modulate
+{
+    technique
+    {
+        pass
+        {
+            scene_blend modulate
+            cull_hardware none
+
+            texture_unit
+            {
+                texture system.png
+                filtering point point none
+            }
+        }
+    }
+}

@@ -1,0 +1,336 @@
+﻿////////////////////////////////
+// system_execute_AKAO
+S3 = 0;
+V1 = hu[8009a000];
+
+[80062f8c] = w(1);
+
+if (V1 == 10 || V1 == 14 || V1 == 15 || V1 == 18 || V1 = 19)
+{
+    akao_offset = w[8009a004];
+    if (bu[akao_offset + 0] != 41 && bu[akao_offset + 1] != 4b && bu[akao_offset + 2] != 41 && bu[akao_offset + 3] != 4f)
+    {
+        S3 = -1;
+    }
+    else
+    {
+        S1 = hu[akao_offset + 4]; // id
+        S2 = hu[akao_offset + 6]; // length
+
+        if (hu[8009a14e] == S1)
+        {
+            S3 = 1;
+        }
+        else
+        {
+            A0 = hu[akao_offset + 8]; // reverb_mode
+            func29af0;
+
+            A0 = SP + 10;
+            func2da30;
+
+            V0 = w[SP + 10];
+            [V0 + 0] = w(w[8009a000]);
+            [V0 + 4] = w(akao_offset + 16);
+            [V0 + 8] = w(S2);
+            [V0 + c] = w(S1);
+            [V0 + 10] = w(w[8009a008]);
+        }
+    }
+}
+else if (V1 == 24)
+{
+    A0 = SP + 10;
+    8002DC3C	jal    func2da30 [$8002da30]
+
+    8002DC44	lw     v1, $0010(sp)
+    8002DC48	lui    v0, $800a
+    8002DC4C	lw     v0, $a004(v0)
+    8002DC50	nop
+    8002DC54	sw     v0, $0004(v1)
+    8002DC58	lui    a0, $800a
+    8002DC5C	lw     a0, $a008(a0)
+    8002DC64	ori    v0, zero, $0020
+    8002DE14	sh     v0, $0000(v1)
+    8002DE1C	sw     a0, $0008(v1)
+}
+else if (V1 == 25)
+{
+    8002DC68	jal    func2da30 [$8002da30]
+    8002DC6C	addiu  a0, sp, $0010
+    8002DC70	lw     a0, $0010(sp)
+    8002DC74	lui    v0, $800a
+    8002DC78	lw     v0, $a004(v0)
+    8002DC7C	nop
+    8002DC80	sw     v0, $0004(a0)
+    8002DC84	lui    v0, $800a
+    8002DC88	lw     v0, $a008(v0)
+    8002DC8C	nop
+    8002DC90	sw     v0, $0008(a0)
+    8002DC94	lui    v0, $800a
+    8002DC98	lw     v0, $a008(v0)
+    8002DC9C	ori    v1, zero, $0021
+    8002DCA0	sh     v1, $0000(a0)
+    8002DCA4	addiu  v0, v0, $0001
+    8002DCAC	sw     v0, $000c(a0)
+}
+else if (V1 == 26)
+{
+    8002DCB0	jal    func2da30 [$8002da30]
+    8002DCB4	addiu  a0, sp, $0010
+    8002DCB8	lw     a0, $0010(sp)
+    8002DCBC	lui    v0, $800a
+    8002DCC0	lw     v0, $a004(v0)
+    8002DCC4	nop
+    8002DCC8	sw     v0, $0004(a0)
+    8002DCCC	lui    v0, $800a
+    8002DCD0	lw     v0, $a008(v0)
+    8002DCD4	nop
+    8002DCD8	sw     v0, $0008(a0)
+    8002DCDC	lui    v0, $800a
+    8002DCE0	lw     v0, $a008(v0)
+    8002DCE4	nop
+    8002DCE8	addiu  v0, v0, $0001
+    8002DCEC	sw     v0, $000c(a0)
+    8002DCF0	lui    v0, $800a
+    8002DCF4	lw     v0, $a008(v0)
+    8002DCF8	ori    v1, zero, $0022
+    8002DCFC	sh     v1, $0000(a0)
+    8002DD00	addiu  v0, v0, $0002
+    8002DD08	sw     v0, $0010(a0)
+}
+else if (V1 == 27)
+{
+    8002DD0C	jal    func2da30 [$8002da30]
+    8002DD10	addiu  a0, sp, $0010
+    8002DD14	lw     a0, $0010(sp)
+    8002DD18	lui    v0, $800a
+    8002DD1C	lw     v0, $a004(v0)
+    8002DD20	nop
+    8002DD24	sw     v0, $0004(a0)
+    8002DD28	lui    v0, $800a
+    8002DD2C	lw     v0, $a008(v0)
+    8002DD30	nop
+    8002DD34	sw     v0, $0008(a0)
+    8002DD38	lui    v0, $800a
+    8002DD3C	lw     v0, $a008(v0)
+    8002DD40	nop
+    8002DD44	addiu  v0, v0, $0001
+    8002DD48	sw     v0, $000c(a0)
+    8002DD4C	lui    v0, $800a
+    8002DD50	lw     v0, $a008(v0)
+    8002DD54	nop
+    8002DD58	addiu  v0, v0, $0002
+    8002DD5C	sw     v0, $0010(a0)
+    8002DD60	lui    v0, $800a
+    8002DD64	lw     v0, $a008(v0)
+    8002DD68	ori    v1, zero, $0023
+    8002DD6C	sh     v1, $0000(a0)
+    8002DD70	addiu  v0, v0, $0003
+    8002DD78	sw     v0, $0014(a0)
+}
+else if (V1 == 98)
+{
+    8002DEC8	jal    func2da30 [$8002da30]
+    8002DECC	addiu  a0, sp, $0010
+    8002DED0	addiu  a0, sp, $0010
+    8002DED4	lw     v1, $0010(sp)
+    8002DED8	ori    v0, zero, $009a
+    8002DEDC	jal    func2da30 [$8002da30]
+    8002DEE0	sh     v0, $0000(v1)
+    8002DEE4	lw     v1, $0010(sp)
+    8002DEEC	ori    v0, zero, $009c
+    8002DF58	sh     v0, $0000(v1)
+}
+else if (V1 == 99)
+{
+    8002DEA0	jal    func2da30 [$8002da30]
+    8002DEA4	addiu  a0, sp, $0010
+    8002DEA8	addiu  a0, sp, $0010
+    8002DEAC	lw     v1, $0010(sp)
+    8002DEB0	ori    v0, zero, $009b
+    8002DEB4	jal    func2da30 [$8002da30]
+    8002DEB8	sh     v0, $0000(v1)
+    8002DEBC	lw     v1, $0010(sp)
+    8002DEC4	ori    v0, zero, $009d
+    8002DF58	sh     v0, $0000(v1)
+}
+else if (V1 == d8)
+{
+    8002DD7C	jal    func2da30 [$8002da30]
+    8002DD80	addiu  a0, sp, $0010
+    8002DD84	lw     v1, $0010(sp)
+    8002DD88	lui    v0, $800a
+    8002DD8C	lw     v0, $a004(v0)
+    8002DD90	addiu  a0, sp, $0010
+    8002DD94	sw     v0, $0004(v1)
+    8002DD98	ori    v0, zero, $00d0
+    8002DD9C	jal    func2da30 [$8002da30]
+    8002DDA0	sh     v0, $0000(v1)
+    8002DDA4	lw     v1, $0010(sp)
+    8002DDA8	lui    v0, $800a
+    8002DDAC	lw     v0, $a004(v0)
+    8002DDB0	nop
+    8002DDB4	sw     v0, $0004(v1)
+    8002DDBC	ori    v0, zero, $00d4
+    8002DF58	sh     v0, $0000(v1)
+}
+if (V1 == d9)
+{
+    8002DDC0	jal    func2da30 [$8002da30]
+    8002DDC4	addiu  a0, sp, $0010
+    8002DDC8	lw     v1, $0010(sp)
+    8002DDCC	lui    v0, $800a
+    8002DDD0	lw     v0, $a004(v0)
+    8002DDD4	addiu  a0, sp, $0010
+    8002DDD8	sw     v0, $0004(v1)
+    8002DDDC	lui    a1, $800a
+    8002DDE0	lw     a1, $a008(a1)
+    8002DDE4	ori    v0, zero, $00d1
+    8002DDE8	sh     v0, $0000(v1)
+    8002DDEC	jal    func2da30 [$8002da30]
+    8002DDF0	sw     a1, $0008(v1)
+    8002DDF4	lw     v1, $0010(sp)
+    8002DDF8	lui    v0, $800a
+    8002DDFC	lw     v0, $a004(v0)
+    8002DE00	nop
+    8002DE04	sw     v0, $0004(v1)
+    8002DE08	lui    a0, $800a
+    8002DE0C	lw     a0, $a008(a0)
+    8002DE10	ori    v0, zero, $00d5
+    8002DE14	sh     v0, $0000(v1)
+    8002DE1C	sw     a0, $0008(v1)
+}
+else if (V1 == da)
+{
+    8002DE20	jal    func2da30 [$8002da30]
+    8002DE24	addiu  a0, sp, $0010
+    8002DE28	lw     v1, $0010(sp)
+    8002DE2C	lui    v0, $800a
+    8002DE30	lw     v0, $a004(v0)
+    8002DE34	nop
+    8002DE38	sw     v0, $0004(v1)
+    8002DE3C	lui    v0, $800a
+    8002DE40	lw     v0, $a008(v0)
+    8002DE44	addiu  a0, sp, $0010
+    8002DE48	sw     v0, $0008(v1)
+    8002DE4C	lui    a1, $800a
+    8002DE50	lw     a1, $a00c(a1)
+    8002DE54	ori    v0, zero, $00d2
+    8002DE58	sh     v0, $0000(v1)
+    8002DE5C	jal    func2da30 [$8002da30]
+    8002DE60	sw     a1, $000c(v1)
+    8002DE64	lw     v1, $0010(sp)
+    8002DE68	lui    v0, $800a
+    8002DE6C	lw     v0, $a004(v0)
+    8002DE70	nop
+    8002DE74	sw     v0, $0004(v1)
+    8002DE78	lui    v0, $800a
+    8002DE7C	lw     v0, $a008(v0)
+    8002DE80	nop
+    8002DE84	sw     v0, $0008(v1)
+    8002DE88	lui    a0, $800a
+    8002DE8C	lw     a0, $a00c(a0)
+    8002DE90	ori    v0, zero, $00d6
+    8002DE94	sh     v0, $0000(v1)
+    8002DE9C	sw     a0, $000c(v1)
+}
+else
+{
+    A0 = SP + 10;
+    func2da30;
+
+    V1 = w[SP + 10];
+    [V1 + 0] = w(w[8009a000]);
+    [V1 + 4] = w(w[8009a004]);
+    [V1 + 8] = w(w[8009a008]);
+    [V1 + c] = w(w[8009a00c]);
+    [V1 + 10] = w(w[8009a010]);
+    [V1 + 14] = w(w[8009a014]);
+}
+
+[80062f8c] = w(0);
+return S3;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2da30
+[A0] = w(80081dc8 + w[80063010] * 24);
+[80063010] = w(w[80063010] + 1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func29af0
+S0 = A0;
+80029B00	jal    func29a50 [$80029a50]
+
+S1 = 8009c564;
+
+A0 = S1;
+80029B10	jal    func387fc [$800387fc]
+
+V0 = w[8009c568];
+if (V0 != S0)
+{
+    80029B2C	lui    at, $800a
+    80029B30	sw     s0, $a140(at)
+    80029B34	jal    func37c40 [$80037c40]
+    80029B38	addu   a0, zero, zero
+    80029B3C	addu   a0, s1, zero
+    80029B40	ori    v0, s0, $0100
+    80029B44	lui    at, $800a
+    80029B48	sw     v0, $c568(at)
+    80029B4C	ori    v0, zero, $0001
+    80029B50	jal    func37e1c [$80037e1c]
+    80029B54	sw     v0, $0000(a0)
+    80029B58	jal    func37c40 [$80037c40]
+    80029B5C	ori    a0, zero, $0001
+}
+////////////////////////////////
+
+
+////////////////////////////////
+// func29a50
+80029A58	jal    func38fec [$80038fec]
+80029A5C	addu   a0, zero, zero
+80029A60	jal    func38a84 [$80038a84]
+80029A64	addu   a0, zero, zero
+80029A68	jal    func38c04 [$80038c04]
+80029A6C	addu   a0, zero, zero
+80029A70	lui    a1, $8006
+80029A74	lw     a1, $2f00(a1)
+80029A78	jal    func38c6c [$80038c6c]
+80029A7C	addu   a0, zero, zero
+80029A80	lui    v1, $8006
+80029A84	lw     v1, $2f00(v1)
+80029A88	lui    v0, $0001
+80029A8C	and    v0, v1, v0
+80029A90	beq    v0, zero, L29aa4 [$80029aa4]
+80029A94	lui    v0, $0001
+80029A98	ori    v0, v0, $ff93
+80029A9C	lui    at, $8009
+80029AA0	sw     v0, $7768(at)
+
+L29aa4:	; 80029AA4
+80029AA4	lui    v0, $0002
+80029AA8	and    v0, v1, v0
+80029AAC	beq    v0, zero, L29ac0 [$80029ac0]
+80029AB0	lui    v0, $0001
+80029AB4	ori    v0, v0, $ff93
+80029AB8	lui    at, $8009
+80029ABC	sw     v0, $7870(at)
+
+L29ac0:	; 80029AC0
+80029AC0	lui    at, $8006
+80029AC4	sw     zero, $2f00(at)
+80029AC8	jal    func30038 [$80030038]
+80029ACC	nop
+80029AD0	jal    func30148 [$80030148]
+80029AD4	nop
+80029AD8	jal    func2ff4c [$8002ff4c]
+
+////////////////////////////////

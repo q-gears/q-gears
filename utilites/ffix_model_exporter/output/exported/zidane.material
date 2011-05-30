@@ -1,0 +1,13 @@
+
+material model/field/zidane
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.0 1.0 1.0
+            cull_hardware none
+            polygon_mode wireframe
+        }
+    }
+}

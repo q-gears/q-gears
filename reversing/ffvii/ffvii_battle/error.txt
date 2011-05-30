@@ -1,0 +1,18 @@
+﻿func155a4
+0x28 - w[800f3948] >= 0x40 (struct overflow)
+
+
+
+A0 = 1;
+func43938;
+A0 = 61;
+A1 = 3;
+func429e0;
+if we cant find free slot for camera
+
+A0 = 1;
+func43938;
+A0 = 61;
+A1 = 4;
+func429e0;
+if we cant find free slot for effect

@@ -1,0 +1,34 @@
+// triangle monochrome textured packet
++00 [][][]
++03 []       store 07 here.
++04 []       R.
++05 []       G.
++06 []       B.
++07 []       store control byte here.
++08 [][][][] place for vertex 1
++0c [][]     texture UV for vertex 1.
++0e [][]     CLUT.
++10 [][][][] place for vertex 2
++14 [][]     texture UV for vertex 2.
++16 [][]     texture page info.
++18 [][][][] place for vertex 3
++1c [][]     texture UV for vertex 3.
+
+
+
+// quad monochrome textured packet
++00 [][][]
++03 []       store 09 here.
++04 []       R.
++05 []       G.
++06 []       B.
++07 []       store control byte here.
++08 [][][][] place for vertex 1
++0c [][]     texture UV for vertex 1.
++0e [][]     CLUT.
++10 [][][][] place for vertex 2
++14 [][]     texture UV for vertex 2.
++16 [][]     texture page info.
++18 [][][][] place for vertex 3
++1c [][]     texture UV for vertex 3.
++24 [][]     texture UV for vertex 4.

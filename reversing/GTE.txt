@@ -1,0 +1,145 @@
+﻿SET REGISTERS
+// data registers
+0   mtc2 GPR, r11r12    - VXY0      r/w     VY0     VX0     1,3,12 / 1,15,0 Vector 0 X and Y
+1   mtc2 GPR, r13r21    - VZ0       r/w     0       VZ0     1,3,12 / 1,15,0 Vector 0 Z
+2   mtc2 GPR, r22r23    - VXY1      r/w     VY1     VX1     1,3,12 / 1,15,0 Vector 1 X and Y
+3   mtc2 GPR, r31r32    - VZ1       r/w     0       VZ1     1,3,12 / 1,15,0 Vector 1 Z
+4   mtc2 GPR, r33       - VXY2      r/w     VY2     VX2     1,3,12 / 1,15,0 Vector 2 X and Y
+5   mtc2 GPR, trx       - VZ2       r/w     0       VZ2     1,3,12 / 1,15,0 Vector 2 Z
+6   mtc2 GPR, try       - RGB       r/w     Code, RG, B     8 bits for each RGB value. Code is passed, but not used in calculation
+8   mtc2 GPR, l11l12    - IR0       r/w     Sign    IR0     1,3,12          Intermediate value 0. Format may differ
+9   mtc2 GPR, l13l21    - IR1       r/w     Sign    IR1     1,3,12          Intermediate value 1. Format may differ
+10  mtc2 GPR, l22l23    - IR2       r/w     Sign    IR2     1,3,12          Intermediate value 2. Format may differ
+11  mtc2 GPR, l31l32    - IR3       r/w     Sign    IR3     1,3,12          Intermediate value 3. Format may differ
+12  mtc2 GPR, l33       - SXY0      r/w     SX0     SY0     1,15,0          Screen XY coordinate FIFO (Note1)
+13  mtc2 GPR, rbk       - SXY1      r/w     SX1     SY1     1,15,0          Screen XY coordinate FIFO
+14  mtc2 GPR, gbk       - SXY2      r/w     SX2     SY2     1,15,0          Screen XY coordinate FIFO
+22  mtc2 GPR, gfc       - RGB2      r/w     CD2, B2G0, R2   8 bits each CD2 is the bit pattern of currently executed function
+25  mtc2 GPR, ofy       - MAC1      r/w     MAC1            1,31,0          Sum of products value 1
+26  mtc2 GPR, h         - MAC2      r/w     MAC2            1,31,0          Sum of products value 1
+27  mtc2 GPR, dqa       - MAC3      r/w     MAC3            1,31,0          Sum of products value 1
+30  mtc2 GPR, zsf4      - LZCS      w       LZCS            1,31,0          Leading zero count source data. (Note 4)
+
+// data registers
+0   lwc2 zero, MEMORY   - VXY0      r/w     VY0     VX0     1,3,12 / 1,15,0 Vector 0 X and Y
+1   lwc2 at, MEMORY     - VZ0       r/w     0       VZ0     1,3,12 / 1,15,0 Vector 0 Z
+2   lwc2 v0, MEMORY     - VXY1      r/w     VY1     VX1     1,3,12 / 1,15,0 Vector 1 X and Y
+3   lwc2 v1, MEMORY     - VZ1       r/w     0       VZ1     1,3,12 / 1,15,0 Vector 1 Z
+4   lwc2 a0, MEMORY     - VXY2      r/w     VY2     VX2     1,3,12 / 1,15,0 Vector 2 X and Y
+5   lwc2 a1, MEMORY     - VZ2       r/w     0       VZ2     1,3,12 / 1,15,0 Vector 2 Z
+6   lwc2 a2, MEMORY     - RGB       r/w     Code, RG, B     8 bits for each RGB value. Code is passed, but not used in calculation
+9   lwc2 t1, MEMORY     - IR1       r/w     Sign    IR3     1,3,12          Intermediate value 1. Format may differ
+10  lwc2 t2, MEMORY     - IR2       r/w     Sign    IR3     1,3,12          Intermediate value 2. Format may differ
+11  lwc2 t3, MEMORY     - IR3       r/w     Sign    IR3     1,3,12          Intermediate value 3. Format may differ
+17  lwc2 s1, MEMORY     - SZ1       r/w     0       SZ1     0,16,0          Screen Z FIFO
+18  lwc2 s2, MEMORY     - SZ2       r/w     0       SZ2     0,16,0          Screen Z FIFO
+19  lwc2 s3, MEMORY     - SZ3       r/w     0       SZ3     0,16,0          Screen Z FIFO
+20  lwc2 s4, MEMORY     - RGB0      r/w     CD0, B0G0, R0   8 bits each Characteristic color FIFO(Note 1)
+21  lwc2 s5, MEMORY     - RGB1      r/w     CD1, B1G1, R1   8 bits eachCharacteristic color FIFO
+
+// control registers
+0   ctc2 GPR, vxy0      - R11R12    Rotation matrix elements 1 to 1, 1 to 2
+1   ctc2 GPR, vz0       - R13R21    Rotation matrix elements 1 to 3, 2 to 1
+2   ctc2 GPR, vxy1      - R22R23    Rotation matrix elements 2 to 2, 2 to 3
+3   ctc2 GPR, vz1       - R31R32    Rotation matrix elements 3 to 1, 3 to 2
+4   ctc2 GPR, vxy2      - R33       Rotation matrix elements 3 to 3
+5   ctc2 GPR, vz2       - TRX       Translation vector X
+6   ctc2 GPR, rgb       - TRY       Translation vector Y
+7   ctc2 GPR, otz       - TRZ       Translation vector Z
+8   ctc2 GPR, ir0       - L11L12    Light source matrix elements 1 to 1, 1 to 2
+9   ctc2 GPR, ir1       - L13L21    Light source matrix elements 1 to 3, 2 to 1
+10  ctc2 GPR, ir2       - L22L23    Light source matrix elements 2 to 2, 2 to 3
+11  ctc2 GPR, ir3       - L31L32    Light source matrix elements 3 to 1, 3 to 2
+12  ctc2 GPR, sxy0      - L33       Light source matrix elements 3 to 3
+13  ctc2 GPR, sxy1      - RBK       Background color red component
+14  ctc2 GPR, sxy2      - BBK       Background color blue component
+15  ctc2 GPR, sxy2p     - GBK       Background color green component
+16  ctc2 GPR, sz0       - LR1LR2    Light color matrix source 1&2 red component
+17  ctc2 GPR, sz1       - LR3LG1    Light color matrix source 3 red, 1 green component
+18  ctc2 GPR, sz2       - LG2LG3    Light color matrix source 2&3 green component
+19  ctc2 GPR, sz3       - LB1LB2    Light color matrix source 1&2 blue comp
+20  ctc2 GPR, rgb0      - LB3       Light color matrix source 3 blue component
+21  ctc2 GPR, rgb1      - RFC       Far color red component
+22  ctc2 GPR, rgb2      - GFC       Far color green component
+23  ctc2 GPR, 17        - BFC       Far color blue component
+24  ctc2 GPR, mac0      - OFX       Screen offset X
+25  ctc2 GPR, mac1      - OFY       Screen offset Y
+26  ctc2 GPR, mac2      - H         Projection plane distance
+
+
+
+GET REGISTERS
+// data registers
+7   mfc2 GPR, trz       - OTZ       r       0       OTZ     0,15,0          Z Average value.
+9   mfc2 GPR, l13l21    - IR1       r/w     Sign    IR1     1,3,12          Intermediate value 1. Format may differ
+10  mfc2 GPR, l22l23    - IR2       r/w     Sign    IR2     1,3,12          Intermediate value 2. Format may differ
+11  mfc2 GPR, l31l32    - IR3       r/w     Sign    IR3     1,3,12          Intermediate value 3. Format may differ
+12  mfc2 GPR, l33       - SXY0      r/w     SX0     SY0     1,15,0          Screen XY coordinate FIFO (Note1)
+13  mfc2 GPR, rbk       - SXY1      r/w     SX1     SY1     1,15,0          Screen XY coordinate FIFO
+14  mfc2 GPR, gbk       - SXY2      r/w     SX2     SY2     1,15,0          Screen XY coordinate FIFO
+22  mfc2 GPR, gfc       - RGB2      r/w     CD2, B2G0, R2   8 bits each     CD2 is the bit pattern of currently executed function
+24  mfc2 GPR, ofx       - MAC0      r/w     MAC0            1,31,0          Sum of products value 1
+25  mfc2 GPR, ofy       - MAC1      r/w     MAC1            1,31,0          Sum of products value 1
+26  mfc2 GPR, h         - MAC2      r/w     MAC2            1,31,0          Sum of products value 1
+27  mfc2 GPR, dqa       - MAC3      r/w     MAC3            1,31,0          Sum of products value 1
+31  mfc2 GPR, flag      - LZCR      r       LZCR            6,6,0           Leading zero count result (Note 4)
+
+// data registers
+11  swc2 t3, MEMORY     - IR3       r/w     Sign    IR3     1,3,12          Intermediate value 3. Format may differ
+12  swc2 t4, MEMORY     - SXY0      r/w     SX0     SY0     1,15, 0         Screen XY coordinate FIFO (Note1)
+13  swc2 t5, MEMORY     - SXY1      r/w     SX1     SY1     1,15, 0         Screen XY coordinate FIFO
+14  swc2 t6, MEMORY     - SXY2      r/w     SX2     SY2     1,15, 0         Screen XY coordinate FIFO
+17  swc2 s1, MEMORY     - SZ1       r/w     0       SZ1     0,16, 0         Screen Z FIFO
+18  swc2 s2, MEMORY     - SZ2       r/w     0       SZ2     0,16, 0         Screen Z FIFO
+19  swc2 s3, MEMORY     - SZ3       r/w     0       SZ3     0,16, 0         Screen Z FIFO
+22  swc2 s6, MEMORY     - RGB2      r/w     CD2, B2G0, R2   8 bits each     CD2 is the bit pattern of currently executed function
+25  swc2 t9, MEMORY     - MAC1      r/w     MAC1            1,31,0          Sum of products value 1
+26  swc2 k0, MEMORY     - MAC2      r/w     MAC2            1,31,0          Sum of products value 1
+27  swc2 k1, MEMORY     - MAC3      r/w     MAC3            1,31,0          Sum of products value 1
+
+// control registers
+0   cfc2 GPR, vxy0      - R11R12    Rotation matrix elements 1 to 1, 1 to 2
+1   cfc2 GPR, vz0       - R13R21    Rotation matrix elements 1 to 3, 2 to 1
+2   cfc2 GPR, vxy1      - R22R23    Rotation matrix elements 2 to 2, 2 to 3
+3   cfc2 GPR, vz1       - R31R32    Rotation matrix elements 3 to 1, 3 to 2
+4   cfc2 GPR, vxy2      - R33       Rotation matrix elements 3 to 3
+5   cfc2 GPR, vz2       - TRX       Translation vector X
+6   cfc2 GPR, rgb       - TRY       Translation vector Y
+7   cfc2 GPR, otz       - TRZ       Translation vector Z
+31  cfc2 GPR, lzcr      - FLAG      Returns any calculation errors.(See below)
+
+
+
+gte_func1t0,r11r12      gte_RTPT        Perspective transform on 3 points
+
+gte_func16t8,r11r12     gte_RTPS        Perspective transform
+
+gte_func17t0,r11r12     gte_RTPT        Perspective transform on 3 points.
+
+gte_func18t0,r11r12     gte_rtv0tr      v0 * rotmatrix + tr vector.
+gte_func18t1,dqb        gte_rtir12      ir * rotmatrix.
+gte_func18t0,l33        gte_rtv0        v0 * rotmatrix.
+
+gte_func19t8,r11r12     gte_DPCS        Depth Cueing.
+
+gte_func20t8,r11r12     gte_INTPL       Interpolation of vector and far color.
+
+gte_func21zero,r11r12   gte_SQR         Square of vector.
+
+gte_func22t0,r11r12     NSC             Normal color v0.
+
+gte_func23t8,r11r12     DPCT            Depth cue color RGB0,RGB1,RGB2.
+
+gte_func24t0,r11r12     gte_NCCS        Normal color col. v0.
+
+gte_func26zero,r11r12   gte_NCLIP       Normal clipping.
+gte_func26t8,r11r12     gte_AVSZ3       Average of three Z values.
+
+gte_func27t0,r11r12     AVSZ4           Average of four Z values
+gte_func27t8,r11r12     gte_op12        Outer product.
+gte_func27s0,r11r12     OP              Outer Product
+
+gte_func28t8,r11r12     gte_gpf12       General purpose interpolation.
+gte_func28s0,r11r12     gte_GPF         General Purpose Interpolation.
+
+gte_func29zero,r11r12   gte_gpl12       General purpose interpolation.

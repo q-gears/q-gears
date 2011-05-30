@@ -1,0 +1,174 @@
+Creating resource group General
+Creating resource group Internal
+Creating resource group Autodetect
+SceneManagerFactory for type 'DefaultSceneManager' registered.
+Registering ResourceManager for type Material
+Registering ResourceManager for type Mesh
+Registering ResourceManager for type Skeleton
+MovableObjectFactory for type 'ParticleSystem' registered.
+OverlayElementFactory for type Panel registered.
+OverlayElementFactory for type BorderPanel registered.
+OverlayElementFactory for type TextArea registered.
+Registering ResourceManager for type Font
+ArchiveFactory for archive type FileSystem registered.
+ArchiveFactory for archive type Zip registered.
+DDS codec registering
+FreeImage version: 3.13.1
+This program uses FreeImage, a free, open source image library supporting all common bitmap formats. See http://freeimage.sourceforge.net for details
+Supported formats: bmp,ico,jpg,jif,jpeg,jpe,jng,koa,iff,lbm,mng,pbm,pbm,pcd,pcx,pgm,pgm,png,ppm,ppm,ras,tga,targa,tif,tiff,wap,wbmp,wbm,psd,cut,xbm,xpm,gif,hdr,g3,sgi,exr,j2k,j2c,jp2,pfm,pct,pict,pic,bay,bmq,cr2,crw,cs1,dc2,dcr,dng,erf,fff,hdr,k25,kdc,mdc,mos,mrw,nef,orf,pef,pxn,raf,raw,rdc,sr2,srf,arw,3fr,cine,ia,kc2,mef,nrw,qtk,rw2,sti,drf,dsc,ptx,cap,iiq,rwz
+Registering ResourceManager for type HighLevelGpuProgram
+Registering ResourceManager for type Compositor
+MovableObjectFactory for type 'Entity' registered.
+MovableObjectFactory for type 'Light' registered.
+MovableObjectFactory for type 'BillboardSet' registered.
+MovableObjectFactory for type 'ManualObject' registered.
+MovableObjectFactory for type 'BillboardChain' registered.
+MovableObjectFactory for type 'RibbonTrail' registered.
+Loading library .\RenderSystem_Direct3D9
+Installing plugin: D3D9 RenderSystem
+D3D9 : Direct3D9 Rendering Subsystem created.
+D3D9: Driver Detection Starts
+D3D9: Driver Detection Ends
+Plugin successfully installed
+Loading library .\RenderSystem_GL
+Installing plugin: GL RenderSystem
+OpenGL Rendering Subsystem created.
+Plugin successfully installed
+*-*-* OGRE Initialising
+*-*-* Version 1.7.0 (Cthugha)
+CPU Identifier & Features
+-------------------------
+ *   CPU ID: GenuineIntel: Intel(R) Celeron(R) CPU          420  @ 1.60GHz
+ *      SSE: yes
+ *     SSE2: yes
+ *     SSE3: yes
+ *      MMX: yes
+ *   MMXEXT: yes
+ *    3DNOW: no
+ * 3DNOWEXT: no
+ *     CMOV: yes
+ *      TSC: yes
+ *      FPU: yes
+ *      PRO: yes
+ *       HT: no
+-------------------------
+*** Starting Win32GL Subsystem ***
+GLRenderSystem::_createRenderWindow "Sound Dumper", 640x480 windowed  miscParams: FSAA=0 FSAAHint= colourDepth=32 displayFrequency=0 gamma=false vsync=false vsyncInterval=1 
+Created Win32Window 'Sound Dumper' : 648x514, 32bpp
+GL_VERSION = 2.1.2
+GL_VENDOR = NVIDIA Corporation
+GL_RENDERER = GeForce 6600 LE/PCI/SSE2
+GL_EXTENSIONS = GL_ARB_color_buffer_float GL_ARB_depth_texture GL_ARB_draw_buffers GL_ARB_fragment_program GL_ARB_fragment_program_shadow GL_ARB_fragment_shader GL_ARB_half_float_pixel GL_ARB_half_float_vertex GL_ARB_framebuffer_object GL_ARB_imaging GL_ARB_map_buffer_range GL_ARB_multisample GL_ARB_multitexture GL_ARB_occlusion_query GL_ARB_pixel_buffer_object GL_ARB_point_parameters GL_ARB_point_sprite GL_ARB_shadow GL_ARB_shader_objects GL_ARB_shading_language_100 GL_ARB_texture_border_clamp GL_ARB_texture_compression GL_ARB_texture_cube_map GL_ARB_texture_env_add GL_ARB_texture_env_combine GL_ARB_texture_env_dot3 GL_ARB_texture_float GL_ARB_texture_mirrored_repeat GL_ARB_texture_non_power_of_two GL_ARB_texture_rectangle GL_ARB_transpose_matrix GL_ARB_vertex_array_object GL_ARB_vertex_buffer_object GL_ARB_vertex_program GL_ARB_vertex_shader GL_ARB_window_pos GL_ATI_draw_buffers GL_ATI_texture_float GL_ATI_texture_mirror_once GL_S3_s3tc GL_EXT_texture_env_add GL_EXT_abgr GL_EXT_bgra GL_EXT_blend_color GL_EXT_blend_equation_separate GL_EXT_blend_func_separate GL_EXT_blend_minmax GL_EXT_blend_subtract GL_EXT_compiled_vertex_array GL_EXT_Cg_shader GL_EXT_depth_bounds_test GL_EXT_direct_state_access GL_EXT_draw_range_elements GL_EXT_fog_coord GL_EXT_framebuffer_blit GL_EXT_framebuffer_multisample GL_EXT_framebuffer_object GL_EXT_gpu_program_parameters GL_EXT_multi_draw_arrays GL_EXT_packed_depth_stencil GL_EXT_packed_pixels GL_EXT_pixel_buffer_object GL_EXT_point_parameters GL_EXT_rescale_normal GL_EXT_secondary_color GL_EXT_separate_specular_color GL_EXT_shadow_funcs GL_EXT_stencil_two_side GL_EXT_stencil_wrap GL_EXT_texture3D GL_EXT_texture_compression_s3tc GL_EXT_texture_cube_map GL_EXT_texture_edge_clamp GL_EXT_texture_env_combine GL_EXT_texture_env_dot3 GL_EXT_texture_filter_anisotropic GL_EXT_texture_lod GL_EXT_texture_lod_bias GL_EXT_texture_mirror_clamp GL_EXT_texture_object GL_EXT_texture_sRGB GL_EXT_texture_swizzle GL_EXT_timer_query GL_EXT_vertex_array GL_EXT_vertex_array_bgra GL_IBM_rasterpos_clip GL_IBM_texture_mirrored_repeat GL_KTX_buffer_region GL_NV_blend_square GL_NV_copy_depth_to_color GL_NV_depth_clamp GL_NV_fence GL_NV_float_buffer GL_NV_fog_distance GL_NV_fragment_program GL_NV_fragment_program_option GL_NV_fragment_program2 GL_NV_framebuffer_multisample_coverage GL_NV_half_float GL_NV_light_max_exponent GL_NV_multisample_filter_hint GL_NV_occlusion_query GL_NV_packed_depth_stencil GL_NV_pixel_data_range GL_NV_point_sprite GL_NV_primitive_restart GL_NV_register_combiners GL_NV_register_combiners2 GL_NV_texgen_reflection GL_NV_texture_compression_vtc GL_NV_texture_env_combine4 GL_NV_texture_expand_normal GL_NV_texture_rectangle GL_NV_texture_shader GL_NV_texture_shader2 GL_NV_texture_shader3 GL_NV_vertex_array_range GL_NV_vertex_array_range2 GL_NV_vertex_program GL_NV_vertex_program1_1 GL_NV_vertex_program2 GL_NV_vertex_program2_option GL_NV_vertex_program3 GL_NVX_conditional_render GL_SGIS_generate_mipmap GL_SGIS_texture_lod GL_SGIX_depth_texture GL_SGIX_shadow GL_SUN_slice_accum GL_WIN_swap_hint WGL_EXT_swap_control 
+Supported WGL extensions: WGL_ARB_buffer_region WGL_ARB_extensions_string WGL_ARB_make_current_read WGL_ARB_multisample WGL_ARB_pbuffer WGL_ARB_pixel_format WGL_ARB_pixel_format_float WGL_ARB_render_texture WGL_ATI_pixel_format_float WGL_EXT_extensions_string WGL_EXT_swap_control WGL_NV_float_buffer WGL_NV_render_depth_texture WGL_NV_render_texture_rectangle 
+***************************
+*** GL Renderer Started ***
+***************************
+Registering ResourceManager for type GpuProgram
+GLSL support detected
+GL: Using GL_EXT_framebuffer_object for rendering to textures (best)
+FBO PF_UNKNOWN depth/stencil support: D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_R5G6B5 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_B5G6R5 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_R8G8B8 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_B8G8R8 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_A8R8G8B8 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_B8G8R8A8 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_A2R10G10B10 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_A2B10G10R10 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_FLOAT16_RGB depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_FLOAT16_RGBA depth/stencil support: D0S0 D16S0 
+FBO PF_FLOAT32_RGB depth/stencil support: D0S0 D16S0 
+FBO PF_FLOAT32_RGBA depth/stencil support: D0S0 D16S0 
+FBO PF_X8R8G8B8 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_X8B8G8R8 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_SHORT_RGBA depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_R3G3B2 depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+FBO PF_SHORT_RGB depth/stencil support: D0S0 D16S0 D24S0 D32S0 Packed-D24S8 
+[GL] : Valid FBO targets PF_UNKNOWN PF_R5G6B5 PF_B5G6R5 PF_R8G8B8 PF_B8G8R8 PF_A8R8G8B8 PF_B8G8R8A8 PF_A2R10G10B10 PF_A2B10G10R10 PF_FLOAT16_RGB PF_FLOAT16_RGBA PF_FLOAT32_RGB PF_FLOAT32_RGBA PF_X8R8G8B8 PF_X8B8G8R8 PF_SHORT_RGBA PF_R3G3B2 PF_SHORT_RGB 
+RenderSystem capabilities
+-------------------------
+RenderSystem Name: OpenGL Rendering Subsystem
+GPU Vendor: nvidia
+Device Name: GeForce 6600 LE/PCI/SSE2
+Driver Version: 2.1.2.0
+ * Fixed function pipeline: yes
+ * Hardware generation of mipmaps: yes
+ * Texture blending: yes
+ * Anisotropic texture filtering: yes
+ * Dot product texture operation: yes
+ * Cube mapping: yes
+ * Hardware stencil buffer: yes
+   - Stencil depth: 8
+   - Two sided stencil support: yes
+   - Wrap stencil values: yes
+ * Hardware vertex / index buffers: yes
+ * Vertex programs: yes
+ * Number of floating-point constants for vertex programs: 256
+ * Number of integer constants for vertex programs: 0
+ * Number of boolean constants for vertex programs: 0
+ * Fragment programs: yes
+ * Number of floating-point constants for fragment programs: 512
+ * Number of integer constants for fragment programs: 0
+ * Number of boolean constants for fragment programs: 0
+ * Geometry programs: no
+ * Number of floating-point constants for geometry programs: 391
+ * Number of integer constants for geometry programs: 8036
+ * Number of boolean constants for geometry programs: 391
+ * Supported Shader Profiles: arbfp1 arbvp1 fp20 fp30 fp40 glsl vp30 vp40
+ * Texture Compression: yes
+   - DXT: yes
+   - VTC: yes
+   - PVRTC: no
+ * Scissor Rectangle: yes
+ * Hardware Occlusion Query: yes
+ * User clip planes: yes
+ * VET_UBYTE4 vertex element type: yes
+ * Infinite far plane projection: yes
+ * Hardware render-to-texture: yes
+ * Floating point textures: yes
+ * Non-power-of-two textures: yes
+ * Volume textures: yes
+ * Multiple Render Targets: 4
+   - With different bit depths: yes
+ * Point Sprites: yes
+ * Extended point parameters: yes
+ * Max Point Size: 63.375
+ * Vertex texture fetch: yes
+ * Number of world matrices: 0
+ * Number of texture units: 16
+ * Stencil buffer depth: 8
+ * Number of vertex blend matrices: 0
+   - Max vertex textures: 4
+   - Vertex textures shared: yes
+ * Render to Vertex Buffer : no
+ * GL 1.5 without VBO workaround: no
+ * Frame Buffer objects: yes
+ * Frame Buffer objects (ARB extension): no
+ * Frame Buffer objects (ATI extension): no
+ * PBuffer support: no
+ * GL 1.5 without HW-occlusion workaround: no
+Registering ResourceManager for type Texture
+DefaultWorkQueue('Root') initialising on thread 0x2457c8.
+Particle Renderer Type 'billboard' registered
+DefaultWorkQueue('Root')::WorkerFunc - thread 0x25f028 starting.
+*** Initializing OIS ***
+DefaultWorkQueue('Root') shutting down on thread 0x2457c8.
+DefaultWorkQueue('Root')::WorkerFunc - thread 0x25f028 stopped.
+*-*-* OGRE Shutdown
+Unregistering ResourceManager for type Compositor
+Unregistering ResourceManager for type Font
+Unregistering ResourceManager for type Skeleton
+Unregistering ResourceManager for type Mesh
+Unregistering ResourceManager for type HighLevelGpuProgram
+Uninstalling plugin: GL RenderSystem
+Unregistering ResourceManager for type GpuProgram
+*** Stopping Win32GL Subsystem ***
+Unregistering ResourceManager for type Texture
+Plugin successfully uninstalled
+Unloading library .\RenderSystem_GL
+Uninstalling plugin: D3D9 RenderSystem
+D3D9 : Shutting down cleanly.
+D3D9 : Direct3D9 Rendering Subsystem destroyed.
+Plugin successfully uninstalled
+Unloading library .\RenderSystem_Direct3D9
+Unregistering ResourceManager for type Material

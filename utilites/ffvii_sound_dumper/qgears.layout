@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="..\common\File.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1697" topLine="63" />
+	</File>
+	<File name="..\common\File.h" open="0" top="0" tabpos="0">
+		<Cursor position="413" topLine="3" />
+	</File>
+	<File name="..\common\Logger.h" open="0" top="0" tabpos="0">
+		<Cursor position="97" topLine="0" />
+	</File>
+	<File name="..\common\TypeDefine.h" open="0" top="0" tabpos="0">
+		<Cursor position="216" topLine="0" />
+	</File>
+	<File name="src\AkaoParser.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="13472" topLine="360" />
+	</File>
+	<File name="src\AkaoParser.h" open="0" top="0" tabpos="0">
+		<Cursor position="2694" topLine="100" />
+	</File>
+	<File name="src\Main.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1897" topLine="69" />
+	</File>
+	<File name="src\engine\SoundManager.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="296" topLine="3" />
+	</File>
+	<File name="src\engine\SoundManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="6017" topLine="198" />
+	</File>
+</CodeBlocks_layout_file>

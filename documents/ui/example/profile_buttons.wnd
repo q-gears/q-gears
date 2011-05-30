@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+	Ýêðàí ãëàâíîãî ìåíþ
+-->
+<window>
+	<params 
+		name = "profile_buttons" 
+	>
+	
+		<spawn name = "OnUpdateNewButton">
+			<if left = "global.profile" leftParam = "can_add_new_profile" operator = "equal" right = "1">
+				<do>
+					<do object = "new_button" command = "Set" param = "enable = 1" />
+					<do object = "new_button" command = "Set" param = "impulsed = 1" />
+					<do object = "new_button" command = "Set" param = "color = 0xffffffff" />
+				</do>
+				<do>
+					<do object = "new_button" command = "Set" param = "enable = 0" />
+					<do object = "new_button" command = "Set" param = "impulsed = 0" />
+					<do object = "new_button" command = "Set" param = "color = 0xaaffffff" />
+				</do>
+			</if>
+		</spawn>
+	</params>
+	
+	
+	<!--Èåðàðõèÿ îáúåêòîâ-->
+	<object name = "hierarchy" type = "objects">
+
+		<object name = "show_anim" type = "object_anim" effect = "objects\screens\main_menu\gui_effects\show_elems" x = "400" y = "200" time_scale = "0.3" />
+		<object name = "hide_anim" type = "object_anim" effect = "objects\screens\main_menu\gui_effects\show_elems" x = "400" y = "200" forward_anim = "0" time_scale = "0.3"/>
+
+		<object name = "Buttons" type = "objects">
+			<object name = "title" 						type = "text" string = "screens_titles_profile" style = "button_mm_title" x = "0" y = "-80"/>
+			<object name = "line" 						type = "sprite" sprite_name = "line" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "-285" y = "-20"/>
+
+			<object name = "window_back" type = "sprite" sprite_name = "menu_wndow_small" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x="50" y="-30"/>
+
+			<object name = "new_button"	 		type = "button_entity" prototype = "objects\screens\main_menu\gui_elements\button_new" x = "0" y = "0" >
+				<spawn name = "OnButtonSelected">
+					<do object = "global" command = "PlaySoundSample" param = "gui_button_select" instant = "1"/>	
+				</spawn>
+				<spawn name = "OnButtonClick">
+					<do object = "global" command = "PlaySoundSample" param = "gui_button_press" instant = "1"/>	
+					<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuProfileEnterName 2" />
+				</spawn>
+			</object>
+
+			<object name = "select_button" 			type = "button_entity" prototype = "objects\screens\main_menu\gui_elements\button_select" x = "0" y = "50" >
+				<spawn name = "OnButtonSelected">
+					<do object = "global" command = "PlaySoundSample" param = "gui_button_select" instant = "1"/>	
+				</spawn>
+				<spawn name = "OnButtonClick">
+					<if left = "screen.profile_names_list" leftParam = "is_selected_item" operator = "equal" right = "1">
+						<if left = "screen.profile_names_list" leftParam = "is_selected_current_item" operator = "equal" right = "0">
+							<do>
+								<do object = "global" command = "PlaySoundSample" param = "gui_button_press"/>
+								<do object = "global.profile" command = "LoadProfile" param = "value screen.profile_names_list selected_item_index" />
+								<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuScreen 2" />
+							</do>
+						</if>
+					</if>
+				</spawn>
+			</object>
+
+			<object name = "delete_button"			type = "button_entity" prototype = "objects\screens\main_menu\gui_elements\button_delete" x = "0" y = "100" >
+				<spawn name = "OnButtonSelected">
+					<do object = "global" command = "PlaySoundSample" param = "gui_button_select" instant = "1"/>	
+				</spawn>
+				<spawn name = "OnButtonClick">
+					<if left = "screen.profile_names_list" leftParam = "is_selected_item" operator = "equal" right = "1">
+						<if left = "screen.profile_names_list" leftParam = "is_selected_current_item" operator = "equal" right = "0">
+							<do>
+								<do object = "global" command = "PlaySoundSample" param = "gui_button_press"/>
+								<do object = "global.profile" command = "DeleteProfile" param = "value screen.profile_names_list selected_item_index" />
+								<do object = "screen" command = "Spawn" param = "OnUpdateNewButton" />
+								<do object = "screen.profile_names_list" command = "UpdateByProfileNames" />
+							</do>
+						</if>
+					</if>
+				</spawn>
+			</object>
+			
+			
+			<!--object name = "rename_button"		type = "button_entity" prototype = "objects\screens\main_menu\gui_elements\button_rename" x = "0" y = "100" color = "0xaaffffff" >
+				<spawn name = "OnButtonSelected">
+					<do object = "global" command = "PlaySoundSample" param = "gui_button_select" instant = "1"/>	
+				</spawn>
+			</object-->
+
+			<object name = "menu_button" 			type = "button_entity" prototype = "objects\screens\main_menu\gui_elements\button_menu" x = "0" y = "200" >
+				<spawn name = "OnButtonClick">
+					<do object = "global" command = "PlaySoundSample" param = "gui_button_press" instant = "1"/>	
+					<do object = "global" command = "PlaySoundSample" param = "gui_menu_levelup" instant = "1"/>	
+					<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuScreen 2" />
+				</spawn>
+				<spawn name = "OnButtonSelected">
+					<do object = "global" command = "PlaySoundSample" param = "gui_button_select" instant = "1"/>	
+				</spawn>
+			</object>
+			
+			<object name = "profile_names_list" 			type = "list_box_entity" prototype = "objects\screens\main_menu\gui_elements\objects_list" x = "200" y = "0" />
+		</object>
+	</object>
+	
+	
+	<!--Îïèñàíèå ïîâåäåíèé-->
+	<behaviors>
+		<behavior name = "Init">
+			<start>
+			</start>
+			<stop/>
+		</behavior>
+		
+		
+		<!-- íà÷àëî -->
+		<behavior name = "StartScreen" >
+			<start>
+				<do command = "Spawn" param = "OnUpdateNewButton" />
+				<do object = "profile_names_list" command = "UpdateByProfileNames" />
+				<do object = "global" command = "PlaySoundSample" param = "gui_menu_show" instant = "1"/>	
+				<do command = "SetLock" param = "1"/>
+				<do object = "show_anim" command = "Restart" param = "Buttons"/>
+			</start>
+			<stop/>
+			<events>
+				<event name = "OnEscDown">
+					<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuScreen 2" />
+				</event>
+			</events>
+		</behavior>
+
+
+		<!-- êîíåö -->
+		<behavior name = "StopScreen" >
+			<start>
+				<do object = "global" command = "PlaySoundSample" param = "gui_menu_hide" instant = "1"/>	
+				<do object = "hide_anim" command = "Restart" param = "Buttons"/>
+				<do command = "SetLock" param = "0"/>
+			</start>
+			<stop/>
+		</behavior>
+	</behaviors>
+</window>

@@ -1,0 +1,177 @@
+Animation actions ids player
+03 - change to front row.
+04 - change to back row.
+14 - attack.
+15 - slash all.
+16 - 2x cut 1st attack.
+17 - 2x cut 2nd attack.
+18 - 4x cut 1st attack.
+19 - 4x cut 2nd attack.
+1a - 4x cut 3rd attack.
+1b - 4x cut 4th attack.
+1c - flash.
+1d - magic.
+1e - enemy skill.
+1f - summon.
+20 - use item on single unit.
+21 - use item on multiple units.
+22 - steal single.
+23 - steal multiple.
+24 - mug single.
+24 - mug multiple.
+26 - sense single.
+27 - sense multiple.
+28 - morph single.
+28 - morph multiple.
+2a - death blow single.
+2a - death blow multiple.
+2c - manipulate single.
+2d - manipulate multiple.
+2e - default for 23 action id.
+
+Animation actions ids enemies
+
+Animation actions ids frog
+14 - frog attack
+1d - frog magic
+34 - some special animation action. If this is set we don't check for enough mana, or frog state.
+
+
+
+Scripts
+0 - Init.
+1 - Normal.
+2 - Total counter (counter for any attack).
+3 - Death counter.
+4 - Physical counter.
+5 - Magical counter.
+6 - Battle end.
+7 - Run before any action if Action priority not 0.
+
+
+
+Action priority
+0 - all actions added with auto called Scripts 0, 2, 3, 4, 5 or 7 or any manually runned script.
+1 - 
+2 - all actions added with auto called Script 1.
+3 - 
+4 - 
+5 - 
+6 - 
+
+
+
+Default [address + 90] values for action type
+00000600 05
+00001204 06
+00000020 09
+00000400 11
+00000200 12
+00000010 19
+00000200 1A
+00000010 1B
+00000000 all others
+
+Action types
+0x01 - player attack
+0x02 - player magic
+0x03 - player summon
+0x04 - player item
+0x05 - player steal
+0x06 - player sense
+0x07 - player coin
+0x08 - player throw
+0x09 - player morph
+0x0A - player deathblow
+0x0B - player manipulate
+0x0C - player mime
+0x0D - player enemy skill
+0x0E - ???
+0x0F - ???
+0x10 - ???
+0x11 - player mug
+0x12 - player change
+0x13 - player defend
+0x14 - player limit
+0x15 - this replaces with magic after modification
+0x16 - this replaces with summon after modification
+0x17 - this replaces with item after modification
+0x18 - player slash-all
+0x19 - player 2x-cut
+0x1A - player flash
+0x1B - player 4x-cut
+0x1C - ???
+0x1D - ???
+0x1E - ???
+0x1F - ???
+0x20 - enemy attack
+0x21 - ???
+0x22 - run scripts
+0x23 - ???
+0x24 - wait for action
+0x25 - ???
+
+Target Types
+0x00 set attacker as target (only flag).
+0x01
+0x02 set all units thats enemys to attacker as target.
+0x04
+0x08
+0x10
+0x20
+0x40 set all alive units on field as target (only flag).
+0x80
+
+Status
+0x00000001 Death
+0x00000002 Near-Death
+0x00000004 Sleep
+0x00000008 Poison
+0x00000010 Sadness
+0x00000020 Fury
+0x00000040 Confusion
+0x00000080 Silence
+0x00000100 Haste
+0x00000200 Slow
+0x00000400 Stop
+0x00000800 Frog
+0x00001000 Small
+0x00002000 Slow-numb
+0x00004000 Petrify
+0x00008000 Regen
+0x00010000 Barrier
+0x00020000 MBarrier
+0x00040000 Reflect
+0x00080000 Unused
+0x00100000 Shield
+0x00200000 D.Sentence
+0x00400000 Manipulate
+0x00800000 Berserk
+0x01000000 Peerless
+0x02000000 Paralyzed
+0x04000000 Darkness
+0x08000000 Dual
+0x10000000 DeathForce
+0x20000000 Resist
+0x40000000 Lucky Girl
+0x80000000 Imprisoned
+
+
+
+Element
+0x0000 Non Elemental
+0x0001 Fire
+0x0002 Ice
+0x0004 Lightning
+0x0008 Earth
+0x0010 Poison
+0x0020 Gravity
+0x0040 Water
+0x0080 Wind
+0x0100 Holy
+0x0200 Restorative
+0x0400 Cut
+0x0800 Hit
+0x1000 Punch
+0x2000 Shoot
+0x4000 Shout

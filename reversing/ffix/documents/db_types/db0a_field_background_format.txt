@@ -1,0 +1,27 @@
+header
++04 [][]     nubmer of animations.
++06 [][]     nubmer of tileset blocks.
++0c [][][][] offset to animation data.
++10 [][][][] offset to tileset blocks data.
++18 [][][][] offset to camera settings.
++1e [][]     ???
++30 [][]     ???
++32 [][]     ???
+
+animation data (0x10 size)
++00 [][][][] ???
++0c [][][][] pointer to sequence data.
+
+sequence data
+
+
+tileset blocks data (0x38 size)
++00 []       some flags.
+             0x02 - maybe active tile. Set if this tile in first frame of animation sequence.
+             0x20 - ???
+             0x40 - ??? we init something if this is set.
++26 [][]     number of tiles.
++30 [][][][] pointer to created PSX packets.
+
+
+camera data (0x34 size)

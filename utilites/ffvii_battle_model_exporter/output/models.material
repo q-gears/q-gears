@@ -1,0 +1,11 @@
+material model/battle
+{
+    technique
+    {
+        pass
+        {
+            ambient vertexcolour
+            cull_hardware none
+        }
+    }
+}

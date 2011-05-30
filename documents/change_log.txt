@@ -1,0 +1,256 @@
+================================================================================
+Q-Gears v0.?? (future idea) | ????-??-??
+Add resolution console command and ability to change resolution and go to fullscreen,
+Colors in console. Console to debug draw.
+Export one xeno model at least with idle. Export one xeno field for test map.
+Free Camera must speedup when pressing shift.
+Think about move console command only to Lua scripts.
+UI base functionality.
+Game State must be implemented.
+Maybe implement map change.
+Implement base battle and field functions in lua.
+Implement base camera support.
+Implement base 2d background support.
+Implement ladder climb and jumps. Implement paths (collection of move targets). Implement related animation management.
+================================================================================
+Q-Gears v0.19 (1st alpha renew) | 2011-06-0?
+At least entitys must be working. At least base walkmesh movement.
+Implement user input for movement.
+Maybe basic sound support.
+Create demo test field map.
+Move calculation of projection to screen to debug draw.
+--------------------------------------------------------------------------------
+
+2011-05-19
+----------
+* [Entity] Add a lot of things to handle movement. Functions move_walkmesh, set_move_auto_rotation,
+           get_move_speed, set_move_speed and others. [Akari]
+* [Application] A lot of restructurisation that touch all q-gears. [Akari]
+
+2011-05-12
+----------
+* [Data] Reorganise data in prepare for demo maps. [Akari]
+* [Walkmesh] Mode walkmesh draw from SimpleRenderable to debug draw. [Akari]
+* [Debug] Add Line3d debug draw. [Akari]
+
+2011-05-11
+----------
+* [Game] Add grid and axis go game debug draw. Add console variables (debug_grid, debug_axis) to manipulate it. [Akari]
+* [Console] After tab is pressed left only one space between parameters. [Akari]
+* [Console] Add autocomplete string to input on enter. [Akari]
+
+2011-05-10
+----------
+* [Entity] Add debug direction draw. [Akari]
+* [Console] Fix crush when try get auto completition for functions without it. [Akari]
+* [Entity] Add a lot of entity script functions (is_visible, is_talkable, set_talkable, get_talk_radius,
+           set_talk_radius, is_solid, set_solid, get_solid_radius, set_solid_radius ). [Akari]
+
+2011-05-09
+----------
+* [Entity] Mode debug draw to entity class from Game. [Akari]
+* [Entity] Add solid and talk collisions to entity. [Akari]
+* [Render] Add DebugCylinder prototype. [Akari]
+* [Walkmesh] Add debug draw and debug draw config variable debug_walkmesh. [Akari]
+* [Entity] Add some debug info for entities. Add config variable to control it debug_entity. [Akari]
+* [Application] Make possible to change alignment of debug text. [Akari]
+* [Application] Make posible to set default load map from config. Set it to field_test1 for now. [Akari]
+* [Font] Make debug font work with alpha. [Akari]
+* [Application] Fix pixel aligment when draw in screen space. [Akari]
+* [Camera] Add function to convert world point to screen space. [Akari]
+
+2011-05-08
+----------
+* [Application] Rename log_level command to set_log_level to indicate command (not variable). [Akari]
+* [Application] Add debug fps config variable. Enabled in config. [Akari]
+* [Application] Make toggle command work with Strings instead of reals. [Akari]
+* [Script] Add script manager debug and console variable to manage it (debug_script). Draws state of entity. [Akari]
+* [Application] Move classes to new Debug system. [Akari]
+* [Application] Rename masros (remove QGEARS prefix) for easiness. [Akari]
+* [Application] Add debug draw Text Line and solid Quad. [Akari]
+
+2011-05-07
+----------
+* [Application] Get rid of video config and initialise render manually.
+                For now we use OpenGl and 800x600 resolution. [Akari]
+
+2011-05-06
+----------
+* [Game] Add <entity_script> to scene file. Allows add scripts not assosiated with models. [Akari]
+* [Script] Add script priority sorting. [Akari]
+* [Script] Add script call functions (request, request_start_sync, request_end_sync). [Akari]
+* [Entity] Add sync for animation end function (animation_sync). [Akari]
+* [Script] Add external script syncing. [Akari]
+
+2011-05-05
+----------
+* [Entity & Script] Add animation sequences and functions to manage entity animations
+                    (play_animation, play_animation_stop, set_default_animation). [Akari]
+
+2011-05-04
+----------
+* [Script] Add script:wait function to pause script execution. [Akari]
+* [Script] Add script entity and priority for them. [Akari]
+* [Game & Script] Add scene load of map script. [Akari]
+* [Entity & Script] Bind basic entity functions to script. [Akari]
+* [Game & Script] Bind get entity by name to script. [Akari]
+* [Script] Rename q_pring to print. [Akari]
+
+2011-05-03
+----------
+* [Entity] add try to run "idle" animation by default during adding entity to scene. [Akari]
+* [Entity] add animation start and update. [Akari]
+* [Script] add "script_run_file" console command that executes lua file. [Akari]
+
+2011-05-02
+----------
+* [Entity] Add base Entity class and EntityModel to implement models in scene. [Akari]
+* [Entity] Add <entity_model> tag into scene file with position and direction. [Akari]
+* [Script] Add script manager with Lua 5.1 and luabind. [Akari]
+* [Console & Script] Add posibility to directly print lua script from console
+                     (mainly for debugging purpose). [Akari]
+* [Script] Add "q_print" global function to scripts. [Akari]
+
+2010-12-12
+----------
+* Rewrite console. [Akari]
+* Add config commands. [Akari]
+* Add config variable. [Akari]
+* Add auto-completition. [Akari]
+
+
+
+================================================================================
+Q-Gears v0.18 (4th alpha) | not released
+--------------------------------------------------------------------------------
+
+* Add base battle cycle.
+* Add fighters content structure management.
+* Add ai scripts.
+* Add action queue.
+* Add attacks.
+* Add damage routine.
+* Add player.
+* Add script for player.
+* Add hurting.
+* Add posibility to switch AI off.
+* Units with different relationship must fight.
+* Add death status. Units must stop thinking and not be targeted.
+* Units must be rotated correctly (without battle types).
+* Player must be placed correctly (without battle types and for two party members only).
+* Add animation scripts.
+* Add all needed parts of model export for existed models (in 1st mission)
+* Add all needed scripts for existed models (in 1st mission)
+* Add all needed attacks for existed models (in 1st mission)
+* Add all needed animations for existed models (in 1st mission)
+* Add all needed battle formations for battles (in 1st mission).
+* During loading models placed correctly.
+* Add battle models with base animations.
+* Add free camera.
+
+
+
+================================================================================
+Q-Gears v0.17 (3rd alpha) | 2008-10-16
+--------------------------------------------------------------------------------
+
+* Line draw off/on.
+* Create fully playable STARTMAP, MD1STIN and MD1_1 as much as posible.
+* battle_run must be waitable.
+* Add game related things like money and items.
+* game:item_add(item_id, quantity);
+* quantity = game:item_get_quantity(item_id);
+* Add rotate to movement input.
+* Add bit operators to lua scripting.
+* Move field debug to global config and to console.
+* Fix console input.
+* Add party and party related functions.
+* game:party_set_size(party_size);
+* game:character_add_to_party(character_id);
+* game:character_remove_from_party(character_id);
+* game:party_clear();
+* Add variables gamestate storing and loading.
+* Remove field debug info on start of battle.
+* Battle module.
+* New module management. Camera and scene node must be detached on module pause for field and map.
+* Battle opcodes.
+* Encounters check.
+* Optimize Field loading from xml (it's better to load everything with one function call).
+* Add fade and fade related opcodes.
+* Waitable windows.
+* Party and Characters Names inserting.
+* Variable inserting.
+* Coloring font.
+* Pausing string output (OK and Wait).
+* New window handling.
+* Tags fo manipulate windows.
+* Text scrolling on overflow.
+* Read unicode text from lang files.
+* Choice window.
+* Transparent windows.
+* Dialog window rendering.
+* Reverse window management.
+* Implement script auto-activation.
+* Talking with other entity.
+* Reverse script auto activation.
+* Entity script management.
+* Reverse script flow.
+* Gateways (lines enough for that).
+* Enabling/disabling lines.
+* Line slipping.
+* Line.
+* Walkmesh ingame view (camera).
+* Add base sprite support like in Xenogears (stand).
+* Add export of bcx models.
+* Fix that at the end of animation first frame shown.
+* Fix rotation during animation.
+
+
+
+================================================================================
+Q-Gears v0.16 (2nd alpha) | 2008-05-28
+--------------------------------------------------------------------------------
+
+* Console.
+* Font rendering.
+* Debug entity stats like position, rotation, triangle.
+* Debug walkmesh (draw triangle id's)
+* Debug info must be drawn under console.
+* Move exit and console button handling to input mapper.
+* Pause in game motion (F11).
+* OpenGL collision and direction debug draw fix.
+* Focus after alt+tab.
+* Add wait script opcode (in seconds).
+* Fix rotating in map 2.
+* Catch errors during load of lua file.
+* Debug scripts states.
+* Script map loading.
+* Add lock/unlock PC input.
+* Add lock/unlock triangle script command.
+* Add correct animation.
+* Add animation update to climb and jump.
+* Remove rotate lock from move functions (it can be done through rotate_lock command).
+* Remove direction setting from climb.
+* Fix offset relative to direction.
+* Add offset routine.
+* Add move to entity.
+* turn_to_model must take direction to model every step.
+* Move action type to field instead of model cause we use instant/linear/smooth not only for model.
+* Add model rendering.
+* Reverse model and model animation.
+* Model auto-action to seconds instead of steps.
+
+
+
+================================================================================
+Q-Gears v0.15 (1st alpha) | 2007-12-30
+--------------------------------------------------------------------------------
+
+* Game button handling.
+* Input handling.
+* XML loader rewrite to OGRE.
+* Model movement.
+* Walkmesh management (enebling/disabling).
+* Walkmesh view.
+* Walkmesh loading.
+* Reverse entity movement/positioning.

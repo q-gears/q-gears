@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="src\game\field\FieldFile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="13685" topLine="391" />
+	</File>
+	<File name="src\game\field\ModelFile.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="331" topLine="5" />
+	</File>
+	<File name="src\game\field\ModelFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="100" topLine="0" />
+	</File>
+	<File name="src\game\filetypes\TimFile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="8402" topLine="248" />
+	</File>
+</CodeBlocks_layout_file>

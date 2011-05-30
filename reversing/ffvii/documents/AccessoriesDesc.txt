@@ -1,0 +1,32 @@
+“Strength” +10
+“Vitality” +10
+“Magic” +10
+“Spirit” +10
+“Dexterity” +10
+“Luck” +10
+“Power”&“Vitality” +30
+Drains [Poison] attacks, protects against [Poison]
+“Vitality”&“Spirit” +50
+“Magic”&“Spirit” +30
+Protects against [Poison]
+Protects against [Darkness]
+Protects against [Sleep]
+Protects against [Poison/Darkness]
+Protects against [Paralyze/Petrify/Slow-numb]
+Protects against [Frog/Small]
+Automatically put you in [Haste]
+Protects against [Berserk/Fury/Sadness]
+Protects against all abnormal status
+Nullifies [Fire] attacks
+Nullifies [Cold] attacks
+Nullifies [Lightning] attacks
+Drains [Fire/Cold/Lightning/Earth] attacks
+Protects against [Sudden Death/Petrify/Slow-numb]
+Automatically puts you in [Berserk]
+It increases each status but…
+Automatically sets up [Barrier/MBarrier]
+Restores HP as you walk
+Automatically sets up [Reflect]
+Drains Water attacks
+Increases Stealing rate
+Increases Manipulation rate

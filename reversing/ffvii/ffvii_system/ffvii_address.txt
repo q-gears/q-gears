@@ -1,0 +1,267 @@
+80049c28 pause table.
+80049c40 default AKAO sequence (only A0 here).
+80049c44 AKAO left volume table (0x100 items 0x2 bytes each)
+80049e44 AKAO right volume table (0x100 items 0x2 bytes each)
+
+8004a68c [][][][] some channel flags. We add here channel we set to play.
+
+8004aaec [][][][] some flags SPU related. if this &1 == 0 then we write data to SPU directly
+8004aaf4 [][][][] pointer to SPU addreses (0x1f801c00)
+
+80062bb8 array of some function pointers (0x4 size).
++08 [][][][] 80045a24 function. Called when copy data from palette to ram and back.
++1c [][][][] 80045654 function. Passed as parameter when copy palette to ram.
++20 [][][][] 80045400 function. Passed as parameter when copy palette from ram.
+80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
+
+80062f74 [][][][] pointer to 80089580. AKAO scripts. EFFECT.ALL offsets.
+80062f84 [][][][] pointer to 8008a580. AKAO scripts. EFFECT.ALL data.
+
+80062f8c [][][][] store 1 here at start of system_execute_AKAO. We will not add AKAO commands untill this is 0.
+
+80062fea [][][][] used as some tempo modificator for AKAO sequenser.
+
+80075f28 INSTR.DAT number of struct with size 0x40
++00 [][][][] start offset.
++04 [][][][] loop offset.
++08 []       attack rate.
++09 []       decay rate.
++0a []       sustain level.
++0b []       sustain rate.
++0c []       release rate.
++0d []       attack mode.
++0e []       sustain mode.
++0f []       release mode.
++10 [][][][] pitch 0.
++14 [][][][] pitch 1.
++18 [][][][] pitch 2.
++1c [][][][] pitch 3.
++20 [][][][] pitch 4.
++24 [][][][] pitch 5.
++28 [][][][] pitch 6.
++2c [][][][] pitch 7.
++30 [][][][] pitch 8.
++34 [][][][] pitch 9.
++38 [][][][] pitch a.
++3c [][][][] pitch b.
+
+
+
+80081dc8 struct with size 0x24 where we store data for AKAO parser. Store here data from 8009a000.
+
+
+
+80083580 we copy here akao data when init music 0x10
+
+
+
+80096608 struct for AKAO channel (0x108 size).
+80097ec8 some other same 0x18 structs for akao channels.
+80099890 some other same 0x18 structs for akao channels.
++000 [][][][] AKAO sequence pointer.
++014 [][][][] pointer to mask for AKAO channels in 80083580.
++018 [][][][] address into wave table.
++024 [][][][] ???
++028 [][][][] ???
++02c [][][][] volume multiplier. Store 0x78 here during init.
++030 [][][][] base pitch. Summarize 0x30, 0x36 and 0xd6 it to get real pitch.
++034 [][][][] init with 0.
++036 [][]     pitch addition. summarize 0x30, 0x36 and 0xd6 it to get real pitch.
++038 [][][][] init with 0. Update mirror. If flag is set we update main params from mirror channel (previous 0x108 channel data).
+                0x00000010 - update pitch. We update from +0xf8 from previous channel.
++03d [][]     pitch modifier. We multiply this with real calculated pitch if +0x54 != 2.
++044 [][][][] volume level. Often used as 2 top bytes.
++04c [][][][] pitch growth. We increment pitch addition by this every frame.
++050 [][][][] set to -1.
++054 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d.
++056 [][]     set to 0x204 in case of 0x30 command. Set to 0x101.
++058 [][]     current instrument.
++05c [][]     init with 0.
++060 [][]     store 0x4000 here in case of playing system sound 0x30.
++062 [][]     set to 0.
++064 [][]     init with 0. Number of steps for pitch changes?.
++066 [][]     pitch corrention. Set in 0xa5 opcode.
++06c [][]     init with 0.
++06e [][]     init with 0.
++076 [][]     wait value until we update left volume. +078 inited from here when left volume updated.
++078 [][]     something. we descrease this by 1 everytime we update channel struct and when this became 0 we update left volume.
++07c [][]     wave multiplier. Some modificator for pitch modificator +d6.
++07e [][]     init with 0.
++080 [][]     init with 0.
++090 [][]     init with 0.
++092 [][]     init with 0.
++09e [][]     init with 0.
++0a0 [][]     init with 0.
++0a4 [][]     init with 0.
++0a6 [][]     init with 0.
++0b8 [][]     init with 0.
++0c2 [][]     we store here pause after setting it.
++0c4 [][]     init with 0.
++0cc [][]     init with 0.
++0ce [][]     init with 0.
++0d0 [][]     pitch saved parameters.
++0d2 [][]     init with 0.
++0d6 [][]     pitch wave shift. Summarize 0x30, 0x36 and 0xd6 it to get real pitch.
++0d8 [][]     ???
++0da [][]     init with 0.
++0dc [][][][] 
++0e0 [][][][] set flags. We remove flag as soon as we set params to SPU.
+                0x00000001 - set left volume.
+                0x00000002 - set right volume.
+                0x00000010 - set pitch.
+                0x00000080 - set start offset.
+                0x00000100 - set attack rate.
+                0x00000200 - set sustain rate.
+                0x00000400 - set release rate.
+                0x00000800 - set attack mode.
+                0x00001000 - set decay rate.
+                0x00002000 - set sustain mode.
+                0x00004000 - set release mode.
+                0x00008000 - set sustain level.
+                0x00010000 - set loop offset.
++0e4 [][][][] start offset.
++0e8 [][][][] loop offset.
++0ec [][][][] attack mode.
+                0x05 - exponential.
+                else linear.
++0f0 [][][][] sustain mode.
+                0x01 - sustain linear increase.
+                0x05 - sustain exponential increase.
+                0x07 - sustain exponential discrease.
+                else sustain linear discrease.
++0f4 [][][][] release mode.
+                0x7 - exponential descrease.
+                else linear discrease.
++0f8 [][]     pitch. Pitch here can be changes somewhere and set to SPU again.
++0fa [][]     attack rate.
++0fc [][]     decay rate.
++0fe [][]     sustain level.
++100 [][]     sustain rate.
++102 [][]     release rate.
++104 [][]     left volume.
++106 [][]     right volume.
+
+
+80099fcc [][][][] some channel mask. Add here channels with scripts to run. We update only this channels starting from 0x00010000
+80099fd0 [][][][] some channel mask. Remove from here channels we want to start sound.
+80099fd4 [][][][] some channel mask. Remove from here channels we want to start sound.
+80099fd8 [][][][] some channel mask. Add here channels we want to start sound.
+80099fdc [][][][] some channel mask. Remove from here channels we want to start sound.
+80099fec [][][][] some channel mask. Remove from here channels we want to start sound.
+80099ff0 [][][][] some channel mask. Remove from here channels we want to start sound.
+80099ff4 [][][][] some channel mask. Remove from here channels we want to start sound.
+
+
+
+8009a000 AKAO data
++00 [][]     clear with 0.
+                Store 0xc8, 0xe4, 0xb0, 0xb1, 0xb2, 0xb3 in AKAO2 opcode.
+                Store 0xf0, 0xc0, 0xa0, 0xa1, 0xa2, 0xa3, 0x28, 0x29, 0x2a, 0x2b in AKAO opcode.
+                Store 0x10 in MUSIC opcode (play music?)
+                Store 0x14 in MUSVT opcode (play music?)
+                Store 0x15 in MUSVM opcode (play music?)
+                Store 0x20 in SOUND opcode (play sample?)
+                Store 0x30 when we try play sound.
++04 [][][][] clear with 0.
+                Store 0x7000, 0x7fff in AKAO2 opcode during 0xc8 in +00.
+                Store 0x7f in AKAO opcode during 0xc0, 0xa0, 0xa1, 0xa2, 0xa3 in +00.
+                Store 0x3f in AKAO opcode during 0x28, 0x29, 0x2a, 0x2b in +00.
+                Store 0x00 in AKAO opcode during 0xf0 in +00.
+                Store offset to AKAO sequence in case of 0x10, 0x14, 0x15 in +00.
+                Store 0x40 in case of 0x20 in +00.
++08 [][][][] clear with 0.
+                Store 0x0000 here in all cases in AKAO2 and AKAO.
+                Store 0x0168 in case of 0x20 in +00.
++0c [][][][] clear with 0.
+                Store 0x0000 here in all cases in AKAO2 and AKAO.
++10 [][][][] clear with 0.
+                Store 0x0000 here in all cases in AKAO2 and AKAO.
++14 [][][][] clear with 0.
+                Store 0x0000 here in all cases in AKAO2 and AKAO.
++18 [][][][] clear with 0.
+
+
+
+8009a104 [][][][] some settings for music (0x01- stereo, 0x02 - mono)
+8009a108 [][][][] active music channel mask.
+8009a10c [][][][] channels to be played mask.
+
+8009a11c [][][][] tempo of music. Used as >> 10.
+8009a120 [][][][] tempo music increment.
+8009a124 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
+
+8009a13c [][][][] we add here 0x00000080 (flag that we need update reverb to spu) each tyme we increment 8009a144.
+
+8009a144 [][][][] reverb depth. some value we can increment this by 8009a148 if 8009a154 not 0.
+8009a148 [][][][] increment for 8009a144.
+8009a14c [][]     this is number of times we need to increment tempo (8009a11c) each update by 8009a120.
+8009a14e [][]     AKAO music id for currently playing sequence.
+
+8009a154 [][]     this is number of times we need to increment 8009a144 each update by 8009a148.
+
+8009a15a [][]     upper timer equal value.
+8009a15c [][]     upper timer value. When this reach 8009a15a then we reset this to 0 and increment 8009a162. Stored in CHMPH opcode.
+8009a15e [][]     lower timer equal value.
+8009a160 [][]     lower timer value. When this equal to 8009a15e then we reset this to 0 and increment 8009a15c.
+8009a162 [][]     upper upper timer. Stored in CHMPH opcode.
+
+
+
+8009c6e4 savemap start
++0054          savemap character name data (0x84 size).
+    +00 []       character id.
+    +02 []       strength
+    +03 []       vitality
+    +04 []       magic
+    +05 []       spirit
+    +06 []       dexterity
+    +07 []       luck
+    +08 []       strength bonus
+    +09 []       vitality bonus
+    +0a []       magic bonus
+    +0b []       spirit bonus
+    +0c []       dexterity bonus
+    +0d []       luck bonus
+    +1c []       equipped weapon.
+    +1d []       equipped armor.
+    +1e []       equipped accessory.
+    +1f []       flags (0x10 sadness, 0x20 fury).
+    +20 []       char order (0xff normal, 0xfe back row).
+    +2c [][]     current hp.
+    +2e [][]     max hp (before materia alterations).
+    +30 [][]     current mp.
+    +32 [][]     max mp (before materia alterations).
+    +38 [][]     max hp (after materia alterations).
+    +3a [][]     max mp (after materia alterations).
+    +40 [][][][] weapon materia slot 1.
+    +44 [][][][] weapon materia slot 2.
+    +48 [][][][] weapon materia slot 3.
+    +4c [][][][] weapon materia slot 4.
+    +50 [][][][] weapon materia slot 5.
+    +54 [][][][] weapon materia slot 6.
+    +58 [][][][] weapon materia slot 7.
+    +5c [][][][] weapon materia slot 8.
+    +60 [][][][] armor materia slot 1.
+    +64 [][][][] armor materia slot 2.
+    +68 [][][][] armor materia slot 3.
+    +6c [][][][] armor materia slot 4.
+    +70 [][][][] armor materia slot 5.
+    +74 [][][][] armor materia slot 6.
+    +78 [][][][] armor materia slot 7.
+    +7c [][][][] armor materia slot 8.
+    +80 [][][][] exp to next level.
++04f8 [][][][] party member in slot1-4 (used in battle).
+8009cbe0 party item stock array
+8009d268 [][][][] savemap seconds for timer (set in STTIM).
+8009d288 savemap memory bank 1/2 start
+8009d302 []       flags for ui show during battle (0x40 - tagret text shown, 0x80 - underwater timer in battle)
++0cad [][][]   party member in slot 1-3.
+
+8009d588 savemap memory bank d/e start
++0eaa [][]     some value that increments each battle check.
++0f0c          field map name for menu (0x17 size).
++10a4 [][]     character lock mask. You cant move character from and out party (in game methods)
++10a6 [][]     character availability mask. Add character here when adding it to party or enable it with opcode.
++10d8 []       battle speed.
+8009d7be [][]     config flags (0x001c - magic order, 0xc000 - atb/recomended/wait)
+8009d7d0 []       savemap message speed.

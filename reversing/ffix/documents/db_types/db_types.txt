@@ -1,0 +1,30 @@
+0x00: ??? (Battle System Data)
+0x02: 3d model.
+0x03: 3d animations.
+0x04: textures (tim).
+0x05: script.
+0x06: text.
+0x07: AKAO Sequencer data (Battle Music, Battle System Data)
+0x08: AKAO FM/Noise/Reverb (Battle Info, Battle System Data, Battle Weapon Model)
+0x09: AKAO Audio, 4bit (Sony) ADPCM. (Battle Music, Battle System Data, Battle Sound Effects)
+0x0a: Field tiles and camera
+0x0b: Field walkmesh
+0x0c: battle background mesh.
+0x10: Monster Stats (Battle Info)
+0x11: ??? (Battle Info)
+0x12: Contain CLUT and TPage for Models (Battle Info, Battle Weapon Model, Character Data)
+0x14: ??? (Battle Info, Battle Weapon Model)
+0x19: ??? (Character Data)
+0x1a: battle background configuration
+0x1b: Pointers to other 'DB'
+
+
+L"DB00: Texture (RAW)", 
+L"DB0D: Font Table", 
+L"DB11: Enemy", 
+L"DB12: Object Mesh Setup", 
+L"DB14: Data Linker", 
+L"DB16: Sprite Animation", 
+L"DB17: Sprite", 
+L"DB18: AKAO Wavedata", 
+L"DB1D: Object Mesh Texture Setup", 

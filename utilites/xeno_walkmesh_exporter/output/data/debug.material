@@ -1,0 +1,91 @@
+material field/walkmesh
+{
+    technique
+    {
+        pass
+        {
+            ambient vertexcolour
+            cull_hardware none
+            polygon_mode wireframe
+        }
+    }
+}
+
+
+
+material field/model/solid_collision
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.0 1.0 1.0
+        }
+    }
+}
+
+
+
+
+material field/model/talk_collision
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.0 1.0 0.5
+        }
+    }
+}
+
+
+
+material field/model/direction
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.0 0.5 1.0
+        }
+    }
+}
+
+
+
+material field/line_trigger/on
+{
+    technique
+    {
+        pass
+        {
+            ambient 1.0 1.0 1.0
+        }
+    }
+}
+
+
+
+material field/line_trigger/off
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.5 0.5 0.5
+        }
+    }
+}
+
+
+
+material field/line_trigger/active
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.0 1.0 0.0
+        }
+    }
+}

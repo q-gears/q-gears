@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+	Ýêðàí çàãðóçêè
+-->
+<window>
+	<params 
+		name = "loading_screen"
+		rect = "0 0 1024 768"
+	/>
+	
+	<!--Èåðàðõèÿ îáúåêòîâ-->
+	<object name = "hierarchy" type = "objects">
+		<object name = "remove_anim" type = "object_anim" effect = "objects\screens\main_menu\gui_effects\remove_elems" x = "0" y = "0" time_scale = "0.5"/>
+
+		<object name = "Lable" type = "objects">
+			<object name = "text_loading" type = "text" string = "screens_loading_loading" style = "loading" x = "512" y = "630"/>
+			<object name = "progress"		type = "progress_bar_entity" prototype = "objects\screens\main_menu\gui_elements\small_progress_bar" x = "400" y = "650" />
+		</object>
+		
+		<object name = "text_continue" type = "text" string = "screens_loading_continue" style = "default" x = "512" y = "650"/>
+
+		<object name = "logotype" type = "sprite" sprite_name = "base" tex_name = "local\textures\logo"  x = "256" y = "200" />
+
+
+	</object>
+	
+	
+	<!--Îïèñàíèå ïîâåäåíèé-->
+	<behaviors>
+		<behavior name = "Init" >
+			<start/>
+			<stop/>
+		</behavior>
+		
+		
+		<!-- çàãðóæàåòñÿ-->
+		<behavior name = "StartScreen" >
+			<start>
+				<do command = "Show" />
+				<do command = "SetLock" param = "1"/>
+				<do object = "progress" command = "Set" param = "value = 0"/>
+				<do object = "text_continue" command = "Set" param = "visible = 0"/>
+
+				<do time = "0.1" object = "global.screens.main_menu_screen.menu_background" command = "BehaviorStart" param = "StopAnimation 1"/>
+				<do command = "BehaviorStart" param = "Loading" />
+			</start>
+			<stop/>
+		</behavior>
+
+		<!-- çàãðóæàåòñÿ-->
+		<behavior name = "Loading" >
+			<start>
+				<do time = "0.01" object = "global" command = "LoadAllSounds"/>
+				<do object = "progress" command = "Set" param = "value = 0.05"/>
+				
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "city_screen" />
+				<do object = "progress" command = "Set" param = "value = 0.3"/>
+				
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "match3_continue_restart" />
+				<do object = "progress" command = "Set" param = "value = 0.35"/>
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "constructions_buy" />
+				<do object = "progress" command = "Set" param = "value = 0.4"/>
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "constructions_view" />
+				<do object = "progress" command = "Set" param = "value = 0.45"/>
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "city_design" />
+				<do object = "progress" command = "Set" param = "value = 0.5"/>
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "city_gui" />
+				<do object = "progress" command = "Set" param = "value = 0.55"/>
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "city_congratulation" />
+				<do object = "progress" command = "Set" param = "value = 0.58"/>
+				
+				<do>
+					<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "city_tutorial" />
+					<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "match3_tutorial" />
+					<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "match3_quests" />
+					<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "city_quest_briefing" />
+
+					<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "match3_exit_confirm" />
+					<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "match3_restart_confirm" />
+					
+					
+					<do object = "progress" command = "Set" param = "value = 0.6"/>
+					<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "city_quest_counter" />
+					<do object = "progress" command = "Set" param = "value = 0.63"/>
+					<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "city_quest_debriefing" />
+					<do object = "progress" command = "Set" param = "value = 0.67"/>
+				</do>
+				
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "city_achievment_info" />
+				<do object = "progress" command = "Set" param = "value = 0.68"/>
+
+
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "match3_back_screen" />
+				<do object = "progress" command = "Set" param = "value = 0.7"/>
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "match3_field_screen" />
+				<do object = "progress" command = "Set" param = "value = 0.8"/>
+				<do time = "0.01" object = "global.screens" command = "LoadScreen" param = "match3_gui" />
+				<do object = "progress" command = "Set" param = "value = 0.9"/>
+				
+
+				<do object = "progress" command = "Set" param = "value = 1"/>
+				<do object = "text_continue" command = "Set" param = "visible = 1"/>
+				<do object = "remove_anim" command = "Restart" param = "Lable"/>
+
+				<do command = "BehaviorStart" param = "Loaded" />
+			</start>
+			<stop/>
+		</behavior>
+		
+		
+		<!-- çàãðóæåíî-->
+		<behavior name = "Loaded" >
+			<start>
+				<do object = "global.cursor" command = "Show" instant = "1"/>
+				<do object = "global.screens.main_menu_screen.menu_background" command = "BehaviorStart" param = "StartAnimation 1" instant = "1"/>
+			</start>
+			<stop/>
+			<events>
+				<event name = "OnLMouseDown">
+					<if left = "global.profile" leftParam = "need_to_create_new_profile" operator = "equal" right = "1">
+						<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuProfileEnterName 2" />
+						<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuScreen 2" />
+					</if>
+				</event>
+				<event name = "OnEnterDown">
+					<if left = "global.profile" leftParam = "need_to_create_new_profile" operator = "equal" right = "1">
+						<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuProfileEnterName 2" />
+						<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuScreen 2" />
+					</if>
+				</event>
+				<event name = "OnEscDown">
+					<if left = "global.profile" leftParam = "need_to_create_new_profile" operator = "equal" right = "1">
+						<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuProfileEnterName 2" />
+						<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuScreen 2" />
+					</if>
+				</event>
+				<event name = "OnSpaceDown">
+					<if left = "global.profile" leftParam = "need_to_create_new_profile" operator = "equal" right = "1">
+						<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuProfileEnterName 2" />
+						<do object = "global.screens.main_menu_screen" command = "BehaviorStart" param = "MainMenuScreen 2" />
+					</if>
+				</event>
+			</events>
+		</behavior>
+
+
+		<!-- êîíåö -->
+		<behavior name = "StopScreen" >
+			<start>
+				<do command = "Hide" />
+				<do command = "SetLock" param = "0"/>
+			</start>
+			<stop/>
+		</behavior>
+	</behaviors>
+</window>

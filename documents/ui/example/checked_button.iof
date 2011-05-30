@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+	Èíòåðàêòèâíûé îáúåêò: êíîïêà
+-->
+<button_entity>
+	<params 
+		name = "button_prot" 
+		rect = "-23 -23 43 43"
+		
+
+		can_checked	= "1"
+		idle_view 		= "idle"
+		selected_view = "over_mouse"
+		pushed_view 	= "pressed"
+		
+		idle_checked_view 			= "idle_checked"
+		selected_checked_view 	= "over_mouse_checked"
+		pushed_checked_view 		= "pressed_checked"
+	/>
+
+	<!--Èåðàðõèÿ îáúåêòîâ-->
+	<object name = "hierarchy" type = "objects">
+		<object name = "idle" 				type = "sprite" sprite_name = "check_empty" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0" hsX = "23" hsY = "23"/>
+		<object name = "over_mouse" 	type = "sprite" sprite_name = "check_empty" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0" scaleX = "1.05" scaleY = "1.05" hsX = "23" hsY = "23"/>
+		<object name = "pressed" 			type = "sprite" sprite_name = "check_empty" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0" hsX = "23" hsY = "23"/>
+	
+		<object name = "idle_checked" type = "objects" >
+			<object name = "idle_01" 			type = "sprite" sprite_name = "check_empty" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0" hsX = "23" hsY = "23"/>
+			<object name = "idle_02" 			type = "sprite" sprite_name = "check_full" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0" hsX = "23" hsY = "23"/>
+		</object>
+
+		<object name = "over_mouse_checked" type = "objects" scaleX = "1.05" scaleY = "1.05">
+			<object name = "over_mouse_01" 			type = "sprite" sprite_name = "check_empty" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0" hsX = "23" hsY = "23"/>
+			<object name = "over_mouse_02" 			type = "sprite" sprite_name = "check_full" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0" hsX = "23" hsY = "23"/>
+		</object>
+
+		<object name = "pressed_checked" type = "objects">
+			<object name = "pressed_01" 			type = "sprite" sprite_name = "check_empty" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0" hsX = "23" hsY = "23"/>
+			<object name = "pressed_02" 			type = "sprite" sprite_name = "check_full" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0" hsX = "23" hsY = "23"/>
+		</object>
+	</object>
+</button_entity>

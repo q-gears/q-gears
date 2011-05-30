@@ -1,0 +1,22 @@
+// header
++02 [][]     number of frames.
++04 [][]     static X rotation/offset to dynamic X root translation.
++06 [][]     static Y rotation/offset to dynamic Y root translation.
++08 [][]     static Z rotation/offset to dynamic Z root translation.
++0a [][]     flags.
+             0x0001 - if flag is set, then we use X root static translation.
+             0x0002 - if flag is set, then we use Y root static translation.
+             0x0004 - if flag is set, then we use Z root static translation.
++0c [][][][] offset to bone rotation data.
++10 [][][][] offset to bone lower rotation data.
+
+
+
+// bone rotation data/bone lower rotation data
++00 [][]     static X rotation/offset to dynamic X translation rotation.
++02 [][]     static Y rotation/offset to dynamic Y translation rotation.
++04 [][]     static Z rotation/offset to dynamic Z translation rotation.
++06 [][]     flags.
+             0x0001 - if flag is set, then we use X static rotation.
+             0x0002 - if flag is set, then we use Y static rotation.
+             0x0004 - if flag is set, then we use Z static rotation.

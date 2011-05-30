@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<map>
+    <script file_name="game_data/maps/test/test_ffvii_1.lua" />
+    <walkmesh file_name="game_data/maps/test/test_ffvii_1_wm.xml" />
+    <entity_model name="Cloud" file_name="models/field/units/cloud.mesh" position="0 0 10" direction="0" />
+    <entity_model name="TreasureChest" file_name="models/field/units/treasure_chest.mesh" position="-1 0 -10" direction="0" />
+    <entity_script name="Manager" />
+
+
+
+
+    <2dbackground texture="md1_1.png" layout="md1_1_bg.xml" />
+    <3dbackground model="md1_1.mesh" />
+    <texts>
+        <dialog file_name="dialogs_mission1.xml" />
+    </texts>
+    <line_triggers>
+        <line_trigger name="Text" point1="-100 0 0" point2="100 100 0" enabled="true" />
+        <line_trigger name="trigger2" point1="250 150 0" point2="250 -150 0" enabled="true" />
+        <line_trigger name="gateway_to_test2" point1="-150 150 0" point2="-150 -150 0" enabled="false" />
+    </line_triggers>
+    <camera view_matrix="0.999756 0.005127 -0.000244 -0.905183 -0.005127 1.000000 0.014160 19.683437 0.000244 -0.013916 1.000000 -1322.251221 0.000000 0.000000 0.000000 1.000000" projection_matrix="2.731250 0.000000 0.000000 0.000000 0.000000 3.901786 0.062500 0.000000 0.000000 0.000000 -1.000020 -2.000020 0.000000 0.000000 -1.000000 0.000000" />
+    <movement_rotation angle="0" />
+</map>

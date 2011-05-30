@@ -1,0 +1,91 @@
+MP Plus
+HP Plus
+Speed Plus
+Magic Plus
+Luck Plus
+EXP Plus
+Gil Plus
+Enemy Away
+Enemy Lure
+Chocobo Lure
+Pre-Emptive
+Long Range
+Mega All
+Counter Attack
+Slash-All
+Double Cut
+Cover
+Underwater
+HP<->MP
+W-Magic
+W-Summon
+W-Item
+
+All
+Counter
+Magic Counter
+MP Turbo
+MP Absorb
+HP Absorb
+Elemental
+Added Effect
+Sneak Attack
+Final Attack
+Added Cut
+Steal as well
+Quadra Magic
+Steal
+Sense
+
+Throw
+Morph
+Deathblow
+Manipulate
+Mime
+Enemy Skill
+
+
+
+Master Command
+Fire
+Ice
+Earth
+Lightning
+Restore
+Heal
+Revive
+Seal
+Mystify
+Transform
+Exit
+Poison
+Gravity
+Barrier
+
+Comet
+Time
+
+
+Destruct
+Contain
+Full Cure
+Shield
+Ultima
+Master Magic
+Choco/Mog
+Shiva
+Ifrit
+Ramuh
+Titan
+Odin
+Leviathan
+Bahamut
+Kujata
+Alexander
+Phoenix
+Neo Bahamut
+Hades
+Typhon
+Bahamut ZERO
+Knights of Round
+Master Summon

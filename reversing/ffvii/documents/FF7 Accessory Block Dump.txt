@@ -1,0 +1,140 @@
+FF7 Accessory Block Dump
+---------------------
+This list has been compiled by The SaiNt.
+
+Legend
+------
+
+
+IT  Increase Type
+-----------------
+Selects the character statistics to increase.
+00	Strength
+01	Vitality
+02	Magic
+03	Spirit
+04	Dexterity
+05	Luck
+FF	None
+
+IB  Increase By
+---------------
+Increases the values defined in IT (Increase Type)
+
+ES  Elemental Strength
+----------------------
+Selects the Element Strength
+00	Drains
+01	Nullifies
+
+SE Special Effect
+-----------------
+Selects the Special Effect to be enabled
+00	Haste
+01	Fury
+02	Curse Ring Effect
+03	Reflect
+04	Increase Stealing Rate
+05	Increase Manipulation Rate
+06	Barrier / MBarrier
+
+ET  Elemental Type
+------------------
+Selects the Element Type Protected From
+01	Fire
+02	Ice
+04	Lightning
+08	Earth
+10	Poison
+20	Gravity
+40	Water
+80	Wind
+00 1	Holy
+FF 01	All Of The Above
+
+SP  Status Protect
+------------------
+Selects the Status's protected from
+00	None
+01	Death
+02	Near Death
+04	Sleep
+08	Poison
+10	Sadness
+20	Fury
+40	Confusion
+80	Silence
+00 10	Haste
+00 20	Slow
+00 40	Stop
+00 80	Frog
+00 01	Small
+00 02	Slow-numb
+00 04	Petrify
+00 08	Regen
+FF FF	All Of The Above
+
+This works with the same addition method.
+So protection from death and sleep would be 01 + 04 = 05
+
+EM Equip Mask
+-------------
+01	Equipable on Cloud
+02	Equipable on Barret
+04	Equipable on Tifa
+08	Equipable on Aeris
+10	Equipable on Red XIII
+20	Equipable on Yuffie
+40	Equipable on Cait Sith
+80	Equipable on Vincent
+100	Equipable on Cid
+200	Equipable on Young Cloud
+400	Equipable on Sephiroth
+
+RM  Restriction Mask
+--------------------
+FF 	Appears in Item Menu. Does not appear in Battle Menu (Not usable at all)
+FE 	Appears in Battle Menu & Item Menu (Not usable at all)
+FD 	Appears in Item Menu. Does not appear in Battle Menu (Usable in Battle Menu)
+FC 	Appears in Battle Menu & Item Menu (Usable in Battle Menu)
+FB 	Appears in Item Menu. Does not appear in Battle Menu (Usable in Item Menu)
+FA 	Appears in Battle Menu & Item Menu (Usable in Item Menu)
+F9 	Appears in Item Menu. Does not appear in Battle Menu (Usable in Item Menu & Battle Menu)
+F8 	Appears in Battle Menu & Item Menu (Usable in Item Menu & Battle Menu)
+F7 	Appears in Item Menu. Does not appear in Battle Menu (Usable in Battle Menu)
+F6 	Appears in Battle Menu & Item Menu (Usable in Battle Menu)
+
+          IT--+ IB--+ ES SE ET--+ SP--------+ EM--+ RM
+00DAE0C8  00 FF 0A FF FF FF FF FF 00 00 00 00 FF 01 FE FF Power Wrist
+00DAE0D8  01 FF 0A FF FF FF FF FF 00 00 00 00 FF 01 FE FF Protect Vest
+00DAE0E8  02 FF 0A FF FF FF FF FF 00 00 00 00 FF 01 FE FF Earring
+00DAE0F8  03 FF 0A FF FF FF FF FF 00 00 00 00 FF 01 FE FF Talisman
+00DAE108  04 FF 0A FF FF FF FF FF 00 00 00 00 FF 01 FE FF Choco Feather
+00DAE118  05 FF 0A FF FF FF FF FF 00 00 00 00 FF 01 FE FF Amulet
+00DAE128  00 01 1E 1E FF FF FF FF 00 00 00 00 FF 01 FE FF Champion Belt
+00DAE138  FF FF FF FF 00 FF 10 00 08 00 00 00 FF 01 FE FF Poison Ring
+00DAE148  01 03 32 32 FF FF FF FF 00 00 00 00 FF 01 FE FF Tough Ring
+00DAE158  02 03 1E 1E FF FF FF FF 00 00 00 00 FF 01 FE FF Circlet
+00DAE168  FF FF FF FF FF FF FF FF 08 00 00 00 FF 01 FE FF Star Pendant
+00DAE178  FF FF FF FF FF FF FF FF 00 00 00 04 FF 01 FE FF Silver Glasses
+00DAE188  FF FF FF FF FF FF FF FF 04 00 00 00 FF 01 FE FF Headband
+00DAE198  FF FF FF FF FF FF FF FF 08 00 00 04 FF 01 FE FF Fairy Ring
+00DAE1A8  FF FF FF FF FF FF FF FF 00 60 00 02 FF 01 FE FF Jem Ring
+00DAE1B8  FF FF FF FF FF FF FF FF 00 18 00 00 FF 01 FE FF White Cape
+00DAE1C8  FF FF FF FF FF 00 FF FF 00 00 00 00 FF 01 FE FF Sprint Shoes
+00DAE1D8  FF FF FF FF FF FF FF FF 70 00 80 00 FF 01 FE FF Peace Ring
+00DAE1E8  FF FF FF FF FF FF FF FF FC 78 A0 06 FF 01 FE FF Ribbon
+00DAE1F8  FF FF FF FF 01 FF 01 00 00 00 00 00 FF 01 FE FF Fire Ring
+00DAE208  FF FF FF FF 01 FF 02 00 00 00 00 00 FF 01 FE FF Ice Ring
+00DAE218  FF FF FF FF 01 FF 04 00 00 00 00 00 FF 01 FE FF Bolt Ring
+00DAE228  FF FF FF FF 00 FF 0F 00 00 00 00 00 FF 01 FE FF Tetra Elemental
+00DAE238  FF FF FF FF FF FF FF FF 01 60 20 00 FF 01 FE FF Safety Bit
+00DAE248  FF FF FF FF FF 01 FF FF 00 00 00 00 FF 01 FE FF Fury Ring
+00DAE258  00 02 14 14 FF 02 FF FF 00 00 00 00 FF 01 FE FF Curse Ring
+00DAE268  FF FF FF FF FF 06 FF FF 00 00 00 00 FF 01 FE FF Protect Ring
+00DAE278  FF FF FF FF FF FF FF FF 00 00 00 00 FF 01 FE FF Cat's Bell
+00DAE288  FF FF FF FF FF 03 FF FF 00 00 00 00 FF 01 FE FF Reflect Ring
+00DAE298  FF FF FF FF 00 FF 40 00 00 00 00 00 FF 01 FE FF Water Ring
+00DAE2A8  FF FF FF FF FF 04 FF FF 00 00 00 00 FF 01 FE FF Sneak Glove
+00DAE2B8  FF FF FF FF FF 05 FF FF 00 00 00 00 FF 01 FE FF HypnoCrown
+

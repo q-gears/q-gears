@@ -1,0 +1,554 @@
+////////////////////////////////
+// funcad63c
+800AD63C	lui    v0, $8011
+800AD640	lw     v0, $ade4(v0)
+800AD654	lh     v0, $0046(v0)
+800AD658	lui    at, $8011
+800AD65C	sw     zero, $ade8(at)
+800AD664	addu   s1, a0, zero
+
+if (V0 != 0)
+{
+    S0 = 0;
+
+    loopad66c:	; 800AD66C
+        A0 = w[8010ade4];
+        V0 = h[A0 + 46];
+        [A0 + 46] = h(V0 + 1);
+
+        V1 = w[8010ad6c];
+        A0 = hu[V1 + V0 * 2];
+
+        if (A0 < 100)
+        {
+            funcabfc0;
+        }
+        else if (A0 < 200)
+        {
+            funcac3c0;
+        }
+        else if (A0 < 300)
+        {
+            funcac484;
+            S0 = V0;
+        }
+        else
+        {
+            funcac700;
+            S0 = V0;
+        }
+    800AD6FC	beq    s0, zero, loopad66c [$800ad66c]
+}
+
+800AD704	lh     a0, $0040(s1)
+800AD708	jal    funca9678 [$800a9678]
+800AD70C	nop
+800AD710	lw     v0, $0004(s1)
+800AD714	nop
+800AD718	beq    v0, zero, Lad770 [$800ad770]
+800AD71C	nop
+800AD720	lui    v0, $8011
+800AD724	lw     v0, $adec(v0)
+800AD728	nop
+800AD72C	bne    v0, zero, Lad770 [$800ad770]
+800AD730	nop
+800AD734	jal    funca21a4 [$800a21a4]
+800AD738	nop
+800AD73C	beq    v0, zero, Lad770 [$800ad770]
+800AD740	nop
+800AD744	jal    func1c8d4 [$8001c8d4]
+800AD748	nop
+800AD74C	andi   v0, v0, $0020
+800AD750	beq    v0, zero, Lad75c [$800ad75c]
+800AD754	ori    a1, zero, $0003
+800AD758	ori    a1, zero, $0004
+
+Lad75c:	; 800AD75C
+800AD75C	lw     v0, $0004(s1)
+800AD760	nop
+800AD764	lbu    a0, $0050(v0)
+800AD768	jal    funcab988 [$800ab988]
+800AD76C	nop
+
+Lad770:	; 800AD770
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcac484
+S0 = A0;
+if (A0 == 200)
+{
+    A0 = w[8010ade4];
+    V0 = hu[A0 + 46];
+    [A0 + 46] = h(V0 + 1);
+
+    V0 = w[8010ad6c] + V0 * 2;
+    S0 = hu[V0];
+    [A0 + 46] = h(S0);
+
+    return 0;
+}
+else if (A0 == 201)
+{
+    struct = w[8010ade4];
+    V0 = hu[struct + 46];
+    [struct + 46] = h(V0 + 1);
+
+    V1 = w[8010ad6c] + V0 * 2;
+    S0 = hu[V0];
+
+
+    funcabb24;
+    if (V0 == 0)
+    {
+        [struct + 46] = h(S0);
+    }
+    return 0;
+}
+else if (A0 == 203)
+{
+    800AC568	lui    v1, $8011
+    800AC56C	lw     v1, $ade4(v1)
+    800AC570	nop
+    800AC574	lbu    v0, $0054(v1)
+    800AC578	nop
+    if (V0 != 0)
+    {
+        800AC584	lbu    v0, $0054(v1)
+        800AC588	nop
+        800AC58C	addiu  v0, v0, $ffff (=-$1)
+        800AC590	sb     v0, $0054(v1)
+        800AC594	andi   v0, v0, $00ff
+        800AC598	sll    v0, v0, $02
+        800AC59C	lui    a0, $8011
+        800AC5A0	lw     a0, $ade4(a0)
+        800AC5A4	addiu  v0, v0, $002c
+        800AC5A8	addu   v0, v0, a0
+        800AC5AC	lhu    v1, $0000(v0)
+        800AC5B0	nop
+        800AC5B4	sh     v1, $0046(a0)
+        800AC5B8	lbu    v1, $0002(v0)
+        800AC5BC	nop
+        800AC5C0	sb     v1, $0056(a0)
+        800AC5C4	lui    v1, $8011
+        800AC5C8	lw     v1, $ade4(v1)
+        800AC5CC	lbu    v0, $0003(v0)
+        800AC5D4	sb     v0, $0057(v1)
+        return 0;
+    }
+    else
+    {
+        Lac5d8:	; 800AC5D8
+        800AC5D8	sb     zero, $0057(v1)
+        800AC5EC	sh     zero, $0046(v1)
+
+        if (w[8010adec] != 0)
+        {
+            if (w[8010ade4] == 80109d74)
+            {
+                S0 = w[8010ad38];
+                if (S0 != 0)
+                {
+                    loopac61c:	; 800AC61C
+                        800AC61C	lbu    a0, $0050(s0)
+                        800AC620	jal    funcab988 [$800ab988]
+                        800AC624	ori    a1, zero, $0001
+                        800AC628	lw     s0, $0000(s0)
+                        800AC62C	nop
+                    800AC630	bne    s0, zero, loopac61c [$800ac61c]
+                }
+            }
+        }
+        else
+        {
+            if (w[8010ade4] == 80109d74)
+            {
+                800AC65C	ori    a0, zero, $0002
+                800AC658	jal    funcaba18 [$800aba18]
+            }
+            else
+            {
+                800AC668	lbu    a0, $0050(v1)
+                800AC670	ori    a1, zero, $0002
+                800AC66C	jal    funcab988 [$800ab988]
+            }
+        }
+    }
+    return 1;
+}
+else
+{
+    800AC67C	jal    funcabb24 [$800abb24]
+    800AC680	nop
+    800AC684	lui    v1, $8011
+    800AC688	lw     v1, $ade4(v1)
+    800AC68C	nop
+    800AC690	sb     v0, $0052(v1)
+    800AC694	lui    v1, $8011
+    800AC698	lw     v1, $ade4(v1)
+    800AC69C	nop
+    800AC6A0	lbu    a0, $0052(v1)
+    800AC6A4	nop
+    800AC6A8	sltiu  v0, a0, $0040
+    800AC6B0	andi   a1, s0, $ffff
+    if (V0 != 0)
+    {
+        800AC6B8	addiu  a1, a1, $fdfc (=-$204)
+        800AC6B4	jal    funcab988 [$800ab988]
+    }
+    else
+    {
+        800AC6C4	lui    v0, $8011
+        800AC6C8	lw     v0, $ad3c(v0)
+        800AC6CC	andi   a0, s0, $ffff
+        800AC6D0	lbu    v0, $0050(v0)
+        800AC6D4	addiu  a0, a0, $fdfc (=-$204)
+        800AC6DC	sb     v0, $0052(v1)
+        800AC6D8	jal    funcab92c [$800ab92c]
+    }
+    return 1;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcac3c0
+S0 = A0;
+V1 = S0 & ffff;
+if (A0 == 100)
+{
+    [8010ad90] = w(8010ad70);
+}
+else
+{
+    A1 = w[8010ad90];
+    A0 = w[8010ade4];
+    V0 = hu[A0 + 46];
+    [A0 + 46] = h(V0 + 1);
+
+    V1 = w[8010ad6c];
+    [A1 + 0] = w(hu[V1 + V0 * 2]);
+    [A1 + 4] = h(S0);
+
+    [8010ad90] = w(A1 + 8);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcabfc0
+switch (A0)
+{
+15 FCBF0A80
+16 90C30A80
+18 58C20A80
+19 8CC20A80
+1a E4C20A80
+1b 58C30A80
+1c 90C30A80
+1d 90C30A80
+1e 90C30A80
+1f 90C30A80
+20 90C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+30 2CC00A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+40 54C00A8074C00A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+50 64C10A8084C10A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+5e 90C30A80
+5f 90C30A80
+61 B4C00A80
+62 D4C00A80
+63 F8C00A80
+64 90C30A80
+65 90C30A80
+66 90C30A80
+67 90C30A80
+68 90C30A80
+69 90C30A80
+6a 90C30A80
+6b 90C30A80
+6c 90C30A80
+6d 90C30A80
+6e 90C30A80
+6f 90C30A80
+71 40C10A80
+72 90C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+80 A4C10A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+90 90C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+a0 C4C10A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+b0 E4C10A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+c0 0CC20A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+d0 90C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
+e0 40C20A80
+
+    800ABFFC	jal    funcabb24 [$800abb24]
+    800AC000	nop
+    800AC004	lui    v1, $8011
+    800AC008	lw     v1, $ad90(v1)
+    800AC00C	j      Lac38c [$800ac38c]
+    800AC010	subu   v0, zero, v0
+
+    case 17:
+    {
+        funcabb24;
+
+        V1 = w[8010ad90];
+        [V1] = w(V0 < 1);
+    }
+    break;
+
+    800AC02C	jal    funcabb24 [$800abb24]
+    800AC030	nop
+    800AC034	jal    funcabb24 [$800abb24]
+    800AC038	addu   s0, v0, zero
+    800AC03C	mult   v0, s0
+    800AC040	lui    v1, $8011
+    800AC044	lw     v1, $ad90(v1)
+    800AC048	mflo   v0
+    800AC04C	j      Lac390 [$800ac390]
+    800AC050	sw     v0, $0000(v1)
+    800AC054	jal    funcabb24 [$800abb24]
+    800AC058	nop
+    800AC05C	jal    funcabb24 [$800abb24]
+    800AC060	addu   s0, v0, zero
+    800AC064	lui    v1, $8011
+    800AC068	lw     v1, $ad90(v1)
+    800AC06C	j      Lac38c [$800ac38c]
+    800AC070	addu   v0, v0, s0
+    800AC074	jal    funcabb24 [$800abb24]
+    800AC078	nop
+    800AC07C	jal    funcabb24 [$800abb24]
+    800AC080	addu   s0, v0, zero
+    800AC084	lui    v1, $8011
+    800AC088	lw     v1, $ad90(v1)
+    800AC08C	j      Lac38c [$800ac38c]
+    800AC090	subu   v0, v0, s0
+
+    case 60:
+    {
+        funcabb24;
+        S0 = V0;
+
+        funcabb24;
+
+        V1 = w[8010ad90];
+        [V1] = w(V0 < S0);
+    }
+    break;
+
+    800AC0B4	jal    funcabb24 [$800abb24]
+    800AC0B8	nop
+    800AC0BC	jal    funcabb24 [$800abb24]
+    800AC0C0	addu   s0, v0, zero
+    800AC0C4	lui    v1, $8011
+    800AC0C8	lw     v1, $ad90(v1)
+    800AC0CC	j      Lac38c [$800ac38c]
+    800AC0D0	slt    v0, s0, v0
+    800AC0D4	jal    funcabb24 [$800abb24]
+    800AC0D8	nop
+    800AC0DC	jal    funcabb24 [$800abb24]
+    800AC0E0	addu   s0, v0, zero
+    800AC0E4	slt    v0, s0, v0
+    800AC0E8	lui    v1, $8011
+    800AC0EC	lw     v1, $ad90(v1)
+    800AC0F0	j      Lac38c [$800ac38c]
+    800AC0F4	xori   v0, v0, $0001
+
+
+
+    case 63:
+    {
+        funcabb24;
+        S0 = V0;
+
+        funcabb24;
+
+        V1 = w[8010ad90];
+        [V1] = w(V0 >= S0);
+    }
+    break;
+
+
+
+    case 70:
+    {
+        funcabb24;
+        S0 = V0;
+
+        funcabb24;
+
+        V1 = w[8010ad90];
+        [V1] = w(V0 == S0);
+    }
+    break;
+
+    800AC140	jal    funcabb24 [$800abb24]
+    800AC144	nop
+    800AC148	jal    funcabb24 [$800abb24]
+    800AC14C	addu   s0, v0, zero
+    800AC150	xor    v0, v0, s0
+    800AC154	lui    v1, $8011
+    800AC158	lw     v1, $ad90(v1)
+    800AC15C	j      Lac38c [$800ac38c]
+    800AC160	sltu   v0, zero, v0
+    800AC164	jal    funcabb24 [$800abb24]
+    800AC168	nop
+    800AC16C	jal    funcabb24 [$800abb24]
+    800AC170	addu   s0, v0, zero
+    800AC174	lui    v1, $8011
+    800AC178	lw     v1, $ad90(v1)
+    800AC17C	j      Lac38c [$800ac38c]
+    800AC180	sllv   v0, s0, v0
+    800AC184	jal    funcabb24 [$800abb24]
+    800AC188	nop
+    800AC18C	jal    funcabb24 [$800abb24]
+    800AC190	addu   s0, v0, zero
+    800AC194	lui    v1, $8011
+    800AC198	lw     v1, $ad90(v1)
+    800AC19C	j      Lac38c [$800ac38c]
+    800AC1A0	srav   v0, s0, v0
+    800AC1A4	jal    funcabb24 [$800abb24]
+    800AC1A8	nop
+    800AC1AC	jal    funcabb24 [$800abb24]
+    800AC1B0	addu   s0, v0, zero
+    800AC1B4	lui    v1, $8011
+    800AC1B8	lw     v1, $ad90(v1)
+    800AC1BC	j      Lac38c [$800ac38c]
+    800AC1C0	and    v0, v0, s0
+    800AC1C4	jal    funcabb24 [$800abb24]
+    800AC1C8	nop
+    800AC1CC	jal    funcabb24 [$800abb24]
+    800AC1D0	addu   s0, v0, zero
+    800AC1D4	lui    v1, $8011
+
+    Lac1d8:	; 800AC1D8
+    800AC1D8	lw     v1, $ad90(v1)
+    800AC1DC	j      Lac38c [$800ac38c]
+    800AC1E0	or     v0, v0, s0
+    800AC1E4	jal    funcabb24 [$800abb24]
+    800AC1E8	nop
+    800AC1EC	jal    funcabb24 [$800abb24]
+    800AC1F0	addu   s0, v0, zero
+    800AC1F4	lui    a0, $8011
+    800AC1F8	lw     a0, $ad90(a0)
+    800AC1FC	beq    v0, zero, Lac238 [$800ac238]
+    800AC200	addu   v1, zero, zero
+    800AC204	j      Lac238 [$800ac238]
+    800AC208	sltu   v1, zero, s0
+    800AC20C	jal    funcabb24 [$800abb24]
+    800AC210	nop
+    800AC214	jal    funcabb24 [$800abb24]
+    800AC218	addu   s0, v0, zero
+    800AC21C	lui    a0, $8011
+    800AC220	lw     a0, $ad90(a0)
+    800AC224	bne    v0, zero, Lac234 [$800ac234]
+    800AC228	addu   v1, zero, zero
+    800AC22C	beq    s0, zero, Lac238 [$800ac238]
+    800AC230	nop
+
+    Lac234:	; 800AC234
+    800AC234	ori    v1, zero, $0001
+
+    Lac238:	; 800AC238
+    800AC238	j      Lac390 [$800ac390]
+    800AC23C	sw     v1, $0000(a0)
+    800AC240	jal    funcabb24 [$800abb24]
+    800AC244	nop
+    800AC248	jal    funcabe58 [$800abe58]
+    800AC24C	addu   a0, v0, zero
+    800AC250	j      Lac390 [$800ac390]
+    800AC254	nop
+    800AC258	jal    funcabb24 [$800abb24]
+    800AC25C	nop
+    800AC260	addu   a0, v0, zero
+    800AC264	jal    funcaf1a8 [$800af1a8]
+    800AC268	addiu  a1, zero, $ffff (=-$1)
+    800AC26C	jal    funcaa098 [$800aa098]
+    800AC270	addiu  a0, sp, $0010
+    800AC274	jal    funcaf96c [$800af96c]
+    800AC278	addiu  a0, sp, $0010
+    800AC27C	lui    v1, $8011
+    800AC280	lw     v1, $ad90(v1)
+    800AC284	j      Lac38c [$800ac38c]
+    800AC288	sra    v0, v0, $05
+    800AC28C	lui    v0, $8011
+    800AC290	lw     v0, $ad90(v0)
+    800AC294	lui    s0, $8011
+    800AC298	lw     s0, $ad3c(s0)
+    800AC29C	jal    funcabb24 [$800abb24]
+    800AC2A0	sw     zero, $0000(v0)
+    800AC2A4	jal    wm_find_id_in_model_struct_list [$800a993c]
+    800AC2A8	addu   a0, v0, zero
+    800AC2AC	beq    v0, zero, Lac2d4 [$800ac2d4]
+    800AC2B0	addiu  a1, s0, $000c
+    800AC2B4	lui    a0, $8011
+    800AC2B8	lw     a0, $ad3c(a0)
+    800AC2BC	jal    funcae024 [$800ae024]
+    800AC2C0	addiu  a0, a0, $000c
+    800AC2C4	lui    v1, $8011
+    800AC2C8	lw     v1, $ad90(v1)
+    800AC2CC	sra    v0, v0, $04
+    800AC2D0	sw     v0, $0000(v1)
+
+    Lac2d4:	; 800AC2D4
+    800AC2D4	lui    at, $8011
+    800AC2D8	sw     s0, $ad3c(at)
+    800AC2DC	j      Lac390 [$800ac390]
+    800AC2E0	nop
+    800AC2E4	jal    funcabb24 [$800abb24]
+    800AC2E8	nop
+    800AC2EC	lui    v1, $8011
+    800AC2F0	lw     v1, $ad3c(v1)
+    800AC2F4	lui    s0, $8011
+    800AC2F8	lw     s0, $ad90(s0)
+    800AC2FC	lw     a0, $000c(v1)
+    800AC300	lw     a1, $0010(v1)
+    800AC304	lw     a2, $0014(v1)
+    800AC308	lw     a3, $0018(v1)
+    800AC30C	sw     a0, $0010(sp)
+    800AC310	sw     a1, $0014(sp)
+    800AC314	sw     a2, $0018(sp)
+    800AC318	sw     a3, $001c(sp)
+    800AC31C	addu   a1, v0, zero
+    800AC320	addiu  a0, sp, $0010
+    800AC324	sltiu  v0, a1, $0003
+    800AC328	beq    v0, zero, Lac350 [$800ac350]
+    800AC32C	sw     zero, $0014(sp)
+    800AC330	sll    a1, a1, $04
+    800AC334	lui    v0, $8011
+    800AC338	addiu  v0, v0, $adf4 (=-$520c)
+    800AC33C	jal    funcae024 [$800ae024]
+    800AC340	addu   a1, a1, v0
+    800AC344	sra    v0, v0, $04
+    800AC348	j      Lac390 [$800ac390]
+    800AC34C	sw     v0, $0000(s0)
+
+    Lac350:	; 800AC350
+    800AC350	j      Lac390 [$800ac390]
+    800AC354	sw     zero, $0000(s0)
+    800AC358	jal    funcabb24 [$800abb24]
+    800AC35C	nop
+    800AC360	addu   a0, v0, zero
+    800AC364	jal    funcaf1a8 [$800af1a8]
+    800AC368	addiu  a1, zero, $ffff (=-$1)
+    800AC36C	jal    funcaa098 [$800aa098]
+    800AC370	addiu  a0, sp, $0010
+    800AC374	jal    funcaf9a0 [$800af9a0]
+    800AC378	addiu  a0, sp, $0010
+    800AC37C	sll    v0, v0, $10
+    800AC380	lui    v1, $8011
+    800AC384	lw     v1, $ad90(v1)
+    800AC388	sra    v0, v0, $14
+
+    Lac38c:	; 800AC38C
+    800AC38C	sw     v0, $0000(v1)
+}
+
+Lac390:	; 800AC390
+V0 = w[8010ad90];
+[V0 + 4] = h(110);
+[8010ad90] = w(V0 + 8);
+////////////////////////////////

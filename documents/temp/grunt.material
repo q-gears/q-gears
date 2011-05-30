@@ -1,0 +1,38 @@
+vertex_program Test/Fixed glsl
+{
+    source Fixed.glsl
+}
+
+
+
+fragment_program Test/Red glsl
+{
+    source Red.glsl
+}
+
+
+
+material ffvii/battle_model/grunt
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+
+            vertex_program_ref Test/Fixed
+            {
+            }
+
+            fragment_program_ref Test/Red
+            {
+            }
+
+			texture_unit
+			{
+				texture grunt.png
+				filtering point point none
+			}
+        }
+    }
+}

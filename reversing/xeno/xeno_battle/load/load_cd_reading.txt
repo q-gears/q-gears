@@ -1,0 +1,63 @@
+STRIPCD1\2\0038 // battle executable
+cdrom $801C3A0C <- 24:13:63($1a958), 2048 bytes
+cdrom $801EBA0C <- 24:14:68($1a9a8), 1200 bytes
+cdrom $80058D94 <- 24:14:68($1a9a8), 848 bytes
+
+STRIPCD1\15\2613.sed // battle sound?
+cdrom $801E3970 <- 53:15:16($3a783), 1664 bytes
+cdrom $80058D94 <- 53:15:16($3a783), 384 bytes
+
+STRIPCD1\15\2614 // battle things
+cdrom $801D5AF0 <- 53:15:17($3a784), 2048 bytes
+cdrom $801E32F0 <- 53:15:44($3a79f), 1656 bytes
+cdrom $80058D94 <- 53:15:44($3a79f), 392 bytes
+
+STRIPCD1\15\2615 // battle things
+cdrom $801E4000 <- 53:15:45($3a7a0), 2048 bytes
+cdrom $801E9000 <- 53:15:55($3a7aa), 1896 bytes
+cdrom $80058D94 <- 53:15:55($3a7aa), 152 bytes
+
+STRIPCD1\16\2620 // enemies
+cdrom $800E8278 <- 53:16:54($3a7f4), 2048 bytes
+cdrom $800E9278 <- 53:16:56($3a7f6), 1132 bytes
+cdrom $80058D94 <- 53:16:56($3a7f6), 916 bytes
+
+STRIPCD1\16\2621.unk7 // enemies
+cdrom $801A2920 <- 53:16:57($3a7f7), 2048 bytes
+cdrom $801C4920 <- 53:17:50($3a83b), 580 bytes
+cdrom $80058D94 <- 53:17:50($3a83b), 1468 bytes
+
+801e48e4 : LHU     800c4008 (v0), 0030 (800e8278 (v1)) [800e82a8]
+801e4950 : LHU     800e827a (v0), 0000 (800e827a (v0)) [800e827a]
+
+
+
+
+STRIPCD1\18\2863.unk5 // 3d background
+cdrom $801736C8 <- 55:45:44($3d391), 2048 bytes
+cdrom $801A26C8 <- 55:46:63($3d3ef), 592 bytes
+cdrom $80058D94 <- 55:46:63($3d3ef), 1456 bytes
+
+STRIPCD1\18\2864 // 3d background data
+cdrom $801E3184 <- 55:46:64($3d3f0), 2020 bytes
+cdrom $80058D94 <- 55:46:64($3d3f0), 28 bytes
+
+STRIPCD1\19\2988.unk3
+cdrom $8010C98C <- 56:32:09($3e133), 2048 bytes
+cdrom $8011D98C <- 56:32:43($3e155), 2008 bytes
+cdrom $80058D94 <- 56:32:43($3e155), 40 bytes
+
+STRIPCD1\19\3080
+cdrom $801D569C <- 57:06:16($3eb30), 2048 bytes
+cdrom $801E369C <- 57:06:44($3eb4c), 560 bytes
+cdrom $80058D94 <- 57:06:44($3eb4c), 1488 bytes
+
+STRIPCD1\19\3081.unk3
+cdrom $80120A28 <- 57:06:45($3eb4d), 2048 bytes
+cdrom $80122A28 <- 57:06:49($3eb51), 476 bytes
+cdrom $80058D94 <- 57:06:49($3eb51), 1572 bytes
+
+STRIPCD1\19\3082.sed
+cdrom $80122C0C <- 57:06:50($3eb52), 2048 bytes
+cdrom $80124C0C <- 57:06:54($3eb56), 660 bytes
+cdrom $80058D94 <- 57:06:54($3eb56), 1388 bytes

@@ -1,0 +1,12 @@
+u8  unsigned byte.
+u16 unsigned two bytes.
+s16 signed two bytes.
+s40 immediate value that is treaten like signed value if bit 0x40 in "f sign" set.
+f   flag used to set signed or unsigned data for sXX type immediate values.
+v   variable from memory.
+v80 variable from memory wich can be immediate value if 0x8000 bit is set.
+
+
+
+0x87 SetProgress(v80 value);
+    store value at progress variable (offset 0 in memory).

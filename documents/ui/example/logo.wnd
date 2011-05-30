@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+	Ýêðàí ïîêàçà ëîãîòèïîâ
+-->
+<logo_screen>
+	<params 
+		name = "logo_screen" 
+		logos_path = "..\screenbranding"
+		splash_show_time = "2.0"
+		splash_fade_time = "0.6"
+	/>
+</logo_screen>

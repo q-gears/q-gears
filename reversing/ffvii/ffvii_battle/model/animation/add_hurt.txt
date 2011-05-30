@@ -1,0 +1,400 @@
+﻿////////////////////////////////
+// funcd5774
+target_id = A0;
+
+V0 = h[800f836c];
+if ((V0 >> target_id) & 1)
+{
+    A0 = 6;
+}
+else
+{
+    A0 = 4;
+}
+
+funcd4fa8;
+[V0 + 0] = h(target_id);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd4fa8
+// A0 == 6 if target with reflect/ A0 == 4 if without reflect
+A1 = w[800f10d8];
+[800f4cec + A1 * 4] = w(A0);
+[800f10d8] = w((A1 + 1) & f);
+
+return 800f4d2c + A1 * 14;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8b48
+S1 = 80151778;
+
+loopb8b60:	; 800B8B60
+    A0 = SP + 10; // we store address of current 800f4d2c
+    funcd4ff0; // we read 800f4cec hurt byte here
+
+    if (V0 == 0)
+    {
+        return;
+    }
+
+    V1 = V0 < b;
+800B8B74	beq    v1, zero, loopb8b60 [$800b8b60]
+
+2C8D0B80 1
+848D0B80 2
+608B0B80 3 8
+E48D0B80 7
+448C0B80 9
+688C0B80 a
+
+if (V0 == 4 || V0 == 5) // normal hurt
+{
+    [800f8378] = b(0);
+
+    V0 = w[SP + 10];
+    S0 = h[V0 + 0]; // unit id
+
+    A0 = S0;
+    funcb88cc;
+
+    [801518e4 + S0 * b9c + 3e] = b(bu[801518e4 + S0 * b9c + 3e] | 20);
+
+    A0 = S0;
+    funcb888c;
+    [80151200 + S0 * 74 + 0] = w(w[80163cc4 + V0 * 8]);
+
+    800B8C3C	j      loopb8b60 [$800b8b60]
+}
+else if (V0 == 6) // reflection
+{
+    V0 = w[SP + 10];
+    S0 = h[V0 + 0]; // unit id
+
+    A0 = S0;
+    funcd6814; // add reflection effect
+
+    [801518e4 + S0 * b9c + 26] = b(1);
+
+    800B8DDC	j      loopb8b60 [$800b8b60]
+}
+
+800B8C44	lw     v0, $0010(sp)
+800B8C48	nop
+800B8C4C	lh     a0, $0000(v0)
+800B8C50	lui    at, $8010
+800B8C54	sb     zero, $8378(at)
+800B8C58	jal    funcb88cc [$800b88cc]
+800B8C5C	nop
+800B8C60	j      loopb8b60 [$800b8b60]
+800B8C64	nop
+800B8C68	lw     v1, $0010(sp)
+800B8C6C	ori    v0, zero, $0001
+800B8C70	lui    at, $8010
+800B8C74	sb     v0, $8378(at)
+800B8C78	lh     s0, $0000(v1)
+800B8C7C	lh     a1, $0010(v1)
+800B8C80	jal    funcb8944 [$800b8944]
+800B8C84	addu   a0, s0, zero
+800B8C88	sll    v1, s0, $01
+800B8C8C	addu   v1, v1, s0
+800B8C90	sll    v0, v1, $05
+800B8C94	subu   v0, v0, v1
+800B8C98	sll    v0, v0, $03
+800B8C9C	subu   v0, v0, s0
+800B8CA0	sll    v0, v0, $02
+800B8CA4	lui    at, $8015
+800B8CA8	addiu  at, at, $1922
+800B8CAC	addu   at, at, v0
+800B8CB0	lbu    v1, $0000(at)
+800B8CB4	nop
+800B8CB8	ori    v1, v1, $0020
+800B8CBC	lui    at, $8015
+800B8CC0	addiu  at, at, $1922
+800B8CC4	addu   at, at, v0
+800B8CC8	sb     v1, $0000(at)
+800B8CCC	jal    funcb888c [$800b888c]
+800B8CD0	addu   a0, s0, zero
+800B8CD4	sll    v1, s0, $03
+800B8CD8	subu   v1, v1, s0
+800B8CDC	sll    v1, v1, $02
+800B8CE0	addu   v1, v1, s0
+800B8CE4	sll    v0, v0, $10
+800B8CE8	sra    v0, v0, $0d
+800B8CEC	sll    v1, v1, $02
+800B8CF0	lui    a0, $8016
+800B8CF4	lbu    a0, $3b38(a0)
+800B8CF8	lui    at, $8016
+800B8CFC	addiu  at, at, $3cc4
+800B8D00	addu   at, at, v0
+800B8D04	lw     v0, $0000(at)
+800B8D08	addiu  a0, a0, $0001
+800B8D0C	lui    at, $8015
+800B8D10	addiu  at, at, $1200
+800B8D14	addu   at, at, v1
+800B8D18	sw     v0, $0000(at)
+800B8D1C	lui    at, $8016
+800B8D20	sb     a0, $3b38(at)
+800B8D24	j      loopb8b60 [$800b8b60]
+800B8D28	nop
+800B8D2C	lw     v1, $0010(sp)
+800B8D30	nop
+800B8D34	lhu    v0, $0004(v1)
+800B8D38	nop
+800B8D3C	sh     v0, $0000(s1)
+800B8D40	lhu    v0, $0006(v1)
+800B8D44	nop
+800B8D48	sh     v0, $0002(s1)
+800B8D4C	lhu    v0, $0008(v1)
+800B8D50	nop
+800B8D54	sh     v0, $0004(s1)
+800B8D58	lhu    v0, $0010(v1)
+800B8D5C	lui    a0, $800c
+800B8D60	addiu  a0, a0, $7340
+800B8D64	lui    at, $8010
+800B8D68	sh     v0, $afe8(at)
+800B8D6C	jal    funcbbeac [$800bbeac]
+800B8D70	nop
+800B8D74	lui    at, $8010
+800B8D78	sb     zero, $8364(at)
+800B8D7C	j      loopb8b60 [$800b8b60]
+800B8D80	nop
+800B8D84	ori    v0, zero, $00ff
+800B8D88	lui    at, $8010
+800B8D8C	sb     v0, $8364(at)
+800B8D90	j      loopb8b60 [$800b8b60]
+800B8D94	nop
+800B8DE4	lw     v1, $0010(sp)
+800B8DE8	nop
+800B8DEC	lh     v0, $0010(v1)
+800B8DF0	lw     a2, $000c(v1)
+800B8DF4	sll    v0, v0, $03
+800B8DF8	lui    at, $800f
+800B8DFC	addiu  at, at, $8c90 (=-$7370)
+800B8E00	addu   at, at, v0
+800B8E04	lw     a0, $0000(at)
+800B8E08	lui    at, $800f
+800B8E0C	addiu  at, at, $8c94 (=-$736c)
+800B8E10	addu   at, at, v0
+800B8E14	lw     a1, $0000(at)
+800B8E18	jal    func33e74 [$80033e74]
+800B8E1C	addu   a3, zero, zero
+800B8E20	jal    funcb7fb4 [$800b7fb4]
+800B8E24	nop
+800B8E28	j      loopb8b60 [$800b8b60]
+800B8E2C	nop
+
+Lb8e30:	; 800B8E30
+800B8E30	lw     ra, $0020(sp)
+800B8E34	lw     s1, $001c(sp)
+800B8E38	lw     s0, $0018(sp)
+800B8E3C	addiu  sp, sp, $0028
+800B8E40	jr     ra 
+800B8E44	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd4ff0
+if (w[800f10d8] != w[800f10dc])
+{
+    V1 = w[800f10dc];
+    [A0] = w(800f4d2c + V1 * 14);
+
+    [800f10dc] = w((w[800f10dc] + 1) & f);
+
+    return w[800f4cec + V1 * 4];
+}
+else
+{
+    [A0] = w(800f4d2c + ((w[800f10d8] - 1) & f) * 14);
+    return 0;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb88cc
+unit_id = A0;
+
+// add new effect
+A0 = 800ce970;
+funcbbeac;
+S0 = V0;
+[80162978 + S0 * 20 + 4] = h(0);
+[80162978 + S0 * 20 + 8] = h(unit_id);
+
+A0 = unit_id;
+funcb888c;
+A0 = V0;
+A1 = S0;
+funcb8a34;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb888c
+V1 = 0;
+
+loopb8890:	; 800B8890
+    V0 = bu[801517f0 + V1];
+    if (A0 == V0)
+    {
+        return V1;
+    }
+
+    V1 = V1 + 1;
+    V0 = V1 < 4e;
+800B88BC	bne    v0, zero, loopb8890 [$800b8890]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8a34
+[80162978 + A1 * 20 + 06] = h(hu[800f99ec + A0 * c + 8]);
+[80162978 + A1 * 20 + 0a] = h(hu[800f99ec + A0 * c + 0]); // damage.
+[80162978 + A1 * 20 + 0c] = h(bu[801590cc]); // attacker id
+[80162978 + A1 * 20 + 0e] = h(hu[800f99ec + A0 * c + 2]); // 1f800220 damage flags (heal damage to mp critical).
+[80162978 + A1 * 20 + 10] = w(h[800f99ec + A0 * c + 4]); // impact sound.
+[80162978 + A1 * 20 + 14] = w(h[800f99f2 + A0 * c]); // impact effect id.
+[80162978 + A1 * 20 + 18] = b(bu[800f8cf0]); // 1 in 0xbe opcode or 0 in 0xf7 opcode
+[80162978 + A1 * 20 + 19] = b(bu[800f99ec + A0 * c + a]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcce75c
+V1 = h[8015169c];
+A0 = h[80162978 + V1 * 20 + 8]; // unit id
+if ((h[800fa69c] >> A0) & 1)
+{
+    // add effect of mbarrier
+    funcd67e8;
+}
+else if ((h[80163608] >> A0) & 1)
+{
+    // add effect of barrier
+    funcd67bc;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd67e8
+// magic barrier
+[800f14d4] = w(a8);
+A1 = 1;
+funcd6734;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd67bc
+// barrier
+[800f14d4] = w(88);
+A1 = 0;
+funcd6734;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd6814
+// reflection
+[800f14d4] = w(88);
+A1 = 2;
+funcd6734;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd6734
+S1 = A0; // target id
+S0 = A1;
+A1 = 800a0dc8;
+800D6754	lw     v0, $0000(a1)
+800D6758	lw     v1, $0004(a1)
+800D675C	lw     a0, $0008(a1)
+800D6760	sw     v0, $0010(sp)
+800D6764	sw     v1, $0014(sp)
+800D6768	sw     a0, $0018(sp)
+
+A0 = 800d650c;
+funcbc04c;
+
+[801621f0 + V0 * 20 + 4] = w(w[SP + 10 + S0 * 4])
+[801621f0 + V0 * 20 + 8] = h(S1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb7db4
+[800fa69c] = h(0);
+[80163608] = h(0);
+[80162088] = h(0);
+[80161de8] = h(0);
+[800f836c] = h(0);
+[801517b4] = h(0);
+[80151774] = h(0);
+
+if (bu[800f9774] > 0)
+{
+    A1 = 80163cc0; // target id
+    A2 = 80163cc2; // flags
+
+    T0 = 0;
+    loopb7e10:	; 800B7E10
+        [80151774] = h(hu[80151774] | (1 << bu[A1]));
+
+        if (hu(A2) & 1)
+        {
+            [801517b4] = h[hu[801517b4] | (1 << bu[A1])];
+        }
+
+        if (hu(A2) & 2)
+        {
+            [800f836c] = h[hu[800f836c] | (1 << bu[A1])];
+        }
+
+        if (hu[A2] & 4) // unit is dead
+        {
+            [80161de8] = h[hu[80161de8] | (1 << bu[A1])];
+        }
+
+        if (hu[A2] & 8)
+        {
+            [80162088] = h[hu[80162088] | (1 << bu[A1])];
+        }
+
+        if (hu[A2] & 10)
+        {
+            [80163608] = h[hu[80163608] | (1 << bu[A1])];
+        }
+
+        if (hu[A2] & 20)
+        {
+            [800fa69c] = h[hu[800fa69c] | (1 << bu[A1])];
+        }
+
+        A2 = A2 + 8;
+        A1 = A1 + 8;
+
+        T0 = T0 + 1;
+        V0 = T0 < bu[800f9774];
+    800B7F58	bne    v0, zero, loopb7e10 [$800b7e10]
+}
+////////////////////////////////

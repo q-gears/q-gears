@@ -1,0 +1,384 @@
+Initial equipment
+
+
+
+
+
+
+
+
+
+
+Sword is used when an ally is down
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Power up when [Near death]
+Power up when condition changes
+
+
+Initial equip. Long range weapon
+Long range weapon
+
+
+Long range weapon
+
+Long range weapon
+Long range weapon
+Long range weapon
+
+Long range weapon
+
+Long range weapon
+
+Long range weapon
+Long range weapon
+
+
+
+
+
+
+
+
+
+Long range weapon
+Memento of father
+
+
+
+
+
+
+
+
+
+
+
+
+
+Raises Power when you need to protect others nearby
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+
+
+
+
+
+
+
+
+
+
+
+
+
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+Long range weapon
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Drains [Fire] attacks
+Drains [Cold] attacks
+Drains [Lightning] attacks
+Drains 1/2 [Fire/Cold/Lightning] attack
+Women's Armlet nullifies [Fire/Cold/Gravity/Holy]
+Man's Armlet nullifies [Lightning/Earth/Water/Poison]
+
+Decreases all elemental attacks by 1/2
+A gorgeous watch
+
+[Strength] +10
+[Vitality] +10
+[Magic] +10
+[Spirit] +10
+[Dexterity] +10
+[Luck] +10
+[Power]&[Vitality] +30
+Drains [Poison] attacks, protects against [Poison]
+[Vitality]&[Spirit] +50
+[Magic]&[Spirit] +30
+Protects against [Poison]
+Protects against [Darkness]
+Protects against [Sleep]
+Protects against [Poison/Darkness]
+Protects against [Paralyze/Petrify/Slow-numb]
+Protects against [Frog/Small]
+Automatically put you in [Haste]
+Protects against [Berserk/Fury/Sadness]
+Protects against all abnormal status
+Nullifies [Fire] attacks
+Nullifies [Cold] attacks
+Nullifies [Lightning] attacks
+Drains [Fire/Cold/Lightning/Earth] attacks
+Protects against [Sudden Death/Petrify/Slow-numb]
+Automatically puts you in [Berserk]
+It increases each status but…
+Automatically sets up [Barrier/MBarrier]
+Restores HP as you walk
+Automatically sets up [Reflect]
+Drains Water attacks
+Increases Stealing rate
+Increases Manipulation rate
+Increases MP capacity
+Increases HP capacity
+Increases [Dexterity]
+Increases [Magic]
+Increases [Luck]
+Receive more EXP points
+Earn more gil after battles
+Decreases Encounter rate
+Increases Encounter rate
+Attracts Chocobos
+Increases rate of pre-emptive attacks
+Same Attack Power even from the back row
+‘All’ effects on every action
+Counter attacks when damage is incurred
+Attack all opponents
+Attacks constantly
+Protects allies when attacked
+Underwater breathing
+Exchange HP and MP levels
+Casts two Magic spells at once
+Casts two Summon spells at once
+Use two items at once
+
+‘All’ effects on paired Magic
+Attacks with paired Command when damage is incurred
+Counters with paired Magic/Summon when attacked
+Uses extra MP and Increases power of paired Magic
+Attack with paired Materia, absorbs MP at same time
+Attacks with paired Materia, absorbs HP at same time
+Adds Materia element to equipped weapon or armor
+Adds Materia status to equipped weapon or armor
+Pre-emptive attack with paired Materia
+Automatically uses paired Materia when disabled
+Attacks simultaneously when paired Materia is used
+Steal simultaneously when paired Materia is used
+Paired Magic used 4 times
+Equips [Steal] command
+Equips [Sense] command
+
+Equips [Throw] command
+Equips [Morph] command
+Equips [Deathblow] command
+Equips [Manipulate] command
+Equips [Mime] command
+Equips [Enemy Skill] command
+
+
+
+Equips all Commands
+Equips [Fire] magic
+Equips [Ice] magic
+Equips [Earth] magic
+Equips [Lightning] magic
+Equips [Restore] magic
+Equips [Heal] magic
+Equips [Revive] magic
+Equips [Seal] magic
+Equips [Mystify] magic
+Equips [Transform] magic
+Equips [Exit] magic
+Equips [Poison] magic
+Equips [Gravity] magic
+Equips [Barrier] magic
+
+Equips [Comet] magic
+Equips [Time] magic
+
+
+Equips [Destruct] magic
+Equips [Contain] magic
+Equips [Full Cure] magic
+Equips [Shield] magic
+Equips [Ultima] magic
+Equips all magic
+Summons Choco/Mog
+Summons Shiva
+Summons Ifrit
+Summons Ramuh
+Summons Titan
+Summons Odin
+Summons Leviathan
+Summons Bahamut
+Summons Kujata
+Summons Alexander
+Summons Phoenix
+Summons Neo Bahamut
+Summons Hades
+Summons Typhon
+Summons Bahamut ZERO
+Summons Knights of Round
+All Summoned monsters summoned
+
+
+
+
+
+Cotton-woven dress
+Dress made of satin
+Dress made of silk
+Wig made from messed up hair
+Wig made of hair dyed light brown
+A blonde wig
+A glass tiara
+A ruby tiara
+A diamond tiara
+Cheap perfume
+Flower scented perfume
+A perfume that amorously arouses
+Membership card to the Honeybee Inn
+Perfumed underwear
+Panties with a childish design on them
+Tight-fitting briefs
+Can be exchanged for goods at the pharmacy
+A disinfectant
+A deodorant
+A digestive
+Materia you get at the Fort Condor Reactor
+Materia you get at the Corel Reactor
+Materia you get at the Underwater Reactor
+Materia you get from the rocket
+An old key found in the ocean
+A letter to a young girl who lives in Kalm
+A letter to a wife who lives in Kalm
+An instrument used to wake the Sleeping Forest
+Key to the basement room in the Shinra Mansion
+Opens the gate to Sector 5 in Midgar
+Allows you to go as far as the 60th floor in the Shinra Bldg.
+Allows you to go as far as the 62nd floor in the Shinra Bldg.
+Allows you to go as far as the 65th floor in the Shinra Bldg.
+Allows you to go as far as the 66th floor in the Shinra Bldg.
+Allows you to go as far as the 68th floor in the Shinra Bldg.
+Part of the Midgar city model
+Part of the Midgar city model
+Part of the Midgar city model
+Part of the Midgar city model
+Part of the Midgar city model
+Able to call your party members from long distances
+Unlimited pass to the Gold Saucer
+Key to the Temple of the Ancients
+Scales with the power of water
+A map you can use on the Great Glacier
+Can be exchanged for items
+Can be exchanged for items
+Can be exchanged for items
+Black Materia
+Might be of some help to you…
+Allows you to slide over the snow
+
+
+
+
+
+
+
+
+
+
+
+
+
+Left
+Attack
+Magic
+Summon
+Item
+Steal
+Sense
+Coin
+Throw
+Morph
+D.blow
+Manip.
+Mime
+E.Skill
+All:
+4x:
+
+Mug
+Change
+Defend
+Limit
+W-Magic
+W-Sum.
+W-Item
+Slash-All
+2x-Cut
+Flash
+4x-Cut
+
+
+
+

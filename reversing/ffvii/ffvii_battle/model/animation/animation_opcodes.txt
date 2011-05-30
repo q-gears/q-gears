@@ -1,0 +1,121 @@
+0x00 - 0x8d - animations
+
+0x8e
+0x8f
+0x90
+0x91
+0x92
+0x93
+0x94
+0x95
+0x96
+0x97
+0x98
+0x99
+0x9a
+0x9b
+0x9c
+0x9d
+0x9e
+0x9f
+0xa0
+0xa1
+0xa2
+0xa3
+0xa4
+0xa5
+0xa6
+0xa7
+0xa8
+0xa9 - A9[][00] this increment script pointer by 2 and execute animation on second pointer.
+0xaa - unpause_camera                   - AA unpause camera scripts.
+0xab
+0xac
+0xad - set_effect                       - AD[joint XX][distance XXXX][start XX][end XX] Attach effect (machinegun) to joint 07 with given distanse from this joint which starts at 01 and ends at 0x0a. Always machingun fire. If end 0x80 byte is set then we do not add shell effect.
+0xae
+0xaf
+0xb0
+0xb1
+0xb2
+0xb3
+0xb4
+0xb5
+0xb6 - pause_camera_finish_animation    - B6[animation XX] pause camera scripts and then continue to play animation given animation from frame that already set. Used to smoothly finish idle animation before start of anything else. Camera paused because we want camera be sync with start of action (this is just finish animation that was already started).
+0xb7
+0xb8
+0xb9 - set_camera                       - B9[camera_script_id XX] set camera script id to use.
+0xba
+0xbb
+0xbc
+0xbd
+0xbe - execute_hurt                     - BE[wait XX] after wait time ends execute hurt action, effect, sound. This will NOT display damage and barriers effect.
+0xbf
+0xc0
+0xc1 - jump                             - C1 jump to first meet C9 from start of script.
+0xc2 - execute_damage                   - C2[wait XX] after wait time ends show damage.
+0xc3
+0xc4
+0xc5 - set_unit_fade_wait               - C5 set value from 0x800f8374 (unit fade time) as wait time for action script.
+0xc6 - set_unit_fade_time               - C6[wait XX] set value to 0x800f8374 (unit fade time) for futher use.
+0xc7
+0xc8
+0xc9 - jump_label                       - C9 do nothing just go to next opcode. Used as marker when jump up.
+0xca - jump_if_not_loaded               - CA jump to first meet C9 at start of this script if something loading in background.
+0xcb
+0xcc
+0xcd
+0xce
+0xcf
+0xd0 - D0[4C04][01] jump to enemy
+0xd1 - move_to_target                   - D1[distance XXXX][XXXX][steps XX] move to enemy using function 0x800cf5bc by number of steps. Stop distance is distance to target collision radius.
+0xd2
+0xd3
+0xd4
+0xd5
+0xd6
+0xd7
+0xd8 - play_sound_for_attacker          - D8[wait XX][sound XXXX] play sound using attacker settings after waiting given number of frames.
+0xd9
+0xda
+0xdb
+0xdc
+0xdd
+0xde
+0xdf
+0xe0
+0xe1 -
+0xe2 -
+0xe3
+0xe4
+0xe5 - return_direction                 - E5 set initial (idle) direction for current unit acording to situation.
+0xe6
+0xe7
+0xe8 - load_additional_effect           - E8 start load effect requested during attack (attack type id and attack id are used to determinate what effect to load).
+0xe9
+0xea - show_action_name                 - EA show action name.
+0xeb
+0xec - execute_additional_effect        - EC if effect not loaded we will call this opcode until it does. For magic, summon, limit, enemy skill and enemy attack we execute loaded effect. All effects are hardcoded so they can do whatever they want (play sounds, display damage, request hurt for target and so on).
+0xed
+0xee - return_to_idle                   - EE reset to idle. Script pointer to 0.
+0xef
+0xf0 - set_effect                       - F0 set effect (foot_dust).
+0xf1
+0xf2
+0xf3 - wait                             - F3 repeat reading this opcode until wait time for script not reach 0. It descrease by 1 each tome this opcode called.
+0xf4 - set_wait                         - F4[wait XX] set frames to wait.
+0xf5
+0xf6 - play_die_if_dead                 - F6 play die effect (depends on die type) if unit is dead. Used in enemy hurt actions.
+0xf7 - execute_attack                   - F7[wait XX] after wait time ends execute hurt action, effect, sound. This will display damage and barriers effect.
+0xf8
+0xf9
+0xfa - return_position                  - FA instantly set default position for units.
+0xfb
+0xfc - set_direction                    - FC set direction for targets (delayed) and attacker acording to situation.
+0xfd
+0xfe
+0xff
+
+
+
+Movement functions
+0x800cf5bc - linear_movement

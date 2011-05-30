@@ -1,0 +1,31 @@
+﻿0 - immediatly reset color to screen.
+    NFADE (00,00,05,00,00,00,05,05)
+4 - immediatly set screen to black.
+    FADE (00,00,00,00,00,01,04,00)
+
+1 - minus color from screen. Set colour depending on current counter (colour * counter / 0x100). Reset to screen after counter reach 0 from start with given speed (-).
+    FADE (00,00,00,00,00,80,01,FF)
+2 - minus color from screen. Set colour depending on current counter (colour * counter / 0x100). Leave in final counter after it reach ff from start with given speed (+).
+    FADE (00,00,A0,A0,A0,80,02,00)
+    FADE (00,00,D2,AA,AA,40,02,00)
+5 - add color to screen. Set colour depending on current counter (colour * counter / 0x100). Reset to screen after counter reach 0 from start with given speed (-).
+    FADE (00,00,00,00,00,08,05,FF)
+6 - add color to screen. Set colour depending on current counter (colour * counter / 0x100). Leave in final counter after it reach ff from start with given speed (+).
+    FADE (00,00,A0,00,00,20,06,00)
+
+3 - not used
+d - not used
+
+7 - minus color from screen. Set immediate colour. Reset to screen after counter reach 0 from start with given speed (-).
+    FADE (00,00,80,80,A8,01,07,FF)
+8 - minus color from screen. Set immediate colour. Leave in final counter after it reach ff from start with given speed (+).
+    FADE (00,00,C8,A0,C8,08,08,00)
+9 - add color to screen. Set immediate colour. Reset to screen after counter reach 0 from start with given speed (-).
+    FADE (00,00,FF,00,00,40,09,FF)
+a - add color to screen. Set immediate colour. Leave in final counter after it reach ff from start with given speed (+).
+    FADE (00,00,C8,C8,C8,20,0A,00)
+
+b - add color to screen. Set colour depending on counter from 0 (current colour) to given steps (given colour).
+    NFADE (00,00,0B,C8,80,40,0C,0C)
+c - minus color from screen. Set colour depending on counter from 0 (current colour) to given steps (given colour).
+    NFADE (00,00,0C,64,3C,14,78,78)

@@ -1,0 +1,824 @@
+Entity: 00
+Script: 000f, 00
+	0xBC(};
+	0x2A(};
+	0xA0(058019800082};
+	Return(};
+
+Script: 0019, 01
+	ConditionalJump(c8020200463800};
+	EO_0x54(};
+	0xF1(0280ff80ff80ff800180};
+	0x5A(};
+	EntityCallScriptSW(016e};
+	DialogShow3(000053};
+	0x9C(};
+	0x5B(};
+	Return(};
+
+Script: 0039, 02
+	Return(};
+
+Script: 0039, 03
+	Return(};
+
+Script: 003a, 04
+	Wait(1480};
+	CameraRotate(3280};
+	CameraRotate(3280};
+	CameraRotate(3280};
+	CameraRotate(3280};
+	CameraRotate(3280};
+	Return(};
+
+Script: 004d, 05
+	Wait(0a80};
+	CameraSetDirection(01803c80};
+	Return(};
+
+
+
+// Fei
+Entity: 01
+Script: 0056, 00
+	SetPlayableCharacter(0080};
+	EO_SetAvatar(0080};
+	Return(};
+
+Script: 005e, 01
+	0x0C(};
+	Return(};
+
+Script: 0060, 02
+	Return(};
+
+Script: 0060, 03
+	Return(};
+
+Script: 0061, 04
+	SpriteGoToPosition(f2ff b3ff c0};
+	SpriteRotateToEntity(09};
+	Return(};
+
+Script: 006a, 05
+	0xD0(00808c80008000800080};
+	DialogShow0(010020};
+	0x9C(};
+	Return(};
+
+Script: 007b, 06
+	SpriteSetSolid(0180};
+	SpriteGoToPosition(2000bfffc0};
+	Wait(0a80};
+	SetRotation(0280};
+	Wait(1480};
+	SpriteSetSolid(0080};
+	Return(};
+
+Script: 0091, 07
+	0xD0(00808c80008004802080};
+	DialogShow0(020020};
+	0x9C(};
+	0xF4(01};
+	SpritePlayAnimation(07};
+	Wait(1480};
+	0xD0(00808c80008003802080};
+	DialogShow0(030000};
+	0x9C(};
+	0xF4(01};
+	SpritePlayAnimation(ff};
+	Wait(0a80};
+	SpriteRotateToEntity(09};
+	Wait(1480};
+	0xD0(00808c80008004800080};
+	DialogShow0(040020};
+	0x9C(};
+	0xF4(01};
+	Return(};
+
+Script: 00d7, 08
+	DialogShow0(050020};
+	0x9C(};
+	Return(};
+
+Script: 00dd, 09
+	0x5D(04};
+	0x5E(};
+	DialogShow0(060020};
+	0x9C(};
+	Return(};
+
+Script: 00e6, 0a
+	Wait(0a80};
+	0xF6(01};
+	SpriteGoToPosition(23000500c0};
+	SetRotation(0280};
+	0xF6(00};
+	Return(};
+
+Script: 00f7, 0b
+	0x5D(04};
+	0x5E(};
+	DialogShow0(070000};
+	0x9C(};
+	Return(};
+
+Script: 0100, 0c
+	SpritePlayAnimation(07};
+	Wait(0a80};
+	DialogShow0(080000};
+	0x9C(};
+	Return(};
+
+Script: 010b, 0d
+	SpritePlayAnimation(ff};
+	Wait(1e80};
+	SpriteRotateToEntity(09};
+	Wait(1480};
+	DialogShow0(090000};
+	0x9C(};
+	Return(};
+
+Script: 011b, 0e
+	Wait(5080};
+	FadeIn(0f80};
+	MapLoad(50800180};
+	Return(};
+
+
+
+
+Entity: 02
+Script: 0127, 00
+	SetPlayableCharacter(0280};
+	EO_SetAvatar(0280};
+	Return(};
+
+Script: 012f, 01
+	0x0C(};
+	Return(};
+
+Script: 0131, 02
+
+Script: 0131, 03
+	Return(};
+
+
+
+
+Entity: 03
+Script: 0132, 00
+	SetPlayableCharacter(0180};
+	EO_SetAvatar(0180};
+	Return(};
+
+Script: 013a, 01
+	0xA7(};
+	Return(};
+
+Script: 013c, 02
+
+Script: 013c, 03
+	Return(};
+
+
+
+
+Entity: 04
+Script: 013d, 00
+	SetPlayableCharacter(0380};
+	EO_SetAvatar(0380};
+	Return(};
+
+Script: 0145, 01
+	0xA7(};
+	Return(};
+
+Script: 0147, 02
+
+Script: 0147, 03
+	Return(};
+
+
+
+
+Entity: 05
+Script: 0148, 00
+	SetPlayableCharacter(0580};
+	EO_SetAvatar(0580};
+	Return(};
+
+Script: 0150, 01
+	0xA7(};
+	Return(};
+
+Script: 0152, 02
+
+Script: 0152, 03
+	Return(};
+
+
+
+
+Entity: 06
+Script: 0153, 00
+	SetPlayableCharacter(0680};
+	EO_SetAvatar(0680};
+	Return(};
+
+Script: 015b, 01
+	0xA7(};
+	Return(};
+
+Script: 015d, 02
+
+Script: 015d, 03
+	Return(};
+
+
+
+
+Entity: 07
+Script: 015e, 00
+	SetPlayableCharacter(0780};
+	EO_SetAvatar(0780};
+	Return(};
+
+Script: 0166, 01
+	0xA7(};
+	Return(};
+
+Script: 0168, 02
+
+Script: 0168, 03
+	Return(};
+
+
+
+
+Entity: 08
+Script: 0169, 00
+	SetPlayableCharacter(0880};
+	EO_SetAvatar(0880};
+	Return(};
+
+Script: 0171, 01
+	0xA7(};
+	Return(};
+
+Script: 0173, 02
+
+Script: 0173, 03
+	Return(};
+
+
+
+// Timothy
+Entity: 09
+Script: 0174, 00
+	0x0B(0680};
+	SpriteSetSolid(0880};
+	SpriteSetPosition(fbff5fffc0};
+	SetRotation(0480};
+	EO_SetAvatar(1180};
+	Return(};
+
+Script: 0188, 01
+	Return(};
+
+Script: 0189, 02
+	ConditionalJump(02040000409401};
+	JumpTo(9501};
+	Return(};
+	SpriteRotateToEntity(01};
+	ProgressNotEqualJumpTo(0880a401};
+	DialogShow0(0a0080};
+	0x9C(};
+	SpriteRotateToEntity(0c};
+	Return(};
+	ConditionalJump(c002000446bc01};
+	0x5D(02};
+	0x5E(};
+	Wait(0a80};
+	SpritePlayAnimation(ff};
+	DialogShow0(0b0080};
+	0x9C(};
+	JumpTo(7502};
+	EO_0x54(};
+	SpriteSetSolid(0980};
+	0x9D(e08c0f};
+	EntityCallScriptSW(0c66};
+	EntityCallScriptEW(0164};
+	Wait(0f80};
+	SpriteRotateToEntity(01};
+	Wait(0a80};
+	DialogShow0(0c0020};
+	0x9C(};
+	EntityCallScriptEW(0165};
+	SpriteRotateClockwise(0180};
+	Wait(0280};
+	Wait(0a80};
+	0x5D(02};
+	0x5E(};
+	Wait(1480};
+	SpritePlayAnimation(ff};
+	DialogShow0(0d0020};
+	0x9C(};
+	SpriteRotateToEntity(01};
+	EntityCallScriptEW(0166};
+	EntityCallScriptSW(0c64};
+	EntityCallScriptSW(0064};
+	EntityCallScriptEW(0167};
+	SpriteRotateClockwise(0180};
+	Wait(0280};
+	SpriteRotateClockwise(0180};
+	Wait(0a80};
+	SpritePlayAnimation(03};
+	0xD0(00808c80008000800080};
+	DialogShow0(0e0020};
+	0x9C(};
+	0xF4(01};
+	SpritePlayAnimation(ff};
+	Wait(0a80};
+	SpriteRotateToEntity(01};
+	Wait(1480};
+	0x5D(02};
+	0x5E(};
+	Wait(1480};
+	SpritePlayAnimation(ff};
+	0xD0(00808c80008000800080};
+	DialogShow0(0f0020};
+	0x9C(};
+	0xF4(01};
+	EntityCallScriptEW(0168};
+	0xD0(00808c80008000800080};
+	DialogShow0(100020};
+	0x9C(};
+	0xF4(01};
+	EntityCallScriptEW(0169};
+	VariableBitSet(c0020a0040};
+	Wait(0a80};
+	EntityCallScriptSW(0c65};
+	0x9D(009014};
+	0xA2(ff};
+	SpriteSetSolid(0c80};
+	Wait(1e80};
+	EO_0x53(};
+	SetRotation(0480};
+
+Script: 0278, 03
+	Return(};
+
+Script: 0279, 04
+	SpriteRotateToEntity(0b};
+	DialogShow0(110010};
+	0x9C(};
+	Return(};
+
+Script: 0281, 05
+	SpriteRotateToEntity(01};
+	Wait(0a80};
+	DialogShow0(120000};
+	0x9C(};
+	Wait(0a80};
+	SetRotation(0480};
+	Return(};
+
+Script: 0292, 06
+	0xF4(00};
+	0x5A(};
+	0x92(};
+
+
+
+// Dan Timothy Speach Trigger and Manager.
+Entity: 0a
+Script: 0296, 00
+	0x2A(};
+	ProgressLessEqualJumpTo(0780 9f02};
+	JumpTo(a102};
+#029f
+	0x29(0a};
+#02a1
+	Return(};
+
+Script: 02a2, 01
+	TriggerJumpTo(01 dc02};
+	EO_0x54(};
+	EntityCallScriptSW(016a};
+	EntityCallScriptSW(0926};
+	EntityCallScriptSW(0c27};
+	EntityCallScriptSW(0d24};
+	EntityCallScriptSW(0e24};
+	EntityCallScriptEW(1164};
+	EntityCallScriptEW(0b64};
+	EntityCallScriptEW(016b};
+	EntityCallScriptEW(0964};
+	EntityCallScriptEW(0b65};
+	EntityCallScriptEW(016c};
+	EntityCallScriptEW(0b66};
+	EntityCallScriptEW(1165};
+	EntityCallScriptEW(016d};
+	EntityCallScriptEW(0965};
+	SetProgress(0780};
+	EO_0x53(};
+	0x29(0a};
+	Return(};
+
+Script: 02dd, 02
+
+Script: 02dd, 03
+	Return(};
+
+
+
+// Dan
+Entity: 0b
+Script: 02de, 00
+	0x0B(0280};
+	SpriteSetPosition(0c010000c0};
+	SetRotation(0680};
+	SpriteSetSolid(0d80};
+	0x1F(77};
+	EO_SetAvatar(1080};
+	0x21(a080};
+	ProgressLessEqualJumpTo(0780 ff02};
+	0x23(};
+	JumpTo(0103};
+#02ff
+	0x29(0b};
+	Return(};
+
+Script: 0302, 01
+	Return(};
+
+Script: 0303, 02
+	Return(};
+
+Script: 0303, 03
+	Return(};
+
+Script: 0304, 04
+	0x22(};
+	Wait(1480};
+	0x10(00750004000000e0};
+	0x10(01};
+	EntityCallScriptSW(0065};
+	SpritePlayAnimation(03};
+	DialogShow0(130000};
+	0x9C(};
+	Return(};
+
+Script: 031e, 05
+	SpritePlayAnimation(00};
+	SpriteRotateToEntity(09};
+	Wait(1480};
+	SpriteRotateAntiClockwise(0180};
+	Wait(0a80};
+	DialogShow0(140000};
+	0x9C(};
+	SpriteRotateToEntity(09};
+	Wait(0a80};
+	DialogShow0(150000};
+	0x9C(};
+	SpriteRotateToEntity(01};
+	Wait(1480};
+	DialogShow0(160000};
+	0x9C(};
+	Return(};
+
+Script: 0345, 06
+	DialogShow0(170000};
+	0x9C(};
+	0x2D(0b060408040a04};
+	0x57(00060408040a04040010};
+	0x57(8f};
+	Wait(0180};
+	0x57(0f};
+	0x57(00060408040a04040010};
+	0x57(8f};
+	Wait(0180};
+	0x57(0f};
+	DialogShow0(180000};
+	0x9C(};
+	Wait(1480};
+	SpriteRotateToEntity(09};
+	Wait(0a80};
+	DialogShow0(190000};
+	0x9C(};
+	0x5D(04};
+	0x5E(};
+	Wait(1480};
+	SpritePlayAnimation(ff};
+	SetRotation(0280};
+	Wait(0a80};
+	0x10(000c0100000000e0};
+	0x10(01};
+	0x23(};
+	0x1D(0c0100002c01};
+	Return(};
+
+
+
+// Lee
+Entity: 0c
+Script: 03aa, 00
+	0x0B(0480};
+	SpriteSetSolid(0880};
+	SetRotation(0080};
+	EO_SetAvatar(0f80};
+	Return(};
+
+Script: 03b8, 01
+	Return(};
+
+Script: 03b9, 02
+	VariableSetTrue(0204};
+	SpriteRotateToEntity(01};
+	ConditionalJump(0c040000400704};
+	DialogShow0(1a0000};
+	0x9C(};
+	SpriteRotateClockwise(0180};
+	Wait(0580};
+	SpriteRotateAntiClockwise(0180};
+	Wait(0a80};
+	DialogShow0(1b0000};
+	0x9C(};
+	SpritePlayAnimation(00};
+	SpriteRotateClockwise(0180};
+	Wait(0180};
+	SpriteRotateClockwise(0180};
+	EO_SetAvatar(fc80};
+	DialogShow0(1c0000};
+	0x9C(};
+	EO_SetAvatar(0f80};
+	Wait(0a80};
+	SpriteRotateToEntity(01};
+	Wait(0a80};
+	DialogShow0(1d0000};
+	0x9C(};
+	VariableSetTrue(0c04};
+	JumpTo(0c04};
+	DialogShow0(1e0000};
+	0x9C(};
+	SpritePlayAnimation(ff};
+	VariableSetFalse(0204};
+
+Script: 0411, 03
+	Return(};
+
+Script: 0412, 04
+	Wait(1480};
+	CameraAngle(0c00da};
+	Return(};
+
+Script: 041a, 05
+	CameraAngle(19008f};
+	Return(};
+
+Script: 041f, 06
+	ConditionalJump(08000600402f04};
+	CameraSetDirection(02803c80};
+	JumpTo(5404};
+	ConditionalJump(08000700403f04};
+	CameraSetDirection(02802880};
+	JumpTo(5404};
+	ConditionalJump(08000500404f04};
+	CameraSetDirection(02802880};
+	JumpTo(5404};
+	CameraSetDirection(02801e80};
+	Return(};
+
+Script: 0455, 07
+	0xF4(00};
+	0x5A(};
+	SetRotation(0080};
+	0x92(};
+
+
+
+// Timothy Father
+Entity: 0d
+Script: 045c, 00
+	0x0B(0080};
+	SpriteSetSolid(0880};
+	SetRotation(0580};
+	Return(};
+
+Script: 0466, 01
+	Wait(0a80};
+	Return(};
+
+Script: 046a, 02
+	ConditionalJump(02040000407504};
+	JumpTo(7604};
+	Return(};
+	SpriteRotateToEntity(01};
+	SpritePlayAnimation(02};
+	DialogShow0(1f0000};
+	0x9C(};
+	SpritePlayAnimation(ff};
+	SetRotation(0580};
+
+Script: 0484, 03
+	Return(};
+
+Script: 0485, 04
+	0xF4(00};
+	0x5A(};
+	SetRotation(0580};
+	0x92(};
+
+
+
+// Aruru no Shukufu
+Entity: 0e
+Script: 048c, 00
+	0x0B(0180};
+	SpriteSetSolid(0880};
+	SetRotation(0380};
+	Return(};
+
+Script: 0496, 01
+	EO_SpritePlayAnimation2(03};
+	0x5B(};
+	Return(};
+
+Script: 049b, 02
+	ConditionalJump(0204000040a604};
+	JumpTo(a704};
+	Return(};
+	EO_SpritePlayAnimation2(00};
+	Wait(0a80};
+	DialogShow0(200000};
+	0x9C(};
+	EO_SpritePlayAnimation2(03};
+	Wait(1480};
+	DialogShow0(210000};
+	0x9C(};
+
+Script: 04bd, 03
+	Return(};
+
+Script: 04be, 04
+	0xF4(00};
+	0x5A(};
+	SetRotation(0380};
+	0x92(};
+
+
+
+// Maid
+30010000 - flags1
+00000100 - flags2
+
+
+Entity: 0f
+Script: 04c5, 00
+	0x0B(0380};
+	Return(};
+
+Script: 04c9, 01
+	VariableRandom(040e, 8003); // store 0-3 to [040e]
+	ConditionalJumpTo(040e, 0000, 40, 04e5); // jump to #04e5 if [040e] != 0000
+	SpriteGoToPosition(ff86, 01b9, c0); // tell sprite to go to x(ff86), y(01b9).
+	SetRotation(0080);
+	Wait(8028); // wait 28 calls
+	JumpTo(0536); // jump to #0536
+# 04e5
+	ConditionalJumpTo(040e, 0001, 40, 04fc); // jump to #04fc if [040e] != 0001
+	SpriteGoToPosition(0020, 01b9, c0);
+	SetRotation(0080);
+	Wait(8028); // wait 28 calls
+	JumpTo(0536); // jump to #0536
+# 04fc
+	ConditionalJumpTo(040e, 0002, 40, 0513); // jump to #0513 if [040e] != 0002
+	SpriteGoToPosition(ff4d, 0156, c0);
+	SetRotation(0680);
+	Wait(8028); // wait 28 calls
+	JumpTo(0536); // jump to #0536
+# 0513
+	ConditionalJumpTo(040e, 0003, 40, 0536); // jump to #0536 if [040e] != 0003
+	SetRotation(0180);
+	Wait(8005); // wait 5 calls
+	SetRotation(0080);
+	Wait(8005); // wait 5 calls
+	SetRotation(0780);
+	Wait(8005); // wait 28 calls
+	SetRotation(0080);
+	Wait(801e); // wait 1e calls
+	JumpTo(0536); // jump to #0536
+# 0536
+	0x04();
+
+Script: 0537, 02
+	ConditionalJump(02040000404205);
+	JumpTo(4305};
+	Return(};
+	SpriteRotateToEntity(01};
+	DialogShow0(220000};
+	0x9C(};
+	0x5D(02};
+	0x5E(};
+	DialogShow0(230000};
+	0x9C(};
+	SpritePlayAnimation(ff};
+
+Script: 0554, 03
+	Return(};
+
+Script: 0555, 04
+	0xF4(00};
+	0x5A(};
+	0x92(};
+
+
+
+// Down Ladder Map Trigger
+Entity: 10
+Script: 0559, 00
+	0x2A(};
+	Return(};
+
+Script: 055b, 01
+	TriggerJumpTo(006405};
+	MapLoad(0e800080};
+	Return(};
+
+Script: 0565, 02
+
+Script: 0565, 03
+	Return(};
+
+
+
+// Door
+Entity: 11
+Script: 0566, 00
+	0x46(};
+	Return(};
+
+Script: 0568, 01
+	Return(};
+
+Script: 0569, 02
+	0x15(};
+	0xC4(00}; // open door
+	0x1F(11};
+	MapLoad2(0001800780};
+
+Script: 0574, 03
+	Return(};
+
+Script: 0575, 04
+	0xC4(00}; // open door
+	Return(};
+
+Script: 0578, 05
+	0xC5(00}; // close door
+	Return(};
+
+
+
+
+// Background Fire
+Entity: 12
+Script: 057b, 00
+	0xBC(};
+	0x2A(};
+	Return(};
+
+Script: 057e, 01
+	SetBackgroundTexture(5c0200001c00260040020000fc};
+	Wait(0480};
+	SetBackgroundTexture(780200001c00260040020000fc};
+	Wait(0480};
+	SetBackgroundTexture(940200001c00260040020000fc};
+	Wait(0480};
+	Return(};
+
+Script: 05b2, 02
+
+Script: 05b2, 03
+	Return(};
+
+
+
+
+Entity: 13
+Script: 05b3, 00
+	0xBC(};
+	0x1D(5effb3010000};
+	0x2A(};
+	Return(};
+
+Script: 05bd, 01
+	EO_0x13(1d807f80};
+	0x5B(};
+	Return(};
+
+Script: 05c5, 02
+
+Script: 05c5, 03
+	Return(};
+	0xE0(000000000052};

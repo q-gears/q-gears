@@ -1,0 +1,161 @@
++00 [][]     X
++02 [][]     Y
++04 [][]     Z
++06 [][]     direction
+
++11 []       init with 0xff. Set 0xc0 in entity 0xf script 0x1. Related with 80077c82.
+
++18 []       scene progress.
+                0x00 - initial value.
+                0x01
+                0x02
+                0x03
+                0x04
+                0x05 - blank, cina and marcus run into room.
+                0x06
+                0x07
+                0x08
+                0x09
+                0x0a - baku dragon enter the room.
+                0x0b
+                0x0c
+                0x0d
+                0x0e
++1a []       some timer. Do various things when it greater than 0.
+
++1c []       some flag progress.
+                0x40 - remove this flag every progress cycle. This flag used to wait all entities until progress updates.
+                0x80 - if this flag is set we advance +18 from 00 to 01 and remove this flag.
+
+
+entity_id = 0x00 - script - init entity.
+    script_id = 0x00
+        init script. Start all others entity and set up initial variable values.
+        ???
+    script_id = 0x0a
+        ???
+
+entity_id = 0x01 - script - ???
+    script_id = 0x00
+        ???
+    script_id = 0x01
+        ???
+
+entity_id = 0x02 - script - ???
+    script_id = 0x00
+        do nothing.
+    script_id = 0x01
+        ???
+
+entity_id = 0x03 - script - progress update entity.
+    script_id = 0x00
+        do nothing.
+    script_id = 0x01
+        update progress variable +18 if flag 0x80 in +1c is set. Remove flag 0x40 from +1c every cycle.
+
+entity_id = 0x04 - type3 - ???
+    script_id = 0x00
+        ???
+    script_id = 0x02
+        ???
+
+entity_id = 0x05 - type3 - ???
+    script_id = 0x00
+        ???
+    script_id = 0x02
+        ???
+
+entity_id = 0x06 - type3 - ???
+    script_id = 0x00
+        ???
+    script_id = 0x02
+        ???
+
+entity_id = 0x07 - type3 - ???
+    script_id = 0x00
+        ???
+    script_id = 0x02
+        ???
+
+entity_id = 0x08 - script - ???
+    script_id = 0x00
+        ???
+    script_id = 0x01
+        ???
+
+entity_id = 0x09 - script - ???
+    script_id = 0x00
+        ???
+    script_id = 0x01
+        ???
+
+entity_id = 0x0a - script - ???
+    script_id = 0x00
+        ???
+    script_id = 0x01
+        ???
+
+entity_id = 0x0b - script - ???
+    script_id = 0x00
+        ???
+    script_id = 0x01
+        ???
+
+entity_id = 0x0c - script - ???
+    script_id = 0x00
+        ???
+    script_id = 0x01
+        ???
+
+entity_id = 0x0d - model - baku dragon
+    script_id = 0x00
+        init model state and position.
+    script_id = 0x01
+        do things depenging on scene progress +18. Wait otherwise.
+        0xa - 
+        0xb - 
+        0xc - 
+
+entity_id = 0x0e - script - baku dragon jump
+    script_id = 0x00
+        perform jump.
+
+entity_id = 0x0f - model - baku
+    script_id = 0x00
+        init model state and position.
+    script_id = 0x01
+        ???
+
+entity_id = 0x10 - script - ???
+    script_id = 0x00
+        ???
+
+entity_id = 0x11 - model - zidane
+    script_id = 0x00
+        init model state and position depending on 0x8007aef0 + 0x0002 (maybe stored progress???).
+    script_id = 0x01
+        ???
+    script_id = 0x0b
+        ???
+    script_id = 0x0c
+        ???
+    script_id = 0x0d
+        ???
+
+entity_id = 0x16 - model - ???
+    script_id = 0x00
+        init model state and position.
+    script_id = 0x01
+        ???
+
+entity_id = 0x17 - model - ???
+    script_id = 0x00
+        init model state and position.
+    script_id = 0x01
+        ???
+
+entity_id = 0x18 - model - ???
+    script_id = 0x00
+        init model state and position.
+    script_id = 0x01
+        ???

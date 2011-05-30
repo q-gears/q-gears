@@ -1,0 +1,110 @@
+dic
+script_0:
+01a8 (end 01a8): game:party_add( 0 );
+01aa (end 01aa): return;
+01ab (end 01ab): return;
+
+cloud
+script_0:
+01ad (end 01ad): -- assosiate entity with model (CHAR) argument doesn't matter;
+01af (end 01af): field:set_entity_to_character("cloud", 0);
+01b1 (end 01b1): return;
+01b2 (end 01b2): cloud:set_position_triangle(0, 0, 0, 1);
+01bd (end 01bd): return;
+
+tifa
+script_0:
+01bf (end 01bf): -- assosiate entity with model (CHAR) argument doesn't matter;
+01c1 (end 01c1): field:set_entity_to_character("tifa", 2);
+01c3 (end 01c3): return;
+01c4 (end 01c4): return;
+
+cid
+script_0:
+01c6 (end 01c6): -- assosiate entity with model (CHAR) argument doesn't matter;
+01c8 (end 01c8): field:set_entity_to_character("cid", 8);
+01ca (end 01ca): return;
+01cb (end 01cb): return;
+
+yufi
+script_0:
+01cd (end 01cd): -- assosiate entity with model (CHAR) argument doesn't matter;
+01cf (end 01cf): yufi:set_position_triangle(-74, -130, 0, 100);
+01da (end 01da): yufi:set_direction( 135 );
+01dd (end 01dd): yufi:set_solid_range( 1 );
+01e0 (end 01e0): return;
+01e1 (end 01e1): return;
+
+script_1:
+01e2 (end 01e2): -- set window parameters (id = 1, x = 0, y = 0, width = 155, height = 169);
+01ec (end 01ec): message:show_text_wait(1, 0, x, y); -- ASK cursor at "temp5_0", start 0, end 9
+01f3 (end 01f3): jumpto( 0209 );
+01f5 (end 0209): -- set window parameters (id = 1, x = 0, y = 0, width = 149, height = 89);
+01ff (end 0209): message:show_text_wait(1, 1, x, y); -- ASK cursor at "temp5_0", start 0, end 4
+0206 (end 0209): jumpto( 02a4 );
+0209 (end 02a4): if ( temp5_0 == 0 ) then continue else jumpto(0215);
+0210 (end 02a4): jumpto( 01f5 );
+0212 (end 02a4): jumpto( 02a3 );
+0215 (end 02a4): if ( temp5_0 == 1 ) then continue else jumpto(0224);
+021c (end 02a4): game:variable_set("menu_selectable", 0);
+0221 (end 02a4): jumpto( 02a3 );
+0224 (end 02a4): if ( temp5_0 == 2 ) then continue else jumpto(0231);
+022b (end 02a4): game:battle_enable( false )
+022e (end 02a4): jumpto( 02a3 );
+0231 (end 02a4): if ( temp5_0 == 3 ) then continue else jumpto(023e);
+0238 (end 02a4): game:battle_enable( true )
+023b (end 02a4): jumpto( 02a3 );
+023e (end 02a4): if ( temp5_0 == 4 ) then continue else jumpto(024b);
+0245 (end 02a4): game:movie_enable( false )
+0248 (end 02a4): jumpto( 02a3 );
+024b (end 02a4): if ( temp5_0 == 5 ) then continue else jumpto(0258);
+0252 (end 02a4): game:movie_enable( true )
+0255 (end 02a4): jumpto( 02a3 );
+0258 (end 02a4): if ( temp5_0 == 6 ) then continue else jumpto(0264);
+025f (end 02a4): game:global_reset()
+0261 (end 02a4): jumpto( 02a3 );
+0264 (end 02a4): if ( temp5_0 == 7 ) then continue else jumpto(0292);
+026b (end 02a4): [UNREVERSED] SPECIAL SPCNM(00, 02);
+026f (end 02a4): [UNREVERSED] SPECIAL SPCNM(01, 03);
+0273 (end 02a4): [UNREVERSED] SPECIAL SPCNM(02, 04);
+0277 (end 02a4): [UNREVERSED] SPECIAL SPCNM(03, 05);
+027b (end 02a4): [UNREVERSED] SPECIAL SPCNM(05, 06);
+027f (end 02a4): [UNREVERSED] SPECIAL SPCNM(06, 07);
+0283 (end 02a4): [UNREVERSED] SPECIAL SPCNM(08, 08);
+0287 (end 02a4): [UNREVERSED] SPECIAL SPCNM(04, 0a);
+028b (end 02a4): [UNREVERSED] SPECIAL SPCNM(07, 09);
+028f (end 02a4): jumpto( 02a3 );
+0292 (end 02a4): if ( temp5_0 == 8 ) then continue else jumpto(02a3);
+0299 (end 02a4): field:jump_to_map(116, 0, 0, 0, 0);
+02a3 (end 02a4): return;
+02a4 (end 02a4): if ( temp5_0 == 0 ) then continue else jumpto(02b1);
+02ab (end 02b1): jumpto( 01e2 );
+02ae (end 02b1): jumpto( 03b1 );
+02b1 (end 03b1): if ( temp5_0 == 1 ) then continue else jumpto(0395);
+02b8 (end 03b1): music:execute_akao( c0, 0000007f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
+02c6 (end 03b1): music:execute_akao( a0, 0000007f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
+02d4 (end 03b1): music:execute_akao( a1, 0000007f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
+02e2 (end 03b1): music:execute_akao( a2, 0000007f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
+02f0 (end 03b1): music:execute_akao( a3, 0000007f, 00000000, 00000000, 00000000, 0000da00, 00000000 );
+02fe (end 03b1): music:execute_akao( c8, 00007fff, 00000000, 00000000, 00000000, 00000000, 000000da );
+030d (end 03b1): music:execute_akao( e4, 00000000, 00000000, 00000000, 00000000, 00000000, 000000da );
+031c (end 03b1): music:execute_akao( b0, 00000000, 00000000, 00000000, 00000000, 00000000, 000000da );
+032b (end 03b1): music:execute_akao( b1, 00000000, 00000000, 00000000, 00000000, 00000000, 000000da );
+033a (end 03b1): music:execute_akao( b2, 00000000, 00000000, 00000000, 00000000, 00000000, 000000da );
+0349 (end 03b1): music:execute_akao( b3, 00000000, 00000000, 00000000, 00000000, 00000000, 000000f0 );
+0358 (end 03b1): music:execute_akao( 10, pointer_to_field_AKAO_0 ); -- play field music
+035a (end 03b1): music:execute_akao( 28, 0000003f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
+0368 (end 03b1): music:execute_akao( 29, 0000003f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
+0376 (end 03b1): music:execute_akao( 2a, 0000003f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
+0384 (end 03b1): music:execute_akao( 2b, 0000003f, 00000000, 00000000, 00000000, 00001100, 0000001e );
+0392 (end 03b1): jumpto( 03b1 );
+0395 (end 03b1): if ( temp5_0 == 2 ) then continue else jumpto(03a5);
+039c (end 03b1): game:fill_materia()
+039e (end 03b1): game:fill_materia()
+03a0 (end 03b1): game:fill_materia()
+03a2 (end 03b1): jumpto( 03b1 );
+03a5 (end 03b1): if ( temp5_0 == 3 ) then continue else jumpto(03b1);
+03ac (end 03b1): field:battle_run( 999 );
+03b0 (end 03b1): game:restore_hp_mp_status_to_all();
+03b1 (end 03b1): return;
+

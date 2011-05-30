@@ -1,0 +1,111 @@
+material system/no_model
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture system/no_model.png
+                filtering point point none
+            }
+        }
+    }
+}
+
+
+
+material console/background
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture system/console.png
+                filtering point point none
+            }
+        }
+    }
+}
+
+
+
+material viewer/grid
+{
+    technique
+    {
+        pass
+        {
+            ambient 1.0 1.0 1.0
+        }
+    }
+}
+
+
+
+material viewer/axis
+{
+    technique
+    {
+        pass
+        {
+            ambient vertexcolour
+        }
+    }
+}
+
+
+
+material walkmesh
+{
+    technique
+    {
+        pass
+        {
+            ambient vertexcolour
+            cull_hardware none
+            polygon_mode wireframe
+        }
+    }
+}
+
+
+
+material entity/solid_collision
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.0 1.0 1.0
+        }
+    }
+}
+
+
+
+material entity/talk_collision
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.0 1.0 0.5
+        }
+    }
+}
+
+
+
+material entity/direction
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.0 0.5 1.0
+        }
+    }
+}

@@ -1,0 +1,281 @@
+# depslib dependency file v1.0
+1277137412 source:d:\my\1\qgears\svn\utilites\common\file.cpp
+	<cassert>
+	<string.h>
+	"File.h"
+	"FileSystem.h"
+	"Logger.h"
+
+1303324804 d:\my\1\qgears\svn\utilites\common\file.h
+	"TypeDefine.h"
+	<OgreString.h>
+
+1283585984 d:\my\1\qgears\svn\utilites\common\typedefine.h
+
+1277137412 d:\my\1\qgears\svn\utilites\common\filesystem.h
+	<OgreString.h>
+
+1283105729 d:\my\1\qgears\svn\utilites\common\logger.h
+	<OgreString.h>
+	<OgreUTFString.h>
+
+1278964753 source:d:\my\1\qgears\svn\utilites\common\filesystem.cpp
+	"FileSystem.h"
+	"Logger.h"
+	<stdio.h>
+
+1292770234 source:d:\my\1\qgears\svn\utilites\common\logger.cpp
+	"Logger.h"
+	"FileSystem.h"
+	<OgreStringConverter.h>
+
+1303847295 source:d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\animationfile.cpp
+	"../../common/Logger.h"
+	"AnimationFile.h"
+
+1303847363 d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\animationfile.h
+	<Ogre.h>
+	"../../common/File.h"
+	"BsxFile.h"
+
+1303845365 d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\bsxfile.h
+	<Ogre.h>
+	"DatFile.h"
+	"../../common/LzsFile.h"
+	"../../common/Vram.h"
+
+1303849673 d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\datfile.h
+	"../../common/LzsFile.h"
+
+1277137412 d:\my\1\qgears\svn\utilites\common\lzsfile.h
+	"File.h"
+
+1303330070 d:\my\1\qgears\svn\utilites\common\vram.h
+	"TypeDefine.h"
+	"Surface.h"
+
+1277137412 d:\my\1\qgears\svn\utilites\common\surface.h
+	<Ogre.h>
+
+1303847954 source:d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\bcxfile.cpp
+	<Ogre.h>
+	<math.h>
+	<vector>
+	"../../common/Logger.h"
+	"AnimationFile.h"
+	"BcxFile.h"
+	"MeshFile.h"
+	"SkeletonFile.h"
+
+1303847598 d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\bcxfile.h
+	"BsxFile.h"
+	"../../common/LzsFile.h"
+
+1303847887 d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\meshfile.h
+	<Ogre.h>
+	"BsxFile.h"
+	"../../common/File.h"
+
+1303850028 d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\skeletonfile.h
+	<Ogre.h>
+	"SkeletonFile.h"
+	"../../common/File.h"
+
+1303849348 source:d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\bsxfile.cpp
+	<Ogre.h>
+	"../../common/Logger.h"
+	"BsxFile.h"
+	"BcxFile.h"
+	"TdbFile.h"
+	"AnimationFile.h"
+	"MeshFile.h"
+	"SkeletonFile.h"
+
+1303848371 d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\tdbfile.h
+	<Ogre.h>
+	"../../common/Surface.h"
+	"../../common/LzsFile.h"
+	"../../common/Vram.h"
+
+1303849650 source:d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\datfile.cpp
+	"DatFile.h"
+	"../../common/Logger.h"
+
+1303849806 source:d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\main.cpp
+	<Ogre.h>
+	<OgreTextAreaOverlayElement.h>
+	<OIS.h>
+	<stdio.h>
+	<iostream>
+	"../../common/FileSystem.h"
+	"../../common/Logger.h"
+	"BsxFile.h"
+	"DatFile.h"
+
+1303849990 source:d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\meshfile.cpp
+	"MeshFile.h"
+	"../../common/Logger.h"
+
+1303850064 source:d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\skeletonfile.cpp
+	"SkeletonFile.h"
+	"../../common/Logger.h"
+
+1303850154 source:d:\my\1\qgears\svn\utilites\ffvii_field_model_exporter\src\tdbfile.cpp
+	"../../common/Logger.h"
+	"TdbFile.h"
+
+1277137411 source:d:\my\1\qgears\svn\utilites\common\lzsfile.cpp
+	"LzsFile.h"
+	"Logger.h"
+
+1303330268 source:d:\my\1\qgears\svn\utilites\common\vram.cpp
+	"Vram.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+	<string.h>
+
+1275163453 source:g:\my\svn\qgears\utilites\common\file.cpp
+	<cassert>
+	<string.h>
+	"File.h"
+	"FileSystem.h"
+	"Logger.h"
+
+1303364478 g:\my\svn\qgears\utilites\common\file.h
+	"TypeDefine.h"
+	<OgreString.h>
+
+1277786435 g:\my\svn\qgears\utilites\common\typedefine.h
+
+1274440642 g:\my\svn\qgears\utilites\common\filesystem.h
+	<OgreString.h>
+
+1283140372 g:\my\svn\qgears\utilites\common\logger.h
+	<OgreString.h>
+	<OgreUTFString.h>
+
+1278996095 source:g:\my\svn\qgears\utilites\common\filesystem.cpp
+	"FileSystem.h"
+	"Logger.h"
+	<stdio.h>
+
+1292601559 source:g:\my\svn\qgears\utilites\common\logger.cpp
+	"Logger.h"
+	"FileSystem.h"
+	<OgreStringConverter.h>
+
+1275163453 source:g:\my\svn\qgears\utilites\common\lzsfile.cpp
+	"LzsFile.h"
+	"Logger.h"
+
+1275163453 g:\my\svn\qgears\utilites\common\lzsfile.h
+	"File.h"
+
+1303914990 source:g:\my\svn\qgears\utilites\common\vram.cpp
+	"Vram.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+	<string.h>
+
+1303364478 g:\my\svn\qgears\utilites\common\vram.h
+	"TypeDefine.h"
+	"Surface.h"
+
+1276518935 g:\my\svn\qgears\utilites\common\surface.h
+	<Ogre.h>
+
+1303880285 source:g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\animationfile.cpp
+	"../../common/Logger.h"
+	"AnimationFile.h"
+
+1303880285 g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\animationfile.h
+	<Ogre.h>
+	"../../common/File.h"
+	"BsxFile.h"
+
+1303912670 g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\bsxfile.h
+	<Ogre.h>
+	"DatFile.h"
+	"../../common/LzsFile.h"
+	"../../common/Vram.h"
+	"../../common/OgreGenUtilites.h"
+
+1303880285 g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\datfile.h
+	"../../common/LzsFile.h"
+
+1303912609 source:g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\bcxfile.cpp
+	<Ogre.h>
+	<math.h>
+	<vector>
+	"../../common/Logger.h"
+	"AnimationFile.h"
+	"BcxFile.h"
+	"MeshFile.h"
+	"SkeletonFile.h"
+
+1303912585 g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\bcxfile.h
+	"BsxFile.h"
+	"../../common/LzsFile.h"
+
+1303913314 g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\meshfile.h
+	<Ogre.h>
+	"BsxFile.h"
+	"../../common/File.h"
+
+1303880285 g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\skeletonfile.h
+	<Ogre.h>
+	"SkeletonFile.h"
+	"../../common/File.h"
+
+1303915766 source:g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\bsxfile.cpp
+	<Ogre.h>
+	"../../common/Logger.h"
+	"BsxFile.h"
+	"BcxFile.h"
+	"TdbFile.h"
+	"AnimationFile.h"
+	"MeshFile.h"
+	"SkeletonFile.h"
+
+1303880285 g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\tdbfile.h
+	<Ogre.h>
+	"../../common/Surface.h"
+	"../../common/LzsFile.h"
+	"../../common/Vram.h"
+
+1303880285 source:g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\datfile.cpp
+	"DatFile.h"
+	"../../common/Logger.h"
+
+1303913831 source:g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\main.cpp
+	<Ogre.h>
+	<OgreTextAreaOverlayElement.h>
+	<OIS.h>
+	<stdio.h>
+	<iostream>
+	"../../common/FileSystem.h"
+	"../../common/Logger.h"
+	"BsxFile.h"
+	"DatFile.h"
+
+1303913391 source:g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\meshfile.cpp
+	"MeshFile.h"
+	"../../common/Logger.h"
+
+1303880285 source:g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\skeletonfile.cpp
+	"SkeletonFile.h"
+	"../../common/Logger.h"
+
+1303880285 source:g:\my\svn\qgears\utilites\ffvii_field_model_exporter\src\tdbfile.cpp
+	"../../common/Logger.h"
+	"TdbFile.h"
+
+1296467333 source:g:\my\svn\qgears\utilites\common\ogregenutilites.cpp
+	"OgreGenUtilites.h"
+	"Logger.h"
+
+1303912889 g:\my\svn\qgears\utilites\common\ogregenutilites.h
+	<Ogre.h>
+	"Logger.h"
+	"Vram.h"
+

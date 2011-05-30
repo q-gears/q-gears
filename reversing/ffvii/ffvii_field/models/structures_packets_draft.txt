@@ -1,0 +1,79 @@
+// compiled textured quads gourad
++00 [][][]
++03 []       store 0x0c here
++04 [][][]   +04 textured quad BGR 1
++07 []       packet header 0x3c or 0x3e
++08 [][][][] place for vertex 1
++0c [][]     tex coords 1. Data from block 3 (vertex 1 index * 2)
++0e [][]     clut x and y
++10 [][][][] +08 textured quad BGR 2
++14 [][][][] place for vertex 2
++18 [][]     tex coords 2. Data from block 3 (vertex 2 index * 2)
++1a [][]     texture page.
++1c [][][][] +0C textured quad BGR 3
++20 [][][][] place for vertex 3
++24 [][]     tex coords 3. Data from block 3 (vertex 3 index * 2)
++26 [][]
++28 [][][][] +10 textured quad BGR 4
++2c [][][][] place for vertex 4
++30 [][]     tex coords 4. Data from block 3 (vertex 4 index * 2)
++32 [][]
+
+// compiled textured triangles gourad
+
+// compiled textured quad flat
+
+// compiled textured triangles flat
+
+// compiled monochrome triangles
++00 [][][]
++03 []       store 0x04 here
++04 [][][]   +04 monochromed triangles BGR
++07 []       packet header 0x20
++08 [][][][] place for vertex 1
++0c [][][][] place for vertex 2
++10 [][][][] place for vertex 3
+
+// compiled monochrome quads
++00 [][][]
++03 []       store 0x05 here
++04 [][][]   +04 monochromed quads BGR
++07 []       packet header 0x28
++08 [][][][] place for vertex 1
++0c [][][][] place for vertex 2
++10 [][][][] place for vertex 3
++14 [][][][] place for vertex 4
+
+// gradated triangles
++00 [][][]
++03 []       store 0x06 here
++04 [][][]   +04 gradated triangles BGR 1
++07 []       packet header 0x30
++08 [][][][] place for vertex 1
++0C [][][][] +08 gradated triangles BGR 2
++10 [][][][] place for vertex 2
++14 [][][][] +0C gradated triangles BGR 3
++18 [][][][] place for vertex 3
+
+// gradated quads
++00 [][][]
++03 []       store 0x08 here
++04 [][][]   +04 gradated triangles BGR 1
++07 []       packet header 0x38
++08 [][][][] place for vertex 1
++0C [][][][] +08 gradated triangles BGR 2
++10 [][][][] place for vertex 2
++14 [][][][] +0C gradated triangles BGR 3
++18 [][][][] place for vertex 3
++14 [][][][] +10 gradated triangles BGR 4
++18 [][][][] place for vertex 4
+
+// background drawed by that
++00 [][][][]
++04 [][]     depth sort value.
++06 []       store 0x80 here
++08 [][]     destination x.
++0a [][]     destination y.
++0c []       source x.
++0d []       source y.
++0e []       clut.

@@ -1,0 +1,4 @@
+text opcodes:
+00 - close
+01
+02 - new window

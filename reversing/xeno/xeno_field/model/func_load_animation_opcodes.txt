@@ -1,0 +1,33 @@
+0x08            - do something for all bones exept root (like 0x0a).
+
+0x0a [bone_id]  - do something for root bone (like 0x08).
+
+0x0c            - reset all bytes from [+70] to [+8c] in model struct with size 0x134 to zero.
+
+0x10 [file_id]  - set initial bones rotation and translation from given file (animation_0_0_0 - animation_0_0_X).
+
+0x13 [???][][file_id][arg3][arg4] - 
+
+0x48 [argument] - store given argument to struct with size 0x134 +36[].
+
+
+ani0
+0A00
+0C00 - reset
+0800
+1000 - set initial bone rotation from given file
+4800
+0000
+
+ani1
+0A00
+0C00 - reset
+4800
+1300 01 00 00 14
+21000000
+
+ani2
+0A00
+0C00 - reset
+4800
+1300 02 00 00 14 21000000

@@ -1,0 +1,202 @@
+//////////////////////////////////////////////////////////
+// 0x00_Return
+// funca1100
+current_entity_data = w[800af54c];
+slot = bu[current_entity_data + ce];
+
+// set lowest priority
+[current_entity_data + 8c + slot * 8 + 4] = w(w[current_entity_data + 90 + slot * 8] | 003c0000);
+// remove script from this slot
+[current_entity_data + 8c + slot * 8 + 3] = b(ff);
+
+// end script execution
+[800af4c0] = w(1);
+[800af594] = w(1);
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x01_JumpTo
+A0 = 1;
+read_two_bytes_unsigned;
+V1 = w[800af54c];
+[V1 + cc] = h(V0);
+//////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////
+// 0x02_ConditionalJumpTo
+S0 = 0;
+S1 = 0;
+
+V1 = w[800ad0d8]; // offset to current field scripts block.
+V0 = w[800af54c];
+V0 = hu[V0 + cc];
+flag = bu[V0 + V1 + 5];
+V1 = flag & 00F0;
+
+if (V1 == 0)
+{
+    A0 = 1;
+    read_two_bytes_unsigned;
+    A0 = V0;
+    get_bytes_from_800C2F3C;
+    S1 = V0;
+
+    A0 = 3;
+    read_two_bytes_unsigned;
+    A0 = V0;
+    get_bytes_from_800C2F3C;
+    S0 = V0;
+
+    A0 = 1;
+    read_two_bytes_unsigned;
+    A0 = V0;
+    get_bytes_sign;
+
+    if (V0 != 0)
+    {
+        S0 = S0 & ffff;
+    }
+}
+else if (V1 == 40)
+{
+    A0 = 1;
+    read_two_bytes_unsigned;
+    A0 = V0;
+    get_bytes_from_800C2F3C;
+    S1 = V0;
+
+    A0 = 3;
+    read_two_bytes_signed;
+    S0 = V0;
+
+    A0 = 1;
+    read_two_bytes_unsigned;
+    A0 = V0;
+    get_bytes_sign;
+
+    if (V0 != 0)
+    {
+        S0 = S0 & ffff;
+    }
+}
+else if (V1 == 80)
+{
+    A0 = 1;
+    read_two_bytes_signed;
+    S1 = V0;
+
+    A0 = 3;
+    read_two_bytes_unsigned;
+    A0 = V0;
+    get_bytes_from_800C2F3C;
+    S0 = V0;
+
+    A0 = 3;
+    read_two_bytes_unsigned;
+    A0 = V0;
+    get_bytes_sign;
+
+    if (V0 != 0)
+    {
+        S1 = S1 & ffff;
+    }
+}
+else if (V1 == C0)
+{
+    A0 = 1;
+    read_two_bytes_signed;
+    S1 = V0;
+
+    A0 = 3;
+    read_two_bytes_signed;
+    S0 = V0;
+}
+
+
+
+V1 = 0;
+switch (flag & 0F)
+{
+    case 0x0:     V1 = (S1 == S0) ? 1 : 0; break;
+    case 0x1 0x7: V1 = (S1 != S0) ? 1 : 0; break;
+    case 0x2:     V1 = (S1 >  S0) ? 1 : 0; break;
+    case 0x3:     V1 = (S1 <  S0) ? 1 : 0; break;
+    case 0x4:     V1 = (S1 >= S0) ? 1 : 0; break;
+    case 0x5:     V1 = (S1 <= S0) ? 1 : 0; break;
+    case 0x6 0x9: V1 = (S1 &  S0) ? 1 : 0; break;
+    case 0x8:     V1 = (S1 |  S0) ? 1 : 0; break;
+    case 0xA:     V1 = ((0 NOR S1) &  S0) ? 1 : 0; break;
+}
+
+if (V1 == 1)
+{
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + 8);
+}
+else
+{
+    A0 = 6;
+    read_two_bytes_unsigned;
+    V1 = w[800af54c];
+    [V1 + cc] = h(V0);
+}
+////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////
+// 0x26_Wait
+V1 = w[800af54c];
+slot_id = bu[V1 + ce];
+
+V0 = bu[V1 + 8c + slot_id * 8 + 2];
+if (V0 == 0)
+{
+    A0 = 1;
+    read_two_bytes_with_80;
+
+    [V1 + 8c + slot_id * 8 + 2] = b(V0);
+}
+else
+{
+    [V1 + 8c + slot_id * 8 + 2] = b(V0 - 1);
+}
+
+if (V0 == 0)
+{
+    [V1 + cc] = h(hu[V1 + cc] + 3);
+}
+
+[800af594] = w(1);
+////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0x86_ProgressNotEqualJumpTo
+V1 = w[800af54c];
+
+A0 = 1;
+read_two_bytes_with_80;
+S0 = V0;
+
+A0 = 0;
+get_bytes_from_800C2F3C;
+
+if (V0 == S0)
+{
+    V0 = hu[V1 + cc];
+    V0 = V0 + 5;
+}
+else
+{
+    A0 = 3;
+    read_two_bytes_unsigned;
+}
+
+[V1 + cc] = h(V0);
+//////////////////////////////////////////////////////////

@@ -1,0 +1,106 @@
+80058ba4 []       we get id of random formation from here.
+
+80064f6c array of formations (0x20 size).
+// worldmap
+28002C0000 00000000FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF00FFFFFFFFFFFFFF
+28002C0000 0000000101FFFFFFFFFFFF 0000FFFFFFFFFFFF0000FFFFFFFFFFFF
+01002C0000 0000000101FFFFFFFFFFFF 00000000FFFFFFFF00000000FFFFFFFF
+31002C0000 00000000FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF00FFFFFFFFFFFFFF
+28002C0000 0000000101FFFFFFFFFFFF 0000FFFFFFFFFFFF0000FFFFFFFFFFFF
+01002C0000 0000000101FFFFFFFFFFFF 00000000FFFFFFFF00000000FFFFFFFF
+01002C0000 00000000010101FFFFFFFF 00000000FFFFFFFF00000000FFFFFFFF
+01002C0000 00000000010101FFFFFFFF 00000000FFFFFFFF00000000FFFFFFFF
+01002C0000 00000000010101FFFFFFFF 00000000FFFFFFFF00000000FFFFFFFF
+2C002C0000 00000000000000FFFFFFFF 00000000FFFFFFFF00000000FFFFFFFF
+2C002C0000 00000082FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF00FFFFFFFFFFFFFF
+2C002C0000 0000000000000082FFFFFF 0000000000FFFFFF0000000000FFFFFF
+2C002C0000 0000008181FFFFFFFFFFFF 0000FFFFFFFFFFFF0102FFFFFFFFFFFF
+48002C0000 00000080FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF00FFFFFFFFFFFFFF
+49002C0000 0000008383FFFFFFFFFFFF 0000FFFFFFFFFFFF0102FFFFFFFFFFFF
+01002C0000 00000001FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF00FFFFFFFFFFFFFF
+// way to citan
+0140030000 000000 01FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF // | 1 tsuchinoto player
+0140030000 000000 0101FFFFFFFFFFFF 0000FFFFFFFFFFFF 0000FFFFFFFFFFFF // | 2 tsuchinoto player
+0140030000 000000 0101FFFFFFFFFFFF 0000FFFFFFFFFFFF 0101FFFFFFFFFFFF // 2 tsuchinoto | player
+0140030001 010100 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 01FFFFFFFFFFFFFF // sai player |
+0140030001 010100 0000FFFFFFFFFFFF 0000FFFFFFFFFFFF 0101FFFFFFFFFFFF // 2 sai player |
+0140030001 010100 000101FFFFFFFFFF 000000FFFFFFFFFF 018080FFFFFFFFFF // sai player | 2 tsuchinoto
+0140030001 010100 000101FFFFFFFFFF 000000FFFFFFFFFF 008080FFFFFFFFFF // player | 2 tsuchinoto sai
+0140030000 000000 00010101FFFFFFFF 00000000FFFFFFFF 01000000FFFFFFFF // sai | 3 tsuchinoto player
+0340030001 010100 03FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 01FFFFFFFFFFFFFF
+0140030000 000000 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
+0140030000 000000 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
+0140030000 000000 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
+0140030000 000000 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
+0140030000 000000 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
+0140030000 000000 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
+0140030000 000000 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
+
+0104010104080806 0000000000000000
+00010506070b131b
+
+
+800C1788      [][]      unit id -> bit mask conversion data.
+
+800C3504      [][][][]  pointer to battle text block.
+
+800C35AC      []        some byte checked dirung action_text_output.
+
+800C35CC      [][][][]  pointer to some data.
+
+800C35D4                some unit data. (size 0x1C).
+800C35D4      []
+800C35D7      []        we check this == 0 during party accessable check.
+
+800C3708                calculated attack data (size 0x48).
+800C3708 +   0 [][]     inflicted damage.
+800C3708 +  18 []       unknown (FF) during reset at start of action parsing.
+800C3708 +  23 [][]     attacker id.
+800C3708 +  24 [][]     unknown (0000) during reset at start of action parsing.
+800C3708 +  3A []       store byte set during skip turn here (00).
+800C3708 +  3C []       unknown (00) during reset at start of action parsing.
+800C3708 +  47 []       writed FF here for all units during script cycle start.
+                        write F7 here during skip turn function.
+
+800CC408                unit data array (0x170 size)
+800CC408 +  4C [][]     unit current hp.
+800CC408 +  4E [][]     unit max hp.
+800CC408 +  5A []       unit speed.
+800CC408 +  5C []       unit ether def.
+800CC408 +  7C [][]     some flags
+800CC408 +  84 [][]     some flags.
+800CC408 + 14C          experience.
+
+800D24EC      []       array of unit exists in battle (1-3 party, 3-A enemy). (0 - no 1 - yes)
+
+800D257C               attack queue array. (size 0x100 0x08).
+800D257C + 06 [][]     target mask.
+
+800D29C1      []       array of something unit related. (size 0x08).
+
+800D2B20               array of struct with script pointers for enemy unit (index = unit_is - 3) (size 0x40).
+800D2B20 + 00 [][][][] pointer to script.
+800D2B20 + 20          variable store array (0x08 0x02).
+800D2B20 + 30          variable store array (0x10 0x01).
+
+800D2E40               some data (size 0x60). read in text output finction.
+800D2E40 + 00 [][][][] pointer to some data related to string.
+
+8010C48C + 20 [][][][] pointer to some data (8010C540).
+8010C48C + 2C [][]     store scale data here (*256).
+8010C48C + 34 [][]
+8010C48C + 3C [][][][] flags.
+                        1: 2: 3:
+                        4: added during scale set.
+                        5: 6: 7: 8: 9: A: B: C: D: E: F: 10: 11: 12: 13: 14: 15: 16: 17: 18: 19: 1A: 1B: 1C: 1D: 1E:
+                       1F: checked &3 during scale set.
+                       20: checked &3 during scale set.
+8010C48C + 60 [][][][] some pointer.
+8010C48C + 64 [][][][] pointer to script.
+8010C48C + 9E [][]     check to == 0 during opcode parsing.
+8010C48C + AC [][][][]
+
+8010C540 + 06 [][]     store scale data here (*256).
+8010C540 + 08 [][]     store scale data here (*256).
+8010C540 + 0A [][]     store scale data here (*256).
+

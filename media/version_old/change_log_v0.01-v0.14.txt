@@ -1,0 +1,623 @@
+================================================================================
+Q-Gears v0.13 | 2007-05-14
+--------------------------------------------------------------------------------
+
+2007-05-14
+----------
++ [ffvii] Change version number to v0.13. [Akari]
+- [ffvii] Fix PC positioning on map start. [Akari]
+- [ffvii] OnLeave now called when we leave trigger by height. [Akari]
++ [ffvii] REQSW and REQEW now called till their scripts can be added to queue. [Akari]
++ [ffvii] First script now called only once like all other scripts. [Akari]
++ [ffvii] Change priority on EntityCollision called script from 0 to 1. [Akari]
+- [ffvii] Fix jump - must move entity to end point. [Akari]
+- [ffvii] Fix that range collision detection was not work with locked triangles. [Akari]
+
+2007-05-12
+----------
+- [ffvii] Fix trouble with walkmesh. Now we can slide over corner. [Akari]
+- [ffvii] Fix that line was still activated when we live in through ladder (height check problem). [Akari]
+
+2007-05-08
+----------
+- [ffvii] Fix now only movable PC activates collision script. [Akari]
+- [ffvii] Fix now only movable PC activates all triggers. [Akari]
++ [ffvii] Now only PC activates collision script. [Akari]
+- [ffvii] Fix movie clean when new map loading. [Akari]
+
+2007-04-25
+----------
+- [ffvii] Fix npc entity now not activate triggers and gateways. [Akari]
+- [ffvii] Fix SetNextWalkMeshMoveStep was used height and not work on maps where Y was other than 0. [Akari]
+- [ffvii] Fix Movie m_CurrentFrame was not initialized properly. [Akari]
+
+2007-04-24
+----------
+* [ffvii] Implement entity/background z ordering. [Akari]
+
+2007-04-20
+----------
+* [ffvii] Add SLIP (0x2B) field opcode support. [Akari]
+* [ffvii] Implement board sliding on/off. [Akari]
+* [ffvii] Add DUMP_WALKMESH_MOVE to config that dumps all walkmesh move related info. [Akari]
++ [ffvii] Rework moving. Made it collision dependable. [Akari]
+
+2007-04-11
+----------
++ [ffvii] Change auto run priorities. [Akari]
++ [ffvii] Made new 2d collision with triggers. [Akari]
+
+2007-03-27
+----------
+* [ffvii] Add save to XML and load from there. [Akari]
+* [ffvii] Add IFMEMBQ (0xCC) field opcode support. [Akari]
+* [ffvii] Add IFPRTYQ (0xCB) field opcode support. [Akari]
+* [ffvii] Add GETPC (0x74) field opcode support. [Akari]
+* [ffvii] Add MMB+- (0xCD) field opcode support. [Akari]
+* [ffvii] Add MMBUK (0xCF) field opcode support. [Akari]
+* [ffvii] Add MMBLK (0xCE) field opcode support. [Akari]
+* [ffvii] Add PRTYM (0xC9) field opcode support. [Akari]
+* [ffvii] Add GTPYE (0x0B) field opcode support. [Akari]
+* [ffvii] Add SPTYE (0x0A) field opcode support. [Akari]
+
+2007-03-26
+----------
+* [ffvii] Add RMITM (0x0FFF) field opcode support. [Akari]
+* [ffvii] Add AAITM (0x0FFA) field opcode support. [Akari]
+* [ffvii] Add CKITM (0x5A) field opcode support. [Akari]
+* [ffvii] Add DLITM (0x59) field opcode support. [Akari]
+* [ffvii] Add STITM (0x58) field opcode support. [Akari]
+
+2007-03-25
+----------
+* [ffvii] Add item/party related info to GameState. [Akari]
+
+2007-03-22
+----------
++ [ffvii] Made line and entity script activation working as Synergy blades write.
+
+2007-03-21
+----------
++ [ffvii] Gateway now sets direction. [Akari]
+* [ffvii] Add GETDIR (0xB7) field opcode support. [Akari]
++ [ffvii] Add auto activation script 3 on entity collision. [Akari]
+
+2007-03-20
+----------
++ [ffvii] Lines now stored as pointer to Line object. [Akari]
+
+
+
+================================================================================
+Q-Gears v0.12 | 2007-03-20
+--------------------------------------------------------------------------------
+
+2007-03-20
+----------
+* [ffvii] Add angle check to TalkCheck. Now dialog only started if angle less than 90. [Akari]
+
+2007-03-19
+----------
++ [ffvii] Moved entity collision related code to ObjectManager, because entity mustn't know anything about other entitys. Only object manager works with all them. [Akari]
++ [ffvii] Backgrounds now swiched off/on by one button (1). [Akari]
+* [ffvii] Implement ability to switch model off/on. [Akari]
+
+2007-03-17
+----------
+- [ffvii] Fix mark_triangle moved when PC moved in movie mode. [Akari]
++ [ffvii] Clean up ObjectManager. Remove instant gamestate position saving. [Akari]
++ [ffvii] MAPJUMP now sets direction as it should be. [Akari]
++ [ffvii] Rotation now float angle value, not FFVII Uint8. [Akari]
+
+2007-03-16
+----------
+* [ffvii] Add TLKON (0x7E) field opcode support. [Akari]
++ [ffvii] Rework talk checking system. [Akari]
+* [ffvii] Implement rotation acording to movement. [Akari]
++ [ffvii] Move movement to update and make it dependable in KERNEL button state. [Akari]
+
+2007-03-15
+----------
+* [ffvii] Add REQEW (0x03) field opcode support. [Akari]
+* [ffvii] Add REQSW (0x02) field opcode support. [Akari]
+
+2007-03-14
+----------
+- [ffvii] Fix solid collision detection. [Akari]
++ [ffvii] Change talk and solid collision vision. [Akari]
+
+2007-03-13
+----------
+* [ffvii] Add MOVE (0xA8) field opcode support. [Akari]
+* [ffvii] Add implementation of STATE_WALKMESH_MOVE state. [Akari]
++ [ffvii] Made JUMP - waitable opcode and move jump routine to ObjectManager. This is still not complete implementation of STATE_JUMP state. [Akari]
+* [ffvii] Add NPC movement by LADER opcode. [Akari]
++ [ffvii] Rewrite entity/object manager. [Akari]
+
+2007-03-05
+----------
+- [ffvii] Fixed movie and screen border positioning. [Akari]
+- [ffvii] Fixed instant scrolling issue. [Akari]
+
+2007-03-02
+----------
+* [ffvii] Add MOVLK (0x0FFC) SPECIAL inner opcode. [Akari]
+* [ffvii] Add MVCAM (0xFB) field opcode support. [Akari]
+* [ffvii] Add MVIEF (0xFA) field opcode support. [Akari]
+* [ffvii] Add MOVIE (0xF9) field opcode support. [Akari]
+* [ffvii] Add PMVIE (0xF8) field opcode support. [Akari]
+* [ffvii] Add movie support to field. [Akari]
+
+2007-02-27
+----------
+* [ffvii] Implement switching view of triggers and lines off. [Akari]
+* [ffvii] Implement real size resolution. New rows in config SCREEN_WIDTH,
+          SCREEN_HEIGHT, GAME_WIDTH, GAME_HEIGHT. [Akari]
+
+2007-02-21
+----------
+* [ffvii] Implement idle pose reading from BCX file. [Akari]
+* [ffvii] Implement base model. [Akari]
+
+2007-02-08
+----------
+* [ffvii] Implement loading directional keys from XML. [Akari]
+* [ffvii] Implement map related directional keys handling. [Akari]
+* [ffvii] Add SLINE (0xD3) field opcode support. [Akari]
+* [ffvii] Add BGPDH (0x2C) field opcode support. [Akari]
++ [ffvii] Add support for 3rd and 4th background. [Akari]
+
+2007-02-02
+----------
+- [ffvii] Understand work of z ordering of walkmesh and rewrite BackgroundManager to render background correctly. This needs to be completely rewrite a bit later. [Akari]
+
+2007-01-26
+----------
+- [ffvii] Walk Mesh size fixed. [Akari]
+
+
+
+================================================================================
+Q-Gears v0.11 | 2007-01-26
+--------------------------------------------------------------------------------
+
+2007-01-26
+----------
++ [ffvii] Change version number to v0.11. [Akari]
++ [ffvii] Change help to all modules. [Akari]
+- [ffvii] Fix error when we add more and more elements to global g_SpritePoly from BackgroundManager when called it constrictor. [Akari]
+
+2007-01-25
+----------
+- [ffvii] Fix bug when two field modules called togather. When one was deleted,
+          static script member was also deleted, making it unavailable for second field module. [Akari]
++ [ffvii] Make Field as start module to q-gears. [Akari]
+- [ffvii] Fix conditional jump opcodes. [Akari]
+
+2007-01-24
+----------
+- [ffvii] Fix ladder movement to start position. [Akari]
+* [ffvii] Add AXYZI (0xC1) field opcode support. [Akari]
+- [ffvii] Fix TimFile loader. [Akari]
+- [ffvii] Fix background viewing (transparency issue). MimFile loader was incorrect. [Akari]
+
+2007-01-23
+----------
++ [ffvii_content] Add NMKIN_4 and NMKIN_5 maps. [Akari]
+* [ffvii] Add JUMP (0xC0) field opcode support. [Akari]
+* [ffvii] Add base implementation of jump mode. [Akari]
++ [ffvii] LADER now is waiting-type opcode. [Akari]
+* [ffvii] Implement ladder climbing buttons. [Akari]
+
+2007-01-22
+----------
++ [ffvii] Make line script activation like Synergy Blades says. [Akari]
+* [ffvii] Add SOLID (0xC7) field opcode support. [Akari]
+* [ffvii] Add TLKR2 (0xD6) field opcode support. [Akari]
+* [ffvii] Add SLDR2 (0xD7) field opcode support. [Akari]
+* [ffvii] Add TALKR (0xC7) field opcode support. [Akari]
+* [ffvii] Add SLIDR (0xC6) field opcode support. [Akari]
++ [ffvii] Gamestate and Database now accessable directly like KERNEL and not accessible from KERNEL anymore. [Akari]
+* [ffvii] Add IFKEYOFF (0x32) field opcode support. [Akari]
+* [ffvii] Add IFKEYON (0x31) field opcode support. [Akari]
+* [ffvii] Add struct that holds state of game button to KERNEL. [Akari]
+
+2007-01-19
+----------
+* [ffvii] Add IFKEY (0x30) field opcode support. [Akari]
++ [all] Add IsButtonPressed method to InputFilter class. [Akari]
++ [ffvii] ODE removed. Implement range collision detection instead. [Akari]
+
+2007-01-18
+----------
++ [ffvii] Make trigger activation works with distance instead of ODE. [Akari]
++ [ffvii] Move WalkMeshTriangle struct to separate class that derives from Actor. [Akari]
+
+2007-01-12
+----------
+* [ffvii] Add mark triangle animation to MarkTriangle class. [Akari]
++ [ffvii] Move MarkTriangle struct to separate class that derives from Actor. [Akari]
+* [ffvii] Add showing gateway mark triangle from DAT and XML. [Akari]
+* [ffvii] Add SCRCC (0x65) field opcode support. [Akari]
+
+2007-01-11
+----------
+* [ffvii] Add reading of extra mark triangle from XML. [Akari]
+* [ffvii] Add MPJPO (0xD2) field opcode support. [Akari]
+
+2007-01-10
+----------
+* [ffvii] Add reading of extra mark triangle from DAT. [Akari]
+* [ffvii] Implement showing triangle that shows gateway on map. [Akari]
+
+2007-01-09
+----------
++ [ffvii] Made all Actor->Draw constant method. [Akari]
+* [ffvii] Implement that camera follows character. [Akari]
+
+
+
+================================================================================
+Q-Gears v0.10 | 2006-12-13
+--------------------------------------------------------------------------------
+
+2006-12-13
+----------
+- [ffvii] Fix init_state in WindowManager was u8 size and can't handle string larger than 255 symbols. [Akari]
+* [ffvii] Add LADER (0xC2) field opcode support. [Akari]
+* [ffvii] Add ladder mode and ladder moving to ObjectManager. [Akari]
+
+2006-12-12
+----------
++ [ffvii_content] Level ELEVTR1 now can be passed to next map and back using LINE and MAPJUMP opcodes. [Akari]
+* [ffvii] Add LINON (0xD1) field opcode support. [Akari]
++ [ffvii] Make that PositionByXZ positioned entity in top triangle with this coords. [Akari]
+- [ffvii] Fix MAPJUMP was not working correctly. Missed KERNEL coords setting. [Akari]
+* [ffvii] Add LINE (0xD0) field opcode support. [Akari]
++ [ffvii] Create OnEnter and OnLeave action for triggers, gateways and line. [Akari]
+
+2006-12-11
+----------
+- [ffvii] Fix small error with vector for WaitForScroll entity. (was used s16 instead of s8) [Akari]
++ [ffvii] Make SCR2DC (0x66) smooth scrolling with slow start and end. [Akari]
+
+2006-12-08
+----------
+* [ffvii] Implement screen and loading of screen range DAT. [Akari]
+* [ffvii] Add SCRLW (0x67) field opcode support. [Akari]
++ [ffvii] Remove poping of Field module when go to battle. Now state of field stored corectly. [Akari]
++ [ffvii_content] Change walkmesh and counter to show entity 1 triangle is. [Akari]
+* [ffvii] Add GETAI (0xB9) field opcode support. [Akari]
++ [ffvii_content] Add CC to STARTMAP.xml to switch player entity to Akari when talk to it. [Akari]
+* [ffvii] Add CC (0xBF) field opcode support. [Akari]
++ [ffvii_content] Add MENU2 to MD1STIN.xml like in the real map. [Akari]
+* [ffvii] Add MENU2 (0x4A) field opcode support. [Akari]
++ [ffvii_content] Add PRTYE to MD1STIN.xml like in the real map. [Akari]
+- [ffvii] Fix wrong character slot check in PartyMenu. [Akari]
+- [ffvii] Fix wrong matrix pushing in gui elements. [Akari]
+* [ffvii] Add PRTYE (0xCA) field opcode support. [Akari]
+
+2006-12-07
+----------
++ [ffvii_content] Add UC opcodes and disables character moving until scrolling finishes. [Akari]
+* [ffvii] Add UC (0x33) field opcode support. [Akari]
++ [ffvii_content] Add SCR2DC and SCR2D opcodes to MD1STIN.xml like in the real map. [Akari]
++ [ffvii_content] Add start dialog to STARTMAP.xml that describes last changes. [Akari]
+* [ffvii] Add SCR2DL (0x68) field opcode support. [Akari]
+- [ffvii] Fix that GetMemoryBank u16 in Kernel do not returned immediate value larger than 254. [Akari]
+* [ffvii] Add SCR2DC (0x66) field opcode support (linear scrolling for now). [Akari]
+* [ffvii] Add SCR2D (0x64) field opcode support. [Akari]
+* [ffvii] Add screen border to field module. [Akari]
+* [ffvii] Sync background scrolling and walkmesh scrolling. [Akari]
+* [ffvii] Add scrolling background posibility to field module. [Akari]
+
+2006-12-06
+----------
++ [ffvii_content] Add for more choises to Yuffie dialog for mapjump to newly added maps for testing. (this will be remove before release) [Akari]
+* [ffvii_content] Add NMKIN_2, NMKIN_3 files for 0.10 release. [Akari]
+* [ffvii] Add perspective matrix loading from Camera in DAT file.. [Akari]
+
+2006-12-01
+----------
++ [ffvii] Combine UnitManager and ScriptManager. Create ObjectManager that manages all object on field. [Akari]
+
+2006-11-28
+----------
++ [ffvii] Remove printf when window status updates. [Akari]
++ [ffvii] Change output from Script from prinf to Logger and add flag to config "DUMP_SCRIPT=false". If setted to "true" output all script to log file. [Akari]
++ [ffvii] Change entity class makes sync opcodes alowed in init script. [Akari]
+
+2006-11-27
+----------
++ [ffvii] Remove unnesessary DropInput methods in UnitManager and FieldModule. [Akari]
++ [ffvii] Make move in UnitManager works with repeat input event. [Akari]
++ [all] Cleanup input module alittle. [Akari]
++ [all] Rework input module. Make it reported not only FIRST_PRESS and RELEASE event but REPEAT too. [Akari]
+
+
+
+================================================================================
+Q-Gears v0.09 | 2006-11-22
+--------------------------------------------------------------------------------
+
+2006-11-22
+----------
++ [ffvii] Change version number to v0.09. [Akari]
++ [ffvii] Optimize FieldModule a little. Remove unneeded pointers and manual memory allocation. [Akari]
+* [ffvii] Implement Fade on map load and unload. [Akari]
++ [ffvii_content] Change map STARTMAP.xml. Add load CHORACE choise in Yuffie dialog. [Akari]
+* [ffvii_content] Add CHORACE map by request of Synergy Blades as very hard with a lot of different background animation. [Akari]
+- [ffvii] Fix DatXmlFile when there is no XML. [Akari]
+* [ffvii] Add FADEW (0x6C) field opcode support. [Akari]
+* [ffvii] Add FADE (0x6B) field opcode support. [Akari]
+* [ffvii] Add Fade effect to field module. [Akari]
+* [ffvii] Add ColorOverlay to Kernel. [Akari]
++ [ffvii_content] Change map ELEVTR1.xml. Add gateway back to NMKIN_1. [Akari]
++ [ffvii_content] Change map STARTMAP.xml. Make battle be lock by default. [Akari]
++ [ffvii_content] Change map STARTMAP.xml. Remove IDLCK opcode (we dont need it since we use our own walkmesh). [Akari]
++ [ffvii_content] Change map MD1STIN.xml. Remove timer and all text scripts. [Akari]
++ [ffvii_content] Change map NRTHMK.xml. Add Triangle lock as on real map. Remove our own gateway. [Akari]
++ [ffvii_content] Add simple sprite animation to MD1_2.xml. [Akari]
+* [ffvii_content] Add NMKIN_1 and ELEVTR1 map. [Akari]
+- [ffvii] Fix SetTriangleAccess() and SetEncounterTable() in UnitManager wrong sanity check. [Akari]
+- [ffvii] Fix sprite animation on same layer (when all sprites located on 2nd layer). [Akari]
+
+2006-11-21
+----------
+* [ffvii] Implement showing/hide walkmesh and unit collision. [Akari]
+* [ffvii] Add BGOFF (0xE1) field opcode support. [Akari]
+* [ffvii] Add BGON (0xE0) field opcode support. [Akari]
+* [ffvii] Add BGCLR (0xE4) field opcode support. [Akari]
+* [ffvii] Implement background swich on/off (layer separately). [Akari]
+* [ffvii] Implement sprite background animation. [Akari]
+* [ffvii] Implement 2nd Layer. [Akari]
++ [ffvii] Rewrite Display blending and geometry to be more like one in psx. [Akari]
+
+2006-11-17
+----------
+* [ffvii] Implement basic Background 1st layer loading. [Akari]
+- [ffvii] Fix Vram image aligment in Vram buffer for both tim and mim. [Akari]
+
+2006-11-16
+----------
+* [ffvii] Add a lot of log info about initialization of different part of Kernel. [Akari]
++ [ffvii] Change tim and mim loading using Vram. [Akari]
+* [ffvii] Create Vram for tim and mim loading. Always allocate 1mb of memory for each texture loading. More efficient than previous method in some way. [Akari]
+
+2006-11-15
+----------
+* [ffvii] Add mim file loader. [Akari]
++ [ffvii] Moved Kernel::Init() calling outside constructor, because we need constructed Kernel in Graphic initialization. [Akari]
+
+
+
+================================================================================
+Q-Gears v0.08 | 2006-11-10
+--------------------------------------------------------------------------------
+
+2006-11-10
+----------
++ [ffvii] Change version number to v0.08. [Akari]
+* [ffvii] Add solid state to unit. [Akari]
+* [ffvii] Implement savemap pc coords loading after gateway. Slightly redone position set mechanics. [Akari]
+* [ffvii] Implement xml walkmesh loading. [Akari]
+* [ffvii] Implement GetVector3 parse method to XmlFile for coords parse (xyz="999 999 999"). [Akari]
+
+2006-11-09
+----------
+- [ffvii] Fix battle encounter and trigger checked even if we are not moving. [Akari]
+* [ffvii] Implement restore position after battle. [Akari]
+* [ffvii] Implement storing and loading pc coords set bool value. [Akari]
+* [ffvii] Move all XML loading from field to DatXmlFile loader. [Akari]
+* [ffvii] Create DatXmlFile class that handles field XML loading. [Akari]
+* [all] Create XmlFile class that handles basic XML operations. [Akari]
+
+2006-11-07
+----------
+* [ffvii] Implement unit/unit colliding. [Akari]
+
+2006-11-03
+----------
+* [xeno] Add WalkMesh loader to FieldModule and display walkmesh. [Akari]
+* [xeno] Add FieldModule placeholder alonf with unit manager (as in ffvii). [Akari]
+* [xeno] Add ArchiveFile class that handles archives. [Akari]
+
+2006-11-02
+----------
+* [ffvii] Implement dialog activation. [Akari]
+- [ffvii] Fix small error in WindowManager. (pointer position was reseted even if we create not ask window) [Akari]
+* [ffvii] Implement unit/unit collision detection. [Akari]
+* [ffvii] Switch to ODE collision detection for triggers and units. [Akari]
+
+2006-10-27
+----------
+* [ffvii] Add triangle that shows gateway and ladder to KERNEL. [Akari]
+
+
+
+================================================================================
+Q-Gears v0.07 | 2006-10-25
+--------------------------------------------------------------------------------
+
+2006-10-25
+----------
+* [ffvii] Add BTLON (0x71) field opcode support. [Akari]
+* [ffvii] Add BTLTB (0x4B) field opcode support. [Akari]
++ [ffvii] Change version number to v0.07a. [Akari]
+* [ffvii] Add MPNAM (0x43) field opcode support. [Akari]
+* [ffvii] Implement savemap map name storing. [Akari]
+- [ffvii] Fix memory leak in xml to script converter (spesial opcode size was incorrect). [Akari]
+* [ffvii] Implement Storing PC unit position and triangle in gamestate. Not use this though. Moved this to next version [Akari]
+
+2006-10-24
+----------
+* [ffvii] Implement BTLLK (0x0FFB) SPECIAL inner opcode. [Akari]
+* [ffvii] Implement SPECIAL (0x0F) field opcode (without inner opcodes). [Akari]
+
+2006-10-23
+----------
++ [ffvii] Rewrite script class. Make KERNEL Gamestate MemoryBank handling, not the FieldModule.
++ [ffvii] Make MemoryBank part of Gamestate.
+* [ffvii] Add PRTYP (0xC8) field opcode support. [Akari]
++ [ffvii] make last active encounter table to be set as active. [Akari]
+* [ffvii] Implement xml encounters loading. [Akari]
++ [ffvii] Return a lot of debug info (current coords, current triangle). [Akari]
++ [ffvii] Implement random encounters (Mechanics by Terence Fergusson). [Akari]
+
+
+
+================================================================================
+Q-Gears v0.06 | 2006-10-13
+--------------------------------------------------------------------------------
+
+2006-10-13
+----------
++ [ffvii] Change version number to v0.06a. [Akari]
+* [ffvii] Implement PartyMenu loading when pressing S in FieldModule (and no text was shown). [Akari]
+* [ffvii] Implement PC (0xA0) opcode and controllable entity. [Akari]
+* [ffvii] Implement xml gateway loading (pc character doesn't set in given position yet). [Akari]
++ [ffvii] Changed coloring of triggers, walkmeshes and entities. [Akari]
++ [ffvii] Moved manager clearing from Dat file reader to FieldModule map loading. [Akari]
+* [ffvii] Implement gateway activation and loading (pc character doesn't set in given position yet). [Akari]
+* [ffvii] Read gateway info. [Akari]
+
+2006-10-12
+----------
+* [ffvii] Implement map loading on gateway activation. [Akari]
+* [ffvii] Add Gateway class. Implement action on trigger activation. [Akari]
+* [ffvii] Implement full collision box/trigger collision. [Akari]
++ [ffvii] Move trigger/collision check to trigger class. [Akari]
++ [ffvii] Move object collision to Model class (implement GetCollision()). [Akari]
+* [ffvii] Create separate collision class. [Akari]
++ [ffvii] Move triggers and collision check to separate class. [Akari]
+
+2006-10-11
+----------
+* [ffvii] Implement test trigger/unit collision detection. [Akari]
+
+
+
+================================================================================
+Q-Gears v0.05 | 2006-10-09
+--------------------------------------------------------------------------------
+
+2006-10-09
+----------
++ [ffvii] Change version number to v0.05c. [Akari]
+* [ffvii] Add IDLCK (0x6D) field opcodes support. [Akari]
++ [ffvii] Redone walkmesh/access (we need posibility to deactivate triangles). [Akari]
++ [ffvii] Move walkmesh math to ffvii directory. [Akari]
+- [ffvii] Fix fatal cycling when we try to cross triangle corner. [Akari]
+
+2006-10-06
+----------
+* [ffvii] Add moving test object to unit manager. [Akari]
+
+2006-10-04
+----------
+- [ffvii] Fix input was handled all by WindowManager and not given to other managers. [Akari]
+
+2006-10-03
+----------
+* [ffvii] Add INC! (0x7A), INC2! (0x7B), DEC! (0x7C), DEC2! (0x7D) field opcodes support. [Akari]
+- [ffvii] Fix that uni has been displayed right after definition. now it displays only after setting its coords. [Akari]
+* [ffvii] Add direction display to default model cube. Testing purpose. [Akari]
+- [ffvii] Fix that XYZI opcode was 10 bytes length instead of 11 bytes. [Akari]
+* [ffvii] Add DIR (0xB3) field opcodes support. [Akari]
++ [ffvii] Now XYZI called only once. After the position is set you can't set it again. [Akari]
+
+2006-10-02
+----------
+* [ffvii] Add XYZI (0xA5) field opcodes support. [Akari]
+* [ffvii] Add CHAR (0xA1) field opcodes support. Parameter not implemented. [Akari]
+* [ffvii] Add unit registration to UnitManager class. [Akari]
+* [ffvii] Add WAIT (0x24) field opcodes support. [Akari]
+- [ffvii] Fix that pointer shown before text finishes writing. [Akari]
++ [ffvii] Moved MemoryBank class to kernel. [Akari]
+
+2006-09-29
+----------
+* [ffvii] Add WREST (0x53) field opcodes support. [Akari]
+* [ffvii] Moved window initialisation to reset method. [Akari]
+* [ffvii] Add SET-BYTE! (0x80) field opcodes support. [Akari]
+* [ffvii] Timer now count down automaticly as you show it and stop as soon as you close this window. [Akari]
+* [ffvii] Make Gamestate and Database non constant wher returned from their get methods so anyone can change it. [Akari]
+* [ffvii] Rewrite Field managers. Now FieldModule contains MemoryBank instead of Script. [Akari]
+
+2006-09-27
+----------
+* [ffvii] Fix error with wrong parameter in WSPCL opcode. [Akari]
+* [ffvii] Fix error with string reading in OpcodesToRawScript. [Akari]
+* [ffvii] Add message typing. [Akari]
+
+
+
+================================================================================
+Q-Gears v0.04 | 2006-09-27
+--------------------------------------------------------------------------------
+
+2006-09-27
+----------
+* [ffvii] Change version number to v0.04c. [Akari]
+* [ffvii] Fix script reading function tries to write u32 to u8 value. [Akari]
+* [ffvii] Fix small errors in new windowing system (input). [Akari]
+
+2006-09-26
+----------
+* [ffvii] Rework windowing system. Windows are now more important than Messages (they are part of windows now). [Akari]
+* [ffvii] Add memory bank access to WNUMB. [Akari]
+* [ffvii] Fix some errors in PLUS and MINUS opcodes. [Akari]
+
+2006-09-19
+----------
+* [ffvii] Add STTIM (0x38) field opcodes support. [Akari]
+* [ffvii] Add WNUMB (0x37) field opcodes support (without memory bank access). [Akari]
+* [ffvii] Add WSPCL (0x36) field opcodes support. [Akari]
+* [ffvii] Implement special window support in WindowManager. [Akari]
+
+2006-09-15
+----------
+* [ffvii] Fix scripts and dialogs was not cleared when load new map from XML. [Akari]
+* [ffvii] Fix all scripts that stored in priority slots were run, not only highest one. [Akari]
+* [ffvii] Change script handling to real game like. [Akari]
+
+2006-09-14
+----------
+* [ffvii] Fix transparent window didn't display transparency on units and walkmesh. [Akari]
+* [ffvii] Fix script calling when script doesn't exist. Add sanity check. [Akari]
+* [ffvii] Implement basic xml support. May load Dialog and Entity from XML. [Akari]
+
+2006-08-30
+----------
+* [ffvii] Add UnitManager class to handles unit on field and move all units related code there. [Akari]
+
+2006-08-29
+----------
+* [ffvii] Add PLUS! (0x76), PLUS2! (0x77), MINUS! (0x78), MINUS2! (0x79) field opcodes support. [Akari]
+
+2006-08-28
+----------
+* [ffvii] Add IFSW (0x16), IFSWL (0x17), IFUW (0x18), IFUWL (0x19) field opcodes support. [Akari]
+
+2006-08-25
+----------
+* [xeno] Bind UP and DOWN button to handles next and previous battle background load [Akari]
+* [xeno] Add texture support to Model class (direct translation from my previous code) [Akari]
+* [xeno] Add ModelUtilites namespace  that contain useful functions for Models [Akari]
+* [xeno] Add texture support to MeshFile class (direct translation from my previous code) [Akari]
+
+2006-08-24
+----------
+* [xeno] Add base implementation of Model class that handles standart models [Akari]
+* [xeno] Add HrcFile class that handles hierarchy in Model files [Akari]
+* [xeno] Add base implementation of MeshFile class that handles mesh in Model files [Akari]
+
+2006-08-23
+----------
+* [xeno] Add TextureFile class that handles textures in Model files [Akari]
+* [xeno] Add TimFile class that handles tim images [Akari]
+* [xeno] Add SubPacketFile class that handles subpacket in packet type of files [Akari]
+* [xeno] Add PacketFile class that handles packet type of files [Akari]
+* [all] Add $Id: ChangeLog.txt 83 2006-10-08 06:55:30Z crazy_otaku $ subversion keyword to all files [Akari]
+* [all] Make all file names first word letter uppercase [Akari]
+* [all] Restructure files and directories [Akari]

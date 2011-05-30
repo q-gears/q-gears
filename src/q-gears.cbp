@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="q-gears" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release">
+				<Option output="..\output\q-gears" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\output\" />
+				<Option object_output="compile\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-DTIXML_USE_STL" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain" />
+					<Add library="ois" />
+				</Linker>
+			</Target>
+			<Target title="Debug">
+				<Option output="..\output\q-gears_d" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\output\" />
+				<Option object_output="compile_d\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-DTIXML_USE_STL" />
+				</Compiler>
+				<Linker>
+					<Add library="OgreMain_d" />
+					<Add library="ois_d" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-W" />
+			<Add option="-mthreads" />
+			<Add option="-fmessage-length=0" />
+			<Add option="-fexceptions" />
+			<Add option="-fident" />
+			<Add option="-DWIN32" />
+			<Add option="-D_WINDOWS" />
+			<Add directory="core\library" />
+		</Compiler>
+		<Linker>
+			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+			<Add option="-Wl,--enable-auto-image-base" />
+			<Add option="-Wl,--add-stdcall-alias" />
+			<Add directory="C:\OgreSDK\lib" />
+			<Add directory="C:\OgreSDK\bin\debug" />
+			<Add directory="C:\MinGW\lib" />
+			<Add directory="C:\OgreSDK\bin\release" />
+		</Linker>
+		<Unit filename="Main.cpp" />
+		<Unit filename="Main.h" />
+		<Unit filename="core\Assert.h" />
+		<Unit filename="core\CameraManager.cpp" />
+		<Unit filename="core\CameraManager.h" />
+		<Unit filename="core\ConfigCmd.cpp" />
+		<Unit filename="core\ConfigCmd.h" />
+		<Unit filename="core\ConfigCmdManager.cpp" />
+		<Unit filename="core\ConfigCmdManager.h" />
+		<Unit filename="core\ConfigFile.cpp" />
+		<Unit filename="core\ConfigFile.h" />
+		<Unit filename="core\ConfigVar.cpp" />
+		<Unit filename="core\ConfigVar.h" />
+		<Unit filename="core\ConfigVarManager.cpp" />
+		<Unit filename="core\ConfigVarManager.h" />
+		<Unit filename="core\Console.cpp" />
+		<Unit filename="core\Console.h" />
+		<Unit filename="core\DebugDraw.cpp" />
+		<Unit filename="core\DebugDraw.h" />
+		<Unit filename="core\Entity.cpp" />
+		<Unit filename="core\Entity.h" />
+		<Unit filename="core\EntityCollision.cpp" />
+		<Unit filename="core\EntityCollision.h" />
+		<Unit filename="core\EntityDirection.cpp" />
+		<Unit filename="core\EntityDirection.h" />
+		<Unit filename="core\EntityManager.cpp" />
+		<Unit filename="core\EntityManager.h" />
+		<Unit filename="core\EntityModel.cpp" />
+		<Unit filename="core\EntityModel.h" />
+		<Unit filename="core\Event.h" />
+		<Unit filename="core\GameFrameListner.cpp" />
+		<Unit filename="core\GameFrameListner.h" />
+		<Unit filename="core\InputManager.cpp" />
+		<Unit filename="core\InputManager.h" />
+		<Unit filename="core\Logger.h" />
+		<Unit filename="core\Module.h" />
+		<Unit filename="core\ScriptManager.cpp" />
+		<Unit filename="core\ScriptManager.h" />
+		<Unit filename="core\Timer.cpp" />
+		<Unit filename="core\Timer.h" />
+		<Unit filename="core\Utilites.cpp" />
+		<Unit filename="core\Utilites.h" />
+		<Unit filename="core\Walkmesh.cpp" />
+		<Unit filename="core\Walkmesh.h" />
+		<Unit filename="core\XmlFile.cpp" />
+		<Unit filename="core\XmlFile.h" />
+		<Unit filename="core\XmlMapFile.cpp" />
+		<Unit filename="core\XmlMapFile.h" />
+		<Unit filename="core\XmlMapsFile.cpp" />
+		<Unit filename="core\XmlMapsFile.h" />
+		<Unit filename="core\XmlWalkmeshFile.cpp" />
+		<Unit filename="core\XmlWalkmeshFile.h" />
+		<Unit filename="core\gui\GuiEffect.cpp" />
+		<Unit filename="core\gui\GuiEffect.h" />
+		<Unit filename="core\gui\GuiManager.cpp" />
+		<Unit filename="core\gui\GuiManager.h" />
+		<Unit filename="core\gui\MovableTextArea.cpp" />
+		<Unit filename="core\gui\MovableTextArea.h" />
+		<Unit filename="core\gui\TextArea.cpp" />
+		<Unit filename="core\gui\TextArea.h" />
+		<Unit filename="core\library\lua\lapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lapi.h" />
+		<Unit filename="core\library\lua\lauxlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lauxlib.h" />
+		<Unit filename="core\library\lua\lbaselib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lcode.h" />
+		<Unit filename="core\library\lua\ldblib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\ldebug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\ldebug.h" />
+		<Unit filename="core\library\lua\ldo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\ldo.h" />
+		<Unit filename="core\library\lua\ldump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lfunc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lfunc.h" />
+		<Unit filename="core\library\lua\lgc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lgc.h" />
+		<Unit filename="core\library\lua\linit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\liolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\llex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\llex.h" />
+		<Unit filename="core\library\lua\llimits.h" />
+		<Unit filename="core\library\lua\lmathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lmem.h" />
+		<Unit filename="core\library\lua\loadlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lobject.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lobject.h" />
+		<Unit filename="core\library\lua\lopcodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lopcodes.h" />
+		<Unit filename="core\library\lua\loslib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lparser.h" />
+		<Unit filename="core\library\lua\lstate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lstate.h" />
+		<Unit filename="core\library\lua\lstring.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lstring.h" />
+		<Unit filename="core\library\lua\lstrlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\ltable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\ltable.h" />
+		<Unit filename="core\library\lua\ltablib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\ltm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\ltm.h" />
+		<Unit filename="core\library\lua\lua.h" />
+		<Unit filename="core\library\lua\luaconf.h" />
+		<Unit filename="core\library\lua\lualib.h" />
+		<Unit filename="core\library\lua\lundump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lundump.h" />
+		<Unit filename="core\library\lua\lvm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lvm.h" />
+		<Unit filename="core\library\lua\lzio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\lua\lzio.h" />
+		<Unit filename="core\library\lua\print.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\luabind\adopt_policy.hpp" />
+		<Unit filename="core\library\luabind\back_reference.hpp" />
+		<Unit filename="core\library\luabind\back_reference_fwd.hpp" />
+		<Unit filename="core\library\luabind\class.cpp" />
+		<Unit filename="core\library\luabind\class.hpp" />
+		<Unit filename="core\library\luabind\class_info.cpp" />
+		<Unit filename="core\library\luabind\class_info.hpp" />
+		<Unit filename="core\library\luabind\class_registry.cpp" />
+		<Unit filename="core\library\luabind\class_rep.cpp" />
+		<Unit filename="core\library\luabind\config.hpp" />
+		<Unit filename="core\library\luabind\container_policy.hpp" />
+		<Unit filename="core\library\luabind\copy_policy.hpp" />
+		<Unit filename="core\library\luabind\create_class.cpp" />
+		<Unit filename="core\library\luabind\dependency_policy.hpp" />
+		<Unit filename="core\library\luabind\detail\calc_arity.hpp" />
+		<Unit filename="core\library\luabind\detail\call.hpp" />
+		<Unit filename="core\library\luabind\detail\call_function.hpp" />
+		<Unit filename="core\library\luabind\detail\call_member.hpp" />
+		<Unit filename="core\library\luabind\detail\call_operator_iterate.hpp" />
+		<Unit filename="core\library\luabind\detail\class_cache.hpp" />
+		<Unit filename="core\library\luabind\detail\class_registry.hpp" />
+		<Unit filename="core\library\luabind\detail\class_rep.hpp" />
+		<Unit filename="core\library\luabind\detail\compute_score.hpp" />
+		<Unit filename="core\library\luabind\detail\constructor.hpp" />
+		<Unit filename="core\library\luabind\detail\conversion_storage.hpp" />
+		<Unit filename="core\library\luabind\detail\convert_to_lua.hpp" />
+		<Unit filename="core\library\luabind\detail\debug.hpp" />
+		<Unit filename="core\library\luabind\detail\decorate_type.hpp" />
+		<Unit filename="core\library\luabind\detail\deduce_signature.hpp" />
+		<Unit filename="core\library\luabind\detail\enum_maker.hpp" />
+		<Unit filename="core\library\luabind\detail\format_signature.hpp" />
+		<Unit filename="core\library\luabind\detail\garbage_collector.hpp" />
+		<Unit filename="core\library\luabind\detail\get_signature.hpp" />
+		<Unit filename="core\library\luabind\detail\has_get_pointer.hpp" />
+		<Unit filename="core\library\luabind\detail\inheritance.hpp" />
+		<Unit filename="core\library\luabind\detail\instance_holder.hpp" />
+		<Unit filename="core\library\luabind\detail\is_indirect_const.hpp" />
+		<Unit filename="core\library\luabind\detail\link_compatibility.hpp" />
+		<Unit filename="core\library\luabind\detail\make_instance.hpp" />
+		<Unit filename="core\library\luabind\detail\most_derived.hpp" />
+		<Unit filename="core\library\luabind\detail\object_call.hpp" />
+		<Unit filename="core\library\luabind\detail\object_funs.hpp" />
+		<Unit filename="core\library\luabind\detail\object_rep.hpp" />
+		<Unit filename="core\library\luabind\detail\open.hpp" />
+		<Unit filename="core\library\luabind\detail\operator_id.hpp" />
+		<Unit filename="core\library\luabind\detail\other.hpp" />
+		<Unit filename="core\library\luabind\detail\pcall.hpp" />
+		<Unit filename="core\library\luabind\detail\pointee_sizeof.hpp" />
+		<Unit filename="core\library\luabind\detail\pointee_typeid.hpp" />
+		<Unit filename="core\library\luabind\detail\policy.hpp" />
+		<Unit filename="core\library\luabind\detail\primitives.hpp" />
+		<Unit filename="core\library\luabind\detail\property.hpp" />
+		<Unit filename="core\library\luabind\detail\ref.hpp" />
+		<Unit filename="core\library\luabind\detail\signature_match.hpp" />
+		<Unit filename="core\library\luabind\detail\stack_utils.hpp" />
+		<Unit filename="core\library\luabind\detail\typetraits.hpp" />
+		<Unit filename="core\library\luabind\detail\yes_no.hpp" />
+		<Unit filename="core\library\luabind\discard_result_policy.hpp" />
+		<Unit filename="core\library\luabind\error.cpp" />
+		<Unit filename="core\library\luabind\error.hpp" />
+		<Unit filename="core\library\luabind\exception_handler.cpp" />
+		<Unit filename="core\library\luabind\exception_handler.hpp" />
+		<Unit filename="core\library\luabind\from_stack.hpp" />
+		<Unit filename="core\library\luabind\function.cpp" />
+		<Unit filename="core\library\luabind\function.hpp" />
+		<Unit filename="core\library\luabind\get_main_thread.hpp" />
+		<Unit filename="core\library\luabind\get_pointer.hpp" />
+		<Unit filename="core\library\luabind\handle.hpp" />
+		<Unit filename="core\library\luabind\inheritance.cpp" />
+		<Unit filename="core\library\luabind\iterator_policy.hpp" />
+		<Unit filename="core\library\luabind\link_compatibility.cpp" />
+		<Unit filename="core\library\luabind\lua_include.hpp" />
+		<Unit filename="core\library\luabind\luabind.hpp" />
+		<Unit filename="core\library\luabind\make_function.hpp" />
+		<Unit filename="core\library\luabind\nil.hpp" />
+		<Unit filename="core\library\luabind\object.hpp" />
+		<Unit filename="core\library\luabind\object_rep.cpp" />
+		<Unit filename="core\library\luabind\open.cpp" />
+		<Unit filename="core\library\luabind\open.hpp" />
+		<Unit filename="core\library\luabind\operator.hpp" />
+		<Unit filename="core\library\luabind\out_value_policy.hpp" />
+		<Unit filename="core\library\luabind\pcall.cpp" />
+		<Unit filename="core\library\luabind\prefix.hpp" />
+		<Unit filename="core\library\luabind\raw_policy.hpp" />
+		<Unit filename="core\library\luabind\return_reference_to_policy.hpp" />
+		<Unit filename="core\library\luabind\scope.cpp" />
+		<Unit filename="core\library\luabind\scope.hpp" />
+		<Unit filename="core\library\luabind\shared_ptr_converter.hpp" />
+		<Unit filename="core\library\luabind\stack_content_by_name.cpp" />
+		<Unit filename="core\library\luabind\tag_function.hpp" />
+		<Unit filename="core\library\luabind\typeid.hpp" />
+		<Unit filename="core\library\luabind\value_wrapper.hpp" />
+		<Unit filename="core\library\luabind\version.hpp" />
+		<Unit filename="core\library\luabind\weak_ref.cpp" />
+		<Unit filename="core\library\luabind\weak_ref.hpp" />
+		<Unit filename="core\library\luabind\wrapper_base.cpp" />
+		<Unit filename="core\library\luabind\wrapper_base.hpp" />
+		<Unit filename="core\library\luabind\yield_policy.hpp" />
+		<Unit filename="core\library\tinyxml\tinystr.cpp" />
+		<Unit filename="core\library\tinyxml\tinystr.h" />
+		<Unit filename="core\library\tinyxml\tinyxml.cpp" />
+		<Unit filename="core\library\tinyxml\tinyxml.h" />
+		<Unit filename="core\library\tinyxml\tinyxmlerror.cpp" />
+		<Unit filename="core\library\tinyxml\tinyxmlparser.cpp" />
+		<Unit filename="core\particles\Particle.cpp" />
+		<Unit filename="core\particles\Particle.h" />
+		<Unit filename="core\particles\ParticleAdditionalData.h" />
+		<Unit filename="core\particles\ParticleEmitter.cpp" />
+		<Unit filename="core\particles\ParticleEmitter.h" />
+		<Unit filename="core\particles\ParticleEmitterDictionary.cpp" />
+		<Unit filename="core\particles\ParticleEmitterDictionary.h" />
+		<Unit filename="core\particles\ParticleEmitterFactory.h" />
+		<Unit filename="core\particles\ParticleEmitterTranslator.cpp" />
+		<Unit filename="core\particles\ParticleEmitterTranslator.h" />
+		<Unit filename="core\particles\ParticlePool.h" />
+		<Unit filename="core\particles\ParticlePoolMap.h" />
+		<Unit filename="core\particles\ParticleRenderer.cpp" />
+		<Unit filename="core\particles\ParticleRenderer.h" />
+		<Unit filename="core\particles\ParticleRendererFactory.h" />
+		<Unit filename="core\particles\ParticleRendererTranslator.cpp" />
+		<Unit filename="core\particles\ParticleRendererTranslator.h" />
+		<Unit filename="core\particles\ParticleSystem.cpp" />
+		<Unit filename="core\particles\ParticleSystem.h" />
+		<Unit filename="core\particles\ParticleSystemFactory.cpp" />
+		<Unit filename="core\particles\ParticleSystemFactory.h" />
+		<Unit filename="core\particles\ParticleSystemManager.cpp" />
+		<Unit filename="core\particles\ParticleSystemManager.h" />
+		<Unit filename="core\particles\ParticleSystemTranslator.cpp" />
+		<Unit filename="core\particles\ParticleSystemTranslator.h" />
+		<Unit filename="core\particles\ParticleSystemTranslatorManager.cpp" />
+		<Unit filename="core\particles\ParticleSystemTranslatorManager.h" />
+		<Unit filename="core\particles\ParticleTechnique.cpp" />
+		<Unit filename="core\particles\ParticleTechnique.h" />
+		<Unit filename="core\particles\ParticleTechniqueTranslator.cpp" />
+		<Unit filename="core\particles\ParticleTechniqueTranslator.h" />
+		<Unit filename="core\particles\ParticleVisual.cpp" />
+		<Unit filename="core\particles\ParticleVisual.h" />
+		<Unit filename="core\particles\emitters\ParticlePointEmitter.cpp" />
+		<Unit filename="core\particles\emitters\ParticlePointEmitter.h" />
+		<Unit filename="core\particles\emitters\ParticlePointEmitterFactory.h" />
+		<Unit filename="core\particles\renderer\ParticleEntityAdditionalData.h" />
+		<Unit filename="core\particles\renderer\ParticleEntityRenderer.cpp" />
+		<Unit filename="core\particles\renderer\ParticleEntityRenderer.h" />
+		<Unit filename="core\particles\renderer\ParticleEntityRendererDictionary.cpp" />
+		<Unit filename="core\particles\renderer\ParticleEntityRendererDictionary.h" />
+		<Unit filename="core\particles\renderer\ParticleEntityRendererFactory.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger>
+				<search_path add="..\output" />
+			</debugger>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

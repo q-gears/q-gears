@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<maps>
+    <map id="65" file_name="data/field/map/startmap.xml" />
+
+    <map id="116" file_name="data/field/map/md1stin.xml" />
+    <map id="117" file_name="data/field/map/md1_1.xml" />
+    <map id="118" file_name="data/field/map/md1_2.xml" />
+    <map id="119" file_name="data/field/map/nrthmk.xml" />
+    <map id="120" file_name="data/field/map/nmkin_1.xml" />
+    <map id="121" file_name="data/field/map/elevtr1.xml" />
+    <map id="122" file_name="data/field/map/nmkin_2.xml" />
+    <map id="123" file_name="data/field/map/nmkin_3.xml" />
+    <map id="124" file_name="data/field/map/nmkin_4.xml" />
+    <map id="125" file_name="data/field/map/nmkin_5.xml" />
+</maps>

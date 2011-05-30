@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<battles>
+    <battle id="0" map_id="9">
+        <formation enemy_id="17" position="0 0 1700" row="1"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+    </battle>
+
+    <battle id="0" map_id="12">
+        <formation enemy_id="18" position="-500 0 -1700" row="1"/>
+        <formation enemy_id="18" position="500 -300 -1900" row="1"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+    </battle>
+
+    <battle id="0" map_id="12">
+        <formation enemy_id="16" position="-1000 0 -1700" row="1"/>
+        <formation enemy_id="16" position="1000 0 -1900" row="1"/>
+        <formation enemy_id="18" position="0 -400 -2700" row="2"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+    </battle>
+
+    <battle id="0" map_id="12">
+        <formation enemy_id="16" position="-600 0 -1900" row="1"/>
+        <formation enemy_id="16" position="600 0 -1400" row="1"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+        <formation enemy_id="-1" position="-1 -1 -1" row="65535"/>
+    </battle>
+
+</battles>

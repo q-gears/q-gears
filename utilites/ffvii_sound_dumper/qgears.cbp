@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Q-Gears" />
+		<Option pch_mode="0" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release">
+				<Option output="output\q-gears.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="output" />
+				<Option object_output="compile" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectResourceIncludeDirsRelation="1" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DUSE_MINGW" />
+				</Compiler>
+				<Linker>
+					<Add library="mingw32" />
+					<Add library="fmodex" />
+					<Add library="zdll" />
+					<Add library="OgreMain" />
+					<Add library="ois" />
+					<Add library="SDL" />
+					<Add library="SDLmain" />
+					<Add directory="$(OGRE_HOME)\lib\opt\release" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="$(OGRE_HOME)\include" />
+			<Add directory="$(OGRE_HOME)\include\opt" />
+			<Add directory="$(OGRE_HOME)\Samples\include" />
+		</Compiler>
+		<Linker>
+			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+			<Add directory="$(OGRE_HOME)\lib" />
+		</Linker>
+		<Unit filename="..\common\File.cpp" />
+		<Unit filename="..\common\File.h" />
+		<Unit filename="..\common\FileSystem.cpp" />
+		<Unit filename="..\common\FileSystem.h" />
+		<Unit filename="..\common\Logger.cpp" />
+		<Unit filename="..\common\Logger.h" />
+		<Unit filename="..\common\TypeDefine.h" />
+		<Unit filename="src\AkaoParser.cpp" />
+		<Unit filename="src\AkaoParser.h" />
+		<Unit filename="src\Main.cpp" />
+		<Unit filename="src\Main.h" />
+		<Unit filename="src\engine\SoundBackend.h" />
+		<Unit filename="src\engine\SoundManager.cpp" />
+		<Unit filename="src\engine\SoundManager.h" />
+		<Unit filename="src\engine\backends\SoundBackendSDL.cpp" />
+		<Unit filename="src\engine\backends\SoundBackendSDL.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

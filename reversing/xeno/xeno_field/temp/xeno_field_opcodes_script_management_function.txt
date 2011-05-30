@@ -1,0 +1,334 @@
+////////////////////////////////////////////////////////
+// 0x08 EntityCallScriptSW
+current_entity_data = w[800AF54C];
+
+A0 = 1;
+get_entity_id_from_opcode;
+param_entity_id = V0;
+
+if (param_entity_id == FF)
+{
+    V0 = hu[current_entity_data + CC];
+    V0 = V0 + 3;
+    [current_entity_data + CC] = V0;
+    return;
+}
+
+V1 = w[800AD0D8];
+V0 = hu[current_entity_data + CC];
+param2 = bu[V1 + V0 + 2];
+script_to_run = param2 & 1F;
+
+
+
+V1 = w[800AEFE4];
+S2 = w[V1 + param_entity_id * 5C + 4C];
+V0 = w[S2 + 4];
+if (V0 & 00100000)
+{
+    V1 = bu[current_entity_data + CE];
+    V0 = w[current_entity_data + 90 + V1 * 8];
+    V0 = V0 & FFFCFFFF;
+    [current_entity_data + 90 + V1 * 8] = w(V0);
+
+    V1 = bu[current_entity_data + CF];
+    V0 = w[S2 + 90 + V1 * 8];
+    V0 = V0 & FFBFFFFF;
+    [S2 + 90 + V1 * 8] = w(V0);
+
+    V0 = hu[current_entity_data + CC];
+    V0 = V0 + 3;
+    [current_entity_data + CC] = V0;
+    return;
+}
+
+V0 = bu[current_entity_data + CE];
+V0 = hu[current_entity_data + V0 * 8 + 92];
+if (V0 & 0003)
+{
+    if (V0 & 0003 == 1)
+    {
+        V0 = bu[S2 + CE];
+        V1 = bu[A1 + CF];
+        if (V0 != V1)
+        {
+            V0 = w[S2 + V1 * 8 + 90];
+            V0 = V0 >>> 12;
+            V0 = V0 & F;
+            if (V0 != F)
+            {
+                [800AF594] = w(1);
+                return;
+            }
+        }
+
+        V0 = hu[current_entity_data + CC];
+        V0 = V0 + 3;
+        [current_entity_data + CC] = h(V0);
+
+        V1 = bu[current_entity_data + CE];
+        V0 = w[current_entity_data + V1 * 8 + 90];
+        V0 = V0 & FFFCFFFF;
+        [current_entity_data + V1 * 8 + 90] = w(V0);
+
+        V1 = bu[current_entity_data + CF];
+        V0 = w[S2 + V1 * 8 + 90];
+        V0 = V0 & FFBFFFFF;
+        [S2 + V1 * 8 + 90] = w(V0);
+    }
+
+    return;
+}
+
+
+
+A0 = S2;
+A1 = script_to_run;
+check_script_execution;
+
+if (V0 == -1)
+{
+    V0 = hu[current_entity_data + CC];
+    V0 = V0 + 3;
+    [current_entity_data + CC] = V0;
+    return;
+}
+
+S1 = 0;
+S0 = S2;
+loop9e434:	; 8009E434
+    V1 = w[S0 + 90];
+    V0 = V1 >>> 12;
+    V0 = V0 & F;
+    if (V0 == F)
+    {
+        V0 = V1 >>> 16;
+        V0 = V0 & 1;
+        if (V0 == 0)
+        {
+            A0 = param_entity_id;
+            A1 = script_to_run;
+            get_script_offset;
+            [S0 + 8C] = h(V0);
+
+            V1 = w[S0 + 90];
+            V1 = V1 & FFC3FFFF;
+            V0 = param2 & E0;
+            V0 = V0 << D;
+            V1 = V1 | V0;
+            [S0 + 90] = w(V1);
+
+            V1 = bu[current_entity_data + CF]
+            V0 = w[S2 + 90 + V1 * 8];
+            V0 = V0 | 00400000;
+            [S2 + 90 + V1 * 8] = w(V0);
+
+            [S0 + 8F] = b(script_to_run);
+
+            [current_entity_data + CF] = b(S1);
+
+            V0 = bu[current_entity_data + CE];
+            V0 = w[current_entity_data + 90 + V0 * 8];
+            V0 = V0 & FFFCFFFF;
+            V0 = V0 | 00010000;
+            [current_entity_data + 90 + V0 * 8] = w(V0);
+            return;
+        }
+    }
+
+    S1 = S1 + 1;
+    S0 = S0 + 8;
+    V0 = S1 < 8;
+8009E464	bne    v0, zero, loop9e434 [$8009e434]
+return;
+////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////
+// 0x09 EntityCallScriptEW
+current_entity_data = w[800AF54C];
+
+A0 = 1;
+get_entity_id_from_opcode;
+param_entity_id = V0;
+
+if (param_entity_id == FF)
+{
+    V0 = hu[current_entity_data + CC];
+    V0 = V0 + 3;
+    [current_entity_data + CC] = h(V0);
+    return;
+}
+
+V1 = w[800AD0D8];
+V0 = hu[current_entity_data + CC];
+param2 = bu[V1 + V0 + 2];
+script_to_run = param2 & 1F;
+
+
+
+V1 = w[800AEFE4];
+S2 = w[V1 + param_entity_id * 5C + 4C];
+V0 = w[S2 + 4];
+if (V0 & 00100000)
+{
+    V1 = bu[current_entity_data + CE];
+    V0 = w[current_entity_data + 90 + V1 * 8];
+    V0 = V0 & FFFCFFFF;
+    [current_entity_data + 90 + V1 * 8] = w(V0);
+
+    V1 = bu[current_entity_data + CF];
+    V0 = w[S2 + 90 + V1 * 8];
+    V0 = V0 & FFBFFFFF;
+    [S2 + 90 + V1 * 8] = w(V0);
+
+    V0 = hu[current_entity_data + CC];
+    V0 = V0 + 3;
+    [current_entity_data + CC] = V0;
+    return;
+}
+
+
+
+V0 = bu[current_entity_data + CE];
+A0 = w[current_entity_data + 90 + V0 * 8];
+V0 = A0 >>> 10;
+V1 = V0 & 0003;
+if (V1 != 1)
+{
+    if (V1 < 2)
+    {
+        if (V1 == 0)
+        {
+            A0 = S2;
+            A1 = script_to_run;
+            check_script_execution;
+
+            if (V0 == -1)
+            {
+                V0 = hu[current_entity_data + CC];
+                V0 = V0 + 3;
+                [current_entity_data + CC] = h(V0);
+                return;
+            }
+
+            slot = 0;
+            loop9e788:	; 8009E788
+                V1 = w[S2 + 90 + slot * 8];
+                V0 = V1 >>> 12;
+                V0 = V0 & F;
+                if (V0 == F)
+                {
+                    V0 = V1 >>> 16;
+                    V0 = V0 & 1;
+                    if (V0 == 0)
+                    {
+                        A0 = param_entity_id;
+                        A1 = script_to_run;
+                        get_script_offset;
+                        [S2 + 8C + slot * 8] = h(V0);
+
+                        V1 = w[S2 + 90 + slot * 8];
+                        V1 = V1 & FFC3FFFF;
+                        V0 = param2;
+                        V0 = V0 >>> 5;
+                        V0 = V0 << 12;
+                        V1 = V0 | V0;
+                        [S2 + 90 + slot * 8] = w(V1);
+
+                        V1 = bu[current_entity_data + CF];
+                        V0 = w[S2 + 90 + V1 * 8];
+                        V0 = V0 | 00400000;
+                        [S2 + 90 + V1 * 8] = w(V0);
+                        [current_entity_data + CF] = b(slot);
+
+                        A0 = bu[current_entity_data + CE];
+                        V0 = w[current_entity_data + 90 + A0 * 8];
+                        V0 = V0 & FFFCFFFF;
+                        V0 = V0 | 00010000;
+                        [current_entity_data + 90 + A0 * 8] = w(V0);
+
+                        V0 = param2 & 1F;
+                        [S2 + slot * 8 + 8F] = b(V0);
+
+                        return;
+                    }
+                }
+
+                slot = slot + 1;
+                V0 = slot < 8;
+            8009E7B8	bne    v0, zero, loop9e788 [$8009e788]
+        }
+    }
+    else if (V1 == 2)
+    {
+        V0 = bu[current_entity_data + CF];
+        V0 = w[S2 + 90 + V0 * 8];
+        V0 = V0 >>> 12;
+        V0 = V0 & F;
+        if (V0 == F)
+        {
+            V0 = A0 & FFFCFFFF;
+            V1 = bu[current_entity_data + CE];
+            [current_entity_data + 90 + V1 * 8] = w(V0);
+
+            V1 = bu[current_entity_data + CF];
+            V0 = w[S2 + 90 + V1 * 8];
+            V0 = V0 & FFBFFFFF;
+            [S2 + V1 * 8 + 90] = w(V0);
+
+            V0 = hu[current_entity_data + CC];
+            V0 = V0 + 3;
+            [current_entity_data + CC] = h(V0);
+        }
+        else
+        {
+            [800AF594] = w(1);
+        }
+    }
+
+    return;
+}
+
+V0 = bu[S2 + CE];
+V1 = bu[current_entity_data + CF];
+if (V0 != V1)
+{
+    V0 = w[S2 + V1 * 8 + 90];
+    V0 = V0 >>> 12;
+    V0 = V0 & F;
+    if (V0 != F)
+    {
+        [800AF594] = w(1);
+        return;
+    }
+}
+
+V0 = A0 & FFFCFFFF;
+V0 = V0 | 00020000;
+V1 = bu[current_entity_data + CE];
+[current_entity_data + 90 + V1 * 8] = w(V0);
+
+return;
+////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////
+// check_script_execution
+V1 = 0;
+loop9e0dc:	; 8009E0DC
+    V0 = bu[A0 + 8F];
+    if (V0 == A1)
+    {
+        return -1;
+    }
+
+    V1 = V1 + 1;
+    V0 = V1 < 8;
+    A0 = A0 + 8;
+8009E0F4	bne    v0, zero, loop9e0dc [$8009e0dc]
+
+return 0;
+////////////////////////////////////////////////////////

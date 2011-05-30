@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<battles>
+    <battle id="300" map_file="sector_1_train_station.mesh" initial_camera="0x5f">
+        <formation enemy_id="16" position="-500 0 1500" row="1"/>
+        <formation enemy_id="16" position="500 0 1800" row="1"/>
+    </battle>
+
+    <battle id="301" map_file="sector_1_train_station.mesh" initial_camera="0x01">
+        <formation enemy_id="16" position="-500 0 1500" row="1"/>
+        <formation enemy_id="16" position="500 0 1700" row="1"/>
+    </battle>
+
+    <battle id="302" map_file="sector_1_train_station.mesh" initial_camera="0x05">
+        <formation enemy_id="17" position="0 0 1700" row="1"/>
+    </battle>
+
+    <battle id="303" map_file="sector_1_train_station.mesh" initial_camera="0x09">
+        <formation enemy_id="16" position="-500 0 1700" row="1"/>
+        <formation enemy_id="17" position="500 0 2000" row="1"/>
+    </battle>
+
+    <battle id="304" map_file="sector_1_train_station.mesh" initial_camera="0x0f" type="0x02 Back Attack">
+        <formation enemy_id="17" position="0 0 -1700" row="1"/>
+    </battle>
+
+    <battle id="305" map_file="reactor_1_entrance.mesh" initial_camera="0x11" type="0x00 Normal">
+        <formation enemy_id="18" position="-500 0 1700" row="1"/>
+        <formation enemy_id="18" position="500 -300 1900" row="1"/>
+    </battle>
+
+    <battle id="306" map_file="reactor_1_entrance.mesh" initial_camera="0x15" type="0x00 Normal">
+        <formation enemy_id="16" position="-1000 0 1700" row="1"/>
+        <formation enemy_id="16" position="1000 0 1900" row="1"/>
+        <formation enemy_id="18" position="0 -400 2700" row="2"/>
+    </battle>
+
+    <battle id="307" map_file="reactor_1_entrance.mesh" initial_camera="0x19" type="0x00 Normal">
+        <formation enemy_id="16" position="-600 0 1900" row="1"/>
+        <formation enemy_id="16" position="600 0 1400" row="1"/>
+    </battle>
+
+    <battle id="308" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="18" position="-700 -300 1400" row="1"/>
+        <formation enemy_id="18" position="700 -100 1500" row="1"/>
+        <formation enemy_id="20" position="0 0 2800" row="2"/>
+    </battle>
+
+    <battle id="309" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="20" position="-700 0 1500" row="1"/>
+        <formation enemy_id="20" position="700 0 1700" row="1"/>
+    </battle>
+
+    <battle id="310" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="19" position="-1000 0 1900" row="1"/>
+        <formation enemy_id="19" position="1000 0 1400" row="1"/>
+    </battle>
+
+    <battle id="311" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="20" position="-500 0 1400" row="1"/>
+        <formation enemy_id="19" position="1300 0 1700" row="1"/>
+        <formation enemy_id="20" position="700 0 2900" row="2"/>
+    </battle>
+
+    <battle id="312" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="20" position="-1200 0 2000" row="1"/>
+        <formation enemy_id="20" position="0 0 1400" row="1"/>
+        <formation enemy_id="20" position="1200 0 2000" row="1"/>
+    </battle>
+
+    <battle id="313" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="19" position="0 0 1400" row="1"/>
+        <formation enemy_id="19" position="-1200 0 2600" row="2"/>
+        <formation enemy_id="19" position="1200 0 2300" row="2"/>
+    </battle>
+
+    <battle id="314" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="18" position="-600 -300 -1400" row="1"/>
+        <formation enemy_id="18" position="600 -100 -1600" row="1"/>
+    </battle>
+
+    <battle id="315" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="19" position="0 0 -1400" row="1"/>
+        <formation enemy_id="19" position="-1200 0 -2500" row="2"/>
+        <formation enemy_id="19" position="1200 0 -2200" row="2"/>
+    </battle>
+
+    <battle id="316" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="19" position="-1200 0 1400" row="1"/>
+        <formation enemy_id="19" position="1200 0 1700" row="1"/>
+        <formation enemy_id="18" position="-1000 -200 2500" row="2"/>
+        <formation enemy_id="18" position="-500 -300 3000" row="2"/>
+    </battle>
+
+    <battle id="317" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="19" position="-1500 0 1500" row="1"/>
+        <formation enemy_id="19" position="1500 0 1500" row="1"/>
+        <formation enemy_id="18" position="-800 -300 2700" row="2"/>
+        <formation enemy_id="18" position="0 -400 3200" row="2"/>
+        <formation enemy_id="18" position="800 -100 2700" row="2"/>
+    </battle>
+
+    <battle id="318" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="19" position="-1200 0 1400" row="1"/>
+        <formation enemy_id="19" position="1200 0 1800" row="1"/>
+        <formation enemy_id="19" position="0 0 2800" row="2"/>
+    </battle>
+
+    <battle id="319" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="19" position="-1200 0 -1400" row="1"/>
+        <formation enemy_id="19" position="1200 0 -1600" row="1"/>
+        <formation enemy_id="18" position="0 -600 -2000" row="2"/>
+    </battle>
+
+    <battle id="320" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="21" position="0 0 2000" row="1"/>
+    </battle>
+
+    <battle id="321" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="21" position="0 0 1900" row="1"/>
+        <formation enemy_id="19" position="-1500 0 3000" row="2"/>
+        <formation enemy_id="19" position="1500 0 3000" row="2"/>
+    </battle>
+
+    <battle id="322" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="19" position="-1800 0 1400" row="1"/>
+        <formation enemy_id="19" position="1800 0 1400" row="1"/>
+        <formation enemy_id="21" position="0 0 3000" row="2"/>
+    </battle>
+
+    <battle id="323" map_file="reactor_1.mesh" initial_camera="">
+        <formation enemy_id="19" position="-1000 0 -1500" row="1"/>
+        <formation enemy_id="19" position="1000 0 -2000" row="1"/>
+    </battle>
+
+    <battle id="324" map_file="reactor_1_core.mesh" initial_camera="">
+        <formation enemy_id="22" position="0 0 2000" row="1"/>
+    </battle>
+</battles>

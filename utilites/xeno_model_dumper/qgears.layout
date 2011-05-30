@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="src\AnimatedModel.h" open="0" top="0" tabpos="0">
+		<Cursor position="279" topLine="0" />
+	</File>
+	<File name="src\FieldModel.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3950" topLine="97" />
+	</File>
+	<File name="src\FieldModel.h" open="0" top="0" tabpos="0">
+		<Cursor position="232" topLine="0" />
+	</File>
+	<File name="src\Main.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="215" topLine="0" />
+	</File>
+	<File name="src\ModelFile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="7330" topLine="153" />
+	</File>
+	<File name="src\ModelFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="649" topLine="12" />
+	</File>
+</CodeBlocks_layout_file>

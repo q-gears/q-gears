@@ -1,0 +1,59 @@
+0636:
+    tsuchinoko x 1          [ts] [pc]
+    tsuchinoko x 2          [ts][ts] xxxx [pc]
+    tsuchinoko x 2          [ts][ts] [pc]
+    sai x 1                 [sa] [pc]
+    sai x 2                 [sa][sa] [pc]
+    sai x 1 tsuchinoko x 2  [pc] xxxx [ts][ts][sa]
+    sai x 1 tsuchinoko x 2  [sa] [pc] xxxx [ts][ts]
+    sai x 1 tsuchinoko x 3  [sa] xxxx [ts][ts][ts] [pc]
+
+worldmap:
+    hoppa x 1               [ho] [pc]
+    kokoborudo x 2          [ko][ko] [pc]
+    tsuchinoko x 2          [ts][ts] [pc]
+
+
+
+sai:
+    hp:
+    exp:
+    money:
+    attack:
+        bite
+        kick
+        jump over
+    items:
+
+tsuchinoko:
+    hp:
+    exp:
+    money:
+    attack:
+        spinning flail
+        blood sucking
+        skip
+    items:
+        tsuchinoko no niku
+
+hoppa:
+    hp:
+    exp: 8
+    money: 0
+    attack:
+        lots of hoppa running
+        kick
+        finger kick
+    items:
+        kentougi
+
+kokoborudo:
+    hp:
+    exp: 3
+    money: 0
+    attack:
+        arrow
+        bow smash
+        greanade arrow
+    items:
+        kentou boushi

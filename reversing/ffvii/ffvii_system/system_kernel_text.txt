@@ -1,0 +1,83 @@
+////////////////////////////////////////////////////////
+// system_copy_text_from_kernel
+800150E4	addiu  sp, sp, $fff8 (=-$8)
+800150E8	addu   t2, zero, zero
+800150EC	addu   t3, zero, zero
+800150F0	lui    a3, $8006
+800150F4	addiu  a3, a3, $3560
+800150F8	addu   t5, a3, zero
+
+loop150fc:	; 800150FC
+T1 = [A0]; // opcode
+A0 = A0 + 1; // address
+T3 = T3 + 1; // readed size
+
+if (T1 = F9)
+{
+    80015114	lbu    t1, $0000(a0)
+    80015118	addiu  a0, a0, $0001
+    8001511C	addiu  t3, t3, $0001
+    80015120	addiu  v1, t3, $fffd (=-$3)
+    80015124	andi   v0, t1, $003f
+    80015128	subu   v1, v1, v0
+    8001512C	srl    v0, t1, $06
+    80015130	sll    v0, v0, $01
+    80015134	addiu  t4, v0, $0004
+    80015138	beq    t4, zero, L151c8 [$800151c8]
+    8001513C	addu   t0, zero, zero
+    80015140	addu   a2, t2, t5
+    80015144	addu   v1, v1, a1
+
+    loop15148:	; 80015148
+    80015148	lbu    t1, $0000(v1)
+    8001514C	addiu  v1, v1, $0001
+    80015150	addiu  a3, a3, $0001
+    80015154	addiu  t2, t2, $0001
+    80015158	addiu  t0, t0, $0001
+    8001515C	slt    v0, t0, t4
+    80015160	sb     t1, $0000(a2)
+    80015164	bne    v0, zero, loop15148 [$80015148]
+    80015168	addiu  a2, a2, $0001
+    80015170	andi   v1, t1, $00ff
+}
+else
+{
+    if ((T1 + 16) & FF < 08) // EA EB EC ED EE EF F0 F1 // character's names
+    {
+        [A3] = T1;
+        A3 = A3 + 1; // store address
+        V0 = [A0]
+        A0 = A0 + 1; // address
+        [A3] = V0;
+        A3 = A3 + 1; // store address
+        V0 = [A0];
+        A0 = A0 + 1; // address
+        [A3] = V0;
+        A3 = A3 + 1; // store address
+
+        T3 = T3 + 2; // readed size
+        T2 = T2 + 3; // stored size
+    }
+    else
+    {
+        [A3] = [80063560] = T1;
+        A3 = A3 + 1;
+        T2 = T2 + 1; // stored size
+    }
+
+    800151C8	andi   v1, t1, $00ff
+}
+
+800151CC	ori    v0, zero, $00ff
+800151D0	beq    v1, v0, L151e0 [$800151e0]
+800151D4	sltiu  v0, t2, $0100
+800151D8	bne    v0, zero, loop150fc [$800150fc]
+800151DC	nop
+
+L151e0:	; 800151E0
+800151E0	lui    v0, $8006
+800151E4	addiu  v0, v0, $3560
+800151E8	addiu  sp, sp, $0008
+800151EC	jr     ra 
+800151F0	nop
+////////////////////////////////////////////////////////

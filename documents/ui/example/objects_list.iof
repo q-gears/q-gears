@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+	Èíòåðàêòèâíûé îáúåêò: ñïèñîê
+-->
+<list_box_entity>
+	<params 
+		name = "editbox_prot"
+		rect = "-100 5 200 30"
+
+		spacing 				= "30"
+		
+		idle_item 			= "list_idle"
+		select_item			= "list_select"
+		current_item		= "list_current"
+	/>
+
+	<!--Èåðàðõèÿ îáúåêòîâ-->
+	<object name = "hierarchy" type = "objects">
+		<object name = "list_idle" 							type = "text" style = "list_idle"/>
+		<object name = "list_select" 						type = "text" style = "list_select"/>
+		<object name = "list_current"						type = "text" style = "list_current"/>
+	</object>
+	
+	
+	<!--Îïèñàíèå ïîâåäåíèé-->
+	<behaviors>
+		<behavior name = "Init">
+			<start/>
+			<stop/>
+		</behavior>
+	</behaviors>
+</list_box_entity>

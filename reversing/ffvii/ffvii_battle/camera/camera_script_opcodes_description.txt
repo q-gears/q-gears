@@ -1,0 +1,33 @@
+// position
+0xe1 - set_idle         - E1 set idle camera.
+
+0xe4 - set_transition   - E4[joint XX][x XXXX][y XXXX][z XXXX][frames XX] set transition using 0x800c0410 function. From current point to attacker id joint.
+
+0xf4 - wait             - F4 return from script if wait timer not 0. Decrement it every call.
+0xf5 - set_wait         - F5[frames XX] set timer to wait.
+
+0xff - loop             - FF loop it for itself.
+
+
+
+// direction
+0xe1 - set_idle         - E1 set idle camera.
+0xe2 - set_transition   - E2[frames XX] set transition from current direction to idle direction using 0x800c0900 function (direct transition from start to end by time linear or smooth (smooth by default)). With given number of steps.
+
+0xe4 - set_transition   - E4[joint XX][x XXXX][y XXXX][z XXXX][frames XX] set transition using 0x800c0900 finction. From current point to attacker id joint.
+0xe5 - set_transition   - E5[joint XX][x XXXX][y XXXX][z XXXX][frames XX] set transition using 0x800c0900 finction. From current point to target id joint.
+
+0xe8 - set_transition   - E8[joint XX][x XXXX][y XXXX][z XXXX][frames XX] show static attacker view given number of frames using 0x800bfda0 function.
+
+0xf4 - wait             - F4 return from script if wait timer not 0. Decrement it every call.
+0xf5 - set_wait         - F5[frames XX] set timer to wait.
+
+0xfa - set_direction    - FA[x XXXX][y XXXX][z XXXX] set camera direction vector X,Y,Z
+
+0xff - loop             - FF loop it for itself.
+
+
+
+0x800bfda0 - static_attacker_view
+0x800c0410 - direct_transition
+0x800c0900 - direct_transition

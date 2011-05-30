@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<map>
+    <walkmesh file_name="md1_1_wm.xml" />
+    <script file_name="md1_1.lua" />
+    <texts>
+        <dialog file_name="dialogs_mission1.xml" />
+    </texts>
+    <line_triggers>
+        <line_trigger name="gateway_to_md1stin" point1="996 285 1296" point2="929 493 1296" enabled="true" />
+        <line_trigger name="gateway_to_md1_2" point1="1019 1728 1298" point2="1298 1705 1298" enabled="false" />
+    </line_triggers>
+    <camera view_matrix="0.788574 0.614746 -0.000244 -997.756348 -0.413330 0.530518 0.740234 -931.438965 0.455078 -0.583496 0.672607 -5141.032227 0.000000 0.000000 0.000000 1.000000" projection_matrix="4.393750 0.000000 -0.600000 0.000000 0.000000 6.276786 -1.133929 0.000000 0.000000 0.000000 -1.000020 -2.000020 0.000000 0.000000 -1.000000 0.000000" />
+    <movement_rotation angle="-5.625" />
+    <encounters>
+        <table rate="100">
+            <encounter percentage="37.5" battle_id="301" />
+            <encounter percentage="34.375" battle_id="302" />
+            <encounter percentage="28.125" battle_id="303" />
+        </table>
+    </encounters>
+</map>

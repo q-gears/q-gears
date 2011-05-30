@@ -1,0 +1,1 @@
+function funcad858 read some additional data in texture file. Some data in it replace global eye texture palette and image, other write texture directly to vram. Last one is unknown.

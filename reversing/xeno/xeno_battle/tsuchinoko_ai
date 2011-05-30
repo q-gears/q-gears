@@ -1,0 +1,155 @@
+08 00 FF FF FF FF C8 00
+
+[0x01][value][offset]   copy value to in 800D257C + offset. If offset is zero then this finalize action definition and we go to another slot in action queue.
+[0x02][offset][1xslot]  copy data from 1xslot to in 800D257C + offset.
+[0x0C][1xslot][value]   get value stored in given 1xslot and % it on given value. Result stored back to given 1xslot.
+[0x3E][1xslot][max]     get random value from 0 to max and store it to given 1xslot.
+[0x40][2xslot][flag]    get unit from random accessible player unit (1-3) and store it to given 2xslot. Flag used to ignore something during selection.
+[0x41][2xslot][flag]    get unit from random accessible player unit (more checks during selection than in 0x40) (1-3) and store it to given 2xslot. Flag used to ignore something during selection.
+[0x4A][2xslot][flag]    get unit from random accessible player unit (1-3) and store it to given 2xslot. Flag used to ignore something during selection.
+[0x50][1xslot][2xslot]  get number of unit maching mask in 2xslot and store it to 1xslot.
+[0x52][offset][2xslot]  copy data from 2xslot to in 800D257C + offset.
+[0x64][2xslot]          get current unit + 3, convert it to mask and store it to given 2xslot.
+[0x80]                  do nothing.
+[0x82][2xslot][[value]] skip if (2xslot value XOR value) != 0.
+[0x83][1xslot][value]   skip if 1xslot value > value.
+
+blood sucking
+jump to enemy
+52060600 0 -- -- -- -- -- -- XXXX
+01040000 0 -- -- -- -- 00 -- XXXX
+01000200 0 02 -- -- -- 00 -- XXXX
+text output
+01030B00 1 -- -- -- 0B -- -- ----
+01000C00 1 0C -- -- 0B -- -- ----
+attack
+52060600 2 -- -- -- -- -- -- XXXX
+01010900 2 -- 09 -- -- -- -- XXXX
+01021D00 2 -- 09 1D -- -- -- XXXX
+01030000 2 -- 09 1D 00 -- -- XXXX
+01000100 2 01 09 1D 00 -- -- XXXX
+
+spinning flail
+jump to enemy
+52060600 0 -- -- -- -- -- -- XXXX
+01040000 0 -- -- -- -- 00 -- XXXX
+01000200 0 02 -- -- -- 00 -- XXXX
+attack
+52060600 1 -- -- -- -- -- -- XXXX
+01010300 1 -- 03 -- -- -- -- XXXX
+01021F00 1 -- 03 1F -- -- -- XXXX
+01030000 1 -- 03 1F 00 -- -- XXXX
+01000100 1 01 03 1F 00 -- -- XXXX
+
+skip turn
+skip
+01040000 0 -- -- -- -- 00 -- ----
+01000E00 0 0E -- -- -- 00 -- ----
+
+spinning flail
+52060600 0 -- -- -- -- -- -- XXXX
+01040000 0 -- -- -- -- 00 -- XXXX
+01000200 0 02 -- -- -- 00 -- XXXX
+52060300 1 -- -- -- -- -- -- XXXX
+01010300 1 -- 03 -- -- -- -- XXXX
+01021F00 1 -- 03 1F -- -- -- XXXX
+01030000 1 -- 03 1F 00 -- -- XXXX
+01000100 1 01 03 1F 00 -- -- XXXX
+
+
+
+                                                               00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+               00    01    02    03    04    05    06    07
+0x08
+80000000       00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00000000000000000000000000
+41060000       00 00 00 00 00 00 00 00 00 00 00 00|01 00|00 00 00 00 00 00000000000000000000000000
+                                                  +-----+
+64000000      |08 00|00 00 00 00 00 00 00 00 00 00|01 00|00 00 00 00 00 00000000000000000000000000
+              +-----+                             +-----+
+50010000      |08 00|00 00 00 00 00 00 00 00 00 00|01 00|00 00 00|02|00 00000000000000000000000000
+              +-----+                             +-----+        +--+
+40020000      |08 00|00 00|01 00|00 00 00 00 00 00|01 00|00 00 00|02|00 00000000000000000000000000
+              +-----+     +-----+                 +-----+        +--+
+4A030000      |08 00|00 00|01 00|00 00|00 00 00 00|01 00|00 00 00|02|00 00000000000000000000000000
+              +-----+     +-----+-----+           +-----+        +--+
+3E00FF00      |08 00|00 00|01 00|00 00|00 00 00 00|01 00|00 00|FD|02|00 00000000000000000000000000
+              +-----+     +-----+-----+           +-----+     +--+--+
+0C000300      |08 00|00 00|01 00|00 00|00 00 00 00|01 00|00 00|01|02|00 00000000000000000000000000
+              +-----+     +-----+-----+           +-----+     +--+--+
+if (82020000) |08 00|00 00|XXXXX|00 00|00 00 00 00|01 00|00 00|01|02|00 00000000000000000000000000
+              +-----+     +-----+-----+           +-----+     +--+--+
+{
+    52060300
+    01040000
+    01000200
+    52060300
+    01010300
+    01021F00
+    01030000
+    01000100
+    FDFFFFFF
+}
+
+if (82060000) |08 00|00 00|01 00|00 00|00 00 00 00|XXXXX|00 00|01|02|00 00000000000000000000000000
+              +-----+     +-----+-----+           +-----+     +--+--+
+{
+    01040000
+    01000E00
+    FDFFFFFF
+}
+
+if (83000000) |08 00|00 00|01 00|00 00|00 00 00 00|01 00|00 00|XX|02|00 00000000000000000000000000
+              +-----+     +-----+-----+           +-----+     +--+--+
+{
+    52060600
+    01040000
+    01000200
+    01030B00
+    01000C00
+    52060600
+    01010900
+    01021D00
+    01030000
+    01000100
+    FDFFFFFF
+}
+
+80000000      |08 00|00 00|01 00|00 00|00 00 00 00|01 00|00 00|01|02|00 00000000000000000000000000
+              +-----+     +-----+-----+           +-----+     +--+--+
+52060600      |08 00|00 00|01 00|00 00|00 00 00 00|XXXXX|00 00|01|02|00 00000000000000000000000000
+              +-----+     +-----+-----+           +-----+     +--+--+
+01040000
+01000200
+52060600      |08 00|00 00|01 00|00 00|00 00 00 00|XXXXX|00 00|01|02|00 00000000000000000000000000
+              +-----+     +-----+-----+           +-----+     +--+--+
+01010300
+01021F00
+01030000
+01000100
+FDFFFFFF
+
+
+
+80000000
+01040000
+01000E00
+FDFFFFFF
+
+// 0xCB
+80000000
+64060000
+2C010106
+90010000
+01040000
+01000E00
+FDFFFFFF
+81091000
+810B0200
+3C023B64
+3B023B64
+FDFFFFFF
+80000000
+01040000
+01000E00
+FDFFFFFF
+FFFFFFFF

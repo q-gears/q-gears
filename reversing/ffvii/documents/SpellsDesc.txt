@@ -1,0 +1,184 @@
+Restores HP
+Restores HP
+Restores HP
+Gradually restores HP
+Heals Poison
+Cures unusual status
+Makes you resistant to transformation
+Restores life
+Restores life and all HP
+Induces or cures a [Small] state
+Induces or cures a [Frog] state
+Puts opponent to Sleep
+Confuses opponent
+Constrains magic
+Causes opponent to go berserk
+Creates a Barrier resistant to physical attacks
+Creates a Barrier resistant to magic attacks
+Can reflect magic spells back up to 4 times
+Creates [Barrier/MBarrier] simultaneously
+Increases speed
+Decreases speed
+Stops all movement
+Destroys function of any barriers
+Makes magic ineffective
+Causes sudden death
+Lets you escape from battle
+Eliminates opponent from battle
+Fire element attack
+Fire element attack
+Fire element attack
+Ice element attack
+Ice element attack
+Ice element attack
+Lightning element attack
+Lightning element attack
+Lightning element attack
+Earth element attack
+Earth element attack
+Earth element attack
+Poison element attack
+Poison element attack
+Poison element attack
+Gravity-based attack. HP at 3/4
+Gravity-based attack. HP at 1/2
+Gravity-based attack. HP at 1/4
+Non-elemental attack
+Non-elemental attack
+Very strong Ice magic. Sometimes causes [Stop]
+Very strong Earth magic. Sometimes causes [Petrify]
+Wind elemental attack. Sometimes causes [Confu]
+Fire element attack
+Restores entire HP
+Extreme magic attack
+Extreme magic defense
+
+
+Attacks all opponents. Sometimes causes [Stop]
+Ice magic damage on all opponents
+Fire magic damage on all opponents
+Lightning magic damage on all opponents
+Damages all opponents on the ground
+Slashes all opponents
+Water Magic damage on all opponents
+Unblockable Non-Elemental attack
+Causes [Fire/Ice/Lightning] magic damage
+Causes Holy Magic damage on all opponents
+Causes Fire Magic damage, and revives all allies
+Unblockable Non-Elemental attack
+Changes status of all opponents
+Causes [Fire/Ice/Lightning/Earth] magic damage
+Unblockable Non-Elemental attack
+Extreme summoned monsters
+Causes [Sleepel/Frog] on one opponent
+Causes [Critical/Small] with levels in multiples of 4
+Drains 100 MP out of every opponent
+Restores HP and status to every ally
+Adds [Barrier/MBarrier/Haste] to every ally
+Revives, restores HP and status to any one ally
+Raises the Defense and Magic Def. level of one ally
+Makes any one ally immune to death
+Causes Fire damage to any single opponent
+Lessens one opponent's HP by 1/2
+Non-elemental damage to all opponents
+[Poison/Confu/Sleepel/Silence/Small/Frog] on all
+Fire damage on all opponents
+Water damage on all opponents
+Lightning damage on all opponents
+[Fire/Ice/Lightning] damage on all opponents
+Does damage equal to user's MaxHP/HP
+Non-elemental damage on any one opponent
+Non-elemental damage on any one opponent
+Causes [Death] on levels in multiples of 5
+Pronounces death sentence on any one opponent
+Pronounces death on any one opponent or ally
+Big non-elemental damage on any one opponent
+Big damage on all opponents, ignores defense
+
+
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"Attacks one opponent
+"Attacks and paralyzes one opponent
+"Diffuses after hitting one opponent
+"Attacks one opponent
+"Attacks all opponents
+"Blows away all opponents
+"Slices up all opponents
+"Attacks one opponent
+"Attacks all opponents
+"Reduces one opponent's MP
+"Blows away one opponent
+"Attacks all opponents
+"Attacks all opponents
+"Damages all opponents
+"Restores HP of all allies
+"Constrains and stop the magic of all opponents
+"Cures all status ailments of all allies
+"Raises party's Limit guage to the max, except yours
+"Makes all allies invincible one time
+"Fully restores all allies
+"Fully restores all allies, makes them invincible one time
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attack an opponent
+"Attacks and drains the HP/MP from one opponent
+"Attacks all opponents, sometimes dealing [Death]
+"Attacks all opponents
+"Continuously attacks, sometimes dealing [Death]
+"Attacks all opponents
+"Causes big damage to all opponents
+"Attacks one opponent
+"Begins fighting wildly
+"Attacks and drains the HP/MP from one opponent
+"Attacks all opponents
+"Casts [Haste] and raises “Defense %” for all allies
+"Attacks all opponents
+"Attacks all opponents
+"Rolls the dice, damage
+
+"What'll come out next…?
+"Turns into Galian Beast!
+"Turns into Death Gigas!
+"Turns into Hellmask!
+"Transforms to Chaos!
+"Attacks opponent with weapon after cutting them
+"Restores HP of all allies
+"Attacks all opponents
+"Continuously attacks all opponents
+"Attacks all opponents
+"Continuously attacks opponents
+"Attacks all opponents

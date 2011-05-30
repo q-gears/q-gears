@@ -1,0 +1,91 @@
+80067948 [][][][] pointer to field database block.
+
+80070520 vertex depth list (0x4 per vertex (SZ)).
+
+800711a8 rasterized vertex list (0x4 per vertex (SXY)).
+
+
+
+
+8007b6f4 [][][][] store here byte after opcode. Flags stream. Everytime we call 0xa8 opcode we do something if 1st bit is set and then right shift it by 1.
+8007b6f8 [][][][] if 1 here then we not roll back 1 opcode.
+
+8007b710 [][][][] increment this if some conditions met in 0x9c and 0xe2 opcode.
+
+8007bbd8 [][][][] 0xe3 opcode store value here ([e3][ ][x]).
+
+8007bcb8 script stack address (each item 0x04 size).
+
+8007bcf8 [][][][] pointer to allocated script memory data after system block.
+
+8008b28c character struct (0x90 size)
+
+800c9ddc [][]     number of collisions with triangles sides.
+800c9dde [][]     number of something1. Not used?
+800c9de0 [][]     number of something2. Not used?
+800c9de4 default data for triangle move scale? (00000000 00000100 00000000 017F0B00)
+800c9df0 []
+800c9df1 []       some flags.
+800c9df4 [][][][] pointer to some entity struct with size 0x28 (stored address 800caad8).
+800c9df8 [][][][] pointer to walkmesh file after 4 bytes header.
+800c9dfc [][][][] pointer to walkmesh vertexes data.
+800c9e00 [][][][] pointer to walkmesh triangles data.
+800c9e04 [][][][] pointer to walkmesh normals data.
+800c9e0c [][][][] pointer to walkmesh groups data.
+
+800c9df1 []       set in 0x27 script opcode with 0x7f or 0xff.
+
+800ca068 + 75 []       id of camera to use in field. Used when selecting background camera.
+
+800ca14c some array of 0xdc size elements.
+
+800ca9d8 array of struct with size 0x6 where we store vector which we need to apply to our position so we don't collide with side of triangle. 0x10 items.
++00 [][]     X
++02 [][]     Y
++04 [][]     Z
+800caa38 array of collision data with walkmeshes (store here is we collide perpendicularly or not) (0x2 byte size). 0x10 items.
+800caa58 array of collision distances (0x4 byte size). 0x10 items.
+800caa98 something1 array 0x9 items. Store -1 by default in move func. Not used?
+800caab8 something2 array 0x9 items. Store -1 by default in move func. Not used?
+
+
+
+800caad8 array of structs with 0x28 size. 800c9df4 points here.
++00 [][]     some flags.
+                0x0001 - if this flag not set we will not perform any move or placement.
++04 [][]     current triangle group id.
++06 [][]     current triangle id.
++08 [][]     some triangle group id. Store here +4[][] if we don't move. Store new triangle group id if we move directly (not collided with anything).
++0a [][]     some triangle id. Store here +6[][] if we don't move. Store new triangle id if we move directly (not collided with anything).
++1c [][][][] collision radius.
++20 [][][][] collision radius square.
++24 [][][][] pointer to script allocated data for entity.
+
+8010a7b8 field script here.
+
+80125105 field walkmesh here.
+
+
+
+
+
+
+// unit structure
++04 []       some matrix id which we use instead of normal root matrix if +1c not NULL.
++08 [][][][] pointer to assosiated model file.
++0c [][][][] pointer to assosiated animation file.
++10 [][][][] pointer to packets we creating.
++18 [][][][] pointer to CLUT and texture page info data (used in model packets).
++1c [][][][] pointer to some matrixes. We use this matrixes instead of normal root matrixes if this pointer not NULL.
++20 [][][][] pointer to bone matrixes.
++24 [][][][] R11R12. This is multiplied with root bone matrix if +1c is NULL.
++28 [][][][] R13R21. This is multiplied with root bone matrix if +1c is NULL.
++2c [][][][] R22R23. This is multiplied with root bone matrix if +1c is NULL.
++30 [][][][] R31R32. This is multiplied with root bone matrix if +1c is NULL.
++34 [][][][] R33. This is multiplied with root bone matrix if +1c is NULL.
++38 [][][][] TRX. This is multiplied with root bone matrix if +1c is NULL.
++3c [][][][] TRY. This is multiplied with root bone matrix if +1c is NULL.
++40 [][][][] TRZ. This is multiplied with root bone matrix if +1c is NULL.
++44 [][][][] offset to some struct from which we get pointer to packets.
++74 [][][][] VXY0.
++78 [][][][] VZ0.

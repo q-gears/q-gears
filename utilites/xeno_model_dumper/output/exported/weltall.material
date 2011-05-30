@@ -1,0 +1,20 @@
+
+material weltall
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+			alpha_rejection greater 0
+
+			texture_unit
+			{
+				texture weltall.png
+				filtering point point none
+			}
+		}
+
+	}
+
+}

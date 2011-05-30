@@ -1,0 +1,105 @@
+Restores HP by 100
+Restores HP by 500
+Fully Restores HP
+Restores MP by 100
+Fully Restores MP
+Fully Restores HP/MP
+Fully restores all members' HP/MP
+Restores life
+Cures [Poison]
+Cures [Petrify]
+Cures [Frog]
+Cures [Small]
+Cures [Silence]
+Cures [Sadness]
+Cures [Fury]
+Cures abnormal status
+Can escape from opponents during battle
+Casts [Haste] on one ally
+Raises ability once during battle
+Protects against transformations
+Explosive damage against one opponent
+Explosive damage against all opponents
+Explosive damage against all opponents
+Stops all opponents
+Uses “Death” on all opponents
+Slows all opponents
+Uses “Sleepel” on all opponents
+Uses “Silence” on all opponents
+Uses “Berserk” on all opponents
+Uses “Confu” on all opponents
+Uses “Fire2” on all opponents
+Uses “Fire3” on all opponents
+Uses “Ice2” on all opponents
+Uses “Ice3” on all opponents
+Uses “Bolt2” on all opponents
+Uses “Bolt3” on all opponents
+Uses “Quake2” on all opponents
+Uses “Quake3” on all opponents
+Uses “Bio2” on all opponents
+Uses “Bio3” on all opponents
+Uses “Comet2” on all opponents
+Drains HP out of one opponent
+Drains MP out of one opponent
+Petrifies one opponent
+Creates [Barrier] around all allies
+Creates [MBarrier] around all allies
+Uses “Reflect” on all allies
+Uses “DeSpell” on all opponents
+Uses whirlwind on all opponents
+Water damage on all opponents
+Changes one opponent to a frog
+Uses “Mini” on one opponent
+Cures [Darkness]
+Fire damage on one opponent
+Explosive damage on one opponent
+Explosive damage against one opponent
+Uses “Demi” against one opponent
+Uses “Demi2” against one opponent
+Uses [Darkness] against one opponent
+Paralyzes one opponent
+Lightning damage against all opponents
+Uses [Poison/Confu/Sleepel/Silence/Small/Frog]
+When you want a Chocobo…
+When you want a Chocobo…
+When you want a Chocobo…
+When you want a Chocobo…
+When you want a Chocobo…
+When you want a Chocobo…
+When you want a Chocobo…
+When you want a Chocobo…
+Restores ally's max HP/MP. Use at Save Point.
+Raises [Strength]
+Raises [Vitality]
+Raises [Magic Power]
+Raises [Spirit]
+Raises [Dexterity]
+Raises [Luck]
+When you want to breed Chocobos…
+When you want to breed Chocobos…
+When you want to breed Chocobos…
+When you want to breed Chocobos…
+When you want to breed Chocobos…
+When you want to breed Chocobos…
+When you want to breed Chocobos…
+When you want to breed Chocobos…
+Looks like it can start some sort of machine
+This one's a little tough…
+Learn Limit Skill “Omnislash”
+Learn Limit Skill “Catastrophe”
+Learn Limit Skill “Final Heaven”
+Learn Limit Skill “Great Gospel”
+Learn Limit Skill “Cosmo Memory”
+Learn Limit Skill “All Creation”
+Learn Limit Skill “Chaos”
+Learn Limit Skill “Highwind”
+Shinra armored ‘attack’ soldiers: 12 in the set!
+A new machine to protect the reactor!
+A perfect copy of Sephiroth's sword!
+Use this to create a SAVE Point in the ‘North Cave’
+A record of Master Dio's fiercest battles
+Dio's autograph
+Second part of Dio's diary: The Gold Saucer years
+Blooms once every 1000 years
+Calms the hearts of all who hear it
+Map of another world. It slumbers with sunken ships

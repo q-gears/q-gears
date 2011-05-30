@@ -1,0 +1,6 @@
++04 [][][][] number of texts
+next block of texts offsets and something 0x4 bytes each.
++00 [][]     offset to text starting from start of this block.
++02 []       width?
++03 []       height?
+next block - textes itself in FFIX format.

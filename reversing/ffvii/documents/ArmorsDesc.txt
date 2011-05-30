@@ -1,0 +1,31 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Drains [Fire] attacks
+Drains [Cold] attacks
+Drains [Lightning] attacks
+Drains 1/2 [Fire/Cold/Lightning] attack
+Women's Armlet nullifies [Fire/Cold/Gravity/Holy]
+Man's Armlet nullifies [Lightning/Earth/Water/Poison]
+
+Decreases all elemental attacks by 1/2
+A gorgeous watch

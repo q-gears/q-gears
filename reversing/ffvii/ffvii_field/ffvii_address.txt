@@ -1,0 +1,518 @@
+800491d0 character id -> savemap block assosiation id. (0-0, 1-1, 2-2, 3-3, 4-4, 5-5, 6-6, 7-7, 8-8, 9-6, A-7)
+
+80049208 window RGB. (size [r][g][b]x4)
+
+8004a62c offset to new model structure at 80138250.
+
+80062c00 [] read byte from this in 43cc0 function.
+
+80062f19 [] looks like enemy lure value (looks like 0xc fixed point)
+80062f1b [] 
+
+80062f24 offset to some message related data.
+
+80063048        [800707c0]  font padding file.
+
+800707be [][] battle result stored here. Loaded by 0x23 BTRLD.
+
+8007078C [] array of enitys lines data. (size 0x01).
+
+800707C0 offset to font padding file.
+
+800716c4 offset to sector 5 triggers.
+
+800716d0 [] store 0 or 4 here during random encounter.
+
+800716d4 [] store music lock here. MULCK opcode.
+
+800716DC [][] entity array (set to 0 during script initing)
+
+8007173c [][] danger counter.
+
+80071748 array of priority script offsets. (size 0x10 0x2).
+
+80071a54 offset to sector 6 encounters.
+
+80071A88 array if priority data. Entity id that request this priority with REQ-type opcodes. (size 0x08 0x01).
+
+80071C0C store that we in line and SLIP byte in line == 1 during move_line_check.
+
+80071e2c number of opened windows. Increment this during window initialization. Decrement during closing.
+80071e38 current screen scroll X.
+80071e3c current screen scroll Y.
+80071e40 offset to camera section
+
+800722c4 current entity.
+
+80074ea4        [8009c544]  model related data. (size 0x84)
+80074ea4 + 00 [][]          store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1 (maybe end kawai)
+80074ea4 + 02 [][]          store 0 here in KAWAI opcode.
+80074ea4 + 04 [][][][]      offset to KAWAI opcode data in script (like offset to opcode + 3).
+80074ea4 + 08 []            blinking. 0 - on, 1 - off.
+80074ea4 + 09 []            store 0 here in KAWAI opcode under some curcumstances.
+80074EA4 + 0a
+80074EA4 + 0b
+80074ea4 + 0c [][][][]      x.
+80074EA4 + 10 [][][][]      y.
+80074EA4 + 14 [][][][]      z.
+80074EA4 + 18 [][][][]      x start (in JUMP and LADER).
+80074EA4 + 1C [][][][]      y start (in JUMP and LADER).
+80074EA4 + 20 [][][][]      z start (in JUMP and LADER).
+80074EA4 + 24
+80074EA4 + 25
+80074EA4 + 26
+80074EA4 + 27
+80074EA4 + 28
+80074EA4 + 29
+80074EA4 + 2A
+80074EA4 + 2B
+80074EA4 + 2C [][]          b value for JUMP function.
+80074EA4 + 2E
+80074EA4 + 2F
+80074EA4 + 30 [][]          store number of steps for JUMP and LADER here.
+80074EA4 + 32 [][]          current step for JUMP and LADER.
+80074EA4 + 34
++ 35 []       shift addition to move direction.
++ 36 []       move direction (used when calculated movement).
++ 37 []       lock rotation. (1 - direction will not be changed)
++ 38 []       model direction.
+80074EA4 + 39 []            number of steps for turn.
+80074EA4 + 3A []            current step for turn.
+80074EA4 + 3B []            used during TURN (5th argument).
+80074EA4 + 3c [][]          start direction (for TURN), we store model direction here at start of turn.
+80074EA4 + 3E [][]          end direction (for TURN).
+80074EA4 + 40 [][]          real X offset value.
+80074EA4 + 42 [][]          start X offset value.
+80074EA4 + 44 [][]          end X offset value.
+80074EA4 + 46 [][]          real Y offset value.
+80074EA4 + 48 [][]          start Y offset value.
+80074EA4 + 4A [][]          end Y offset value.
+80074EA4 + 4C [][]          real Z offset value.
+80074EA4 + 4E [][]          start Z offset value.
+80074EA4 + 50 [][]          end Z offset value.
+80074EA4 + 52 [][]          steps in offseting.
+80074EA4 + 54 [][]          current step in offsetting.
+80074EA4 + 56 []            type of offsetting (LINEAR SMOOTH INSTANT).
+80074EA4 + 57 []            store current entity id here during CHAR opcode.
+80074EA4 + 58 []            pc entity collide with this entity. (1 - true/0 - false).
+80074EA4 + 59 []            model solidity (0x01 - off/0x00 - on).
+80074EA4 + 5A []            pc entity talk with this entity. (1 - true/0 - false).
+80074EA4 + 5B []            model talkability (0x01 - off/0x00 - on).
+80074EA4 + 5C []            model visibility (0x01 - on/0x00 - off).
+80074EA4 + 5D []            model state.
+                            0 - nothing.
+                            1 - MOVE-type.
+                            3 - JUMP.
+                            4 - up/down LADER.
+                            5 - left/right LADER.
+80074ea4 + 5e []            animation id.
+80074ea4 + 5f
+80074ea4 + 60 [][]          animation speed. Store 10 here during MOVE opcode and animation speed during LADER.
+80074ea4 + 62 [][]          current frame. Store 0 here during MOVE and LADER opcode.
+80074EA4 + 64 [][]          number of frames. Set during MOVE and LADER opcode (animation related. maybe frames number)
+80074EA4 + 66 [][]          store CHAR byte here.
+80074EA4 + 68 [][]          0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
+80074EA4 + 6A [][]          stage of state.
+                            0 - init.
+                            1 - action.
+                            2 - finish.
+80074EA4 + 6C [][]          solid range value.
+80074ea4 + 6e [][]          talk range value.
+80074EA4 + 70 [][]          movement speed. For MOVE-type opcodes.
+80074EA4 + 72 [][]          triangle.
+80074EA4 + 74 [][]          move to triangle (LADER and JUMP).
+80074EA4 + 76
+80074EA4 + 77
+80074EA4 + 78 [][][][]      move to x (MOVE and LADER and JUMP).
+80074EA4 + 7C [][][][]      move to y (MOVE and LADER and JUMP).
+80074EA4 + 80 [][][][]      move to z (MOVE and LADER and JUMP).
+
+800756E8 [] array of animation state? Store 0 here if we set UC to 0. Store 1 here if we MOVE. (size 0x1)
+            0 - play default animation.
+            1 - if current frame >= number of frames - set first frame. (we start load anim after this)
+            2 - play animation.
+            3 - wait for continue animation.
+            4 - finish animation.
+            5 - play and set to 0.
+            6 - play and set to 3.
+
+80075cf8 [][]     current background scroll step.
+80075e14 [][]     start X position of scroll.
+80075e18 [][]     end X position of scroll.
+80075e1c [][]     start Y position of scroll.
+80075e20 [][]     end Y position of scroll.
+
+80075dec [][]     screen index (ffvii uses two render buffers). Used to render to specific buffers.
+
+80075e10 [][][][] pointer to where to load next data for model. 1) Part after all new structures for the model. 2) Part after all loaded global models.
+
+80077F64        [80062f24]  message related data.
+
+8007e770 [][][][] offset to block 7 in dat file.
+
+8007e7a0          array of some fade data. (size 0x4).
+8007E7A8 [][][][] offset to dialog block.
+
+8007e7ac         array of LINE data. (size 0x18).
++ 00 [][] x1.
++ 02 [][] y1.
++ 04 [][] z1.
++ 06 [][] x2.
++ 08 [][] y2.
++ 0a [][] z2.
++ 0c []   line on/off. (1 - true/0 - false).
++ 0d []   parent entity.
++ 0e []   entity currently in LINE (with solid).  Script call.
++ 0f []   entity cross LINE. Script call (removed after script call).
++ 10 []   entity move to line. Script call (removed after script call).
++ 11 []   entity talk to LINE. (1 - true/0 - false).
++ 12 []   entity enter LINE. Script call (removed after script call).
++ 13 []   entity leave LINE. Script call (removed after script call).
++ 14 []   store direction of moving between move vector and line if we move in line.
++ 15 []   entity move to line (for talk check).
++ 16 []   store SLIP byte here.
+
+8007eb90 [][]     some data.
+8007eb94 [][]     some data.
+8007eb98 [] array of entity data. entity_id <-> model_id. 0xFF if not visible entity. (size 0x01).
+
+8007ebc8 []       store 1 here during random encounter.
+
+80081d90 [] array of some entity data. Store 1 to pc entity here during SPLIT.
+
+80081DC4 current UC opcode state. Not actually influence on game, but it is restored from here if chenged as in ASK opcode. Real uc is set in game data.
+
+80082248 [][] array of model default animation speed.
+
+800831fc entity current script pointers table.
+
+8008325C [] array of model default animation.
+
+8008326C []       windows parent entity (size 0x01).
+80083274 [][][][] windows data (size 0x30). Pointer to dialog string.
+80083278 [][]     windows data (size 0x30). WINDOW x.
+8008327A [][]     windows data (size 0x30). WINDOW y.
+8008327C [][]     windows data (size 0x30). WINDOW width.
+8008327E [][]     windows data (size 0x30). WINDOW height.
+80083280 [][]     windows data (size 0x30). WINDOW current width. Set during dialog init (width / 4) (8 - min value).
+80083282 [][]     windows data (size 0x30). WINDOW current height. Set during dialog init (height / 4) (8 - min value).
+80083284 [][]     windows data (size 0x30). Text scrolling value.
+80083286 [][]     windows data (size 0x30). Letters in window string.
+80083288 [][]     windows data (size 0x30). Bytes in window string.
+8008328A [][]     windows data (size 0x30). Current row in string. Incremented during copy.
+8008328C []
+8008328D []       windows data (size 0x30). WMODE style.
+8008328E []       windows data (size 0x30). Show pointer.
+8008328F []       windows data (size 0x30). WSPCL type.
+80083290 []
+80083291 []       windows data (size 0x30). WNUMB number of digits in number.
+80083292 [][]
+80083294 [][][][] windows data (size 0x30). WNUMB number.
+80083298 [][]     windows data (size 0x30). Pointer X.
+8008329A [][]     windows data (size 0x30). Pointer Y.
+8008329C []       windows data (size 0x30). WSPCL x.
+8008329D []
+8008329E []       windows data (size 0x30). WSPCL y.
+8008329F []
+800832A0 [][]     windows data (size 0x30). window state.
+800832A2 []       windows data (size 0x30). WMODE cbc.
+800832A3 []
+
+800833F8 array of script running state. 0x00 - not started, 0x01 - running, 0x02 - finished. (size 0x8 0x1).
+
+8008357c offset to model data in 7 block in dat file.
+
+80095D84 number of inited lines.
+
+80095dd4 [][] set this to 0 when type 3 fade reach 22.
+
+80095de0 array of stored background palletes (0x20 size).
+
+800965e0 we store manual visible entity here. Checked during general move at least.
+800965e8 [][]     if not 0 then field background already loading.
+800965ec [][]     depending on this value we load field differently. Store 1 here when move from map to map.
+
+80099ffc [] script related. In script function.
+
+8009a048 maybe array of states for KAWAI (byte per model). Used in 0xd kawai opcode
+
+8009A058 save current opcode here.
+8009a05c looks like we read field id from here when loading data.
+
+8009A064 [][][][] script related. In script function. We increase this every opcode (maybe number of proseed opcodes). We go to next entoty after 8 of this.
+
+8009a074 structures for fade (size 0x30). Index for using fade structure here 80075dec.
+
+8009a100 manual or auto scroll. If 1 then this is manual scroll. O - we auto scroll to PC.
+
+8009A1C4 [] array of current priority slot used by entity (size 0x01 0x08).
+
+8009abf4        [8009c6e0]  start of game data (message/fade/nfade/walkmesh).
+8009abf4 + 01 []            encounters state (0 - no encounter, 2- encounter).
+8009abf4 + 02 [][]          map to load (gateway activation) or battle to fight.
+8009abf4 + 04 [][]          destination x during map load.
+8009abf4 + 06 [][]          destination y during map load.
+8009abf4 + 0a [][]          background X scroll to this position.
+8009abf4 + 0c [][]          background Y scroll to this position.
++ 10 [][]     field scale (9 bit fixed point).
++ 12 []       set to 0 in 0x6A VWOFT opcode.
++ 13 []       set to 0 in 0x6A VWOFT opcode.
++ 14 []       set to 0 in 0x6A VWOFT opcode.
++ 16 [][]     set to 2-3 bytes in 0x6A VWOFT opcode.
++ 18 [][]     set to 0 in 0x6A VWOFT opcode.
++ 1a [][]     set to 0 in 0x6A VWOFT opcode.
+8009abf4 + 1d []            set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC).
+8009abf4 + 1e []            store entity id to which we scroll background.
+8009abf4 + 1f []            state of scrolling. 0-init 1-action 2-finish.
+8009abf4 + 20 [][]          speed of background scroll. Number of steps?
+8009ABF4 + 22 [][]          destination z during map load.
+8009ABF4 + 24 [][]          rotation during map load.
+8009abf4 + 26 [][]          battle state ?
+8009ABF4 + 28 [][]          number of model.
+8009abf4 + 2a []            manual model id.
+8009ABF4 + 2C [][]          animation for stand. Set in CCANM (XX,-,-,0)
+8009ABF4 + 2E [][]          animation for walk. Set in CCANM (XX,-,-,1)
+8009ABF4 + 30 [][]          animation for stand. Set in CCANM (XX,-,-,2)
++ 32 []       we store UC byte here.
+8009ABF4 + 33 []            if 1 here model will not automove. And animation will not play.
+8009ABF4 + 34               we store MENU byte here. Checked when call menu.
+8009abf4 + 36 []            check gateways during move or not.
+8009abf4 + 37 []            scroll lock.
+8009abf4 + 38 [][]          0 here when there is no fade.
++ 3a []       we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode.
+8009ABF4 + 3b []            battle field check on/off (0/1).
+8009abf4 + 3c []            battle table to use (0 or 1).
+8009ABF4 + 44 [][][][]      offset to battle music (global, with field file offset).
++ 48 [][][][] offset to field music (global, with field file offset).
+8009abf4 + 4c [][]          we store FADE and NFADE type here.
+8009abf4 + 4e [][]          we store start value on FADE and zero on NFADE here.
+8009abf4 + 50 [][]          we store FADE and NFADE speed here.
+8009abf4 + 52 [][]          we store FADE R-value here.
+8009abf4 + 54 [][]          we store FADE G-value here.
+8009abf4 + 56 [][]          we store FADE B-value here.
+8009abf4 + 58 [][]          probably current fade R.
+8009abf4 + 5a [][]          probably current fade G.
+8009abf4 + 5c [][]          probably current fade B.
+8009abf4 + 5e [][]          we store NFADE 1/4-byte_value here.
+8009abf4 + 60 [][]          we store NFADE 2/5-byte_value here.
+8009abf4 + 62 [][]          we store NFADE 3/6-byte_value here.
+8009ABF4 + 70 [][][][]      key data. 1000 - up button. 4000 - down button (hold, released or pressed). Checked during ASK pointer movement.
+8009abf4 + 78 [][][][]      key data. 0020 - ok button (hold, released or pressed). Checked during text copy.
+8009ABF4 + 7C [][][][]      key data. (repeat)
+8009ABF4 + 80 [][][][]      key data. 0020 - ok button (hold, released or pressed). Checked during window state check.
++ 8a []       if 1 we activate X shaking. 0 - deactivate.
++ 8b []       state of shaking single X movement (0 - init, 1 - action)
++ 8c []       random shake array index single X movement.
++ 8d []       store here smooth shake single X movement.
++ 8e [][]     shake single X movement strength.
++ 90 [][]     start position of shake single X movement.
++ 92 [][]     end position of shake single X movement.
++ 94 [][]     number of steps for shake single X movement.
++ 96 [][]     current step for shake single X movement.
++ 98 []       if 1 we activate Y shaking. 0 - deactivate.
++ 99 []       state of shaking single Y movement (0 - init, 1 - action)
++ 9a []       random shake array index single Y movement.
++ 9b []       store here smooth shake single Y movement.
++ 9c [][]     shake single Y movement strength.
++ 9e [][]     start position of shake single Y movement.
++ a0 [][]     end position of shake single Y movement.
++ a2 [][]     number of steps for shake single Y movement.
++ a4 [][]     current step for shake single Y movement.
++ a6 [][]     x scroll for 2nd background.
++ a8 [][]     y scroll for 2nd background.
++ aa [][]     x scroll for 3rd background.
++ ac [][]     y scroll for 3rd background.
++ ae [][]     depth for background 3rd layer.
++ b0 [][]     depth for background 2nd layer.
++ b2          triangle lock array (bit per triangle)
++ f2          array of background state.
+
+8009ad30 player character array of assigned entity_id (size 0x01).
+
+8009c544 offset to model related data. 0x80074ea4
+
+8009c558 [][]     total number of background scroll steps.
+
+8009c6c4 number of already inited visible entity.
+
+8009c6dc current field file offset.
+8009c6e0 offset to game data (fade/nfade/walkmesh/key data).
+
+
+
+8009d820 unknown value that checked x & 3 == 0.
+
+8009d828 [][] array of animation speed. ASPED set speed to model data+60 and here.
+
+800a00dc []       some flag in model loading functions. If true - load global texture.
+
+800da5b8 structure where data for loading field files (size 0x18)
++00 [][][][] DAT file sector.
++04 [][][][] DAT file size.
++08 [][][][] MIM file sector.
++0c [][][][] MIM file size.
++10 [][][][] BSX file sector.
++14 [][][][] BSX file size.
+
+800df08c CLOUD.BCX start sector. After it pointers and sezes for all global models.
+800df090 CLOUD.BCX size.
+
+800df0d4 FIELD.TDB start sector.
+800df0d8 FIELD.TDB size.
+
+800df114 swich packet draft buffers to render. 0x00 - 1st biffer, 0x01 - second buffer.
+800df118 offset to 800fc68c.
+800df11c offset to KAWAI opcodes addreses (800df0dc).
+800df120 Sin and Cos table. Sin +00 [][], Cos +02 [][]
+800df520 normals table
+800dfca0 store 80128000 here during level models initing. We store globals texture here.
+
+800dfdfc array related with kawai. (0x2 size, 0x10 items) First element init with 0x10, others with 0.
+
+800dfe1c
+800dfe1c [][]     in case of KAWAI_5 we store here +00[][] transformed by camera.
+800dfe1e [][]     in case of KAWAI_5 we store here +02[][] transformed by camera.
+800dfe20 [][]     in case of KAWAI_5 we store here +04[][] transformed by camera.
+
+800dfe22 []       +6[]
+800dfe23 []       +7[]
+
+800dfe24 [][]     +8[][]
+800dfe26 [][]     +a[][]
+800dfe28 [][]     +c[][]
+
+800dfe2a [][]     +e[][]
+800dfe2c [][]     +10[][]
+800dfe2e [][]     +12[][]
+
+800dfe3c kawai structure (size 0x3c)
+800dfe3c + 00 [][]     used in function funcb0edc (it seems render data to packet draft)
+800dfe3c + 02 [][]     used in function funcb0edc (it seems render data to packet draft)
+800dfe3c + 04 [][]     used in function funcb0edc (it seems render data to packet draft)
+800dfe3c + 06 [][]
+800dfe3c + 08 [][]
+800dfe3c + 0a [][]
+800dfe3c + 0c [][]
+800dfe3c + 0e [][]     store 0x0064 here during 0xD KAWAI opcode.
+800dfe3c + 10 [][]     store 0x0800 here during 0xD KAWAI opcode.
+800dfe3c + 12 []       used in function funcb0edc (it seems render data to packet draft)
+800dfe3c + 13 []
+800dfe3c + 14 [][]
+800dfe3c + 16 [][]
+800dfe3c + 18 []
+800dfe3c + 19 []       store 0x00 here during 0x8 KAWAI opcode.
+800dfe3c + 1a [][]
+800dfe3c + 1c [][][][]
+800dfe3c + 20 [][][][]
+800dfe3c + 24 [][][][]
+800dfe3c + 28 [][][][]
+800dfe3c + 2c [][][][]
+800dfe3c + 30 [][][][]
+800dfe3c + 34 [][][][]
+800dfe3c + 38 [][][][]
+
+800e0200 [][][][] offset to color data from BSX file.
+800e0204 [][][][] offset to BSX file.
+
+800e0228 opcode address table.
+
+800E0738 digit->letter assosiation array (10-26 letters from character table)
+
+800E4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
+800E4234 reading offsets in dialog in field. One for each window. (size 0x4).
+800E424C total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
+800E4274 offset to ID block.
+800E4278 [][] name reading offset for dialog windows. (size 0x2).
+800E4280 [][] current variable for windows. (size 0x2).
+800E48F0 [] store FF here during end of SPLIT.
+800E4944 text for windows to diaplay. (size 0x100)
+800e4d48 offsets for getting variable from memory block for windows. 8 for each window. (size 0x10 0x2)
+
+// MIM data
+800e4d90 [][][][] pointer to clut data.
+800e4d94 [][][][] pointer to first image block.
+800e4d98 [][]     clut vram x.
+800e4d9a [][]     clut vram y.
+800e4d9c [][]     clut width.
+800e4d9e [][]     clut height.
+800e4da4 [][][][] pointer to 1st image data.
+800e4da8 [][][][] pointer to second image block.
+800e4dac [][]     1st image vram x.
+800e4dae [][]     1st image vram y.
+800e4db0 [][]     1st image width.
+800e4db2 [][]     1st image height.
+800e4db4 [][]     texpage settings for 1st image.
+800e4dd4 [][][][] pointer to 2nd image data.
+800e4dd8 [][][][] pointer to end.
+800e4ddc [][]     2nd image vram x.
+800e4dde [][]     2nd image vram y.
+800e4de0 [][]     2nd image width.
+800e4de2 [][]     2nd image height.
+800e4de4 [][]     texpage settings for 2nd image.
+
+800fc68c some data related to model rendering packet. Depth sorted polygons addreses.
+
+8011016C        [8008357C]  some model related data (size 0x08)
+8011016C + 04 []
+
+80113f28 [][] store current triangle here during walkmesh_border_cross.
+
+80114278 [][] some data for windows. Set this to zero during window initialization
+
+801142CC [][] additional rows during text scrolling. (size 0x2).
+
+801142D4 [] priority queue script id. (size 0x08 0x01).
+
+80114458 [][][][] offset to id triangle access block.
+8011445C [][] time to wait for windows. (size 0x2).
+
+80114470 [][] field dialog value which content value how mush characters add at current character copy. (size 0x08 0x2).
+80114480 [][] field dialog OK button speed modificator. (size 0x08 0x2).
+
+80114488 we read something from here during reading unknown data in triggers and check if this != 0. If this != 0 then battle will not be activated during field battle check. (0)
+
+801144CC [][] store which side we cross here during walkmesh_border_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
+
+801144DC [][] temp variable string. First we write variable here and then copy it to window string. (size 0x10).
+
+8011451C [][] current variable read offset. (size 0x2).
+
+80114fe4 temp storage for DAT file after load.
+
+80128000 address for temp load of different textures.
+    MIM files stored here before parse.
+    FIELD.TDB (this is global textures for models)
+
+
+
+80138250        [8004a62c]  header for new model structures (size 0x24).
+80138250 + 00 []       number of models.
+80138250 + 01 []       store 00 here during init.
+80138250 + 02 [][]     store 00 here during init.
+80138250 + 04 [][][][] offset to new structures (8013825c).
+80138250 + 08 [][][][] store 00 here during init. Offset to texture in bsx file.
+8013825c new structures for model data (we init it and copy data from 7 dat block during level loading) (size 0x24)
+8013825c + 00 []       store 01 here during init. Store 0 here after initialization if number of models greater than 1.
+8013825c + 01 []       store 0xff here during init. Store KAWAI second byte here. (4,8,9,b,c - one kind, others - other)
+8013825c + 02 []       number of bones.
+8013825c + 03 []       number of model parts.
+8013825c + 04 []       number of animation.
+8013825c + 05 []       store 00 here during init. Rotation x.
+8013825c + 06 []       store 00 here during init. Rotation y.
+8013825c + 07 []       model direction. (rotation z)
+8013825c + 08 [][][][] translation x.
+8013825c + 0c [][][][] translation y.
+8013825c + 10 [][][][] translation z.
+8013825c + 14 []       global model id.
+8013825c + 15 []       face id in global texture (load palette with this id to vram). store + 00 [] of model data in 7 block in dat file.
+8013825c + 16 [][]     model scale. Store 1000 here during init. (12bit fixed point)
+8013825c + 18 [][]     local offset to model parts part.
+8013825c + 1a [][]     local offset to animation part.
+8013825c + 1c [][][][] start offset of data for this model (data starts right after new model structure).
+8013825c + 20 [][][][] offset to packet drafts and bone matrixes. init with 0.
+
+
+
+8013C864                    BALLET.BCX
+
+8013F558                    BSX file.

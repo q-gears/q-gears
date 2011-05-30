@@ -1,0 +1,14 @@
+WORLD/WORLD.BIN
+cdrom $80180000 <- 00:40:20($b36), 2048 bytes
+cdrom $80190000 <- 00:40:52($b56), 2048 bytes
+
+WORLD/WM0.TXZ
+cdrom $800698F0 <- 00:42:70($bfe), 2048 bytes
+cdrom $8006A8F0 <- 00:45:63($cd8), 2048 bytes
+
+WORLD/WM0.BOT
+cdrom $80156000 <- 02:07:57($24d8), 2048 bytes
+cdrom $80183800 <- 02:08:73($2533), 2048 bytes
+
+WORLD/WM0.BSZ
+cdrom $800698F0 <- 03:29:72($3ced), 2048 bytes

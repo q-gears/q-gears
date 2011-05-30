@@ -1,0 +1,129 @@
+//////////////////////////////////////////////////////////
+// 0x84 ProgressLessEqualJumpTo
+V1 = w[800AF54C];
+
+A0 = 1;
+read_two_bytes_with_80;
+S0 = V0;
+
+A0 = 0;
+get_bytes_from_800C2F3C;
+
+if (V0 < S0)
+{
+    V0 = hu[V1 + CC];
+    V0 = V0 + 5;
+}
+else
+{
+    A0 = 3;
+    read_two_bytes_unsigned;
+}
+
+
+[V1 + CC] = h(V0);
+
+return;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// 0xCB TriggerJumpTo
+V0 = w[800AF54C];
+A0 = hu[V0 + CC];
+V0 = w[800AD0D8];
+param = bu[A0 + V0 + 1];
+
+party_leader_entity_id = w[800B1740];
+V1 = w[800AEFE4];
+A2 = w[V1 + party_leader_entity_id * 5C + 4C];
+
+address_to_8 = w[800AD0CC];
+
+// check height
+V1 = h[A2 + 26];
+trigger_height = h[address_to_8 + param * 18 + 2];
+if (trigger_height < V1)
+{
+    V0 = hu[A2 + 1A];
+    V0 = V1 - V0;
+    if (V0 < trigger_height)
+    {
+        V0 = h[address_to_8 + param * 18 + 4];
+        V1 = h[address_to_8 + param * 18 + 0];
+        V0 = V0 << 10;
+        S4 = V0 + V1;
+        A0 = S4;
+
+        V0 = h[address_to_8 + param * 18 + A];
+        V1 = h[address_to_8 + param * 18 + 6];
+        V0 = V0 << 10;
+        S3 = V0 + V1;
+        A1 = S3;
+
+        V0 = h[A2 + 2A];
+        V1 = h[A2 + 22];
+        V0 = V0 << 10;
+        S0 = V0 + V1;
+        A2 = S0;
+
+        V0 = h[address_to_8 + param * 18 + 10];
+        V1 = h[address_to_8 + param * 18 + C];
+        V0 = V0 << 10;
+        S1 = V0 + V1;
+
+        V0 = h[address_to_8 + param * 18 + 16];
+        V1 = h[address_to_8 + param * 18 + 12];
+        V0 = V0 << 10;
+        S2 = V0 + V1;
+
+        system_side_of_vector;
+
+        if (V0 >= 0)
+        {
+            A0 = S3;
+            A1 = S1;
+            A2 = S0;
+            system_side_of_vector;
+
+            if (V0 >= 0)
+            {
+                A0 = S1;
+                A1 = S2;
+                A2 = S0;
+                system_side_of_vector;
+
+                if (V0 >= 0)
+                {
+                    A0 = S2;
+                    A1 = S4;
+                    A2 = S0;
+                    system_side_of_vector;
+
+                    if (V0 >= 0)
+                    {
+                        V1 = w[800AF54C];
+                        V0 = hu[V1 + CC];
+                        V0 = V0 + 4;
+                        [V1 + CC] = h(V0);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+
+L95004:	; 80095004
+A0 = 2;
+read_two_bytes_unsigned;
+V1 = w[800AF54C];
+[V1 + CC] = h(V0);
+
+V1 = w[800AF150];
+V1 = V1 + 1;
+[800AF150] = w(V1);
+
+return;
+//////////////////////////////////////////////////////////

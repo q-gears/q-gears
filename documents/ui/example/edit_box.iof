@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+	Èíòåðàêòèâíûé îáúåêò: ïîëå äëÿ âîîäà
+-->
+<edit_box_entity>
+	<params 
+		name = "editbox_prot"
+		rect = "15 5 210 35"
+
+
+		max_symbol_limit	= "8"
+		cursor_offset		= "5"
+		text_view 			= "edit_text"
+		cursor_name		= "cursor_ind"
+	/>
+
+	<!--Èåðàðõèÿ îáúåêòîâ-->
+	<object name = "hierarchy" type = "objects">
+		<object name = "namebox_background" 		type = "sprite" sprite_name = "namebox" tex_name = "objects\screens\main_menu\gui_effects\mainmenu_tex_st" x = "0" y = "0"/>
+	
+		<object name = "edit_text" 						type = "text" style = "edit_box_text" x = "115" y = "5"/>
+		<object name = "cursor_ind" 						type = "distortion_anim" effect = "objects\screens\main_menu\gui_effects\editbox_cursor" x = "120" y = "23" time_scale = "1"/>
+	</object>
+	
+	
+	<!--Îïèñàíèå ïîâåäåíèé-->
+	<behaviors>
+		<behavior name = "Init">
+			<start>
+				<do object = "cursor_ind" command = "Start"/>
+			</start>
+			<stop/>
+		</behavior>
+	</behaviors>
+</edit_box_entity>

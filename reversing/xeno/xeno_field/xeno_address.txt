@@ -1,0 +1,465 @@
+800589e8 [][][][] store start of extended text characters here. 0xf8 in japanese.
+
+80058bc4 [][][][] store here pointer to polygons data block in 3d model file.
+
+80058bd4 [][][][] store here pointer to texture data block in 3d model file.
+
+80059640 array of four bytes values. Store 0 in slot GP + 0x1ac when we start parse model and animation.
+
+80059aa4 array of offsets to player sprite datas by party slot. (size 0x04)
+
+80059ad4 array of party slot - entity id association. (size 0x04).
+80059ad8 [][][][] entity id in party 2.
+80059adñ [][][][] entity id in patry 3.
+
+80061C20 [][][][] party member 1.
+80061C24 [][][][] party member 2.
+80061C28 [][][][] party member 3.
+
+80065198 [][][][] store entity id which perform move here duting func821cc.
+
+800acff4          we read something from here during rotation set. We will not set 80115cdc + 108 if this is not 0.
+
+800ad040 [][][][] checked in move function (func821cc) as well as some other condition to make entity play run animation if equal to 1.
+
+800ad070 [][][][] checked if equal to 0 in func83f40.
+
+800ad0c8 [][][][] pointer to field dialogs block (file 7).
+800ad0cc [][][][] pointer to field triggers (file 8).
+800ad0d0 [][][][] pointer to field entity file (file 5).
+800ad0d4 [][][][] number of entity.
+800ad0d8 [][][][] offset to field scripts in file 5.
++0 []       use spawn table? (0xff - not use). Which table to use defined in 2nd slot in memory block. Used in function func9efe4.
+spawn table
++0 [][]     x
++2 [][]     z
++4 []       walkmesh id.
++5 []       if 0xff - use value from slot 8 in memory block.
++6 []       rotation. If 0xff - use rotation from slot 6 in memory block. (8 directions)
+
+800ad0e4 [][][][] checked if equal to 1 in func83f40.
+
+800ad778          opcodes table. (size 0x4).
+800adb78          extended opcodes table. (size 0x4).
+
+800adf08          data for rotation (each 2 bytes)
+
+800aec3c          some data during texture set (func910b0).
+
+800aeeba [][]     store some direction here. maybe for camera. func9efe4.
+800aeec4 [][][][] store some direction here. maybe for camera. func9efe4.
+800aeee0 [][][][] store some direction here. maybe for camera. func9efe4.
+
+800aefe4          offset to some entity data (size 0x5c).
+
+800aeff0 [][][][] offset to 2dsprite block in field file.
+800aeff4 [][][][] offset to material data in walkmesh file.
+800aeff8          array of 4 offsets to triangle data.
+800af008          array of 4 offsets to triangle vertex data.
+
+800af148 [][][][] every time we init entity model with func76150 we increment this by 1.
+
+800af150 [][][][] store here how much opcodes to execute in run_script.
+
+800af1f0 [][][][] current entity id.
+800af1f4 [][]     store 0xff40 here if we init player entity.
+
+800af370 [][]     some flags. Checked hu[800af370] & 0040 in move function (func821cc) as well as some other condition to make entity play run animation.
+
+800af4c0 [][][][] if this is 0 then we execure script till the end (or until wait type opcode). If 1 together with 800af594 then we end script cycle.
+
+800af54c [][][][] offset to current entity data.
+
+800af594 [][][][] seems like return result from function (wait opcode returns 1). Set to 0 at start of run_script function.
+
+800afb8c [][][][] offset to 80114f2c struct for current entity.
+
+800b168c [][][][] store here id of sound to play.
+
+800b16a0 []       if this is not 0 we nulify triangle material mask. If this not 0 we do not run scripts for party character entity.
+
+800b16aa [][]     if this != 8 then dialog speed doubled (store 2 instead of 1)
+
+800b1740 [][][][] store entity id which controls party leader here.
+
+800b1812 [][]     store entity id which controls party leader here.
+
+800c1b68 [][]     button mask. Maybe pressed (not repeated) button mask?
+
+800c1b6c          dialogs struct (0x498 size)(4 items)
++ 18 [][]     store 0x64 here in case of new row. Maybe how much symbols in new row we can put.
++ 1a [][]     
++ 22 [][]     total number of symbols???
++ 28 [][]     some flags
+                0x0008: add this flag if we met 0x00_Close text opcode and there is no 0x0080 flag here or if we met 0x03_Wait text opcode. Maybe wait for player input? If this flag is set we read +83.
+                0x0048: add this flags if we met 0x02_New text opcode.
+                0x0200: add this flag in 0x0F0D text opcode.
++ 2a [][]
++ 34 [][][][] pointer to current position in text data
++ 38 [][][][] some pointer.
++ 40 [][][][] some pointer.
++ 44 [][][][] some pointer.
++ 80 []       default text speed.
++ 81 []       current text speed. How much text read in one function call. 2 symbols opcodes counted as one.
++ 82 []       stored text speed (to restore if we want).
++ 83 []       state? Set to 1 if we met 0x00_Close text opcode. Set to 2 if we met 0x02_New text opcode. Set to 3 if we met 0x03_Wait text opcode.
++ 84 []       store 1 here if we met 0x00_Close text opcode or if we met 0x0F02 text opcode.
++ 88 [][][][] +0016 from memory block.
++ 8c [][][][] +0018 from memory block.
++ 90 [][][][] +001a from memory block.
++ 94 [][][][] +001c from memory block.
++ 98 [][]     +001c from memory block.
++ 9a [][]
++ 9c [][]     store time to delay output here if we met 0x0F00_Delay text opcode or if we met 0x0F02 text opcode.
++ 9e [][]     store value for 0x0F0E text opcode here.
++ a0 [][]     store value for 0x0F0E text opcode here.
++ a8 [][][][] offset to dialog text data.
++37c [][]
++3c4 [][]     we store 0 here if 37c != 0 and 83 != 0 and 28 flag 0x0008 is set
++40c [][]     
++40e [][]     
++410 [][]     looks like order of dialogs. 0-top. 0xffff if window not inited.
++414 [][]     we set this to 0 if we tried to open new window but all window slots are filled. Maybe say this window to close. Usually 0xffff (not used in usual window render)
++416 [][]     some entity id??? maybe owner.
++418 [][]     some entity id???
+
+
+
+800c2f3c          memory block. used in get_bytes_from_800C2F3C.
++ 0000 [][]     progress
++ 0002 [][]     spawn slot id (used when spawn pc)
++ 0004
++ 0006 [][]     direction of pc entity during spawn.
++ 0008 [][]     direction of camera?
++ 0014 [][]     related to displayed window. Store something here during 0x9c opcode. Maybe cursor position.
++ 0016 [][]     slot1 for dialog temp variable.
++ 0018 [][]     slot2 for dialog temp variable.
++ 001a [][]     slot3 for dialog temp variable.
++ 001c [][]     slot4 for dialog temp variable.
+800c373c [][][][] maybe number of inited windows.
+800c3740          end of memory block.
+
+8010b6a0        [800AD0D0]  entity file.
+
+8010bc24        [800AD0D8]  scripts block.
+
+
+
+80114f2c        [800aefe4] entity data (size 0x5c).
++   0 [][][][] copy flags from 80115cdc+0 here.
++   4 [][][][] offset to some data (8012c138).
++  1e          solid range.
++  20 [][][][] some X data.
++  24 [][][][] some Y data.
++  28 [][][][] some Z data.
++  40 [][][][] some X data.
++  44 [][][][] some Y data.
++  48 [][][][] some Z data.
++  4c [][][][] offset to total entity data (80115cdc).
++  52 [][]     Y rotation (door opened with this).
++  58 [][]     flags
+               0x0020:set in 0x29 and 0x23(only) opcode. Remove if we init this entity as player.
+
+
+
+80115cdc
+801176A4        [800af54c] and [80114f2c +  4c] total entity data. (size 0x1b8)
++   0 [][][][] entity flags.
+               0x00000001: if flag is set - scripts will be not runned. In addition it make entity not solid (maybe this is turn entity off (ie it will not calculated at all))
+               0x00000002: flag added if 0x2A opcode called in this entity.
+               0x00000004: can be set in 0x20_SetFlags.
+               0x00000008: can be set in 0x20_SetFlags.
+               0x00000010: not pushable.
+               0x00000020: can be set in 0x20_SetFlags.
+               0x00000080: not solid.
+               0x00000100: add during initialization with 0xBC and 0x0B opcodes.
+               0x00000200: add if we init player entity (not really).
+               0x00000400: add if we init player entity and this is patry leader. Seems like manipulatable entity.
+               0x00000700: movement over 3 types of walkmesh material. Checked with bits 0x000000e0 in walkmesh material data.
+               0x00004000: if we remove this flag - entity not move, menu not called. Checked in move function. If this flag is set and (hu[800af370] & 0040) && (w[800ad040] == 1) then we set animation_id 2 (run) to play instead of 1 (walk).
+               0x00010000: removed in 0x19_SetPosition.
+               0x00020000: added during initialization with 0x16 (SetPlayableCharacter) opcode.
+               0x00040000: removed during set position by x z.
+               0x00100000: if set then this entity (door) opened else closed.
+               0x00400000: flag added in SpriteGoToPosition opcode. Looks like make step to direction. Set during set position by x z. Maybe update position?
+               0x01000000: if this bit is set we will not perform move (we just skip movement).
+               0x04000000: add this bit if we can move where we want to move (in movement function after all checks).
+               0x08000000: can be set in 0x20_SetFlags.
++   4 [][][][] entity flags 2.
+               0x00000001:
+               0x00000002:
+               0x00000078: flags for material checking in specific walkmesh id. If flag is set - we will not use walkmesh material.
+               0x00000800: remove this flag during initialization in 0x0B opcode (with model). Add it in 0xBC opcode. Looks like if this entity has model or not.
+               0x00002000:
+               0x00200000: removed in 0x19_SetPosition.
++   8 [][]     triangle id for walkmesh 0.
++   a [][]     triangle id for walkmesh 1.
++   c [][]     triangle id for walkmesh 2.
++   e [][]     triangle id for walkmesh 3.
++  10 [][]     walkmesh id.
++  12
++  13
++  14 [][][][] some flags.
++  18
++  19
++  1a [][]     ???
++  1c
++  1d
++  1e          solid range.
++  1f
++  20 [][][][] maybe current X. Used in movement.
++  24 [][][][] maybe current Y. Used in movement.
++  28 [][][][] maybe current Z. Used in movement.
++  2c
++  2d
++  2e
++  2f
++  30 [][][][] some X. Init with 0 when set position by x z
++  34 [][][][] some Y. Init with 0 when set position by x z
++  38 [][][][] some Z. Init with 0 when set position by x z
++  3c
++  3d
++  3e
++  3f
++  40 [][][][] some X. Init with 0 when set position by x z
++  44 [][][][] some Y. Init with 0 when set position by x z
++  48 [][][][] some Z. Init with 0 when set position by x z
++  4c
++  4d
++  4e
++  4f
++  50 [][][][] X. store normal to triangle where we currently is here (during set by xz)
++  54 [][][][] Y. store normal to triangle where we currently is here (during set by xz)
++  58 [][][][] Z. store normal to triangle where we currently is here (during set by xz)
++  5c
++  5d
++  5e
++  5f
++  60 [][]     maybe X. Init with 0 when set position by x z
++  62 [][]     maybe Y. Init with 0 when set position by x z
++  64 [][]     maybe Z. Init with 0 when set position by x z
++  66
++  67
++  68
++  69
++  6a
++  6b
++  6c
++  6d
++  6e
++  6f
++  70
++  71
++  72 [][]     store some 2 bytes Y here.
++  73
++  74 []       some entity id??? We dont calculate interaction with this entity.
++  75
++  76 [][]     
++  78
++  79
++  7a
++  7b
++  7c
++  7d
++  7e
++  7f
++  80 []       store character id here when we set avatar.
++  81 []       store something from here to memory block + 14. Dialog related. Maybe cursor position.
++  82 []       something dialog related.
++  83 []       something dialog related.
++  84 [][][][] something dialog related.
++  88 [][]     something dialog related.
++  8a [][]     something dialog related.
++  8c start of slots
++0 [][]     pointer to requested script this slot.
++2 []       wait byte in this slot.
++3 []       script id in this slot. Store 0xff  in 0x00_Return.
++4 [][][][] flags for script this slot (script priority among them).
+               0x003c0000: priority. Lower value - higher priority. Max value - empty slot?
+               0x01800000: how read argument in move reading function. (SpriteGoToPosition(vf80 x, vf40 y, f flag) - 0x00). Unknown setting. When add auto script during collision add script only if this not 1.
+               0x0000ffff: seems like number of steps to move. (SpriteGoToPosition == 0x0000ffff)
+here 7 more requersed script data 8 bytes each.
++  cc [][]     current script pointer.
++  ce []       current script slot id. Used in 0x00_Return.
++  cf []       byte to get data for Requests.
++  d0 [][][][] maybe current X. Init with 0 when set position by x z
++  d4 [][][][] maybe current Y. Init with 0 when set position by x z
++  d8 [][][][] maybe current Z. Init with 0 when set position by x z
++  dc
++  dd
++  de
++  df
++  e0
++  e1
++  e2 []       current step when opening or closing door.
++  e3 []       if this is >= 9 then we discrease it by 1 every step in move function.
++  e4 [][]     we store character id here.
++  e6 [][]     we store animation id to play here in SpritePlayAnimation2. Looks like default animation.
++  e8 [][]     when entity is moving we store here animation id acording to that movement (1,2 and so on) maybe playing animation id.
++  ea [][]     we store animation id to play here in SpritePlayAnimation.
++  eb
++  ec [][][][] Init with 0 when set position by x z
++  f0 [][][][] Init with 0 when set position by x z
++  f4
++  f5
++  f6
++  f7
++  f8
++  f9
++  fa
++  fb
++  fc
++  fd
++  fe
++  ff
++ 100
++ 101
++ 102
++ 103
++ 104 [][]     we store rotation data here, also set during DialogShow (flags). Seems like current rotation.
++ 106 [][]     we store rotation data here.
++ 108 [][]     we store rotation data here (if 800acff4 == 0).
++ 12c [][][][] flags.
+                0x00000020 - if set - door opening or closing.
+
+
+8012c138 some entity data. 80114f2c+4 pointer.
++  00 [][][][] some X.
++  04 [][][][] some Y.
++  08 [][][][] some Z.
++  0c [][][][] some X. Init with 0 when set position by x z
++  10 [][][][] some Y. Init with 0 when set position by x z
++  14 [][][][] some Z. Init with 0 when set position by x z
++  18 [][][][] we store 08000000 / hu[current_entity_data + 76] here if 00002000 flag in 80115cdc+4 set. Set to 04000000 / hu[current_entity_data + 76] if 00002000 flag in 80115cdc+4 not set but this (+  18) == 0. In movement set function.
++  84 [][]     store some Y here.
+
+
+
+801e85f4 model data to init (0x8 size 0x8 items).
++0 [][][][] pointer to array that contains pointer to all model parts (dynamicly allocated).
++4 [][][][] number of parts in this model.
+
+
+
+801e8634 [][][][] Temp index of currently inited model (index into 801e85f4). Store address of inited model 3d data here.
+801e8638 [][][][] store address model 3d data here.
+
+801e8670 looks like array of pointers to the model data? If this is not 0 during load - then we will not load model.
+
+
+
+struct where pointer point to size 0x134
++  0 [][][][] pointer to 801e85f4 item of this model.
++  4 [][][][] pointer to allocated place for skeleton (0x7c size).
++  8 [][][][] pointer to animation sub file addreses animation_0_1, animation_0_2 and so on.
++  c [][][][] init with 0.
++ 10 [][][][] init with 0. Store pointer to animation file like animation_0_1-animation_0_X.
++ 14 [][][][] pointer to animation_0_0.
++ 18 [][][][] init with 0.
++ 1c [][]     store 2 bytes from model_3_0 + 8 here.
++ 1e [][]     init with -1.
++ 20 []       model id or some other index???
++ 22 []       init with 0.
++ 23 []       init with 0.
++ 24 [][]     store 2 bytes from model_3_0 + 2 here.
++ 26 [][]     store 2 bytes from model_3_0 + 4 here.
++ 28 [][]     store 2 bytes from model_3_0 + 6 here.
++ 2a []       store byte from model_3_0 + a here.
++ 2b []       init with 0.
++ 34 []       init with 1.
++ 35 []       init with 0.
++ 36 []       init with 0.
++ 37 []       init with 0.
++ 38 []       init with 0.
++ 39 []       init with 0x6b.
++ 3a [][]     init with -1.
++ 3c [][]     init with -1.
++ 40 [][]     init with 0.
++ 42 [][]     init with 0.
++ 4a [][]     store 2 bytes from model_3_0 + c here.
++ 4c [][][][] init with 0.
++ 50 [][][][] init with 0.
++ 54 [][][][] init with 0.
++ 58 [][]     init with 0.
++ 5c []       init with -1.
++ 62 []       store 0 here during init.
++ 63 []       store 0 here during init.
++ 70 [][]     init with 0. Some root X rotation.
++ 72 [][]     init with 0. Some root Y rotation.
++ 74 [][]     init with 0. Some root Z rotation.
++ 76 [][]     init with 0. Some addition to +70.
++ 78 [][]     init with 0. Some addition to +72.
++ 7a [][]     init with 0. Some addition to +74.
++ 7c [][]     init with 0. X something.
++ 7e [][]     init with 0. Y something.
++ 80 [][]     init with 0. Z something.
++ 82 [][]     init with 0. Some addition to +7c.
++ 84 [][]     init with 0. Some addition to +7e.
++ 86 [][]     init with 0. Some addition to +80.
++ 88 [][]     init with 0.
++ 8a [][]     init with 0.
++ 8c [][]     init with 0.
++ 8e [][]     init with 1.
++ 90 [][]     TX as 0x3c0. or -1 if default TX TY clutX and clutY not used.
++ 92 [][]     TY as 0x100.
++ 94 [][]     clutX.
++ 96 [][]     clutY.
++ 98 [][]     init with -1.
++ ac [][][][] store animation file pointer here (or 0).
++ b0 [][][][] store pointer to animation_1 here.
++ b8 start of two quad monochrome textured packet (0x28 size)
++10a [][]     store here 2 bytes from 801e863c.
++10c []       store 1 byte from model_3_0 + e here. Number of something.
++10d []       store 1 byte from model_3_0 + 12 here. Number of something.
++10e []       store 1 byte from model_3_0 + 10 here. Number of something.
++110 [][][][] pointer to allocated place for something with size 0x70.
++118 [][][][] pointer to allocated place for something with size 0x30.
+
+
+
+allocated place for skeleton ((number_of_bones + 1) * 0x74)
++  0 [][]     store 0 here or pointer to parent bone data.
++  4 []       store 1 here during init.
++  5 []       store 1 here during init.
++  6 []       store 0 here during init. In case of root store 1.
++  7 []       store 1 here during init. In case of root store 0.
++  8 [][]     store part id here during init (ffff if there is no part).
++  a []       index of bone? start with 1. Increment with each bone. In case of root store number of bones here.
++ 2c          matrix in standart GTE format.
++ 4c [][]     store 1000 here during init. Scale X?
++ 4e [][]     store 1000 here during init. Scale Y?
++ 50 [][]     store 1000 here during init. Scale Z?
++ 52 [][]     store 0 here during init.
++ 54 [][]     store 0 here during init. Bone rotation X.
++ 56 [][]     store 0 here during init. Bone rotation Y.
++ 58 [][]     store 0 here during init. Bone rotation Z.
++ 5c [][][][] store 0 here during init. Bone translation X.
++ 60 [][][][] store 0 here during init. Bone translation Y.
++ 64 [][][][] store 0 here during init. Bone translation Z.
++ 68 [][][][] pointer to 1st packets buffer.
++ 6c [][][][] pointer to 2nd packets buffer.
++ 70 [][][][] store 0 here during init.
++ 74 [][][][] store 0 here during init.
++ 78 [][][][] store 0 here during init.
+
+
+
+allocated place for something with size 0x70. Number given in model struct with size 0x134 at +10c, offset at +110.
++  0 [][]     store -1 here during initialization.
++  8 [][][][] store 0 here during initialization.
+
+
+
+allocated place for something with size 0x30. Number given in model struct with size 0x134 at +10c, offset at +118.
++  4 [][][][] store 0 here during initialization.
++  8 [][][][] store 0 here during initialization.
++  c [][][][] store 0 here during initialization.
++ 1a [][]     store 0 here during initialization.
+
+
+
+allocated place for something with size 0x24. Number given in model struct with size 0x134 at +10d, offset at +118.
++  4 [][][][] store 0 here during initialization.
++  8 [][][][] store 0 here during initialization.
++  c [][][][] store 0 here during initialization.
++ 1a [][]     store 0 here during initialization.

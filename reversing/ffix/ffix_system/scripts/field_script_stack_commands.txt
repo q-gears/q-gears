@@ -1,0 +1,105 @@
+Read
+0x10:   switch (command & 0xff)
+        {
+            case 0: return GetXPositionFromEntity( command >> 0x8 );
+            case 1: return GetYPositionFromEntity( command >> 0x8 );
+            case 2: return GetZPositionFromEntity( command >> 0x8 );
+            case 3: return GetYRotationFromEntity( command >> 0x8 );
+            case 4: return GetFlagsFromEntity( command >> 0x8 );
+            case 5: return GetMainEntityIdFromEntity( command >> 0x8 );
+            case 6: return GetCurrentScriptPriorityFromEntity( command >> 0x8 );
+            case 7: return Get[3a]FromEntity( command >> 0x8 );
+        }
+        else get data from battle struct.
+
+0x14:   return GetBattleUnitsMask( command & 0x7 );
+        command & 0x7 == 2 - enemy
+        command & 0x7 == 3 - party
+        command & 0x7 == 4 - units
+
+0x18:   switch ( (command << 6) >> 6 )
+        {
+            case 0: return GetXPositionFromEntity( entity_in_8007b700 );
+            case 1: return GetYPositionFromEntity( entity_in_8007b700 );
+            case 2: return GetZPositionFromEntity( entity_in_8007b700 );
+            case 3: return GetYRotationFromEntity( entity_in_8007b700 );
+            case 4: return GetFlagsFromEntity( entity_in_8007b700 );
+            case 5: return GetMainEntityIdFromEntity( entity_in_8007b700 );
+            case 6: return GetCurrentScriptPriorityFromEntity( entity_in_8007b700 );
+            case 7: return Get[3a]FromEntity( entity_in_8007b700 );
+        }
+        else get data from battle struct.
+
+0x1c:   get immediate value without command itself
+        return (command << 0x6) >> 0x6;
+
+0x20:   return (bu[8007aef0 + (command & 0xffff) >> 0x3] >> (command & 0x7)) & 1;
+
+0x24:   return (bu[w[8007aecc] + (command & 0xffff) >> 0x3] >> (command & 0x7)) & 1;
+
+0x48:   return b3[w[8007bcf8] + command & 0xffff];
+
+0x80:   return b[8007aef0 + command & 0xffff];
+
+0x84:   return b[w[8007aecc] + command & 0xffff];
+
+0x88:   return b[w[8007bcf8] + command & 0xffff];
+
+0xa0:   return bu[8007aef0 + command & 0xffff];
+
+0xa4:   return bu[w[8007aecc] + command & 0xffff];
+
+0xa8:   return bu[w[8007bcf8] + command & 0xffff];
+
+0xc0:   return h[8007aef0 + command & 0xffff];
+
+0xc4:   return h[w[8007aecc] + command & 0xffff];
+
+0xe0:   return hu[8007aef0 + command & 0xffff];
+
+0xe4:   return hu[w[8007aecc] + command & 0xffff];
+
+0xe8:   return hu[w[8007bcf8] + command & 0xffff];
+
+
+
+Write
+0x14:   [masks + ( command & 0x7 ) * 2] = h(A0);
+
+0x20:   if (A0 == 0)
+        {
+            [8007aef0 + (command & 0xffff) >> 0x3] = b(b[8007aef0 + (command & 0xffff) >> 0x3] & (0xff XOR (1 << (command & 0x7))));
+        }
+        else
+        {
+            [8007aef0 + (command & 0xffff) >> 0x3] = b(b[8007aef0 + (command & 0xffff) >> 0x3] | (1 << (command & 0x7)));
+        }
+
+0x24:   if (A0 == 0)
+        {
+            [w[8007aecc] + (command & 0xffff) >> 0x3] = b(b[w[8007aecc] + (command & 0xffff) >> 0x3] & (0xff XOR (1 << (command & 0x7))));
+        }
+        else
+        {
+            [w[8007aecc] + (command & 0xffff) >> 0x3] = b(b[w[8007aecc] + (command & 0xffff) >> 0x3] | (1 << (command & 0x7)));
+        }
+
+0x40:   [8007aef0 + command & 0xffff] = b3(A0);
+0x44:   [w[8007aecc] + command & 0xffff] = b3(A0);
+0x48:   [w[8007bcf8] + command & 0xffff] = b3(A0);
+
+0x80:   [8007aef0 + command & 0xffff] = b(A0);
+0x84:   [w[8007aecc] + command & 0xffff] = b(A0);
+0x88:   [w[8007bcf8] + command & 0xffff] = b(A0);
+
+0xa0:   [8007aef0 + command & 0xffff] = b(A0);
+0xa4:   [w[8007aecc] + command & 0xffff] = b(A0);
+0xa8:   [w[8007bcf8] + command & 0xffff] = b(A0);
+
+0xc0:   [8007aef0 + command & 0xffff] = h(A0);
+0xc4:   [w[8007aecc] + command & 0xffff] = h(A0);
+0xc8:   [w[8007bcf8] + command & 0xffff] = h(A0);
+
+0xe0:   [8007aef0 + command & 0xffff] = h(A0);
+0xe4:   [w[8007aecc] + command & 0xffff] = h(A0);
+0xe8:   [w[8007bcf8] + command & 0xffff] = h(A0);

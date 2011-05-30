@@ -1,0 +1,95 @@
+////////////////////////////////
+// funcbc81c
+//A0 = h[800f8370]; // camera id to use
+//A1 = bu[801590cc]; // attacker id
+//A1 = bu[801518e4 + A1 * b9c + 22];
+camera_id = A0;
+S3 = A1;
+
+V0 = bu[801590dc];
+if (V0 == 0)
+{
+    S1 = 0;
+    loopbc858:	; 800BC858
+        A0 = S1;
+        A1 = S3;
+        A2 = camera_id;
+        funcbea38; // call camera direction script
+
+        A0 = S1;
+        A1 = S3;
+        A2 = camera_id;
+        funcbcb1c; // call camera position script
+
+        A1 = S1 + 1;
+        V0 = S1 < 3;
+    800BC880	bne    v0, zero, loopbc858 [$800bc858]
+
+    funcbc630;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbc630
+800BC638	lui    s0, $8010
+800BC63C	addiu  s0, s0, $a978 (=-$5688)
+800BC644	lui    at, $8010
+800BC648	sh     zero, $8360(at)
+
+loopbc64c:	; 800BC64C
+800BC64C	lui    v0, $8010
+800BC650	lh     v0, $8360(v0)
+800BC654	nop
+800BC658	sll    v0, v0, $02
+800BC65C	addu   v0, v0, s0
+800BC660	lw     v0, $0000(v0)
+800BC664	nop
+800BC668	beq    v0, zero, Lbc6e4 [$800bc6e4]
+800BC66C	nop
+800BC670	jalr   v0 ra
+800BC674	nop
+800BC678	lui    v0, $8010
+800BC67C	lh     v0, $8360(v0)
+800BC680	nop
+800BC684	sll    a1, v0, $02
+800BC688	addu   v0, a1, v0
+800BC68C	sll    a0, v0, $03
+800BC690	lui    at, $800f
+800BC694	addiu  at, at, $7ed8
+800BC698	addu   at, at, a0
+800BC69C	lh     v1, $0000(at)
+800BC6A0	addiu  v0, zero, $ffff (=-$1)
+800BC6A4	bne    v1, v0, Lbc6e4 [$800bc6e4]
+800BC6A8	addu   v0, a1, s0
+800BC6AC	lui    v1, $8010
+800BC6B0	lhu    v1, $a9bc(v1)
+800BC6B4	lui    at, $800f
+800BC6B8	addiu  at, at, $7ed8
+800BC6BC	addu   at, at, a0
+800BC6C0	sh     zero, $0000(at)
+800BC6C4	lui    at, $800f
+800BC6C8	addiu  at, at, $7eda
+800BC6CC	addu   at, at, a0
+800BC6D0	sh     zero, $0000(at)
+800BC6D4	sw     zero, $0000(v0)
+800BC6D8	addiu  v1, v1, $ffff (=-$1)
+800BC6DC	lui    at, $8010
+800BC6E0	sh     v1, $a9bc(at)
+
+Lbc6e4:	; 800BC6E4
+800BC6E4	lui    v0, $8010
+800BC6E8	lhu    v0, $8360(v0)
+800BC6EC	nop
+800BC6F0	addiu  v0, v0, $0001
+800BC6F4	lui    at, $8010
+800BC6F8	sh     v0, $8360(at)
+800BC6FC	sll    v0, v0, $10
+800BC700	sra    v0, v0, $10
+800BC704	slti   v0, v0, $0010
+800BC708	bne    v0, zero, loopbc64c [$800bc64c]
+800BC70C	nop
+800BC710	lui    at, $8010
+800BC714	sh     zero, $8360(at)
+////////////////////////////////

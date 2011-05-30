@@ -1,0 +1,1019 @@
+//////////////////////////////////////////////////////////
+// func7f5e0
+S0 = A0;
+S1 = A2;
+V0 = w[S0];
+A2 = A1;
+V0 = bu[V0];
+A1 = 800D257C;
+V1 = V0 - 1;
+if (V1 < 74)
+{
+60F60780 // 0x03
+70F6078084F6078098F60780ACF60780BCF60780D0F60780E4F60780
+F8F60780 // 0B
+20F70780 // 0D
+34F70780
+48F70780
+5CF70780 // 10
+70F7078084F7078098F70780ACF70780C0F70780D4F70780E8F70780FCF7078010F8078024F8078038F807804CF8078060F8078074F8078088F80780
+9CF80780 // 20
+B0F80780C4F80780D8F80780ECF8078000F9078014F9078028F907803CF9078050F9078064F9078078F9078090F90780A4F90780BCF90780D0F90780
+E8F90780 // 30
+FCF9078010FA078024FA078038FA07804CFA078060FA078074FA078084FA078094FA0780A8FA0780BCFA0780D0FA0780
+E4FA0780 // 3D
+0CFB0780 // 3F
+48FB0780 // 42
+5CFB078070FB078084FB078098FB0780ACFB0780C0FB0780
+D4FB0780 // 0x49
+FCFB0780 // 0x4B
+10FC078024FC078038FC0780
+4CFC0780 // 4F
+74FC0780 // 51
+A0FC0780 // 53
+B4FC0780C8FC0780DCFC0780F0FC078004FD078018FD07802CFD078040FD078054FD078068FD07807CFD078090FD0780
+A4FD0780 // 60
+B8FD078010FF0780
+CCFD0780 // 63
+F4FD0780 // 65
+08FE07801CFE078030FE078044FE078054FE078068FE07807CFE078090FE0780FCFE0780FCFE0780
+A4FE0780 // 70
+B4FE0780 // 71
+C8FE0780 // 72
+D8FE0780 // 73
+ECFE0780 // 74
+
+    switch (V0)
+    {
+        case 0x01:
+        {
+            A0 = S0;
+            A1 = S1;
+            func7ae9c;
+            S1 = V0;
+
+            8007F640	j      L7ff10 [$8007ff10]
+        }
+        break;
+
+        case 0x02:
+        {
+            A0 = S0;
+            A1 = A2;
+            A2 = S1;
+            func7aee8;
+
+            8007F658	j      L7ff10 [$8007ff10]
+        }
+        break;
+
+        8007F660	jal    func7af28 [$8007af28]
+        8007F664	addu   a0, s0, zero
+        8007F668	j      L7ff10 [$8007ff10]
+        8007F66C	nop
+        8007F670	addu   a0, s0, zero
+        8007F674	jal    func7af74 [$8007af74]
+        8007F678	andi   a1, a2, $00ff
+        8007F67C	j      L7ff10 [$8007ff10]
+        8007F680	nop
+        8007F684	addu   a0, s0, zero
+        8007F688	jal    func7afa0 [$8007afa0]
+        8007F68C	andi   a1, a2, $00ff
+        8007F690	j      L7ff10 [$8007ff10]
+        8007F694	nop
+        8007F698	addu   a0, s0, zero
+        8007F69C	jal    func7afdc [$8007afdc]
+        8007F6A0	andi   a1, a2, $00ff
+        8007F6A4	j      L7ff10 [$8007ff10]
+        8007F6A8	nop
+        8007F6AC	jal    func7b01c [$8007b01c]
+        8007F6B0	addu   a0, s0, zero
+        8007F6B4	j      L7ff10 [$8007ff10]
+        8007F6B8	nop
+        8007F6BC	addu   a0, s0, zero
+        8007F6C0	jal    func7b044 [$8007b044]
+        8007F6C4	andi   a1, a2, $00ff
+        8007F6C8	j      L7ff10 [$8007ff10]
+        8007F6CC	nop
+        8007F6D0	addu   a0, s0, zero
+        8007F6D4	jal    func7b090 [$8007b090]
+        8007F6D8	andi   a1, a2, $00ff
+        8007F6DC	j      L7ff10 [$8007ff10]
+        8007F6E0	nop
+        8007F6E4	addu   a0, s0, zero
+        8007F6E8	jal    func7b0d4 [$8007b0d4]
+        8007F6EC	andi   a1, a2, $00ff
+        8007F6F0	j      L7ff10 [$8007ff10]
+        8007F6F4	nop
+        8007F6F8	addu   a0, s0, zero
+        8007F6FC	jal    func7b12c [$8007b12c]
+        8007F700	andi   a1, a2, $00ff
+        8007F704	j      L7ff10 [$8007ff10]
+        8007F708	nop
+
+        case 0x0C:
+        {
+            A0 = S0;
+            A1 = A2 & FF;
+            battle_ai_0C_mod;
+
+            8007F718	j      L7ff10 [$8007ff10]
+        }
+        break;
+
+        8007F720	addu   a0, s0, zero
+        8007F724	jal    func7b1a4 [$8007b1a4]
+        8007F728	andi   a1, a2, $00ff
+        8007F72C	j      L7ff10 [$8007ff10]
+        8007F730	nop
+        8007F734	addu   a0, s0, zero
+        8007F738	jal    func7b1dc [$8007b1dc]
+        8007F73C	andi   a1, a2, $00ff
+        8007F740	j      L7ff10 [$8007ff10]
+        8007F744	nop
+        8007F748	addu   a0, s0, zero
+        8007F74C	jal    func7b214 [$8007b214]
+        8007F750	andi   a1, a2, $00ff
+        8007F754	j      L7ff10 [$8007ff10]
+        8007F758	nop
+        8007F75C	addu   a0, s0, zero
+        8007F760	jal    func7b24c [$8007b24c]
+        8007F764	andi   a1, a2, $00ff
+        8007F768	j      L7ff10 [$8007ff10]
+        8007F76C	nop
+        8007F770	addu   a0, s0, zero
+        8007F774	jal    func7b2a4 [$8007b2a4]
+        8007F778	andi   a1, a2, $00ff
+        8007F77C	j      L7ff10 [$8007ff10]
+        8007F780	nop
+        8007F784	addu   a0, s0, zero
+        8007F788	jal    func7b2f4 [$8007b2f4]
+        8007F78C	andi   a1, a2, $00ff
+        8007F790	j      L7ff10 [$8007ff10]
+        8007F794	nop
+        8007F798	addu   a0, s0, zero
+        8007F79C	jal    func7b350 [$8007b350]
+        8007F7A0	andi   a1, a2, $00ff
+        8007F7A4	j      L7ff10 [$8007ff10]
+        8007F7A8	nop
+        8007F7AC	addu   a0, s0, zero
+        8007F7B0	jal    func7b398 [$8007b398]
+        8007F7B4	andi   a1, a2, $00ff
+        8007F7B8	j      L7ff10 [$8007ff10]
+        8007F7BC	nop
+        8007F7C0	addu   a0, s0, zero
+        8007F7C4	jal    func7b3e0 [$8007b3e0]
+        8007F7C8	andi   a1, a2, $00ff
+        8007F7CC	j      L7ff10 [$8007ff10]
+        8007F7D0	nop
+        8007F7D4	addu   a0, s0, zero
+        8007F7D8	jal    func7b424 [$8007b424]
+        8007F7DC	andi   a1, a2, $00ff
+        8007F7E0	j      L7ff10 [$8007ff10]
+        8007F7E4	nop
+        8007F7E8	addu   a0, s0, zero
+        8007F7EC	jal    func7b468 [$8007b468]
+        8007F7F0	andi   a1, a2, $00ff
+        8007F7F4	j      L7ff10 [$8007ff10]
+        8007F7F8	nop
+        8007F7FC	addu   a0, s0, zero
+        8007F800	jal    func7b4ac [$8007b4ac]
+        8007F804	andi   a1, a2, $00ff
+        8007F808	j      L7ff10 [$8007ff10]
+        8007F80C	nop
+        8007F810	addu   a0, s0, zero
+        8007F814	jal    func7b50c [$8007b50c]
+        8007F818	andi   a1, a2, $00ff
+        8007F81C	j      L7ff10 [$8007ff10]
+        8007F820	nop
+        8007F824	addu   a0, s0, zero
+        8007F828	jal    func7b564 [$8007b564]
+        8007F82C	andi   a1, a2, $00ff
+        8007F830	j      L7ff10 [$8007ff10]
+        8007F834	nop
+        8007F838	addu   a0, s0, zero
+        8007F83C	jal    func7b5d0 [$8007b5d0]
+        8007F840	andi   a1, a2, $00ff
+        8007F844	j      L7ff10 [$8007ff10]
+        8007F848	nop
+        8007F84C	addu   a0, s0, zero
+        8007F850	jal    func7b620 [$8007b620]
+        8007F854	andi   a1, a2, $00ff
+        8007F858	j      L7ff10 [$8007ff10]
+        8007F85C	nop
+        8007F860	addu   a0, s0, zero
+        8007F864	jal    func7b670 [$8007b670]
+        8007F868	andi   a1, a2, $00ff
+        8007F86C	j      L7ff10 [$8007ff10]
+        8007F870	nop
+        8007F874	addu   a0, s0, zero
+        8007F878	jal    func7b6b4 [$8007b6b4]
+        8007F87C	andi   a1, a2, $00ff
+        8007F880	j      L7ff10 [$8007ff10]
+        8007F884	nop
+        8007F888	addu   a0, s0, zero
+        8007F88C	jal    func7b6f8 [$8007b6f8]
+        8007F890	andi   a1, a2, $00ff
+        8007F894	j      L7ff10 [$8007ff10]
+        8007F898	nop
+        8007F89C	addu   a0, s0, zero
+        8007F8A0	jal    func7b73c [$8007b73c]
+        8007F8A4	andi   a1, a2, $00ff
+        8007F8A8	j      L7ff10 [$8007ff10]
+        8007F8AC	nop
+        8007F8B0	addu   a0, s0, zero
+        8007F8B4	jal    func7b7a8 [$8007b7a8]
+        8007F8B8	andi   a1, a2, $00ff
+        8007F8BC	j      L7ff10 [$8007ff10]
+        8007F8C0	nop
+        8007F8C4	addu   a0, s0, zero
+        8007F8C8	jal    func7b80c [$8007b80c]
+        8007F8CC	andi   a1, a2, $00ff
+        8007F8D0	j      L7ff10 [$8007ff10]
+        8007F8D4	nop
+        8007F8D8	addu   a0, s0, zero
+        8007F8DC	jal    func7b87c [$8007b87c]
+        8007F8E0	andi   a1, a2, $00ff
+        8007F8E4	j      L7ff10 [$8007ff10]
+        8007F8E8	nop
+        8007F8EC	addu   a0, s0, zero
+        8007F8F0	jal    func7b8d8 [$8007b8d8]
+        8007F8F4	andi   a1, a2, $00ff
+        8007F8F8	j      L7ff10 [$8007ff10]
+        8007F8FC	nop
+        8007F900	addu   a0, s0, zero
+        8007F904	jal    func7b934 [$8007b934]
+        8007F908	andi   a1, a2, $00ff
+        8007F90C	j      L7ff10 [$8007ff10]
+        8007F910	nop
+        8007F914	addu   a0, s0, zero
+        8007F918	jal    func7b984 [$8007b984]
+        8007F91C	andi   a1, a2, $00ff
+        8007F920	j      L7ff10 [$8007ff10]
+        8007F924	nop
+        8007F928	addu   a0, s0, zero
+        8007F92C	jal    func7b9d4 [$8007b9d4]
+        8007F930	andi   a1, a2, $00ff
+        8007F934	j      L7ff10 [$8007ff10]
+        8007F938	nop
+        8007F93C	addu   a0, s0, zero
+        8007F940	jal    func7ba24 [$8007ba24]
+        8007F944	andi   a1, a2, $00ff
+        8007F948	j      L7ff10 [$8007ff10]
+        8007F94C	nop
+        8007F950	addu   a0, s0, zero
+        8007F954	jal    func7ba58 [$8007ba58]
+        8007F958	andi   a1, a2, $00ff
+        8007F95C	j      L7ff10 [$8007ff10]
+        8007F960	nop
+        8007F964	addu   a0, s0, zero
+        8007F968	jal    func7ba98 [$8007ba98]
+        8007F96C	andi   a1, a2, $00ff
+        8007F970	j      L7ff10 [$8007ff10]
+        8007F974	nop
+        8007F978	addu   a0, s0, zero
+        8007F97C	andi   a1, a2, $00ff
+        8007F980	jal    func7bb2c [$8007bb2c]
+        8007F984	andi   a2, s1, $00ff
+        8007F988	j      L7ff10 [$8007ff10]
+        8007F98C	addu   s1, v0, zero
+        8007F990	addu   a0, s0, zero
+        8007F994	jal    func7bbec [$8007bbec]
+        8007F998	andi   a1, a2, $00ff
+        8007F99C	j      L7ff10 [$8007ff10]
+        8007F9A0	nop
+        8007F9A4	addu   a0, s0, zero
+        8007F9A8	andi   a1, a2, $00ff
+        8007F9AC	jal    func7bc7c [$8007bc7c]
+        8007F9B0	andi   a2, s1, $00ff
+        8007F9B4	j      L7ff10 [$8007ff10]
+        8007F9B8	addu   s1, v0, zero
+        8007F9BC	addu   a0, s0, zero
+        8007F9C0	jal    func7bd34 [$8007bd34]
+        8007F9C4	andi   a1, a2, $00ff
+        8007F9C8	j      L7ff10 [$8007ff10]
+        8007F9CC	nop
+        8007F9D0	addu   a0, s0, zero
+        8007F9D4	andi   a1, a2, $00ff
+        8007F9D8	jal    func7be24 [$8007be24]
+        8007F9DC	andi   a2, s1, $00ff
+        8007F9E0	j      L7ff10 [$8007ff10]
+        8007F9E4	addu   s1, v0, zero
+        8007F9E8	addu   a0, s0, zero
+        8007F9EC	jal    func7bf48 [$8007bf48]
+        8007F9F0	andi   a1, a2, $00ff
+        8007F9F4	j      L7ff10 [$8007ff10]
+        8007F9F8	nop
+        8007F9FC	addu   a0, s0, zero
+        8007FA00	jal    func7bf88 [$8007bf88]
+        8007FA04	andi   a1, a2, $00ff
+        8007FA08	j      L7ff10 [$8007ff10]
+        8007FA0C	nop
+        8007FA10	addu   a0, s0, zero
+        8007FA14	jal    func7bfcc [$8007bfcc]
+        8007FA18	andi   a1, a2, $00ff
+        8007FA1C	j      L7ff10 [$8007ff10]
+        8007FA20	nop
+        8007FA24	addu   a0, s0, zero
+        8007FA28	jal    func7c000 [$8007c000]
+        8007FA2C	andi   a1, a2, $00ff
+        8007FA30	j      L7ff10 [$8007ff10]
+        8007FA34	nop
+        8007FA38	addu   a0, s0, zero
+        8007FA3C	jal    func7c03c [$8007c03c]
+        8007FA40	andi   a1, a2, $00ff
+        8007FA44	j      L7ff10 [$8007ff10]
+        8007FA48	nop
+        8007FA4C	addu   a0, s0, zero
+        8007FA50	jal    func7c078 [$8007c078]
+        8007FA54	andi   a1, a2, $00ff
+        8007FA58	j      L7ff10 [$8007ff10]
+        8007FA5C	nop
+        8007FA60	addu   a0, s0, zero
+        8007FA64	jal    func7c0b8 [$8007c0b8]
+        8007FA68	andi   a1, a2, $00ff
+        8007FA6C	j      L7ff10 [$8007ff10]
+        8007FA70	nop
+        8007FA74	jal    func7c0fc [$8007c0fc]
+        8007FA78	andi   a0, a2, $00ff
+        8007FA7C	j      L7ff10 [$8007ff10]
+        8007FA80	nop
+        8007FA84	jal    func7c12c [$8007c12c]
+        8007FA88	andi   a0, a2, $00ff
+        8007FA8C	j      L7ff10 [$8007ff10]
+        8007FA90	nop
+        8007FA94	addu   a0, s0, zero
+        8007FA98	jal    func7c15c [$8007c15c]
+        8007FA9C	andi   a1, a2, $00ff
+        8007FAA0	j      L7ff10 [$8007ff10]
+        8007FAA4	nop
+        8007FAA8	addu   a0, s0, zero
+        8007FAAC	jal    func7c1a0 [$8007c1a0]
+        8007FAB0	andi   a1, a2, $00ff
+        8007FAB4	j      L7ff10 [$8007ff10]
+        8007FAB8	nop
+        8007FABC	addu   a0, s0, zero
+        8007FAC0	jal    func7c1e4 [$8007c1e4]
+        8007FAC4	andi   a1, a2, $00ff
+        8007FAC8	j      L7ff10 [$8007ff10]
+        8007FACC	nop
+        8007FAD0	addu   a0, s0, zero
+        8007FAD4	jal    func7c24c [$8007c24c]
+        8007FAD8	andi   a1, a2, $00ff
+        8007FADC	j      L7ff10 [$8007ff10]
+        8007FAE0	nop
+        8007FAE4	addu   a0, s0, zero
+        8007FAE8	jal    func7c2b4 [$8007c2b4]
+        8007FAEC	andi   a2, s1, $00ff
+        8007FAF0	j      L7ff10 [$8007ff10]
+        8007FAF4	nop
+
+        case 0x3E:
+        {
+            A0 = S0;
+            A1 = A2 & FF;
+            battle_ai_3E_get_random;
+
+            8007FB04	j      L7ff10 [$8007ff10]
+        }
+        break;
+
+        8007FB0C	addu   a0, s0, zero
+        8007FB10	jal    func7c35c [$8007c35c]
+        8007FB14	andi   a1, a2, $00ff
+        8007FB18	j      L7ff10 [$8007ff10]
+        8007FB1C	nop
+
+        case 0x40
+        {
+            A0 = S0;
+            A1 = A2 & FF;
+            func7c3d0;
+
+            8007FB2C	j      L7ff10 [$8007ff10]
+        }
+        break;
+
+        case 0x41:
+        {
+            A0 = S0;
+            A1 = A2 & FF;
+            func7c51c;
+
+            8007FB40	j      L7ff10 [$8007ff10]
+        }
+        break;
+
+        8007FB48	addu   a0, s0, zero
+        8007FB4C	jal    func7c6b4 [$8007c6b4]
+        8007FB50	andi   a1, a2, $00ff
+        8007FB54	j      L7ff10 [$8007ff10]
+        8007FB58	nop
+        8007FB5C	addu   a0, s0, zero
+        8007FB60	jal    func7c818 [$8007c818]
+        8007FB64	andi   a1, a2, $00ff
+        8007FB68	j      L7ff10 [$8007ff10]
+        8007FB6C	nop
+        8007FB70	addu   a0, s0, zero
+        8007FB74	jal    func7c9b0 [$8007c9b0]
+        8007FB78	andi   a1, a2, $00ff
+        8007FB7C	j      L7ff10 [$8007ff10]
+        8007FB80	nop
+        8007FB84	addu   a0, s0, zero
+        8007FB88	jal    func7cb14 [$8007cb14]
+        8007FB8C	andi   a1, a2, $00ff
+        8007FB90	j      L7ff10 [$8007ff10]
+        8007FB94	nop
+        8007FB98	addu   a0, s0, zero
+        8007FB9C	jal    func7cbf4 [$8007cbf4]
+        8007FBA0	andi   a1, a2, $00ff
+        8007FBA4	j      L7ff10 [$8007ff10]
+        8007FBA8	nop
+        8007FBAC	addu   a0, s0, zero
+        8007FBB0	jal    func7ccec [$8007ccec]
+        8007FBB4	andi   a1, a2, $00ff
+        8007FBB8	j      L7ff10 [$8007ff10]
+        8007FBBC	nop
+        8007FBC0	addu   a0, s0, zero
+        8007FBC4	jal    func7cdd0 [$8007cdd0]
+        8007FBC8	andi   a1, a2, $00ff
+        8007FBCC	j      L7ff10 [$8007ff10]
+        8007FBD0	nop
+        8007FBD4	addu   a0, s0, zero
+        8007FBD8	jal    func7ceb4 [$8007ceb4]
+        8007FBDC	andi   a1, a2, $00ff
+        8007FBE0	j      L7ff10 [$8007ff10]
+        8007FBE4	nop
+
+        case 0x4A:
+        {
+            A0 = S0;
+            A1 = A2 & FF;
+            func7d048;
+
+            8007FBF4	j      L7ff10 [$8007ff10]
+        }
+        break;
+
+        8007FBFC	addu   a0, s0, zero
+        8007FC00	jal    func7d194 [$8007d194]
+        8007FC04	andi   a1, a2, $00ff
+        8007FC08	j      L7ff10 [$8007ff10]
+        8007FC0C	nop
+        8007FC10	addu   a0, s0, zero
+        8007FC14	jal    func7d2c4 [$8007d2c4]
+        8007FC18	andi   a1, a2, $00ff
+        8007FC1C	j      L7ff10 [$8007ff10]
+        8007FC20	nop
+        8007FC24	addu   a0, s0, zero
+        8007FC28	jal    func7d384 [$8007d384]
+        8007FC2C	andi   a1, a2, $00ff
+        8007FC30	j      L7ff10 [$8007ff10]
+        8007FC34	nop
+        8007FC38	addu   a0, s0, zero
+        8007FC3C	jal    func7d444 [$8007d444]
+        8007FC40	andi   a1, a2, $00ff
+        8007FC44	j      L7ff10 [$8007ff10]
+        8007FC48	nop
+        8007FC4C	addu   a0, s0, zero
+        8007FC50	jal    func7d518 [$8007d518]
+        8007FC54	andi   a1, a2, $00ff
+        8007FC58	j      L7ff10 [$8007ff10]
+        8007FC5C	nop
+
+        case 0x50:
+        {
+            A0 = S0;
+            A1 = A2 & FF;
+            func7d62c;
+
+            8007FC6C	j      L7ff10 [$8007ff10]
+
+        }
+        break;
+
+        8007FC74	addu   a0, s0, zero
+        8007FC78	jal    func7d740 [$8007d740]
+        8007FC7C	andi   a1, a2, $00ff
+        8007FC80	j      L7ff10 [$8007ff10]
+        8007FC84	nop
+
+        case 0x52:
+        {
+            A0 = S0;
+            A1 = A2 & FF;
+            A2 = S1 & FF;
+            func7d7bc;
+
+            8007FC98	j      L7ff10 [$8007ff10]
+        }
+        break;
+
+        8007FCA0	addu   a0, s0, zero
+        8007FCA4	jal    func7d81c [$8007d81c]
+        8007FCA8	andi   a1, a2, $00ff
+        8007FCAC	j      L7ff10 [$8007ff10]
+        8007FCB0	nop
+        8007FCB4	addu   a0, s0, zero
+        8007FCB8	jal    func7d850 [$8007d850]
+        8007FCBC	andi   a1, a2, $00ff
+        8007FCC0	j      L7ff10 [$8007ff10]
+        8007FCC4	nop
+        8007FCC8	addu   a0, s0, zero
+        8007FCCC	jal    func7d980 [$8007d980]
+        8007FCD0	andi   a1, a2, $00ff
+        8007FCD4	j      L7ff10 [$8007ff10]
+        8007FCD8	nop
+        8007FCDC	addu   a0, s0, zero
+        8007FCE0	jal    func7d9b8 [$8007d9b8]
+        8007FCE4	andi   a1, a2, $00ff
+        8007FCE8	j      L7ff10 [$8007ff10]
+        8007FCEC	nop
+        8007FCF0	addu   a0, s0, zero
+        8007FCF4	jal    func7daec [$8007daec]
+        8007FCF8	andi   a1, a2, $00ff
+        8007FCFC	j      L7ff10 [$8007ff10]
+        8007FD00	nop
+        8007FD04	addu   a0, s0, zero
+        8007FD08	jal    func7dc24 [$8007dc24]
+        8007FD0C	andi   a1, a2, $00ff
+        8007FD10	j      L7ff10 [$8007ff10]
+        8007FD14	nop
+        8007FD18	addu   a0, s0, zero
+        8007FD1C	jal    func7dc84 [$8007dc84]
+        8007FD20	andi   a1, a2, $00ff
+        8007FD24	j      L7ff10 [$8007ff10]
+        8007FD28	nop
+        8007FD2C	addu   a0, s0, zero
+        8007FD30	jal    func7dd1c [$8007dd1c]
+        8007FD34	andi   a1, a2, $00ff
+        8007FD38	j      L7ff10 [$8007ff10]
+        8007FD3C	nop
+        8007FD40	addu   a0, s0, zero
+        8007FD44	jal    func7de28 [$8007de28]
+        8007FD48	andi   a1, a2, $00ff
+        8007FD4C	j      L7ff10 [$8007ff10]
+        8007FD50	nop
+        8007FD54	addu   a0, s0, zero
+        8007FD58	jal    func7df34 [$8007df34]
+        8007FD5C	andi   a1, a2, $00ff
+        8007FD60	j      L7ff10 [$8007ff10]
+        8007FD64	nop
+        8007FD68	addu   a0, s0, zero
+        8007FD6C	jal    func7e090 [$8007e090]
+        8007FD70	andi   a1, a2, $00ff
+        8007FD74	j      L7ff10 [$8007ff10]
+        8007FD78	nop
+        8007FD7C	addu   a0, s0, zero
+        8007FD80	jal    func7e1ec [$8007e1ec]
+        8007FD84	andi   a1, a2, $00ff
+        8007FD88	j      L7ff10 [$8007ff10]
+        8007FD8C	nop
+        8007FD90	addu   a0, s0, zero
+        8007FD94	jal    func7e36c [$8007e36c]
+        8007FD98	andi   a1, a2, $00ff
+        8007FD9C	j      L7ff10 [$8007ff10]
+        8007FDA0	nop
+        8007FDA4	addu   a0, s0, zero
+        8007FDA8	jal    func7e4ec [$8007e4ec]
+        8007FDAC	andi   a1, a2, $00ff
+        8007FDB0	j      L7ff10 [$8007ff10]
+        8007FDB4	nop
+        8007FDB8	addu   a0, s0, zero
+        8007FDBC	jal    func7e648 [$8007e648]
+        8007FDC0	andi   a1, a2, $00ff
+        8007FDC4	j      L7ff10 [$8007ff10]
+        8007FDC8	nop
+        8007FDCC	addu   a0, s0, zero
+        8007FDD0	jal    func7e7c8 [$8007e7c8]
+        8007FDD4	andi   a1, a2, $00ff
+        8007FDD8	j      L7ff10 [$8007ff10]
+        8007FDDC	nop
+
+        case 0x64:
+        {
+            A0 = S0;
+            A1 = A2 & FF;
+            func7e844;
+
+            8007FDEC	j      L7ff10 [$8007ff10]
+        }
+        break;
+
+        8007FDF4	addu   a0, s0, zero
+        8007FDF8	jal    func7e8a8 [$8007e8a8]
+        8007FDFC	andi   a1, a2, $00ff
+        8007FE00	j      L7ff10 [$8007ff10]
+        8007FE04	nop
+        8007FE08	addu   a0, s0, zero
+        8007FE0C	jal    func7e9a8 [$8007e9a8]
+        8007FE10	andi   a1, a2, $00ff
+        8007FE14	j      L7ff10 [$8007ff10]
+        8007FE18	nop
+        8007FE1C	addu   a0, s0, zero
+        8007FE20	jal    func7eaac [$8007eaac]
+        8007FE24	andi   a1, a2, $00ff
+        8007FE28	j      L7ff10 [$8007ff10]
+        8007FE2C	nop
+        8007FE30	addu   a0, s0, zero
+        8007FE34	jal    func7ebc8 [$8007ebc8]
+        8007FE38	andi   a1, a2, $00ff
+        8007FE3C	j      L7ff10 [$8007ff10]
+        8007FE40	nop
+        8007FE44	jal    func7ece8 [$8007ece8]
+        8007FE48	andi   a0, a2, $00ff
+        8007FE4C	j      L7ff10 [$8007ff10]
+        8007FE50	nop
+        8007FE54	addu   a0, s0, zero
+        8007FE58	jal    func7ed14 [$8007ed14]
+        8007FE5C	andi   a1, a2, $00ff
+        8007FE60	j      L7ff10 [$8007ff10]
+        8007FE64	nop
+        8007FE68	addu   a0, s0, zero
+        8007FE6C	jal    func7ed64 [$8007ed64]
+        8007FE70	andi   a1, a2, $00ff
+        8007FE74	j      L7ff10 [$8007ff10]
+        8007FE78	nop
+        8007FE7C	addu   a0, s0, zero
+        8007FE80	jal    func7edb4 [$8007edb4]
+        8007FE84	andi   a1, a2, $00ff
+        8007FE88	j      L7ff10 [$8007ff10]
+        8007FE8C	nop
+        8007FE90	addu   a0, s0, zero
+        8007FE94	jal    func7edf4 [$8007edf4]
+        8007FE98	andi   a1, a2, $00ff
+        8007FE9C	j      L7ff10 [$8007ff10]
+        8007FEA0	nop
+        8007FEA4	jal    func7ee34 [$8007ee34]
+        8007FEA8	addu   a0, s0, zero
+        8007FEAC	j      L7ff10 [$8007ff10]
+        8007FEB0	nop
+        8007FEB4	addu   a0, s0, zero
+        8007FEB8	jal    func7ee58 [$8007ee58]
+        8007FEBC	andi   a1, a2, $00ff
+        8007FEC0	j      L7ff10 [$8007ff10]
+        8007FEC4	nop
+        8007FEC8	jal    func7ef20 [$8007ef20]
+        8007FECC	addu   a0, s0, zero
+        8007FED0	j      L7ff10 [$8007ff10]
+        8007FED4	nop
+        8007FED8	addu   a0, s0, zero
+        8007FEDC	jal    func7ef54 [$8007ef54]
+        8007FEE0	andi   a1, a2, $00ff
+        8007FEE4	j      L7ff10 [$8007ff10]
+        8007FEE8	nop
+        8007FEEC	jal    func7efa8 [$8007efa8]
+        8007FEF0	nop
+        8007FEF4	j      L7ff10 [$8007ff10]
+        8007FEF8	nop
+    }
+}
+
+L7fefc:	; 8007FEFC
+8007FEFC	addu   a0, s0, zero
+8007FF00	andi   a2, a2, $00ff
+8007FF04	jal    func7ae30 [$8007ae30]
+8007FF08	andi   a3, s1, $00ff
+8007FF0C	addu   s1, v0, zero
+
+L7ff10:	; 8007FF10
+A0 = S0;
+battle_ai_move_script_pointer_4;
+
+return S1;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// func7ff34
+S1 = A0;
+S2 = A1;
+S0 = 0;
+S4 = 0;
+S3 = 0;
+
+L7ff64:	; 8007FF64
+V0 = w[S1]; // opcode address
+V0 = bu[V0]; // opcode reading
+
+V1 = V0 - 80;
+if (V1 < 1C)
+{
+    switch (V0)
+    {
+        case 0x80:
+        case 0x9A:
+        {
+            S0 = 1;
+        }
+        break;
+
+    A4FF0780 // 99
+        8007FFA4	j      L80188 [$80080188]
+        8007FFA8	ori    s4, zero, $0001
+
+    ACFF0780 // 81
+        8007FFAC	addu   a0, s1, zero
+        8007FFB0	jal    func7efc8 [$8007efc8]
+        8007FFB4	andi   a1, s2, $00ff
+        8007FFB8	j      L80188 [$80080188]
+        8007FFBC	addu   s0, v0, zero
+
+        case 0x82:
+        {
+            A0 = S1;
+            A1 = S2;
+            func7f000;
+            S0 = V0;
+        }
+        break;
+
+        case 0x83:
+        {
+            A0 = S1;
+            A1 = S2;
+            func7f044;
+            S0 = V0;
+
+            8007FFE0	j      L80188 [$80080188]
+        }
+        break;
+
+    E8FF0780 // 84
+        8007FFE8	addu   a0, s1, zero
+        8007FFEC	jal    func7f07c [$8007f07c]
+        8007FFF0	andi   a1, s2, $00ff
+        8007FFF4	j      L80188 [$80080188]
+        8007FFF8	addu   s0, v0, zero
+
+    FCFF0780 // 85
+        8007FFFC	addu   a0, s1, zero
+        80080000	jal    func7f0c0 [$8007f0c0]
+        80080004	andi   a1, s2, $00ff
+        80080008	j      L80188 [$80080188]
+        8008000C	addu   s0, v0, zero
+
+    10000880 // 86
+        80080010	addu   a0, s1, zero
+        80080014	jal    func7f0f8 [$8007f0f8]
+        80080018	andi   a1, s2, $00ff
+        8008001C	j      L80188 [$80080188]
+        80080020	addu   s0, v0, zero
+
+    24000880 // 87
+        80080024	addu   a0, s1, zero
+        80080028	jal    func7f13c [$8007f13c]
+        8008002C	andi   a1, s2, $00ff
+        80080030	j      L80188 [$80080188]
+        80080034	addu   s0, v0, zero
+
+    38000880 // 88
+        80080038	addu   a0, s1, zero
+        8008003C	jal    func7f17c [$8007f17c]
+        80080040	andi   a1, s2, $00ff
+        80080044	j      L80188 [$80080188]
+        80080048	addu   s0, v0, zero
+
+    4C000880 // 89
+        8008004C	addu   a0, s1, zero
+        80080050	jal    func7f1c4 [$8007f1c4]
+        80080054	andi   a1, s2, $00ff
+        80080058	j      L80188 [$80080188]
+        8008005C	addu   s0, v0, zero
+
+    60000880 // 8A
+        80080060	addu   a0, s1, zero
+        80080064	jal    func7f204 [$8007f204]
+        80080068	andi   a1, s2, $00ff
+        8008006C	j      L80188 [$80080188]
+        80080070	addu   s0, v0, zero
+
+    74000880 // 8B
+        80080074	addu   a0, s1, zero
+        80080078	jal    func7f24c [$8007f24c]
+        8008007C	andi   a1, s2, $00ff
+        80080080	j      L80188 [$80080188]
+        80080084	addu   s0, v0, zero
+
+    88000880 // 8C
+        80080088	addu   a0, s1, zero
+        8008008C	jal    func7f284 [$8007f284]
+        80080090	andi   a1, s2, $00ff
+        80080094	j      L80188 [$80080188]
+        80080098	addu   s0, v0, zero
+
+    9C000880 // 8D
+        8008009C	addu   a0, s1, zero
+        800800A0	jal    func7f2c8 [$8007f2c8]
+        800800A4	andi   a1, s2, $00ff
+        800800A8	j      L80188 [$80080188]
+        800800AC	addu   s0, v0, zero
+
+    B0000880 // 8E
+        800800B0	addu   a0, s1, zero
+        800800B4	jal    func7f308 [$8007f308]
+        800800B8	andi   a1, s2, $00ff
+        800800BC	j      L80188 [$80080188]
+        800800C0	addu   s0, v0, zero
+
+    C4000880 // 8F
+        800800C4	addu   a0, s1, zero
+        800800C8	jal    func7f350 [$8007f350]
+        800800CC	andi   a1, s2, $00ff
+        800800D0	j      L80188 [$80080188]
+        800800D4	addu   s0, v0, zero
+
+    D8000880 // 90
+        800800D8	addu   a0, s1, zero
+        800800DC	jal    func7f388 [$8007f388]
+        800800E0	andi   a1, s2, $00ff
+        800800E4	j      L80188 [$80080188]
+        800800E8	addu   s0, v0, zero
+
+    EC000880 // 91
+        800800EC	addu   a0, s1, zero
+        800800F0	jal    func7f3cc [$8007f3cc]
+        800800F4	andi   a1, s2, $00ff
+        800800F8	j      L80188 [$80080188]
+        800800FC	addu   s0, v0, zero
+
+    00010880 // 92
+        80080100	addu   a0, s1, zero
+        80080104	jal    func7f40c [$8007f40c]
+        80080108	andi   a1, s2, $00ff
+        8008010C	j      L80188 [$80080188]
+        80080110	addu   s0, v0, zero
+
+    14010880 // 93
+        80080114	addu   a0, s1, zero
+        80080118	jal    func7f454 [$8007f454]
+        8008011C	andi   a1, s2, $00ff
+        80080120	j      L80188 [$80080188]
+        80080124	addu   s0, v0, zero
+
+    28010880 // 94
+        80080128	addu   a0, s1, zero
+        8008012C	jal    func7f49c [$8007f49c]
+        80080130	andi   a1, s2, $00ff
+        80080134	j      L80188 [$80080188]
+        80080138	addu   s0, v0, zero
+
+    3C010880 // 95
+        8008013C	jal    func7f4e4 [$8007f4e4]
+        80080140	addu   a0, s1, zero
+        80080144	j      L80188 [$80080188]
+        80080148	addu   s0, v0, zero
+
+    4C010880 // 96
+        8008014C	jal    func7f51c [$8007f51c]
+        80080150	addu   a0, s1, zero
+        80080154	j      L80188 [$80080188]
+        80080158	addu   s0, v0, zero
+
+    5C010880 // 97
+        8008015C	jal    func7f544 [$8007f544]
+        80080160	nop
+        80080164	j      L80188 [$80080188]
+        80080168	addu   s0, v0, zero
+
+    6C010880 // 98
+        8008016C	jal    func7f55c [$8007f55c]
+        80080170	nop
+        80080174	j      L80188 [$80080188]
+        80080178	addu   s0, v0, zero
+
+    7C010880 // 9B
+        8008017C	jal    func7f5b8 [$8007f5b8]
+        80080180	andi   a0, s2, $00ff
+        80080184	addu   s0, v0, zero
+    }
+}
+
+L80188:	; 80080188
+A0 = S1;
+battle_ai_move_script_pointer_4;
+
+if (S4 != 0)
+{
+    V0 = w[S1];
+    V1 = S3 | S0;
+    V0 = bu[V0];
+    V0 = V0 < 80;
+
+    800801B0	beq    v0, zero, L7ff64 [$8007ff64]
+
+    S3 = V1;
+    S0 = S3;
+}
+
+return S0;
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// battle_ai_move_script_pointer_4
+V0 = w[A0];
+V0 = V0 + 4;
+[A0] = w(V0);
+//////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////
+// we read opcodes in this function
+// ai_script_cycle
+S1 = 0;
+S0 = A0 - 3;
+
+V0 = w[800D2B20 + S0 * 40];
+[SP + 10] = w(V0);
+
+
+
+// clean up action queue
+V1 = 800D257C;
+A0 = V1 + 100;
+loop7a078:	; 8007A078
+    [V1] = b(0);
+    V1 = V1 + 1;
+    V0 = V1 < A0;
+8007A084	bne    v0, zero, loop7a078 [$8007a078]
+
+
+
+V0 = 8B8;
+loop7a090:	; 8007A090
+    [800C374F + V0] = b(FF);
+    V0 = V0 - 48;
+8007A0A0	bgez   v0, loop7a090 [$8007a090]
+
+8007A0A8	j      L7a0f4 [$8007a0f4]
+
+loop7a0b0:	; 8007A0B0
+    if (V1 == FF)
+    {
+        return;
+    }
+    else if (V1 >= 80)
+    {
+        A0 = SP + 10;
+        A1 = S0 & FF;
+        func7ff34;
+
+        if (V0 == 0)
+        {
+            A0 = SP + 10;
+            func79fbc;
+        }
+    }
+    else
+    {
+        A0 = SP + 10;
+        A1 = S0 & FF;
+        A2 = S1 & FF;
+        func7f5e0;
+        S1 = V0;
+    }
+
+    L7a0f4:	; 8007A0F4
+    A0 = w[SP + 10];
+    V1 = bu[A0];
+8007A104	bne    v1, FD, loop7a0b0 [$8007a0b0]
+
+return;
+//////////////////////////////////////////////////////////
+
+
+
+
+//////////////////////////////////////////////////////////
+// func79fbc
+address = w[A0];
+
+// skip opcodes greater or equal 0x80
+80079FC8	j      L79fd8 [$80079fd8]
+loop79fd0:	; 80079FD0
+    battle_ai_move_script_pointer_4;
+
+    L79fd8:	; 80079FD8
+    V0 = bu[address];
+    V0 = V0 < 80;
+80079FEC	beq    v0, zero, loop79fd0 [$80079fd0]
+
+80079FF4	j      L7a004 [$8007a004]
+80079FF8	nop
+
+loop79ffc:	; 80079FFC
+    battle_ai_move_script_pointer_4;
+
+    L7a004:	; 8007A004
+    V0 = bu[address];
+    V0 = V0 + 80;
+    V0 = V0 & FF;
+    V0 = V0 < 70;
+8007A020	beq    v0, zero, loop79ffc [$80079ffc]
+
+return;
+//////////////////////////////////////////////////////////

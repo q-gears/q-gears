@@ -1,0 +1,395 @@
+EB STPLS
+EC LDPLS
+
+E7 CPPAL
+ED CPPAL2
+
+E8 RTPAL
+EE RTPAL2
+
+EF ADPAL2
+
+
+
+
+
+////////////////////////////////
+// 0xDF MPPAL
+struct = w[8009c6e0];
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+
+src_id = bu[script + 4];
+dst_id = bu[script + 5];
+
+A0 = 6;
+A1 = a;
+read_memory_block_one_byte;
+length = V0 + 1;
+
+A0 = 1;
+A1 = 6;
+read_memory_block_one_byte;
+start = V0;
+
+A0 = 2;
+A1 = 7;
+read_memory_block_one_byte;
+mulB = V0;
+
+A0 = 3;
+A1 = 8;
+read_memory_block_one_byte;
+mulG = V0;
+
+A0 = 4;
+A1 = 9;
+read_memory_block_one_byte;
+mulR = V0;
+
+end = start + length;
+
+if (start < end)
+{
+    S1 = start;
+    loopcea00:	; 800CEA00
+        A3 = hu[80095de0 + src_id * 20 + S1 * 2];
+        if (A3 != 0)
+        {
+            A1 = (mulB * ((A3 >> 9) & 3f)) >> 7;
+            if (A1 >= 20)
+            {
+                A1 = 1f;
+            }
+
+            V1 = (mulG * ((A3 >> 4) & 3f)) >> 7;
+            if (V1 >= 20)
+            {
+                V1 = 1f;
+            }
+
+            A0 = (mulR * ((A3 << 1) & 3e)) >> 7;
+            if (A0 >= 20)
+            {
+                A0 = 1f;
+            }
+
+            [80095de0 + dst_id * 20 + S1 * 2] = h((A3 & 8000) | (A1 << a) | (V1 << 5) | A0);
+
+            if (hu[80095de0 + dst_id * 20 + S1 * 2] == 0)
+            {
+                [80095de0 + dst_id * 20 + S1 * 2] = h(8000);
+            }
+        }
+
+        S1 = S1 + 1;
+        V0 = S1 < end;
+    800CEAC8	bne    v0, zero, loopcea00 [$800cea00]
+}
+
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + b);
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0xE5 STPAL
+struct = w[8009c6e0];
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+
+A0 = SP + 10;
+funccdc14;
+
+A0 = 1;
+A1 = 2;
+read_memory_block_one_byte;
+[SP + 12] = h(V0 + 1e0);
+[SP + 10] = h(0);
+[SP + 14] = h(bu[script + 4] + 1);
+[SP + 16] = h(1);
+
+A0 = 2;
+A1 = 3;
+read_memory_block_one_byte;
+
+A0 = SP + 10;
+A1 = 80095de0 + V0 * 20;
+func44064;
+
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0xE6 LDPAL
+struct = w[8009c6e0];
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+
+A0 = SP + 10;
+funccdc14;
+
+A0 = 2;
+A1 = 3;
+read_memory_block_one_byte;
+[SP + 10] = h(0);
+[SP + 12] = h(V0 + 1e0);
+[SP + 14] = h(bu[script + 4] + 1);
+[SP + 16] = h(1);
+
+A0 = 1;
+A1 = 2;
+read_memory_block_one_byte;
+
+A0 = SP + 10;
+A1 = 80095de0 + V0 * 20;
+func44000;
+
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0xE9 ADPAL
+struct = w[8009c6e0];
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+
+S4 = bu[script + 9] + 1;
+
+A0 = 1;
+A1 = 4;
+read_memory_block_one_byte;
+S2 = V0;
+
+A0 = 2;
+A1 = 5;
+read_memory_block_one_byte;
+S3 = V0;
+
+A0 = 3;
+A1 = 6;
+read_memory_block_one_byte;
+S1 = V0;
+
+A0 = 4;
+A1 = 7;
+read_memory_block_one_byte;
+S0 = V0;
+
+A0 = 5;
+A1 = 8;
+read_memory_block_one_byte;
+T2 = V0;
+
+800CE2D4	andi   v0, s1, $0080
+800CE2D8	beq    v0, zero, Lce2e4 [$800ce2e4]
+800CE2DC	andi   v0, s0, $0080
+800CE2E0	xori   s1, s1, $ff00
+
+Lce2e4:	; 800CE2E4
+800CE2E4	beq    v0, zero, Lce2f0 [$800ce2f0]
+800CE2E8	andi   v0, t2, $0080
+800CE2EC	xori   s0, s0, $ff00
+
+Lce2f0:	; 800CE2F0
+800CE2F0	beq    v0, zero, Lce2fc [$800ce2fc]
+800CE2F4	addu   t1, zero, zero
+800CE2F8	xori   t2, t2, $ff00
+
+Lce2fc:	; 800CE2FC
+800CE2FC	addu   a0, s4, zero
+800CE304	andi   v0, s2, $00ff
+if (A0 != 0)
+{
+
+    800CE308	lui    v1, $8009
+    800CE30C	addiu  v1, v1, $5de0
+    800CE310	sll    v0, v0, $05
+    800CE314	addu   t5, v0, v1
+    800CE318	andi   v0, s3, $00ff
+    800CE31C	sll    v0, v0, $05
+    800CE320	addu   t4, v0, v1
+    800CE324	addu   t3, a0, zero
+
+
+    loopce32c:	; 800CE32C
+        800CE328	sll    v0, t1, $10
+        800CE32C	sra    a1, v0, $0f
+        800CE330	addu   v0, a1, t5
+        800CE334	lhu    t0, $0000(v0)
+        800CE338	nop
+        800CE33C	andi   v0, t0, $001f
+        800CE340	addu   v0, t2, v0
+        800CE344	addu   a2, v0, zero
+        800CE348	sll    v0, v0, $10
+        800CE34C	sra    v0, v0, $10
+        800CE350	slti   v0, v0, $0020
+        800CE354	bne    v0, zero, Lce364 [$800ce364]
+        800CE358	sll    v0, a2, $10
+        800CE35C	ori    a2, zero, $001f
+        800CE360	sll    v0, a2, $10
+
+        Lce364:	; 800CE364
+        800CE364	bgez   v0, Lce370 [$800ce370]
+        800CE368	andi   a3, t0, $ffff
+        800CE36C	addu   a2, zero, zero
+
+        Lce370:	; 800CE370
+        800CE370	srl    v0, a3, $05
+        800CE374	andi   v0, v0, $001f
+        800CE378	addu   v0, s0, v0
+        800CE37C	addu   v1, v0, zero
+        800CE380	sll    v0, v0, $10
+        800CE384	sra    v0, v0, $10
+        800CE388	slti   v0, v0, $0020
+        800CE38C	bne    v0, zero, Lce39c [$800ce39c]
+        800CE390	sll    v0, v1, $10
+        800CE394	ori    v1, zero, $001f
+        800CE398	sll    v0, v1, $10
+
+        Lce39c:	; 800CE39C
+        800CE39C	bgez   v0, Lce3a8 [$800ce3a8]
+        800CE3A0	srl    v0, a3, $0a
+        800CE3A4	addu   v1, zero, zero
+
+        Lce3a8:	; 800CE3A8
+        800CE3A8	andi   v0, v0, $001f
+        800CE3AC	addu   v0, s1, v0
+        800CE3B0	addu   a0, v0, zero
+        800CE3B4	sll    v0, v0, $10
+        800CE3B8	sra    v0, v0, $10
+        800CE3BC	slti   v0, v0, $0020
+        800CE3C0	bne    v0, zero, Lce3d0 [$800ce3d0]
+        800CE3C4	sll    v0, a0, $10
+        800CE3C8	ori    a0, zero, $001f
+        800CE3CC	sll    v0, a0, $10
+
+        Lce3d0:	; 800CE3D0
+        800CE3D0	bgez   v0, Lce3dc [$800ce3dc]
+        800CE3D4	addu   a1, a1, t4
+        800CE3D8	addu   a0, zero, zero
+
+        Lce3dc:	; 800CE3DC
+        800CE3DC	sll    v0, a0, $0a
+        800CE3E0	sll    v1, v1, $05
+        800CE3E4	or     v0, v0, v1
+        800CE3E8	or     v0, a2, v0
+        800CE3EC	andi   v1, t0, $8000
+        800CE3F0	or     v0, v0, v1
+        800CE3F4	sh     v0, $0000(a1)
+        800CE3F8	lhu    v0, $0000(a1)
+        800CE3FC	nop
+        if (V0 == 0 && A3 != 0)
+        {
+            [A1]= h(8000);
+        }
+
+        800CE40C	addiu  v0, t1, $0001
+        800CE41C	addu   t1, v0, zero
+        800CE428	slt    v0, v0, t3
+    800CE42C	bne    v0, zero, loopce32c [$800ce32c]
+}
+
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + a);
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0xEA MPPAL2
+struct = w[8009c6e0];
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+
+length = bu[script + 9] + 1;
+
+A0 = 1;
+A1 = 4;
+read_memory_block_one_byte
+src_id = V0;
+
+A0 = 2;
+A1 = 5;
+read_memory_block_one_byte
+dst_id = V0;
+
+A0 = 3;
+A1 = 6;
+read_memory_block_one_byte
+mulB = V0;
+
+A0 = 4;
+A1 = 7;
+read_memory_block_one_byte
+mulG = V0;
+
+A0 = 5;
+A1 = 8;
+read_memory_block_one_byte
+mulR = V0;
+
+if (length != 0)
+{
+
+    T0 = 0;
+    loopce7e8:	; 800CE7E8
+        A3 = hu[80095de0 + src_id * 20 + T0 * 2];
+        if (A3 != 0)
+        {
+            A1 = (mulB * ((A3 >> 9) & 3f)) >> 7;
+            if (A1 >= 20)
+            {
+                A1 = 1f;
+            }
+
+            V1 = (mulG * ((A3 >> 4) & 3f)) >> 7;
+            if (V1 >= 20)
+            {
+                V1 = 1f;
+            }
+
+            A0 = (mulR * ((A3 << 1) & 3e)) >> 7;
+            if (A0 >= 20)
+            {
+                A0 = 1f;
+            }
+
+            [80095de0 + dst_id * 20 + A2] = h((A3 & 8000) | (A1 << a) | (V1 << 5) | A0);
+
+            if (hu[80095de0 + dst_id * 20 + A2] == 0)
+            {
+                [80095de0 + dst_id * 20 + A2] = h(8000);
+            }
+        }
+
+        T0 = T0 + 1;
+        V0 = T0 < length;
+    800CE8B0	bne    v0, zero, loopce7e8 [$800ce7e8]
+}
+
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + a);
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funccdc14
+[A0 + 0] = h(0);
+[A0 + 2] = h(0);
+[A0 + 4] = h(0);
+[A0 + 6] = h(0);
+////////////////////////////////

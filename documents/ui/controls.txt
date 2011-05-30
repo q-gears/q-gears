@@ -1,0 +1,15 @@
+Label: ui entity text rendered with given fonts. May content images and other things as part of text.
+    text - just common text.
+
+Effect: ui entity effect that played.
+    animation - animation to play.
+
+Button: ui entity that hold numerous Lanels and Effects and can have specified behaviour on different events.
+    on_focus - script that played if entity is focused.
+    on_press - script that played if entity is pressed.
+    on_release - script that played if entity is released.
+    on_show - script that played if entity is appear.
+    on_hide - script that played if entity is hiding.
+    on_idle
+
+ButtonList: ui entity that hold numerous Buttons, can have it's own specified behaviour on different events and pass some events to buttons. Can has visual slider if appropriate effect created.

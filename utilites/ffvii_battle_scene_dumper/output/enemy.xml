@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<enemies>
+    <enemy id="16" file_name="enemy/mp_.lua"/>
+    <enemy id="17" file_name="enemy/guard_hound_.lua"/>
+    <enemy id="18" file_name="enemy/mono_drive_.lua"/>
+</enemies>
