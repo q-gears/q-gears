@@ -1,13 +1,12 @@
 ================================================================================
 Q-Gears v0.?? (future idea) | ????-??-??
-Add resolution console command and ability to change resolution and go to fullscreen,
+Add resolution console command and ability to change resolution and go to fullscreen
 Colors in console. Console to debug draw.
 Export one xeno model at least with idle. Export one xeno field for test map.
 Free Camera must speedup when pressing shift.
-Think about move console command only to Lua scripts.
 UI base functionality.
 Game State must be implemented.
-Maybe implement map change.
+Implement map change.
 Implement base battle and field functions in lua.
 Implement base camera support.
 Implement base 2d background support.
