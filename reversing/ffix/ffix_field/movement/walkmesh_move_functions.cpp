@@ -196,16 +196,12 @@ Lc2bb4:	; 800C2BB4
                 }
             }
 
-            800C2E98	lh     v0, $0060(sp)
-            V1 = current_triangle_pointer;
-            800C2EA0	lhu    t6, $0078(sp)
-            800C2EA4	sll    v0, v0, $01
-            800C2EA8	addu   v1, v1, v0
-            800C2EAC	sll    v0, t6, $10
-            800C2EB0	sra    v0, v0, $10
-            800C2EB4	lh     a0, $0018(v1)
-            800C2EB8	lhu    a1, $0018(v1)
-            if (A0 == V0)
+            V0 = h[SP + 60];
+            T6 = h[SP + 78];
+            V1 = current_triangle_pointer + V0 * 2
+            A0 = h[V1 + 18];
+            A1 = hu[V1 + 18];
+            if (A0 == T6)
             {
                 [S3 + 4] = h(hu[walkmesh_triangles_data + S6 + 4]);
                 [S3 + 6] = h(S5);
@@ -213,32 +209,25 @@ Lc2bb4:	; 800C2BB4
                 return 1;
             }
 
-            800C2EC0	sll    v0, a0, $02
-            800C2EEC	lhu    t6, $0006(s3)
-            800C2EF0	addu   v0, v0, a0
-            800C2EF4	sh     t6, $0078(sp)
-            800C2EF8	sh     a1, $0006(s3)
-            800C2EFC	lw     a0, $0010(s4)
-            800C2F00	sll    v0, v0, $03
-            800C2F04	addu   a0, a0, v0
-            800C2F08	lhu    a1, $0004(a0)
-            800C2F0C	lh     v0, $0012(v1)
-            800C2F10	lw     v1, $0018(s4)
-            800C2F14	sll    v0, v0, $02
-            800C2F18	addu   v1, v1, v0
-            800C2F1C	sh     a1, $0004(s3)
-            800C2F20	lh    v1, $0002(v1)
-            800C2F24	addiu  v0, zero, $ffff (=-$1)
+            
+            T6 = hu[S3 + 6];
+            [SP + 78] = h(T6);
+            [S3 + 6] = h(A1);
+            A0 = w[S4 + 10] + A0 * 28;
+            A1 = hu[A0 + 4];
+            V1 = w[S4 + 18] + h[V1 + 12] * 4;
+            [S3 + 4] = h(A1);
+            V1 = h[V1 + 2];
+
+            V0 = -1;
             current_triangle_pointer = A0;
-            800C2F2C	sh     v1, $0060(sp)
+            [SP + 60] = h(V1);
+
             800C2F38	bne    v1, v0, Lc31b0 [$800c31b0]
 
-            800C2F40	sh     s5, $0006(s3)
-            800C2F44	lw     v1, $0010(s4)
-            800C2F48	nop
-            800C2F4C	addu   v1, v1, s6
-            800C2F50	lhu    a0, $0004(v1)
-            800C2F58	sh     a0, $0004(s3)
+            [S3 + 6] = h(S5);
+            V1 = w[S4 + 10] + S6;
+            [S3 + 3] = h(hu[V1 + 4]);
             [address_of_current_triangle_pointer] = w(V1);
             return 1;
         }
@@ -255,11 +244,12 @@ Lc2bb4:	; 800C2BB4
             800C2FC4	bne    v0, zero, loopc2fac [$800c2fac]
         }
 
-        800C2FCC	addu   a0, s3, zero
+        A0 = S3;
         A1 = &current_triangle_pointer;
-        800C2FD4	addu   a2, s2, zero
+        A2 = S2;
+        A3 = 0;
         800C2FD8	jal    funcc2920 [$800c2920]
-        800C2FDC	addu   a3, zero, zero
+
         800C2FE0	andi   v0, v0, $00ff
         if (V0 != 0)
         {
@@ -374,13 +364,11 @@ Lc2bb4:	; 800C2BB4
                 }
             }
 
-            800C3184	sh     s5, $0006(s3)
-            800C3188	lw     v1, $0010(s4)
-            800C318C	nop
-            800C3190	addu   v1, v1, s6
-            800C3194	lhu    a0, $0004(v1)
-            800C3198	sw     v1, $0064(sp)
-            800C319C	sh     a0, $0004(s3)
+            [S3 + 6] = h(S5);
+            V1 = w[S4 + 10] + S6;
+            A0 = hu[V1 + 4];
+            [SP + 64] = w(V1);
+            [S3 + 4] = h(A0);
             [address_of_current_triangle_pointer] = w(V1);
             return 1;
         }
