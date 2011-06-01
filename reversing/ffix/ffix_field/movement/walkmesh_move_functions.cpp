@@ -171,16 +171,10 @@ Lc2bb4:	; 800C2BB4
                 }
                 else
                 {
-                    V0 = h[SP + 48];
-                    A0 = V0 * V0;
-                    V0 = h[SP + 4a];
-                    V1 = V0 * V0;
-                    V0 = h[SP + 4c];
-                    T0 = V0 * V0;
-                    A0 = A0 + V1;
-                    A0 = A0 + T0;
+                    A0 = h[SP + 48] * h[SP + 48];
+                    A0 = A0 + h[SP + 4a] * h[SP + 4a];
+                    A0 = A0 + h[SP + 4c] * h[SP + 4c];
                     system_square_root;
-
                     V0 = (V0 << 10) >> 10;
 
                     [SP + 50] = w((w[SP + 28] * V0) / S0);
@@ -249,44 +243,24 @@ Lc2bb4:	; 800C2BB4
         A2 = S2;
         A3 = 0;
         800C2FD8	jal    funcc2920 [$800c2920]
+        V0 = V0 & ff;
 
-        800C2FE0	andi   v0, v0, $00ff
         if (V0 != 0)
         {
-            800C2FF4	lhu    t6, $0070(sp)
-            800C2FF8	nop
-            800C2FFC	sll    v0, t6, $10
-            800C3000	sra    v0, v0, $10
-            800C3004	slti   v0, v0, $0006
-            if (V0 != 0)
+            T6 = h[SP + 70];
+            if (V0 < 6)
             {
+                [S2 + 0] = h(hu[SP + 38]);
+                [S2 + 2] = h(hu[SP + 3a]);
+                [S2 + 4] = h(h[SP + 3c]);
 
-                800C3010	lhu    v0, $0038(sp)
-                800C3018	sh     v0, $0000(s2)
-                800C301C	lhu    v0, $003a(sp)
-                800C3020	lh     v1, $0000(s2)
-                800C3024	lui    a3, $0001
-                800C3028	sh     v0, $0002(s2)
-                800C302C	lhu    v0, $003c(sp)
-                800C3030	addu   a2, zero, zero
-                800C3034	sh     v0, $0004(s2)
-                800C3038	sll    v0, v0, $10
-                800C303C	lh     a0, $0000(s7)
-                800C3040	sra    v0, v0, $10
-                800C3044	subu   v1, v1, a0
-                800C3048	lhu    a0, $00c0(sp)
-                800C304C	sll    v1, v1, $10
-                800C3050	or     v1, v1, a0
-                800C3054	sra    t3, v1, $08
-                800C3058	lh     a0, $0004(s7)
-                800C305C	sra    t1, v1, $10
-                800C3060	subu   v0, v0, a0
-                800C3064	lhu    a0, $00c4(sp)
-                800C3068	sll    v0, v0, $10
-                800C306C	or     v0, v0, a0
-                800C3070	sra    t2, v0, $08
-                800C3074	sra    t0, v0, $10
-                800C3078	addiu  a3, a3, $0ccc
+                A2 = 0;
+                A3 = 00010ccc;
+
+                T0 = T0 >> 10;
+                T1 = T1 >> 10;
+                T2 = (((h[SP + 3c] - h[S7 + 4]) << 10) | hu[SP + c4]) >> 8;
+                T3 = (((h[S2 + 0] - h[S7 + 0]) << 10) | hu[SP + c0]) >> 8;
 
                 loopc307c:	; 800C307C
                     800C307C	sra    v0, a3, $08
@@ -353,10 +327,12 @@ Lc2bb4:	; 800C2BB4
                 800C3160	lw     v0, $00c0(sp)
                 800C3164	addu   a0, s3, zero
                 800C3168	sw     v0, $0018(sp)
-                800C316C	lw     v0, $00c4(sp)
-                800C3170	addiu  a1, sp, $0064
+
+                V0 = w[SP + c4];
+                A1 = SP + 64;
+                [SP + 1c] = w(V0);
                 800C3174	jal    funcc2af0 [$800c2af0]
-                800C3178	sw     v0, $001c(sp)
+
                 if (V0 == 0)
                 {
                     [address_of_current_triangle_pointer] = w(current_triangle_pointer);
@@ -366,9 +342,8 @@ Lc2bb4:	; 800C2BB4
 
             [S3 + 6] = h(S5);
             V1 = w[S4 + 10] + S6;
-            A0 = hu[V1 + 4];
             [SP + 64] = w(V1);
-            [S3 + 4] = h(A0);
+            [S3 + 4] = h(hu[V1 + 4]);
             [address_of_current_triangle_pointer] = w(V1);
             return 1;
         }
