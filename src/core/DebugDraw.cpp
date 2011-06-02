@@ -16,6 +16,8 @@ template<>DebugDraw *Ogre::Singleton< DebugDraw >::ms_Singleton = NULL;
 DebugDraw::DebugDraw():
     m_Colour( 1, 1, 1, 1 ),
     m_ScreenSpace( true ),
+    m_FadeStartSquare( 999999 ),
+    m_FadeEndSquare( 999999 ),
     m_FontHeight( 16 )
 {
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
@@ -93,6 +95,15 @@ void
 DebugDraw::SetScreenSpace( const bool screen_space )
 {
     m_ScreenSpace = screen_space;
+}
+
+
+
+void
+DebugDraw::SetFadeDistance( const float fade_s, const float fade_e )
+{
+    m_FadeStartSquare = fade_s * fade_s;
+    m_FadeEndSquare = fade_e * fade_e;
 }
 
 
@@ -383,6 +394,26 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
     }
 
     m_TextVertexBuffer->unlock();
+}
+
+
+
+void
+DebugDraw::Text( const Ogre::Vector3& point, const float x, const float y, const Ogre::String& text )
+{
+    Ogre::Vector3 point2d = CameraManager::getSingleton().ProjectPointToScreen( point );
+
+    if( point2d.z <= 0 )
+    {
+        float dist_sq = point.squaredDistance( CameraManager::getSingleton().GetCurrentCamera()->getPosition() );
+
+        if( dist_sq < m_FadeEndSquare )
+        {
+            float a = ( dist_sq > m_FadeStartSquare ) ? ( 1.0f - ( dist_sq - m_FadeStartSquare ) / ( m_FadeEndSquare - m_FadeStartSquare ) ) : 1.0f;
+            SetColour( m_Colour.r, m_Colour.g, m_Colour.b, a );
+            Text( point2d.x + x, point2d.y + y, text );
+        }
+    }
 }
 
 

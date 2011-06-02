@@ -17,6 +17,7 @@ public:
 
     void SetColour( const float r, const float g, const float b, const float a );
     void SetScreenSpace( const bool screen_space );
+    void SetFadeDistance( const float fade_s, const float fade_e );
 
     enum TextAlignment
     {
@@ -30,6 +31,7 @@ public:
     void Line3d( const Ogre::Vector3& point1, const Ogre::Vector3& point2 );
     void Quad( const float x1, const float y1, const float x2, const float y2, const float x3, const float y3, const float x4, const float y4 );
     void Text( const float x1, const float y1, const Ogre::String& text );
+    void Text( const Ogre::Vector3& point, const float x, const float y, const Ogre::String& text );
 
     void renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
 
@@ -70,10 +72,12 @@ private:
     int                                 m_FontHeight;
     TextAlignment                       m_TextAlignment;
 
-    Ogre::MaterialPtr m_Material;
-    Ogre::MaterialPtr m_Material3d;
-    Ogre::ColourValue m_Colour;
-    bool m_ScreenSpace;
+    Ogre::MaterialPtr                   m_Material;
+    Ogre::MaterialPtr                   m_Material3d;
+    Ogre::ColourValue                   m_Colour;
+    bool                                m_ScreenSpace;
+    float                               m_FadeStartSquare; // text start fading from this distance
+    float                               m_FadeEndSquare; // text fully faded from this distance
 };
 
 

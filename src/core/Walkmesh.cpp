@@ -1,6 +1,5 @@
 #include "Walkmesh.h"
 
-#include "CameraManager.h"
 #include "ConfigVar.h"
 #include "DebugDraw.h"
 #include "Logger.h"
@@ -34,9 +33,6 @@ Walkmesh::Update()
 
         for( int i = 0; i < m_Triangles.size(); ++i )
         {
-            Ogre::Vector3 triangle_pos = ( m_Triangles[ i ].a + m_Triangles[ i ].b + m_Triangles[ i ].c) / 3;
-            Ogre::Vector3 point = CameraManager::getSingleton().ProjectPointToScreen( triangle_pos );
-
             if( m_Triangles[ i ].access_side[ 0 ] == -1 )
             {
                 DEBUG_DRAW.SetColour( 1, 0, 0, 1 );
@@ -65,22 +61,11 @@ Walkmesh::Update()
             }
             DEBUG_DRAW.Line3d( m_Triangles[ i ].c, m_Triangles[ i ].a );
 
-            if( point.z <= 0 )
-            {
-                float dist_sq = triangle_pos.squaredDistance( CameraManager::getSingleton().GetCurrentCamera()->getPosition() );
-                float fade_s = 20 * 20; // text start fading from this distance
-                float fade_e = 25 * 25; // text fully faded from this distance
-
-                if( dist_sq < fade_e )
-                {
-                    float a = ( dist_sq > fade_s ) ? ( 1.0f - ( dist_sq - fade_s ) / ( fade_e - fade_s ) ) : 1.0f;
-                    DEBUG_DRAW.SetColour( 1, 1, 1, a );
-                    DEBUG_DRAW.Text( point.x, point.y, Ogre::StringConverter::toString( i ) );
-                }
-            }
+            DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+            DEBUG_DRAW.SetFadeDistance( 20, 25 );
+            Ogre::Vector3 triangle_pos = ( m_Triangles[ i ].a + m_Triangles[ i ].b + m_Triangles[ i ].c) / 3;
+            DEBUG_DRAW.Text( triangle_pos, 0, 0, Ogre::StringConverter::toString( i ) );
         }
-
-        DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
     }
 }
 

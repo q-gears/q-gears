@@ -17,8 +17,11 @@ At least entitys must be working. At least base walkmesh movement.
 Implement user input for movement.
 Maybe basic sound support.
 Create demo test field map.
-Move calculation of projection to screen to debug draw.
 --------------------------------------------------------------------------------
+
+2011-06-02
+----------
+* [Application] Move calculation of projection to screen to debug draw. [Akari]
 
 2011-05-19
 ----------

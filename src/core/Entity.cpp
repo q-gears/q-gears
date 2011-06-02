@@ -2,7 +2,6 @@
 
 #include <OgreSceneNode.h>
 
-#include "../core/CameraManager.h"
 #include "../core/ConfigVar.h"
 #include "../core/DebugDraw.h"
 #include "../core/Logger.h"
@@ -82,37 +81,23 @@ Entity::Update()
     // debug output
     if( cv_debug_entity.GetB() == true )
     {
+        DEBUG_DRAW.SetScreenSpace( true );
+        DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.CENTER );
+        DEBUG_DRAW.SetFadeDistance( 20, 30 );
+
         Ogre::Vector3 entity_pos = GetPosition();
 
-        Ogre::Vector3 point = CameraManager::getSingleton().ProjectPointToScreen( entity_pos );
+        DEBUG_DRAW.Text( entity_pos, 0, 0, m_Name );
+        DEBUG_DRAW.Text( entity_pos, 0, 12, m_AnimationCurrentName );
 
-        if( point.z <= 0 )
+        static Ogre::String move_state_string[] = { "NONE", "MOVE_WALKMESH", "MOVE_LINEAR", "JUMP" };
+
+        DEBUG_DRAW.Text( entity_pos, 0, 24, "Move state: " + move_state_string[ m_MoveState ] );
+        DEBUG_DRAW.Text( entity_pos, 0, 36, Ogre::StringConverter::toString( entity_pos ) );
+        if( m_MoveState == MOVE_WALKMESH )
         {
-            DEBUG_DRAW.SetScreenSpace( true );
-            float dist_sq = entity_pos.squaredDistance( CameraManager::getSingleton().GetCurrentCamera()->getPosition() );
-            float fade_s = 20 * 20; // text start fading from this distance
-            float fade_e = 30 * 30; // text fully faded from this distance
-
-            if( dist_sq < fade_e )
-            {
-                float a = ( dist_sq > fade_s ) ? ( 1.0f - ( dist_sq - fade_s ) / ( fade_e - fade_s ) ) : 1.0f;
-                DEBUG_DRAW.SetColour( 1, 1, 1, a );
-                DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.CENTER );
-                DEBUG_DRAW.Text( point.x, point.y, m_Name );
-                DEBUG_DRAW.Text( point.x, point.y + 12, m_AnimationCurrentName );
-
-                static Ogre::String move_state_string[] = { "NONE", "MOVE_WALKMESH", "MOVE_LINEAR", "JUMP" };
-
-                DEBUG_DRAW.Text( point.x, point.y + 24, "Move state: " + move_state_string[ m_MoveState ] );
-                DEBUG_DRAW.Text( point.x, point.y + 36, Ogre::StringConverter::toString( entity_pos ) );
-                if( m_MoveState == MOVE_WALKMESH )
-                {
-                    DEBUG_DRAW.Text( point.x, point.y + 48, "Triangle: " + Ogre::StringConverter::toString( m_MoveTriangleId ) );
-                    DEBUG_DRAW.Text( point.x, point.y + 60, "Target: " + Ogre::StringConverter::toString( m_MoveTarget ) );
-                }
-
-                DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
-            }
+            DEBUG_DRAW.Text( entity_pos, 0, 48, "Triangle: " + Ogre::StringConverter::toString( m_MoveTriangleId ) );
+            DEBUG_DRAW.Text( entity_pos, 0, 60, "Target: " + Ogre::StringConverter::toString( m_MoveTarget ) );
         }
     }
 }
