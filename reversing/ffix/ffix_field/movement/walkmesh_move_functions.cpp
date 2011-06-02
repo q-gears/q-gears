@@ -63,7 +63,7 @@ walkmesh_triangles_data = w[800c9e00];
 walkmesh_normals_data   = w[800c9e04];
 walkmesh_groups_data    = w[800c9e0c];
 
-S3 = A0;
+entity_struct = A0;
 address_of_current_triangle_pointer = A1;
 
 [SP + 60] = h(-1);
@@ -90,8 +90,8 @@ S1 = SP + 20;
 
 
 S4 = 800c9df0;
-S5 = hu[S3 + 6];
-S6 = h[S3 + 6] * 28;
+S5 = hu[entity_struct + 6];
+S6 = h[entity_struct + 6] * 28;
 
 Lc2bb4:	; 800C2BB4
     // move vector
@@ -141,15 +141,15 @@ Lc2bb4:	; 800C2BB4
         A1 = V0 & ff;
         if (A1 != 0)
         {
-            A0 = S3;
+            A0 = entity_struct;
             A1 = current_triangle_pointer;
             A2 = h[SP + 60];
             field_get_next_walkmesh_triangle_address;
 
             if (V0 == 0)
             {
-                [S3 + 4] = h(hu[walkmesh_triangles_data + S6 + 4]);
-                [S3 + 6] = h(S5);
+                [entity_struct + 4] = h(hu[walkmesh_triangles_data + S6 + 4]);
+                [entity_struct + 6] = h(S5);
                 [address_of_current_triangle_pointer] = w(walkmesh_triangles_data + S6);
                 return 1;
             }
@@ -171,16 +171,10 @@ Lc2bb4:	; 800C2BB4
                 }
                 else
                 {
-                    V0 = h[SP + 48];
-                    A0 = V0 * V0;
-                    V0 = h[SP + 4a];
-                    V1 = V0 * V0;
-                    V0 = h[SP + 4c];
-                    T0 = V0 * V0;
-                    A0 = A0 + V1;
-                    A0 = A0 + T0;
+                    A0 = h[SP + 48] * h[SP + 48];
+                    A0 = A0 + h[SP + 4a] * h[SP + 4a];
+                    A0 = A0 + h[SP + 4c] * h[SP + 4c];
                     system_square_root;
-
                     V0 = (V0 << 10) >> 10;
 
                     [SP + 50] = w((w[SP + 28] * V0) / S0);
@@ -196,177 +190,121 @@ Lc2bb4:	; 800C2BB4
                 }
             }
 
-            800C2E98	lh     v0, $0060(sp)
-            V1 = current_triangle_pointer;
-            800C2EA0	lhu    t6, $0078(sp)
-            800C2EA4	sll    v0, v0, $01
-            800C2EA8	addu   v1, v1, v0
-            800C2EAC	sll    v0, t6, $10
-            800C2EB0	sra    v0, v0, $10
-            800C2EB4	lh     a0, $0018(v1)
-            800C2EB8	lhu    a1, $0018(v1)
-            if (A0 == V0)
+            V0 = h[SP + 60];
+            T6 = h[SP + 78];
+            V1 = current_triangle_pointer + V0 * 2
+            A0 = h[V1 + 18];
+            A1 = hu[V1 + 18];
+            if (A0 == T6)
             {
-                [S3 + 4] = h(hu[walkmesh_triangles_data + S6 + 4]);
-                [S3 + 6] = h(S5);
+                [entity_struct + 4] = h(hu[walkmesh_triangles_data + S6 + 4]);
+                [entity_struct + 6] = h(S5);
                 [address_of_current_triangle_pointer] = w(walkmesh_triangles_data + S6);
                 return 1;
             }
 
-            800C2EC0	sll    v0, a0, $02
-            800C2EEC	lhu    t6, $0006(s3)
-            800C2EF0	addu   v0, v0, a0
-            800C2EF4	sh     t6, $0078(sp)
-            800C2EF8	sh     a1, $0006(s3)
-            800C2EFC	lw     a0, $0010(s4)
-            800C2F00	sll    v0, v0, $03
-            800C2F04	addu   a0, a0, v0
-            800C2F08	lhu    a1, $0004(a0)
-            800C2F0C	lh     v0, $0012(v1)
-            800C2F10	lw     v1, $0018(s4)
-            800C2F14	sll    v0, v0, $02
-            800C2F18	addu   v1, v1, v0
-            800C2F1C	sh     a1, $0004(s3)
-            800C2F20	lh    v1, $0002(v1)
-            800C2F24	addiu  v0, zero, $ffff (=-$1)
+            
+            T6 = hu[entity_struct + 6];
+            [SP + 78] = h(T6);
+            [entity_struct + 6] = h(A1);
+            A0 = w[S4 + 10] + A0 * 28;
+            A1 = hu[A0 + 4];
+            V1 = w[S4 + 18] + h[V1 + 12] * 4;
+            [entity_struct + 4] = h(A1);
+            V1 = h[V1 + 2];
+
+            V0 = -1;
             current_triangle_pointer = A0;
-            800C2F2C	sh     v1, $0060(sp)
+            [SP + 60] = h(V1);
+
             800C2F38	bne    v1, v0, Lc31b0 [$800c31b0]
 
-            800C2F40	sh     s5, $0006(s3)
-            800C2F44	lw     v1, $0010(s4)
-            800C2F48	nop
-            800C2F4C	addu   v1, v1, s6
-            800C2F50	lhu    a0, $0004(v1)
-            800C2F58	sh     a0, $0004(s3)
+            [entity_struct + 6] = h(S5);
+            V1 = w[S4 + 10] + S6;
+            [entity_struct + 4] = h(hu[V1 + 4]);
             [address_of_current_triangle_pointer] = w(V1);
             return 1;
         }
 
-        A2 = hu[walkmesh_header + 24];
 
-        if (A1 < A2)
+
+        // remove visit flags from all triangles
+        number_of_triangles = hu[walkmesh_header + 24];
+        if (A1 < number_of_triangles)
         {
             A0 = 0;
             loopc2fac:	; 800C2FAC
-                [walkmesh_triangles_data + A0 * 28] = h(hu[walkmesh_triangles_data + A0 * 28] & ff7f);
+                [walkmesh_triangles_data + A0 * 28 + 0] = h(hu[walkmesh_triangles_data + A0 * 28 + 0] & ff7f);
                 A0 = A0 + 1;
-                V0 = A0 < A2;
+                V0 = A0 < number_of_triangles;
             800C2FC4	bne    v0, zero, loopc2fac [$800c2fac]
         }
 
-        800C2FCC	addu   a0, s3, zero
+        A0 = entity_struct;
         A1 = &current_triangle_pointer;
-        800C2FD4	addu   a2, s2, zero
+        A2 = S2;
+        A3 = 0;
         800C2FD8	jal    funcc2920 [$800c2920]
-        800C2FDC	addu   a3, zero, zero
-        800C2FE0	andi   v0, v0, $00ff
+        V0 = V0 & ff;
+
         if (V0 != 0)
         {
-            800C2FF4	lhu    t6, $0070(sp)
-            800C2FF8	nop
-            800C2FFC	sll    v0, t6, $10
-            800C3000	sra    v0, v0, $10
-            800C3004	slti   v0, v0, $0006
-            if (V0 != 0)
+            T6 = h[SP + 70];
+            if (V0 < 6)
             {
+                [S2 + 0] = h(hu[SP + 38]);
+                [S2 + 2] = h(hu[SP + 3a]);
+                [S2 + 4] = h(h[SP + 3c]);
 
-                800C3010	lhu    v0, $0038(sp)
-                800C3018	sh     v0, $0000(s2)
-                800C301C	lhu    v0, $003a(sp)
-                800C3020	lh     v1, $0000(s2)
-                800C3024	lui    a3, $0001
-                800C3028	sh     v0, $0002(s2)
-                800C302C	lhu    v0, $003c(sp)
-                800C3030	addu   a2, zero, zero
-                800C3034	sh     v0, $0004(s2)
-                800C3038	sll    v0, v0, $10
-                800C303C	lh     a0, $0000(s7)
-                800C3040	sra    v0, v0, $10
-                800C3044	subu   v1, v1, a0
-                800C3048	lhu    a0, $00c0(sp)
-                800C304C	sll    v1, v1, $10
-                800C3050	or     v1, v1, a0
-                800C3054	sra    t3, v1, $08
-                800C3058	lh     a0, $0004(s7)
-                800C305C	sra    t1, v1, $10
-                800C3060	subu   v0, v0, a0
-                800C3064	lhu    a0, $00c4(sp)
-                800C3068	sll    v0, v0, $10
-                800C306C	or     v0, v0, a0
-                800C3070	sra    t2, v0, $08
-                800C3074	sra    t0, v0, $10
-                800C3078	addiu  a3, a3, $0ccc
+                A2 = 0;
+                A3 = 00010ccc;
+
+                T0 = (((h[SP + 3c] - h[S7 + 4]) << 10) | hu[SP + c4]) >> 10;
+                T2 = (((h[SP + 3c] - h[S7 + 4]) << 10) | hu[SP + c4]) >> 8;
+
+                T1 = (((h[S2 + 0] - h[S7 + 0]) << 10) | hu[SP + c0]) >> 10;
+                T3 = (((h[S2 + 0] - h[S7 + 0]) << 10) | hu[SP + c0]) >> 8;
 
                 loopc307c:	; 800C307C
-                    800C307C	sra    v0, a3, $08
-                    800C3080	mult   t3, v0
-                    800C3084	mflo   a1
-                    800C3088	nop
-                    800C308C	nop
-                    800C3090	mult   t2, v0
-                    800C3094	sra    v1, a1, $10
-                    800C3098	mflo   a0
-                    800C309C	bne    v1, t1, Lc30b8 [$800c30b8]
-                    800C30A0	addiu  a2, a2, $0001
-                    800C30A4	sra    v0, a0, $10
-                    800C30A8	bne    v0, t0, Lc30b8 [$800c30b8]
-                    800C30AC	slti   v0, a2, $0032
+                    A1 = T3 * (A3 >> 8);
+                    A0 = T2 * (A3 >> 8);
 
-                    800C30B4	addiu  a3, a3, $0ccc
+                    if (((A1 >> 10) == T1) && ((A0 >> 10) == T0))
+                    {
+                        break;
+                    }
+
+                    A3 = A3 + ccc;
+                    A2 = A2 + 1;
+                    V0 = A2 < 32;
                 800C30B0	bne    v0, zero, loopc307c [$800c307c]
 
 
                 Lc30b8:	; 800C30B8
-                800C30B8	lhu    v0, $0000(s7)
-                800C30BC	sra    v1, a1, $10
-                800C30C0	addu   v0, v0, v1
-                800C30C4	sh     v0, $0000(s2)
-                800C30C8	lhu    v0, $0004(s7)
-                800C30CC	sra    v1, a0, $10
-                800C30D0	addu   v0, v0, v1
-                800C30D4	sh     v0, $0004(s2)
-                800C30D8	andi   v0, a1, $ffff
-                [A6] = w(V0);
-                800C30E0	andi   v0, a0, $ffff
-                [A7] = w(V0);
-                800C30E8	lw     v1, $0024(s3)
-                800C30EC	lh     v0, $0000(s2)
-                800C30F0	nop
-                800C30F4	sw     v0, $0014(v1)
-                800C30F8	lw     v1, $0024(s3)
-                800C30FC	lh     v0, $0002(s2)
-                800C3100	nop
-                800C3104	sw     v0, $0018(v1)
-                800C3108	lw     v1, $0024(s3)
-                800C310C	lh     v0, $0004(s2)
-                800C3110	nop
-                800C3114	sw     v0, $001c(v1)
-                800C3118	sh     s5, $0006(s3)
-                800C311C	lw     v0, $0010(s4)
-                800C3120	nop
-                800C3124	addu   v0, v0, s6
-                800C3128	lhu    v1, $0004(v0)
-                800C312C	addu   a2, s7, zero
-                800C3130	sw     v0, $0064(sp)
-                800C3134	sh     v1, $0004(s3)
-                800C3138	lhu    t6, $0068(sp)
-                800C313C	addu   a3, s2, zero
-                800C3140	sll    v0, t6, $10
-                800C3144	lhu    t6, $0070(sp)
-                800C3148	sra    v0, v0, $10
-                800C314C	sw     v0, $0010(sp)
-                800C3150	addiu  v0, t6, $0001
-                800C3154	sll    v0, v0, $10
-                800C3158	sra    v0, v0, $10
-                800C315C	sw     v0, $0014(sp)
-                800C3160	lw     v0, $00c0(sp)
-                800C3164	addu   a0, s3, zero
-                800C3168	sw     v0, $0018(sp)
-                800C316C	lw     v0, $00c4(sp)
-                800C3170	addiu  a1, sp, $0064
-                800C3174	jal    funcc2af0 [$800c2af0]
-                800C3178	sw     v0, $001c(sp)
+                [S2 + 0] = h(hu[S7 + 0] + (A1 >> 10));
+                [S2 + 4] = h(hu[S7 + 4] + (A0 >> 10));
+                [A6] = w(A1 & ffff);
+                [A7] = w(A0 & ffff);
+                V1 = w[entity_struct + 24];
+                [V1 + 14] = w(h[S2 + 0]);
+                [V1 + 18] = w(h[S2 + 2]);
+                [V1 + 1c] = w(h[S2 + 4]);
+
+                [entity_struct + 6] = h(S5);
+                V0 = w[S4 + 10] + S6;
+                [SP + 64] = w(V0);
+                [entity_struct + 4] = h(hu[V0 + 4]);
+                [SP + 10] = w(h[SP + 68]);
+                [SP + 14] = w(h[SP + 70] + 1);
+                [SP + 18] = w(w[SP + c0]);
+                [SP + 1c] = w(w[SP + c4]);
+
+                A0 = entity_struct;
+                A1 = SP + 64;
+                A2 = S7;
+                A3 = S2;
+                funcc2af0;
+
                 if (V0 == 0)
                 {
                     [address_of_current_triangle_pointer] = w(current_triangle_pointer);
@@ -374,13 +312,10 @@ Lc2bb4:	; 800C2BB4
                 }
             }
 
-            800C3184	sh     s5, $0006(s3)
-            800C3188	lw     v1, $0010(s4)
-            800C318C	nop
-            800C3190	addu   v1, v1, s6
-            800C3194	lhu    a0, $0004(v1)
-            800C3198	sw     v1, $0064(sp)
-            800C319C	sh     a0, $0004(s3)
+            [entity_struct + 6] = h(S5);
+            V1 = w[S4 + 10] + S6;
+            [SP + 64] = w(V1);
+            [entity_struct + 4] = h(hu[V1 + 4]);
             [address_of_current_triangle_pointer] = w(V1);
             return 1;
         }
