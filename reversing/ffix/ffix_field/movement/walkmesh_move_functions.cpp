@@ -144,7 +144,7 @@ Lc2bb4:	; 800C2BB4
             A0 = entity_struct;
             A1 = current_triangle_pointer;
             A2 = h[SP + 60];
-            field_get_next_walkmesh_triangle_address;
+            field_get_next_walkmesh_triangle_address; // return address of next triangle or 0 if we cant pass this side
 
             if (V0 == 0)
             {
@@ -217,7 +217,11 @@ Lc2bb4:	; 800C2BB4
             current_triangle_pointer = A0;
             [SP + 60] = h(V1);
 
-            800C2F38	bne    v1, v0, Lc31b0 [$800c31b0]
+            if (V1 != -1)
+            {
+                [address_of_current_triangle_pointer] = w(current_triangle_pointer);
+                return 0;
+            }
 
             [entity_struct + 6] = h(S5);
             V1 = w[S4 + 10] + S6;
@@ -242,10 +246,9 @@ Lc2bb4:	; 800C2BB4
 
         A0 = entity_struct;
         A1 = &current_triangle_pointer;
-        A2 = S2;
+        A2 = S2; // end position
         A3 = 0;
-        800C2FD8	jal    funcc2920 [$800c2920]
-        V0 = V0 & ff;
+        funcc2920; // 1 - can move here, 0 - can't
 
         if (V0 != 0)
         {
@@ -329,7 +332,6 @@ Lc2bb4:	; 800C2BB4
 800C31B0	beq    v0, zero, Lc2bb4 [$800c2bb4]
 
 [address_of_current_triangle_pointer] = w(current_triangle_pointer);
-
 return 0;
 ////////////////////////////////
 
@@ -1101,4 +1103,116 @@ Lc5a48:	; 800C5A48
 800C5A48	addiu  v0, zero, $0001
 
 Lc5a4c:	; 800C5A4C
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcc2920
+//        A0 = entity_struct;
+//        A1 = &current_triangle_pointer;
+//        A2 = S2; // end position
+//        A3 = 0;
+// 1 - can move here, 0 - can't
+S2 = A0;
+S6 = A1;
+S4 = A2;
+S5 = A3;
+
+if (S5 >= 9)
+{
+    return 0;
+}
+
+S1 = 800c9df0;
+
+A0 = w[S1 + 8]; // walkmesh_header
+A1 = w[S1 + 1c] + h[A2 + 4] * 20; // current triangle group data
+A2 = w[S6 + 0]; // current_triangle_pointer
+A3 = S4; // final position
+[SP + 10] = w(A2);
+funcc4b30; // check in triangle
+
+if (V0 != 0)
+{
+    return 1;
+}
+
+S0 = 0;
+S3 = S1;
+
+loopc29d8:	; 800C29D8
+    A0 = S2;
+    A1 = w[SP + 10];
+    A2 = S0;
+    field_get_next_walkmesh_triangle_address; // return address of next triangle or 0 if we cant pass this side
+
+    [SP + 14] = w(V0);
+
+    if (V0 != 0)
+    {
+        A0 = w[S3 + 8];
+        A1 = w[S3 + 1c] + h[A2 + 4] * 20;
+        A2 = V0;
+        A3 = S4;
+        funcc4b30; // check in triangle
+
+        if (V0 != 0)
+        {
+            V0 = w[SP + 10] + S0 * 2;
+            V1 = h[V0 + 18];
+            [S2 + 6] = h(V1);
+
+            if (V1 >= 0)
+            {
+                V1 = w[S3 + 10] + V1 * 28;
+
+                [SP + 14] = w(V1);
+                [S2 + 4] = h(hu[V1 + 4]);
+                [S6 + 0] = w(w[SP + 14]);
+                return 1;
+            }
+        }
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+800C2A50	bne    v0, zero, loopc29d8 [$800c29d8]
+
+S0 = 0;
+
+loopc2a5c:	; 800C2A5C
+    A0 = S2;
+    A1 = w[SP + 10];
+    A2 = S0;
+    field_get_next_walkmesh_triangle_address; // return address of next triangle or 0 if we cant pass this side
+
+    [SP + 14] = w(V0);
+
+    if (V0 != 0)
+    {
+        A0 = hu[V0];
+        if ((A0 & 80) == 0)
+        {
+            [V0] = h(A0 | 80);
+
+            A0 = S2;
+            A1 = SP + 14;
+            A2 = S4;
+            A3 = S5 + 1;
+            funcc2920; // 1 - can move here, 0 - can't
+
+            if (V0 == 1)
+            {
+                [S6 + 0] = w(w[SP + 14]);
+                return 1;
+            }
+        }
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+800C2ABC	bne    v0, zero, loopc2a5c [$800c2a5c]
+
+return 0;
 ////////////////////////////////
