@@ -1,52 +1,4 @@
 ////////////////////////////////
-// funcc2390
-//    A0 - some data pointer
-//    A1 = SP + 40; // move vector
-//    A2 = SP + 20; // start vector
-//    A3 = SP + 28; // output?
-
-0000 0000 1E00 move up
-0000 0000 E2FF move down
-E2FF 0000 0000 move left
-
-ECFF EAFF 0000
-
-// expand move vector to s32
-moveX = h[A1 + 0] << 10;
-moveZ = h[A1 + 4] << 10;
-
-[A3 + 0] = w(-h[A1 + 4]);
-[A3 + 4] = w(0);
-[A3 + 8] = w(h[A1 + 0]);
-
-if (w[A0 + 4] >= 0)
-{
-    finalX = (w[A0 + 4] * moveX) >> 10;
-    finalY = -(((w[A0 + 8] * moveZ) >> 10) + ((w[A0 + 0] * moveX) >> 10));
-    finalZ = (w[A0 + 4] * moveZ) >> 10;
-}
-else
-{
-    finalX = -((w[A0 + 4] * moveX) >> 10);
-    finalY = ((w[A0 + 0] * moveX) >> 10) + ((w[A0 + 8] * moveZ) >> 10);
-    finalZ = -((w[A0 + 4] * moveZ) >> 10);
-}
-
-// return move vector to s16
-finalX = (finalX + 8000) >> 10;
-finalY = (finalY + 8000) >> 10;
-finalZ = (finalZ + 8000) >> 10;
-
-[A1 + 0] = h(finalX);
-[A1 + 2] = h(finalY);
-[A1 + 4] = h(finalZ);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funcc2af0
 // A0 - entity struct
 // A1 - address of current triangle data pointer
@@ -94,7 +46,7 @@ S5 = hu[entity_struct + 6];
 S6 = h[entity_struct + 6] * 28;
 
 Lc2bb4:	; 800C2BB4
-    // move vector
+    // move vector = new position vector - start position vector
     [SP + 40] = h(hu[S2 + 0] - hu[SP + 20]);
     [SP + 42] = h(hu[S2 + 2] - hu[SP + 22]);
     [SP + 44] = h(hu[S2 + 4] - hu[SP + 24]);
@@ -328,8 +280,7 @@ Lc2bb4:	; 800C2BB4
         FP = 1;
     }
 
-    V0 = FP;
-800C31B0	beq    v0, zero, Lc2bb4 [$800c2bb4]
+800C31B0	beq    fp, zero, Lc2bb4 [$800c2bb4]
 
 [address_of_current_triangle_pointer] = w(current_triangle_pointer);
 return 0;
@@ -1215,4 +1166,52 @@ loopc2a5c:	; 800C2A5C
 800C2ABC	bne    v0, zero, loopc2a5c [$800c2a5c]
 
 return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcc2390
+//    A0 - some data pointer
+//    A1 = SP + 40; // move vector
+//    A2 = SP + 20; // start vector
+//    A3 = SP + 28; // output?
+
+0000 0000 1E00 move up
+0000 0000 E2FF move down
+E2FF 0000 0000 move left
+
+ECFF EAFF 0000
+
+// expand move vector to s32
+moveX = h[A1 + 0] << 10;
+moveZ = h[A1 + 4] << 10;
+
+[A3 + 0] = w(-h[A1 + 4]);
+[A3 + 4] = w(0);
+[A3 + 8] = w(h[A1 + 0]);
+
+if (w[A0 + 4] >= 0)
+{
+    finalX = (w[A0 + 4] * moveX) >> 10;
+    finalY = -(((w[A0 + 8] * moveZ) >> 10) + ((w[A0 + 0] * moveX) >> 10));
+    finalZ = (w[A0 + 4] * moveZ) >> 10;
+}
+else
+{
+    finalX = -((w[A0 + 4] * moveX) >> 10);
+    finalY = ((w[A0 + 0] * moveX) >> 10) + ((w[A0 + 8] * moveZ) >> 10);
+    finalZ = -((w[A0 + 4] * moveZ) >> 10);
+}
+
+// return move vector to s16
+finalX = (finalX + 8000) >> 10;
+finalY = (finalY + 8000) >> 10;
+finalZ = (finalZ + 8000) >> 10;
+
+[A1 + 0] = h(finalX);
+[A1 + 2] = h(finalY);
+[A1 + 4] = h(finalZ);
+
+return 1;
 ////////////////////////////////
