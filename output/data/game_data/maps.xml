@@ -2,5 +2,4 @@
 <maps>
     <map name="test_ffvii_1" file_name="game_data/maps/test/test_ffvii_1.xml" />
     <map name="test_ffvii_2" file_name="game_data/maps/test/test_ffvii_2.xml" />
-    <map name="test_xeno" file_name="game_data/maps/test/test_xeno.xml" />
 </maps>

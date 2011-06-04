@@ -21187,7 +21187,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1306971021 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
+1307169002 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.cpp"
 	"ScriptManagerCommands.cpp"
@@ -21941,4 +21941,17 @@
 	"ParticleEntityRendererDictionary.h"
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
+
+1307033743 source:d:\my\1\svn\q-gears\src\core\entity.cpp
+	"Entity.h"
+	<OgreSceneNode.h>
+	"../core/ConfigVar.h"
+	"../core/DebugDraw.h"
+	"../core/Logger.h"
+
+1307033748 source:d:\my\1\svn\q-gears\src\core\walkmesh.cpp
+	"Walkmesh.h"
+	"ConfigVar.h"
+	"DebugDraw.h"
+	"Logger.h"
 
