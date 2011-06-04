@@ -183,6 +183,7 @@ ScriptManager::Update()
 
     if( cv_debug_script.GetB() == true )
     {
+        DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
         DEBUG_DRAW.SetScreenSpace( true );
         DEBUG_DRAW.SetColour( 0.8, 0.8, 0, 1 );
         DEBUG_DRAW.Text( 10, 34, "Script entity:" );
