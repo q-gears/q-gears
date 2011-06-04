@@ -1,2 +1,3 @@
 syntax: glob
 src/compile/
+output/q-gears.log
