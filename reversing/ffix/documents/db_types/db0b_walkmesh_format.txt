@@ -77,7 +77,6 @@ groups (size 0x20)
 
 
 normals (size 0x10)
-there are two sets of data which i don't know where located.
 +0 [][][][] x. 0 default. 0x8-bit fixed point.
 +4 [][][][] y. 0x100 default. 0x8-bit fixed point.
 +8 [][][][] z. 0 default. 0x8-bit fixed point.
