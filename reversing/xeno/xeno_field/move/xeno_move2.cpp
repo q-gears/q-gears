@@ -36,11 +36,12 @@ L83054:	; 80083054
 
     if (((A1 & 1) == 0) || (bu[FP + 74] == S3))
     {
-        8008309C	lh     v1, $0026(s1)
-        800830A0	lh     v0, $0062(s1)
-        800830A4	lw     a0, $0004(s1)
-        800830A8	addu   s0, v1, v0
-        800830AC	andi   v0, a0, $0180
+        V1 = h[S1 + 26];
+        V0 = h[S1 + 62];
+        A0 = w[S1 + 4];
+        S0 = V1 + V0;
+        V0 = A0 & 0180;
+
         800830B0	beq    v0, zero, L83214 [$80083214]
         800830B4	andi   v0, a0, $0100
         800830B8	beq    v0, zero, L8320c [$8008320c]
@@ -278,126 +279,83 @@ L83054:	; 80083054
         [SP + 24] = w(MAC2);
         [SP + 28] = w(MAC3);
 
-        V0 = w[SP + 20];
-        A0 = w[SP + 24];
-        V1 = w[SP + 28];
-        V0 = V0 + V1;
-        V0 = V0 < A0;
-
-        8008348C	beq    v0, zero, L836a4 [$800836a4]
-
-        80083494	lw     t0, $0078(sp)
-        80083498	nop
-        8008349C	slt    v0, s0, t0
-        800834A0	bne    v0, zero, L836a4 [$800836a4]
-
-        800834A8	lhu    v0, $001a(s1)
-        800834AC	lw     t0, $0070(sp)
-        800834B0	subu   v0, s0, v0
-        800834B4	slt    v0, t0, v0
-        800834B8	bne    v0, zero, L836a0 [$800836a0]
-        800834BC	nop
-        800834C0	lw     t0, $0050(sp)
-        800834C4	nop
-        800834C8	beq    s3, t0, L836a4 [$800836a4]
-
-        800834D0	lw     a0, $0090(sp)
-        800834D4	lw     a1, $0088(sp)
-        800834D8	lh     v0, $0022(s1)
-        800834DC	lh     v1, $0060(s1)
-        800834E0	subu   v0, v0, s6
-        800834E4	addu   v0, v0, v1
-        800834E8	sw     v0, $0010(sp)
-        800834EC	lh     v0, $002a(s1)
-        800834F0	lh     v1, $0064(s1)
-        800834F4	subu   v0, v0, s5
-        800834F8	addu   v0, v0, v1
-        800834FC	jal    system_gte_square_of_vector [$8004a2bc]
-        80083500	sw     v0, $0018(sp)
-        80083504	addiu  a0, sp, $0030
-        80083508	addiu  a1, sp, $0040
-        8008350C	lhu    v0, $001e(s1)
-        80083510	lw     t0, $0060(sp)
-        80083514	lw     a2, $0020(sp)
-        80083518	lw     v1, $0028(sp)
-        8008351C	addu   v0, t0, v0
-        80083520	sw     v0, $0030(sp)
-        80083524	lhu    v0, $001e(s1)
-        80083528	lw     t0, $0068(sp)
-        8008352C	addu   s0, a2, v1
-        80083530	addu   v0, t0, v0
-        80083534	jal    system_gte_square_of_vector [$8004a2bc]
-        80083538	sw     v0, $0038(sp)
-        8008353C	lw     v0, $0048(sp)
-
-        if ((S0 < V0) && (hu[800c1b68] & 0020) && (S7 == 0) && ((w[S1 + 4] & 04000000) == 0))
+        if (w[SP + 20] + w[SP + 28] < w[SP + 24])
         {
-            80083580	lui    v1, $0022
-            80083584	lw     v0, $0000(s1)
-            80083588	nop
-            8008358C	and    v0, v0, v1
-            if (V0 == 0)
+            if (S0 >= w[SP + 78])
             {
-                80083598	lw     a0, $0018(sp)
-                8008359C	lw     a1, $0010(sp)
-                800835A0	jal    system_get_rotation_based_on_vector_x_y [$8004b1d4]
-                800835A4	nop
-                800835A8	subu   a0, zero, v0
-                800835AC	sra    v0, a0, $09
-                800835B0	andi   a1, v0, $0007
-                800835B4	lw     t0, $0080(sp)
-                800835B8	andi   v0, a0, $0fff
-                800835BC	subu   v0, t0, v0
-                800835C0	andi   a0, v0, $0fff
-                800835C4	addiu  v0, a0, $fd44 (=-$2bc)
-                800835C8	sltiu  v0, v0, $0a89
-                if (V0 == 0)
+                if (w[SP + 70] >= S0 - hu[S1 + 1a])
                 {
-                    800835D4	lui    v0, $800b
-                    800835D8	lh     v0, $1648(v0)
-                    800835DC	nop
-                    if (V0 == 0)
+                    T0 = w[SP + 50];
+                    if (S3 != T0)
                     {
-                        800835E8	ori    s7, zero, $0001
-                        script_to_call = 2;
-                        script_priority = 3;
-                        80083688	addiu  t0, zero, $f1ff (=-$e01)
-                        8008368C	lw     v1, $012c(s1)
-                        80083690	sll    v0, a1, $09
-                        80083694	and    v1, v1, t0
-                        80083698	or     v1, v1, v0
-                        8008369C	sw     v1, $012c(s1)
+                        A0 = w[SP + 90];
+                        A1 = w[SP + 88];
+                        [SP + 10] = w(h[S1 + 22] - S6 + h[S1 + 60]);
+                        [SP + 18] = w(h[S1 + 2a] - S5 + h[S1 + 64]);
+                        system_gte_square_of_vector;
+
+                        S0 = w[SP + 20] + w[SP + 28];
+
+                        [SP + 30] = w(w[SP + 60] + hu[S1 + 1e]);
+                        [SP + 38] = w(w[SP + 68] + hu[S1 + 1e]);
+
+                        A0 = SP + 30;
+                        A1 = SP + 40;
+                        A2 = w[SP + 20];
+                        system_gte_square_of_vector;
+
+                        if ((S0 < w[SP + 48]) && (hu[800c1b68] & 0020) && (S7 == 0) && ((w[S1 + 4] & 04000000) == 0))
+                        {
+                            if ((w[S1] & 00220000) == 0)
+                            {
+                                A0 = w[SP + 18];
+                                A1 = w[SP + 10];
+                                system_get_rotation_based_on_vector_x_y;
+
+                                A0 = 0 - V0;
+                                V0 = A0 >> 9;
+                                A1 = V0 & 7;
+                                T0 = w[SP + 80];
+                                V0 = A0 & fff;
+                                V0 = T0 - V0;
+                                A0 = V0 & fff;
+                                if (A0 - 2bc >= a89)
+                                {
+                                    if (h[800b1648] == 0)
+                                    {
+                                        S7 = 1;
+
+                                        script_to_call = 2;
+                                        script_priority = 3;
+
+                                        [S1 + 12c] = w((w[S1 + 12c] & fffff1ff) | (A1 << 9));
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if ((w[S1] & 00a20000) == 0)
+                            {
+                                if (S0 < w[SP + 40])
+                                {
+                                    script_to_call = 3;
+                                    script_priority = 4;
+
+                                    A0 = w[SP + 18];
+                                    A1 = w[SP + 10];
+                                    system_get_rotation_based_on_vector_x_y;
+
+                                    V0 = V0 >> 9;
+                                    V0 = 0 - V0;
+                                    A1 = V0 & 7;
+                                    [S1 + 12c] = w((w[S1 + 12c] & fffff1ff) | (A1 << 9));
+                                }
+                            }
+                        }
                     }
                 }
             }
-        }
-        else
-        {
-            80083640	lw     v0, $0000(s1)
-            80083644	lui    v1, $00a2
-            80083648	and    v0, v0, v1
-            8008364C	bne    v0, zero, L836a4 [$800836a4]
-
-            80083654	lw     v0, $0040(sp)
-            80083658	nop
-            8008365C	slt    v0, s0, v0
-            80083660	beq    v0, zero, L836a4 [$800836a4]
-
-            8008366C	lw     a0, $0018(sp)
-            80083670	lw     a1, $0010(sp)
-            script_to_call = 3;
-            script_priority = 4;
-            80083674	jal    system_get_rotation_based_on_vector_x_y [$8004b1d4]
-
-            8008367C	sra    v0, v0, $09
-            80083680	subu   v0, zero, v0
-            80083684	andi   a1, v0, $0007
-            80083688	addiu  t0, zero, $f1ff (=-$e01)
-            8008368C	lw     v1, $012c(s1)
-            80083690	sll    v0, a1, $09
-            80083694	and    v1, v1, t0
-            80083698	or     v1, v1, v0
-            8008369C	sw     v1, $012c(s1)
         }
     }
 
