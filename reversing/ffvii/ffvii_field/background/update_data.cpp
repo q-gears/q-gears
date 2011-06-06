@@ -41,32 +41,16 @@ system_set_gte_mac2;
 
 if ((hu[80114488] != 0) && (bu[8009abf4 + 3a] == 0))
 {
-    800A5E24	lui    v1, $800a
-    800A5E28	lbu    v1, $ac2d(v1)
+    V1 = bu[8009ac2d];
     if (V1 != 1)
     {
-        800A5ED4	lui    v0, $800e
-        800A5ED8	addiu  v0, v0, $4df0
         A0 = S2 + 41d4;
-        if (S2 == V0)
+        if (S2 == 800e4df0)
         {
-            800A5EE4	lui    a2, $8007
-            800A5EE8	lw     a2, $1e40(a2)
-            800A5EEC	lui    v0, $8008
-            800A5EF0	lhu    v0, $eb90(v0)
-            800A5EF4	lhu    v1, $0020(a2)
-            800A5EF8	lui    a1, $8011
-            800A5EFC	addiu  a1, a1, $3f34
-            800A5F00	subu   v0, v0, v1
-            800A5F04	sh     v0, $0000(a1)
-            800A5F08	lui    v0, $8008
-            800A5F0C	lhu    v0, $eb94(v0)
-            800A5F10	lhu    v1, $0022(a2)
-            800A5F14	nop
-            800A5F18	addu   v0, v0, v1
-            800A5F1C	lui    at, $8011
-            800A5F20	sh     v0, $3f36(at)
-            800A5F28	addiu  a1, a1, $fff8 (=-$8)
+            A2 = w[80071e40];
+            [80113f34] = h(hu[8007eb90] - hu[A2 + 20]);
+            [80113f36] = h(hu[8007eb94] + hu[A2 + 22]);
+            A1 = 80113f34 - 8;
             func44ac0;
         }
         else
@@ -90,8 +74,7 @@ if ((hu[80114488] != 0) && (bu[8009abf4 + 3a] == 0))
     }
     else
     {
-        800A5E38	lui    v0, $800e
-        800A5E3C	addiu  v0, v0, $4df0
+        V0 = 800e4df0;
         if (S2 != V0)
         {
             800A5E8C	lui    a0, $8010
