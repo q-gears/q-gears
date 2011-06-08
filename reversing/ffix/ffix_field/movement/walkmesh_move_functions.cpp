@@ -500,60 +500,27 @@ if (walk_material_id >= 0)
 [SP + 1a] = h(hu[T0 + a] + hu[A1 + c]);
 [SP + 1c] = h(hu[T0 + c] + hu[A1 + e]);
 
-T7 = 0;
+
 T2 = SP + 30;
 A3 = T0 + hu[T0 + 3a];
 
-
+T7 = 0;
 loopc52b4:	; 800C52B4
-    800C52B4	sll    a1, t7, $10
-    800C52B8	sra    a1, a1, $10
-    800C52BC	sll    a0, a1, $01
-    800C52C0	addu   a1, a0, a1
-    800C52C4	addu   a0, a2, a0
-    800C52C8	lh     v1, $000c(a0)
-    800C52CC	sll    a1, a1, $01
-    800C52D0	sll    v0, v1, $01
-    800C52D4	addu   v0, v0, v1
-    800C52D8	sll    v0, v0, $01
-    800C52DC	addu   v0, v0, a3
-    800C52E0	lhu    v1, $0018(sp)
-    800C52E4	lhu    v0, $0000(v0)
-    800C52E8	addu   a1, t2, a1
-    800C52EC	addu   v1, v1, v0
-    800C52F0	sh     v1, $0000(a1)
-    800C52F4	lh     v1, $000c(a0)
-    800C52F8	nop
-    800C52FC	sll    v0, v1, $01
-    800C5300	addu   v0, v0, v1
-    800C5304	sll    v0, v0, $01
-    800C5308	addu   v0, v0, a3
-    800C530C	lhu    v1, $001a(sp)
-    800C5310	lhu    v0, $0002(v0)
-    800C5314	nop
-    800C5318	addu   v1, v1, v0
-    800C531C	sh     v1, $0002(a1)
-    800C5320	lh     v1, $000c(a0)
-    800C5324	lhu    a0, $001c(sp)
-    800C5328	sll    v0, v1, $01
-    800C532C	addu   v0, v0, v1
-    800C5330	sll    v0, v0, $01
-    800C5334	addu   v0, v0, a3
-    800C5338	addiu  v1, t7, $0001
-    800C533C	addu   t7, v1, zero
-    800C5340	sll    v1, v1, $10
-    800C5344	sra    v1, v1, $10
-    800C5348	lhu    v0, $0004(v0)
-    800C5350	addu   a0, a0, v0
-    800C5358	sh     a0, $0004(a1)
+    A0 = A2 + T7 * 2; // vertex data
+    V1 = h[A0 + c];
+    [T2 + T7 * 6 + 0] = h(hu[SP + 18] + hu[A3 + V1 * 6 + 0]);
+    [T2 + T7 * 6 + 2] = h(hu[SP + 1a] + hu[A3 + V1 * 6 + 2]);
+    [T2 + T7 * 6 + 4] = h(hu[SP + 1c] + hu[A3 + V1 * 6 + 4]);
 
-    V1 = V1 < 3;
+    T7 = T7 + 1;
+    V1 = T7 < 3;
 800C5354	bne    v1, zero, loopc52b4 [$800c52b4]
 
-800C535C	addiu  v0, sp, $003c
-800C5360	addu   t8, zero, zero
-800C5364	addu   t7, t8, zero
-800C5368	addiu  fp, sp, $0030
+V0 = SP + 3c;
+T8 = 0;
+T7 = 0;
+FP = SP + 30;
+
 800C536C	sll    t5, s3, $01
 800C5370	sll    t6, s4, $01
 800C5374	addu   s2, t6, s5
@@ -685,8 +652,6 @@ Lc5524:	; 800C5524
 800C5524	bltz   a2, Lc553c [$800c553c]
 800C5528	nop
 800C552C	bgez   t2, Lc5544 [$800c5544]
-
-funcc5530:	; 800C5530
 800C5530	nop
 800C5534	bgtz   a2, Lc580c [$800c580c]
 800C5538	addiu  v0, t7, $0001
@@ -697,24 +662,20 @@ Lc553c:	; 800C553C
 
 Lc5544:	; 800C5544
 800C5544	beq    t2, zero, Lc57f4 [$800c57f4]
-800C5548	lui    v0, $0008
-800C554C	slt    v0, v0, t3
-800C5550	beq    v0, zero, Lc5568 [$800c5568]
-800C5554	lui    v1, $0008
 
-loopc5558:	; 800C5558
-800C5558	sra    t3, t3, $01
-800C555C	slt    v0, v1, t3
-800C5560	bne    v0, zero, loopc5558 [$800c5558]
-800C5564	sra    t2, t2, $01
+if (T3 >= 00080000)
+{
+    loopc5558:	; 800C5558
+        T3 = T3 >> 1;
+        T2 = T2 >> 1;
+        V0 = T3 >= 00080000;
+    800C5560	bne    v0, zero, loopc5558 [$800c5558]
+}
 
-Lc5568:	; 800C5568
 800C5568	lw     a1, $0020(sp)
 800C556C	lw     v0, $0024(sp)
 800C5570	addu   a1, a1, t6
 800C5574	addu   v0, v0, t6
-
-Lc5578:	; 800C5578
 800C5578	lh     v0, $0000(v0)
 800C557C	lh     v1, $0000(a1)
 800C5580	nop
@@ -762,11 +723,11 @@ Lc5578:	; 800C5578
 800C5670	lh     v0, $0000(v1)
 800C5674	nop
 800C5678	subu   a0, a1, v0
-800C567C	bgez   a0, Lc5688 [$800c5688]
-800C5680	nop
-800C5684	subu   a0, v0, a1
+if (A0 < 0)
+{
+    A0 = V0 - A1;
+}
 
-Lc5688:	; 800C5688
 800C5688	addu   v0, a2, t5
 800C568C	addu   v1, a3, t5
 800C5690	lh     a1, $0000(v0)
@@ -776,8 +737,6 @@ Lc5688:	; 800C5688
 800C56A0	bltz   v0, Lc56b8 [$800c56b8]
 800C56A4	slt    v0, v0, a0
 800C56A8	bne    v0, zero, Lc56c8 [$800c56c8]
-
-Lc56ac:	; 800C56AC
 800C56AC	sll    v0, t8, $10
 800C56B0	j      Lc575c [$800c575c]
 800C56B4	sra    v0, v0, $10
@@ -841,8 +800,6 @@ Lc5770:	; 800C5770
 800C5798	subu   v0, v0, a0
 800C579C	mult   v1, v0
 800C57A0	addu   a2, a2, t5
-
-funcc57a4:	; 800C57A4
 800C57A4	lh     v1, $0000(a2)
 800C57A8	mflo   t1
 800C57AC	subu   v1, v1, a3
@@ -881,16 +838,20 @@ Lc5810:	; 800C5810
 800C582C	sra    a0, v0, $10
 800C5830	addiu  a1, zero, $0001
 800C5834	beq    a0, a1, Lc5908 [$800c5908]
-800C5838	slti   v0, a0, $0002
-800C583C	bne    v0, zero, Lc5a3c [$800c5a3c]
-800C5840	addiu  v0, zero, $ffff (=-$1)
+
+if (A0 < 2)
+{
+    [S6] = h(-1);
+    return 0;
+}
+
 800C5844	addiu  v0, zero, $0002
 800C5848	beq    a0, v0, Lc5860 [$800c5860]
 800C584C	addiu  v0, zero, $0003
 800C5850	beq    a0, v0, Lc5968 [$800c5968]
 800C5854	addiu  v0, zero, $ffff (=-$1)
-800C5858	j      Lc5a40 [$800c5a40]
 800C585C	sh     v0, $0000(s6)
+return 0;
 
 Lc5860:	; 800C5860
 800C5860	lh     v1, $0060(sp)
@@ -907,8 +868,6 @@ Lc5878:	; 800C5878
 800C5884	beq    v1, a1, Lc58a8 [$800c58a8]
 800C5888	addiu  v0, sp, $0036
 800C588C	j      Lc58e8 [$800c58e8]
-
-funcc5890:	; 800C5890
 800C5890	sw     s4, $0010(sp)
 
 Lc5894:	; 800C5894
@@ -942,8 +901,6 @@ Lc58d0:	; 800C58D0
 
 Lc58e0:	; 800C58E0
 800C58E0	sw     v0, $0028(sp)
-
-funcc58e4:	; 800C58E4
 800C58E4	sw     s4, $0010(sp)
 
 Lc58e8:	; 800C58E8
@@ -967,8 +924,8 @@ Lc5908:	; 800C5908
 800C5924	nop
 800C5928	sh     v0, $0002(s1)
 800C592C	lhu    v0, $004c(sp)
-800C5930	j      Lc5a48 [$800c5a48]
 800C5934	sh     v0, $0004(s1)
+return 1;
 
 Lc5938:	; 800C5938
 800C5938	lhu    v0, $0062(sp)
@@ -981,8 +938,8 @@ Lc5938:	; 800C5938
 800C5954	nop
 800C5958	sh     v0, $0002(s1)
 800C595C	lhu    v0, $0052(sp)
-800C5960	j      Lc5a48 [$800c5a48]
 800C5964	sh     v0, $0004(s1)
+return 1;
 
 Lc5968:	; 800C5968
 800C5968	addu   a3, zero, zero
@@ -990,41 +947,41 @@ Lc5968:	; 800C5968
 800C5970	ori    a2, a2, $ffff
 800C5974	addu   t7, zero, zero
 800C5978	addiu  t0, sp, $0048
-800C597C	sll    v0, t7, $10
 
 loopc5980:	; 800C5980
-800C5980	sra    v0, v0, $10
-800C5984	sll    v1, v0, $01
-800C5988	addu   v1, v1, v0
-800C598C	sll    v1, v1, $01
-800C5990	addu   v1, t0, v1
-800C5994	lh     v0, $0000(v1)
-800C5998	nop
-800C599C	mult   v0, v0
-800C59A0	mflo   a1
-800C59A4	lh     v0, $0002(v1)
-800C59A8	nop
-800C59AC	mult   v0, v0
-800C59B0	mflo   a0
-800C59B4	lh     v0, $0004(v1)
-800C59B8	nop
-800C59BC	mult   v0, v0
-800C59C0	addu   v0, a1, a0
-800C59C4	mflo   v1
-800C59C8	addu   v1, v0, v1
-800C59CC	slt    v0, v1, a2
-800C59D0	beq    v0, zero, Lc59e0 [$800c59e0]
-800C59D4	addiu  v0, t7, $0001
-800C59D8	addu   a3, t7, zero
-800C59DC	addu   a2, v1, zero
+    800C597C	sll    v0, t7, $10
+    800C5980	sra    v0, v0, $10
+    800C5984	sll    v1, v0, $01
+    800C5988	addu   v1, v1, v0
+    800C598C	sll    v1, v1, $01
+    800C5990	addu   v1, t0, v1
+    800C5994	lh     v0, $0000(v1)
+    800C5998	nop
+    800C599C	mult   v0, v0
+    800C59A0	mflo   a1
+    800C59A4	lh     v0, $0002(v1)
+    800C59A8	nop
+    800C59AC	mult   v0, v0
+    800C59B0	mflo   a0
+    800C59B4	lh     v0, $0004(v1)
+    800C59B8	nop
+    800C59BC	mult   v0, v0
+    800C59C0	addu   v0, a1, a0
+    800C59C4	mflo   v1
+    800C59C8	addu   v1, v0, v1
+    800C59D4	addiu  v0, t7, $0001
+    if (V1 < A2)
+    {
+        A3 = T7;
+        A2 = V1;
+    }
 
-Lc59e0:	; 800C59E0
-800C59E0	addu   t7, v0, zero
-800C59E4	sll    v0, v0, $10
-800C59E8	sra    v0, v0, $10
-800C59EC	slti   v0, v0, $0003
+    800C59E0	addu   t7, v0, zero
+    800C59E4	sll    v0, v0, $10
+    800C59E8	sra    v0, v0, $10
+    800C59EC	slti   v0, v0, $0003
 800C59F0	bne    v0, zero, loopc5980 [$800c5980]
-800C59F4	sll    v0, t7, $10
+
 800C59F8	andi   v0, a3, $00ff
 800C59FC	andi   v1, a3, $00ff
 800C5A00	sh     v0, $0000(s6)
@@ -1040,20 +997,8 @@ Lc59e0:	; 800C59E0
 800C5A28	nop
 800C5A2C	sh     v0, $0002(s1)
 800C5A30	lhu    v0, $0004(v1)
-800C5A34	j      Lc5a48 [$800c5a48]
 800C5A38	sh     v0, $0004(s1)
-
-Lc5a3c:	; 800C5A3C
-800C5A3C	sh     v0, $0000(s6)
-
-Lc5a40:	; 800C5A40
-800C5A40	j      Lc5a4c [$800c5a4c]
-800C5A44	addu   v0, zero, zero
-
-Lc5a48:	; 800C5A48
-800C5A48	addiu  v0, zero, $0001
-
-Lc5a4c:	; 800C5A4C
+return 1;
 ////////////////////////////////
 
 
