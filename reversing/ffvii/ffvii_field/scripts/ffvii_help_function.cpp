@@ -1456,17 +1456,11 @@ funcbfee0:	; 800BFEE0
 800BFFF8	addu   at, at, a1
 800BFFFC	lbu    s0, $0000(at)
 800C0000	andi   v0, v0, $0003
-
-funcc0004:	; 800C0004
 800C0004	beq    v0, zero, Lc0234 [$800c0234]
 800C0008	addu   v0, s0, zero
 800C000C	lui    a0, $800a
 800C0010	addiu  a0, a0, $0308
-
-funcc0014:	; 800C0014
 800C0014	jal    funcbeca4 [$800beca4]
-
-funcc0018:	; 800C0018
 800C0018	ori    a2, zero, $0004
 800C001C	lui    a0, $800a
 800C0020	addiu  a0, a0, $0310

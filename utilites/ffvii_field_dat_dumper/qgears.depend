@@ -4812,22 +4812,23 @@
 1307948251 d:\my\1\svn\q-gears\utilites\common\surface.h
 	<Ogre.h>
 
-1307952348 source:d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.cpp
+1307958856 source:d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.cpp
 	"DatFile.h"
 	"../../common/Logger.h"
 	<OgreStringConverter.h>
 	<OgreVector3.h>
 
-1307950678 d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.h
+1307960676 d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.h
 	"../../common/LzsFile.h"
 	"../../common/Surface.h"
+	"Main.h"
 	"MimFile.h"
 
 1307952467 d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\mimfile.h
 	"../../common/LzsFile.h"
 	"../../common/Vram.h"
 
-1307953520 source:d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\mimfile.cpp
+1307958867 source:d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\mimfile.cpp
 	"MimFile.h"
 	"../../common/Logger.h"
 
@@ -4838,7 +4839,7 @@
 	"FileSystem.h"
 	"Logger.h"
 
-1307905995 source:d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\main.cpp
+1307960390 source:d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\main.cpp
 	"Main.h"
 	<Ogre.h>
 	<stdio.h>
@@ -4848,7 +4849,7 @@
 	"DatFile.h"
 	"MimFile.h"
 
-1306971027 d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\main.h
+1307957234 d:\my\1\svn\q-gears\utilites\ffvii_field_dat_dumper\src\main.h
 	<Ogre.h>
 
 1307953885 source:d:\my\1\svn\q-gears\utilites\common\surface.cpp

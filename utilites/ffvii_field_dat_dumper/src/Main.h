@@ -17,6 +17,8 @@ enum
 struct Field
 {
     Ogre::String name;
+    int tex_width;
+    int tex_height;
 };
 
 

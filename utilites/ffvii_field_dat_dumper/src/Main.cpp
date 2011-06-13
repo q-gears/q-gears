@@ -13,7 +13,7 @@
 
 
 
-std::vector<Field> fields;
+std::vector< Field > fields;
 
 int state;
 
@@ -25,17 +25,29 @@ fill_names()
     Field field;
 
     Ogre::ConfigFile cf;
-    cf.load("export.cfg");
+    cf.load( "export.cfg" );
     Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
 
-    while (seci.hasMoreElements())
+    while( seci.hasMoreElements() )
     {
-        field.name = seci.peekNextKey();
+        Ogre::String names = seci.peekNextKey();
         seci.moveNext();
 
-        if (field.name != "")
+        Ogre::StringVector name = Ogre::StringUtil::split( names, ":", 2 );
+        if( name.size() < 2 )
         {
-            fields.push_back(field);
+            LOGGER->Log( "In '" + names + "' not enough names. Must be 2.\n" );
+            continue;
+        }
+        field.name = name[ 0 ];
+
+        Ogre::StringVector tex_size = Ogre::StringUtil::split( name[ 1 ], "x", 2 );
+        field.tex_width = Ogre::StringConverter::parseInt( tex_size[ 0 ] );
+        field.tex_height = Ogre::StringConverter::parseInt( tex_size[ 1 ] );
+
+        if( field.name != "" )
+        {
+            fields.push_back( field );
         }
     }
 }
@@ -70,7 +82,7 @@ main( int argc, char *argv[] )
     state = GAME;
 
 
-
+/*
     for (int f = 0; f < fields.size(); ++f)
     {
         DatFile dat("data/jp/" + fields[f].name + ".dat");
@@ -85,6 +97,7 @@ main( int argc, char *argv[] )
         dat.DumpTextData("export_jp_in/" + fields[f].name + "_text.txt", false);
         dat.DumpWalkmeshData("export_jp_in/" + fields[f].name + "_wm.xml");
     }
+*/
     for( int f = 0; f < fields.size(); ++f )
     {
         DatFile dat( "data/en/" + fields[ f ].name + ".dat" );
@@ -92,10 +105,10 @@ main( int argc, char *argv[] )
         dat.DumpScriptData( "export_en/" + fields[ f ].name + "_script.txt" );
         dat.DumpTextData( "export_en/" + fields[ f ].name + "_text.txt", true );
         dat.DumpWalkmeshData( "export_en/" + fields[ f ].name + "_wm.xml" );
-        dat.DumpBackground( "export_en/" + fields[ f ].name + "_bg.xml", mim );
+        dat.DumpBackground( "export_en/", fields[ f ], mim );
     }
 
-    DatFile::DumpSoundOpcodesData("sound.txt");
+    //DatFile::DumpSoundOpcodesData("sound.txt");
 
 
 

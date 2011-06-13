@@ -3,6 +3,7 @@
 
 #include "../../common/LzsFile.h"
 #include "../../common/Surface.h"
+#include "Main.h"
 #include "MimFile.h"
 
 
@@ -40,7 +41,7 @@ public:
     void DumpTextData( const Ogre::String& export_file, bool english );
     void DumpScriptData( const Ogre::String& export_file );
     void DumpWalkmeshData( const Ogre::String& export_file );
-    void DumpBackground( const Ogre::String &export_file, MimFile& mim );
+    void DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim );
     static void DumpSoundOpcodesData( const Ogre::String& export_file );
 
     void AdvanceScript( u32 value, u32& current, u32& end );
@@ -64,6 +65,12 @@ private:
     static std::vector< Ogre::String > m_SoundOpcodes;
 
     std::vector< SurfaceTexData > m_Surfaces;
+    Surface* full_image;
+    int x_32;
+    int y_32;
+    int x_16;
+    int y_16;
+    int n_16;
 };
 
 

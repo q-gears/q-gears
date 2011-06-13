@@ -258,5 +258,5 @@ MimFile::InnerGetImage()
     mImageWidth  = 2048;
     mImageHeight = 512;
 
-    m_Vram.Save( "export" );
+    //m_Vram.Save( "export" );
 }

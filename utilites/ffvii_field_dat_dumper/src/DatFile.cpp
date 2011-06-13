@@ -6,13 +6,6 @@
 
 
 
-Surface* full_image = NULL;
-int x_32 = 0;
-int y_32 = 0;
-int x_16 = 0;
-int y_16 = 0;
-int n_16 = 0;
-
 class surface_find
 {
 public:
@@ -2828,13 +2821,16 @@ DatFile::OffsetString(int val)
 
 
 void
-DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
+DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim )
 {
-    Logger* export_text = new Logger( export_file );
+    Logger* export_text = new Logger( export_path + field.name + "_bg.xml" );
 
-    int width = 1024;
-    int height = 512;
+    int width = field.tex_width;
+    int height = field.tex_height;
     full_image = CreateSurface( width, height );
+    x_32 = 0; y_32 = 0;
+    x_16 = 0; y_16 = 0;
+    n_16 = 0;
 
     // sector 3
     u32 offset_to_background = 0x1c + GetU32LE( 0x08 ) - GetU32LE( 0x00 );
@@ -3032,7 +3028,7 @@ DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
 
     Ogre::Image image;
     image.loadDynamicImage( ( Ogre::uchar* )pb.data, width, height, Ogre::PF_R8G8B8A8 );
-    image.save( "texture.png" );
+    image.save( export_path + field.name + ".png" );
     buffer->unlock();
     Ogre::TextureManager::getSingleton().remove( "DynaTex" );
 }
