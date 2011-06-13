@@ -43,6 +43,8 @@
 		<Unit filename="..\common\Logger.h" />
 		<Unit filename="..\common\LzsFile.cpp" />
 		<Unit filename="..\common\LzsFile.h" />
+		<Unit filename="..\common\Surface.cpp" />
+		<Unit filename="..\common\Surface.h" />
 		<Unit filename="..\common\Vram.cpp" />
 		<Unit filename="..\common\Vram.h" />
 		<Unit filename="src\DatFile.cpp" />
