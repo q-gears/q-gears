@@ -6,7 +6,38 @@
 
 
 
-std::vector<Ogre::String> DatFile::m_SoundOpcodes;
+Surface* full_image = NULL;
+int x_32 = 0;
+int y_32 = 0;
+int x_16 = 0;
+int y_16 = 0;
+int n_16 = 0;
+
+class surface_find
+{
+public:
+    surface_find( const SurfaceTexData& a ):
+        m_Surface(a)
+    {
+    }
+
+    bool
+    operator()( const SurfaceTexData& a ) const
+    {
+        return ( a.page_x == m_Surface.page_x ) &&
+               ( a.page_y == m_Surface.page_y ) &&
+               ( a.clut_y == m_Surface.clut_y ) &&
+               ( a.clut_x == m_Surface.clut_x ) &&
+               ( a.bpp    == m_Surface.bpp );
+    }
+
+private:
+    SurfaceTexData m_Surface;
+};
+
+
+
+std::vector< Ogre::String > DatFile::m_SoundOpcodes;
 
 
 
@@ -193,6 +224,10 @@ DatFile::DatFile(File *file):
 
 DatFile::~DatFile()
 {
+    if( full_image != NULL )
+    {
+        delete full_image;
+    }
 }
 
 
@@ -2786,25 +2821,20 @@ DatFile::OffsetString(int val)
 
 
 
-
-
-
-
 void
 DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
 {
-/*
     Logger* export_text = new Logger( export_file );
 
     // sector 3
-    u32 offset_to_background = 0x1C + GetU32LE( 0x08 ) - GetU32LE( 0x00 );
+    u32 offset_to_background = 0x1c + GetU32LE( 0x08 ) - GetU32LE( 0x00 );
+    LOGGER->Log( "offset_to_background = " + ToHexString( offset_to_background, 8, '0' ) + "\n" );
 
-    //LOGGER->Log("offset_to_background = %x, offset_to_next = %x", offset_to_background, 0x1C + GetU32LE(0x0C) - GetU32LE(0x00));
     u32 offset_to_1 = offset_to_background + 0x10;
-    u32 offset_to_2 = offset_to_background + GetU32LE(offset_to_background + 0x00);
-    u32 offset_to_3 = offset_to_background + GetU32LE(offset_to_background + 0x04);
-    u32 offset_to_4 = offset_to_background + GetU32LE(offset_to_background + 0x08);
-    u32 offset_to_5 = offset_to_background + GetU32LE(offset_to_background + 0x0C);
+    u32 offset_to_2 = offset_to_background + GetU32LE( offset_to_background + 0x00 );
+    u32 offset_to_3 = offset_to_background + GetU32LE( offset_to_background + 0x04 );
+    u32 offset_to_4 = offset_to_background + GetU32LE( offset_to_background + 0x08 );
+    u32 offset_to_5 = offset_to_background + GetU32LE( offset_to_background + 0x0c );
 
     u32 s1 = offset_to_1;
     u32 s2 = offset_to_2;
@@ -2815,205 +2845,171 @@ DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
 
 
     // get global texture setting
-    Uint16 g_page_x   =  GetU16LE(s3) & 0x000F;
-    Uint16 g_page_y   = (GetU16LE(s3) & 0x0010) >> 0x04;
-    Uint8  g_blending = (GetU16LE(s3) & 0x0060) >> 0x05;
-    Uint8  g_bpp      = (GetU16LE(s3) & 0x0180) >> 0x07;
+    u16 g_page_x   =   GetU16LE( s3 ) & 0x000f;
+    u16 g_page_y   = ( GetU16LE( s3 ) & 0x0010 ) >> 0x04;
+    u8  g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
+    u8  g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
     s3 += 0x02;
-    if (CONFIG->mDumpSpecificGameData == true)
+    LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
+
+
+
+    for( ; s1 < offset_to_2; s1 += 0x06 )
     {
-        LOGGER->Log(LOGGER_INFO, "Set global tex page x = %04x, tex page y = %04x, blending = %02x, bpp = %02x", g_page_x, g_page_y, g_blending, g_bpp);
-    }
-
-
-
-    for (; s1 < offset_to_2; s1 += 0x06)
-    {
-        if (GetU16LE(s1) == 0x7FFE)
+        if( GetU16LE(s1) == 0x7ffe )
         {
-            g_page_x   =  GetU16LE(s3) & 0x000F;
-            g_page_y   = (GetU16LE(s3) & 0x0010) >> 0x04;
-            g_blending = (GetU16LE(s3) & 0x0060) >> 0x05;
-            g_bpp      = (GetU16LE(s3) & 0x0180) >> 0x07;
+            g_page_x   =   GetU16LE( s3 ) & 0x000f;
+            g_page_y   = ( GetU16LE( s3 ) & 0x0010 ) >> 0x04;
+            g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
+            g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
             s3 += 0x02;
-            if (CONFIG->mDumpSpecificGameData == true)
-            {
-                LOGGER->Log(LOGGER_INFO, "Set global tex page x = %04x, tex page y = %04x, blending = %02x, bpp = %02x", g_page_x, g_page_y, g_blending, g_bpp);
-            }
-
+            LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
             s1 += 0x06;
         }
-        if (GetU16LE(s1) == 0x7FFF)
+        if( GetU16LE( s1 ) == 0x7fff )
         {
             s1 += 0x02;
             break;
         }
 
+        u16 sprite_num = GetU16LE( s1 + 0x04 );
 
-
-        u16 sprite_num = GetU16LE(s1 + 0x04);
-
-        for (u16 i = 0; i < sprite_num; ++i)
+        for( u16 i = 0; i < sprite_num; ++i )
         {
-            Sint16 dest_x =  GetU16LE(s2 + 0x00);
-            Sint16 dest_y =  GetU16LE(s2 + 0x02);
-            Uint8  src_x  =  GetU16LE(s2 + 0x04);
-            Uint8  src_y  =  GetU16LE(s2 + 0x05);
-            Uint16 clut_y = (GetU16LE(s2 + 0x06) & 0xFFC0) >> 6;
-            Uint16 clut_x = (GetU16LE(s2 + 0x06) & 0x003F) << 4;
+            s16 dest_x =   GetU16LE( s2 + 0x00 );
+            s16 dest_y =   GetU16LE( s2 + 0x02 );
+            u8  src_x  =   GetU16LE( s2 + 0x04 );
+            u8  src_y  =   GetU16LE( s2 + 0x05 );
+            u16 clut_y = ( GetU16LE( s2 + 0x06 ) & 0xffc0 ) >> 6;
+            u16 clut_x = ( GetU16LE( s2 + 0x06 ) & 0x003f ) << 4;
 
-            if (CONFIG->mDumpSpecificGameData == true)
-            {
-                LOGGER->Log(LOGGER_INFO, "Add layer 1 sprite to (%d %d) from (%d %d texpage_x %d, texpage_y %d, clut_x %d, clut_y %d).", dest_x, dest_y, src_x, src_y, g_page_x, g_page_y, clut_x, clut_y);
-            }
-
-            backgroundManager.AddTile(0, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, 0, 0, 0);
-
+            LOGGER->Log( "Add layer 1 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + ")\n" );
+            AddTile( 0, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, 0, 0, 0 );
             s2 += 0x08;
         }
     }
 
 
 
-    for (; s1 < offset_to_2; s1 += 0x06)
+    for( ; s1 < offset_to_2; s1 += 0x06 )
     {
-        if (GetU16LE(s1) == 0x7FFF)
+        if( GetU16LE( s1 ) == 0x7fff )
         {
             s1 += 0x02;
             break;
         }
 
+        u16 sprite_num = GetU16LE( s1 + 0x04 );
 
-
-        Uint16 sprite_num = GetU16LE(s1 + 0x04);
-
-        for (Uint32 i = 0; i < sprite_num; ++i)
+        for( u32 i = 0; i < sprite_num; ++i )
         {
-            Sint16 dest_x    =  GetU16LE(s4 + 0x00);
-            Sint16 dest_y    =  GetU16LE(s4 + 0x02);
-            Uint8  src_x     =  GetU16LE(s4 + 0x04);
-            Uint8  src_y     =  GetU16LE(s4 + 0x05);
-            Uint16 clut_y    = (GetU16LE(s4 + 0x06) & 0xFFC0) >> 6;
-            Uint16 clut_x    = (GetU16LE(s4 + 0x06) & 0x003F) << 4;
-            Uint16 page_x    =  GetU16LE(s4 + 0x08) & 0x000F;
-            Uint16 page_y    = (GetU16LE(s4 + 0x08) & 0x0010) >> 0x04;
-            Uint8  bpp       = (GetU16LE(s4 + 0x08) & 0x0180) >> 0x07;
-            Uint8  blending  = (GetU16LE(s4 + 0x08) & 0x60) >> 0x05;
-            Uint16 distance  =  GetU16LE(s4 + 0x0A);
-            Uint8  animation =  GetU8(s4 + 0x0C) & 0x0F;
-            Uint8  index     =  GetU8(s4 + 0x0D);
+            s16 dest_x    =   GetU16LE( s4 + 0x00 );
+            s16 dest_y    =   GetU16LE( s4 + 0x02 );
+            u8  src_x     =   GetU16LE( s4 + 0x04 );
+            u8  src_y     =   GetU16LE( s4 + 0x05 );
+            u16 clut_y    = ( GetU16LE( s4 + 0x06 ) & 0xffc0 ) >> 6;
+            u16 clut_x    = ( GetU16LE( s4 + 0x06 ) & 0x003f ) << 4;
+            u16 page_x    =   GetU16LE( s4 + 0x08 ) & 0x000f;
+            u16 page_y    = ( GetU16LE( s4 + 0x08 ) & 0x0010 ) >> 0x04;
+            u8  bpp       = ( GetU16LE( s4 + 0x08 ) & 0x0180 ) >> 0x07;
+            u8  blending  = ( GetU16LE( s4 + 0x08 ) & 0x60 ) >> 0x05;
+            u16 distance  =   GetU16LE( s4 + 0x0a );
+            u8  animation =   GetU8( s4 + 0x0c ) & 0x0f;
+            u8  index     =   GetU8( s4 + 0x0d );
 
-            if (CONFIG->mDumpSpecificGameData == true)
-            {
-                LOGGER->Log(LOGGER_INFO, "Add layer 2 sprite to (%d %d) from (%d %d texpage_x %d, texpage_y %d, clut_x %d, clut_y %d). Depth %d. Anim group %d, index %d. Anim %04x", dest_x, dest_y, src_x, src_y, g_page_x, g_page_y, clut_x, clut_y, distance, animation, index, GetU16LE(s4 + 0x0C));
-            }
-
-            backgroundManager.AddTile(1, dest_x, dest_y, src_x, src_y, clut_x, clut_y, bpp, page_x, page_y, distance, blending, animation, index);
-
-            s4 += 0x0E;
+            LOGGER->Log( "Add layer 2 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Depth " + ToIntString( distance ) + ". Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s4 + 0x0c), 4, '0' ) + "\n" );
+            AddTile( 1, dest_x, dest_y, src_x, src_y, clut_x, clut_y, bpp, page_x, page_y, distance, blending, animation, index );
+            s4 += 0x0e;
         }
     }
 
 
 
-    for (; s1 < offset_to_2; s1 += 0x06)
+    for( ; s1 < offset_to_2; s1 += 0x06 )
     {
-        if (GetU16LE(s1) == 0x7FFE)
+        if( GetU16LE( s1 ) == 0x7ffe )
         {
-            g_page_x   =  GetU16LE(s3) & 0x000F;
-            g_page_y   = (GetU16LE(s3) & 0x0010) >> 0x04;
-            g_blending = (GetU16LE(s3) & 0x0060) >> 0x05;
-            g_bpp      = (GetU16LE(s3) & 0x0180) >> 0x07;
+            g_page_x   =   GetU16LE( s3 ) & 0x000f;
+            g_page_y   = ( GetU16LE( s3 ) & 0x0010 ) >> 0x04;
+            g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
+            g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
             s3 += 0x02;
-
-            if (CONFIG->mDumpSpecificGameData == true)
-            {
-                LOGGER->Log(LOGGER_INFO, "Set global tex page x = %04x, tex page y = %04x, blending = %02x, bpp = %02x", g_page_x, g_page_y, g_blending, g_bpp);
-            }
-
+            LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
             s1 += 0x06;
         }
-        if (GetU16LE(s1) == 0x7FFF)
+        if( GetU16LE( s1 ) == 0x7fff )
         {
             s1 += 0x02;
             break;
         }
 
+        u16 sprite_num = GetU16LE( s1 + 0x04 );
 
-
-        Uint16 sprite_num = GetU16LE(s1 + 0x04);
-
-        for (Uint32 i = 0; i < sprite_num; ++i)
+        for( u32 i = 0; i < sprite_num; ++i )
         {
-            Sint16 dest_x    =  GetU16LE(s5 + 0x00);
-            Sint16 dest_y    =  GetU16LE(s5 + 0x02);
-            Uint8  src_x     =  GetU16LE(s5 + 0x04);
-            Uint8  src_y     =  GetU16LE(s5 + 0x05);
-            Uint16 clut_y    = (GetU16LE(s5 + 0x06) & 0xFFC0) >> 6;
-            Uint16 clut_x    = (GetU16LE(s5 + 0x06) & 0x003F) << 4;
-            Uint8  animation =  GetU8(s5 + 0x08) & 0x0F;
-            Uint8  index     =  GetU8(s5 + 0x09);
-
-            if (CONFIG->mDumpSpecificGameData == true)
-            {
-                LOGGER->Log(LOGGER_INFO, "Add layer 3 sprite to (%d %d) from (%d %d texpage_x %d, texpage_y %d, clut_x %d, clut_y %d). Anim group %d, index %d. Anim %04x", dest_x, dest_y, src_x, src_y, g_page_x, g_page_y, clut_x, clut_y, animation, index, GetU16LE(s5 + 0x08));
-            }
-
-            backgroundManager.AddTile(2, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index);
-
-            s5 += 0x0A;
+            s16 dest_x    =   GetU16LE( s5 + 0x00 );
+            s16 dest_y    =   GetU16LE( s5 + 0x02 );
+            u8  src_x     =   GetU16LE( s5 + 0x04 );
+            u8  src_y     =   GetU16LE( s5 + 0x05 );
+            u16 clut_y    = ( GetU16LE( s5 + 0x06 ) & 0xffc0 ) >> 6;
+            u16 clut_x    = ( GetU16LE( s5 + 0x06 ) & 0x003f ) << 4;
+            u8  animation =   GetU8( s5 + 0x08 ) & 0x0f;
+            u8  index     =   GetU8( s5 + 0x09 );
+            LOGGER->Log( "Add layer 3 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
+            AddTile( 2, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index );
+            s5 += 0x0a;
         }
     }
 
 
 
     // add layer 4 sprite
-    for (; s1 < offset_to_2; s1 += 0x06)
+    for( ; s1 < offset_to_2; s1 += 0x06 )
     {
-        if (GetU16LE(s1) == 0x7FFE)
+        if( GetU16LE( s1 ) == 0x7ffe )
         {
-            g_page_x   =  GetU16LE(s3) & 0x000F;
-            g_page_y   = (GetU16LE(s3) & 0x0010) >> 0x04;
-            g_blending = (GetU16LE(s3) & 0x0060) >> 0x05;
-            g_bpp      = (GetU16LE(s3) & 0x0180) >> 0x07;
+            g_page_x   =   GetU16LE( s3 ) & 0x000f;
+            g_page_y   = ( GetU16LE( s3 ) & 0x0010 ) >> 0x04;
+            g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
+            g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
             s3 += 0x02;
-
-            if (CONFIG->mDumpSpecificGameData == true)
-            {
-                LOGGER->Log(LOGGER_INFO, "Set global tex page x = %04x, tex page y = %04x, blending = %02x, bpp = %02x", g_page_x, g_page_y, g_blending, g_bpp);
-            }
-
+            LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
             s1 += 0x06;
         }
-        if (GetU16LE(s1) == 0x7FFF)
+        if( GetU16LE( s1 ) == 0x7fff )
         {
             break;
         }
 
+        u16 sprite_num = GetU16LE( s1 + 0x04 );
 
-
-        Uint16 sprite_num = GetU16LE(s1 + 0x04);
-
-        for (Uint32 i = 0; i < sprite_num; ++i)
+        for( u32 i = 0; i < sprite_num; ++i )
         {
-            Sint16 dest_x    =  GetU16LE(s5 + 0x00);
-            Sint16 dest_y    =  GetU16LE(s5 + 0x02);
-            Uint8  src_x     =  GetU16LE(s5 + 0x04);
-            Uint8  src_y     =  GetU16LE(s5 + 0x05);
-            Uint16 clut_y    = (GetU16LE(s5 + 0x06) & 0xFFC0) >> 6;
-            Uint16 clut_x    = (GetU16LE(s5 + 0x06) & 0x003F) << 4;
-            Uint8  animation =  GetU8(s5 + 0x08) & 0x0F;
-            Uint8  index     =  GetU8(s5 + 0x09);
+            s16 dest_x    =   GetU16LE( s5 + 0x00 );
+            s16 dest_y    =   GetU16LE( s5 + 0x02 );
+            u8  src_x     =   GetU16LE( s5 + 0x04 );
+            u8  src_y     =   GetU16LE( s5 + 0x05 );
+            u16 clut_y    = ( GetU16LE( s5 + 0x06 ) & 0xffc0 ) >> 6;
+            u16 clut_x    = ( GetU16LE( s5 + 0x06 ) & 0x003f ) << 4;
+            u8  animation =   GetU8( s5 + 0x08 ) & 0x0f;
+            u8  index     =   GetU8( s5 + 0x09 );
 
-            if (CONFIG->mDumpSpecificGameData == true)
-            {
-                LOGGER->Log(LOGGER_INFO, "Add layer 4 sprite to (%d %d) from (%d %d texpage_x %d, texpage_y %d, clut_x %d, clut_y %d). Anim group %d, index %d. Anim %04x", dest_x, dest_y, src_x, src_y, g_page_x, g_page_y, clut_x, clut_y, animation, index, GetU16LE(s5 + 0x08));
-            }
-
-            backgroundManager.AddTile(3, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index);
-
-            s5 += 0x0A;
+            LOGGER->Log( "Add layer 4 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
+            AddTile( 3, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index );
+            s5 += 0x0a;
         }
     }
-*/
+}
+
+
+
+void
+DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index )
+{
+    SurfaceTexData surface;
+    surface.page_x = page_x;
+    surface.page_y = page_y;
+    surface.clut_x = clut_x;
+    surface.clut_y = clut_y;
+    surface.bpp    = bpp;
 }

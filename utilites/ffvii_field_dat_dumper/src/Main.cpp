@@ -48,16 +48,17 @@ main( int argc, char *argv[] )
     Ogre::Root*         root;
     Ogre::RenderWindow* window;
 
-    root = new Ogre::Root( "plugins.cfg", "ogre.cfg", "ogre.log" );
-
-    if( root->restoreConfig() == true || root->showConfigDialog() == true )
-    {
-        window = root->initialise( true, "FFVII Exporter" );
-    }
-    else
-    {
-        return 0;
-    }
+    root = new Ogre::Root( "", "" );
+#ifndef _DEBUG
+    root->loadPlugin( "RenderSystem_GL.dll" );
+#else
+    root->loadPlugin( "RenderSystem_GL_d.dll" );
+#endif
+    root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
+    root->initialise( false );
+    Ogre::NameValuePairList misc;
+    misc[ "title" ] = "FFVII Exporter";
+    window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
 
 
 

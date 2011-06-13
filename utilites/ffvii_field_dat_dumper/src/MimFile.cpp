@@ -244,7 +244,7 @@ MimFile::InnerGetImage()
                 for (int x = 0; x < image_width; ++x)
                 {
                     u8 data = GetU8(data_3_offset + sizeof(MimHeader2) + y * image_width + x);
-                    m_Vram.PutU8(x + image_vram_position_x, y + image_vram_position_y, data);
+                    m_Vram.PutU8( x + image_vram_position_x, y + image_vram_position_y, data );
                 }
             }
 
