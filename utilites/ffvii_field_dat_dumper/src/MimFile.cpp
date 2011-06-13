@@ -41,14 +41,14 @@ MimFile::~MimFile()
 }
 
 
-/*
+
 Surface*
-MimFile::GetSurface(const Uint16 page_x, const Uint16 page_y, const Uint16 clut_x, const Uint16 clut_y, const Uint8 bpp)
+MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const u16 clut_y, const u8 bpp )
 {
     // lastest texture page x are on the border with vram so we need get smaller tex
-    Uint16 size_x = (page_x >= 15 && bpp == 1) ? 128 : 256;
-    Surface* ret = CreateSurface(size_x, 256);
-
+    u16 size_x = ( page_x >= 15 && bpp == 1 ) ? 128 : 256;
+    Surface* ret = CreateSurface( size_x, 256 );
+/*
     if (clut_y > mClutHeight + mClutVramPositionY)
     {
         LOGGER->Log(LOGGER_WARNING, "TimFile::GetSurface: Warning: 'clut_number' is greater than number of clut in file.");
@@ -167,20 +167,12 @@ MimFile::GetSurface(const Uint16 page_x, const Uint16 page_y, const Uint16 clut_
             }
         }
     }
-
+*/
 
 
     return ret;
 }
 
-
-
-const Uint16
-MimFile::GetNumberOfClut(void) const
-{
-    return mClutHeight;
-}
-*/
 
 
 void

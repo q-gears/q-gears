@@ -14,11 +14,8 @@ public:
     MimFile( File* pFile, const u32 offset, const u32 length );
     MimFile( u8* pBuffer, const u32 offset, const u32 length );
     virtual ~MimFile();
-/*
-    Surface*     GetSurface(const Uint16 page_x, const Uint16 page_y, const Uint16 clut_x, const Uint16 clut_y, const Uint8 bpp);
+    Surface* GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const u16 clut_y, const u8 bpp);
 
-    const Uint16 GetNumberOfClut(void) const;
-*/
 private:
     void InnerGetImage();
 

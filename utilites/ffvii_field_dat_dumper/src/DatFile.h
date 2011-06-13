@@ -56,12 +56,14 @@ public:
     Ogre::String ArgumentString( int script, int number );
     Ogre::String OffsetString( int val );
 
-    void AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index );
+    void AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index, MimFile& mim );
 
 private:
     std::vector< int > m_Dialogs;
 
     static std::vector< Ogre::String > m_SoundOpcodes;
+
+    std::vector< SurfaceTexData > m_Surfaces;
 };
 
 

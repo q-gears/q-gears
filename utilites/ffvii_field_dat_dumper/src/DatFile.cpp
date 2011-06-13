@@ -228,6 +228,12 @@ DatFile::~DatFile()
     {
         delete full_image;
     }
+
+    for( u8 i = 0; i < m_Surfaces.size(); ++i )
+    {
+        delete m_Surfaces[ i ].surface;
+    }
+    m_Surfaces.clear();
 }
 
 
@@ -2884,7 +2890,7 @@ DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
             u16 clut_x = ( GetU16LE( s2 + 0x06 ) & 0x003f ) << 4;
 
             LOGGER->Log( "Add layer 1 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + ")\n" );
-            AddTile( 0, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, 0, 0, 0 );
+            AddTile( 0, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, 0, 0, 0, mim );
             s2 += 0x08;
         }
     }
@@ -2918,7 +2924,7 @@ DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
             u8  index     =   GetU8( s4 + 0x0d );
 
             LOGGER->Log( "Add layer 2 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Depth " + ToIntString( distance ) + ". Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s4 + 0x0c), 4, '0' ) + "\n" );
-            AddTile( 1, dest_x, dest_y, src_x, src_y, clut_x, clut_y, bpp, page_x, page_y, distance, blending, animation, index );
+            AddTile( 1, dest_x, dest_y, src_x, src_y, clut_x, clut_y, bpp, page_x, page_y, distance, blending, animation, index, mim );
             s4 += 0x0e;
         }
     }
@@ -2956,7 +2962,7 @@ DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
             u8  animation =   GetU8( s5 + 0x08 ) & 0x0f;
             u8  index     =   GetU8( s5 + 0x09 );
             LOGGER->Log( "Add layer 3 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
-            AddTile( 2, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index );
+            AddTile( 2, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim );
             s5 += 0x0a;
         }
     }
@@ -2995,7 +3001,7 @@ DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
             u8  index     =   GetU8( s5 + 0x09 );
 
             LOGGER->Log( "Add layer 4 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
-            AddTile( 3, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index );
+            AddTile( 3, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim );
             s5 += 0x0a;
         }
     }
@@ -3004,7 +3010,7 @@ DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
 
 
 void
-DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index )
+DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index, MimFile& mim )
 {
     SurfaceTexData surface;
     surface.page_x = page_x;
@@ -3012,4 +3018,16 @@ DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const
     surface.clut_x = clut_x;
     surface.clut_y = clut_y;
     surface.bpp    = bpp;
+
+    std::vector< SurfaceTexData >::iterator it = std::find_if( m_Surfaces.begin(), m_Surfaces.end(), surface_find( surface ) );
+
+    if( it == m_Surfaces.end() )
+    {
+        surface.surface = mim.GetSurface( surface.page_x, surface.page_y, surface.clut_x, surface.clut_y, surface.bpp );
+        m_Surfaces.push_back( surface );
+    }
+    else
+    {
+        surface = *it;
+    }
 }

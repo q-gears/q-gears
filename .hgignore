@@ -1,3 +1,4 @@
 syntax: glob
 src/compile/
-output/q-gears.log
+utilites/ffvii_field_dat_dumper/compile/
+*.log
