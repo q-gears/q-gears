@@ -48,31 +48,27 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
     // lastest texture page x are on the border with vram so we need get smaller tex
     u16 size_x = ( page_x >= 15 && bpp == 1 ) ? 128 : 256;
     Surface* ret = CreateSurface( size_x, 256 );
-/*
-    if (clut_y > mClutHeight + mClutVramPositionY)
+
+    if( clut_y > mClutHeight + mClutVramPositionY )
     {
-        LOGGER->Log(LOGGER_WARNING, "TimFile::GetSurface: Warning: 'clut_number' is greater than number of clut in file.");
+        LOGGER->Log( "MimFile::GetSurface: Warning: 'clut_number' is greater than number of clut in file." );
         return ret;
     }
-
-
 
     // temp clut color
     ClutColor color;
 
-
-
-    if (bpp == 0)
+    if( bpp == 0 )
     {
-        for (int y = 0; y < 256; ++y)
+        for( int y = 0; y < 256; ++y )
         {
-            for (int x = 0; x < 128; ++x)
+            for( int x = 0; x < 128; ++x )
             {
                 u16 real_x = mImageVramPositionX + page_x * 128 + x;
                 u16 real_y = mImageVramPositionY + page_y * 256 + y;
 
-                u8 data = mVram.GetU8(real_x, real_y) & 0x0F;
-                u16 col = mVram.GetU16(data * 2 + clut_x * 2, clut_y);
+                u8 data = m_Vram.GetU8(real_x, real_y) & 0x0F;
+                u16 col = m_Vram.GetU16(data * 2 + clut_x * 2, clut_y);
 
                 color.r = ((col      ) & 31) * 255 / 31;
                 color.g = ((col >>  5) & 31) * 255 / 31;
@@ -99,8 +95,8 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
 
 
 
-                data    = (mVram.GetU8(real_x, real_y) & 0xF0) >> 4;
-                col     = mVram.GetU16(data * 2 + clut_x * 2, clut_y);
+                data    = (m_Vram.GetU8(real_x, real_y) & 0xF0) >> 4;
+                col     = m_Vram.GetU16(data * 2 + clut_x * 2, clut_y);
 
                 color.r = ((col      ) & 31) * 255 / 31;
                 color.g = ((col >>  5) & 31) * 255 / 31;
@@ -130,17 +126,17 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
 
 
 
-    else if (bpp == 1)
+    else if( bpp == 1 )
     {
-        for (int y = 0; y < 256; ++y)
+        for( int y = 0; y < 256; ++y )
         {
             for (int x = 0; x < size_x; ++x)
             {
                 u16 real_x = mImageVramPositionX + page_x * 128 + x;
                 u16 real_y = mImageVramPositionY + page_y * 256 + y;
 
-                u8 data = mVram.GetU8(real_x, real_y);
-                u16 col = mVram.GetU16(data * 2 + clut_x * 2, clut_y);
+                u8 data = m_Vram.GetU8(real_x, real_y);
+                u16 col = m_Vram.GetU16(data * 2 + clut_x * 2, clut_y);
 
                 color.r = ((col      ) & 31) * 255 / 31;
                 color.g = ((col >>  5) & 31) * 255 / 31;
@@ -167,8 +163,6 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
             }
         }
     }
-*/
-
 
     return ret;
 }

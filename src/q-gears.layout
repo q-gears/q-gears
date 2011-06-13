@@ -65,7 +65,7 @@
 		<Cursor1 position="408" topLine="20" />
 	</File>
 	<File name="core\ScriptManager.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="408" topLine="2" />
+		<Cursor1 position="48" topLine="0" />
 	</File>
 	<File name="core\ScriptManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="613" topLine="18" />
@@ -112,11 +112,17 @@
 	<File name="core\gui\TextArea.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="119" topLine="0" />
 	</File>
+	<File name="core\library\luabind\class.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="9126" topLine="305" />
+	</File>
 	<File name="core\library\luabind\detail\policy.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="11875" topLine="505" />
 	</File>
 	<File name="core\library\luabind\luabind.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1200" topLine="15" />
+	</File>
+	<File name="core\library\luabind\object.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="23641" topLine="939" />
 	</File>
 	<File name="core\particles\ParticleEmitter.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="804" topLine="6" />

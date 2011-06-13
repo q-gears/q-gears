@@ -2832,6 +2832,10 @@ DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
 {
     Logger* export_text = new Logger( export_file );
 
+    int width = 1024;
+    int height = 512;
+    full_image = CreateSurface( width, height );
+
     // sector 3
     u32 offset_to_background = 0x1c + GetU32LE( 0x08 ) - GetU32LE( 0x00 );
     LOGGER->Log( "offset_to_background = " + ToHexString( offset_to_background, 8, '0' ) + "\n" );
@@ -3005,6 +3009,32 @@ DatFile::DumpBackground( const Ogre::String &export_file, MimFile& mim )
             s5 += 0x0a;
         }
     }
+
+
+
+    Ogre::TexturePtr ptex;
+    Ogre::HardwarePixelBufferSharedPtr buffer;
+    ptex = Ogre::TextureManager::getSingleton().createManual( "DynaTex", "General", Ogre::TEX_TYPE_2D, width, height, 0, Ogre::PF_R8G8B8A8, Ogre::TU_STATIC );
+    buffer = ptex->getBuffer( 0, 0 );
+    buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
+    const Ogre::PixelBox& pb = buffer->getCurrentLock();
+
+    for( u32 y = 0; y < height; ++y )
+    {
+        u32* data = static_cast< u32* >( pb.data ) + y * pb.rowPitch;
+
+        for( u32 x = 0; x < width; ++x )
+        {
+            u32 clut = full_image->pixels[ y * width * 4 + x * 4 + 3 ] | ( full_image->pixels[ y * width * 4 + x * 4 + 2 ] << 8 ) | ( full_image->pixels[ y * width * 4 + x * 4 + 1 ] << 16 ) | ( full_image->pixels[ y * width * 4 + x * 4 + 0 ] << 24 );
+            data[ x ] = clut;
+        }
+    }
+
+    Ogre::Image image;
+    image.loadDynamicImage( ( Ogre::uchar* )pb.data, width, height, Ogre::PF_R8G8B8A8 );
+    image.save( "texture.png" );
+    buffer->unlock();
+    Ogre::TextureManager::getSingleton().remove( "DynaTex" );
 }
 
 
@@ -3030,4 +3060,61 @@ DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const
     {
         surface = *it;
     }
+
+    // set size depending on background
+    u8 size = ( background > 1 ) ? 32 : 16;
+
+    Surface* sub_image = CreateSubSurface( src_x, src_y, size, size, surface.surface );
+
+    int x = 0;
+    int y = 0;
+    if( sub_image->width == 32 )
+    {
+        x = x_32;
+        y = y_32;
+
+        x_32 += 32;
+        if( x_32 == full_image->width )
+        {
+            y_32 += 32;
+            x_32 = 0;
+        }
+    }
+    else if( sub_image->width == 16 )
+    {
+        // if we start new 16x16*4 block
+        if( n_16 == 0 )
+        {
+            x_16 = x_32;
+            y_16 = y_32;
+
+            x_32 += 32;
+            if( x_32 == full_image->width )
+            {
+                y_32 += 32;
+                x_32 = 0;
+            }
+        }
+
+        x = x_16;
+        y = y_16;
+
+        ++n_16;
+        if( n_16 == 1 || n_16 == 3 )
+        {
+            x_16 += 16;
+        }
+        else if( n_16 == 2 )
+        {
+            x_16 -= 16;
+            y_16 += 16;
+        }
+        else if( n_16 == 4 )
+        {
+            n_16 = 0;
+        }
+    }
+    CopyToSurface( full_image, x, y, sub_image );
+
+    delete sub_image;
 }
