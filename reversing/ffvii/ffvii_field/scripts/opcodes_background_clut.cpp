@@ -1,6 +1,5 @@
 ////////////////////////////////
 // 0xDF MPPAL
-struct = w[8009c6e0];
 current_entity = bu[800722c4];
 script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
@@ -179,130 +178,55 @@ return 0;
 
 ////////////////////////////////
 // 0xE8 RTPAL
-800CDE8C	lui    v0, $800a
-800CDE90	lbu    v0, $d820(v0)
-800CDE94	addiu  sp, sp, $ffd8 (=-$28)
-800CDE98	sw     ra, $0020(sp)
-800CDE9C	sw     s3, $001c(sp)
-800CDEA0	sw     s2, $0018(sp)
-800CDEA4	sw     s1, $0014(sp)
-800CDEA8	andi   v0, v0, $0003
-800CDEAC	beq    v0, zero, Lcdec4 [$800cdec4]
-800CDEB0	sw     s0, $0010(sp)
-800CDEB4	lui    a0, $800a
-800CDEB8	addiu  a0, a0, $0c70
-800CDEBC	jal    funcbead4 [$800bead4]
-800CDEC0	ori    a1, zero, $0006
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
-Lcdec4:	; 800CDEC4
-800CDEC4	lui    v0, $8007
-800CDEC8	lbu    v0, $22c4(v0)
-800CDECC	nop
-800CDED0	sll    v0, v0, $01
-800CDED4	lui    at, $8008
-800CDED8	addiu  at, at, $31fc
-800CDEDC	addu   at, at, v0
-800CDEE0	lhu    v1, $0000(at)
-800CDEE4	lui    v0, $800a
-800CDEE8	lw     v0, $c6dc(v0)
-800CDEEC	ori    a0, zero, $0001
-800CDEF0	addu   v0, v0, v1
-800CDEF4	lbu    s0, $0006(v0)
-800CDEF8	ori    a1, zero, $0003
-800CDEFC	jal    read_memory_block_one_byte [$800bee10]
-800CDF00	addiu  s0, s0, $0001
-800CDF04	ori    a0, zero, $0002
-800CDF08	ori    a1, zero, $0004
-800CDF0C	jal    read_memory_block_one_byte [$800bee10]
-800CDF10	addu   s3, v0, zero
-800CDF14	ori    a0, zero, $0004
-800CDF18	ori    a1, zero, $0005
-800CDF1C	jal    read_memory_block_one_byte [$800bee10]
-800CDF20	addu   s2, v0, zero
-800CDF24	addu   a2, zero, zero
-800CDF28	andi   t1, v0, $00ff
-800CDF2C	addu   a1, t1, zero
-800CDF30	slt    v0, s0, a1
-800CDF34	bne    v0, zero, Lcdf98 [$800cdf98]
-800CDF38	addu   s1, s0, zero
-800CDF3C	andi   v0, s2, $00ff
-800CDF40	lui    v1, $8009
-800CDF44	addiu  v1, v1, $5de0
-800CDF48	sll    v0, v0, $05
-800CDF4C	addu   t0, v0, v1
-800CDF50	andi   v0, s3, $00ff
-800CDF54	sll    v0, v0, $05
-800CDF58	addu   a3, v0, v1
+size = bu[script + 6] + 1;
 
-loopcdf5c:	; 800CDF5C
-800CDF5C	sll    v1, a2, $10
-800CDF60	addiu  a2, a2, $0001
-800CDF64	sll    a0, a1, $10
-800CDF68	addiu  v0, a1, $0001
-800CDF6C	addu   a1, v0, zero
-800CDF70	sra    a0, a0, $0f
-800CDF74	sra    v1, v1, $0f
-800CDF78	addu   v1, v1, a3
-800CDF7C	addu   a0, a0, t0
-800CDF80	sll    v0, v0, $10
-800CDF84	sra    v0, v0, $10
-800CDF88	lhu    v1, $0000(v1)
-800CDF8C	slt    v0, s0, v0
-800CDF90	beq    v0, zero, loopcdf5c [$800cdf5c]
-800CDF94	sh     v1, $0000(a0)
+A0 = 1;
+A1 = 3;
+read_memory_block_one_byte;
+src = V0;
 
-Lcdf98:	; 800CDF98
-800CDF98	subu   v0, s1, t1
-800CDF9C	addu   a2, v0, zero
-800CDFA0	addu   s0, s1, zero
-800CDFA4	slt    v0, s0, v0
-800CDFA8	bne    v0, zero, Lce00c [$800ce00c]
-800CDFAC	addu   a1, zero, zero
-800CDFB0	andi   v0, s2, $00ff
-800CDFB4	lui    v1, $8009
-800CDFB8	addiu  v1, v1, $5de0
-800CDFBC	sll    v0, v0, $05
-800CDFC0	addu   t0, v0, v1
-800CDFC4	andi   v0, s3, $00ff
-800CDFC8	sll    v0, v0, $05
-800CDFCC	addu   a3, v0, v1
+A0 = 2;
+A1 = 4;
+read_memory_block_one_byte;
+dst = V0;
 
-loopcdfd0:	; 800CDFD0
-800CDFD0	sll    a0, a2, $10
-800CDFD4	addiu  v0, a2, $0001
-800CDFD8	addu   a2, v0, zero
-800CDFDC	sll    v1, a1, $10
-800CDFE0	addiu  a1, a1, $0001
-800CDFE4	sra    v1, v1, $0f
-800CDFE8	sra    a0, a0, $0f
-800CDFEC	addu   a0, a0, a3
-800CDFF0	addu   v1, v1, t0
-800CDFF4	sll    v0, v0, $10
-800CDFF8	sra    v0, v0, $10
-800CDFFC	lhu    a0, $0000(a0)
-800CE000	slt    v0, s0, v0
-800CE004	beq    v0, zero, loopcdfd0 [$800cdfd0]
-800CE008	sh     a0, $0000(v1)
+A0 = 4;
+A1 = 5;
+read_memory_block_one_byte;
+start = V0;
 
-Lce00c:	; 800CE00C
-800CE00C	lui    v1, $8007
-800CE010	lbu    v1, $22c4(v1)
-800CE014	lui    v0, $8008
-800CE018	addiu  v0, v0, $31fc
-800CE01C	sll    v1, v1, $01
-800CE020	addu   v1, v1, v0
-800CE024	lhu    a0, $0000(v1)
-800CE028	addu   v0, zero, zero
-800CE02C	addiu  a0, a0, $0007
-800CE030	sh     a0, $0000(v1)
-800CE034	lw     ra, $0020(sp)
-800CE038	lw     s3, $001c(sp)
-800CE03C	lw     s2, $0018(sp)
-800CE040	lw     s1, $0014(sp)
-800CE044	lw     s0, $0010(sp)
-800CE048	addiu  sp, sp, $0028
-800CE04C	jr     ra 
-800CE050	nop
+if (size >= start)
+{
+    A1 = start;
+    A2 = 0;
+    loopcdf5c:	; 800CDF5C
+        [80095de0 + dst * 20 + A1 * 2] = h(hu[80095de0 + src * 20 + A2 * 2]);
+
+        A1 = A1 + 1;
+        A2 = A2 + 1;
+        V0 = A2 > size;
+    800CDF90	beq    v0, zero, loopcdf5c [$800cdf5c]
+}
+
+A2 = size - start;
+if (size >= A2)
+{
+    A1 = 0;
+    loopcdfd0:	; 800CDFD0
+        [80095de0 + dst * 20 + A1 * 2] = h(hu[80095de0 + src * 20 + A2 * 2]);
+
+        A1 = A1 + 1;
+        A2 = A2 + 1;
+        V0 = A2 > size;
+    800CE004	beq    v0, zero, loopcdfd0 [$800cdfd0]
+}
+
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 7);
+
+return 0;
 ////////////////////////////////
 
 
