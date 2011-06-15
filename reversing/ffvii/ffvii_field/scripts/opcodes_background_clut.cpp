@@ -284,92 +284,87 @@ V0 = S2 & ff;
 
 if (A0 != 0)
 {
-
-    800CE308	lui    v1, $8009
-    800CE30C	addiu  v1, v1, $5de0
-    800CE310	sll    v0, v0, $05
-    800CE314	addu   t5, v0, v1
-    800CE318	andi   v0, s3, $00ff
-    800CE31C	sll    v0, v0, $05
-    800CE320	addu   t4, v0, v1
-    800CE324	addu   t3, a0, zero
-
+    V1 = 80095de0;
+    V0 = V0 * 20;
+    T5 = V0 + V1;
+    V0 = S3;
+    V0 = V0 * 20;
+    T4 = V0 + V1;
+    T3 = A0;
 
     loopce32c:	; 800CE32C
-        800CE328	sll    v0, t1, $10
-        800CE32C	sra    a1, v0, $0f
-        800CE330	addu   v0, a1, t5
-        800CE334	lhu    t0, $0000(v0)
-        800CE338	nop
-        800CE33C	andi   v0, t0, $001f
-        800CE340	addu   v0, t2, v0
-        800CE344	addu   a2, v0, zero
-        800CE348	sll    v0, v0, $10
-        800CE34C	sra    v0, v0, $10
-        800CE350	slti   v0, v0, $0020
-        800CE354	bne    v0, zero, Lce364 [$800ce364]
-        800CE358	sll    v0, a2, $10
-        800CE35C	ori    a2, zero, $001f
-        800CE360	sll    v0, a2, $10
+        A1 = V1 * 2;
+        V0 = A1 + T5;
 
-        Lce364:	; 800CE364
-        800CE364	bgez   v0, Lce370 [$800ce370]
-        800CE368	andi   a3, t0, $ffff
-        800CE36C	addu   a2, zero, zero
+        T0 = hu[V0];
+        V0 = T0 & 1f;
+        V0 = T2 + V0;
 
-        Lce370:	; 800CE370
+        A2 = V0;
+        if (V0 >= 20)
+        {
+            A2 = 1f;
+        }
+
+        V0 = A2 << 10;
+        A3 = T0 & ffff;
+        if (V0 < 0)
+        {
+            A2 = 0;
+        }
+
         800CE370	srl    v0, a3, $05
         800CE374	andi   v0, v0, $001f
         800CE378	addu   v0, s0, v0
         800CE37C	addu   v1, v0, zero
-        800CE380	sll    v0, v0, $10
-        800CE384	sra    v0, v0, $10
-        800CE388	slti   v0, v0, $0020
-        800CE38C	bne    v0, zero, Lce39c [$800ce39c]
-        800CE390	sll    v0, v1, $10
-        800CE394	ori    v1, zero, $001f
-        800CE398	sll    v0, v1, $10
+        if (V0 >= 20)
+        {
+            V1 = 1f;
+        }
 
-        Lce39c:	; 800CE39C
-        800CE39C	bgez   v0, Lce3a8 [$800ce3a8]
+        V0 = V1 << 10;
+        if (V0 < 0)
+        {
+            V1 = 0;
+        }
+
         800CE3A0	srl    v0, a3, $0a
-        800CE3A4	addu   v1, zero, zero
-
-        Lce3a8:	; 800CE3A8
         800CE3A8	andi   v0, v0, $001f
         800CE3AC	addu   v0, s1, v0
         800CE3B0	addu   a0, v0, zero
         800CE3B4	sll    v0, v0, $10
         800CE3B8	sra    v0, v0, $10
         800CE3BC	slti   v0, v0, $0020
-        800CE3C0	bne    v0, zero, Lce3d0 [$800ce3d0]
+        if (V0 >= 20)
+        {
+            A0 = 1f;
+        }
+
         800CE3C4	sll    v0, a0, $10
-        800CE3C8	ori    a0, zero, $001f
-        800CE3CC	sll    v0, a0, $10
+        A1 = A1 + T4;
+        if (V0 < 0)
+        {
+            A0 = 0;
+        }
 
-        Lce3d0:	; 800CE3D0
-        800CE3D0	bgez   v0, Lce3dc [$800ce3dc]
-        800CE3D4	addu   a1, a1, t4
-        800CE3D8	addu   a0, zero, zero
+        V0 = A0 << a;
+        V1 = V1 * 20;
+        V0 = V0 | V1;
+        V0 = A2 | V0;
+        V1 = T0 & 8000;
+        V0 = V0 | V1;
 
-        Lce3dc:	; 800CE3DC
-        800CE3DC	sll    v0, a0, $0a
-        800CE3E0	sll    v1, v1, $05
-        800CE3E4	or     v0, v0, v1
-        800CE3E8	or     v0, a2, v0
-        800CE3EC	andi   v1, t0, $8000
-        800CE3F0	or     v0, v0, v1
-        800CE3F4	sh     v0, $0000(a1)
-        800CE3F8	lhu    v0, $0000(a1)
-        800CE3FC	nop
+        [A1] = h(V0);
+        V0 = h[A1];
+
         if (V0 == 0 && A3 != 0)
         {
             [A1]= h(8000);
         }
 
-        800CE40C	addiu  v0, t1, $0001
-        800CE41C	addu   t1, v0, zero
-        800CE428	slt    v0, v0, t3
+        V0 = T1 + 1;
+        T1 = V0;
+        V0 = V0 < T3;
     800CE42C	bne    v0, zero, loopce32c [$800ce32c]
 }
 
