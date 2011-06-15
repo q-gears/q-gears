@@ -233,7 +233,6 @@ return 0;
 
 ////////////////////////////////
 // 0xE9 ADPAL
-struct = w[8009c6e0];
 current_entity = bu[800722c4];
 script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
@@ -264,24 +263,25 @@ A1 = 8;
 read_memory_block_one_byte;
 T2 = V0;
 
-800CE2D4	andi   v0, s1, $0080
-800CE2D8	beq    v0, zero, Lce2e4 [$800ce2e4]
-800CE2DC	andi   v0, s0, $0080
-800CE2E0	xori   s1, s1, $ff00
+if (S1 & 80)
+{
+    S1 = S1 ^ ff00;
+}
 
-Lce2e4:	; 800CE2E4
-800CE2E4	beq    v0, zero, Lce2f0 [$800ce2f0]
-800CE2E8	andi   v0, t2, $0080
-800CE2EC	xori   s0, s0, $ff00
+if (S0 & 80)
+{
+    S0 = S0 ^ ff00;
+}
 
-Lce2f0:	; 800CE2F0
-800CE2F0	beq    v0, zero, Lce2fc [$800ce2fc]
-800CE2F4	addu   t1, zero, zero
-800CE2F8	xori   t2, t2, $ff00
+if (T2 & 80)
+{
+    T2 = T2 ^ ff00;
+}
 
-Lce2fc:	; 800CE2FC
-800CE2FC	addu   a0, s4, zero
-800CE304	andi   v0, s2, $00ff
+T1 = 0;
+A0 = S4;
+V0 = S2 & ff;
+
 if (A0 != 0)
 {
 
