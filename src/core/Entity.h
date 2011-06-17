@@ -5,7 +5,7 @@
 
 #include "EntityCollision.h"
 #include "EntityDirection.h"
-#include "../core/ScriptManager.h"
+#include "ScriptManager.h"
 
 
 

@@ -15,12 +15,14 @@ template<>UiManager *Ogre::Singleton< UiManager >::ms_Singleton = NULL;
 
 UiManager::UiManager()
 {
+    m_BaseWidget = new UiWidget( "UI" );
 }
 
 
 
 UiManager::~UiManager()
 {
+    delete m_BaseWidget;
 }
 
 
@@ -28,6 +30,10 @@ UiManager::~UiManager()
 void
 UiManager::Update()
 {
+    m_BaseWidget->Update();
+
+
+
     // debug output
     if( cv_debug_ui.GetB() == true )
     {

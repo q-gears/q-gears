@@ -3,6 +3,8 @@
 
 #include <OgreSingleton.h>
 
+#include "UiWidget.h"
+
 
 
 class UiManager : public Ogre::Singleton< UiManager >
@@ -12,6 +14,9 @@ public:
     virtual ~UiManager();
 
     void Update();
+
+private:
+    UiWidget* m_BaseWidget;
 };
 
 
