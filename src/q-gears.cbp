@@ -104,6 +104,10 @@
 		<Unit filename="core\ScriptManager.h" />
 		<Unit filename="core\Timer.cpp" />
 		<Unit filename="core\Timer.h" />
+		<Unit filename="core\UiManager.cpp" />
+		<Unit filename="core\UiManager.h" />
+		<Unit filename="core\UiWidget.cpp" />
+		<Unit filename="core\UiWidget.h" />
 		<Unit filename="core\Utilites.cpp" />
 		<Unit filename="core\Utilites.h" />
 		<Unit filename="core\Walkmesh.cpp" />
@@ -118,8 +122,6 @@
 		<Unit filename="core\XmlWalkmeshFile.h" />
 		<Unit filename="core\gui\GuiEffect.cpp" />
 		<Unit filename="core\gui\GuiEffect.h" />
-		<Unit filename="core\gui\GuiManager.cpp" />
-		<Unit filename="core\gui\GuiManager.h" />
 		<Unit filename="core\gui\MovableTextArea.cpp" />
 		<Unit filename="core\gui\MovableTextArea.h" />
 		<Unit filename="core\gui\TextArea.cpp" />
