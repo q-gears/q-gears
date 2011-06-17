@@ -4,7 +4,6 @@
 #include <OgreRoot.h>
 
 #include "ConfigVar.h"
-#include "DebugDraw.h"
 #include "EntityModel.h"
 #include "Logger.h"
 #include "ScriptManager.h"

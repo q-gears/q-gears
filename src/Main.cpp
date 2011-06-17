@@ -14,7 +14,7 @@
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
 #include "core/Timer.h"
-#include "core/gui/GuiManager.h"
+#include "core/UiManager.h"
 #include "core/particles/ParticleSystemManager.h"
 
 
@@ -86,7 +86,7 @@ main(int argc, char *argv[])
     // create This earlier than DisplayFrameListener cause it can fire event there
     CameraManager* camera_manager = new CameraManager();
     EntityManager* entity_manager = new EntityManager();
-    GuiManager* gui_manager = new GuiManager();
+    UiManager* ui_manager = new UiManager();
     Console* console = new Console();
 
     // init after game managers because it attack them to script
@@ -121,7 +121,7 @@ main(int argc, char *argv[])
     delete entity_manager;
     delete script_manager;
     delete console;
-    delete gui_manager;
+    delete ui_manager;
     delete camera_manager;
     delete input_manager;
     delete debug_draw;

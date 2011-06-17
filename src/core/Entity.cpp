@@ -2,9 +2,9 @@
 
 #include <OgreSceneNode.h>
 
-#include "../core/ConfigVar.h"
-#include "../core/DebugDraw.h"
-#include "../core/Logger.h"
+#include "ConfigVar.h"
+#include "DebugDraw.h"
+#include "Logger.h"
 
 
 

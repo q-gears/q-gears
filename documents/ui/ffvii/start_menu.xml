@@ -1,0 +1,6 @@
+<window name="StartMenu">
+    <object name="menu_background" type="sprite" texture="start_menu_sword.png" />
+    <object name="start_game" type="button" text="start_game" />
+    <object name="continue" type="button" text="continue" />
+    <object name="cursor" type="animated_sprite" texture="cursor.mesh" />
+</window>

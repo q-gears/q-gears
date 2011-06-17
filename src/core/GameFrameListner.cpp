@@ -11,7 +11,7 @@
 #include "Logger.h"
 #include "ScriptManager.h"
 #include "Timer.h"
-#include "gui/GuiManager.h"
+#include "UiManager.h"
 #include "../Main.h"
 
 
@@ -97,7 +97,6 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
 
         if( console_active != true )
         {
-            GuiManager::getSingleton().Input( input_event_array[ i ] );
             CameraManager::getSingleton().Input( input_event_array[ i ] );
         }
     }
@@ -108,7 +107,7 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
     }
 
     ScriptManager::getSingleton().Update();
-    GuiManager::getSingleton().Update();
+    UiManager::getSingleton().Update();
     CameraManager::getSingleton().Update();
     EntityManager::getSingleton().Update();
 
