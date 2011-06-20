@@ -419,7 +419,7 @@ DebugDraw::Text( const Ogre::Vector3& point, const float x, const float y, const
 
 
 void
-DebugDraw::renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation )
+DebugDraw::renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation )
 {
     if( queueGroupId == Ogre::RENDER_QUEUE_OVERLAY )
     {

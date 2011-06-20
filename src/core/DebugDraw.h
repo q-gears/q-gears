@@ -33,7 +33,7 @@ public:
     void Text( const float x1, const float y1, const Ogre::String& text );
     void Text( const Ogre::Vector3& point, const float x, const float y, const Ogre::String& text );
 
-    void renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
+    void renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation );
 
 private:
     void CreateLineVertexBuffer();
