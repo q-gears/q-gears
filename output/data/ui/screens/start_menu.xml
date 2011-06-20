@@ -1,0 +1,7 @@
+<window name="StartMenu">
+    <object name="StartMenuBackground">
+        <object name="StartGame" />
+        <object name="Continue" />
+        <object name="Cursor" />
+    </object>
+</window>
