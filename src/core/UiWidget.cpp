@@ -9,7 +9,9 @@
 
 UiWidget::UiWidget( const Ogre::String& name ):
     m_Name( name ),
-    m_Parent( NULL )
+    m_Parent( NULL ),
+
+    m_Colour( 1, 1, 1, 1 )
 {
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
@@ -109,9 +111,19 @@ UiWidget::RemoveAllChildren()
 
 
 void
+UiWidget::SetColour( const float r, const float g, const float b, const float a )
+{
+    m_Colour.r = r;
+    m_Colour.g = g;
+    m_Colour.b = b;
+    m_Colour.a = a;
+}
+
+
+
+void
 UiWidget::Quad( const float x1, const float y1, const float x2, const float y2, const float x3, const float y3, const float x4, const float y4 )
 {
-    Ogre::ColourValue m_Colour( 1, 1, 1, 1 );
     bool m_ScreenSpace = true;
 
 

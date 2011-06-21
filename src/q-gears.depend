@@ -22033,7 +22033,7 @@
 	<assert.h>
 	<string.h>
 
-1307078782 g:\my\svn\q-gears\src\core\debugdraw.h
+1308552570 g:\my\svn\q-gears\src\core\debugdraw.h
 	<OgreFont.h>
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
@@ -22547,7 +22547,8 @@
 1305781273 g:\my\svn\q-gears\src\core\timer.h
 	<OgreSingleton.h>
 
-1308316397 g:\my\svn\q-gears\src\core\uimanager.h
+1308552570 g:\my\svn\q-gears\src\core\uimanager.h
+	<OgreRenderQueueListener.h>
 	<OgreSingleton.h>
 	"UiWidget.h"
 
@@ -22705,7 +22706,7 @@
 	"Timer.h"
 	"Utilites.h"
 
-1307078782 source:g:\my\svn\q-gears\src\core\debugdraw.cpp
+1308552570 source:g:\my\svn\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -22809,7 +22810,7 @@
 	"Timer.h"
 	"ConfigVar.h"
 
-1305613407 source:g:\my\svn\q-gears\src\core\utilites.cpp
+1308651651 source:g:\my\svn\q-gears\src\core\utilites.cpp
 	"Utilites.h"
 	<OgreStringConverter.h>
 
@@ -23537,17 +23538,23 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1308316332 g:\my\svn\q-gears\src\core\uiwidget.h
+1308662669 g:\my\svn\q-gears\src\core\uiwidget.h
+	<OgreHardwareVertexBuffer.h>
+	<OgreRenderQueueListener.h>
+	<OgreRoot.h>
 	<OgreString.h>
 	<vector>
 
-1308316602 source:g:\my\svn\q-gears\src\core\uimanager.cpp
+1308663320 source:g:\my\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	"ConfigVar.h"
 	"DebugDraw.h"
 
-1308316763 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
+1308662686 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
+	<OgreHardwareBufferManager.h>
+	<OgreMaterialManager.h>
+	"Logger.h"
 
 1308501987 d:\my\1\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>

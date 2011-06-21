@@ -26,6 +26,7 @@ public:
     UiWidget*           GetChild( const Ogre::String& name );
     void                RemoveAllChildren();
 
+    void                SetColour( const float r, const float g, const float b, const float a );
     void                Quad( const float x1, const float y1, const float x2, const float y2, const float x3, const float y3, const float x4, const float y4 );
 
 private:
@@ -40,6 +41,7 @@ private:
     std::vector< UiWidget* > m_Children;
 
     Ogre::MaterialPtr        m_Material;
+    Ogre::ColourValue        m_Colour;
     Ogre::SceneManager*      m_SceneManager;
     Ogre::RenderSystem*      m_RenderSystem;
     // quad
