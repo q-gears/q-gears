@@ -66,6 +66,11 @@ KeyName key_names[] =
     { "Y", OIS::KC_Y },
     { "Z", OIS::KC_Z },
 
+    { "Left", OIS::KC_LEFT },
+    { "Up", OIS::KC_UP },
+    { "Down", OIS::KC_DOWN },
+    { "Right", OIS::KC_RIGHT },
+
     { "Num0", OIS::KC_NUMPAD0 },
     { "Num1", OIS::KC_NUMPAD1 },
     { "Num2", OIS::KC_NUMPAD2 },
