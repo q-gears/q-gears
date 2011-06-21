@@ -30,6 +30,8 @@ UiManager::UiManager()
     widget->AddChild( widget2 );
     UiWidget* widget3 = new UiWidget( "ContinueButton" );
     widget->AddChild( widget3 );
+    UiWidget* widget4 = new UiWidget( "Cursor" );
+    widget->AddChild( widget4 );
     m_BaseWidget->AddChild( widget );
     // </test code>
 

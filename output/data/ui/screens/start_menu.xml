@@ -1,7 +1,6 @@
-<window name="StartMenu">
-    <object name="StartMenuBackground">
-        <object name="StartGame" />
-        <object name="Continue" />
-        <object name="Cursor" />
-    </object>
+<window name="StartScreen">
+    <object name="Background" />
+    <object name="StartButton" />
+    <object name="ContinueButton" />
+    <object name="Cursor" />
 </window>
