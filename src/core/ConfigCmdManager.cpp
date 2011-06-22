@@ -1,7 +1,7 @@
 #include "ConfigCmdManager.h"
+#include "ConfigCmdManagerCommands.inc"
 
 #include "Assert.h"
-#include "ConfigCmdManagerCommands.cpp"
 
 
 

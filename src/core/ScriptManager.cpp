@@ -1,6 +1,6 @@
 #include "ScriptManager.h"
-#include "ScriptManagerBinds.cpp"
-#include "ScriptManagerCommands.cpp"
+#include "ScriptManagerBinds.inc"
+#include "ScriptManagerCommands.inc"
 
 #include "ConfigVar.h"
 #include "DebugDraw.h"

@@ -1,8 +1,8 @@
 #include "InputManager.h"
+#include "InputManagerCommands.inc"
 
 #include "ConfigCmdManager.h"
 #include "Console.h"
-#include "InputManagerCommands.cpp"
 #include "Logger.h"
 #include "Timer.h"
 
