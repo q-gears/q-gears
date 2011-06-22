@@ -1,9 +1,9 @@
-map = {}
+entity = {}
 
-map.i = 0;
+entity.i = 0;
 
 
-map[ "Cloud" ] = {
+entity[ "Cloud" ] = {
     on_start = function()
         local entity = game:get_entity( "Cloud" )
         entity:move_walkmesh( 1, 1 )
@@ -11,11 +11,11 @@ map[ "Cloud" ] = {
     end,
 
     animation1 = function()
-        map.i = 0;
+        entity.i = 0;
         local entity = game:get_entity( "Cloud" )
-        while map.i < 5 do
+        while entity.i < 5 do
             entity:play_animation( "idle" )
-            map.i = map.i + 1
+            entity.i = entity.i + 1
             entity:animation_sync()
         end
 
@@ -23,11 +23,11 @@ map[ "Cloud" ] = {
     end,
 
     animation2 = function()
-        map.i = 0;
+        entity.i = 0;
         local entity = game:get_entity( "Cloud" )
-        while map.i < 5 do
+        while entity.i < 5 do
             entity:play_animation( "walk" )
-            map.i = map.i + 1
+            entity.i = entity.i + 1
             entity:animation_sync()
         end
 
@@ -35,11 +35,11 @@ map[ "Cloud" ] = {
     end,
 
     animation3 = function()
-        map.i = 0;
+        entity.i = 0;
         local entity = game:get_entity( "Cloud" )
-        while map.i < 5 do
+        while entity.i < 5 do
             entity:play_animation( "run" )
-            map.i = map.i + 1
+            entity.i = entity.i + 1
             entity:animation_sync()
         end
 
@@ -47,11 +47,11 @@ map[ "Cloud" ] = {
     end,
 
     animation4 = function()
-        map.i = 0;
+        entity.i = 0;
         local entity = game:get_entity( "Cloud" )
-        while map.i < 5 do
+        while entity.i < 5 do
             entity:play_animation( "jump" )
-            map.i = map.i + 1
+            entity.i = entity.i + 1
             entity:animation_sync()
         end
 
@@ -59,11 +59,11 @@ map[ "Cloud" ] = {
     end,
 
     animation5 = function()
-        map.i = 0;
+        entity.i = 0;
         local entity = game:get_entity( "Cloud" )
-        while map.i < 5 do
+        while entity.i < 5 do
             entity:play_animation( "talk_no" )
-            map.i = map.i + 1
+            entity.i = entity.i + 1
             entity:animation_sync()
         end
 
@@ -73,7 +73,7 @@ map[ "Cloud" ] = {
 
 
 
-map[ "TreasureChest" ] = {
+entity[ "TreasureChest" ] = {
     on_start = function()
         local entity = game:get_entity( "TreasureChest" )
         entity:play_animation_stop( "idle" )
@@ -83,7 +83,7 @@ map[ "TreasureChest" ] = {
 
 
 
-map[ "Manager" ] = {
+entity[ "Manager" ] = {
     on_start = function()
         script:request( "Cloud", "animation5", 5 )
         script:request( "Cloud", "animation1", 1 )

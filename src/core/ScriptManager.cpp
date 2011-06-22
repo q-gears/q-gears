@@ -6,6 +6,7 @@
 #include "DebugDraw.h"
 #include "Logger.h"
 #include "Timer.h"
+#include "Utilites.h"
 extern "C"
 {
     #include "library/lua/lua.h"
@@ -89,19 +90,14 @@ ScriptManager::Update()
                         current_script->paused_script_start.entity = "";
                     }
 
-                    luabind::object map = luabind::globals( current_script->state )[ "map" ];
-
-                    if( luabind::type( map ) == LUA_TTABLE &&
-                        luabind::type( map[ m_CurrentScriptId.entity ] ) == LUA_TTABLE &&
-                        luabind::type( map[ m_CurrentScriptId.entity ][ current_script->function ] ) == LUA_TFUNCTION )
+                    if( luabind::type( m_ScriptEntity[ i ].table ) == LUA_TTABLE &&
+                        luabind::type( m_ScriptEntity[ i ].table[ current_script->function ] ) == LUA_TFUNCTION )
                     {
-                        luabind::object table = map[ m_CurrentScriptId.entity ];
-
                         int ret = 0;
 
                         try
                         {
-                            ret = luabind::resume_function< int >( table[ current_script->function ], table );
+                            ret = luabind::resume_function< int >( m_ScriptEntity[ i ].table[ current_script->function ], m_ScriptEntity[ i ].table );
                         }
                         catch( luabind::error& e )
                         {
@@ -174,8 +170,6 @@ ScriptManager::Update()
                     current_script->wait = false;
                 }
             }
-
-            m_CurrentScriptId.entity = "";
         }
     }
 
@@ -245,7 +239,7 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
     {
         if( m_ScriptEntity[ i ].name == entity_name )
         {
-            LOG_WARNING( "Entity \"" + entity_name + "\" already exist in script manager." );
+            LOG_WARNING( "Script entity \"" + entity_name + "\" already exist in script manager." );
             return;
         }
     }
@@ -263,6 +257,24 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
     script.wait = false;
     script.yield = false;
     script_entity.queue.push_back( script );
+
+    Ogre::StringVector table_path = StringTokenise( entity_name, "." );
+    luabind::object table = luabind::globals( script.state );
+    for( int i = 0; i < table_path.size(); ++i )
+    {
+        table = table[ table_path[ i ] ];
+
+        if( luabind::type( table ) == LUA_TTABLE )
+        {
+            script_entity.table = table;
+        }
+        else
+        {
+            LOG_ERROR( "Script entity \"" + entity_name + "\" try use table \"" + table_path[ i ] + "\" which is not a table. Table will not be added and entity won't work." );
+            script_entity.table = luabind::object();
+            break;
+        }
+    }
 
     m_ScriptEntity.push_back( script_entity );
 }

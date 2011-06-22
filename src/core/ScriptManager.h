@@ -16,10 +16,10 @@ class GameModule;
 
 struct ScriptId
 {
-    ScriptId(): function( "" ), entity( "" ){}
+    ScriptId(): entity( "" ), function( "" ){}
 
-    Ogre::String function;
     Ogre::String entity;
+    Ogre::String function;
 };
 
 
@@ -48,6 +48,7 @@ struct ScriptEntity
     ScriptEntity(): name( "" ), resort( false ){}
 
     Ogre::String name;
+    luabind::object table;
     std::vector< QueueScript > queue;
     bool resort;
 };

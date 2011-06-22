@@ -116,14 +116,14 @@ EntityManager::Clear()
 
     for( int i = 0; i < m_EntityModels.size(); ++i )
     {
-        ScriptManager::getSingleton().RemoveEntity( m_EntityModels[ i ]->GetName() );
+        ScriptManager::getSingleton().RemoveEntity( "entity." + m_EntityModels[ i ]->GetName() );
         delete m_EntityModels[ i ];
     }
     m_EntityModels.clear();
 
     for( int i = 0; i < m_EntityScripts.size(); ++i )
     {
-        ScriptManager::getSingleton().RemoveEntity( m_EntityScripts[ i ] );
+        ScriptManager::getSingleton().RemoveEntity( "entity." + m_EntityScripts[ i ] );
     }
 
     m_SceneNode->removeAndDestroyAllChildren();
@@ -149,7 +149,7 @@ EntityManager::AddEntityModel( const Ogre::String& name, const Ogre::String& fil
 
     m_EntityModels.push_back( entity );
 
-    ScriptManager::getSingleton().AddEntity( entity->GetName() );
+    ScriptManager::getSingleton().AddEntity( "entity." + entity->GetName() );
     SetEntityOnWalkmesh( entity ); // temporary
 }
 
@@ -159,7 +159,7 @@ void
 EntityManager::AddEntityScript( const Ogre::String& name )
 {
     m_EntityScripts.push_back( name );
-    ScriptManager::getSingleton().AddEntity( name );
+    ScriptManager::getSingleton().AddEntity( "entity." + name );
 }
 
 
