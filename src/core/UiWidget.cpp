@@ -10,9 +10,10 @@
 
 UiWidget::UiWidget( const Ogre::String& name ):
     m_Name( name ),
-    m_Parent( NULL )
+    m_Parent( NULL ),
+    m_Colour( 1, 1, 1, 1 )
 {
-    CreateQuadVertexBuffer();
+    Initialise();
 }
 
 
@@ -20,8 +21,26 @@ UiWidget::UiWidget( const Ogre::String& name ):
 UiWidget::UiWidget( const Ogre::String& name, UiWidget* parent ):
     m_Name( name ),
     m_Parent( parent ),
-
     m_Colour( 1, 1, 1, 1 )
+{
+    Initialise();
+}
+
+
+
+UiWidget::~UiWidget()
+{
+    ScriptManager::getSingleton().RemoveEntity( "ui." + m_Name );
+
+    RemoveAllChildren();
+
+    DestroyQuadVertexBuffer();
+}
+
+
+
+void
+UiWidget::Initialise()
 {
     ScriptManager::getSingleton().AddEntity( "ui." + m_Name );
 
@@ -38,17 +57,6 @@ UiWidget::UiWidget( const Ogre::String& name, UiWidget* parent ):
     pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
     CreateQuadVertexBuffer();
-}
-
-
-
-UiWidget::~UiWidget()
-{
-    ScriptManager::getSingleton().RemoveEntity( "ui." + m_Name );
-
-    RemoveAllChildren();
-
-    DestroyQuadVertexBuffer();
 }
 
 

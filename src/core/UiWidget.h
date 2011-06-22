@@ -16,6 +16,8 @@ public:
                         UiWidget( const Ogre::String& name, UiWidget* parent );
     virtual            ~UiWidget();
 
+    void                Initialise();
+
     void                Update();
     void                Render();
 

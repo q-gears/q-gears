@@ -23565,7 +23565,7 @@
 	<OgreSingleton.h>
 	"UiWidget.h"
 
-1308678723 d:\my\1\svn\q-gears\src\core\uiwidget.h
+1308768712 d:\my\1\svn\q-gears\src\core\uiwidget.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
@@ -23579,7 +23579,7 @@
 	"Logger.h"
 	"ScriptManager.h"
 
-1308767173 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
+1308768569 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	"ConfigVar.h"
 	"DebugDraw.h"
