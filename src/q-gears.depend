@@ -20364,7 +20364,7 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1308373416 source:d:\my\1\svn\q-gears\src\main.cpp
+1308768151 source:d:\my\1\svn\q-gears\src\main.cpp
 	<OgreRoot.h>
 	<OIS.h>
 	"Main.h"
@@ -20469,7 +20469,7 @@
 	<OgreCamera.h>
 	<OgreSimpleRenderable.h>
 
-1306971021 d:\my\1\svn\q-gears\src\core\scriptmanager.h
+1308763882 d:\my\1\svn\q-gears\src\core\scriptmanager.h
 	<OgreSingleton.h>
 	<OgreString.h>
 	"library/lua/lua.h"
@@ -21054,10 +21054,10 @@
 1306971020 source:d:\my\1\svn\q-gears\src\core\configcmd.cpp
 	"ConfigCmd.h"
 
-1306971020 source:d:\my\1\svn\q-gears\src\core\configcmdmanager.cpp
+1308763882 source:d:\my\1\svn\q-gears\src\core\configcmdmanager.cpp
 	"ConfigCmdManager.h"
+	"ConfigCmdManagerCommands.h"
 	"Assert.h"
-	"ConfigCmdManagerCommands.cpp"
 
 1306971020 d:\my\1\svn\q-gears\src\core\assert.h
 	<cassert>
@@ -21135,7 +21135,7 @@
 	"EntityDirection.h"
 	<OgreHardwareBufferManager.h>
 
-1308373416 source:d:\my\1\svn\q-gears\src\core\entitymanager.cpp
+1308763882 source:d:\my\1\svn\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -21155,7 +21155,7 @@
 	"../core/Logger.h"
 	"../core/Timer.h"
 
-1308373416 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
+1308767193 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
 	"GameFrameListner.h"
 	<OgreStringConverter.h>
 	"CameraManager.h"
@@ -21170,11 +21170,11 @@
 	"UiManager.h"
 	"../Main.h"
 
-1306971021 source:d:\my\1\svn\q-gears\src\core\inputmanager.cpp
+1308763882 source:d:\my\1\svn\q-gears\src\core\inputmanager.cpp
 	"InputManager.h"
+	"InputManagerCommands.h"
 	"ConfigCmdManager.h"
 	"Console.h"
-	"InputManagerCommands.cpp"
 	"Logger.h"
 	"Timer.h"
 
@@ -21186,14 +21186,15 @@
 	"Logger.h"
 	"Utilites.h"
 
-1307902883 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
+1308766190 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
-	"ScriptManagerBinds.cpp"
-	"ScriptManagerCommands.cpp"
+	"ScriptManagerBinds.h"
+	"ScriptManagerCommands.h"
 	"ConfigVar.h"
 	"DebugDraw.h"
 	"Logger.h"
 	"Timer.h"
+	"Utilites.h"
 	"library/lua/lua.h"
 	"library/lua/lualib.h"
 	"library/lua/lauxlib.h"
@@ -21216,7 +21217,7 @@
 	"Timer.h"
 	"ConfigVar.h"
 
-1306971021 source:d:\my\1\svn\q-gears\src\core\utilites.cpp
+1308678723 source:d:\my\1\svn\q-gears\src\core\utilites.cpp
 	"Utilites.h"
 	<OgreStringConverter.h>
 
@@ -23559,28 +23560,31 @@
 	"Logger.h"
 	"ScriptManager.h"
 
-1308501987 d:\my\1\svn\q-gears\src\core\uimanager.h
+1308768301 d:\my\1\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>
 	<OgreSingleton.h>
 	"UiWidget.h"
 
-1308504842 d:\my\1\svn\q-gears\src\core\uiwidget.h
+1308678723 d:\my\1\svn\q-gears\src\core\uiwidget.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
 	<OgreString.h>
 	<vector>
 
-1308504609 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
+1308768069 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
 	"Logger.h"
+	"ScriptManager.h"
 
-1308504746 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
+1308767173 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	"ConfigVar.h"
 	"DebugDraw.h"
+	"Logger.h"
+	"ScriptManager.h"
 
 1305697740 g:\my\svn\q-gears\src\core\configcmdmanagercommands.h
 	<OgreStringConverter.h>
@@ -23606,6 +23610,33 @@
 	"EntityManager.h"
 
 1305613407 g:\my\svn\q-gears\src\core\scriptmanagercommands.h
+	"ConfigCmdManager.h"
+	"Console.h"
+
+1308763882 d:\my\1\svn\q-gears\src\core\configcmdmanagercommands.h
+	<OgreStringConverter.h>
+	"Console.h"
+	"ConfigCmdManager.h"
+	"ConfigVarManager.h"
+	"EntityManager.h"
+	"Logger.h"
+	"XmlMapFile.h"
+	"XmlMapsFile.h"
+
+1308763882 d:\my\1\svn\q-gears\src\core\inputmanagercommands.h
+	<OgreStringConverter.h>
+	"Console.h"
+	"ConfigCmdManager.h"
+	"ConfigVarManager.h"
+	"Logger.h"
+	"Utilites.h"
+
+1308763882 d:\my\1\svn\q-gears\src\core\scriptmanagerbinds.h
+	"Logger.h"
+	"Entity.h"
+	"EntityManager.h"
+
+1308763882 d:\my\1\svn\q-gears\src\core\scriptmanagercommands.h
 	"ConfigCmdManager.h"
 	"Console.h"
 

@@ -124,9 +124,9 @@ main(int argc, char *argv[])
     delete frame_listener;
     // destroy before script manager because it removes things from it.
     delete entity_manager;
+    delete ui_manager;
     delete script_manager;
     delete console;
-    delete ui_manager;
     delete camera_manager;
     delete input_manager;
     delete debug_draw;
