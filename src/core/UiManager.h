@@ -21,7 +21,7 @@ public:
     void renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
 
 private:
-    UiWidget* m_BaseWidget;
+    std::vector< UiWidget* > m_Widgets;
 };
 
 

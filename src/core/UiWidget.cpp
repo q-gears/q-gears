@@ -10,17 +10,18 @@
 
 UiWidget::UiWidget( const Ogre::String& name ):
     m_Name( name ),
-    m_Parent( NULL ),
-
-    m_Colour( 1, 1, 1, 1 )
+    m_Parent( NULL )
 {
+    CreateQuadVertexBuffer();
 }
 
 
 
 UiWidget::UiWidget( const Ogre::String& name, UiWidget* parent ):
     m_Name( name ),
-    m_Parent( parent )
+    m_Parent( parent ),
+
+    m_Colour( 1, 1, 1, 1 )
 {
     ScriptManager::getSingleton().AddEntity( "ui." + m_Name );
 
@@ -66,14 +67,15 @@ UiWidget::Update()
 void
 UiWidget::Render()
 {
-    m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
-    m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
-    m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
-
     if( m_QuadRenderOp.vertexData->vertexCount != 0 )
     {
+        m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
+        m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
+        m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
+
         m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
         m_RenderSystem->_render( m_QuadRenderOp );
+
         //m_QuadRenderOp.vertexData->vertexCount = 0;
     }
 

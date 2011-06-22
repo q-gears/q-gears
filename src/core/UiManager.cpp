@@ -2,6 +2,7 @@
 
 #include "ConfigVar.h"
 #include "DebugDraw.h"
+#include "Logger.h"
 #include "ScriptManager.h"
 
 
@@ -16,8 +17,6 @@ template<>UiManager *Ogre::Singleton< UiManager >::ms_Singleton = NULL;
 
 UiManager::UiManager()
 {
-    m_BaseWidget = new UiWidget( "ui" );
-
     Ogre::Root::getSingleton().getSceneManager( "Scene" )->addRenderQueueListener( this );
 }
 
@@ -27,7 +26,10 @@ UiManager::~UiManager()
 {
     Ogre::Root::getSingleton().getSceneManager( "Scene" )->removeRenderQueueListener( this );
 
-    delete m_BaseWidget;
+    for( int i = 0; i < m_Widgets.size(); ++i )
+    {
+        delete m_Widgets[ i ];
+    }
 }
 
 
@@ -40,7 +42,7 @@ UiManager::Initialise()
 
 
 
-    UiWidget* widget = new UiWidget( "StartScreen", m_BaseWidget );
+    UiWidget* widget = new UiWidget( "StartScreen" );
 
     UiWidget* widget1 = new UiWidget( "StartScreen.Background", widget );
     widget1->SetColour( 1, 1, 1, 1 );
@@ -58,7 +60,7 @@ UiManager::Initialise()
     widget4->SetColour( 0, 0, 0, 1 );
     widget4->Quad( 10, 20, 20, 20, 20, 30, 10, 30 );
     widget->AddChild( widget4 );
-    m_BaseWidget->AddChild( widget );
+    m_Widgets.push_back( widget );
     // </test code>
 }
 
@@ -67,7 +69,10 @@ UiManager::Initialise()
 void
 UiManager::Update()
 {
-    m_BaseWidget->Update();
+    for( int i = 0; i < m_Widgets.size(); ++i )
+    {
+        m_Widgets[ i ]->Update();
+    }
 
 
 
@@ -87,6 +92,9 @@ UiManager::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invoc
 {
     if( queueGroupId == Ogre::RENDER_QUEUE_OVERLAY )
     {
-        m_BaseWidget->Render();
+        for( int i = 0; i < m_Widgets.size(); ++i)
+        {
+            m_Widgets[ i ]->Render();
+        }
     }
 }
