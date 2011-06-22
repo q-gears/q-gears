@@ -14,6 +14,8 @@ public:
     UiManager();
     virtual ~UiManager();
 
+    void Initialise();
+
     void Update();
 
     void renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );

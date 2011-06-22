@@ -1,6 +1,6 @@
 #include "ScriptManager.h"
-#include "ScriptManagerBinds.inc"
-#include "ScriptManagerCommands.inc"
+#include "ScriptManagerBinds.h"
+#include "ScriptManagerCommands.h"
 
 #include "ConfigVar.h"
 #include "DebugDraw.h"
@@ -90,7 +90,8 @@ ScriptManager::Update()
                         current_script->paused_script_start.entity = "";
                     }
 
-                    if( luabind::type( m_ScriptEntity[ i ].table ) == LUA_TTABLE &&
+                    if( m_ScriptEntity[ i ].table.is_valid() &&
+                        luabind::type( m_ScriptEntity[ i ].table ) == LUA_TTABLE &&
                         luabind::type( m_ScriptEntity[ i ].table[ current_script->function ] ) == LUA_TFUNCTION )
                     {
                         int ret = 0;
@@ -124,7 +125,7 @@ ScriptManager::Update()
                     }
                     else
                     {
-                        LOG_WARNING( "Script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "' doesn't exist in table \"map\"." );
+                        LOG_WARNING( "Script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "' doesn't exist." );
                         RemoveEntityTopScript( m_ScriptEntity[ i ] );
                     }
                 }
@@ -270,7 +271,7 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
         }
         else
         {
-            LOG_ERROR( "Script entity \"" + entity_name + "\" try use table \"" + table_path[ i ] + "\" which is not a table. Table will not be added and entity won't work." );
+            LOG_WARNING( "Script entity \"" + entity_name + "\" try use table \"" + table_path[ i ] + "\" which is not a table. Table will not be added and entity won't work." );
             script_entity.table = luabind::object();
             break;
         }

@@ -45,7 +45,7 @@ ui[ "StartScreen" ] = {
 
     to_continue = function()
         ui:get_entity( "ContinueMenu" ):Show()
-    end
+    end,
 
 
 

@@ -4,6 +4,7 @@
 #include <OgreMaterialManager.h>
 
 #include "Logger.h"
+#include "ScriptManager.h"
 
 
 
@@ -13,6 +14,16 @@ UiWidget::UiWidget( const Ogre::String& name ):
 
     m_Colour( 1, 1, 1, 1 )
 {
+}
+
+
+
+UiWidget::UiWidget( const Ogre::String& name, UiWidget* parent ):
+    m_Name( name ),
+    m_Parent( parent )
+{
+    ScriptManager::getSingleton().AddEntity( "ui." + m_Name );
+
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
 
@@ -30,16 +41,10 @@ UiWidget::UiWidget( const Ogre::String& name ):
 
 
 
-UiWidget::UiWidget( const Ogre::String& name, UiWidget* parent ):
-    m_Name( name ),
-    m_Parent( parent )
-{
-}
-
-
-
 UiWidget::~UiWidget()
 {
+    ScriptManager::getSingleton().RemoveEntity( "ui." + m_Name );
+
     RemoveAllChildren();
 
     DestroyQuadVertexBuffer();

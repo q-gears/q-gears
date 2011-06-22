@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include "InputManagerCommands.inc"
+#include "InputManagerCommands.h"
 
 #include "ConfigCmdManager.h"
 #include "Console.h"

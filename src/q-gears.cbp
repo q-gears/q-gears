@@ -73,7 +73,7 @@
 		<Unit filename="core\ConfigCmd.h" />
 		<Unit filename="core\ConfigCmdManager.cpp" />
 		<Unit filename="core\ConfigCmdManager.h" />
-		<Unit filename="core\ConfigCmdManagerCommands.inc" />
+		<Unit filename="core\ConfigCmdManagerCommands.h" />
 		<Unit filename="core\ConfigFile.cpp" />
 		<Unit filename="core\ConfigFile.h" />
 		<Unit filename="core\ConfigVar.cpp" />
@@ -99,13 +99,13 @@
 		<Unit filename="core\GameFrameListner.h" />
 		<Unit filename="core\InputManager.cpp" />
 		<Unit filename="core\InputManager.h" />
-		<Unit filename="core\InputManagerCommands.inc" />
+		<Unit filename="core\InputManagerCommands.h" />
 		<Unit filename="core\Logger.h" />
 		<Unit filename="core\Module.h" />
 		<Unit filename="core\ScriptManager.cpp" />
 		<Unit filename="core\ScriptManager.h" />
-		<Unit filename="core\ScriptManagerBinds.inc" />
-		<Unit filename="core\ScriptManagerCommands.inc" />
+		<Unit filename="core\ScriptManagerBinds.h" />
+		<Unit filename="core\ScriptManagerCommands.h" />
 		<Unit filename="core\Timer.cpp" />
 		<Unit filename="core\Timer.h" />
 		<Unit filename="core\UiManager.cpp" />

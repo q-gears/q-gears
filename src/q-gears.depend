@@ -21954,7 +21954,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1308308114 source:g:\my\svn\q-gears\src\main.cpp
+1308751237 source:g:\my\svn\q-gears\src\main.cpp
 	<OgreRoot.h>
 	<OIS.h>
 	"Main.h"
@@ -22547,7 +22547,7 @@
 1305781273 g:\my\svn\q-gears\src\core\timer.h
 	<OgreSingleton.h>
 
-1308552570 g:\my\svn\q-gears\src\core\uimanager.h
+1308751212 g:\my\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>
 	<OgreSingleton.h>
 	"UiWidget.h"
@@ -22641,10 +22641,10 @@
 1305613408 source:g:\my\svn\q-gears\src\core\configcmd.cpp
 	"ConfigCmd.h"
 
-1305613407 source:g:\my\svn\q-gears\src\core\configcmdmanager.cpp
+1308750035 source:g:\my\svn\q-gears\src\core\configcmdmanager.cpp
 	"ConfigCmdManager.h"
+	"ConfigCmdManagerCommands.h"
 	"Assert.h"
-	"ConfigCmdManagerCommands.cpp"
 
 1305781273 g:\my\svn\q-gears\src\core\assert.h
 	<cassert>
@@ -22764,11 +22764,11 @@
 	"UiManager.h"
 	"../Main.h"
 
-1305613408 source:g:\my\svn\q-gears\src\core\inputmanager.cpp
+1308750050 source:g:\my\svn\q-gears\src\core\inputmanager.cpp
 	"InputManager.h"
+	"InputManagerCommands.h"
 	"ConfigCmdManager.h"
 	"Console.h"
-	"InputManagerCommands.cpp"
 	"Logger.h"
 	"Timer.h"
 
@@ -22780,10 +22780,10 @@
 	"Logger.h"
 	"Utilites.h"
 
-1308747723 source:g:\my\svn\q-gears\src\core\scriptmanager.cpp
+1308752601 source:g:\my\svn\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
-	"ScriptManagerBinds.cpp"
-	"ScriptManagerCommands.cpp"
+	"ScriptManagerBinds.h"
+	"ScriptManagerCommands.h"
 	"ConfigVar.h"
 	"DebugDraw.h"
 	"Logger.h"
@@ -23546,16 +23546,18 @@
 	<OgreString.h>
 	<vector>
 
-1308663320 source:g:\my\svn\q-gears\src\core\uimanager.cpp
+1308751883 source:g:\my\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	"ConfigVar.h"
 	"DebugDraw.h"
+	"ScriptManager.h"
 
-1308662686 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
+1308751841 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
 	"Logger.h"
+	"ScriptManager.h"
 
 1308501987 d:\my\1\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>
@@ -23579,4 +23581,31 @@
 	"UiManager.h"
 	"ConfigVar.h"
 	"DebugDraw.h"
+
+1305697740 g:\my\svn\q-gears\src\core\configcmdmanagercommands.h
+	<OgreStringConverter.h>
+	"Console.h"
+	"ConfigCmdManager.h"
+	"ConfigVarManager.h"
+	"EntityManager.h"
+	"Logger.h"
+	"XmlMapFile.h"
+	"XmlMapsFile.h"
+
+1305613407 g:\my\svn\q-gears\src\core\inputmanagercommands.h
+	<OgreStringConverter.h>
+	"Console.h"
+	"ConfigCmdManager.h"
+	"ConfigVarManager.h"
+	"Logger.h"
+	"Utilites.h"
+
+1305781273 g:\my\svn\q-gears\src\core\scriptmanagerbinds.h
+	"Logger.h"
+	"Entity.h"
+	"EntityManager.h"
+
+1305613407 g:\my\svn\q-gears\src\core\scriptmanagercommands.h
+	"ConfigCmdManager.h"
+	"Console.h"
 

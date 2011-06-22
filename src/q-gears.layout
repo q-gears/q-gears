@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="Main.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="330" topLine="6" />
+	<File name="Main.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="2578" topLine="76" />
 	</File>
 	<File name="core\CameraManager.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="104" topLine="0" />
@@ -16,7 +16,7 @@
 	<File name="core\ConfigCmdManager.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1626" topLine="57" />
 	</File>
-	<File name="core\ConfigCmdManager.h" open="1" top="1" tabpos="0">
+	<File name="core\ConfigCmdManager.h" open="0" top="0" tabpos="0">
 		<Cursor position="485" topLine="0" />
 	</File>
 	<File name="core\ConfigFile.cpp" open="0" top="0" tabpos="0">
@@ -67,11 +67,11 @@
 	<File name="core\Module.h" open="0" top="0" tabpos="0">
 		<Cursor position="408" topLine="20" />
 	</File>
-	<File name="core\ScriptManager.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="9741" topLine="246" />
+	<File name="core\ScriptManager.cpp" open="1" top="1" tabpos="6">
+		<Cursor position="6968" topLine="156" />
 	</File>
-	<File name="core\ScriptManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="352" topLine="0" />
+	<File name="core\ScriptManager.h" open="1" top="0" tabpos="5">
+		<Cursor position="1375" topLine="53" />
 	</File>
 	<File name="core\Timer.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="227" topLine="6" />
@@ -79,14 +79,14 @@
 	<File name="core\Timer.h" open="0" top="0" tabpos="0">
 		<Cursor position="143" topLine="0" />
 	</File>
-	<File name="core\UiManager.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="614" topLine="0" />
+	<File name="core\UiManager.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="749" topLine="24" />
 	</File>
-	<File name="core\UiManager.h" open="0" top="0" tabpos="4">
-		<Cursor position="112" topLine="0" />
+	<File name="core\UiManager.h" open="1" top="0" tabpos="2">
+		<Cursor position="313" topLine="0" />
 	</File>
-	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="7">
-		<Cursor position="889" topLine="0" />
+	<File name="core\UiWidget.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1100" topLine="18" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="6">
 		<Cursor position="906" topLine="0" />

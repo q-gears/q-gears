@@ -89,7 +89,7 @@ main(int argc, char *argv[])
     UiManager* ui_manager = new UiManager();
     Console* console = new Console();
 
-    // init after game managers because it attack them to script
+    // init after game managers because it attach them to script
     ScriptManager* script_manager = new ScriptManager();
 
 
@@ -104,6 +104,11 @@ main(int argc, char *argv[])
         ConfigFile config;
         config.Execute( "./data/config.cfg" );
     }
+
+
+
+    // init ui and run it scripts
+    ui_manager->Initialise();
 
 
 
