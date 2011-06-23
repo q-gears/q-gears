@@ -1,6 +1,7 @@
-<window name="StartScreen">
-    <object name="Background" />
-    <object name="StartButton" />
-    <object name="ContinueButton" />
-    <object name="Cursor" />
-</window>
+<screen name="StartScreen" script="ui/screens/start_menu.lua">
+    <sprite name="Background" image="ui/screens/start_menu_background.png" />
+    <widget name="Background" colour="1 1 1 1" point1="10 10" point2="100 10" point3="100 100" point4="10 100" />
+    <widget name="StartButton" colour="1 0 0 1" point1="20 20" point2="90 20" point3="90 30" point4="20 30" />
+    <widget name="ContinueButton" colour="0 1 0 1" point1="20 40" point2="90 40" point3="90 50" point4="20 50" />
+    <widget name="Cursor" colour="0 0 0 1" point1="10 20" point2="20 20" point3="20 30" point4="10 30" />
+</screen>

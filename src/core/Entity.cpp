@@ -409,7 +409,7 @@ Entity::ScriptAnimationSync()
 {
     ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
 
-    LOG_TRIVIAL( "[SCRIPT] Wait entity \"" + m_Name + "\" animation for function '" + script.function + "' in entity \"" + script.entity + "\"." );
+    LOG_TRIVIAL( "[SCRIPT] Wait entity \"" + m_Name + "\" animation for function \"" + script.function + "\" in script entity \"" + script.entity + "\"." );
 
     m_AnimationSync.push_back( script );
     return -1;

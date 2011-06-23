@@ -26,16 +26,16 @@ XmlFile::~XmlFile()
 
 
 const bool
-XmlFile::GetBool(TiXmlNode* node, const Ogre::String& tag) const
+XmlFile::GetBool( TiXmlNode* node, const Ogre::String& tag ) const
 {
     bool ret = false;
 
-    if (node->Type() == TiXmlNode::TINYXML_ELEMENT)
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {
-        const std::string* string = node->ToElement()->Attribute(tag);
-        if (string != NULL)
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
         {
-            ret = Ogre::StringConverter::parseBool(*string);
+            ret = Ogre::StringConverter::parseBool( *string );
         }
     }
 
@@ -45,16 +45,16 @@ XmlFile::GetBool(TiXmlNode* node, const Ogre::String& tag) const
 
 
 const int
-XmlFile::GetInt(TiXmlNode* node, const Ogre::String& tag) const
+XmlFile::GetInt( TiXmlNode* node, const Ogre::String& tag ) const
 {
     int ret = 0;
 
-    if (node->Type() == TiXmlNode::TINYXML_ELEMENT)
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {
-        const std::string* string = node->ToElement()->Attribute(tag);
-        if (string != NULL)
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
         {
-            ret = Ogre::StringConverter::parseInt(*string);
+            ret = Ogre::StringConverter::parseInt( *string );
         }
     }
 
@@ -64,16 +64,16 @@ XmlFile::GetInt(TiXmlNode* node, const Ogre::String& tag) const
 
 
 const float
-XmlFile::GetFloat(TiXmlNode* node, const Ogre::String& tag) const
+XmlFile::GetFloat( TiXmlNode* node, const Ogre::String& tag ) const
 {
     float ret = 0;
 
-    if (node->Type() == TiXmlNode::TINYXML_ELEMENT)
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {
-        const std::string* string = node->ToElement()->Attribute(tag);
-        if (string != NULL)
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
         {
-            ret = Ogre::StringConverter::parseReal(*string);
+            ret = Ogre::StringConverter::parseReal( *string );
         }
     }
 
@@ -83,14 +83,14 @@ XmlFile::GetFloat(TiXmlNode* node, const Ogre::String& tag) const
 
 
 const Ogre::String
-XmlFile::GetString(TiXmlNode* node, const Ogre::String& tag) const
+XmlFile::GetString( TiXmlNode* node, const Ogre::String& tag ) const
 {
-    Ogre::String ret("");
+    Ogre::String ret( "" );
 
-    if (node->Type() == TiXmlNode::TINYXML_ELEMENT)
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {
-        const std::string* string = node->ToElement()->Attribute(tag);
-        if (string != NULL)
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
         {
             ret = *string;
         }
@@ -129,17 +129,37 @@ XmlFile::GetText(TiXmlNode* node) const
 */
 
 
+
+const Ogre::Vector2
+XmlFile::GetVector2( TiXmlNode* node, const Ogre::String& tag ) const
+{
+    Ogre::Vector2 ret = Ogre::Vector2::ZERO;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseVector2( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
 const Ogre::Vector3
-XmlFile::GetVector3(TiXmlNode* node, const Ogre::String& tag) const
+XmlFile::GetVector3( TiXmlNode* node, const Ogre::String& tag ) const
 {
     Ogre::Vector3 ret = Ogre::Vector3::ZERO;
 
-    if (node->Type() == TiXmlNode::TINYXML_ELEMENT)
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {
-        const std::string* string = node->ToElement()->Attribute(tag);
-        if (string != NULL)
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
         {
-            ret = Ogre::StringConverter::parseVector3(*string);
+            ret = Ogre::StringConverter::parseVector3( *string );
         }
     }
 
@@ -149,16 +169,35 @@ XmlFile::GetVector3(TiXmlNode* node, const Ogre::String& tag) const
 
 
 const Ogre::Matrix4
-XmlFile::GetMatrix4(TiXmlNode* node, const Ogre::String& tag) const
+XmlFile::GetMatrix4( TiXmlNode* node, const Ogre::String& tag ) const
 {
     Ogre::Matrix4 ret = Ogre::Matrix4::IDENTITY;
 
-    if (node->Type() == TiXmlNode::TINYXML_ELEMENT)
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {
-        const std::string* string = node->ToElement()->Attribute(tag);
-        if (string != NULL)
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
         {
-            ret = Ogre::StringConverter::parseMatrix4(*string);
+            ret = Ogre::StringConverter::parseMatrix4( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+const Ogre::ColourValue
+XmlFile::GetColourValue( TiXmlNode* node, const Ogre::String& tag ) const
+{
+    Ogre::ColourValue ret = Ogre::ColourValue::ZERO;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseColourValue( *string );
         }
     }
 

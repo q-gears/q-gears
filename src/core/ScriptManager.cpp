@@ -90,15 +90,34 @@ ScriptManager::Update()
                         current_script->paused_script_start.entity = "";
                     }
 
-                    if( m_ScriptEntity[ i ].table.is_valid() &&
-                        luabind::type( m_ScriptEntity[ i ].table ) == LUA_TTABLE &&
-                        luabind::type( m_ScriptEntity[ i ].table[ current_script->function ] ) == LUA_TFUNCTION )
+
+
+                    // get real table by name
+                    Ogre::StringVector table_path = StringTokenise( m_CurrentScriptId.entity, "." );
+                    luabind::object table = luabind::globals( current_script->state );
+                    for( int i = 0; i < table_path.size(); ++i )
+                    {
+                        table = table[ table_path[ i ] ];
+
+                        if( luabind::type( table ) != LUA_TTABLE )
+                        {
+                            LOG_WARNING( "Script entity \"" + m_CurrentScriptId.entity + "\" try run script on table \"" + table_path[ i ] + "\" which is not a table." );
+                            table = luabind::object();
+                            break;
+                        }
+                    }
+
+
+
+                    if( table.is_valid() &&
+                        luabind::type( table ) == LUA_TTABLE &&
+                        luabind::type( table[ current_script->function ] ) == LUA_TFUNCTION )
                     {
                         int ret = 0;
 
                         try
                         {
-                            ret = luabind::resume_function< int >( m_ScriptEntity[ i ].table[ current_script->function ], m_ScriptEntity[ i ].table );
+                            ret = luabind::resume_function< int >( table[ current_script->function ], table );
                         }
                         catch( luabind::error& e )
                         {
@@ -224,7 +243,7 @@ ScriptManager::RunString( const Ogre::String& lua )
 void
 ScriptManager::RunFile( const Ogre::String& file )
 {
-    if( luaL_dofile( m_LuaState, ( "data/" + file ).c_str() ) == 1 )
+    if( luaL_dofile( m_LuaState, ( "./data/" + file ).c_str() ) == 1 )
     {
         luabind::object error_msg( luabind::from_stack( m_LuaState, -1 ) );
         LOG_WARNING( Ogre::String( luabind::object_cast< std::string >( error_msg ) ) );
@@ -258,25 +277,6 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
     script.wait = false;
     script.yield = false;
     script_entity.queue.push_back( script );
-
-    Ogre::StringVector table_path = StringTokenise( entity_name, "." );
-    luabind::object table = luabind::globals( script.state );
-    for( int i = 0; i < table_path.size(); ++i )
-    {
-        table = table[ table_path[ i ] ];
-
-        if( luabind::type( table ) == LUA_TTABLE )
-        {
-            script_entity.table = table;
-        }
-        else
-        {
-            LOG_WARNING( "Script entity \"" + entity_name + "\" try use table \"" + table_path[ i ] + "\" which is not a table. Table will not be added and entity won't work." );
-            script_entity.table = luabind::object();
-            break;
-        }
-    }
-
     m_ScriptEntity.push_back( script_entity );
 }
 

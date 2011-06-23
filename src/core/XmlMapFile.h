@@ -17,4 +17,4 @@ public:
 
 
 
-#endif // XML_FIELD_MAP_FILE_h
+#endif // XML_MAP_FILE_H

@@ -48,7 +48,6 @@ struct ScriptEntity
     ScriptEntity(): name( "" ), resort( false ){}
 
     Ogre::String name;
-    luabind::object table;
     std::vector< QueueScript > queue;
     bool resort;
 };

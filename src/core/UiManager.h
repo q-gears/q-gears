@@ -18,6 +18,8 @@ public:
 
     void Update();
 
+    void AddWidget( UiWidget* widget );
+
     void renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
 
 private:

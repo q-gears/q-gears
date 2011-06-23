@@ -122,6 +122,10 @@
 		<Unit filename="core\XmlMapFile.h" />
 		<Unit filename="core\XmlMapsFile.cpp" />
 		<Unit filename="core\XmlMapsFile.h" />
+		<Unit filename="core\XmlScreenFile.cpp" />
+		<Unit filename="core\XmlScreenFile.h" />
+		<Unit filename="core\XmlScreensFile.cpp" />
+		<Unit filename="core\XmlScreensFile.h" />
 		<Unit filename="core\XmlWalkmeshFile.cpp" />
 		<Unit filename="core\XmlWalkmeshFile.h" />
 		<Unit filename="core\gui\GuiEffect.cpp" />

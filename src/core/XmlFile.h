@@ -20,8 +20,10 @@ public:
     const float               GetFloat( TiXmlNode* node, const Ogre::String& tag ) const;
     const Ogre::String        GetString( TiXmlNode* node, const Ogre::String& tag ) const;
 //    const Ogre::UTFString     GetText( TiXmlNode* node ) const;
+    const Ogre::Vector2       GetVector2( TiXmlNode* node, const Ogre::String& tag ) const;
     const Ogre::Vector3       GetVector3( TiXmlNode* node, const Ogre::String& tag ) const;
     const Ogre::Matrix4       GetMatrix4( TiXmlNode* node, const Ogre::String& tag ) const;
+    const Ogre::ColourValue   GetColourValue( TiXmlNode* node, const Ogre::String& tag ) const;
 
 protected:
     bool m_NormalFile;
@@ -31,4 +33,4 @@ protected:
 
 
 
-#endif // XML_FILE_h
+#endif // XML_FILE_H
