@@ -1,21 +1,21 @@
-entity = {}
+Entity = {}
 
-entity.i = 0;
+i = 0;
 
 
-entity[ "Cloud" ] = {
+Entity[ "Cloud" ] = {
     on_start = function()
-        local cloud = game:get_entity( "Cloud" )
+        local cloud = entity_manager:get_entity( "Cloud" )
         cloud:move_walkmesh( 1, 1 )
         return 0
     end,
 
     animation1 = function()
-        entity.i = 0;
-        local cloud = game:get_entity( "Cloud" )
-        while entity.i < 5 do
+        i = 0;
+        local cloud = entity_manager:get_entity( "Cloud" )
+        while i < 5 do
             cloud:play_animation( "idle" )
-            entity.i = entity.i + 1
+            i = i + 1
             cloud:animation_sync()
         end
 
@@ -23,11 +23,11 @@ entity[ "Cloud" ] = {
     end,
 
     animation2 = function()
-        entity.i = 0;
-        local cloud = game:get_entity( "Cloud" )
-        while entity.i < 5 do
+        i = 0;
+        local cloud = entity_manager:get_entity( "Cloud" )
+        while i < 5 do
             cloud:play_animation( "walk" )
-            entity.i = entity.i + 1
+            i = i + 1
             cloud:animation_sync()
         end
 
@@ -35,11 +35,11 @@ entity[ "Cloud" ] = {
     end,
 
     animation3 = function()
-        entity.i = 0;
-        local cloud = game:get_entity( "Cloud" )
-        while entity.i < 5 do
+        i = 0;
+        local cloud = entity_manager:get_entity( "Cloud" )
+        while i < 5 do
             cloud:play_animation( "run" )
-            entity.i = entity.i + 1
+            i = i + 1
             cloud:animation_sync()
         end
 
@@ -47,11 +47,11 @@ entity[ "Cloud" ] = {
     end,
 
     animation4 = function()
-        entity.i = 0;
-        local cloud = game:get_entity( "Cloud" )
-        while entity.i < 5 do
+        i = 0;
+        local cloud = entity_manager:get_entity( "Cloud" )
+        while i < 5 do
             cloud:play_animation( "jump" )
-            entity.i = entity.i + 1
+            i = i + 1
             cloud:animation_sync()
         end
 
@@ -59,11 +59,11 @@ entity[ "Cloud" ] = {
     end,
 
     animation5 = function()
-        entity.i = 0;
-        local cloud = game:get_entity( "Cloud" )
-        while entity.i < 5 do
+        i = 0;
+        local cloud = entity_manager:get_entity( "Cloud" )
+        while i < 5 do
             cloud:play_animation( "talk_no" )
-            entity.i = entity.i + 1
+            i = i + 1
             cloud:animation_sync()
         end
 
@@ -73,9 +73,9 @@ entity[ "Cloud" ] = {
 
 
 
-entity[ "TreasureChest" ] = {
+Entity[ "TreasureChest" ] = {
     on_start = function()
-        local chest = game:get_entity( "TreasureChest" )
+        local chest = entity_manager:get_entity( "TreasureChest" )
         chest:play_animation_stop( "idle" )
         return 0
     end,
@@ -83,13 +83,13 @@ entity[ "TreasureChest" ] = {
 
 
 
-entity[ "Manager" ] = {
+Entity[ "Manager" ] = {
     on_start = function()
-        script:request( "entity.Cloud", "animation5", 5 )
-        script:request( "entity.Cloud", "animation1", 1 )
-        script:request( "entity.Cloud", "animation3", 3 )
-        script:request( "entity.Cloud", "animation2", 2 )
-        script:request( "entity.Cloud", "animation4", 4 )
+        script:request( "Entity.Cloud", "animation5", 5 )
+        script:request( "Entity.Cloud", "animation1", 1 )
+        script:request( "Entity.Cloud", "animation3", 3 )
+        script:request( "Entity.Cloud", "animation2", 2 )
+        script:request( "Entity.Cloud", "animation4", 4 )
 
         return 0
     end,

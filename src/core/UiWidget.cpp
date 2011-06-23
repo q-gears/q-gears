@@ -30,7 +30,7 @@ UiWidget::UiWidget( const Ogre::String& name, UiWidget* parent ):
 
 UiWidget::~UiWidget()
 {
-    ScriptManager::getSingleton().RemoveEntity( "ui." + m_Name );
+    ScriptManager::getSingleton().RemoveEntity( "Ui." + m_Name );
 
     RemoveAllChildren();
 
@@ -42,7 +42,7 @@ UiWidget::~UiWidget()
 void
 UiWidget::Initialise()
 {
-    ScriptManager::getSingleton().AddEntity( "ui." + m_Name );
+    ScriptManager::getSingleton().AddEntity( "Ui." + m_Name );
 
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();

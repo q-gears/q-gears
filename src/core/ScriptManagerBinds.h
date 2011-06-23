@@ -67,5 +67,5 @@ ScriptManager::InitBinds()
     ];
 
     luabind::globals( m_LuaState )[ "script" ] = boost::ref( *this );
-    luabind::globals( m_LuaState )[ "game" ] = boost::ref( *( EntityManager::getSingletonPtr() ) );
+    luabind::globals( m_LuaState )[ "entity_manager" ] = boost::ref( *( EntityManager::getSingletonPtr() ) );
 }
