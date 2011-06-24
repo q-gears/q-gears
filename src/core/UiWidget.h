@@ -24,12 +24,14 @@ public:
     const Ogre::String& GetName() const;
 
     void                AddChild( UiWidget *widget );
-    void                RemoveChild( UiWidget *widget );
     UiWidget*           GetChild( const Ogre::String& name );
     void                RemoveAllChildren();
 
     void                SetColour( const float r, const float g, const float b, const float a );
     void                Quad( const float x1, const float y1, const float x2, const float y2, const float x3, const float y3, const float x4, const float y4 );
+
+    void                Show();
+    void                Hide();
 
 private:
                         UiWidget();
@@ -50,6 +52,7 @@ private:
     Ogre::RenderOperation               m_QuadRenderOp;
     Ogre::HardwareVertexBufferSharedPtr m_QuadVertexBuffer;
     int                                 m_QuadMaxVertexCount;
+    bool                                m_Visible;
 };
 
 

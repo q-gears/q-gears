@@ -1,6 +1,8 @@
 #include "Logger.h"
 #include "Entity.h"
 #include "EntityManager.h"
+#include "UiManager.h"
+#include "UiWidget.h"
 
 
 
@@ -56,6 +58,21 @@ ScriptManager::InitBinds()
             .def( "get_entity", ( Entity* ( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntity )
     ];
 
+    // ui widget access
+    luabind::module( m_LuaState )
+    [
+        luabind::class_< UiWidget >( "UiWidget" )
+            .def( "show", ( void( UiWidget::* )() ) &UiWidget::Show )
+            .def( "hide", ( void( UiWidget::* )() ) &UiWidget::Hide )
+    ];
+
+    // ui access
+    luabind::module( m_LuaState )
+    [
+        luabind::class_< UiManager >( "UiManager" )
+            .def( "get_widget", ( UiWidget* ( UiManager::* )( const char* ) ) &UiManager::ScriptGetWidget )
+    ];
+
     // script access
     luabind::module( m_LuaState )
     [
@@ -66,6 +83,7 @@ ScriptManager::InitBinds()
             .def( "request_end_sync", ( int( ScriptManager::* )( const char*, const char*, const int ) ) &ScriptManager::ScriptRequestEndSync, luabind::yield )
     ];
 
-    luabind::globals( m_LuaState )[ "script" ] = boost::ref( *this );
     luabind::globals( m_LuaState )[ "entity_manager" ] = boost::ref( *( EntityManager::getSingletonPtr() ) );
+    luabind::globals( m_LuaState )[ "ui_manager" ] = boost::ref( *( UiManager::getSingletonPtr() ) );
+    luabind::globals( m_LuaState )[ "script" ] = boost::ref( *this );
 }

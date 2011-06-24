@@ -67,13 +67,13 @@
 	<File name="core\Module.h" open="0" top="0" tabpos="0">
 		<Cursor position="408" topLine="20" />
 	</File>
-	<File name="core\ScriptManager.cpp" open="1" top="0" tabpos="2">
+	<File name="core\ScriptManager.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="3602" topLine="185" />
 	</File>
-	<File name="core\ScriptManager.h" open="1" top="0" tabpos="3">
+	<File name="core\ScriptManager.h" open="0" top="0" tabpos="3">
 		<Cursor position="199" topLine="0" />
 	</File>
-	<File name="core\ScriptManagerBinds.h" open="1" top="0" tabpos="4">
+	<File name="core\ScriptManagerBinds.h" open="0" top="0" tabpos="4">
 		<Cursor position="226" topLine="0" />
 	</File>
 	<File name="core\Timer.cpp" open="0" top="0" tabpos="0">
@@ -82,14 +82,14 @@
 	<File name="core\Timer.h" open="0" top="0" tabpos="0">
 		<Cursor position="143" topLine="0" />
 	</File>
-	<File name="core\UiManager.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="640" topLine="0" />
+	<File name="core\UiManager.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="174" topLine="45" />
 	</File>
 	<File name="core\UiManager.h" open="0" top="0" tabpos="2">
 		<Cursor position="291" topLine="0" />
 	</File>
-	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="297" topLine="24" />
+	<File name="core\UiWidget.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="6404" topLine="224" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="5">
 		<Cursor position="429" topLine="0" />
@@ -100,7 +100,7 @@
 	<File name="core\Utilites.h" open="0" top="0" tabpos="0">
 		<Cursor position="352" topLine="0" />
 	</File>
-	<File name="core\XmlFile.cpp" open="1" top="0" tabpos="1">
+	<File name="core\XmlFile.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="4060" topLine="166" />
 	</File>
 	<File name="core\XmlFile.h" open="0" top="0" tabpos="4">
@@ -136,8 +136,8 @@
 	<File name="core\library\luabind\class.hpp" open="0" top="0" tabpos="0">
 		<Cursor position="9126" topLine="305" />
 	</File>
-	<File name="core\library\luabind\detail\policy.hpp" open="1" top="1" tabpos="5">
-		<Cursor position="7423" topLine="296" />
+	<File name="core\library\luabind\detail\policy.hpp" open="0" top="0" tabpos="5">
+		<Cursor position="7424" topLine="296" />
 	</File>
 	<File name="core\library\luabind\luabind.hpp" open="0" top="0" tabpos="0">
 		<Cursor position="1200" topLine="15" />

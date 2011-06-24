@@ -1,9 +1,12 @@
 #include "UiManager.h"
 
+#include <OgreStringVector.h>
+
 #include "ConfigVar.h"
 #include "DebugDraw.h"
 #include "Logger.h"
 #include "ScriptManager.h"
+#include "Utilites.h"
 #include "XmlScreensFile.h"
 
 
@@ -69,6 +72,42 @@ void
 UiManager::AddWidget( UiWidget* widget )
 {
     m_Widgets.push_back( widget );
+}
+
+
+
+UiWidget*
+UiManager::GetWidget( const Ogre::String& name )
+{
+    // get real table by name
+    Ogre::StringVector table_path = StringTokenise( name, "." );
+    UiWidget* widget = NULL;
+
+    if( table_path.size() > 0 )
+    {
+        for( int i = 0; i < m_Widgets.size(); ++i )
+        {
+            if( m_Widgets[ i ]->GetName() == table_path[ 0 ] )
+            {
+                widget = m_Widgets[ i ];
+
+                for( int j = 1; ( j < table_path.size() ) && ( widget != NULL ); ++j )
+                {
+                    widget = widget->GetChild( table_path[ j ] );
+                }
+            }
+        }
+    }
+
+    return widget;
+}
+
+
+
+UiWidget*
+UiManager::ScriptGetWidget( const char* name )
+{
+    return GetWidget( Ogre::String( name ) );
 }
 
 

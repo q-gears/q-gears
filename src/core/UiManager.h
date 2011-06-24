@@ -19,6 +19,8 @@ public:
     void Update();
 
     void AddWidget( UiWidget* widget );
+    UiWidget* GetWidget( const Ogre::String& name );
+    UiWidget* ScriptGetWidget( const char* name );
 
     void renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
 

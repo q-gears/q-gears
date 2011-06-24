@@ -11,7 +11,8 @@
 UiWidget::UiWidget( const Ogre::String& name ):
     m_Name( name ),
     m_Parent( NULL ),
-    m_Colour( 1, 1, 1, 1 )
+    m_Colour( 1, 1, 1, 1 ),
+    m_Visible( false )
 {
     Initialise();
 }
@@ -21,7 +22,8 @@ UiWidget::UiWidget( const Ogre::String& name ):
 UiWidget::UiWidget( const Ogre::String& name, UiWidget* parent ):
     m_Name( name ),
     m_Parent( parent ),
-    m_Colour( 1, 1, 1, 1 )
+    m_Colour( 1, 1, 1, 1 ),
+    m_Visible( false )
 {
     Initialise();
 }
@@ -75,7 +77,7 @@ UiWidget::Update()
 void
 UiWidget::Render()
 {
-    if( m_QuadRenderOp.vertexData->vertexCount != 0 )
+    if( m_Visible != false && m_QuadRenderOp.vertexData->vertexCount != 0 )
     {
         m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
         m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
@@ -109,6 +111,22 @@ void
 UiWidget::AddChild( UiWidget *widget )
 {
     m_Children.push_back( widget );
+}
+
+
+
+UiWidget*
+UiWidget::GetChild( const Ogre::String& name )
+{
+    for( int i = 0; i < m_Children.size(); ++i )
+    {
+        if( m_Children[ i ]->GetName() == name )
+        {
+            return m_Children[ i ];
+        }
+    }
+
+    return NULL;
 }
 
 
@@ -215,6 +233,24 @@ UiWidget::Quad( const float x1, const float y1, const float x2, const float y2, 
     m_QuadRenderOp.vertexData->vertexCount += 6;
 
     m_QuadVertexBuffer->unlock();
+}
+
+
+
+void
+UiWidget::Show()
+{
+    m_Visible = true;
+    ScriptManager::getSingleton().ScriptRequest( ( "Ui." + m_Name ).c_str(), "on_show", 0 );
+}
+
+
+
+void
+UiWidget::Hide()
+{
+    m_Visible = false;
+    ScriptManager::getSingleton().ScriptRequest( ( "Ui." + m_Name ).c_str(), "on_hide", 0 );
 }
 
 
