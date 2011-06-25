@@ -10,6 +10,7 @@
 
 UiWidget::UiWidget( const Ogre::String& name ):
     m_Name( name ),
+    m_PathName( name ),
     m_Parent( NULL ),
     m_Colour( 1, 1, 1, 1 ),
     m_Visible( false )
@@ -19,8 +20,9 @@ UiWidget::UiWidget( const Ogre::String& name ):
 
 
 
-UiWidget::UiWidget( const Ogre::String& name, UiWidget* parent ):
+UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent ):
     m_Name( name ),
+    m_PathName( path_name ),
     m_Parent( parent ),
     m_Colour( 1, 1, 1, 1 ),
     m_Visible( false )
@@ -32,7 +34,7 @@ UiWidget::UiWidget( const Ogre::String& name, UiWidget* parent ):
 
 UiWidget::~UiWidget()
 {
-    ScriptManager::getSingleton().RemoveEntity( "Ui." + m_Name );
+    ScriptManager::getSingleton().RemoveEntity( "Ui." + m_PathName );
 
     RemoveAllChildren();
 
@@ -44,7 +46,7 @@ UiWidget::~UiWidget()
 void
 UiWidget::Initialise()
 {
-    ScriptManager::getSingleton().AddEntity( "Ui." + m_Name );
+    ScriptManager::getSingleton().AddEntity( "Ui." + m_PathName );
 
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
@@ -241,7 +243,7 @@ void
 UiWidget::Show()
 {
     m_Visible = true;
-    ScriptManager::getSingleton().ScriptRequest( ( "Ui." + m_Name ).c_str(), "on_show", 0 );
+    ScriptManager::getSingleton().ScriptRequest( ( "Ui." + m_PathName ).c_str(), "on_show", 0 );
 }
 
 
@@ -250,7 +252,7 @@ void
 UiWidget::Hide()
 {
     m_Visible = false;
-    ScriptManager::getSingleton().ScriptRequest( ( "Ui." + m_Name ).c_str(), "on_hide", 0 );
+    ScriptManager::getSingleton().ScriptRequest( ( "Ui." + m_PathName ).c_str(), "on_hide", 0 );
 }
 
 

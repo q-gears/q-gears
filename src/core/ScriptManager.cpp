@@ -73,28 +73,28 @@ ScriptManager::Update()
                 m_ScriptEntity[ i ].resort = false;
             }
 
-            QueueScript* current_script = &( m_ScriptEntity[ i ].queue[ 0 ] );
+
 
             m_CurrentScriptId.entity = m_ScriptEntity[ i ].name;
-            m_CurrentScriptId.function = current_script->function;
+            m_CurrentScriptId.function = m_ScriptEntity[ i ].queue[ 0 ].function;
 
-            if( current_script->wait == false )
+            if( m_ScriptEntity[ i ].queue[ 0 ].wait == false )
             {
-                if( current_script->yield == false)
+                if( m_ScriptEntity[ i ].queue[ 0 ].yield == false)
                 {
-                    LOG_TRIVIAL( "[SCRIPT] Start script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "'." );
+                    LOG_TRIVIAL( "[SCRIPT] Start script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "'." );
 
-                    if( current_script->paused_script_start.entity != "" )
+                    if( m_ScriptEntity[ i ].queue[ 0 ].paused_script_start.entity != "" )
                     {
-                        ContinueScriptExecution( current_script->paused_script_start );
-                        current_script->paused_script_start.entity = "";
+                        ContinueScriptExecution( m_ScriptEntity[ i ].queue[ 0 ].paused_script_start );
+                        m_ScriptEntity[ i ].queue[ 0 ].paused_script_start.entity = "";
                     }
 
 
 
                     // get real table by name
                     Ogre::StringVector table_path = StringTokenise( m_CurrentScriptId.entity, "." );
-                    luabind::object table = luabind::globals( current_script->state );
+                    luabind::object table = luabind::globals( m_ScriptEntity[ i ].queue[ 0 ].state );
                     for( int i = 0; i < table_path.size(); ++i )
                     {
                         table = table[ table_path[ i ] ];
@@ -111,13 +111,13 @@ ScriptManager::Update()
 
                     if( table.is_valid() &&
                         luabind::type( table ) == LUA_TTABLE &&
-                        luabind::type( table[ current_script->function ] ) == LUA_TFUNCTION )
+                        luabind::type( table[ m_CurrentScriptId.function ] ) == LUA_TFUNCTION )
                     {
                         int ret = 0;
 
                         try
                         {
-                            ret = luabind::resume_function< int >( table[ current_script->function ], table );
+                            ret = luabind::resume_function< int >( table[ m_CurrentScriptId.function ], table );
                         }
                         catch( luabind::error& e )
                         {
@@ -127,36 +127,36 @@ ScriptManager::Update()
 
                         if( ret == 0 )
                         {
-                            LOG_TRIVIAL( "[SCRIPT] Script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "' finished." );
+                            LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' finished." );
                             RemoveEntityTopScript( m_ScriptEntity[ i ] );
                         }
                         else if( ret == 1 )
                         {
-                            LOG_TRIVIAL( "[SCRIPT] Script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "' not paused and will be continued next cycle." );
-                            current_script->yield = true;
+                            LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' not paused and will be continued next cycle." );
+                            m_ScriptEntity[ i ].queue[ 0 ].yield = true;
                         }
                         else
                         {
-                            LOG_TRIVIAL( "[SCRIPT] Script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "' not finished yet." );
-                            current_script->yield = true;
-                            current_script->wait = true;
+                            LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' not finished yet." );
+                            m_ScriptEntity[ i ].queue[ 0 ].yield = true;
+                            m_ScriptEntity[ i ].queue[ 0 ].wait = true;
                         }
                     }
                     else
                     {
-                        LOG_WARNING( "Script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "' doesn't exist." );
+                        LOG_WARNING( "Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' doesn't exist." );
                         RemoveEntityTopScript( m_ScriptEntity[ i ] );
                     }
                 }
                 else
                 {
-                    LOG_TRIVIAL( "[SCRIPT] Continue function '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "'." );
+                    LOG_TRIVIAL( "[SCRIPT] Continue function '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "'." );
 
                     int ret = 0;
 
                     try
                     {
-                        ret = luabind::resume< int >( current_script->state );
+                        ret = luabind::resume< int >( m_ScriptEntity[ i ].queue[ 0 ].state );
                     }
                     catch( luabind::error& e )
                     {
@@ -166,28 +166,28 @@ ScriptManager::Update()
 
                     if( ret == 0 ) // finished
                     {
-                        LOG_TRIVIAL( "[SCRIPT] Script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "' finished." );
+                        LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' finished." );
                         RemoveEntityTopScript( m_ScriptEntity[ i ] );
                     }
                     else if (ret == 1)
                     {
-                        LOG_TRIVIAL( "[SCRIPT] Script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "' not paused and will be continued next cycle." );
+                        LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' not paused and will be continued next cycle." );
                     }
                     else
                     {
-                        LOG_TRIVIAL( "[SCRIPT] Script '" + current_script->function + "' for entity '" + m_CurrentScriptId.entity + "' not finished yet." );
-                        current_script->wait = true;
+                        LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' not finished yet." );
+                        m_ScriptEntity[ i ].queue[ 0 ].wait = true;
                     }
                 }
             }
-            else if( current_script->seconds_to_wait > 0 )
+            else if( m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait > 0 )
             {
-                current_script->seconds_to_wait -= Timer::getSingleton().GetGameTimeDelta();
-                current_script->seconds_to_wait = ( current_script->seconds_to_wait < 0 ) ? 0 : current_script->seconds_to_wait;
+                m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait -= Timer::getSingleton().GetGameTimeDelta();
+                m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait = ( m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait < 0 ) ? 0 : m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait;
 
-                if( current_script->seconds_to_wait == 0 )
+                if( m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait == 0 )
                 {
-                    current_script->wait = false;
+                    m_ScriptEntity[ i ].queue[ 0 ].wait = false;
                 }
             }
         }

@@ -8,6 +8,9 @@ Ui[ "StartScreen" ] = {
         ui_manager:get_widget( "StartScreen.StartButton" ):hide()
         ui_manager:get_widget( "StartScreen.ContinueButton" ):hide()
         ui_manager:get_widget( "StartScreen.Cursor" ):hide()
+
+        ui_manager:get_widget( "StartScreen" ):show()
+        return 0
     end,
 
     on_show = function()
@@ -15,6 +18,11 @@ Ui[ "StartScreen" ] = {
         ui_manager:get_widget( "StartScreen.StartButton" ):show()
         ui_manager:get_widget( "StartScreen.ContinueButton" ):show()
         ui_manager:get_widget( "StartScreen.Cursor" ):show()
+        return 0
+    end,
+
+    on_hide = function()
+        return 0
     end,
 
     on_key_press = function( button )
@@ -37,55 +45,104 @@ Ui[ "StartScreen" ] = {
                 script:request( "Ui.StartScreen.Cursor", "to_start", 0 )
             end
         end
+
+        return 0
     end,
 
     to_start = function()
         -- load map
+        return 0
     end,
 
     to_continue = function()
         ui_manager:get_widget( "ContinueMenu" ):show()
+        return 0
     end,
+
+
+
+    Background = {
+        on_start = function()
+            return 0
+        end,
+
+        on_show = function()
+            return 0
+        end,
+
+        on_hide = function()
+            return 0
+        end,
+    },
 
 
 
     StartButton = {
         focus = false,
 
+        on_start = function()
+            return 0
+        end,
+
         on_show = function()
-            ui_manager:get_widget( "StartScreen.StartButton" ):play_animation( "appear" )
+            --ui_manager:get_widget( "StartScreen.StartButton" ):play_animation( "appear" )
             -- after playing this animation - entity changes to default idle animation.
+            return 0
+        end,
+
+        on_hide = function()
+            return 0
         end,
     },
 
 
 
     ContinueButton = {
+        on_start = function()
+            return 0
+        end,
+
         on_show = function()
-            ui_manager:get_widget( "StartScreen.ContinueButton" ):play_animation( "appear" )
+            --ui_manager:get_widget( "StartScreen.ContinueButton" ):play_animation( "appear" )
             -- after playing this animation - entity changes to default idle animation.
+            return 0
+        end,
+
+        on_hide = function()
+            return 0
         end,
     },
 
 
 
     Cursor = {
+        on_start = function()
+            return 0
+        end,
+
         on_show = function()
             local cursor = ui_manager:get_widget( "StartScreen.Cursor" )
-            cursor:play_animation( "appear" )
-            cursor:animation_sync()
-            cursor:set_default_animation( "position1" )
+            --cursor:play_animation( "appear" )
+            --cursor:animation_sync()
+            --cursor:set_default_animation( "position1" )
             Ui[ "StartScreen" ][ "StartButton" ].focus = true;
+            return 0
+        end,
+
+        on_hide = function()
+            return 0
         end,
 
         to_start = function()
-            cursor:set_default_animation( "position1" )
+            --cursor:set_default_animation( "position1" )
             Ui[ "StartScreen" ][ "StartButton" ].focus = true;
+            return 0
         end,
 
         to_continue = function()
-            cursor:set_default_animation( "position2" )
+            --cursor:set_default_animation( "position2" )
             Ui[ "StartScreen" ][ "StartButton" ].focus = false;
+            return 0
         end
     },
 }

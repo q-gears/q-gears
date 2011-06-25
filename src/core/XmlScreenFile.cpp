@@ -57,7 +57,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
     {
         if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "widget" )
         {
-            Ogre::String name = base_name + "." + GetString( node, "name" );
+            Ogre::String name = GetString( node, "name" );
 
             Ogre::ColourValue colour = GetColourValue( node, "colour" );
             Ogre::Vector2 point1 = GetVector2( node, "point1" );
@@ -65,7 +65,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
             Ogre::Vector2 point3 = GetVector2( node, "point3" );
             Ogre::Vector2 point4 = GetVector2( node, "point4" );
 
-            UiWidget* widget2 = new UiWidget( name, widget );
+            UiWidget* widget2 = new UiWidget( name, base_name + "." + name, widget );
             widget2->SetColour( colour.r, colour.g, colour.b, colour.a );
             widget2->Quad( point1.x, point1.y, point2.x, point2.y, point3.x, point3.y, point4.x, point4.y );
             widget->AddChild( widget2 );

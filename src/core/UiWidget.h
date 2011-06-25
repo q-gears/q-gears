@@ -13,7 +13,7 @@ class UiWidget
 {
 public:
                         UiWidget( const Ogre::String& name );
-                        UiWidget( const Ogre::String& name, UiWidget* parent );
+                        UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent );
     virtual            ~UiWidget();
 
     void                Initialise();
@@ -40,6 +40,7 @@ private:
 
 private:
     Ogre::String             m_Name;
+    Ogre::String             m_PathName;
 
     UiWidget*                m_Parent;
     std::vector< UiWidget* > m_Children;

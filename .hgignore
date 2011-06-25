@@ -2,3 +2,4 @@ syntax: glob
 src/compile/
 utilites/ffvii_field_dat_dumper/compile/
 *.log
+src/compile_d/
