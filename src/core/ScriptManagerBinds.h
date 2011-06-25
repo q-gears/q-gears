@@ -1,3 +1,4 @@
+#include "Console.h"
 #include "Logger.h"
 #include "Entity.h"
 #include "EntityManager.h"
@@ -9,7 +10,7 @@
 void
 ScriptPrint( const char* text )
 {
-    LOG_TRIVIAL( text );
+    Console::getSingleton().AddTextToOutput( text );
 }
 
 
