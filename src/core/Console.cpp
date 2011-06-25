@@ -596,9 +596,8 @@ Console::CompleteInput()
         }
 
         int input_size = m_InputLine.size();
-        const char* str = m_InputLine.c_str();
 
-        Ogre::StringVector params = StringTokenise( m_InputLine, "\t\n ", "\"", 0 );
+        Ogre::StringVector params = StringTokenise( m_InputLine );
 
         if( params.size() == 0 )
         {
@@ -625,7 +624,7 @@ Console::CompleteInput()
             for( int i = 0; i < num_vars; ++i )
             {
                 Ogre::String name = ConfigVarManager::getSingleton().GetConfigVar( i )->GetName();
-                int pos = name.find( str );
+                int pos = name.find( m_InputLine );
                 if( pos == 0 && input_size != name.size() )
                 {
                     Ogre::String part = name.substr( input_size, name.size() - input_size );
@@ -639,7 +638,7 @@ Console::CompleteInput()
             {
                 Ogre::String name = ConfigCmdManager::getSingleton().GetConfigCmd( i )->GetName();
 
-                int pos = name.find(str);
+                int pos = name.find( m_InputLine );
                 if( pos == 0 && name != params[ 0 ] )
                 {
                     Ogre::String part = name.substr( input_size, name.size() - input_size );

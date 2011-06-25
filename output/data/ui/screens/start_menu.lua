@@ -4,12 +4,6 @@ Ui = {}
 
 Ui[ "StartScreen" ] = {
     on_start = function()
-        ui_manager:get_widget( "StartScreen.Background" ):hide()
-        ui_manager:get_widget( "StartScreen.StartButton" ):hide()
-        ui_manager:get_widget( "StartScreen.ContinueButton" ):hide()
-        ui_manager:get_widget( "StartScreen.Cursor" ):hide()
-
-        ui_manager:get_widget( "StartScreen" ):show()
         return 0
     end,
 
@@ -22,6 +16,10 @@ Ui[ "StartScreen" ] = {
     end,
 
     on_hide = function()
+        ui_manager:get_widget( "StartScreen.Background" ):hide()
+        ui_manager:get_widget( "StartScreen.StartButton" ):hide()
+        ui_manager:get_widget( "StartScreen.ContinueButton" ):hide()
+        ui_manager:get_widget( "StartScreen.Cursor" ):hide()
         return 0
     end,
 

@@ -9,28 +9,28 @@
 
 
 void
-CmdBind(const Ogre::StringVector& params)
+CmdBind( const Ogre::StringVector& params )
 {
-    if (params.size() < 3 || params.size() > 4)
+    if( params.size() < 3 || params.size() > 4 )
     {
-        Console::getSingleton().AddTextToOutput("Usage: /bind <key1>+[key2]+[key3] \"<command line>\"");
+        Console::getSingleton().AddTextToOutput( "Usage: /bind <key1>+[key2]+[key3] \"<command line>\"" );
         return;
     }
 
-    Ogre::StringVector keys = Ogre::StringUtil::split(params[1], "+");
+    Ogre::StringVector keys = Ogre::StringUtil::split( params[ 1 ], "+" );
     ButtonList key_codes;
 
-    for (int i = 0; i < keys.size(); ++i)
+    for( int i = 0; i < keys.size(); ++i )
     {
-        key_codes.push_back(StringToKey(keys[i]));
+        key_codes.push_back( StringToKey( keys[ i ] ) );
     }
 
     bool fail = false;
-    for (int i = 0; i < key_codes.size(); ++i)
+    for( int i = 0; i < key_codes.size(); ++i )
     {
-        if (key_codes[i] == OIS::KC_UNASSIGNED)
+        if( key_codes[ i ] == OIS::KC_UNASSIGNED )
         {
-            LOG_ERROR("Failed to bind \"" + params[1] + "\" to command \"" + params[2] + "\". Can't recognize key " + Ogre::StringConverter::toString(i));
+            LOG_ERROR( "Failed to bind \"" + params[ 1 ] + "\" to command \"" + params[ 2 ] + "\". Can't recognize key " + Ogre::StringConverter::toString( i ) );
             fail = true;
         }
     }

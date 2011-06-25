@@ -15,14 +15,15 @@ CreateAutoName( const Ogre::String prefix );
 Ogre::String
 KeyToString( OIS::KeyCode key );
 
+
+
 OIS::KeyCode
 StringToKey( const Ogre::String& str );
 
 
 
-// until someone fix tokenise in ogre - use this fixed version
 Ogre::StringVector
-StringTokenise( const Ogre::String& str, const Ogre::String& delims = "\t\n ", const Ogre::String& doubleDelims = "\"", unsigned int maxSplits = 0 );
+StringTokenise( const Ogre::String& str, const Ogre::String& delimiters = "\t\n ", const Ogre::String& delimiters_preserve = "", const Ogre::String& quote = "\"", const Ogre::String& esc = "\\" );
 
 
 

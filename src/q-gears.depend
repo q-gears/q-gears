@@ -21092,7 +21092,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1306971021 d:\my\1\svn\q-gears\src\core\utilites.h
+1309031294 d:\my\1\svn\q-gears\src\core\utilites.h
 	<OgreString.h>
 	<OgreStringVector.h>
 	<OIS.h>
@@ -21105,7 +21105,7 @@
 1306971020 source:d:\my\1\svn\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1306971020 source:d:\my\1\svn\q-gears\src\core\console.cpp
+1309030767 source:d:\my\1\svn\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
 	<OgreOverlayManager.h>
@@ -21155,7 +21155,7 @@
 	"../core/Logger.h"
 	"../core/Timer.h"
 
-1308767193 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
+1309028171 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
 	"GameFrameListner.h"
 	<OgreStringConverter.h>
 	"CameraManager.h"
@@ -21186,7 +21186,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1308847892 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
+1309006032 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.h"
 	"ScriptManagerCommands.h"
@@ -21217,7 +21217,7 @@
 	"Timer.h"
 	"ConfigVar.h"
 
-1308678723 source:d:\my\1\svn\q-gears\src\core\utilites.cpp
+1309026988 source:d:\my\1\svn\q-gears\src\core\utilites.cpp
 	"Utilites.h"
 	<OgreStringConverter.h>
 
@@ -23576,7 +23576,7 @@
 	<OgreString.h>
 	<vector>
 
-1308991833 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
+1309010772 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
@@ -23632,7 +23632,7 @@
 	"XmlMapFile.h"
 	"XmlMapsFile.h"
 
-1308763882 d:\my\1\svn\q-gears\src\core\inputmanagercommands.h
+1309011074 d:\my\1\svn\q-gears\src\core\inputmanagercommands.h
 	<OgreStringConverter.h>
 	"Console.h"
 	"ConfigCmdManager.h"
@@ -23640,14 +23640,15 @@
 	"Logger.h"
 	"Utilites.h"
 
-1308943819 d:\my\1\svn\q-gears\src\core\scriptmanagerbinds.h
+1309011571 d:\my\1\svn\q-gears\src\core\scriptmanagerbinds.h
+	"Console.h"
 	"Logger.h"
 	"Entity.h"
 	"EntityManager.h"
 	"UiManager.h"
 	"UiWidget.h"
 
-1308763882 d:\my\1\svn\q-gears\src\core\scriptmanagercommands.h
+1309009773 d:\my\1\svn\q-gears\src\core\scriptmanagercommands.h
 	"ConfigCmdManager.h"
 	"Console.h"
 

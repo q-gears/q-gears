@@ -147,70 +147,173 @@ StringToKey(const Ogre::String& str)
 
 
 Ogre::StringVector
-StringTokenise( const Ogre::String& str, const Ogre::String& singleDelims, const Ogre::String& doubleDelims, unsigned int maxSplits )
+StringTokenise( const Ogre::String& str, const Ogre::String& delimiters, const Ogre::String& delimiters_preserve, const Ogre::String& quote, const Ogre::String& esc )
 {
     Ogre::StringVector ret;
-    // Pre-allocate some space for performance
-    ret.reserve( maxSplits ? maxSplits + 1 : 10 );    // 10 is guessed capacity for most case
 
-    unsigned int numSplits = 0;
-    Ogre::String delims = singleDelims + doubleDelims;
+    Ogre::String::size_type pos = 0; // the current position (char) in the string
+    char ch = 0; // buffer for the current character
+    char delimiter = 0;	// the buffer for the delimiter char which
+                            // will be added to the tokens if the delimiter
+                            // is preserved
+    char current_quote = 0; // the char of the current open quote
+    bool quoted = false; // indicator if there is an open quote
+    Ogre::String token;  // string buffer for the token
+    bool token_complete = false; // indicates if the current token is
+                                 // read to be added to the result vector
+    Ogre::String::size_type len = str.length();  // length of the input-string
 
-    // Use STL methods
-    size_t start, pos;
-    char curDoubleDelim = 0;
-    start = 0;
-    do
+    // for every char in the input-string
+    while( len > pos )
     {
-        if (curDoubleDelim != 0)
-        {
-            pos = str.find(curDoubleDelim, start);
-        }
-        else
-        {
-            pos = str.find_first_of(delims, start);
-        }
+        // get the character of the string and reset the delimiter buffer
+        ch = str.at( pos );
+        delimiter = 0;
 
-        if (pos == start)
+        // assume ch isn't a delimiter
+        bool add_char = true;
+
+        // check ...
+
+        // ... if the delimiter is an escaped character
+        bool escaped = false; // indicates if the next char is protected
+        if( esc.empty() == false ) // check if esc-chars are provided
         {
-            char curDelim = str.at(pos);
-            if (doubleDelims.find_first_of(curDelim) != Ogre::String::npos)
+            if( esc.find_first_of( ch ) != std::string::npos )
             {
-                curDoubleDelim = curDelim;
+                // get the escaped char
+                ++pos;
+                if( pos < len ) // if there are more chars left
+                {
+                    // get the next one
+                    ch = str.at( pos );
+
+                    // add the escaped character to the token
+                    add_char = true;
+                }
+                else // cannot get any more characters
+                {
+                    // don't add the esc-char
+                    add_char = false;
+                }
+
+                // ignore the remaining delimiter checks
+                escaped = true;
             }
-            // Do nothing
-            start = pos + 1;
         }
-        else if (pos == Ogre::String::npos || (maxSplits && numSplits == maxSplits))
+
+        // ... if the delimiter is a quote
+        if( quote.empty() == false && escaped == false )
         {
-            if (curDoubleDelim != 0)
+            // if quote chars are provided and the char isn't protected
+            if( quote.find_first_of( ch ) != std::string::npos )
             {
-                //Missing closer. Warn or throw exception?
+                // if not quoted, set state to open quote and set
+                // the quote character
+                if( quoted == false )
+                {
+                    quoted = true;
+                    current_quote = ch;
+
+                    // don't add the quote-char to the token
+                    add_char = false;
+                }
+                else // if quote is open already
+                {
+                    // check if it is the matching character to close it
+                    if( current_quote == ch )
+                    {
+                        // close quote and reset the quote character
+                        quoted = false;
+                        current_quote = 0;
+
+                        // don't add the quote-char to the token
+                        add_char = false;
+                    }
+                }
             }
-            // Copy the rest of the string
-            ret.push_back( str.substr(start) );
-            break;
         }
-        else
+
+        // if the delimiter isn't preserved
+        if( delimiters.empty() == false && escaped == false && quoted == false )
         {
-            if (curDoubleDelim != 0)
+            // if a delimiter is provided and the char isn't protected by
+            // quote or escape char
+            if( delimiters.find_first_of( ch ) != std::string::npos )
             {
-                curDoubleDelim = 0;
+                // if ch is a delimiter and the token string isn't empty
+                // the token is complete
+                if( token.empty() == false )
+                {
+                    token_complete = true;
+                }
+
+                // don't add the delimiter to the token
+                add_char = false;
             }
-
-            // Copy up to delimiter
-            ret.push_back( str.substr(start, pos - start) );
-            start = pos + 1;
         }
-        if (curDoubleDelim == 0)
+
+        // if the delimiter is preserved - add it as a token
+        bool add_delimiter = false;
+        if( delimiters_preserve.empty() == false && escaped == false && quoted == false )
         {
-            // parse up to next real data
-            start = str.find_first_not_of(singleDelims, start);
+            // if a delimiter which will be preserved is provided and the
+            // char isn't protected by quote or escape char
+            if( delimiters_preserve.find_first_of( ch ) != std::string::npos )
+            {
+                // if ch is a delimiter and the token string isn't empty the token is complete
+                if( token.empty() == false )
+                {
+                    token_complete = true;
+                }
+
+                // don't add the delimiter to the token
+                add_char = false;
+
+                // add the delimiter
+                delimiter = ch;
+                add_delimiter = true;
+            }
         }
 
-        ++numSplits;
+        // add the character to the token
+        if( add_char == true )
+        {
+            // add the current char
+            token.push_back( ch );
+        }
 
-    } while (pos != Ogre::String::npos && start != Ogre::String::npos);
+        // add the token if it is complete
+        if( token_complete == true && token.empty() == false )
+        {
+            // add the token string
+            ret.push_back( token );
+
+            // clear the contents
+            token.clear();
+
+            // build the next token
+            token_complete = false;
+        }
+
+        // add the delimiter
+        if( add_delimiter == true )
+        {
+            // the next token is the delimiter
+            Ogre::String delim_token;
+            delim_token.push_back( delimiter );
+            ret.push_back( delim_token );
+        }
+
+        // repeat for the next character
+        ++pos;
+    }
+
+    // add the final token
+    if( token.empty() == false )
+    {
+        ret.push_back( token );
+    }
 
     return ret;
 }

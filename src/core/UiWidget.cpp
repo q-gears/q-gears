@@ -79,23 +79,25 @@ UiWidget::Update()
 void
 UiWidget::Render()
 {
-    if( m_Visible != false && m_QuadRenderOp.vertexData->vertexCount != 0 )
+    if( m_Visible == true )
     {
-        m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
-        m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
-        m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
+        if( m_QuadRenderOp.vertexData->vertexCount != 0 )
+        {
+            m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
+            m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
+            m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
 
-        m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
-        m_RenderSystem->_render( m_QuadRenderOp );
+            m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
+            m_RenderSystem->_render( m_QuadRenderOp );
 
-        //m_QuadRenderOp.vertexData->vertexCount = 0;
-    }
+            //m_QuadRenderOp.vertexData->vertexCount = 0;
+        }
 
-
-
-    for( int i = 0; i < m_Children.size(); ++i )
-    {
-        m_Children[ i ]->Render();
+        // render all child of this widget
+        for( int i = 0; i < m_Children.size(); ++i )
+        {
+            m_Children[ i ]->Render();
+        }
     }
 }
 
