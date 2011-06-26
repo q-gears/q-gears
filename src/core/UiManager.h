@@ -15,8 +15,8 @@ public:
     virtual ~UiManager();
 
     void Initialise();
-
     void Update();
+    void OnResize();
 
     void AddWidget( UiWidget* widget );
     UiWidget* GetWidget( const Ogre::String& name );

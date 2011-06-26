@@ -17,8 +17,8 @@ public:
     virtual            ~UiWidget();
 
     void                Initialise();
-
     void                Update();
+    void                OnResize();
     void                Render();
 
     const Ogre::String& GetName() const;
@@ -27,8 +27,30 @@ public:
     UiWidget*           GetChild( const Ogre::String& name );
     void                RemoveAllChildren();
 
+
+
+    enum Align
+    {
+        LEFT,
+        RIGHT,
+        CENTER
+    };
+
+    enum VerticalAlign
+    {
+        TOP,
+        BOTTOM,
+        MIDDLE
+    };
+
     void                SetColour( const float r, const float g, const float b, const float a );
-    void                Quad( const float x1, const float y1, const float x2, const float y2, const float x3, const float y3, const float x4, const float y4 );
+    void                SetAlign( const UiWidget::Align align );
+    void                SetVerticalAlign( const UiWidget::VerticalAlign valign );
+    void                SetX( const float x, const bool percent );
+    void                SetY( const float y, const bool percent );
+    void                SetWidth( const float width, const bool percent );
+    void                SetHeight( const float height, const bool percent );
+    void                GeometryUpdate();
 
     void                Show();
     void                Hide();
@@ -52,8 +74,18 @@ private:
     // quad
     Ogre::RenderOperation               m_QuadRenderOp;
     Ogre::HardwareVertexBufferSharedPtr m_QuadVertexBuffer;
-    int                                 m_QuadMaxVertexCount;
     bool                                m_Visible;
+
+    Align                               m_Align;
+    VerticalAlign                       m_VerticalAlign;
+    float                               m_X;
+    bool                                m_XPercent;
+    float                               m_Y;
+    bool                                m_YPercent;
+    float                               m_Width;
+    bool                                m_WidthPercent;
+    float                               m_Height;
+    bool                                m_HeightPercent;
 };
 
 

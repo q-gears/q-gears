@@ -22,6 +22,7 @@ public:
 
     void            Input(const Event& event);
     void            Update();
+    void            OnResize();
 
     void            SetToVisible();
     void            SetToHide();

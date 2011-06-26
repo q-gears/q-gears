@@ -45,7 +45,6 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
 			<Add option="-W" />
 			<Add option="-mthreads" />
 			<Add option="-fmessage-length=0" />

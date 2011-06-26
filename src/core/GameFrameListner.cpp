@@ -43,7 +43,6 @@ GameFrameListener::GameFrameListener( Ogre::RenderWindow* win ):
     m_Mouse->setEventCallback( this );
     windowResized( m_Window );
 
-
     //Register as a Window listener
     Ogre::WindowEventUtilities::addWindowEventListener( m_Window, this );
 }
@@ -149,6 +148,10 @@ GameFrameListener::windowResized( Ogre::RenderWindow *rw )
         ms.width = ( int )rw->getWidth();
         ms.height = ( int )rw->getHeight();
     }
+
+    Console::getSingleton().OnResize();
+    UiManager::getSingleton().OnResize();
+    CameraManager::getSingleton().OnResize();
 }
 
 

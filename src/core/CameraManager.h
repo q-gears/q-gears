@@ -16,6 +16,7 @@ public:
 
     void Input( const Event& event );
     void Update();
+    void OnResize();
 
     const Ogre::Vector3 ProjectPointToScreen( const Ogre::Vector3& point );
 

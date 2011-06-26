@@ -36,9 +36,6 @@ Console::Console():
     m_HistoryLine( -1 ),
     m_HistorySize( 32 )
 {
-    Ogre::Root* root = Ogre::Root::getSingletonPtr();
-    Ogre::SceneManager* scene = root->getSceneManager( "Scene" );
-
     // calculate width and height of console depending on size of application
     m_ConsoleWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getWidth();
     m_ConsoleHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getHeight() / 2.5f;
@@ -94,9 +91,6 @@ Console::Console():
 
 Console::~Console()
 {
-    Ogre::Root* root = Ogre::Root::getSingletonPtr();
-    Ogre::SceneManager* scene = root->getSceneManager( "Scene" );
-
     // remove as listner
     Ogre::LogManager::getSingleton().getDefaultLog()->removeListener( this );
 
@@ -337,7 +331,7 @@ Console::Update()
 {
     float delta_time = Timer::getSingleton().GetSystemTimeDelta();
 
-    if (m_ToVisible == true && m_Height < m_ConsoleHeight)
+    if( m_ToVisible == true && m_Height < m_ConsoleHeight )
     {
         m_Height += delta_time * m_Speed;
 
@@ -345,16 +339,16 @@ Console::Update()
         m_OutputTextBox->show();
         m_InputTextBox->show();
 
-        if (m_Height >= m_ConsoleHeight)
+        if( m_Height >= m_ConsoleHeight )
         {
             m_Height = m_ConsoleHeight;
         }
     }
-    else if (m_ToVisible == false && m_Height > 0)
+    else if( m_ToVisible == false && m_Height > 0 )
     {
         m_Height -= delta_time * m_Speed;
 
-        if (m_Height <= 0)
+        if( m_Height <= 0 )
         {
             m_Height = 0;
 
@@ -365,12 +359,12 @@ Console::Update()
         }
     }
 
-    if (m_CursorPosition != m_CursorDrawPosition)
+    if( m_CursorPosition != m_CursorDrawPosition )
     {
-        Ogre::FontPtr font = Ogre::FontManager::getSingletonPtr()->getByName("CourierNew");
-        if (font.isNull() == false)
+        Ogre::FontPtr font = Ogre::FontManager::getSingletonPtr()->getByName( "CourierNew" );
+        if( font.isNull() == false )
         {
-            m_CursorTextBoxX = m_CursorPosition * font->getGlyphAspectRatio('_') * 16;
+            m_CursorTextBoxX = m_CursorPosition * font->getGlyphAspectRatio( '_' ) * 16;
             m_CursorDrawPosition = m_CursorPosition;
         }
         else
@@ -379,10 +373,10 @@ Console::Update()
         }
     }
 
-    if (m_Height > 0)
+    if( m_Height > 0 )
     {
         m_CursorBlinkTime += delta_time;
-        if ((((int)(m_CursorBlinkTime * 1000 )) >> 8 ) & 1)
+        if( ( ( ( int )( m_CursorBlinkTime * 1000 ) ) >> 8 ) & 1 )
         {
             m_CursorTextBox->show();
         }
@@ -392,10 +386,37 @@ Console::Update()
         }
     }
 
-    m_Background->setPosition(0, -m_ConsoleHeight + m_Height);
-    m_OutputTextBox->setPosition(5, -m_ConsoleHeight + m_Height);
-    m_InputTextBox->setPosition(12, -20 + m_Height);
-    m_CursorTextBox->setPosition(12 + m_CursorTextBoxX, -19 + m_Height);
+    m_Background->setPosition( 0, -m_ConsoleHeight + m_Height );
+    m_OutputTextBox->setPosition( 5, -m_ConsoleHeight + m_Height );
+    m_InputTextBox->setPosition( 12, -20 + m_Height );
+    m_CursorTextBox->setPosition( 12 + m_CursorTextBoxX, -19 + m_Height );
+}
+
+
+
+void
+Console::OnResize()
+{
+    // calculate width and height of console depending on size of application
+    m_ConsoleWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getWidth();
+    m_ConsoleHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getHeight() / 2.5f;
+    m_LineWidth = ( m_ConsoleWidth - 20 ) / 8;
+
+    LOG_TRIVIAL( "Resized console width to " + Ogre::StringConverter::toString( m_ConsoleWidth ) + ", height to " + Ogre::StringConverter::toString( m_ConsoleHeight ) );
+
+    // update size and position of background and other fields
+    m_Background->setWidth( m_ConsoleWidth );
+    m_Background->setHeight( m_ConsoleHeight );
+    m_Background->setPosition( 0, -m_ConsoleHeight + m_Height );
+    m_OutputTextBox->setPosition( 5, -m_ConsoleHeight + m_Height );
+    m_InputTextBox->setPosition( 12, -20 + m_Height );
+    m_CursorTextBox->setPosition( 12 + m_CursorTextBoxX, -19 + m_Height );
+
+    // update height of already opened console
+    m_Height = ( m_Height > m_ConsoleHeight) ? m_ConsoleHeight : m_Height;
+
+    // update output string
+    UpdateOutput();
 }
 
 
@@ -494,35 +515,35 @@ Console::AddTextToOutput( const Ogre::String& text )
 void
 Console::UpdateOutput()
 {
-    int rows = (m_ConsoleHeight - 30) / 16;
+    int rows = ( m_ConsoleHeight - 30 ) / 16;
 
     Ogre::String temp = "";
 
-    std::list<Ogre::String>::iterator i;
+    std::list< Ogre::String >::iterator i;
     int row = 1;
     int outputed_row = 0;
-    for (i = m_OutputLine.begin(); i != m_OutputLine.end(); ++i, ++row)
+    for( i = m_OutputLine.begin(); i != m_OutputLine.end(); ++i, ++row )
     {
-        if (row > m_DisplayLine - rows && row <= m_DisplayLine)
+        if( row > m_DisplayLine - rows && row <= m_DisplayLine )
         {
-            temp += (*i) + "\n";
+            temp += ( *i ) + "\n";
             ++outputed_row;
         }
     }
-    if (m_DisplayLine != m_OutputLine.size())
+    if( m_DisplayLine != m_OutputLine.size() )
     {
-        for (int i = 0; i < m_LineWidth; ++i)
+        for( int i = 0; i < m_LineWidth; ++i )
         {
             temp += "^";
         }
     }
 
-    for (; outputed_row < rows; ++outputed_row)
+    for( ; outputed_row < rows; ++outputed_row )
     {
         temp = "\n" + temp;
     }
 
-    m_OutputTextBox->SetCaption(temp);
+    m_OutputTextBox->SetCaption( temp );
 }
 
 

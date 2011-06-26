@@ -83,6 +83,14 @@ CameraManager::Update()
 
 
 
+void
+CameraManager::OnResize()
+{
+    m_Camera->setAspectRatio( Ogre::Real( m_Viewport->getActualWidth() ) / Ogre::Real( m_Viewport->getActualHeight() ) );
+}
+
+
+
 const Ogre::Vector3
 CameraManager::ProjectPointToScreen( const Ogre::Vector3& point )
 {

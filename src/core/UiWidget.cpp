@@ -13,7 +13,18 @@ UiWidget::UiWidget( const Ogre::String& name ):
     m_PathName( name ),
     m_Parent( NULL ),
     m_Colour( 1, 1, 1, 1 ),
-    m_Visible( false )
+    m_Visible( false ),
+
+    m_Align( LEFT ),
+    m_VerticalAlign( TOP ),
+    m_X( 0 ),
+    m_XPercent( false ),
+    m_Y( 0 ),
+    m_YPercent( false ),
+    m_Width( 0 ),
+    m_WidthPercent( false ),
+    m_Height( 0 ),
+    m_HeightPercent( false )
 {
     Initialise();
 }
@@ -25,7 +36,18 @@ UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiW
     m_PathName( path_name ),
     m_Parent( parent ),
     m_Colour( 1, 1, 1, 1 ),
-    m_Visible( false )
+    m_Visible( false ),
+
+    m_Align( LEFT ),
+    m_VerticalAlign( TOP ),
+    m_X( 0 ),
+    m_XPercent( false ),
+    m_Y( 0 ),
+    m_YPercent( false ),
+    m_Width( 0 ),
+    m_WidthPercent( false ),
+    m_Height( 0 ),
+    m_HeightPercent( false )
 {
     Initialise();
 }
@@ -71,6 +93,19 @@ UiWidget::Update()
     for( int i = 0; i < m_Children.size(); ++i )
     {
         m_Children[ i ]->Update();
+    }
+}
+
+
+
+void
+UiWidget::OnResize()
+{
+    GeometryUpdate();
+
+    for( int i = 0; i < m_Children.size(); ++i )
+    {
+        m_Children[ i ]->OnResize();
     }
 }
 
@@ -159,32 +194,111 @@ UiWidget::SetColour( const float r, const float g, const float b, const float a 
 
 
 void
-UiWidget::Quad( const float x1, const float y1, const float x2, const float y2, const float x3, const float y3, const float x4, const float y4 )
+UiWidget::SetAlign( const UiWidget::Align align )
 {
-    bool m_ScreenSpace = true;
+    m_Align = align;
+}
 
 
 
-    if( m_QuadRenderOp.vertexData->vertexCount + 6 > m_QuadMaxVertexCount )
+void
+UiWidget::SetVerticalAlign( const UiWidget::VerticalAlign valign )
+{
+    m_VerticalAlign = valign;
+}
+
+
+
+void
+UiWidget::SetX( const float x, const bool percent )
+{
+    m_X = x;
+    m_XPercent = percent;
+}
+
+
+
+void
+UiWidget::SetY( const float y, const bool percent )
+{
+    m_Y = y;
+    m_YPercent = percent;
+}
+
+
+
+void
+UiWidget::SetWidth( const float width, const bool percent )
+{
+    m_Width = width;
+    m_WidthPercent = percent;
+}
+
+
+
+void
+UiWidget::SetHeight( const float height, const bool percent )
+{
+    m_Height = height;
+    m_HeightPercent = percent;
+}
+
+
+
+void
+UiWidget::GeometryUpdate()
+{
+    float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+
+    float area_width = screen_width;
+    float area_height = screen_height;
+
+    // calculate base x depending in aligment
+    // TODO - add parent position
+    float base_x = 0;
+    if( m_Align == RIGHT )
     {
-        LOG_ERROR( "Max number of quads reached. Can't create more than " + Ogre::StringConverter::toString( m_QuadMaxVertexCount / 6 ) + " quads." );
-        return;
+        base_x = area_width;
+    }
+    else if( m_Align == CENTER )
+    {
+        base_x = area_width / 2;
     }
 
-    float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    // calculate base y depending in vertical aligment
+    // TODO - add parent position
+    float base_y = 0;
+    if( m_VerticalAlign == BOTTOM )
+    {
+        base_y = area_height;
+    }
+    else if( m_VerticalAlign == MIDDLE )
+    {
+        base_y = area_height / 2;
+    }
 
-    float new_x1 = ( m_ScreenSpace == true ) ? ( ( int ) x1 / width ) * 2 - 1 : x1;
-    float new_y1 = ( m_ScreenSpace == true ) ? -( ( ( int ) y1 / height ) * 2 - 1 ) : y1;
-    float new_x2 = ( m_ScreenSpace == true ) ? ( ( int ) x2 / width ) * 2 - 1 : x2;
-    float new_y2 = ( m_ScreenSpace == true ) ? -( ( y2 / height ) * 2 - 1 ) : y2;
-    float new_x3 = ( m_ScreenSpace == true ) ? ( ( int ) x3 / width ) * 2 - 1 : x3;
-    float new_y3 = ( m_ScreenSpace == true ) ? -( ( ( int ) y3 / height ) * 2 - 1 ) : y3;
-    float new_x4 = ( m_ScreenSpace == true ) ? ( ( int ) x4 / width ) * 2 - 1 : x4;
-    float new_y4 = ( m_ScreenSpace == true ) ? -( ( ( int ) y4 / height ) * 2 - 1 ) : y4;
+    int x1 = base_x + ( ( m_XPercent == true ) ? ( area_width * m_X ) / 100.0f : ( m_X * screen_height / 720.0f ) );
+    int y1 = base_y + ( ( m_YPercent == true ) ? ( area_height * m_Y ) / 100.0f : ( m_Y * screen_height / 720.0f ) );
+    int width = ( ( m_WidthPercent == true ) ? ( area_width * m_Width ) / 100.0f : ( m_Width * screen_height / 720.0f ) );
+    int height = ( ( m_HeightPercent == true ) ? ( area_width * m_Height ) / 100.0f : ( m_Height * screen_height / 720.0f ) );
+    int x2 = x1 + width;
+    int y2 = y1;
+    int x3 = x2;
+    int y3 = y2 + height;
+    int x4 = x1;
+    int y4 = y3;
+
+    float new_x1 = ( x1 / screen_width ) * 2 - 1;
+    float new_y1 = -( ( y1 / screen_height ) * 2 - 1 );
+    float new_x2 = ( x2 / screen_width ) * 2 - 1;
+    float new_y2 = -( ( y2 / screen_height ) * 2 - 1 );
+    float new_x3 = ( x3 / screen_width ) * 2 - 1;
+    float new_y3 = -( ( y3 / screen_height ) * 2 - 1 );
+    float new_x4 = ( x4 / screen_width ) * 2 - 1;
+    float new_y4 = -( ( y4 / screen_height ) * 2 - 1 );
 
     float* writeIterator = ( float* ) m_QuadVertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
-    writeIterator += m_QuadRenderOp.vertexData->vertexCount * 7;
 
     *writeIterator++ = new_x1;
     *writeIterator++ = new_y1;
@@ -234,7 +348,7 @@ UiWidget::Quad( const float x1, const float y1, const float x2, const float y2, 
     *writeIterator++ = m_Colour.b;
     *writeIterator++ = m_Colour.a;
 
-    m_QuadRenderOp.vertexData->vertexCount += 6;
+    m_QuadRenderOp.vertexData->vertexCount = 6;
 
     m_QuadVertexBuffer->unlock();
 }
@@ -262,7 +376,6 @@ UiWidget::Hide()
 void
 UiWidget::CreateQuadVertexBuffer()
 {
-    m_QuadMaxVertexCount = 128 * 6;
     m_QuadRenderOp.vertexData = new Ogre::VertexData;
     m_QuadRenderOp.vertexData->vertexStart = 0;
 
@@ -273,7 +386,7 @@ UiWidget::CreateQuadVertexBuffer()
     offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT3 );
     vDecl->addElement( 0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE );
 
-    m_QuadVertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), m_QuadMaxVertexCount, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
+    m_QuadVertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), 6, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
 
     m_QuadRenderOp.vertexData->vertexBufferBinding->setBinding( 0, m_QuadVertexBuffer );
     m_QuadRenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
@@ -288,5 +401,4 @@ UiWidget::DestroyQuadVertexBuffer()
     delete m_QuadRenderOp.vertexData;
     m_QuadRenderOp.vertexData = 0;
     m_QuadVertexBuffer.setNull();
-    m_QuadMaxVertexCount = 0;
 }

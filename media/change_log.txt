@@ -1,4 +1,46 @@
 ================================================================================
+Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
+--------------------------------------------------------------------------------
+
+2011-06-26
+----------
+* [Application] Add resolution console command that allow change resolution on fly. It allow switch between fullscreen and windowed also. [Akari]
+* [UI] Width and height now all relative to basic 1280x720 resolution.
+* [UI] Add width and height of elements in %. [Akari]
+
+2011-06-25
+----------
+* [Script] Fix that function "print" was output to console only when log level was set to 3. [Akari]
+* [Console] Fix error on autocompletition of commands. [Akari]
+* [Application] Rewrite tokenise function to work with escape characters to allow inner quotes. [Akari]
+* [Console] Add script_run_string command to bind scripts to buttons. [Akari]
+* [UI] Widgets how hide it's children when hided. [Akari]
+
+2011-06-24
+----------
+* [Script] Rename globat UI and Entity tables in script. Now Entity (was map) and Ui. [Akari]
+
+2011-06-23
+----------
+* [UI] Add XML loaders for UI. [Akari]
+
+2011-06-22
+----------
+* [Script] Rework script managet to allow work with nested tables. [Akari]
+
+2011-06-21
+----------
+* [UI] Add colors for Ui widgets test draw. [Akari]
+
+2011-06-20
+----------
+* [UI] Add test draw for UI widgets. [Akari]
+
+2011-06-17
+----------
+* [UI] Add placeholder for UI. [Akari]
+
+================================================================================
 Q-Gears v0.19 (1st alpha renew) | 2011-06-06
 --------------------------------------------------------------------------------
 

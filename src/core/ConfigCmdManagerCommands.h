@@ -1,3 +1,5 @@
+#include <OgreRenderWindow.h>
+#include <OgreRoot.h>
 #include <OgreStringConverter.h>
 
 #include "Console.h"
@@ -292,6 +294,46 @@ CmdMapCompletion( Ogre::StringVector& complete_params )
 
 
 
+void
+CmdResolution( const Ogre::StringVector& params )
+{
+    if( params.size() < 3 )
+    {
+        Console::getSingleton().AddTextToOutput( "Usage: /resolution <width> <height> [full screen]" );
+        return;
+    }
+
+    Ogre::RenderWindow* window = ( Ogre::RenderWindow* )Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" );
+
+    if( params.size() >= 4 )
+    {
+        window->setFullscreen( Ogre::StringConverter::parseBool( params[ 3 ] ), Ogre::StringConverter::parseInt( params[ 1 ] ), Ogre::StringConverter::parseInt( params[ 2 ] ) );
+    }
+    else
+    {
+        window->resize( Ogre::StringConverter::parseInt( params[ 1 ] ), Ogre::StringConverter::parseInt( params[ 2 ] ) );
+    }
+}
+
+
+
+void
+CmdResolutionCompletition( Ogre::StringVector& complete_params )
+{
+    complete_params.push_back( "640 480 0" );
+    complete_params.push_back( "640 480 1" );
+    complete_params.push_back( "800 600 0" );
+    complete_params.push_back( "800 600 1" );
+    complete_params.push_back( "1024 768 0" );
+    complete_params.push_back( "1024 768 1" );
+    complete_params.push_back( "1280 720 0" );
+    complete_params.push_back( "1280 720 1" );
+    complete_params.push_back( "1280 1024 0" );
+    complete_params.push_back( "1280 1024 1" );
+}
+
+
+
 /*
 void
 CmdViewer( const Ogre::StringVector& params )
@@ -372,5 +414,8 @@ ConfigCmdManager::InitCmd()
     AddCmd( "set_log_level", "Set log messages level", "", CmdSetLogLevel, NULL );
 
     AddCmd( "map", "Run game module", "", CmdMap, CmdMapCompletion );
+
+    AddCmd( "resolution", "Change resolution", "", CmdResolution, CmdResolutionCompletition );
+
     //AddCmd( "viewer", "Run viewer module", "", CmdViewer, CmdViewerCompletion );
 }

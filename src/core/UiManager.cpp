@@ -69,6 +69,17 @@ UiManager::Update()
 
 
 void
+UiManager::OnResize()
+{
+    for( int i = 0; i < m_Widgets.size(); ++i )
+    {
+        m_Widgets[ i ]->OnResize();
+    }
+}
+
+
+
+void
 UiManager::AddWidget( UiWidget* widget )
 {
     m_Widgets.push_back( widget );
