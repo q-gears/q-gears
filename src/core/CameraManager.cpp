@@ -5,6 +5,7 @@
 #include <OIS.h>
 
 #include "ConfigVar.h"
+#include "InputManager.h"
 #include "Logger.h"
 
 
@@ -43,21 +44,27 @@ CameraManager::~CameraManager()
 void
 CameraManager::Input( const Event& event )
 {
+    float speed = cv_cam_speed.GetF();
+    if( InputManager::getSingleton().IsButtonPressed( OIS::KC_RSHIFT ) || InputManager::getSingleton().IsButtonPressed( OIS::KC_LSHIFT ) )
+    {
+        speed *= 4;
+    }
+
     if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_W )
     {
-        m_Camera->moveRelative( Ogre::Vector3( 0, 0, -cv_cam_speed.GetF() ) );
+        m_Camera->moveRelative( Ogre::Vector3( 0, 0, -speed ) );
     }
     else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_A )
     {
-        m_Camera->moveRelative( Ogre::Vector3( -cv_cam_speed.GetF(), 0, 0 ) );
+        m_Camera->moveRelative( Ogre::Vector3( -speed, 0, 0 ) );
     }
     else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_S )
     {
-        m_Camera->moveRelative( Ogre::Vector3( 0, 0, cv_cam_speed.GetF() ) );
+        m_Camera->moveRelative( Ogre::Vector3( 0, 0, speed ) );
     }
     else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_D )
     {
-        m_Camera->moveRelative( Ogre::Vector3( cv_cam_speed.GetF(), 0, 0 ) );
+        m_Camera->moveRelative( Ogre::Vector3( speed, 0, 0 ) );
     }
     else if( event.type == ET_MOUSE_PRESS && event.param1 == OIS::MB_Right )
     {
