@@ -21974,9 +21974,9 @@
 	"core/UiManager.h"
 	"core/particles/ParticleSystemManager.h"
 
-1308317341 g:\my\svn\q-gears\src\main.h
+1309157218 g:\my\svn\q-gears\src\main.h
 
-1305613407 g:\my\svn\q-gears\src\core\cameramanager.h
+1309157218 g:\my\svn\q-gears\src\core\cameramanager.h
 	<OgreCamera.h>
 	<OgreSingleton.h>
 	"Event.h"
@@ -22003,7 +22003,7 @@
 1305613408 g:\my\svn\q-gears\src\core\configvar.h
 	<OgreString.h>
 
-1305613408 g:\my\svn\q-gears\src\core\console.h
+1309157218 g:\my\svn\q-gears\src\core\console.h
 	<OgreLog.h>
 	<OgrePanelOverlayElement.h>
 	<OgreSingleton.h>
@@ -22548,7 +22548,7 @@
 1305781273 g:\my\svn\q-gears\src\core\timer.h
 	<OgreSingleton.h>
 
-1308895430 g:\my\svn\q-gears\src\core\uimanager.h
+1309157218 g:\my\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>
 	<OgreSingleton.h>
 	"UiWidget.h"
@@ -22631,7 +22631,7 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1305613408 source:g:\my\svn\q-gears\src\core\cameramanager.cpp
+1309157218 source:g:\my\svn\q-gears\src\core\cameramanager.cpp
 	"CameraManager.h"
 	<OgreRenderWindow.h>
 	<OgreRoot.h>
@@ -22680,7 +22680,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1305613408 g:\my\svn\q-gears\src\core\utilites.h
+1309157219 g:\my\svn\q-gears\src\core\utilites.h
 	<OgreString.h>
 	<OgreStringVector.h>
 	<OIS.h>
@@ -22693,7 +22693,7 @@
 1305613407 source:g:\my\svn\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1305697740 source:g:\my\svn\q-gears\src\core\console.cpp
+1309157218 source:g:\my\svn\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
 	<OgreOverlayManager.h>
@@ -22750,7 +22750,7 @@
 	"../core/Logger.h"
 	"../core/Timer.h"
 
-1308312061 source:g:\my\svn\q-gears\src\core\gameframelistner.cpp
+1309157218 source:g:\my\svn\q-gears\src\core\gameframelistner.cpp
 	"GameFrameListner.h"
 	<OgreStringConverter.h>
 	"CameraManager.h"
@@ -22781,7 +22781,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1308838010 source:g:\my\svn\q-gears\src\core\scriptmanager.cpp
+1309157218 source:g:\my\svn\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.h"
 	"ScriptManagerCommands.h"
@@ -22812,7 +22812,7 @@
 	"Timer.h"
 	"ConfigVar.h"
 
-1308651651 source:g:\my\svn\q-gears\src\core\utilites.cpp
+1309157219 source:g:\my\svn\q-gears\src\core\utilites.cpp
 	"Utilites.h"
 	<OgreStringConverter.h>
 
@@ -23540,14 +23540,14 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1308907273 g:\my\svn\q-gears\src\core\uiwidget.h
+1309157219 g:\my\svn\q-gears\src\core\uiwidget.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
 	<OgreString.h>
 	<vector>
 
-1308906772 source:g:\my\svn\q-gears\src\core\uimanager.cpp
+1309157218 source:g:\my\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	<OgreStringVector.h>
 	"ConfigVar.h"
@@ -23557,7 +23557,7 @@
 	"Utilites.h"
 	"XmlScreensFile.h"
 
-1308907458 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
+1309157218 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
@@ -23593,7 +23593,9 @@
 	"Utilites.h"
 	"XmlScreensFile.h"
 
-1308836094 g:\my\svn\q-gears\src\core\configcmdmanagercommands.h
+1309168100 g:\my\svn\q-gears\src\core\configcmdmanagercommands.h
+	<OgreRenderWindow.h>
+	<OgreRoot.h>
 	<OgreStringConverter.h>
 	"Console.h"
 	"ConfigCmdManager.h"
@@ -23603,7 +23605,7 @@
 	"XmlMapFile.h"
 	"XmlMapsFile.h"
 
-1305613407 g:\my\svn\q-gears\src\core\inputmanagercommands.h
+1309157218 g:\my\svn\q-gears\src\core\inputmanagercommands.h
 	<OgreStringConverter.h>
 	"Console.h"
 	"ConfigCmdManager.h"
@@ -23611,14 +23613,15 @@
 	"Logger.h"
 	"Utilites.h"
 
-1308907221 g:\my\svn\q-gears\src\core\scriptmanagerbinds.h
+1309157218 g:\my\svn\q-gears\src\core\scriptmanagerbinds.h
+	"Console.h"
 	"Logger.h"
 	"Entity.h"
 	"EntityManager.h"
 	"UiManager.h"
 	"UiWidget.h"
 
-1305613407 g:\my\svn\q-gears\src\core\scriptmanagercommands.h
+1309157218 g:\my\svn\q-gears\src\core\scriptmanagercommands.h
 	"ConfigCmdManager.h"
 	"Console.h"
 
@@ -23661,7 +23664,7 @@
 1308832354 g:\my\svn\q-gears\src\core\xmlscreensfile.h
 	"XmlFile.h"
 
-1308836139 source:g:\my\svn\q-gears\src\core\xmlscreenfile.cpp
+1309157219 source:g:\my\svn\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"

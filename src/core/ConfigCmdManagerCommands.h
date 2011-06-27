@@ -334,6 +334,16 @@ CmdResolutionCompletition( Ogre::StringVector& complete_params )
 
 
 
+void
+CmdScreenshot( const Ogre::StringVector& params )
+{
+    Ogre::RenderWindow* window = ( Ogre::RenderWindow* )Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" );
+    Ogre::String ret = window->writeContentsToTimestampedFile( "screenshot_", ".tga" );
+    Console::getSingleton().AddTextToOutput( "Screenshot " + ret + " saved." );
+}
+
+
+
 /*
 void
 CmdViewer( const Ogre::StringVector& params )
@@ -416,6 +426,7 @@ ConfigCmdManager::InitCmd()
     AddCmd( "map", "Run game module", "", CmdMap, CmdMapCompletion );
 
     AddCmd( "resolution", "Change resolution", "", CmdResolution, CmdResolutionCompletition );
+    AddCmd( "screenshot", "Capture current screen content", "", CmdScreenshot, NULL );
 
     //AddCmd( "viewer", "Run viewer module", "", CmdViewer, CmdViewerCompletion );
 }

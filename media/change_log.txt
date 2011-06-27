@@ -2,6 +2,10 @@
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 --------------------------------------------------------------------------------
 
+2011-06-27
+----------
+* [Application] Add screenshot console command. take screenshot and save it in the same directory as exe file. [Akari]
+
 2011-06-26
 ----------
 * [Application] Add resolution console command that allow change resolution on fly. It allow switch between fullscreen and windowed also. [Akari]
