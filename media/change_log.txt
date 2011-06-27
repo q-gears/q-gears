@@ -6,7 +6,7 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 ----------
 * [Application] Add resolution console command that allow change resolution on fly. It allow switch between fullscreen and windowed also. [Akari]
 * [UI] Width and height now all relative to basic 1280x720 resolution.
-* [UI] Add width and height of elements in %. [Akari]
+* [UI] Add horizontal and vertical alignment. Add width and height of elements in % and pixels. [Akari]
 
 2011-06-25
 ----------
@@ -18,7 +18,7 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 
 2011-06-24
 ----------
-* [Script] Rename globat UI and Entity tables in script. Now Entity (was map) and Ui. [Akari]
+* [Script] Rename global UI and Entity tables in script. Now Entity (was map) and Ui. [Akari]
 
 2011-06-23
 ----------
