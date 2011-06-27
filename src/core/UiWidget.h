@@ -49,6 +49,7 @@ public:
     void                SetX( const float x, const bool percent );
     void                SetY( const float y, const bool percent );
     void                SetWidth( const float width, const bool percent );
+    float               GetWidth() const;
     void                SetHeight( const float height, const bool percent );
     void                GeometryUpdate();
 

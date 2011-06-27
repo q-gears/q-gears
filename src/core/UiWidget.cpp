@@ -236,6 +236,21 @@ UiWidget::SetWidth( const float width, const bool percent )
 
 
 
+float
+UiWidget::GetWidth() const
+{
+    if( m_Parent != NULL)
+    {
+        return ( m_WidthPercent == true ) ? ( m_Parent->GetWidth() * m_Width ) / 100.0f : m_Width;
+    }
+    else
+    {
+        return Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+    }
+}
+
+
+
 void
 UiWidget::SetHeight( const float height, const bool percent )
 {
@@ -251,36 +266,40 @@ UiWidget::GeometryUpdate()
     float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
-    float area_width = screen_width;
+    // TODO - add parent position
+    float area_x = 0;
+    float area_y = 0;
+    float area_width = m_Parent->GetWidth();
+    LOG_ERROR( "area_width = " + Ogre::StringConverter::toString( area_width ) + ", m_Width = " + Ogre::StringConverter::toString( m_Width ) );
     float area_height = screen_height;
 
     // calculate base x depending in aligment
-    // TODO - add parent position
-    float base_x = 0;
+    float base_x = area_x;
     if( m_Align == RIGHT )
     {
-        base_x = area_width;
+        base_x = area_x + area_width;
     }
     else if( m_Align == CENTER )
     {
-        base_x = area_width / 2;
+        base_x = area_x + area_width / 2;
     }
 
     // calculate base y depending in vertical aligment
-    // TODO - add parent position
-    float base_y = 0;
+    float base_y = area_y;
     if( m_VerticalAlign == BOTTOM )
     {
-        base_y = area_height;
+        base_y = area_y + area_height;
     }
     else if( m_VerticalAlign == MIDDLE )
     {
-        base_y = area_height / 2;
+        base_y = area_y + area_height / 2;
     }
 
     int x1 = base_x + ( ( m_XPercent == true ) ? ( area_width * m_X ) / 100.0f : ( m_X * screen_height / 720.0f ) );
+    LOG_ERROR( "base_x = " + Ogre::StringConverter::toString( base_x ) + ", x1 = " + Ogre::StringConverter::toString( x1 ) );
     int y1 = base_y + ( ( m_YPercent == true ) ? ( area_height * m_Y ) / 100.0f : ( m_Y * screen_height / 720.0f ) );
     int width = ( ( m_WidthPercent == true ) ? ( area_width * m_Width ) / 100.0f : ( m_Width * screen_height / 720.0f ) );
+    LOG_ERROR( "m_Width = " + Ogre::StringConverter::toString( m_Width ) + ", width = " + Ogre::StringConverter::toString( width ) );
     int height = ( ( m_HeightPercent == true ) ? ( area_height * m_Height ) / 100.0f : ( m_Height * screen_height / 720.0f ) );
     int x2 = x1 + width;
     int y2 = y1;
