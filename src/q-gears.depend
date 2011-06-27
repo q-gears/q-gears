@@ -22631,12 +22631,13 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1309157218 source:g:\my\svn\q-gears\src\core\cameramanager.cpp
+1309174991 source:g:\my\svn\q-gears\src\core\cameramanager.cpp
 	"CameraManager.h"
 	<OgreRenderWindow.h>
 	<OgreRoot.h>
 	<OIS.h>
 	"ConfigVar.h"
+	"InputManager.h"
 	"Logger.h"
 
 1305613408 source:g:\my\svn\q-gears\src\core\configcmd.cpp
@@ -22765,7 +22766,7 @@
 	"UiManager.h"
 	"../Main.h"
 
-1308750050 source:g:\my\svn\q-gears\src\core\inputmanager.cpp
+1309171916 source:g:\my\svn\q-gears\src\core\inputmanager.cpp
 	"InputManager.h"
 	"InputManagerCommands.h"
 	"ConfigCmdManager.h"

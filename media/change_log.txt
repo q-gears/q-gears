@@ -4,6 +4,7 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 
 2011-06-27
 ----------
+* [UI] Fix error with height in %. [Akari]
 * [Camera] Add free camera speed multiplyer when shift is pressed for faster movement. [Akari]
 * [Application] Add screenshot console command. Take screenshot and save it in the same directory as exe file. [Akari]
 

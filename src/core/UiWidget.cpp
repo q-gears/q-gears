@@ -281,7 +281,7 @@ UiWidget::GeometryUpdate()
     int x1 = base_x + ( ( m_XPercent == true ) ? ( area_width * m_X ) / 100.0f : ( m_X * screen_height / 720.0f ) );
     int y1 = base_y + ( ( m_YPercent == true ) ? ( area_height * m_Y ) / 100.0f : ( m_Y * screen_height / 720.0f ) );
     int width = ( ( m_WidthPercent == true ) ? ( area_width * m_Width ) / 100.0f : ( m_Width * screen_height / 720.0f ) );
-    int height = ( ( m_HeightPercent == true ) ? ( area_width * m_Height ) / 100.0f : ( m_Height * screen_height / 720.0f ) );
+    int height = ( ( m_HeightPercent == true ) ? ( area_height * m_Height ) / 100.0f : ( m_Height * screen_height / 720.0f ) );
     int x2 = x1 + width;
     int y2 = y1;
     int x3 = x2;
