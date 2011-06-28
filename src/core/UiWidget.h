@@ -47,10 +47,13 @@ public:
     void                SetAlign( const UiWidget::Align align );
     void                SetVerticalAlign( const UiWidget::VerticalAlign valign );
     void                SetX( const float x, const bool percent );
+    float               GetScreenX() const;
     void                SetY( const float y, const bool percent );
+    float               GetScreenY() const;
     void                SetWidth( const float width, const bool percent );
-    float               GetWidth() const;
+    float               GetScreenWidth() const;
     void                SetHeight( const float height, const bool percent );
+    float               GetScreenHeight() const;
     void                GeometryUpdate();
 
     void                Show();

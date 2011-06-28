@@ -2,6 +2,10 @@
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 --------------------------------------------------------------------------------
 
+2011-06-28
+----------
+* [UI] Make widgets relative to their parents. [Akari]
+
 2011-06-27
 ----------
 * [UI] Fix error with height in %. [Akari]

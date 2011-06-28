@@ -21,10 +21,10 @@ UiWidget::UiWidget( const Ogre::String& name ):
     m_XPercent( false ),
     m_Y( 0 ),
     m_YPercent( false ),
-    m_Width( 0 ),
-    m_WidthPercent( false ),
-    m_Height( 0 ),
-    m_HeightPercent( false )
+    m_Width( 100 ),
+    m_WidthPercent( true ),
+    m_Height( 100 ),
+    m_HeightPercent( true )
 {
     Initialise();
 }
@@ -44,10 +44,10 @@ UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiW
     m_XPercent( false ),
     m_Y( 0 ),
     m_YPercent( false ),
-    m_Width( 0 ),
-    m_WidthPercent( false ),
-    m_Height( 0 ),
-    m_HeightPercent( false )
+    m_Width( 100 ),
+    m_WidthPercent( true ),
+    m_Height( 100 ),
+    m_HeightPercent( true )
 {
     Initialise();
 }
@@ -124,8 +124,6 @@ UiWidget::Render()
 
             m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
             m_RenderSystem->_render( m_QuadRenderOp );
-
-            //m_QuadRenderOp.vertexData->vertexCount = 0;
         }
 
         // render all child of this widget
@@ -218,11 +216,62 @@ UiWidget::SetX( const float x, const bool percent )
 
 
 
+float
+UiWidget::GetScreenX() const
+{
+    float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+
+    float area_x = ( m_Parent != NULL ) ? m_Parent->GetScreenX() : 0;
+    float area_width = ( m_Parent != NULL ) ? m_Parent->GetScreenWidth() : screen_width;
+
+    // calculate base x depending in aligment
+    float base_x = area_x;
+    if( m_Align == RIGHT )
+    {
+        base_x = area_x + area_width;
+    }
+    else if( m_Align == CENTER )
+    {
+        base_x = area_x + area_width / 2;
+    }
+
+    return base_x + ( ( m_XPercent == true ) ? ( area_width * m_X ) / 100.0f : m_X * screen_height / 720.0f );
+}
+
+
+
 void
 UiWidget::SetY( const float y, const bool percent )
 {
     m_Y = y;
     m_YPercent = percent;
+}
+
+
+
+float
+UiWidget::GetScreenY() const
+{
+    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+
+    float area_y = ( m_Parent != NULL ) ? m_Parent->GetScreenY() : 0;
+    float area_height = ( m_Parent != NULL ) ? m_Parent->GetScreenHeight() : screen_height;
+
+    // calculate base y depending in vertical aligment
+    float base_y = area_y;
+    if( m_VerticalAlign == BOTTOM )
+    {
+        base_y = area_y + area_height;
+    }
+    else if( m_VerticalAlign == MIDDLE )
+    {
+        base_y = area_y + area_height / 2;
+    }
+
+    //LOG_ERROR( m_Name + ": area_y = " + Ogre::StringConverter::toString( area_y ) + ", area_height = " + Ogre::StringConverter::toString( area_height ) + ", base_y = " + Ogre::StringConverter::toString( base_y ) );
+
+    return base_y + ( ( m_YPercent == true ) ? ( area_height * m_Y ) / 100.0f : m_Y * screen_height / 720.0f );
 }
 
 
@@ -237,16 +286,12 @@ UiWidget::SetWidth( const float width, const bool percent )
 
 
 float
-UiWidget::GetWidth() const
+UiWidget::GetScreenWidth() const
 {
-    if( m_Parent != NULL)
-    {
-        return ( m_WidthPercent == true ) ? ( m_Parent->GetWidth() * m_Width ) / 100.0f : m_Width;
-    }
-    else
-    {
-        return Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    }
+    float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    float area_width = ( m_Parent != NULL ) ? m_Parent->GetScreenWidth() : screen_width;
+    return ( m_WidthPercent == true ) ? ( area_width * m_Width ) / 100.0f : m_Width * screen_height / 720.0f;
 }
 
 
@@ -260,47 +305,23 @@ UiWidget::SetHeight( const float height, const bool percent )
 
 
 
+float
+UiWidget::GetScreenHeight() const
+{
+    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    float area_height = ( m_Parent != NULL ) ? m_Parent->GetScreenHeight() : screen_height;
+    return ( m_HeightPercent == true ) ? ( area_height * m_Height ) / 100.0f : m_Height * screen_height / 720.0f;
+}
+
+
+
 void
 UiWidget::GeometryUpdate()
 {
-    float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
-
-    // TODO - add parent position
-    float area_x = 0;
-    float area_y = 0;
-    float area_width = m_Parent->GetWidth();
-    LOG_ERROR( "area_width = " + Ogre::StringConverter::toString( area_width ) + ", m_Width = " + Ogre::StringConverter::toString( m_Width ) );
-    float area_height = screen_height;
-
-    // calculate base x depending in aligment
-    float base_x = area_x;
-    if( m_Align == RIGHT )
-    {
-        base_x = area_x + area_width;
-    }
-    else if( m_Align == CENTER )
-    {
-        base_x = area_x + area_width / 2;
-    }
-
-    // calculate base y depending in vertical aligment
-    float base_y = area_y;
-    if( m_VerticalAlign == BOTTOM )
-    {
-        base_y = area_y + area_height;
-    }
-    else if( m_VerticalAlign == MIDDLE )
-    {
-        base_y = area_y + area_height / 2;
-    }
-
-    int x1 = base_x + ( ( m_XPercent == true ) ? ( area_width * m_X ) / 100.0f : ( m_X * screen_height / 720.0f ) );
-    LOG_ERROR( "base_x = " + Ogre::StringConverter::toString( base_x ) + ", x1 = " + Ogre::StringConverter::toString( x1 ) );
-    int y1 = base_y + ( ( m_YPercent == true ) ? ( area_height * m_Y ) / 100.0f : ( m_Y * screen_height / 720.0f ) );
-    int width = ( ( m_WidthPercent == true ) ? ( area_width * m_Width ) / 100.0f : ( m_Width * screen_height / 720.0f ) );
-    LOG_ERROR( "m_Width = " + Ogre::StringConverter::toString( m_Width ) + ", width = " + Ogre::StringConverter::toString( width ) );
-    int height = ( ( m_HeightPercent == true ) ? ( area_height * m_Height ) / 100.0f : ( m_Height * screen_height / 720.0f ) );
+    int x1 = GetScreenX();
+    int y1 = GetScreenY();
+    int width = GetScreenWidth();
+    int height = GetScreenHeight();
     int x2 = x1 + width;
     int y2 = y1;
     int x3 = x2;
@@ -308,6 +329,12 @@ UiWidget::GeometryUpdate()
     int x4 = x1;
     int y4 = y3;
 
+    //LOG_ERROR( m_Name );
+    //LOG_ERROR( "width = " + Ogre::StringConverter::toString( width ) + ", height = " + Ogre::StringConverter::toString( height ) );
+    //LOG_ERROR( "x1 = " + Ogre::StringConverter::toString( x1 ) + ", y1 = " + Ogre::StringConverter::toString( y1 ) );
+
+    float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
     float new_x1 = ( x1 / screen_width ) * 2 - 1;
     float new_y1 = -( ( y1 / screen_height ) * 2 - 1 );
     float new_x2 = ( x2 / screen_width ) * 2 - 1;
