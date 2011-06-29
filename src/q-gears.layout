@@ -2,7 +2,7 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
 	<File name="Main.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="3000" topLine="86" />
+		<Cursor position="1313" topLine="23" />
 	</File>
 	<File name="core\CameraManager.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1326" topLine="28" />
@@ -92,7 +92,7 @@
 		<Cursor position="368" topLine="0" />
 	</File>
 	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="8015" topLine="301" />
+		<Cursor position="1197" topLine="30" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="1">
 		<Cursor position="1527" topLine="27" />
@@ -116,7 +116,7 @@
 		<Cursor position="225" topLine="0" />
 	</File>
 	<File name="core\XmlScreenFile.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="4515" topLine="115" />
+		<Cursor position="4249" topLine="106" />
 	</File>
 	<File name="core\XmlScreenFile.h" open="0" top="0" tabpos="0">
 		<Cursor position="74" topLine="0" />

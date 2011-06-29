@@ -18,12 +18,16 @@ UiWidget::UiWidget( const Ogre::String& name ):
     m_Align( LEFT ),
     m_VerticalAlign( TOP ),
     m_X( 0 ),
+    m_XAdd( 0 ),
     m_XPercent( false ),
     m_Y( 0 ),
+    m_YAdd( 0 ),
     m_YPercent( false ),
     m_Width( 100 ),
+    m_WidthAdd( 0 ),
     m_WidthPercent( true ),
     m_Height( 100 ),
+    m_HeightAdd( 0 ),
     m_HeightPercent( true )
 {
     Initialise();
@@ -41,12 +45,16 @@ UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiW
     m_Align( LEFT ),
     m_VerticalAlign( TOP ),
     m_X( 0 ),
+    m_XAdd( 0 ),
     m_XPercent( false ),
     m_Y( 0 ),
+    m_YAdd( 0 ),
     m_YPercent( false ),
     m_Width( 100 ),
+    m_WidthAdd( 0 ),
     m_WidthPercent( true ),
     m_Height( 100 ),
+    m_HeightAdd( 0 ),
     m_HeightPercent( true )
 {
     Initialise();
@@ -101,7 +109,10 @@ UiWidget::Update()
 void
 UiWidget::OnResize()
 {
-    GeometryUpdate();
+    if( m_Parent != NULL )
+    {
+        GeometryUpdate();
+    }
 
     for( int i = 0; i < m_Children.size(); ++i )
     {
@@ -208,9 +219,10 @@ UiWidget::SetVerticalAlign( const UiWidget::VerticalAlign valign )
 
 
 void
-UiWidget::SetX( const float x, const bool percent )
+UiWidget::SetX( const float x, const float add, const bool percent )
 {
     m_X = x;
+    m_XAdd = add;
     m_XPercent = percent;
 }
 
@@ -236,15 +248,16 @@ UiWidget::GetScreenX() const
         base_x = area_x + area_width / 2;
     }
 
-    return base_x + ( ( m_XPercent == true ) ? ( area_width * m_X ) / 100.0f : m_X * screen_height / 720.0f );
+    return base_x + ( ( m_XPercent == true ) ? ( area_width * m_X ) / 100.0f + m_XAdd * screen_height / 720.0f : m_X * screen_height / 720.0f );
 }
 
 
 
 void
-UiWidget::SetY( const float y, const bool percent )
+UiWidget::SetY( const float y, const float add, const bool percent )
 {
     m_Y = y;
+    m_YAdd = add;
     m_YPercent = percent;
 }
 
@@ -271,15 +284,16 @@ UiWidget::GetScreenY() const
 
     //LOG_ERROR( m_Name + ": area_y = " + Ogre::StringConverter::toString( area_y ) + ", area_height = " + Ogre::StringConverter::toString( area_height ) + ", base_y = " + Ogre::StringConverter::toString( base_y ) );
 
-    return base_y + ( ( m_YPercent == true ) ? ( area_height * m_Y ) / 100.0f : m_Y * screen_height / 720.0f );
+    return base_y + ( ( m_YPercent == true ) ? ( area_height * m_Y ) / 100.0f + m_YAdd * screen_height / 720.0f : m_Y * screen_height / 720.0f );
 }
 
 
 
 void
-UiWidget::SetWidth( const float width, const bool percent )
+UiWidget::SetWidth( const float width, const float add, const bool percent )
 {
     m_Width = width;
+    m_WidthAdd = add;
     m_WidthPercent = percent;
 }
 
@@ -291,15 +305,16 @@ UiWidget::GetScreenWidth() const
     float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
     float area_width = ( m_Parent != NULL ) ? m_Parent->GetScreenWidth() : screen_width;
-    return ( m_WidthPercent == true ) ? ( area_width * m_Width ) / 100.0f : m_Width * screen_height / 720.0f;
+    return ( m_WidthPercent == true ) ? ( area_width * m_Width ) / 100.0f + m_WidthAdd * screen_height / 720.0f : m_Width * screen_height / 720.0f;
 }
 
 
 
 void
-UiWidget::SetHeight( const float height, const bool percent )
+UiWidget::SetHeight( const float height, const float add, const bool percent )
 {
     m_Height = height;
+    m_HeightAdd = add;
     m_HeightPercent = percent;
 }
 
@@ -310,7 +325,7 @@ UiWidget::GetScreenHeight() const
 {
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
     float area_height = ( m_Parent != NULL ) ? m_Parent->GetScreenHeight() : screen_height;
-    return ( m_HeightPercent == true ) ? ( area_height * m_Height ) / 100.0f : m_Height * screen_height / 720.0f;
+    return ( m_HeightPercent == true ) ? ( area_height * m_Height ) / 100.0f + m_HeightAdd * screen_height / 720.0f: m_Height * screen_height / 720.0f;
 }
 
 

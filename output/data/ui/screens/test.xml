@@ -7,15 +7,15 @@
         <widget name="Top" colour="0 1 0 1" align="center" valign="top" x="-10" y="10" width="20" height="20" />
         <widget name="Bottom" colour="0 1 0 1" align="center" valign="bottom" x="-10" y="-30" width="20" height="20" />
     </widget>
-    <widget name="Bottom" colour="1 1 1 1" align="center" valign="bottom" x="-100" y="-200" width="200" height="100">
+    <widget name="Bottom" colour="1 1 1 1" align="center" valign="bottom" x="-50%+110" y="-200" width="100%-220" height="100">
         <widget name="Left" colour="0 1 0 1" align="left" valign="middle" x="10" y="-10" width="20" height="20" />
         <widget name="Right" colour="0 1 0 1" align="right" valign="middle" x="-30" y="-10" width="20" height="20" />
     </widget>
-    <widget name="Top" colour="1 1 1 1" align="center" valign="top" x="-100" y="100" width="200" height="100">
+    <widget name="Top" colour="1 1 1 1" align="center" valign="top" x="-50%+110" y="100" width="100%-220" height="100">
         <widget name="Left" colour="0 1 0 1" align="left" valign="middle" x="10" y="-10" width="20" height="20" />
         <widget name="Right" colour="0 1 0 1" align="right" valign="middle" x="-30" y="-10" width="20" height="20" />
     </widget>
-    <widget name="Center" colour="1 1 1 1" align="center" valign="middle" x="-100" y="-100" width="200" height="200">
+    <widget name="Center" colour="1 1 1 1" align="center" valign="middle" x="-50%+110" y="-50%+210" width="100%-220" height="100%-420">
         <widget name="LeftTop" colour="0 1 0 1" align="left" valign="top" x="10" y="10" width="20" height="20" />
         <widget name="RightTop" colour="0 1 0 1" align="right" valign="top" x="-30" y="10" width="20" height="20" />
         <widget name="LeftBottom" colour="0 1 0 1" align="left" valign="bottom" x="10" y="-30" width="20" height="20" />

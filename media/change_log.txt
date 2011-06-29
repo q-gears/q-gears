@@ -2,6 +2,10 @@
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 --------------------------------------------------------------------------------
 
+2011-06-29
+----------
+* [UI] Added posibility to set x, y, width and height in percent and pixels altogether. [Akari]
+
 2011-06-28
 ----------
 * [UI] Make widgets relative to their parents. [Akari]
