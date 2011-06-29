@@ -1,0 +1,134 @@
+================================================================================
+Q-Gears v0.18 (4th alpha) | not released
+--------------------------------------------------------------------------------
+
+* Add base battle cycle.
+* Add fighters content structure management.
+* Add ai scripts.
+* Add action queue.
+* Add attacks.
+* Add damage routine.
+* Add player.
+* Add script for player.
+* Add hurting.
+* Add posibility to switch AI off.
+* Units with different relationship must fight.
+* Add death status. Units must stop thinking and not be targeted.
+* Units must be rotated correctly (without battle types).
+* Player must be placed correctly (without battle types and for two party members only).
+* Add animation scripts.
+* Add all needed parts of model export for existed models (in 1st mission)
+* Add all needed scripts for existed models (in 1st mission)
+* Add all needed attacks for existed models (in 1st mission)
+* Add all needed animations for existed models (in 1st mission)
+* Add all needed battle formations for battles (in 1st mission).
+* During loading models placed correctly.
+* Add battle models with base animations.
+* Add free camera.
+
+
+
+================================================================================
+Q-Gears v0.17 (3rd alpha) | 2008-10-16
+--------------------------------------------------------------------------------
+
+* Line draw off/on.
+* Create fully playable STARTMAP, MD1STIN and MD1_1 as much as posible.
+* battle_run must be waitable.
+* Add game related things like money and items.
+* game:item_add(item_id, quantity);
+* quantity = game:item_get_quantity(item_id);
+* Add rotate to movement input.
+* Add bit operators to lua scripting.
+* Move field debug to global config and to console.
+* Fix console input.
+* Add party and party related functions.
+* game:party_set_size(party_size);
+* game:character_add_to_party(character_id);
+* game:character_remove_from_party(character_id);
+* game:party_clear();
+* Add variables gamestate storing and loading.
+* Remove field debug info on start of battle.
+* Battle module.
+* New module management. Camera and scene node must be detached on module pause for field and map.
+* Battle opcodes.
+* Encounters check.
+* Optimize Field loading from xml (it's better to load everything with one function call).
+* Add fade and fade related opcodes.
+* Waitable windows.
+* Party and Characters Names inserting.
+* Variable inserting.
+* Coloring font.
+* Pausing string output (OK and Wait).
+* New window handling.
+* Tags fo manipulate windows.
+* Text scrolling on overflow.
+* Read unicode text from lang files.
+* Choice window.
+* Transparent windows.
+* Dialog window rendering.
+* Reverse window management.
+* Implement script auto-activation.
+* Talking with other entity.
+* Reverse script auto activation.
+* Entity script management.
+* Reverse script flow.
+* Gateways (lines enough for that).
+* Enabling/disabling lines.
+* Line slipping.
+* Line.
+* Walkmesh ingame view (camera).
+* Add base sprite support like in Xenogears (stand).
+* Add export of bcx models.
+* Fix that at the end of animation first frame shown.
+* Fix rotation during animation.
+
+
+
+================================================================================
+Q-Gears v0.16 (2nd alpha) | 2008-05-28
+--------------------------------------------------------------------------------
+
+* Console.
+* Font rendering.
+* Debug entity stats like position, rotation, triangle.
+* Debug walkmesh (draw triangle id's)
+* Debug info must be drawn under console.
+* Move exit and console button handling to input mapper.
+* Pause in game motion (F11).
+* OpenGL collision and direction debug draw fix.
+* Focus after alt+tab.
+* Add wait script opcode (in seconds).
+* Fix rotating in map 2.
+* Catch errors during load of lua file.
+* Debug scripts states.
+* Script map loading.
+* Add lock/unlock PC input.
+* Add lock/unlock triangle script command.
+* Add correct animation.
+* Add animation update to climb and jump.
+* Remove rotate lock from move functions (it can be done through rotate_lock command).
+* Remove direction setting from climb.
+* Fix offset relative to direction.
+* Add offset routine.
+* Add move to entity.
+* turn_to_model must take direction to model every step.
+* Move action type to field instead of model cause we use instant/linear/smooth not only for model.
+* Add model rendering.
+* Reverse model and model animation.
+* Model auto-action to seconds instead of steps.
+
+
+
+================================================================================
+Q-Gears v0.15 (1st alpha) | 2007-12-30
+--------------------------------------------------------------------------------
+
+* Game button handling.
+* Input handling.
+* XML loader rewrite to OGRE.
+* Model movement.
+* Walkmesh management (enebling/disabling).
+* Walkmesh view.
+* Walkmesh loading.
+* Reverse entity movement/positioning.
