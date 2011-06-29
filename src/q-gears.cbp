@@ -109,6 +109,8 @@
 		<Unit filename="core\Timer.h" />
 		<Unit filename="core\UiManager.cpp" />
 		<Unit filename="core\UiManager.h" />
+		<Unit filename="core\UiSprite.cpp" />
+		<Unit filename="core\UiSprite.h" />
 		<Unit filename="core\UiWidget.cpp" />
 		<Unit filename="core\UiWidget.h" />
 		<Unit filename="core\Utilites.cpp" />

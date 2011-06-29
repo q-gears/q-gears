@@ -3,6 +3,8 @@
 #include "Logger.h"
 #include "ScriptManager.h"
 #include "UiManager.h"
+#include "UiSprite.h"
+#include "UiWidget.h"
 
 
 
@@ -55,17 +57,35 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 {
     while( node != NULL )
     {
-        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "widget" )
+        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && ( node->ValueStr() == "widget" || node->ValueStr() == "sprite" ) )
         {
             Ogre::String name = GetString( node, "name" );
             if( name != "" )
             {
-                UiWidget* widget2 = new UiWidget( name, base_name + "." + name, widget );
+                UiWidget* widget2;
+
+                if( node->ValueStr() == "sprite" )
+                {
+                    widget2 = new UiSprite( name, base_name + "." + name, widget );
+                }
+                else
+                {
+                    widget2 = new UiWidget( name, base_name + "." + name, widget );
+                }
 
 
 
-                Ogre::ColourValue colour = GetColourValue( node, "colour" );
-                widget2->SetColour( colour.r, colour.g, colour.b, colour.a );
+                if( node->ValueStr() == "sprite" )
+                {
+                    Ogre::ColourValue colour = GetColourValue( node, "colour" );
+                    ( ( UiSprite* )widget2 )->SetColour( colour.r, colour.g, colour.b, colour.a );
+
+                    Ogre::String image = GetString( node, "image" );
+                    if( image != "" )
+                    {
+                        ( ( UiSprite* )widget2 )->SetImage( image );
+                    }
+                }
 
 
 
@@ -213,7 +233,13 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
 
 
-                widget2->GeometryUpdate();
+                if( node->ValueStr() == "sprite" )
+                {
+                    ( ( UiSprite* )widget2 )->GeometryUpdate();
+                }
+
+
+
                 widget->AddChild( widget2 );
 
                 TiXmlNode* node2 = node->FirstChild();
