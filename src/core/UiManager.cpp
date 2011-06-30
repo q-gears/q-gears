@@ -1,17 +1,12 @@
 #include "UiManager.h"
 
+#include <OgreRoot.h>
 #include <OgreStringVector.h>
 
-#include "ConfigVar.h"
-#include "DebugDraw.h"
 #include "Logger.h"
 #include "ScriptManager.h"
 #include "Utilites.h"
 #include "XmlScreensFile.h"
-
-
-
-ConfigVar cv_debug_ui( "debug_ui", "Draw ui debug info", "false" );
 
 
 
@@ -53,16 +48,6 @@ UiManager::Update()
     for( int i = 0; i < m_Widgets.size(); ++i )
     {
         m_Widgets[ i ]->Update();
-    }
-
-
-
-    // debug output
-    if( cv_debug_ui.GetB() == true )
-    {
-        DEBUG_DRAW.SetScreenSpace( true );
-        DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
-        DEBUG_DRAW.Text( 100, 100, "TEST" );
     }
 }
 

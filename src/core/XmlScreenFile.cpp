@@ -105,6 +105,34 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
 
 
+                Ogre::String origin_x_str = GetString( node, "origin_x" );
+                if( origin_x_str != "" )
+                {
+                    float x = 0;
+                    float x_add = 0;
+                    bool x_percent = false;
+
+                    ParsePersent( x, x_add, x_percent, origin_x_str );
+
+                    widget2->SetOriginX( x, x_add, x_percent );
+                }
+
+
+
+                Ogre::String origin_y_str = GetString( node, "origin_y" );
+                if( origin_y_str != "" )
+                {
+                    float y = 0;
+                    float y_add = 0;
+                    bool y_percent = false;
+
+                    ParsePersent( y, y_add, y_percent, origin_y_str );
+
+                    widget2->SetOriginY( y, y_add, y_percent );
+                }
+
+
+
                 Ogre::String x_str = GetString( node, "x" );
                 if( x_str != "" )
                 {
@@ -112,25 +140,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     float x_add = 0;
                     bool x_percent = false;
 
-                    if( x_str.at( x_str.size() - 1 ) == '%' )
-                    {
-                        x = Ogre::StringConverter::parseReal( x_str.substr( 0, x_str.size() - 1 ) );
-                        x_percent = true;
-                    }
-                    else
-                    {
-                        Ogre::StringVector param = Ogre::StringUtil::split( x_str, "%" );
-                        if( param.size() > 1 )
-                        {
-                            x = Ogre::StringConverter::parseReal( param[ 0 ] );
-                            x_add = Ogre::StringConverter::parseReal( param[ 1 ] );
-                            x_percent = true;
-                        }
-                        else
-                        {
-                            x = Ogre::StringConverter::parseReal( x_str );
-                        }
-                    }
+                    ParsePersent( x, x_add, x_percent, x_str );
 
                     widget2->SetX( x, x_add, x_percent );
                 }
@@ -144,25 +154,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     float y_add = 0;
                     bool y_percent = false;
 
-                    if( y_str.at( y_str.size() - 1 ) == '%' )
-                    {
-                        y = Ogre::StringConverter::parseReal( y_str.substr( 0, y_str.size() - 1 ) );
-                        y_percent = true;
-                    }
-                    else
-                    {
-                        Ogre::StringVector param = Ogre::StringUtil::split( y_str, "%" );
-                        if( param.size() > 1 )
-                        {
-                            y = Ogre::StringConverter::parseReal( param[ 0 ] );
-                            y_add = Ogre::StringConverter::parseReal( param[ 1 ] );
-                            y_percent = true;
-                        }
-                        else
-                        {
-                            y = Ogre::StringConverter::parseReal( y_str );
-                        }
-                    }
+                    ParsePersent( y, y_add, y_percent, y_str );
 
                     widget2->SetY( y, y_add, y_percent );
                 }
@@ -176,25 +168,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     float width = 0;
                     float width_add = 0;
 
-                    if( width_str.at( width_str.size() - 1 ) == '%' )
-                    {
-                        width_percent = true;
-                        width = Ogre::StringConverter::parseReal( width_str.substr( 0, width_str.size() - 1 ) );
-                    }
-                    else
-                    {
-                        Ogre::StringVector param = Ogre::StringUtil::split( width_str, "%" );
-                        if( param.size() > 1 )
-                        {
-                            width = Ogre::StringConverter::parseReal( param[ 0 ] );
-                            width_add = Ogre::StringConverter::parseReal( param[ 1 ] );
-                            width_percent = true;
-                        }
-                        else
-                        {
-                            width = Ogre::StringConverter::parseReal( width_str );
-                        }
-                    }
+                    ParsePersent( width, width_add, width_percent, width_str );
 
                     widget2->SetWidth( width, width_add, width_percent );
                 }
@@ -208,25 +182,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     float height_add = 0;
                     bool height_percent = false;
 
-                    if( height_str.at( height_str.size() - 1 ) == '%' )
-                    {
-                        height = Ogre::StringConverter::parseReal( height_str.substr( 0, height_str.size() - 1 ) );
-                        height_percent = true;
-                    }
-                    else
-                    {
-                        Ogre::StringVector param = Ogre::StringUtil::split( height_str, "%" );
-                        if( param.size() > 1 )
-                        {
-                            height = Ogre::StringConverter::parseReal( param[ 0 ] );
-                            height_add = Ogre::StringConverter::parseReal( param[ 1 ] );
-                            height_percent = true;
-                        }
-                        else
-                        {
-                            height = Ogre::StringConverter::parseReal( height_str );
-                        }
-                    }
+                    ParsePersent( height, height_add, height_percent, height_str );
 
                     widget2->SetHeight( height, height_add, height_percent );
                 }
@@ -255,5 +211,31 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
         }
 
         node = node->NextSibling();
+    }
+}
+
+
+
+void
+XmlScreenFile::ParsePersent( float& value, float& value_add, bool& value_percent, const Ogre::String& string )
+{
+    if( string.at( string.size() - 1 ) == '%' )
+    {
+        value = Ogre::StringConverter::parseReal( string.substr( 0, string.size() - 1 ) );
+        value_percent = true;
+    }
+    else
+    {
+        Ogre::StringVector param = Ogre::StringUtil::split( string, "%" );
+        if( param.size() > 1 )
+        {
+            value = Ogre::StringConverter::parseReal( param[ 0 ] );
+            value_add = Ogre::StringConverter::parseReal( param[ 1 ] );
+            value_percent = true;
+        }
+        else
+        {
+            value = Ogre::StringConverter::parseReal( string );
+        }
     }
 }

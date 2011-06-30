@@ -42,6 +42,8 @@ public:
 
     void SetAlign( const UiWidget::Align align );
     void SetVerticalAlign( const UiWidget::VerticalAlign valign );
+    void SetOriginX( const float x, const float add, const bool percent );
+    void SetOriginY( const float y, const float add, const bool percent );
     void SetX( const float x, const float add, const bool percent );
     float GetScreenX() const;
     void SetY( const float y, const float add, const bool percent );
@@ -65,6 +67,12 @@ protected:
 
     Align                    m_Align;
     VerticalAlign            m_VerticalAlign;
+    float                    m_OriginX;
+    float                    m_OriginXAdd;
+    bool                     m_OriginXPercent;
+    float                    m_OriginY;
+    float                    m_OriginYAdd;
+    bool                     m_OriginYPercent;
     float                    m_X;
     float                    m_XAdd;
     bool                     m_XPercent;

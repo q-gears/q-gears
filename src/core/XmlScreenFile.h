@@ -14,6 +14,7 @@ public:
 
     void LoadScreen();
     void LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_name, UiWidget* widget );
+    void ParsePersent( float& value, float& value_add, bool& value_percent, const Ogre::String& string );
 };
 
 

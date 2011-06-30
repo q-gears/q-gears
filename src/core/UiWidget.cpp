@@ -2,30 +2,19 @@
 
 #include <OgreRoot.h>
 
+#include "ConfigVar.h"
 #include "ScriptManager.h"
+
+
+
+ConfigVar cv_debug_ui( "debug_ui", "Draw ui debug info", "false" );
 
 
 
 UiWidget::UiWidget( const Ogre::String& name ):
     m_Name( name ),
     m_PathName( name ),
-    m_Parent( NULL ),
-    m_Visible( false ),
-
-    m_Align( LEFT ),
-    m_VerticalAlign( TOP ),
-    m_X( 0 ),
-    m_XAdd( 0 ),
-    m_XPercent( false ),
-    m_Y( 0 ),
-    m_YAdd( 0 ),
-    m_YPercent( false ),
-    m_Width( 100 ),
-    m_WidthAdd( 0 ),
-    m_WidthPercent( true ),
-    m_Height( 100 ),
-    m_HeightAdd( 0 ),
-    m_HeightPercent( true )
+    m_Parent( NULL )
 {
     Initialise();
 }
@@ -35,23 +24,7 @@ UiWidget::UiWidget( const Ogre::String& name ):
 UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent ):
     m_Name( name ),
     m_PathName( path_name ),
-    m_Parent( parent ),
-    m_Visible( false ),
-
-    m_Align( LEFT ),
-    m_VerticalAlign( TOP ),
-    m_X( 0 ),
-    m_XAdd( 0 ),
-    m_XPercent( false ),
-    m_Y( 0 ),
-    m_YAdd( 0 ),
-    m_YPercent( false ),
-    m_Width( 100 ),
-    m_WidthAdd( 0 ),
-    m_WidthPercent( true ),
-    m_Height( 100 ),
-    m_HeightAdd( 0 ),
-    m_HeightPercent( true )
+    m_Parent( parent )
 {
     Initialise();
 }
@@ -70,6 +43,29 @@ UiWidget::~UiWidget()
 void
 UiWidget::Initialise()
 {
+    m_Visible = false;
+
+    m_Align = LEFT;
+    m_VerticalAlign = TOP;
+    m_OriginX = 0;
+    m_OriginXAdd = 0;
+    m_OriginXPercent = false;
+    m_OriginY = 0;
+    m_OriginYAdd = 0;
+    m_OriginYPercent = false;
+    m_X = 0;
+    m_XAdd = 0;
+    m_XPercent = false;
+    m_Y = 0;
+    m_YAdd = 0;
+    m_YPercent = false;
+    m_Width = 100;
+    m_WidthAdd = 0;
+    m_WidthPercent = true;
+    m_Height = 100;
+    m_HeightAdd = 0;
+    m_HeightPercent = true;
+
     ScriptManager::getSingleton().AddEntity( "Ui." + m_PathName );
 }
 
@@ -190,6 +186,26 @@ UiWidget::SetVerticalAlign( const UiWidget::VerticalAlign valign )
 
 
 void
+UiWidget::SetOriginX( const float x, const float add, const bool percent )
+{
+    m_OriginX = x;
+    m_OriginXAdd = add;
+    m_OriginXPercent = percent;
+}
+
+
+
+void
+UiWidget::SetOriginY( const float y, const float add, const bool percent )
+{
+    m_OriginY = y;
+    m_OriginYAdd = add;
+    m_OriginYPercent = percent;
+}
+
+
+
+void
 UiWidget::SetX( const float x, const float add, const bool percent )
 {
     m_X = x;
@@ -218,6 +234,8 @@ UiWidget::GetScreenX() const
     {
         base_x = area_x + area_width / 2;
     }
+
+    base_x -= ( ( m_OriginXPercent == true ) ? ( GetScreenWidth() * m_OriginX ) / 100.0f + m_OriginXAdd * screen_height / 720.0f : m_OriginX * screen_height / 720.0f );
 
     return base_x + ( ( m_XPercent == true ) ? ( area_width * m_X ) / 100.0f + m_XAdd * screen_height / 720.0f : m_X * screen_height / 720.0f );
 }
@@ -252,6 +270,8 @@ UiWidget::GetScreenY() const
     {
         base_y = area_y + area_height / 2;
     }
+
+    base_y -= ( ( m_OriginYPercent == true ) ? ( GetScreenHeight() * m_OriginY ) / 100.0f + m_OriginYAdd * screen_height / 720.0f : m_OriginY * screen_height / 720.0f );
 
     return base_y + ( ( m_YPercent == true ) ? ( area_height * m_Y ) / 100.0f + m_YAdd * screen_height / 720.0f : m_Y * screen_height / 720.0f );
 }

@@ -86,10 +86,16 @@ UiSprite::Render()
         {
             m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
             m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
-            m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
+
+            Ogre::Matrix4 matrix = Ogre::Matrix4::IDENTITY;
+            matrix.makeTransform ( Ogre::Vector3( 0.0f, 0.0f, 0.0f ), Ogre::Vector3( 1.0, 1.0f, 0.0f ), Ogre::Quaternion ( Ogre::Radian( Ogre::Degree( 0 ) ), Ogre::Vector3( 0, 0, -1 ) ) );
+            m_RenderSystem->_setViewMatrix( matrix );
 
             m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
+
+            //m_RenderSystem->setScissorTest( true, 200, 200, 400, 400 );
             m_RenderSystem->_render( m_QuadRenderOp );
+            //m_RenderSystem->setScissorTest( false );
         }
     }
 
