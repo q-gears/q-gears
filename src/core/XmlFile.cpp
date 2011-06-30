@@ -190,7 +190,7 @@ XmlFile::GetMatrix4( TiXmlNode* node, const Ogre::String& tag ) const
 const Ogre::ColourValue
 XmlFile::GetColourValue( TiXmlNode* node, const Ogre::String& tag ) const
 {
-    Ogre::ColourValue ret = Ogre::ColourValue::ZERO;
+    Ogre::ColourValue ret = Ogre::ColourValue::White;
 
     if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {

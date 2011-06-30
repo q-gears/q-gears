@@ -1,24 +1,13 @@
 <screen name="TestScreen" script="ui/screens/test.lua">
-    <sprite name="Right" colour="1 1 1 1" align="right" valign="top" x="-100" y="5%" width="100" height="90%">
-        <sprite name="Top" colour="0 1 0 1" align="center" valign="top" x="-10" y="10" width="20" height="20" />
-        <sprite name="Bottom" colour="0 1 0 1" align="center" valign="bottom" x="-10" y="-30" width="20" height="20" />
-    </sprite>
-    <sprite name="Left" colour="1 1 1 1" align="left" valign="top" x="0" y="5%" width="100" height="90%">
-        <sprite name="Top" colour="0 1 0 1" align="center" valign="top" x="-10" y="10" width="20" height="20" />
-        <sprite name="Bottom" colour="0 1 0 1" align="center" valign="bottom" x="-10" y="-30" width="20" height="20" />
-    </sprite>
-    <sprite name="Bottom" colour="1 1 1 1" align="center" valign="bottom" x="-50%+110" y="-200" width="100%-220" height="100">
-        <sprite name="Left" colour="0 1 0 1" align="left" valign="middle" x="10" y="-10" width="20" height="20" />
-        <sprite name="Right" colour="0 1 0 1" align="right" valign="middle" x="-30" y="-10" width="20" height="20" />
-    </sprite>
-    <sprite name="Top" colour="1 1 1 1" align="center" valign="top" x="-50%+110" y="100" width="100%-220" height="100">
-        <sprite name="Left" colour="0 1 0 1" align="left" valign="middle" x="10" y="-10" width="20" height="20" />
-        <sprite name="Right" colour="0 1 0 1" align="right" valign="middle" x="-30" y="-10" width="20" height="20" />
-    </sprite>
-    <sprite name="Center" colour="1 1 1 1" image="ui/screens/test.jpg" align="center" valign="middle" x="-50%+110" y="-50%+210" width="338" height="480">
-        <sprite name="LeftTop" colour="0 1 0 1" align="left" valign="top" x="10" y="10" width="20" height="20" />
-        <sprite name="RightTop" colour="0 1 0 1" align="right" valign="top" x="-30" y="10" width="20" height="20" />
-        <sprite name="LeftBottom" colour="0 1 0 1" align="left" valign="bottom" x="10" y="-30" width="20" height="20" />
-        <sprite name="RightBottom" colour="0 1 0 1" align="right" valign="bottom" x="-30" y="-30" width="20" height="20" />
-    </sprite>
+    <widget name="Dialog" x="100" y="100" width="344" height="486">
+        <sprite name="Center" image="ui/screens/test.jpg" x="3" y="3" width="100%-6" height="100%-6" />
+        <sprite name="Top" image="ui/screens/border_t.png" x="8" y="0" width="100%-16" height="8" />
+        <sprite name="Bottom" image="ui/screens/border_b.png" x="8" y="100%-8" width="100%-16" height="8" />
+        <sprite name="Left" image="ui/screens/border_l.png" x="0" y="8" width="8" height="100%-16" />
+        <sprite name="Right" image="ui/screens/border_r.png" x="100%-8" y="8" width="8" height="100%-16" />
+        <sprite name="TopLeft" image="ui/screens/border_tl.png" x="0" y="0" width="8" height="8" />
+        <sprite name="TopRight" image="ui/screens/border_tr.png" x="100%-8" y="0" width="8" height="8" />
+        <sprite name="BottomLeft" image="ui/screens/border_bl.png" x="0" y="100%-8" width="8" height="8" />
+        <sprite name="BottomRight" image="ui/screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" />
+    </widget>
 </screen>
