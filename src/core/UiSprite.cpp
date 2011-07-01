@@ -86,10 +86,7 @@ UiSprite::Render()
         {
             m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
             m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
-
-            Ogre::Matrix4 matrix = Ogre::Matrix4::IDENTITY;
-            matrix.makeTransform ( Ogre::Vector3( 0.0f, 0.0f, 0.0f ), Ogre::Vector3( 1.0, 1.0f, 0.0f ), Ogre::Quaternion ( Ogre::Radian( Ogre::Degree( 0 ) ), Ogre::Vector3( 0, 0, -1 ) ) );
-            m_RenderSystem->_setViewMatrix( matrix );
+            m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
 
             m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
 
@@ -128,22 +125,85 @@ UiSprite::SetImage( const Ogre::String& image )
 void
 UiSprite::GeometryUpdate()
 {
-    float x1 = GetScreenX();
-    float y1 = GetScreenY();
-    float width = GetScreenWidth();
-    float height = GetScreenHeight();
-    float x2 = x1 + width;
-    float y2 = y1;
-    float x3 = x2;
-    float y3 = y2 + height;
-    float x4 = x1;
-    float y4 = y3;
+    //float fX1 = -v_stHotSpot.v_fX * v_stTransform.v_stScale.v_fX;
+    //float fY1 = -v_stHotSpot.v_fY * v_stTransform.v_stScale.v_fY;
+    //float fX2 = (v_fWidth - v_stHotSpot.v_fX) * v_stTransform.v_stScale.v_fX;
+    //float fY2 = (v_fHeight - v_stHotSpot.v_fY) * v_stTransform.v_stScale.v_fY;
+/*
+    if( v_stTransform.v_fRotation != 0.0f )
+    {
+        float fCos = Cos( v_stTransform.v_fRotation );
+        float fSin = Sin( v_stTransform.v_fRotation );
 
-    //LOG_ERROR( m_Name );
-    //LOG_ERROR( "x1 = " + Ogre::StringConverter::toString( x1 ) + ", y1 = " + Ogre::StringConverter::toString( y1 ) );
-    //LOG_ERROR( "x2 = " + Ogre::StringConverter::toString( x2 ) + ", y2 = " + Ogre::StringConverter::toString( y2 ) );
-    //LOG_ERROR( "x3 = " + Ogre::StringConverter::toString( x3 ) + ", y3 = " + Ogre::StringConverter::toString( y3 ) );
-    //LOG_ERROR( "x4 = " + Ogre::StringConverter::toString( x4 ) + ", y4 = " + Ogre::StringConverter::toString( y4 ) );
+        v_stQuad.v[ 0 ].x  = fX1 * fCos - fY1 * fSin + v_stTransform.v_stPos.v_fX;
+        v_stQuad.v[ 0 ].y  = fX1 * fSin + fY1 * fCos + v_stTransform.v_stPos.v_fY;
+
+        v_stQuad.v[ 1 ].x  = fX2 * fCos - fY1 * fSin + v_stTransform.v_stPos.v_fX;
+        v_stQuad.v[ 1 ].y  = fX2 * fSin + fY1 * fCos + v_stTransform.v_stPos.v_fY;
+
+        v_stQuad.v[ 2 ].x  = fX2 * fCos - fY2 * fSin + v_stTransform.v_stPos.v_fX;
+        v_stQuad.v[ 2 ].y  = fX2 * fSin + fY2 * fCos + v_stTransform.v_stPos.v_fY;
+
+        v_stQuad.v[ 3 ].x  = fX1 * fCos - fY2 * fSin + v_stTransform.v_stPos.v_fX;
+        v_stQuad.v[ 3 ].y  = fX1 * fSin + fY2 * fCos + v_stTransform.v_stPos.v_fY;
+    }
+    else
+    {
+*/
+        //v_stQuad.v[ 0 ].x = fX1 + v_stTransform.v_stPos.v_fX; v_stQuad.v[ 0 ].y = fY1 + v_stTransform.v_stPos.v_fY;
+        //v_stQuad.v[ 1 ].x = fX2 + v_stTransform.v_stPos.v_fX; v_stQuad.v[ 1 ].y = fY1 + v_stTransform.v_stPos.v_fY;
+        //v_stQuad.v[ 2 ].x = fX2 + v_stTransform.v_stPos.v_fX; v_stQuad.v[ 2 ].y = fY2 + v_stTransform.v_stPos.v_fY;
+        //v_stQuad.v[ 3 ].x = fX1 + v_stTransform.v_stPos.v_fX; v_stQuad.v[ 3 ].y = fY2 + v_stTransform.v_stPos.v_fY;
+/*
+    }
+*/
+
+
+
+
+    float x1, y1, x2, y2, x3, y3, x4, y4;
+    float width, height;
+
+    float rotation = GetFinalRotation();
+    if( rotation != 0 )
+    {
+        float local_x1 = -GetFinalOriginX();
+        float local_y1 = -GetFinalOriginY();
+        float local_x2 = GetFinalWidth() + local_x1;
+        float local_y2 = GetFinalHeight() + local_y1;
+        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( rotation ) ) );
+        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( rotation ) ) );
+        float x = GetFinalX();
+        float y = GetFinalY();
+
+        x1 = local_x1 * cos - local_y1 * sin + x;
+        y1 = local_x1 * sin + local_y1 * cos + y;
+        x2 = local_x2 * cos - local_y1 * sin + x;
+        y2 = local_x2 * sin + local_y1 * cos + y;
+        x3 = local_x2 * cos - local_y2 * sin + x;
+        y3 = local_x2 * sin + local_y2 * cos + y;
+        x4 = local_x1 * cos - local_y2 * sin + x;
+        y4 = local_x1 * sin + local_y2 * cos + y;
+
+        //LOG_ERROR( m_Name + ", rotation = " + Ogre::StringConverter::toString( rotation ) );
+        //LOG_ERROR( "x1 = " + Ogre::StringConverter::toString( x1 ) + ", y1 = " + Ogre::StringConverter::toString( y1 ) );
+        //LOG_ERROR( "x2 = " + Ogre::StringConverter::toString( x2 ) + ", y2 = " + Ogre::StringConverter::toString( y2 ) );
+        //LOG_ERROR( "x3 = " + Ogre::StringConverter::toString( x3 ) + ", y3 = " + Ogre::StringConverter::toString( y3 ) );
+        //LOG_ERROR( "x4 = " + Ogre::StringConverter::toString( x4 ) + ", y4 = " + Ogre::StringConverter::toString( y4 ) );
+    }
+    else
+    {
+        x1 = GetFinalX();
+        y1 = GetFinalY();
+        width = GetFinalWidth();
+        height = GetFinalHeight();
+        x2 = x1 + width;
+        y2 = y1;
+        x3 = x2;
+        y3 = y2 + height;
+        x4 = x1;
+        y4 = y3;
+    }
 
     float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();

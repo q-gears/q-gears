@@ -43,15 +43,23 @@ public:
     void SetAlign( const UiWidget::Align align );
     void SetVerticalAlign( const UiWidget::VerticalAlign valign );
     void SetOriginX( const float x, const float add, const bool percent );
+    float GetFinalOriginX() const;
     void SetOriginY( const float y, const float add, const bool percent );
+    float GetFinalOriginY() const;
     void SetX( const float x, const float add, const bool percent );
-    float GetScreenX() const;
+    float GetFinalX() const;
     void SetY( const float y, const float add, const bool percent );
-    float GetScreenY() const;
+    float GetFinalY() const;
     void SetWidth( const float width, const float add, const bool percent );
-    float GetScreenWidth() const;
+    float GetFinalWidth() const;
     void SetHeight( const float height, const float add, const bool percent );
-    float GetScreenHeight() const;
+    float GetFinalHeight() const;
+    void SetScaleX( const float x );
+    float GetFinalScaleX() const;
+    void SetScaleY( const float y );
+    float GetFinalScaleY() const;
+    void SetRotation( const float degree );
+    float GetFinalRotation() const;
 
 private:
     UiWidget();
@@ -67,6 +75,7 @@ protected:
 
     Align                    m_Align;
     VerticalAlign            m_VerticalAlign;
+
     float                    m_OriginX;
     float                    m_OriginXAdd;
     bool                     m_OriginXPercent;
@@ -85,6 +94,9 @@ protected:
     float                    m_Height;
     float                    m_HeightAdd;
     bool                     m_HeightPercent;
+    float                    m_ScaleX;
+    float                    m_ScaleY;
+    float                    m_Rotation;
 };
 
 

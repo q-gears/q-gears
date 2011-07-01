@@ -1,8 +1,10 @@
 #include "UiWidget.h"
 
+#include <OgreMath.h>
 #include <OgreRoot.h>
 
 #include "ConfigVar.h"
+#include "Logger.h"
 #include "ScriptManager.h"
 
 
@@ -65,6 +67,9 @@ UiWidget::Initialise()
     m_Height = 100;
     m_HeightAdd = 0;
     m_HeightPercent = true;
+    m_ScaleX = 1.0f;
+    m_ScaleY = 1.0f;
+    m_Rotation = 0.0f;
 
     ScriptManager::getSingleton().AddEntity( "Ui." + m_PathName );
 }
@@ -195,12 +200,30 @@ UiWidget::SetOriginX( const float x, const float add, const bool percent )
 
 
 
+float
+UiWidget::GetFinalOriginX() const
+{
+    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    return ( m_OriginXPercent == true ) ? ( GetFinalWidth() * m_OriginX ) / 100.0f + m_OriginXAdd * screen_height / 720.0f : m_OriginX * screen_height / 720.0f;
+}
+
+
+
 void
 UiWidget::SetOriginY( const float y, const float add, const bool percent )
 {
     m_OriginY = y;
     m_OriginYAdd = add;
     m_OriginYPercent = percent;
+}
+
+
+
+float
+UiWidget::GetFinalOriginY() const
+{
+    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    return ( m_OriginYPercent == true ) ? ( GetFinalHeight() * m_OriginY ) / 100.0f + m_OriginYAdd * screen_height / 720.0f : m_OriginY * screen_height / 720.0f;
 }
 
 
@@ -216,13 +239,13 @@ UiWidget::SetX( const float x, const float add, const bool percent )
 
 
 float
-UiWidget::GetScreenX() const
+UiWidget::GetFinalX() const
 {
     float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
-    float area_x = ( m_Parent != NULL ) ? m_Parent->GetScreenX() : 0;
-    float area_width = ( m_Parent != NULL ) ? m_Parent->GetScreenWidth() : screen_width;
+    float area_x = ( m_Parent != NULL ) ? m_Parent->GetFinalX() : 0;
+    float area_width = ( m_Parent != NULL ) ? m_Parent->GetFinalWidth() : screen_width;
 
     // calculate base x depending in aligment
     float base_x = area_x;
@@ -235,9 +258,9 @@ UiWidget::GetScreenX() const
         base_x = area_x + area_width / 2;
     }
 
-    base_x -= ( ( m_OriginXPercent == true ) ? ( GetScreenWidth() * m_OriginX ) / 100.0f + m_OriginXAdd * screen_height / 720.0f : m_OriginX * screen_height / 720.0f );
+    float x = ( m_XPercent == true ) ? ( area_width * m_X * m_ScaleX ) / 100.0f + ( m_XAdd * screen_height / 720.0f) * GetFinalScaleX() : ( m_X * screen_height / 720.0f ) * GetFinalScaleX();
 
-    return base_x + ( ( m_XPercent == true ) ? ( area_width * m_X ) / 100.0f + m_XAdd * screen_height / 720.0f : m_X * screen_height / 720.0f );
+    return base_x - GetFinalOriginX() + x;
 }
 
 
@@ -253,12 +276,12 @@ UiWidget::SetY( const float y, const float add, const bool percent )
 
 
 float
-UiWidget::GetScreenY() const
+UiWidget::GetFinalY() const
 {
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
-    float area_y = ( m_Parent != NULL ) ? m_Parent->GetScreenY() : 0;
-    float area_height = ( m_Parent != NULL ) ? m_Parent->GetScreenHeight() : screen_height;
+    float area_y = ( m_Parent != NULL ) ? m_Parent->GetFinalY() : 0;
+    float area_height = ( m_Parent != NULL ) ? m_Parent->GetFinalHeight() : screen_height;
 
     // calculate base y depending in vertical aligment
     float base_y = area_y;
@@ -271,9 +294,9 @@ UiWidget::GetScreenY() const
         base_y = area_y + area_height / 2;
     }
 
-    base_y -= ( ( m_OriginYPercent == true ) ? ( GetScreenHeight() * m_OriginY ) / 100.0f + m_OriginYAdd * screen_height / 720.0f : m_OriginY * screen_height / 720.0f );
+    float y = ( m_YPercent == true ) ? ( area_height * m_Y * m_ScaleY ) / 100.0f + ( m_YAdd * screen_height / 720.0f ) * GetFinalScaleY() : ( m_Y * screen_height / 720.0f ) * GetFinalScaleY();
 
-    return base_y + ( ( m_YPercent == true ) ? ( area_height * m_Y ) / 100.0f + m_YAdd * screen_height / 720.0f : m_Y * screen_height / 720.0f );
+    return base_y - GetFinalOriginY() + y;
 }
 
 
@@ -289,12 +312,12 @@ UiWidget::SetWidth( const float width, const float add, const bool percent )
 
 
 float
-UiWidget::GetScreenWidth() const
+UiWidget::GetFinalWidth() const
 {
     float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
-    float area_width = ( m_Parent != NULL ) ? m_Parent->GetScreenWidth() : screen_width;
-    return ( m_WidthPercent == true ) ? ( area_width * m_Width ) / 100.0f + m_WidthAdd * screen_height / 720.0f : m_Width * screen_height / 720.0f;
+    float area_width = ( m_Parent != NULL ) ? m_Parent->GetFinalWidth() : screen_width;
+    return ( m_WidthPercent == true ) ? ( area_width * m_Width * m_ScaleX ) / 100.0f + ( m_WidthAdd * screen_height / 720.0f ) * GetFinalScaleX() : ( m_Width * screen_height / 720.0f) * GetFinalScaleX();
 }
 
 
@@ -310,9 +333,57 @@ UiWidget::SetHeight( const float height, const float add, const bool percent )
 
 
 float
-UiWidget::GetScreenHeight() const
+UiWidget::GetFinalHeight() const
 {
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
-    float area_height = ( m_Parent != NULL ) ? m_Parent->GetScreenHeight() : screen_height;
-    return ( m_HeightPercent == true ) ? ( area_height * m_Height ) / 100.0f + m_HeightAdd * screen_height / 720.0f: m_Height * screen_height / 720.0f;
+    float area_height = ( m_Parent != NULL ) ? m_Parent->GetFinalHeight() : screen_height;
+    return ( m_HeightPercent == true ) ? ( area_height * m_Height * m_ScaleY ) / 100.0f + ( m_HeightAdd * screen_height / 720.0f ) * GetFinalScaleY() : ( m_Height * screen_height / 720.0f ) * GetFinalScaleY();
+}
+
+
+
+void
+UiWidget::SetScaleX( const float x )
+{
+    m_ScaleX = x;
+}
+
+
+
+float
+UiWidget::GetFinalScaleX() const
+{
+    return ( m_Parent != NULL ) ? m_Parent->GetFinalScaleX() * m_ScaleX : m_ScaleX;
+}
+
+
+
+void
+UiWidget::SetScaleY( const float y )
+{
+    m_ScaleY = y;
+}
+
+
+
+float
+UiWidget::GetFinalScaleY() const
+{
+    return ( m_Parent != NULL ) ? m_Parent->GetFinalScaleY() * m_ScaleY : m_ScaleY;
+}
+
+
+
+void
+UiWidget::SetRotation( const float degree )
+{
+    m_Rotation = degree;
+}
+
+
+
+float
+UiWidget::GetFinalRotation() const
+{
+    return ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() + m_Rotation : m_Rotation;
 }

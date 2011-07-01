@@ -64,9 +64,9 @@ XmlFile::GetInt( TiXmlNode* node, const Ogre::String& tag ) const
 
 
 const float
-XmlFile::GetFloat( TiXmlNode* node, const Ogre::String& tag ) const
+XmlFile::GetFloat( TiXmlNode* node, const Ogre::String& tag, float def ) const
 {
-    float ret = 0;
+    float ret = def;
 
     if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {
@@ -131,9 +131,9 @@ XmlFile::GetText(TiXmlNode* node) const
 
 
 const Ogre::Vector2
-XmlFile::GetVector2( TiXmlNode* node, const Ogre::String& tag ) const
+XmlFile::GetVector2( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector2& def ) const
 {
-    Ogre::Vector2 ret = Ogre::Vector2::ZERO;
+    Ogre::Vector2 ret = def;
 
     if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {
@@ -188,9 +188,9 @@ XmlFile::GetMatrix4( TiXmlNode* node, const Ogre::String& tag ) const
 
 
 const Ogre::ColourValue
-XmlFile::GetColourValue( TiXmlNode* node, const Ogre::String& tag ) const
+XmlFile::GetColourValue( TiXmlNode* node, const Ogre::String& tag, const Ogre::ColourValue& def ) const
 {
-    Ogre::ColourValue ret = Ogre::ColourValue::White;
+    Ogre::ColourValue ret = def;
 
     if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {

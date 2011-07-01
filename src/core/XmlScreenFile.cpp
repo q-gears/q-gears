@@ -77,7 +77,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
                 if( node->ValueStr() == "sprite" )
                 {
-                    Ogre::ColourValue colour = GetColourValue( node, "colour" );
+                    Ogre::ColourValue colour = GetColourValue( node, "colour", Ogre::ColourValue::White );
                     ( ( UiSprite* )widget2 )->SetColour( colour.r, colour.g, colour.b, colour.a );
 
                     Ogre::String image = GetString( node, "image" );
@@ -186,6 +186,17 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
                     widget2->SetHeight( height, height_add, height_percent );
                 }
+
+
+
+                Ogre::Vector2 scale = GetVector2( node, "scale", Ogre::Vector2( 1.0f, 1.0f ) );
+                widget2->SetScaleX( scale.x );
+                widget2->SetScaleY( scale.y );
+
+
+
+                float rotation = GetFloat( node, "rotation", 0.0f );
+                widget2->SetRotation( rotation );
 
 
 
