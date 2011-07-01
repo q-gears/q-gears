@@ -239,13 +239,27 @@ UiWidget::SetX( const float x, const float add, const bool percent )
 
 
 float
-UiWidget::GetFinalX() const
+UiWidget::GetLocalX() const
 {
     float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
-    float area_x = ( m_Parent != NULL ) ? m_Parent->GetFinalX() : 0;
     float area_width = ( m_Parent != NULL ) ? m_Parent->GetFinalWidth() : screen_width;
+
+    return ( m_XPercent == true ) ? ( area_width * m_X * m_ScaleX ) / 100.0f + ( m_XAdd * screen_height / 720.0f) * GetFinalScaleX() : ( m_X * screen_height / 720.0f ) * GetFinalScaleX();
+}
+
+
+
+float
+UiWidget::GetFinalX() const
+{
+    float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+
+    float area_x = ( m_Parent != NULL ) ? m_Parent->GetFinalX() : 0;
+    float area_origin_x = ( m_Parent != NULL ) ? m_Parent->GetFinalOriginX() : 0;
+    float area_width = ( m_Parent != NULL ) ? m_Parent->GetFinalWidth() : screen_width;
+    float area_rotation = ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() : 0;
 
     // calculate base x depending in aligment
     float base_x = area_x;
@@ -258,9 +272,18 @@ UiWidget::GetFinalX() const
         base_x = area_x + area_width / 2;
     }
 
-    float x = ( m_XPercent == true ) ? ( area_width * m_X * m_ScaleX ) / 100.0f + ( m_XAdd * screen_height / 720.0f) * GetFinalScaleX() : ( m_X * screen_height / 720.0f ) * GetFinalScaleX();
+    float x = GetLocalX() - area_origin_x;
 
-    return base_x - GetFinalOriginX() + x;
+    if( area_rotation != 0 )
+    {
+        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        float area_origin_y = ( m_Parent != NULL ) ? m_Parent->GetFinalOriginY() : 0;
+        float y = GetLocalY() - area_origin_y;
+        x = x * cos - y * sin;
+    }
+
+    return x + base_x;
 }
 
 
@@ -276,12 +299,27 @@ UiWidget::SetY( const float y, const float add, const bool percent )
 
 
 float
+UiWidget::GetLocalY() const
+{
+    float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+
+    float area_height = ( m_Parent != NULL ) ? m_Parent->GetFinalHeight() : screen_height;
+
+    return ( m_YPercent == true ) ? ( area_height * m_Y * m_ScaleY ) / 100.0f + ( m_YAdd * screen_height / 720.0f ) * GetFinalScaleY() : ( m_Y * screen_height / 720.0f ) * GetFinalScaleY();
+}
+
+
+
+float
 UiWidget::GetFinalY() const
 {
     float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
     float area_y = ( m_Parent != NULL ) ? m_Parent->GetFinalY() : 0;
+    float area_origin_y = ( m_Parent != NULL ) ? m_Parent->GetFinalOriginY() : 0;
     float area_height = ( m_Parent != NULL ) ? m_Parent->GetFinalHeight() : screen_height;
+    float area_rotation = ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() : 0;
 
     // calculate base y depending in vertical aligment
     float base_y = area_y;
@@ -294,9 +332,19 @@ UiWidget::GetFinalY() const
         base_y = area_y + area_height / 2;
     }
 
-    float y = ( m_YPercent == true ) ? ( area_height * m_Y * m_ScaleY ) / 100.0f + ( m_YAdd * screen_height / 720.0f ) * GetFinalScaleY() : ( m_Y * screen_height / 720.0f ) * GetFinalScaleY();
+    float y = GetLocalY() - area_origin_y;
 
-    return base_y - GetFinalOriginY() + y;
+    if( area_rotation != 0 )
+    {
+        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        float area_origin_x = ( m_Parent != NULL ) ? m_Parent->GetFinalOriginX() : 0;
+        float x = GetLocalX() - area_origin_x;
+
+        y = x * sin + y * cos;
+    }
+
+    return y + base_y;
 }
 
 

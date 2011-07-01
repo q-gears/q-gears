@@ -47,8 +47,10 @@ public:
     void SetOriginY( const float y, const float add, const bool percent );
     float GetFinalOriginY() const;
     void SetX( const float x, const float add, const bool percent );
+    float GetLocalX() const;
     float GetFinalX() const;
     void SetY( const float y, const float add, const bool percent );
+    float GetLocalY() const;
     float GetFinalY() const;
     void SetWidth( const float width, const float add, const bool percent );
     float GetFinalWidth() const;
@@ -97,6 +99,12 @@ protected:
     float                    m_ScaleX;
     float                    m_ScaleY;
     float                    m_Rotation;
+
+    bool                     m_Scissor;
+    int                      m_Top;
+    int                      m_Bottom;
+    int                      m_Left;
+    int                      m_Right;
 };
 
 
