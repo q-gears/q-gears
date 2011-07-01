@@ -90,9 +90,9 @@ UiSprite::Render()
 
             m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
 
-            //m_RenderSystem->setScissorTest( true, 200, 200, 400, 400 );
+            m_RenderSystem->setScissorTest( true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom );
             m_RenderSystem->_render( m_QuadRenderOp );
-            //m_RenderSystem->setScissorTest( false );
+            m_RenderSystem->setScissorTest( false );
         }
     }
 
@@ -132,7 +132,7 @@ UiSprite::GeometryUpdate()
     float x = GetFinalX();
     float y = GetFinalY();
 
-    float x1, y1, x2, y2, x3, y3, x4, y4;
+    int x1, y1, x2, y2, x3, y3, x4, y4;
     float width, height;
 
     float rotation = GetFinalRotation();
@@ -172,16 +172,14 @@ UiSprite::GeometryUpdate()
     //LOG_ERROR( "x3 = " + Ogre::StringConverter::toString( x3 ) + ", y3 = " + Ogre::StringConverter::toString( y3 ) );
     //LOG_ERROR( "x4 = " + Ogre::StringConverter::toString( x4 ) + ", y4 = " + Ogre::StringConverter::toString( y4 ) );
 
-    float screen_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float screen_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
-    float new_x1 = ( ( int )x1 / screen_width ) * 2 - 1;
-    float new_y1 = -( ( ( int )y1 / screen_height ) * 2 - 1 );
-    float new_x2 = ( ( int )x2 / screen_width ) * 2 - 1;
-    float new_y2 = -( ( ( int )y2 / screen_height ) * 2 - 1 );
-    float new_x3 = ( ( int )x3 / screen_width ) * 2 - 1;
-    float new_y3 = -( ( ( int )y3 / screen_height ) * 2 - 1 );
-    float new_x4 = ( ( int )x4 / screen_width ) * 2 - 1;
-    float new_y4 = -( ( ( int )y4 / screen_height ) * 2 - 1 );
+    float new_x1 = ( x1 / m_ScreenWidth ) * 2 - 1;
+    float new_y1 = -( ( y1 / m_ScreenHeight ) * 2 - 1 );
+    float new_x2 = ( x2 / m_ScreenWidth ) * 2 - 1;
+    float new_y2 = -( ( y2 / m_ScreenHeight ) * 2 - 1 );
+    float new_x3 = ( x3 / m_ScreenWidth ) * 2 - 1;
+    float new_y3 = -( ( y3 / m_ScreenHeight ) * 2 - 1 );
+    float new_x4 = ( x4 / m_ScreenWidth ) * 2 - 1;
+    float new_y4 = -( ( y4 / m_ScreenHeight ) * 2 - 1 );
 
     float* writeIterator = ( float* ) m_QuadVertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
 

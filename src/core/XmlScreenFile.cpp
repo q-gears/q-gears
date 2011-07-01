@@ -190,13 +190,15 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
 
                 Ogre::Vector2 scale = GetVector2( node, "scale", Ogre::Vector2( 1.0f, 1.0f ) );
-                widget2->SetScaleX( scale.x );
-                widget2->SetScaleY( scale.y );
+                widget2->SetScale( scale );
 
 
 
-                float rotation = GetFloat( node, "rotation", 0.0f );
-                widget2->SetRotation( rotation );
+                widget2->SetRotation( GetFloat( node, "rotation", 0.0f ) );
+
+
+
+                widget2->SetScissor( GetBool( node, "scissor", false ) );
 
 
 
@@ -204,7 +206,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 {
                     ( ( UiSprite* )widget2 )->GeometryUpdate();
                 }
-
+                widget2->ScissorUpdate();
 
 
                 widget->AddChild( widget2 );

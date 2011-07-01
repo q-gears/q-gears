@@ -129,8 +129,6 @@
 		<Unit filename="core\XmlScreensFile.h" />
 		<Unit filename="core\XmlWalkmeshFile.cpp" />
 		<Unit filename="core\XmlWalkmeshFile.h" />
-		<Unit filename="core\gui\GuiEffect.cpp" />
-		<Unit filename="core\gui\GuiEffect.h" />
 		<Unit filename="core\gui\MovableTextArea.cpp" />
 		<Unit filename="core\gui\MovableTextArea.h" />
 		<Unit filename="core\gui\TextArea.cpp" />

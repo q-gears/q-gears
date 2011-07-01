@@ -26,9 +26,9 @@ XmlFile::~XmlFile()
 
 
 const bool
-XmlFile::GetBool( TiXmlNode* node, const Ogre::String& tag ) const
+XmlFile::GetBool( TiXmlNode* node, const Ogre::String& tag, bool def ) const
 {
-    bool ret = false;
+    bool ret = def;
 
     if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {

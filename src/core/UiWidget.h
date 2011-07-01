@@ -56,12 +56,18 @@ public:
     float GetFinalWidth() const;
     void SetHeight( const float height, const float add, const bool percent );
     float GetFinalHeight() const;
-    void SetScaleX( const float x );
+    void SetScale( const Ogre::Vector2& scale );
     float GetFinalScaleX() const;
-    void SetScaleY( const float y );
     float GetFinalScaleY() const;
     void SetRotation( const float degree );
     float GetFinalRotation() const;
+
+    void SetScissor( bool scissor );
+    int GetScissorTop() const;
+    int GetScissorBottom() const;
+    int GetScissorLeft() const;
+    int GetScissorRight() const;
+    void ScissorUpdate();
 
 private:
     UiWidget();
@@ -72,6 +78,9 @@ protected:
 
     UiWidget*                m_Parent;
     std::vector< UiWidget* > m_Children;
+
+    float                    m_ScreenWidth;
+    float                    m_ScreenHeight;
 
     bool                     m_Visible;
 
@@ -101,10 +110,10 @@ protected:
     float                    m_Rotation;
 
     bool                     m_Scissor;
-    int                      m_Top;
-    int                      m_Bottom;
-    int                      m_Left;
-    int                      m_Right;
+    int                      m_ScissorTop;
+    int                      m_ScissorBottom;
+    int                      m_ScissorLeft;
+    int                      m_ScissorRight;
 };
 
 

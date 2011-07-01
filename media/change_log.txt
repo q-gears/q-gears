@@ -5,6 +5,7 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 2011-07-02
 ----------
 * [UI] Add widget transformation support. Scale and Rotation. [Akari]
+* [UI] Add parent scissor test. Tag scissor="true" in screen description file. [Akari]
 
 2011-06-30
 ----------
