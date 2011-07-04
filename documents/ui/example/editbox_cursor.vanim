@@ -1,0 +1,107 @@
+distortion_effect
+{
+	cycle_time 1
+	playback_mode looped
+
+	distort_animation
+	{
+		num_rows 2
+		num_columns 2
+
+		material
+		{
+			param DiffuseSampler 
+			{
+				sampler
+				{
+					texture "objects\screens\main_menu\gui_effects\mainmenu_tex_st.dds"
+				}
+			}
+			pins
+			{
+				User0 0
+			}
+		}
+
+		vertices
+		{
+			vertex
+			{
+				trans_value
+				{
+					(-2.5 -17.5) 
+				}
+				color_value
+				{
+					(1 1 1) 
+				}
+				opacity_table1d 3
+				{
+					1 0 1 
+				}
+				uv_value
+				{
+					(0.121935 0.876907) 
+				}
+			}
+			vertex
+			{
+				trans_value
+				{
+					(2.5 -17.5) 
+				}
+				color_value
+				{
+					(1 1 1) 
+				}
+				opacity_table1d 3
+				{
+					1 0 1 
+				}
+				uv_value
+				{
+					(0.12427 0.876907) 
+				}
+			}
+			vertex
+			{
+				trans_value
+				{
+					(-2.5 17.5) 
+				}
+				color_value
+				{
+					(1 1 1) 
+				}
+				opacity_table1d 3
+				{
+					1 0 1 
+				}
+				uv_value
+				{
+					(0.121935 0.894332) 
+				}
+			}
+			vertex
+			{
+				trans_value
+				{
+					(2.5 17.5) 
+				}
+				color_value
+				{
+					(1 1 1) 
+				}
+				opacity_table1d 3
+				{
+					1 0 1 
+				}
+				uv_value
+				{
+					(0.12427 0.894332) 
+				}
+			}
+		}
+	}
+
+}
