@@ -2,6 +2,7 @@
 #define UI_WIDGET_H
 
 #include <OgreString.h>
+#include <OgreVector2.h>
 #include <vector>
 
 #include "UiAnimation.h"
@@ -19,6 +20,7 @@ public:
     virtual void Update();
     virtual void OnResize();
     virtual void Render();
+
     void Show();
     void Hide();
 
@@ -28,48 +30,45 @@ public:
     UiWidget* GetChild( const Ogre::String& name );
     void RemoveAllChildren();
 
+
+
+    void UpdateTransformation();
+
     enum Align
     {
         LEFT,
         RIGHT,
         CENTER
     };
-
     enum VerticalAlign
     {
         TOP,
         BOTTOM,
         MIDDLE
     };
-
     void SetAlign( const UiWidget::Align align );
     void SetVerticalAlign( const UiWidget::VerticalAlign valign );
-    void SetOriginX( const float x, const float add, const bool percent );
-    float GetFinalOriginX() const;
-    void SetOriginY( const float y, const float add, const bool percent );
-    float GetFinalOriginY() const;
-    void SetX( const float x, const float add, const bool percent );
-    float GetLocalX() const;
-    float GetFinalX() const;
-    void SetY( const float y, const float add, const bool percent );
-    float GetLocalY() const;
-    float GetFinalY() const;
-    void SetWidth( const float width, const float add, const bool percent );
-    float GetFinalWidth() const;
-    void SetHeight( const float height, const float add, const bool percent );
-    float GetFinalHeight() const;
-    void SetScale( const Ogre::Vector2& scale );
-    float GetFinalScaleX() const;
-    float GetFinalScaleY() const;
-    void SetRotation( const float degree );
+
+    Ogre::Vector2 GetFinalOrigin() const;
+    Ogre::Vector2 GetFinalTranslate() const;
+    Ogre::Vector2 GetFinalSize() const;
+    Ogre::Vector2 GetFinalScale() const;
     float GetFinalRotation() const;
+
+    void SetOriginX( const float x, const float add, const bool percent );
+    void SetOriginY( const float y, const float add, const bool percent );
+    void SetX( const float x, const float add, const bool percent );
+    void SetY( const float y, const float add, const bool percent );
+    void SetWidth( const float width, const float add, const bool percent );
+    void SetHeight( const float height, const float add, const bool percent );
+    void SetScale( const Ogre::Vector2& scale );
+    void SetRotation( const float degree );
 
     void SetScissor( bool scissor );
     int GetScissorTop() const;
     int GetScissorBottom() const;
     int GetScissorLeft() const;
     int GetScissorRight() const;
-    void ScissorUpdate();
 
 private:
     UiWidget();
@@ -88,6 +87,12 @@ protected:
 
     Align                    m_Align;
     VerticalAlign            m_VerticalAlign;
+
+    Ogre::Vector2            m_FinalOrigin;
+    Ogre::Vector2            m_FinalTranslate;
+    Ogre::Vector2            m_FinalSize;
+    Ogre::Vector2            m_FinalScale;
+    float                    m_FinalRotation;
 
     float                    m_OriginX;
     float                    m_OriginXAdd;

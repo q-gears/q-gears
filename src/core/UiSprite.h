@@ -23,7 +23,7 @@ public:
 
     void SetColour( const float r, const float g, const float b, const float a );
     void SetImage( const Ogre::String& image );
-    void GeometryUpdate();
+    void UpdateGeometry();
 
 private:
     UiSprite();

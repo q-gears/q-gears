@@ -23572,12 +23572,13 @@
 	<OgreSingleton.h>
 	"UiWidget.h"
 
-1309807942 d:\my\1\svn\q-gears\src\core\uiwidget.h
+1309896038 d:\my\1\svn\q-gears\src\core\uiwidget.h
 	<OgreString.h>
+	<OgreVector2.h>
 	<vector>
 	"UiAnimation.h"
 
-1309809930 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
+1309895617 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
@@ -23682,7 +23683,7 @@
 1308847892 d:\my\1\svn\q-gears\src\core\xmlscreensfile.h
 	"XmlFile.h"
 
-1309551149 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
+1309892895 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -23699,13 +23700,13 @@
 	"Logger.h"
 	"XmlScreenFile.h"
 
-1309550939 source:d:\my\1\svn\q-gears\src\core\uisprite.cpp
+1309895816 source:d:\my\1\svn\q-gears\src\core\uisprite.cpp
 	"UiSprite.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
 	"Logger.h"
 
-1309376418 d:\my\1\svn\q-gears\src\core\uisprite.h
+1309887798 d:\my\1\svn\q-gears\src\core\uisprite.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
@@ -23727,7 +23728,7 @@
 	<OgreString.h>
 	<vector>
 
-1309809943 source:d:\my\1\svn\q-gears\src\core\uianimation.cpp
+1309886379 source:d:\my\1\svn\q-gears\src\core\uianimation.cpp
 	"UiAnimation.h"
 	<OgreVector2.h>
 	"UiWidget.h"

@@ -68,83 +68,25 @@ UiSprite::Update()
 
 
 void
-UiSprite::OnResize()
+UiSprite::UpdateGeometry()
 {
-    GeometryUpdate();
-
-    UiWidget::OnResize();
-}
-
-
-
-void
-UiSprite::Render()
-{
-    if( m_Visible == true )
-    {
-        if( m_QuadRenderOp.vertexData->vertexCount != 0 )
-        {
-            m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
-            m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
-            m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
-
-            m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
-
-            m_RenderSystem->setScissorTest( true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom );
-            m_RenderSystem->_render( m_QuadRenderOp );
-            m_RenderSystem->setScissorTest( false );
-        }
-    }
-
-    UiWidget::Render();
-}
-
-
-
-void
-UiSprite::SetColour( const float r, const float g, const float b, const float a )
-{
-    m_Colour.r = r;
-    m_Colour.g = g;
-    m_Colour.b = b;
-    m_Colour.a = a;
-}
-
-
-
-void
-UiSprite::SetImage( const Ogre::String& image )
-{
-    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
-    Ogre::TextureUnitState* tex = pass->getTextureUnitState( 0 );
-    tex->setTextureName( image );
-}
-
-
-
-void
-UiSprite::GeometryUpdate()
-{
-    float local_x1 = -GetFinalOriginX();
-    float local_y1 = -GetFinalOriginY();
-    float local_x2 = GetFinalWidth() + local_x1;
-    float local_y2 = GetFinalHeight() + local_y1;
-    float x = GetFinalX();
-    float y = GetFinalY();
+    float local_x1 = -m_FinalOrigin.x;
+    float local_y1 = -m_FinalOrigin.y;
+    float local_x2 = m_FinalSize.x + local_x1;
+    float local_y2 = m_FinalSize.y + local_y1;
+    float x = m_FinalTranslate.x;
+    float y = m_FinalTranslate.y;
 
     int x1, y1, x2, y2, x3, y3, x4, y4;
-    float width, height;
-
-    float rotation = GetFinalRotation();
 
     //LOG_ERROR( m_Name + ", rotation = " + Ogre::StringConverter::toString( rotation ) );
     //LOG_ERROR( "local_x1 = " + Ogre::StringConverter::toString( local_x1 ) + ", local_y1 = " + Ogre::StringConverter::toString( local_y1 ) );
     //LOG_ERROR( "local_x2 = " + Ogre::StringConverter::toString( local_x2 ) + ", local_y2 = " + Ogre::StringConverter::toString( local_y2 ) );
 
-    if( rotation != 0 )
+    if( m_FinalRotation != 0 )
     {
-        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( rotation ) ) );
-        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( rotation ) ) );
+        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
+        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
 
         x1 = local_x1 * cos - local_y1 * sin + x;
         y1 = local_x1 * sin + local_y1 * cos + y;
@@ -246,6 +188,61 @@ UiSprite::GeometryUpdate()
     m_QuadRenderOp.vertexData->vertexCount = 6;
 
     m_QuadVertexBuffer->unlock();
+}
+
+
+
+void
+UiSprite::OnResize()
+{
+    UiWidget::OnResize();
+
+    UpdateGeometry();
+}
+
+
+
+void
+UiSprite::Render()
+{
+    if( m_Visible == true )
+    {
+        if( m_QuadRenderOp.vertexData->vertexCount != 0 )
+        {
+            m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
+            m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
+            m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
+
+            m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
+
+            m_RenderSystem->setScissorTest( true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom );
+            m_RenderSystem->_render( m_QuadRenderOp );
+            m_RenderSystem->setScissorTest( false );
+        }
+    }
+
+    UiWidget::Render();
+}
+
+
+
+void
+UiSprite::SetColour( const float r, const float g, const float b, const float a )
+{
+    m_Colour.r = r;
+    m_Colour.g = g;
+    m_Colour.b = b;
+    m_Colour.a = a;
+}
+
+
+
+void
+UiSprite::SetImage( const Ogre::String& image )
+{
+    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
+    Ogre::TextureUnitState* tex = pass->getTextureUnitState( 0 );
+    tex->setTextureName( image );
 }
 
 

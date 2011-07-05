@@ -60,7 +60,7 @@ UiAnimation::AddTime( const float time )
                 min = m_TrackScaleX[ i ].time;
             }
 
-            if( m_TrackScaleX[ i ].time > m_Time && m_TrackScaleX[ i ].time < max )
+            if( m_TrackScaleX[ i ].time >= m_Time && m_TrackScaleX[ i ].time <= max )
             {
                 max_value = m_TrackScaleX[ i ].value;
                 max = m_TrackScaleX[ i ].time;

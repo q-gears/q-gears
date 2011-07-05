@@ -202,11 +202,15 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
 
 
+                widget2->UpdateTransformation();
+
+
+
                 if( node->ValueStr() == "sprite" )
                 {
-                    ( ( UiSprite* )widget2 )->GeometryUpdate();
+                    ( ( UiSprite* )widget2 )->UpdateGeometry();
                 }
-                widget2->ScissorUpdate();
+
 
 
                 widget->AddChild( widget2 );

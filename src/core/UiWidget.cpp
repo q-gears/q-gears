@@ -55,6 +55,13 @@ UiWidget::Initialise()
 
     m_Align = LEFT;
     m_VerticalAlign = TOP;
+
+    m_FinalOrigin = Ogre::Vector2::ZERO;
+    m_FinalTranslate = Ogre::Vector2::ZERO;
+    m_FinalSize = Ogre::Vector2( m_ScreenWidth, m_ScreenHeight );
+    m_FinalScale = Ogre::Vector2( 1, 1 );
+    m_FinalRotation = 0;
+
     m_OriginX = 0;
     m_OriginXAdd = 0;
     m_OriginXPercent = false;
@@ -117,7 +124,7 @@ UiWidget::OnResize()
     m_ScreenWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     m_ScreenHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
-    ScissorUpdate();
+    UpdateTransformation();
 
     for( int i = 0; i < m_Children.size(); ++i )
     {
@@ -204,6 +211,134 @@ UiWidget::RemoveAllChildren()
 
 
 void
+UiWidget::UpdateTransformation()
+{
+    m_FinalScale = ( m_Parent != NULL ) ? m_Parent->GetFinalScale() * Ogre::Vector2( m_ScaleX, m_ScaleY ) : Ogre::Vector2( m_ScaleX, m_ScaleY );
+
+
+
+    Ogre::Vector2 area_origin = ( m_Parent != NULL ) ? m_Parent->GetFinalOrigin() : Ogre::Vector2::ZERO;
+    Ogre::Vector2 area_translate = ( m_Parent != NULL ) ? m_Parent->GetFinalTranslate() : Ogre::Vector2::ZERO;
+    Ogre::Vector2 area_size = ( m_Parent != NULL ) ? m_Parent->GetFinalSize() : Ogre::Vector2( m_ScreenWidth, m_ScreenHeight );
+    float area_rotation = ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() : 0;
+
+    float local_x = ( m_XPercent == true ) ? ( area_size.x * m_X * m_ScaleX ) / 100.0f + ( m_XAdd * m_ScreenHeight / 720.0f) * m_FinalScale.x : ( m_X * m_ScreenHeight / 720.0f ) * m_FinalScale.x;
+    float local_y = ( m_YPercent == true ) ? ( area_size.y * m_Y * m_ScaleY ) / 100.0f + ( m_YAdd * m_ScreenHeight / 720.0f ) * m_FinalScale.y : ( m_Y * m_ScreenHeight / 720.0f ) * m_FinalScale.y;
+
+
+
+    // calculate base x depending in aligment
+    m_FinalTranslate.x = area_translate.x;
+    if( m_Align == RIGHT )
+    {
+        m_FinalTranslate.x = area_translate.x + area_size.x;
+    }
+    else if( m_Align == CENTER )
+    {
+        m_FinalTranslate.x = area_translate.x + area_size.x / 2;
+    }
+
+    float x = local_x - area_origin.x;
+
+    if( area_rotation != 0 )
+    {
+        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        float y = local_y - area_origin.y;
+        x = x * cos - y * sin;
+    }
+
+    m_FinalTranslate.x += x;
+
+
+
+    // calculate base y depending in vertical aligment
+    m_FinalTranslate.y = area_translate.y;
+    if( m_VerticalAlign == BOTTOM )
+    {
+        m_FinalTranslate.y = area_translate.y + area_size.y;
+    }
+    else if( m_VerticalAlign == MIDDLE )
+    {
+        m_FinalTranslate.y = area_translate.y + area_size.y / 2;
+    }
+
+    float y = local_y - area_origin.y;
+
+    if( area_rotation != 0 )
+    {
+        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        float x = local_x - area_origin.x;
+
+        y = x * sin + y * cos;
+    }
+
+    m_FinalTranslate.y += y;
+
+
+
+    m_FinalSize.x = ( m_WidthPercent == true ) ? ( area_size.x * m_Width * m_ScaleX ) / 100.0f + ( m_WidthAdd * m_ScreenHeight / 720.0f ) * m_FinalScale.x : ( m_Width * m_ScreenHeight / 720.0f) * m_FinalScale.x;
+    m_FinalSize.y = ( m_HeightPercent == true ) ? ( area_size.y * m_Height * m_ScaleY ) / 100.0f + ( m_HeightAdd * m_ScreenHeight / 720.0f ) * m_FinalScale.y : ( m_Height * m_ScreenHeight / 720.0f ) * m_FinalScale.y;
+    m_FinalOrigin.x = ( m_OriginXPercent == true ) ? ( m_FinalSize.x * m_OriginX ) / 100.0f + m_OriginXAdd * m_ScreenHeight / 720.0f : m_OriginX * m_ScreenHeight / 720.0f;
+    m_FinalOrigin.y = ( m_OriginYPercent == true ) ? ( m_FinalSize.y * m_OriginY ) / 100.0f + m_OriginYAdd * m_ScreenHeight / 720.0f : m_OriginY * m_ScreenHeight / 720.0f;
+    m_FinalRotation = area_rotation + m_Rotation;
+
+
+
+    // scissor update
+    m_ScissorTop = ( m_Parent != NULL ) ? m_Parent->GetScissorTop() : 0;
+    m_ScissorBottom = ( m_Parent != NULL ) ? m_Parent->GetScissorBottom() : m_ScreenHeight;
+    m_ScissorLeft = ( m_Parent != NULL ) ? m_Parent->GetScissorLeft() : 0;
+    m_ScissorRight = ( m_Parent != NULL ) ? m_Parent->GetScissorRight() : m_ScreenWidth;
+
+    if( m_Scissor == true )
+    {
+        float local_x1 = -m_FinalOrigin.x;
+        float local_y1 = -m_FinalOrigin.y;
+        float local_x2 = m_FinalSize.x + local_x1;
+        float local_y2 = m_FinalSize.y + local_y1;
+        float x = m_FinalTranslate.x;
+        float y = m_FinalTranslate.y;
+
+        int x1, y1, x2, y2, x3, y3, x4, y4;
+
+        if( m_FinalRotation != 0 )
+        {
+            float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
+            float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
+
+            x1 = local_x1 * cos - local_y1 * sin + x;
+            y1 = local_x1 * sin + local_y1 * cos + y;
+            x2 = local_x2 * cos - local_y1 * sin + x;
+            y2 = local_x2 * sin + local_y1 * cos + y;
+            x3 = local_x2 * cos - local_y2 * sin + x;
+            y3 = local_x2 * sin + local_y2 * cos + y;
+            x4 = local_x1 * cos - local_y2 * sin + x;
+            y4 = local_x1 * sin + local_y2 * cos + y;
+        }
+        else
+        {
+            x1 = local_x1 + x;
+            y1 = local_y1 + y;
+            x2 = local_x2 + x;
+            y2 = local_y1 + y;
+            x3 = local_x2 + x;
+            y3 = local_y2 + y;
+            x4 = local_x1 + x;
+            y4 = local_y2 + y;
+        }
+
+        m_ScissorTop = std::max( m_ScissorTop, std::min( std::min( y1 , y2 ), std::min( y3 , y4 ) ) );
+        m_ScissorBottom = std::min( m_ScissorBottom, std::max( std::max( y1 , y2 ), std::max( y3 , y4 ) ) );
+        m_ScissorLeft = std::max( m_ScissorLeft, std::min( std::min( x1 , x2 ), std::min( x3 , x4 ) ) );
+        m_ScissorRight = std::min( m_ScissorRight, std::max( std::max( x1 , x2 ), std::max( x3 , x4 ) ) );
+    }
+}
+
+
+
+void
 UiWidget::SetAlign( const UiWidget::Align align )
 {
     m_Align = align;
@@ -219,20 +354,52 @@ UiWidget::SetVerticalAlign( const UiWidget::VerticalAlign valign )
 
 
 
+Ogre::Vector2
+UiWidget::GetFinalOrigin() const
+{
+    return m_FinalOrigin;
+}
+
+
+
+Ogre::Vector2
+UiWidget::GetFinalTranslate() const
+{
+    return m_FinalTranslate;
+}
+
+
+
+Ogre::Vector2
+UiWidget::GetFinalSize() const
+{
+    return m_FinalSize;
+}
+
+
+
+Ogre::Vector2
+UiWidget::GetFinalScale() const
+{
+    return m_FinalScale;
+}
+
+
+
+float
+UiWidget::GetFinalRotation() const
+{
+    return m_FinalRotation;
+}
+
+
+
 void
 UiWidget::SetOriginX( const float x, const float add, const bool percent )
 {
     m_OriginX = x;
     m_OriginXAdd = add;
     m_OriginXPercent = percent;
-}
-
-
-
-float
-UiWidget::GetFinalOriginX() const
-{
-    return ( m_OriginXPercent == true ) ? ( GetFinalWidth() * m_OriginX ) / 100.0f + m_OriginXAdd * m_ScreenHeight / 720.0f : m_OriginX * m_ScreenHeight / 720.0f;
 }
 
 
@@ -247,65 +414,12 @@ UiWidget::SetOriginY( const float y, const float add, const bool percent )
 
 
 
-float
-UiWidget::GetFinalOriginY() const
-{
-    return ( m_OriginYPercent == true ) ? ( GetFinalHeight() * m_OriginY ) / 100.0f + m_OriginYAdd * m_ScreenHeight / 720.0f : m_OriginY * m_ScreenHeight / 720.0f;
-}
-
-
-
 void
 UiWidget::SetX( const float x, const float add, const bool percent )
 {
     m_X = x;
     m_XAdd = add;
     m_XPercent = percent;
-}
-
-
-
-float
-UiWidget::GetLocalX() const
-{
-    float area_width = ( m_Parent != NULL ) ? m_Parent->GetFinalWidth() : m_ScreenWidth;
-
-    return ( m_XPercent == true ) ? ( area_width * m_X * m_ScaleX ) / 100.0f + ( m_XAdd * m_ScreenHeight / 720.0f) * GetFinalScaleX() : ( m_X * m_ScreenHeight / 720.0f ) * GetFinalScaleX();
-}
-
-
-
-float
-UiWidget::GetFinalX() const
-{
-    float area_x = ( m_Parent != NULL ) ? m_Parent->GetFinalX() : 0;
-    float area_origin_x = ( m_Parent != NULL ) ? m_Parent->GetFinalOriginX() : 0;
-    float area_width = ( m_Parent != NULL ) ? m_Parent->GetFinalWidth() : m_ScreenWidth;
-    float area_rotation = ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() : 0;
-
-    // calculate base x depending in aligment
-    float base_x = area_x;
-    if( m_Align == RIGHT )
-    {
-        base_x = area_x + area_width;
-    }
-    else if( m_Align == CENTER )
-    {
-        base_x = area_x + area_width / 2;
-    }
-
-    float x = GetLocalX() - area_origin_x;
-
-    if( area_rotation != 0 )
-    {
-        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
-        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
-        float area_origin_y = ( m_Parent != NULL ) ? m_Parent->GetFinalOriginY() : 0;
-        float y = GetLocalY() - area_origin_y;
-        x = x * cos - y * sin;
-    }
-
-    return x + base_x;
 }
 
 
@@ -320,67 +434,12 @@ UiWidget::SetY( const float y, const float add, const bool percent )
 
 
 
-float
-UiWidget::GetLocalY() const
-{
-    float area_height = ( m_Parent != NULL ) ? m_Parent->GetFinalHeight() : m_ScreenHeight;
-
-    return ( m_YPercent == true ) ? ( area_height * m_Y * m_ScaleY ) / 100.0f + ( m_YAdd * m_ScreenHeight / 720.0f ) * GetFinalScaleY() : ( m_Y * m_ScreenHeight / 720.0f ) * GetFinalScaleY();
-}
-
-
-
-float
-UiWidget::GetFinalY() const
-{
-    float area_y = ( m_Parent != NULL ) ? m_Parent->GetFinalY() : 0;
-    float area_origin_y = ( m_Parent != NULL ) ? m_Parent->GetFinalOriginY() : 0;
-    float area_height = ( m_Parent != NULL ) ? m_Parent->GetFinalHeight() : m_ScreenHeight;
-    float area_rotation = ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() : 0;
-
-    // calculate base y depending in vertical aligment
-    float base_y = area_y;
-    if( m_VerticalAlign == BOTTOM )
-    {
-        base_y = area_y + area_height;
-    }
-    else if( m_VerticalAlign == MIDDLE )
-    {
-        base_y = area_y + area_height / 2;
-    }
-
-    float y = GetLocalY() - area_origin_y;
-
-    if( area_rotation != 0 )
-    {
-        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
-        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
-        float area_origin_x = ( m_Parent != NULL ) ? m_Parent->GetFinalOriginX() : 0;
-        float x = GetLocalX() - area_origin_x;
-
-        y = x * sin + y * cos;
-    }
-
-    return y + base_y;
-}
-
-
-
 void
 UiWidget::SetWidth( const float width, const float add, const bool percent )
 {
     m_Width = width;
     m_WidthAdd = add;
     m_WidthPercent = percent;
-}
-
-
-
-float
-UiWidget::GetFinalWidth() const
-{
-    float area_width = ( m_Parent != NULL ) ? m_Parent->GetFinalWidth() : m_ScreenWidth;
-    return ( m_WidthPercent == true ) ? ( area_width * m_Width * m_ScaleX ) / 100.0f + ( m_WidthAdd * m_ScreenHeight / 720.0f ) * GetFinalScaleX() : ( m_Width * m_ScreenHeight / 720.0f) * GetFinalScaleX();
 }
 
 
@@ -395,15 +454,6 @@ UiWidget::SetHeight( const float height, const float add, const bool percent )
 
 
 
-float
-UiWidget::GetFinalHeight() const
-{
-    float area_height = ( m_Parent != NULL ) ? m_Parent->GetFinalHeight() : m_ScreenHeight;
-    return ( m_HeightPercent == true ) ? ( area_height * m_Height * m_ScaleY ) / 100.0f + ( m_HeightAdd * m_ScreenHeight / 720.0f ) * GetFinalScaleY() : ( m_Height * m_ScreenHeight / 720.0f ) * GetFinalScaleY();
-}
-
-
-
 void
 UiWidget::SetScale( const Ogre::Vector2& scale )
 {
@@ -413,34 +463,10 @@ UiWidget::SetScale( const Ogre::Vector2& scale )
 
 
 
-float
-UiWidget::GetFinalScaleX() const
-{
-    return ( m_Parent != NULL ) ? m_Parent->GetFinalScaleX() * m_ScaleX : m_ScaleX;
-}
-
-
-
-float
-UiWidget::GetFinalScaleY() const
-{
-    return ( m_Parent != NULL ) ? m_Parent->GetFinalScaleY() * m_ScaleY : m_ScaleY;
-}
-
-
-
 void
 UiWidget::SetRotation( const float degree )
 {
     m_Rotation = degree;
-}
-
-
-
-float
-UiWidget::GetFinalRotation() const
-{
-    return ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() + m_Rotation : m_Rotation;
 }
 
 
@@ -481,65 +507,4 @@ int
 UiWidget::GetScissorRight() const
 {
     return m_ScissorRight;
-}
-
-
-
-void
-UiWidget::ScissorUpdate()
-{
-    m_ScissorTop = ( m_Parent != NULL ) ? m_Parent->GetScissorTop() : 0;
-    m_ScissorBottom = ( m_Parent != NULL ) ? m_Parent->GetScissorBottom() : m_ScreenHeight;
-    m_ScissorLeft = ( m_Parent != NULL ) ? m_Parent->GetScissorLeft() : 0;
-    m_ScissorRight = ( m_Parent != NULL ) ? m_Parent->GetScissorRight() : m_ScreenWidth;
-
-    if( m_Scissor == true )
-    {
-        float local_x1 = -GetFinalOriginX();
-        float local_y1 = -GetFinalOriginY();
-        float local_x2 = GetFinalWidth() + local_x1;
-        float local_y2 = GetFinalHeight() + local_y1;
-        float x = GetFinalX();
-        float y = GetFinalY();
-
-        int x1, y1, x2, y2, x3, y3, x4, y4;
-        float width, height;
-
-        float rotation = GetFinalRotation();
-
-        //LOG_ERROR( m_Name + ", rotation = " + Ogre::StringConverter::toString( rotation ) );
-        //LOG_ERROR( "local_x1 = " + Ogre::StringConverter::toString( local_x1 ) + ", local_y1 = " + Ogre::StringConverter::toString( local_y1 ) );
-        //LOG_ERROR( "local_x2 = " + Ogre::StringConverter::toString( local_x2 ) + ", local_y2 = " + Ogre::StringConverter::toString( local_y2 ) );
-
-        if( rotation != 0 )
-        {
-            float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( rotation ) ) );
-            float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( rotation ) ) );
-
-            x1 = local_x1 * cos - local_y1 * sin + x;
-            y1 = local_x1 * sin + local_y1 * cos + y;
-            x2 = local_x2 * cos - local_y1 * sin + x;
-            y2 = local_x2 * sin + local_y1 * cos + y;
-            x3 = local_x2 * cos - local_y2 * sin + x;
-            y3 = local_x2 * sin + local_y2 * cos + y;
-            x4 = local_x1 * cos - local_y2 * sin + x;
-            y4 = local_x1 * sin + local_y2 * cos + y;
-        }
-        else
-        {
-            x1 = local_x1 + x;
-            y1 = local_y1 + y;
-            x2 = local_x2 + x;
-            y2 = local_y1 + y;
-            x3 = local_x2 + x;
-            y3 = local_y2 + y;
-            x4 = local_x1 + x;
-            y4 = local_y2 + y;
-        }
-
-        m_ScissorTop = std::max( m_ScissorTop, std::min( std::min( y1 , y2 ), std::min( y3 , y4 ) ) );
-        m_ScissorBottom = std::min( m_ScissorBottom, std::max( std::max( y1 , y2 ), std::max( y3 , y4 ) ) );
-        m_ScissorLeft = std::max( m_ScissorLeft, std::min( std::min( x1 , x2 ), std::min( x3 , x4 ) ) );
-        m_ScissorRight = std::min( m_ScissorRight, std::max( std::max( x1 , x2 ), std::max( x3 , x4 ) ) );
-    }
 }
