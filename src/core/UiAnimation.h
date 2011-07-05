@@ -6,6 +6,24 @@
 
 
 
+class UiWidget;
+
+
+
+struct KeyFrameFloat
+{
+    float time;
+    float value;
+};
+
+
+
+struct KeyFramePercent
+{
+};
+
+
+
 class UiAnimation
 {
 public:
@@ -23,8 +41,9 @@ private:
     UiWidget*    m_Widget;
 
     float        m_Time;
+    float        m_TimeTotal;
 
-    std::vector< float > m_TrackScaleX;
+    std::vector< KeyFrameFloat > m_TrackScaleX;
 };
 
 

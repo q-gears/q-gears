@@ -23572,17 +23572,19 @@
 	<OgreSingleton.h>
 	"UiWidget.h"
 
-1309550710 d:\my\1\svn\q-gears\src\core\uiwidget.h
+1309807942 d:\my\1\svn\q-gears\src\core\uiwidget.h
 	<OgreString.h>
 	<vector>
+	"UiAnimation.h"
 
-1309551101 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
+1309809930 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
 	"ConfigVar.h"
 	"Logger.h"
 	"ScriptManager.h"
+	"Timer.h"
 
 1309449571 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
@@ -23680,7 +23682,7 @@
 1308847892 d:\my\1\svn\q-gears\src\core\xmlscreensfile.h
 	"XmlFile.h"
 
-1309538164 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
+1309551149 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -23720,4 +23722,13 @@
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
 	"Logger.h"
+
+1309808318 d:\my\1\svn\q-gears\src\core\uianimation.h
+	<OgreString.h>
+	<vector>
+
+1309809943 source:d:\my\1\svn\q-gears\src\core\uianimation.cpp
+	"UiAnimation.h"
+	<OgreVector2.h>
+	"UiWidget.h"
 

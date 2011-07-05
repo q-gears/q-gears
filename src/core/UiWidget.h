@@ -4,6 +4,8 @@
 #include <OgreString.h>
 #include <vector>
 
+#include "UiAnimation.h"
+
 
 
 class UiWidget
@@ -114,6 +116,8 @@ protected:
     int                      m_ScissorBottom;
     int                      m_ScissorLeft;
     int                      m_ScissorRight;
+
+    UiAnimation*             m_Animation;
 };
 
 

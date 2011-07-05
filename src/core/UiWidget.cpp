@@ -6,6 +6,7 @@
 #include "ConfigVar.h"
 #include "Logger.h"
 #include "ScriptManager.h"
+#include "Timer.h"
 
 
 
@@ -35,6 +36,8 @@ UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiW
 
 UiWidget::~UiWidget()
 {
+    delete m_Animation;
+
     ScriptManager::getSingleton().RemoveEntity( "Ui." + m_PathName );
 
     RemoveAllChildren();
@@ -80,6 +83,12 @@ UiWidget::Initialise()
     m_ScissorLeft = 0;
     m_ScissorRight = m_ScreenWidth;
 
+    m_Animation = NULL;
+    if( m_Name == "Dialog0" )
+    {
+        m_Animation = new UiAnimation( "Idle", this );
+    }
+
     ScriptManager::getSingleton().AddEntity( "Ui." + m_PathName );
 }
 
@@ -88,6 +97,12 @@ UiWidget::Initialise()
 void
 UiWidget::Update()
 {
+    if( m_Animation != NULL )
+    {
+        m_Animation->AddTime( Timer::getSingleton().GetGameTimeDelta() );
+        OnResize();
+    }
+
     for( int i = 0; i < m_Children.size(); ++i )
     {
         m_Children[ i ]->Update();

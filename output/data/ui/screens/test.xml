@@ -1,5 +1,5 @@
 <screen name="TestScreen" script="ui/screens/test.lua">
-    <widget name="Dialog0" origin_x="50%" origin_y="50%" x="200" y="200" width="344" height="486" scale="0.7 0.7" rotation="-30">
+    <widget name="Dialog0" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="344" height="486" scale="2 1" rotation="0">
         <sprite name="Center" image="ui/screens/test1.jpg" x="3" y="3" width="100%-6" height="100%-6" />
         <sprite name="Top" image="ui/screens/border_t.png" x="8" y="0" width="100%-16" height="8" />
         <sprite name="Bottom" image="ui/screens/border_b.png" x="8" y="100%-8" width="100%-16" height="8" />
