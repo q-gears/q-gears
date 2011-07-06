@@ -83,9 +83,9 @@ XmlFile::GetFloat( TiXmlNode* node, const Ogre::String& tag, float def ) const
 
 
 const Ogre::String
-XmlFile::GetString( TiXmlNode* node, const Ogre::String& tag ) const
+XmlFile::GetString( TiXmlNode* node, const Ogre::String& tag, const Ogre::String& def ) const
 {
-    Ogre::String ret( "" );
+    Ogre::String ret = def;
 
     if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {

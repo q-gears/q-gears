@@ -30,7 +30,7 @@ public:
     UiWidget* GetChild( const Ogre::String& name );
     void RemoveAllChildren();
 
-
+    void AddAnimation( UiAnimation *animation );
 
     void UpdateTransformation();
 
@@ -55,12 +55,12 @@ public:
     Ogre::Vector2 GetFinalScale() const;
     float GetFinalRotation() const;
 
-    void SetOriginX( const float x, const float percent );
-    void SetOriginY( const float y, const float percent );
-    void SetX( const float x, const float percent );
-    void SetY( const float y, const float percent );
-    void SetWidth( const float width, const float percent );
-    void SetHeight( const float height, const float percent );
+    void SetOriginX( const float percent, const float x );
+    void SetOriginY( const float percent, const float y );
+    void SetX( const float percent, const float x );
+    void SetY( const float percent, const float y );
+    void SetWidth( const float percent, const float width );
+    void SetHeight( const float percent, const float height );
     void SetScale( const Ogre::Vector2& scale );
     void SetRotation( const float degree );
 
@@ -98,14 +98,14 @@ protected:
     float                    m_OriginX;
     float                    m_OriginYPercent;
     float                    m_OriginY;
-    float                    m_X;
     float                    m_XPercent;
-    float                    m_Y;
+    float                    m_X;
     float                    m_YPercent;
-    float                    m_Width;
+    float                    m_Y;
     float                    m_WidthPercent;
-    float                    m_Height;
+    float                    m_Width;
     float                    m_HeightPercent;
+    float                    m_Height;
     Ogre::Vector2            m_Scale;
     float                    m_Rotation;
 

@@ -36,7 +36,10 @@ UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiW
 
 UiWidget::~UiWidget()
 {
-    delete m_Animation;
+    if( m_Animation != NULL )
+    {
+        delete m_Animation;
+    }
 
     ScriptManager::getSingleton().RemoveEntity( "Ui." + m_PathName );
 
@@ -62,18 +65,18 @@ UiWidget::Initialise()
     m_FinalScale = Ogre::Vector2( 1, 1 );
     m_FinalRotation = 0;
 
-    m_OriginX = 0;
     m_OriginXPercent = 0;
-    m_OriginY = 0;
+    m_OriginX = 0;
     m_OriginYPercent = 0;
-    m_X = 0;
+    m_OriginY = 0;
     m_XPercent = 0;
-    m_Y = 0;
+    m_X = 0;
     m_YPercent = 0;
-    m_Width = 0;
+    m_Y = 0;
     m_WidthPercent = 100;
-    m_Height = 0;
+    m_Width = 0;
     m_HeightPercent = 100;
+    m_Height = 0;
     m_Scale = Ogre::Vector2( 1.0f, 1.0f );
     m_Rotation = 0.0f;
 
@@ -84,10 +87,6 @@ UiWidget::Initialise()
     m_ScissorRight = m_ScreenWidth;
 
     m_Animation = NULL;
-    if( m_Name == "Dialog0" )
-    {
-        m_Animation = new UiAnimation( "Idle", this );
-    }
 
     ScriptManager::getSingleton().AddEntity( "Ui." + m_PathName );
 }
@@ -199,6 +198,19 @@ UiWidget::RemoveAllChildren()
         delete m_Children[ i ];
     }
     m_Children.clear();
+}
+
+
+
+void
+UiWidget::AddAnimation( UiAnimation *animation )
+{
+    if( m_Animation != NULL)
+    {
+        delete m_Animation;
+    }
+
+    m_Animation = animation;
 }
 
 
@@ -374,55 +386,55 @@ UiWidget::GetFinalRotation() const
 
 
 void
-UiWidget::SetOriginX( const float x, const float percent )
+UiWidget::SetOriginX( const float percent, const float x )
 {
-    m_OriginX = x;
     m_OriginXPercent = percent;
+    m_OriginX = x;
 }
 
 
 
 void
-UiWidget::SetOriginY( const float y, const float percent )
+UiWidget::SetOriginY( const float percent, const float y )
 {
-    m_OriginY = y;
     m_OriginYPercent = percent;
+    m_OriginY = y;
 }
 
 
 
 void
-UiWidget::SetX( const float x, const float percent )
+UiWidget::SetX( const float percent, const float x )
 {
-    m_X = x;
     m_XPercent = percent;
+    m_X = x;
 }
 
 
 
 void
-UiWidget::SetY( const float y, const float percent )
+UiWidget::SetY( const float percent, const float y )
 {
-    m_Y = y;
     m_YPercent = percent;
+    m_Y = y;
 }
 
 
 
 void
-UiWidget::SetWidth( const float width, const float percent )
+UiWidget::SetWidth( const float percent, const float width )
 {
-    m_Width = width;
     m_WidthPercent = percent;
+    m_Width = width;
 }
 
 
 
 void
-UiWidget::SetHeight( const float height, const float percent )
+UiWidget::SetHeight( const float percent, const float height )
 {
-    m_Height = height;
     m_HeightPercent = percent;
+    m_Height = height;
 }
 
 

@@ -8,21 +8,10 @@
 
 UiAnimation::UiAnimation( const Ogre::String& name, UiWidget* widget ):
     m_Name( name ),
-    m_Widget( widget )
+    m_Widget( widget ),
+    m_Time( 0 ),
+    m_Length( 0 )
 {
-    UiKeyFrameVector2 key;
-    key.time = 0;
-    key.value = Ogre::Vector2( 1.0f, 1.0f );
-    m_TrackScale.push_back( key );
-    key.time = 5;
-    key.value = Ogre::Vector2( 2.0f, 2.0f );
-    m_TrackScale.push_back( key );
-    key.time = 10;
-    key.value = Ogre::Vector2( 0.5f, 0.5f );
-    m_TrackScale.push_back( key );
-
-    m_Time = 0;
-    m_TimeTotal = 10;
 }
 
 
@@ -37,33 +26,33 @@ void
 UiAnimation::AddTime( const float time )
 {
     m_Time += time;
-    if( m_Time > m_TimeTotal )
+    if( m_Time > m_Length )
     {
-        m_Time = m_TimeTotal;
+        m_Time = m_Length;
     }
 
 
 
     // update all
-    if( m_TrackScale.size() > 0 )
+    if( m_Scale.size() > 0 )
     {
-        Ogre::Vector2 min_value = m_TrackScale[ 0 ].value;
+        Ogre::Vector2 min_value = m_Scale[ 0 ].value;
         Ogre::Vector2 max_value = min_value;
         float min = 0;
-        float max = m_TimeTotal;
+        float max = m_Length;
 
-        for( int i = 0; i < m_TrackScale.size(); ++i )
+        for( int i = 0; i < m_Scale.size(); ++i )
         {
-            if( m_TrackScale[ i ].time < m_Time && m_TrackScale[ i ].time > min )
+            if( m_Scale[ i ].time < m_Time && m_Scale[ i ].time > min )
             {
-                min_value = m_TrackScale[ i ].value;
-                min = m_TrackScale[ i ].time;
+                min_value = m_Scale[ i ].value;
+                min = m_Scale[ i ].time;
             }
 
-            if( m_TrackScale[ i ].time >= m_Time && m_TrackScale[ i ].time <= max )
+            if( m_Scale[ i ].time >= m_Time && m_Scale[ i ].time <= max )
             {
-                max_value = m_TrackScale[ i ].value;
-                max = m_TrackScale[ i ].time;
+                max_value = m_Scale[ i ].value;
+                max = m_Scale[ i ].time;
             }
         }
 
@@ -80,4 +69,120 @@ UiAnimation::AddTime( const float time )
 
         m_Widget->SetScale( value );
     }
+
+
+
+    if( m_X.size() > 0 )
+    {
+        Ogre::Vector2 min_value = m_X[ 0 ].value;
+        Ogre::Vector2 max_value = min_value;
+        float min = 0;
+        float max = m_Length;
+
+        for( int i = 0; i < m_X.size(); ++i )
+        {
+            if( m_X[ i ].time < m_Time && m_X[ i ].time > min )
+            {
+                min_value = m_X[ i ].value;
+                min = m_X[ i ].time;
+            }
+
+            if( m_X[ i ].time >= m_Time && m_X[ i ].time <= max )
+            {
+                max_value = m_X[ i ].value;
+                max = m_X[ i ].time;
+            }
+        }
+
+        Ogre::Vector2 value;
+
+        if( m_Time == 0 )
+        {
+            value = min_value;
+        }
+        else
+        {
+            value = min_value + ( max_value - min_value ) * ( ( m_Time - min ) / ( max - min ) );
+        }
+
+        m_Widget->SetX( value.x, value.y );
+    }
+
+
+
+    if( m_Y.size() > 0 )
+    {
+        Ogre::Vector2 min_value = m_Y[ 0 ].value;
+        Ogre::Vector2 max_value = min_value;
+        float min = 0;
+        float max = m_Length;
+
+        for( int i = 0; i < m_Y.size(); ++i )
+        {
+            if( m_Y[ i ].time < m_Time && m_Y[ i ].time > min )
+            {
+                min_value = m_Y[ i ].value;
+                min = m_Y[ i ].time;
+            }
+
+            if( m_Y[ i ].time >= m_Time && m_Y[ i ].time <= max )
+            {
+                max_value = m_Y[ i ].value;
+                max = m_Y[ i ].time;
+            }
+        }
+
+        Ogre::Vector2 value;
+
+        if( m_Time == 0 )
+        {
+            value = min_value;
+        }
+        else
+        {
+            value = min_value + ( max_value - min_value ) * ( ( m_Time - min ) / ( max - min ) );
+        }
+
+        m_Widget->SetY( value.x, value.y );
+    }
+}
+
+
+
+const Ogre::String&
+UiAnimation::GetName() const
+{
+    return m_Name;
+}
+
+
+
+void
+UiAnimation::SetLength( const float time )
+{
+    m_Length = time;
+}
+
+
+
+void
+UiAnimation::AddScaleKeyFrame( const UiKeyFrameVector2& key_frame )
+{
+    m_Scale.push_back( key_frame );
+}
+
+
+
+void
+UiAnimation::AddXKeyFrame( const UiKeyFrameVector2& key_frame )
+{
+    m_X.push_back( key_frame );
+}
+
+
+
+void
+UiAnimation::AddYKeyFrame( const UiKeyFrameVector2& key_frame )
+{
+    m_Y.push_back( key_frame );
 }

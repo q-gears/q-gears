@@ -27,12 +27,6 @@ struct UiKeyFrameVector2
 
 
 
-struct UiKeyFramePercent
-{
-};
-
-
-
 class UiAnimation
 {
 public:
@@ -43,6 +37,11 @@ public:
 
     const Ogre::String& GetName() const;
 
+    void SetLength( const float time );
+    void AddScaleKeyFrame( const UiKeyFrameVector2& key_frame );
+    void AddXKeyFrame( const UiKeyFrameVector2& key_frame );
+    void AddYKeyFrame( const UiKeyFrameVector2& key_frame );
+
 private:
     UiAnimation();
 
@@ -50,9 +49,11 @@ private:
     UiWidget*    m_Widget;
 
     float        m_Time;
-    float        m_TimeTotal;
+    float        m_Length;
 
-    std::vector< UiKeyFrameVector2 > m_TrackScale;
+    std::vector< UiKeyFrameVector2 > m_Scale;
+    std::vector< UiKeyFrameVector2 > m_X;
+    std::vector< UiKeyFrameVector2 > m_Y;
 };
 
 
