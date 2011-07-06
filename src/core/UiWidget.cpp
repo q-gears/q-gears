@@ -222,12 +222,22 @@ UiWidget::UpdateTransformation()
     Ogre::Vector2 area_size = ( m_Parent != NULL ) ? m_Parent->GetFinalSize() : Ogre::Vector2( m_ScreenWidth, m_ScreenHeight );
     float area_rotation = ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() : 0;
 
-    float local_x = ( m_XPercent == true ) ? ( area_size.x * m_X * m_ScaleX ) / 100.0f + ( m_XAdd * m_ScreenHeight / 720.0f) * m_FinalScale.x : ( m_X * m_ScreenHeight / 720.0f ) * m_FinalScale.x;
-    float local_y = ( m_YPercent == true ) ? ( area_size.y * m_Y * m_ScaleY ) / 100.0f + ( m_YAdd * m_ScreenHeight / 720.0f ) * m_FinalScale.y : ( m_Y * m_ScreenHeight / 720.0f ) * m_FinalScale.y;
+    float local_x = ( ( m_XPercent == true ) ? ( area_size.x * m_X * m_ScaleX ) / 100.0f + ( m_XAdd * m_ScreenHeight / 720.0f) * m_FinalScale.x : ( m_X * m_ScreenHeight / 720.0f ) * m_FinalScale.x ) - area_origin.x;
+    float local_y = ( ( m_YPercent == true ) ? ( area_size.y * m_Y * m_ScaleY ) / 100.0f + ( m_YAdd * m_ScreenHeight / 720.0f ) * m_FinalScale.y : ( m_Y * m_ScreenHeight / 720.0f ) * m_FinalScale.y )  - area_origin.y;
+
+    float x = local_x;
+    float y = local_y;
+
+    if( area_rotation != 0 )
+    {
+        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
+        x = local_x * cos - local_y * sin;
+        y = local_x * sin + local_y * cos;
+    }
 
 
 
-    // calculate base x depending in aligment
     m_FinalTranslate.x = area_translate.x;
     if( m_Align == RIGHT )
     {
@@ -237,22 +247,10 @@ UiWidget::UpdateTransformation()
     {
         m_FinalTranslate.x = area_translate.x + area_size.x / 2;
     }
-
-    float x = local_x - area_origin.x;
-
-    if( area_rotation != 0 )
-    {
-        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
-        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
-        float y = local_y - area_origin.y;
-        x = x * cos - y * sin;
-    }
-
     m_FinalTranslate.x += x;
 
 
 
-    // calculate base y depending in vertical aligment
     m_FinalTranslate.y = area_translate.y;
     if( m_VerticalAlign == BOTTOM )
     {
@@ -262,18 +260,6 @@ UiWidget::UpdateTransformation()
     {
         m_FinalTranslate.y = area_translate.y + area_size.y / 2;
     }
-
-    float y = local_y - area_origin.y;
-
-    if( area_rotation != 0 )
-    {
-        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
-        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( area_rotation ) ) );
-        float x = local_x - area_origin.x;
-
-        y = x * sin + y * cos;
-    }
-
     m_FinalTranslate.y += y;
 
 
