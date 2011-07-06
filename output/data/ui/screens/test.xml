@@ -1,27 +1,27 @@
-<screen name="TestScreen" script="ui/screens/test.lua">
-    <widget name="Dialog0" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="344" height="486" scale="2 1" rotation="0">
-        <sprite name="Center" image="ui/screens/test1.jpg" x="3" y="3" width="100%-6" height="100%-6" />
-        <sprite name="Top" image="ui/screens/border_t.png" x="8" y="0" width="100%-16" height="8" />
-        <sprite name="Bottom" image="ui/screens/border_b.png" x="8" y="100%-8" width="100%-16" height="8" />
-        <sprite name="Left" image="ui/screens/border_l.png" x="0" y="8" width="8" height="100%-16" />
-        <sprite name="Right" image="ui/screens/border_r.png" x="100%-8" y="8" width="8" height="100%-16" />
-        <sprite name="TopLeft" image="ui/screens/border_tl.png" x="0" y="0" width="8" height="8" />
-        <sprite name="TopRight" image="ui/screens/border_tr.png" x="100%-8" y="0" width="8" height="8" />
-        <sprite name="BottomLeft" image="ui/screens/border_bl.png" x="0" y="100%-8" width="8" height="8" />
-        <sprite name="BottomRight" image="ui/screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" />
+<screen name="TestScreen" script="ui/screens/test.lua" show="true">
+    <widget name="Dialog0" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="344" height="486" scale="2 1" rotation="0" show="true">
+        <sprite name="Center" image="ui/screens/test1.jpg" x="3" y="3" width="100%-6" height="100%-6" show="true" />
+        <sprite name="Top" image="ui/screens/border_t.png" x="8" y="0" width="100%-16" height="8" show="true" />
+        <sprite name="Bottom" image="ui/screens/border_b.png" x="8" y="100%-8" width="100%-16" height="8" show="true" />
+        <sprite name="Left" image="ui/screens/border_l.png" x="0" y="8" width="8" height="100%-16" show="true" />
+        <sprite name="Right" image="ui/screens/border_r.png" x="100%-8" y="8" width="8" height="100%-16" show="true" />
+        <sprite name="TopLeft" image="ui/screens/border_tl.png" x="0" y="0" width="8" height="8" show="true" />
+        <sprite name="TopRight" image="ui/screens/border_tr.png" x="100%-8" y="0" width="8" height="8" show="true" />
+        <sprite name="BottomLeft" image="ui/screens/border_bl.png" x="0" y="100%-8" width="8" height="8" show="true" />
+        <sprite name="BottomRight" image="ui/screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" show="true" />
     </widget>
 
-    <widget name="Dialog1" align="right" origin_x="50%" origin_y="50%" x="-200" y="300" width="406" height="640" scale="0.6 0.6" rotation="34">
-        <sprite name="Center" image="ui/screens/test2.jpg" x="3" y="3" width="100%-6" height="100%-6" />
-        <sprite name="Top" image="ui/screens/border_t.png" x="8" y="0" width="100%-16" height="8" />
-        <sprite name="Bottom" image="ui/screens/border_b.png" x="8" y="100%-8" width="100%-16" height="8" />
-        <sprite name="Left" image="ui/screens/border_l.png" x="0" y="8" width="8" height="100%-16" />
-        <sprite name="Right" image="ui/screens/border_r.png" x="100%-8" y="8" width="8" height="100%-16" />
-        <sprite name="TopLeft" image="ui/screens/border_tl.png" x="0" y="0" width="8" height="8" />
-        <sprite name="TopRight" image="ui/screens/border_tr.png" x="100%-8" y="0" width="8" height="8" />
-        <sprite name="BottomLeft" image="ui/screens/border_bl.png" x="0" y="100%-8" width="8" height="8" />
-        <sprite name="BottomRight" image="ui/screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" />
+    <widget name="Dialog1" align="right" origin_x="50%" origin_y="50%" x="-200" y="300" width="406" height="640" scale="0.6 0.6" rotation="34" show="true">
+        <sprite name="Center" image="ui/screens/test2.jpg" x="3" y="3" width="100%-6" height="100%-6" show="true" />
+        <sprite name="Top" image="ui/screens/border_t.png" x="8" y="0" width="100%-16" height="8" show="true" />
+        <sprite name="Bottom" image="ui/screens/border_b.png" x="8" y="100%-8" width="100%-16" height="8" show="true" />
+        <sprite name="Left" image="ui/screens/border_l.png" x="0" y="8" width="8" height="100%-16" show="true" />
+        <sprite name="Right" image="ui/screens/border_r.png" x="100%-8" y="8" width="8" height="100%-16" show="true" />
+        <sprite name="TopLeft" image="ui/screens/border_tl.png" x="0" y="0" width="8" height="8" show="true" />
+        <sprite name="TopRight" image="ui/screens/border_tr.png" x="100%-8" y="0" width="8" height="8" show="true" />
+        <sprite name="BottomLeft" image="ui/screens/border_bl.png" x="0" y="100%-8" width="8" height="8" show="true" />
+        <sprite name="BottomRight" image="ui/screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" show="true" />
     </widget>
 
-    <sprite name="Dialog2" image="ui/screens/ff7_logo.png" align="center" valign="bottom" y="-250" origin_x="50%" origin_y="50%" width="1000" height="714" scale="0.5 0.5" />
+    <sprite name="Dialog2" image="ui/screens/ff7_logo.png" align="center" valign="bottom" y="-250" origin_x="50%" origin_y="50%" width="1000" height="714" scale="0.5 0.5" show="true" />
 </screen>
