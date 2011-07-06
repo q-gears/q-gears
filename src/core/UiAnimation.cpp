@@ -10,16 +10,16 @@ UiAnimation::UiAnimation( const Ogre::String& name, UiWidget* widget ):
     m_Name( name ),
     m_Widget( widget )
 {
-    KeyFrameFloat key;
+    UiKeyFrameVector2 key;
     key.time = 0;
-    key.value = 1;
-    m_TrackScaleX.push_back( key );
+    key.value = Ogre::Vector2( 1.0f, 1.0f );
+    m_TrackScale.push_back( key );
     key.time = 5;
-    key.value = 2.0;
-    m_TrackScaleX.push_back( key );
+    key.value = Ogre::Vector2( 2.0f, 2.0f );
+    m_TrackScale.push_back( key );
     key.time = 10;
-    key.value = 0.1;
-    m_TrackScaleX.push_back( key );
+    key.value = Ogre::Vector2( 0.5f, 0.5f );
+    m_TrackScale.push_back( key );
 
     m_Time = 0;
     m_TimeTotal = 10;
@@ -45,29 +45,29 @@ UiAnimation::AddTime( const float time )
 
 
     // update all
-    if( m_TrackScaleX.size() > 0 )
+    if( m_TrackScale.size() > 0 )
     {
-        float min_value = m_TrackScaleX[ 0 ].value;
-        float max_value = min_value;
+        Ogre::Vector2 min_value = m_TrackScale[ 0 ].value;
+        Ogre::Vector2 max_value = min_value;
         float min = 0;
         float max = m_TimeTotal;
 
-        for( int i = 0; i < m_TrackScaleX.size(); ++i )
+        for( int i = 0; i < m_TrackScale.size(); ++i )
         {
-            if( m_TrackScaleX[ i ].time < m_Time && m_TrackScaleX[ i ].time > min )
+            if( m_TrackScale[ i ].time < m_Time && m_TrackScale[ i ].time > min )
             {
-                min_value = m_TrackScaleX[ i ].value;
-                min = m_TrackScaleX[ i ].time;
+                min_value = m_TrackScale[ i ].value;
+                min = m_TrackScale[ i ].time;
             }
 
-            if( m_TrackScaleX[ i ].time >= m_Time && m_TrackScaleX[ i ].time <= max )
+            if( m_TrackScale[ i ].time >= m_Time && m_TrackScale[ i ].time <= max )
             {
-                max_value = m_TrackScaleX[ i ].value;
-                max = m_TrackScaleX[ i ].time;
+                max_value = m_TrackScale[ i ].value;
+                max = m_TrackScale[ i ].time;
             }
         }
 
-        float value;
+        Ogre::Vector2 value;
 
         if( m_Time == 0 )
         {
@@ -78,6 +78,6 @@ UiAnimation::AddTime( const float time )
             value = min_value + ( max_value - min_value ) * ( ( m_Time - min ) / ( max - min ) );
         }
 
-        m_Widget->SetScale( Ogre::Vector2( value, 1 ) );
+        m_Widget->SetScale( value );
     }
 }

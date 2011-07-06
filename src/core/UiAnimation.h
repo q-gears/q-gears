@@ -2,6 +2,7 @@
 #define UI_ANIMATION_H
 
 #include <OgreString.h>
+#include <OgreVector2.h>
 #include <vector>
 
 
@@ -10,7 +11,7 @@ class UiWidget;
 
 
 
-struct KeyFrameFloat
+struct UiKeyFrameFloat
 {
     float time;
     float value;
@@ -18,7 +19,15 @@ struct KeyFrameFloat
 
 
 
-struct KeyFramePercent
+struct UiKeyFrameVector2
+{
+    float time;
+    Ogre::Vector2 value;
+};
+
+
+
+struct UiKeyFramePercent
 {
 };
 
@@ -43,7 +52,7 @@ private:
     float        m_Time;
     float        m_TimeTotal;
 
-    std::vector< KeyFrameFloat > m_TrackScaleX;
+    std::vector< UiKeyFrameVector2 > m_TrackScale;
 };
 
 

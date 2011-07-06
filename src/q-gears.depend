@@ -23561,7 +23561,7 @@
 	"Utilites.h"
 	"XmlScreensFile.h"
 
-1309958346 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
+1309958488 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
@@ -23736,8 +23736,9 @@
 	<OgreVector2.h>
 	"UiWidget.h"
 
-1309930637 g:\my\svn\q-gears\src\core\uianimation.h
+1309958712 g:\my\svn\q-gears\src\core\uianimation.h
 	<OgreString.h>
+	<OgreVector2.h>
 	<vector>
 
 1309930637 source:g:\my\svn\q-gears\src\core\uianimation.cpp
