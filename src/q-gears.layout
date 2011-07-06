@@ -125,10 +125,10 @@
 		<Cursor position="225" topLine="0" />
 	</File>
 	<File name="core\XmlScreenFile.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="5764" topLine="192" />
+		<Cursor position="6877" topLine="213" />
 	</File>
 	<File name="core\XmlScreenFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="74" topLine="0" />
+		<Cursor position="427" topLine="0" />
 	</File>
 	<File name="core\XmlScreensFile.h" open="0" top="0" tabpos="0">
 		<Cursor position="240" topLine="0" />
@@ -155,7 +155,7 @@
 		<Cursor position="4664" topLine="134" />
 	</File>
 	<File name="core\library\luabind\detail\policy.hpp" open="0" top="0" tabpos="5">
-		<Cursor position="7423" topLine="296" />
+		<Cursor position="8690" topLine="352" />
 	</File>
 	<File name="core\library\luabind\luabind.hpp" open="0" top="0" tabpos="0">
 		<Cursor position="1200" topLine="15" />

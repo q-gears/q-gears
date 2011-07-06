@@ -55,12 +55,12 @@ public:
     Ogre::Vector2 GetFinalScale() const;
     float GetFinalRotation() const;
 
-    void SetOriginX( const float x, const float add, const bool percent );
-    void SetOriginY( const float y, const float add, const bool percent );
-    void SetX( const float x, const float add, const bool percent );
-    void SetY( const float y, const float add, const bool percent );
-    void SetWidth( const float width, const float add, const bool percent );
-    void SetHeight( const float height, const float add, const bool percent );
+    void SetOriginX( const float x, const float percent );
+    void SetOriginY( const float y, const float percent );
+    void SetX( const float x, const float percent );
+    void SetY( const float y, const float percent );
+    void SetWidth( const float width, const float percent );
+    void SetHeight( const float height, const float percent );
     void SetScale( const Ogre::Vector2& scale );
     void SetRotation( const float degree );
 
@@ -94,26 +94,19 @@ protected:
     Ogre::Vector2            m_FinalScale;
     float                    m_FinalRotation;
 
+    float                    m_OriginXPercent;
     float                    m_OriginX;
-    float                    m_OriginXAdd;
-    bool                     m_OriginXPercent;
+    float                    m_OriginYPercent;
     float                    m_OriginY;
-    float                    m_OriginYAdd;
-    bool                     m_OriginYPercent;
     float                    m_X;
-    float                    m_XAdd;
-    bool                     m_XPercent;
+    float                    m_XPercent;
     float                    m_Y;
-    float                    m_YAdd;
-    bool                     m_YPercent;
+    float                    m_YPercent;
     float                    m_Width;
-    float                    m_WidthAdd;
-    bool                     m_WidthPercent;
+    float                    m_WidthPercent;
     float                    m_Height;
-    float                    m_HeightAdd;
-    bool                     m_HeightPercent;
-    float                    m_ScaleX;
-    float                    m_ScaleY;
+    float                    m_HeightPercent;
+    Ogre::Vector2            m_Scale;
     float                    m_Rotation;
 
     bool                     m_Scissor;

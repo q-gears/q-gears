@@ -114,12 +114,9 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( origin_x_str != "" )
                 {
                     float x = 0;
-                    float x_add = 0;
-                    bool x_percent = false;
-
-                    ParsePersent( x, x_add, x_percent, origin_x_str );
-
-                    widget2->SetOriginX( x, x_add, x_percent );
+                    float x_percent = 0;
+                    ParsePersent( x, x_percent, origin_x_str );
+                    widget2->SetOriginX( x, x_percent );
                 }
 
 
@@ -128,12 +125,9 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( origin_y_str != "" )
                 {
                     float y = 0;
-                    float y_add = 0;
-                    bool y_percent = false;
-
-                    ParsePersent( y, y_add, y_percent, origin_y_str );
-
-                    widget2->SetOriginY( y, y_add, y_percent );
+                    float y_percent = 0;
+                    ParsePersent( y, y_percent, origin_y_str );
+                    widget2->SetOriginY( y, y_percent );
                 }
 
 
@@ -142,12 +136,9 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( x_str != "" )
                 {
                     float x = 0;
-                    float x_add = 0;
-                    bool x_percent = false;
-
-                    ParsePersent( x, x_add, x_percent, x_str );
-
-                    widget2->SetX( x, x_add, x_percent );
+                    float x_percent = 0;
+                    ParsePersent( x, x_percent, x_str );
+                    widget2->SetX( x, x_percent );
                 }
 
 
@@ -156,12 +147,9 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( y_str != "" )
                 {
                     float y = 0;
-                    float y_add = 0;
-                    bool y_percent = false;
-
-                    ParsePersent( y, y_add, y_percent, y_str );
-
-                    widget2->SetY( y, y_add, y_percent );
+                    float y_percent = 0;
+                    ParsePersent( y, y_percent, y_str );
+                    widget2->SetY( y, y_percent );
                 }
 
 
@@ -169,13 +157,10 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 Ogre::String width_str = GetString( node, "width" );
                 if( width_str != "" )
                 {
-                    bool width_percent = false;
                     float width = 0;
-                    float width_add = 0;
-
-                    ParsePersent( width, width_add, width_percent, width_str );
-
-                    widget2->SetWidth( width, width_add, width_percent );
+                    float width_percent = 0;
+                    ParsePersent( width, width_percent, width_str );
+                    widget2->SetWidth( width, width_percent );
                 }
 
 
@@ -184,12 +169,10 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( height_str != "" )
                 {
                     float height = 0;
-                    float height_add = 0;
-                    bool height_percent = false;
+                    float height_percent = 0;
+                    ParsePersent( height, height_percent, height_str );
 
-                    ParsePersent( height, height_add, height_percent, height_str );
-
-                    widget2->SetHeight( height, height_add, height_percent );
+                    widget2->SetHeight( height, height_percent );
                 }
 
 
@@ -247,25 +230,25 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
 
 void
-XmlScreenFile::ParsePersent( float& value, float& value_add, bool& value_percent, const Ogre::String& string )
+XmlScreenFile::ParsePersent( float& value, float& value_percent, const Ogre::String& string )
 {
     if( string.at( string.size() - 1 ) == '%' )
     {
-        value = Ogre::StringConverter::parseReal( string.substr( 0, string.size() - 1 ) );
-        value_percent = true;
+        value = 0;
+        value_percent = Ogre::StringConverter::parseReal( string.substr( 0, string.size() - 1 ) );
     }
     else
     {
         Ogre::StringVector param = Ogre::StringUtil::split( string, "%" );
         if( param.size() > 1 )
         {
-            value = Ogre::StringConverter::parseReal( param[ 0 ] );
-            value_add = Ogre::StringConverter::parseReal( param[ 1 ] );
-            value_percent = true;
+            value = Ogre::StringConverter::parseReal( param[ 1 ] );
+            value_percent = Ogre::StringConverter::parseReal( param[ 0 ] );
         }
         else
         {
             value = Ogre::StringConverter::parseReal( string );
+            value_percent = 0;
         }
     }
 }

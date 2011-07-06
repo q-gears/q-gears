@@ -63,25 +63,18 @@ UiWidget::Initialise()
     m_FinalRotation = 0;
 
     m_OriginX = 0;
-    m_OriginXAdd = 0;
-    m_OriginXPercent = false;
+    m_OriginXPercent = 0;
     m_OriginY = 0;
-    m_OriginYAdd = 0;
-    m_OriginYPercent = false;
+    m_OriginYPercent = 0;
     m_X = 0;
-    m_XAdd = 0;
-    m_XPercent = false;
+    m_XPercent = 0;
     m_Y = 0;
-    m_YAdd = 0;
-    m_YPercent = false;
-    m_Width = 100;
-    m_WidthAdd = 0;
-    m_WidthPercent = true;
-    m_Height = 100;
-    m_HeightAdd = 0;
-    m_HeightPercent = true;
-    m_ScaleX = 1.0f;
-    m_ScaleY = 1.0f;
+    m_YPercent = 0;
+    m_Width = 0;
+    m_WidthPercent = 100;
+    m_Height = 0;
+    m_HeightPercent = 100;
+    m_Scale = Ogre::Vector2( 1.0f, 1.0f );
     m_Rotation = 0.0f;
 
     m_Scissor = false;
@@ -213,7 +206,7 @@ UiWidget::RemoveAllChildren()
 void
 UiWidget::UpdateTransformation()
 {
-    m_FinalScale = ( m_Parent != NULL ) ? m_Parent->GetFinalScale() * Ogre::Vector2( m_ScaleX, m_ScaleY ) : Ogre::Vector2( m_ScaleX, m_ScaleY );
+    m_FinalScale = ( m_Parent != NULL ) ? m_Parent->GetFinalScale() * m_Scale : m_Scale;
 
 
 
@@ -222,8 +215,8 @@ UiWidget::UpdateTransformation()
     Ogre::Vector2 area_size = ( m_Parent != NULL ) ? m_Parent->GetFinalSize() : Ogre::Vector2( m_ScreenWidth, m_ScreenHeight );
     float area_rotation = ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() : 0;
 
-    float local_x = ( ( m_XPercent == true ) ? ( area_size.x * m_X * m_ScaleX ) / 100.0f + ( m_XAdd * m_ScreenHeight / 720.0f) * m_FinalScale.x : ( m_X * m_ScreenHeight / 720.0f ) * m_FinalScale.x ) - area_origin.x;
-    float local_y = ( ( m_YPercent == true ) ? ( area_size.y * m_Y * m_ScaleY ) / 100.0f + ( m_YAdd * m_ScreenHeight / 720.0f ) * m_FinalScale.y : ( m_Y * m_ScreenHeight / 720.0f ) * m_FinalScale.y )  - area_origin.y;
+    float local_x = ( ( area_size.x * m_XPercent * m_Scale.x ) / 100.0f + ( m_X * m_ScreenHeight / 720.0f) * m_FinalScale.x ) - area_origin.x;
+    float local_y = ( ( area_size.y * m_YPercent * m_Scale.y ) / 100.0f + ( m_Y * m_ScreenHeight / 720.0f ) * m_FinalScale.y ) - area_origin.y;
 
     float x = local_x;
     float y = local_y;
@@ -264,10 +257,10 @@ UiWidget::UpdateTransformation()
 
 
 
-    m_FinalSize.x = ( m_WidthPercent == true ) ? ( area_size.x * m_Width * m_ScaleX ) / 100.0f + ( m_WidthAdd * m_ScreenHeight / 720.0f ) * m_FinalScale.x : ( m_Width * m_ScreenHeight / 720.0f) * m_FinalScale.x;
-    m_FinalSize.y = ( m_HeightPercent == true ) ? ( area_size.y * m_Height * m_ScaleY ) / 100.0f + ( m_HeightAdd * m_ScreenHeight / 720.0f ) * m_FinalScale.y : ( m_Height * m_ScreenHeight / 720.0f ) * m_FinalScale.y;
-    m_FinalOrigin.x = ( m_OriginXPercent == true ) ? ( m_FinalSize.x * m_OriginX ) / 100.0f + m_OriginXAdd * m_ScreenHeight / 720.0f : m_OriginX * m_ScreenHeight / 720.0f;
-    m_FinalOrigin.y = ( m_OriginYPercent == true ) ? ( m_FinalSize.y * m_OriginY ) / 100.0f + m_OriginYAdd * m_ScreenHeight / 720.0f : m_OriginY * m_ScreenHeight / 720.0f;
+    m_FinalSize.x = ( area_size.x * m_WidthPercent * m_Scale.x ) / 100.0f + ( m_Width * m_ScreenHeight / 720.0f ) * m_FinalScale.x;
+    m_FinalSize.y = ( area_size.y * m_HeightPercent * m_Scale.y ) / 100.0f + ( m_Height * m_ScreenHeight / 720.0f ) * m_FinalScale.y;
+    m_FinalOrigin.x = ( m_FinalSize.x * m_OriginXPercent ) / 100.0f + m_OriginX * m_ScreenHeight / 720.0f;
+    m_FinalOrigin.y = ( m_FinalSize.y * m_OriginYPercent ) / 100.0f + m_OriginY * m_ScreenHeight / 720.0f;
     m_FinalRotation = area_rotation + m_Rotation;
 
 
@@ -381,60 +374,54 @@ UiWidget::GetFinalRotation() const
 
 
 void
-UiWidget::SetOriginX( const float x, const float add, const bool percent )
+UiWidget::SetOriginX( const float x, const float percent )
 {
     m_OriginX = x;
-    m_OriginXAdd = add;
     m_OriginXPercent = percent;
 }
 
 
 
 void
-UiWidget::SetOriginY( const float y, const float add, const bool percent )
+UiWidget::SetOriginY( const float y, const float percent )
 {
     m_OriginY = y;
-    m_OriginYAdd = add;
     m_OriginYPercent = percent;
 }
 
 
 
 void
-UiWidget::SetX( const float x, const float add, const bool percent )
+UiWidget::SetX( const float x, const float percent )
 {
     m_X = x;
-    m_XAdd = add;
     m_XPercent = percent;
 }
 
 
 
 void
-UiWidget::SetY( const float y, const float add, const bool percent )
+UiWidget::SetY( const float y, const float percent )
 {
     m_Y = y;
-    m_YAdd = add;
     m_YPercent = percent;
 }
 
 
 
 void
-UiWidget::SetWidth( const float width, const float add, const bool percent )
+UiWidget::SetWidth( const float width, const float percent )
 {
     m_Width = width;
-    m_WidthAdd = add;
     m_WidthPercent = percent;
 }
 
 
 
 void
-UiWidget::SetHeight( const float height, const float add, const bool percent )
+UiWidget::SetHeight( const float height, const float percent )
 {
     m_Height = height;
-    m_HeightAdd = add;
     m_HeightPercent = percent;
 }
 
@@ -443,8 +430,7 @@ UiWidget::SetHeight( const float height, const float add, const bool percent )
 void
 UiWidget::SetScale( const Ogre::Vector2& scale )
 {
-    m_ScaleX = scale.x;
-    m_ScaleY = scale.y;
+    m_Scale = scale;
 }
 
 
