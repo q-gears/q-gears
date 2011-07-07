@@ -53,11 +53,6 @@ EntityModel::Update()
             {
                 float time = ( m_AnimationCurrent->hasEnded() != true ) ? m_AnimationCurrent->getTimePosition() : 0;
 
-                if( delta_time < 0 && m_AnimationCurrent->getTimePosition() == 0 )
-                {
-                    time = m_AnimationCurrent->getLength();
-                }
-
                 PlayAnimation( m_AnimationDefault, DEFAULT, time, -1 );
 
                 m_AnimationCurrent->addTime( delta_time );
@@ -108,7 +103,7 @@ EntityModel::PlayAnimation( const Ogre::String& animation, EntityAnimation state
         m_AnimationCurrent->setEnabled( true );
         m_AnimationCurrent->setTimePosition( start );
 
-        m_AnimationEndTime = (end == -1) ? m_AnimationCurrent->getLength() : end;
+        m_AnimationEndTime = ( end == -1 ) ? m_AnimationCurrent->getLength() : end;
         m_AnimationState = state;
     }
     else

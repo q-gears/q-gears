@@ -4,6 +4,7 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 
 2011-07-07
 ----------
+* [UI] Add animation play functions to lua script. [Akari]
 * [UI] Add animations to widgets. Translation, rotation and scale. [Akari]
 * [UI] Separate colour and alpha. And move them to widget class. [Akari]
 

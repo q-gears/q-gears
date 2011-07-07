@@ -36,9 +36,9 @@ UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiW
 
 UiWidget::~UiWidget()
 {
-    if( m_Animation != NULL )
+    for( int i = 0; i < m_Animations.size(); ++i )
     {
-        delete m_Animation;
+        delete m_Animations[ i ];
     }
 
     ScriptManager::getSingleton().RemoveEntity( "Ui." + m_PathName );
@@ -86,7 +86,8 @@ UiWidget::Initialise()
     m_ScissorLeft = 0;
     m_ScissorRight = m_ScreenWidth;
 
-    m_Animation = NULL;
+    m_AnimationCurrent = NULL;
+    m_AnimationDefault = "Idle";
 
     m_Colour = Ogre::ColourValue( 1, 1, 1, 1 );
 
@@ -98,11 +99,38 @@ UiWidget::Initialise()
 void
 UiWidget::Update()
 {
-    if( m_Animation != NULL )
+    if( m_AnimationCurrent != NULL )
     {
-        m_Animation->AddTime( Timer::getSingleton().GetGameTimeDelta() );
+        float delta_time = Timer::getSingleton().GetGameTimeDelta();
+
+        // if animation ended
+        if( m_AnimationCurrent->GetTime() + delta_time >= m_AnimationEndTime )
+        {
+            for( int i = 0; i < m_AnimationSync.size(); ++i)
+            {
+                ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationSync[ i ] );
+            }
+            m_AnimationSync.clear();
+
+            if( m_AnimationState == UiAnimation::DEFAULT )
+            {
+                // in case of cycled default we need to sync with end
+                float time = m_AnimationCurrent->GetTime() - m_AnimationCurrent->GetLength();
+
+                PlayAnimation( m_AnimationDefault, UiAnimation::DEFAULT, time, -1 );
+
+                m_AnimationCurrent->AddTime( delta_time );
+            }
+        }
+        else
+        {
+            m_AnimationCurrent->AddTime( delta_time );
+        }
+
         OnResize();
     }
+
+
 
     for( int i = 0; i < m_Children.size(); ++i )
     {
@@ -207,12 +235,86 @@ UiWidget::RemoveAllChildren()
 void
 UiWidget::AddAnimation( UiAnimation *animation )
 {
-    if( m_Animation != NULL)
+    m_Animations.push_back( animation );
+}
+
+
+
+const Ogre::String&
+UiWidget::GetCurrentAnimationName() const
+{
+    return m_AnimationCurrent->GetName();
+}
+
+
+
+void
+UiWidget::PlayAnimation( const Ogre::String& animation, UiAnimation::State state, const float start, const float end )
+{
+    for( int i = 0; i < m_Animations.size(); ++i)
     {
-        delete m_Animation;
+        if( m_Animations[ i ]->GetName() == animation )
+        {
+            m_AnimationCurrent = m_Animations[ i ];
+            m_AnimationCurrent->SetTime( start );
+            m_AnimationEndTime = ( end == -1 ) ? m_AnimationCurrent->GetLength() : end;
+            m_AnimationState = state;
+            return;
+        }
     }
 
-    m_Animation = animation;
+
+    LOG_ERROR( "Widget '" + m_Name + "' doesn't has animation '" + animation + "'." );
+}
+
+
+
+void
+UiWidget::ScriptPlayAnimation( const char* name )
+{
+    PlayAnimation( Ogre::String( name ), UiAnimation::DEFAULT, 0, -1 );
+}
+
+
+
+void
+UiWidget::ScriptPlayAnimationStop( const char* name )
+{
+    PlayAnimation( Ogre::String( name ), UiAnimation::ONCE, 0, -1 );
+}
+
+
+
+void
+UiWidget::ScriptPlayAnimation( const char* name, const float start, const float end )
+{
+    PlayAnimation( Ogre::String( name ), UiAnimation::DEFAULT, start, end );
+}
+
+
+
+void
+UiWidget::ScriptPlayAnimationStop( const char* name, const float start, const float end )
+{
+    PlayAnimation( Ogre::String( name ), UiAnimation::ONCE, start, end );
+}
+
+
+
+void
+UiWidget::ScriptSetDefaultAnimation( const char* animation )
+{
+    m_AnimationDefault = Ogre::String( animation );
+}
+
+
+
+const int
+UiWidget::ScriptAnimationSync()
+{
+    ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
+    m_AnimationSync.push_back( script );
+    return -1;
 }
 
 

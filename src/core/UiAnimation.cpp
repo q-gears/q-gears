@@ -196,9 +196,33 @@ UiAnimation::GetName() const
 
 
 void
+UiAnimation::SetTime( const float time )
+{
+    m_Time = time;
+}
+
+
+
+const float
+UiAnimation::GetTime() const
+{
+    return m_Time;
+}
+
+
+
+void
 UiAnimation::SetLength( const float time )
 {
     m_Length = time;
+}
+
+
+
+const float
+UiAnimation::GetLength() const
+{
+    return m_Length;
 }
 
 

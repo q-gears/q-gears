@@ -22749,7 +22749,7 @@
 1305613386 g:\my\svn\q-gears\src\core\entitymodel.h
 	"Entity.h"
 
-1305613387 source:g:\my\svn\q-gears\src\core\entitymodel.cpp
+1310045383 source:g:\my\svn\q-gears\src\core\entitymodel.cpp
 	"EntityModel.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -22828,7 +22828,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1309757152 source:g:\my\svn\q-gears\src\core\xmlfile.cpp
+1310028496 source:g:\my\svn\q-gears\src\core\xmlfile.cpp
 	"XmlFile.h"
 	<OgreStringConverter.h>
 	"Logger.h"
@@ -23546,11 +23546,12 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1310028928 g:\my\svn\q-gears\src\core\uiwidget.h
+1310045151 g:\my\svn\q-gears\src\core\uiwidget.h
 	<OgreColourValue.h>
 	<OgreString.h>
 	<OgreVector2.h>
 	<vector>
+	"ScriptManager.h"
 	"UiAnimation.h"
 
 1309497540 source:g:\my\svn\q-gears\src\core\uimanager.cpp
@@ -23562,7 +23563,7 @@
 	"Utilites.h"
 	"XmlScreensFile.h"
 
-1309958488 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
+1310046854 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
@@ -23620,7 +23621,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1309157218 g:\my\svn\q-gears\src\core\scriptmanagerbinds.h
+1310046991 g:\my\svn\q-gears\src\core\scriptmanagerbinds.h
 	"Console.h"
 	"Logger.h"
 	"Entity.h"
@@ -23671,7 +23672,7 @@
 1308832354 g:\my\svn\q-gears\src\core\xmlscreensfile.h
 	"XmlFile.h"
 
-1309957508 source:g:\my\svn\q-gears\src\core\xmlscreenfile.cpp
+1310028459 source:g:\my\svn\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -23716,13 +23717,13 @@
 	<OgreRoot.h>
 	"UiWidget.h"
 
-1309930637 g:\my\svn\q-gears\src\core\uisprite.h
+1310027427 g:\my\svn\q-gears\src\core\uisprite.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
 	"UiWidget.h"
 
-1309930637 source:g:\my\svn\q-gears\src\core\uisprite.cpp
+1310027454 source:g:\my\svn\q-gears\src\core\uisprite.cpp
 	"UiSprite.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
@@ -23738,12 +23739,12 @@
 	<OgreVector2.h>
 	"UiWidget.h"
 
-1310018972 g:\my\svn\q-gears\src\core\uianimation.h
+1310045167 g:\my\svn\q-gears\src\core\uianimation.h
 	<OgreString.h>
 	<OgreVector2.h>
 	<vector>
 
-1309930637 source:g:\my\svn\q-gears\src\core\uianimation.cpp
+1310045017 source:g:\my\svn\q-gears\src\core\uianimation.cpp
 	"UiAnimation.h"
 	<OgreVector2.h>
 	"UiWidget.h"

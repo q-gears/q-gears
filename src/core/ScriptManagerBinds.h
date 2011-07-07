@@ -65,6 +65,12 @@ ScriptManager::InitBinds()
         luabind::class_< UiWidget >( "UiWidget" )
             .def( "show", ( void( UiWidget::* )() ) &UiWidget::Show )
             .def( "hide", ( void( UiWidget::* )() ) &UiWidget::Hide )
+            .def( "play_animation", ( void( UiWidget::* )( const char* ) ) &UiWidget::ScriptPlayAnimation )
+            .def( "play_animation_stop", ( void( UiWidget::* )( const char* ) ) &UiWidget::ScriptPlayAnimationStop )
+            .def( "play_animation", ( void( UiWidget::* )( const char*, const float, const float ) ) &UiWidget::ScriptPlayAnimation )
+            .def( "play_animation_stop", ( void( UiWidget::* )( const char*, const float, const float ) ) &UiWidget::ScriptPlayAnimationStop )
+            .def( "set_default_animation", ( void( UiWidget::* )( const char* ) ) &UiWidget::ScriptSetDefaultAnimation )
+            .def( "animation_sync", ( int( UiWidget::* )()) &UiWidget::ScriptAnimationSync, luabind::yield )
     ];
 
     // ui access

@@ -10,7 +10,12 @@
         <sprite name="BottomLeft" image="ui/screens/border_bl.png" x="0" y="100%-8" width="8" height="8" show="true" />
         <sprite name="BottomRight" image="ui/screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" show="true" />
 
-        <animation name="Idle" length="3"
+        <animation name="Idle" length="2"
+            scale="0:1 1, 1:2 2, 2: 1 1"
+            x="0:0 172"
+            y="0:0 243"
+        />
+        <animation name="Appear" length="3"
             scale="0:1 1, 0.5:1.1 1.1, 1:1 1, 1.5:1.1 1.1, 2:1 1, 2.5:1.1 1.1, 3:1 1"
             x="0:100 172, 3:0 172"
             y="0:0 243, 3:0 243"

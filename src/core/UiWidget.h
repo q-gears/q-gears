@@ -6,6 +6,7 @@
 #include <OgreVector2.h>
 #include <vector>
 
+#include "ScriptManager.h"
 #include "UiAnimation.h"
 
 
@@ -31,7 +32,16 @@ public:
     UiWidget* GetChild( const Ogre::String& name );
     void RemoveAllChildren();
 
+    // animation related
     void AddAnimation( UiAnimation *animation );
+    const Ogre::String& GetCurrentAnimationName() const;
+    void PlayAnimation( const Ogre::String& animation, UiAnimation::State state, const float start, const float end );
+    void ScriptPlayAnimation( const char* name );
+    void ScriptPlayAnimationStop( const char* name );
+    void ScriptPlayAnimation( const char* name, const float start, const float end );
+    void ScriptPlayAnimationStop( const char* name, const float start, const float end );
+    void ScriptSetDefaultAnimation( const char* animation );
+    const int ScriptAnimationSync();
 
     void UpdateTransformation();
 
@@ -120,7 +130,12 @@ protected:
     int                      m_ScissorLeft;
     int                      m_ScissorRight;
 
-    UiAnimation*             m_Animation;
+    UiAnimation*                m_AnimationCurrent;
+    std::vector< ScriptId >     m_AnimationSync;
+    UiAnimation::State          m_AnimationState;
+    Ogre::String                m_AnimationDefault;
+    float                       m_AnimationEndTime;
+    std::vector< UiAnimation* > m_Animations;
 };
 
 

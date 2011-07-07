@@ -100,11 +100,11 @@
 	<File name="core\UiSprite.h" open="0" top="0" tabpos="0">
 		<Cursor position="42" topLine="0" />
 	</File>
-	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="9432" topLine="312" />
+	<File name="core\UiWidget.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="5898" topLine="255" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="2">
-		<Cursor position="2316" topLine="50" />
+		<Cursor position="4437" topLine="102" />
 	</File>
 	<File name="core\Utilites.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="4127" topLine="150" />
