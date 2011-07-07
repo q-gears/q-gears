@@ -145,6 +145,44 @@ UiAnimation::AddTime( const float time )
 
         m_Widget->SetY( value.x, value.y );
     }
+
+
+
+    if( m_Rotation.size() > 0 )
+    {
+        float min_value = m_Rotation[ 0 ].value;
+        float max_value = min_value;
+        float min = 0;
+        float max = m_Length;
+
+        for( int i = 0; i < m_Rotation.size(); ++i )
+        {
+            if( m_Rotation[ i ].time < m_Time && m_Rotation[ i ].time > min )
+            {
+                min_value = m_Rotation[ i ].value;
+                min = m_Rotation[ i ].time;
+            }
+
+            if( m_Rotation[ i ].time >= m_Time && m_Rotation[ i ].time <= max )
+            {
+                max_value = m_Rotation[ i ].value;
+                max = m_Rotation[ i ].time;
+            }
+        }
+
+        float value;
+
+        if( m_Time == 0 )
+        {
+            value = min_value;
+        }
+        else
+        {
+            value = min_value + ( max_value - min_value ) * ( ( m_Time - min ) / ( max - min ) );
+        }
+
+        m_Widget->SetRotation( value );
+    }
 }
 
 
@@ -185,4 +223,12 @@ void
 UiAnimation::AddYKeyFrame( const UiKeyFrameVector2& key_frame )
 {
     m_Y.push_back( key_frame );
+}
+
+
+
+void
+UiAnimation::AddRotationKeyFrame( const UiKeyFrameFloat& key_frame )
+{
+    m_Rotation.push_back( key_frame );
 }
