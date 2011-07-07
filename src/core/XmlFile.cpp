@@ -150,9 +150,9 @@ XmlFile::GetVector2( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vecto
 
 
 const Ogre::Vector3
-XmlFile::GetVector3( TiXmlNode* node, const Ogre::String& tag ) const
+XmlFile::GetVector3( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector3& def ) const
 {
-    Ogre::Vector3 ret = Ogre::Vector3::ZERO;
+    Ogre::Vector3 ret = def;
 
     if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {

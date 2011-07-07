@@ -22667,7 +22667,7 @@
 1308821641 g:\my\svn\q-gears\src\core\xmlmapfile.h
 	"XmlFile.h"
 
-1309757152 g:\my\svn\q-gears\src\core\xmlfile.h
+1310028480 g:\my\svn\q-gears\src\core\xmlfile.h
 	"tinyxml/tinyxml.h"
 	<OgreColourValue.h>
 	<OgreMatrix4.h>
@@ -23546,7 +23546,8 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1309946261 g:\my\svn\q-gears\src\core\uiwidget.h
+1310028928 g:\my\svn\q-gears\src\core\uiwidget.h
+	<OgreColourValue.h>
 	<OgreString.h>
 	<OgreVector2.h>
 	<vector>
@@ -23663,7 +23664,7 @@
 	"ConfigCmdManager.h"
 	"Console.h"
 
-1309946204 g:\my\svn\q-gears\src\core\xmlscreenfile.h
+1310018973 g:\my\svn\q-gears\src\core\xmlscreenfile.h
 	"uiWidget.h"
 	"XmlFile.h"
 
@@ -23737,7 +23738,7 @@
 	<OgreVector2.h>
 	"UiWidget.h"
 
-1309958712 g:\my\svn\q-gears\src\core\uianimation.h
+1310018972 g:\my\svn\q-gears\src\core\uianimation.h
 	<OgreString.h>
 	<OgreVector2.h>
 	<vector>

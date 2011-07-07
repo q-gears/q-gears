@@ -88,6 +88,8 @@ UiWidget::Initialise()
 
     m_Animation = NULL;
 
+    m_Colour = Ogre::ColourValue( 1, 1, 1, 1 );
+
     ScriptManager::getSingleton().AddEntity( "Ui." + m_PathName );
 }
 
@@ -491,4 +493,22 @@ int
 UiWidget::GetScissorRight() const
 {
     return m_ScissorRight;
+}
+
+
+
+void
+UiWidget::SetColour( const float r, const float g, const float b )
+{
+    m_Colour.r = r;
+    m_Colour.g = g;
+    m_Colour.b = b;
+}
+
+
+
+void
+UiWidget::SetAlpha( const float a )
+{
+    m_Colour.a = a;
 }

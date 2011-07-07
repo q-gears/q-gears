@@ -2,6 +2,11 @@
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 --------------------------------------------------------------------------------
 
+2011-07-07
+----------
+* [UI] Add animations to widgets. Translation, rotation and scale. [Akari]
+* [UI] Separate colour and alpha. And move them to widget class. [Akari]
+
 2011-07-06
 ----------
 * [UI] Add tag show="true" to enable visibility right on start. [Akari]

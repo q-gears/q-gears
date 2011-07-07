@@ -1,6 +1,7 @@
 #ifndef UI_WIDGET_H
 #define UI_WIDGET_H
 
+#include <OgreColourValue.h>
 #include <OgreString.h>
 #include <OgreVector2.h>
 #include <vector>
@@ -70,6 +71,9 @@ public:
     int GetScissorLeft() const;
     int GetScissorRight() const;
 
+    void SetColour( const float r, const float g, const float b );
+    void SetAlpha( const float a );
+
 private:
     UiWidget();
 
@@ -84,6 +88,7 @@ protected:
     float                    m_ScreenHeight;
 
     bool                     m_Visible;
+    Ogre::ColourValue        m_Colour;
 
     Align                    m_Align;
     VerticalAlign            m_VerticalAlign;

@@ -21,7 +21,6 @@ public:
     virtual void OnResize();
     virtual void Render();
 
-    void SetColour( const float r, const float g, const float b, const float a );
     void SetImage( const Ogre::String& image );
     void UpdateGeometry();
 
@@ -32,7 +31,6 @@ private:
 
 private:
     Ogre::MaterialPtr                   m_Material;
-    Ogre::ColourValue                   m_Colour;
     Ogre::SceneManager*                 m_SceneManager;
     Ogre::RenderSystem*                 m_RenderSystem;
 

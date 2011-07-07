@@ -8,8 +8,7 @@
 
 
 UiSprite::UiSprite( const Ogre::String& name ):
-    UiWidget( name ),
-    m_Colour( 1, 1, 1, 1 )
+    UiWidget( name )
 {
     Initialise();
 }
@@ -17,8 +16,7 @@ UiSprite::UiSprite( const Ogre::String& name ):
 
 
 UiSprite::UiSprite( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent ):
-    UiWidget( name, path_name, parent ),
-    m_Colour( 1, 1, 1, 1 )
+    UiWidget( name, path_name, parent )
 {
     Initialise();
 }
@@ -222,17 +220,6 @@ UiSprite::Render()
     }
 
     UiWidget::Render();
-}
-
-
-
-void
-UiSprite::SetColour( const float r, const float g, const float b, const float a )
-{
-    m_Colour.r = r;
-    m_Colour.g = g;
-    m_Colour.b = b;
-    m_Colour.a = a;
 }
 
 
