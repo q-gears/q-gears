@@ -318,17 +318,14 @@ UiWidget::ScriptAnimationSync()
 void
 UiWidget::UpdateTransformation()
 {
-    m_FinalScale = ( m_Parent != NULL ) ? m_Parent->GetFinalScale() * m_Scale : m_Scale;
-
-
-
+    Ogre::Vector2 area_scale = ( m_Parent != NULL ) ? m_Parent->GetFinalScale() : Ogre::Vector2( 1, 1 );
     Ogre::Vector2 area_origin = ( m_Parent != NULL ) ? m_Parent->GetFinalOrigin() : Ogre::Vector2::ZERO;
     Ogre::Vector2 area_translate = ( m_Parent != NULL ) ? m_Parent->GetFinalTranslate() : Ogre::Vector2::ZERO;
     Ogre::Vector2 area_size = ( m_Parent != NULL ) ? m_Parent->GetFinalSize() : Ogre::Vector2( m_ScreenWidth, m_ScreenHeight );
     float area_rotation = ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() : 0;
 
-    float local_x = ( ( area_size.x * m_XPercent ) / 100.0f + ( m_X * m_ScreenHeight / 720.0f) * m_FinalScale.x ) - area_origin.x;
-    float local_y = ( ( area_size.y * m_YPercent ) / 100.0f + ( m_Y * m_ScreenHeight / 720.0f ) * m_FinalScale.y ) - area_origin.y;
+    float local_x = ( ( area_size.x * m_XPercent ) / 100.0f + ( m_X * m_ScreenHeight / 720.0f) * area_scale.x ) - area_origin.x;
+    float local_y = ( ( area_size.y * m_YPercent ) / 100.0f + ( m_Y * m_ScreenHeight / 720.0f ) * area_scale.y ) - area_origin.y;
     float x = local_x;
     float y = local_y;
 
@@ -336,7 +333,7 @@ UiWidget::UpdateTransformation()
     LOG_ERROR( m_Name + ", area_size = " + Ogre::StringConverter::toString( area_size ) );
     LOG_ERROR( m_Name + ", m_XPercent = " + Ogre::StringConverter::toString( m_XPercent ) );
     LOG_ERROR( m_Name + ", m_X = " + Ogre::StringConverter::toString( m_X ) );
-    LOG_ERROR( m_Name + ", m_FinalScale = " + Ogre::StringConverter::toString( m_FinalScale ) );
+    LOG_ERROR( m_Name + ", area_scale = " + Ogre::StringConverter::toString( area_scale ) );
     LOG_ERROR( m_Name + ", area_origin = " + Ogre::StringConverter::toString( area_origin ) );
 
 
@@ -377,6 +374,7 @@ UiWidget::UpdateTransformation()
 
 
 
+    m_FinalScale = area_scale * m_Scale;
     m_FinalSize.x = ( area_size.x * m_WidthPercent * m_Scale.x ) / 100.0f + ( m_Width * m_ScreenHeight / 720.0f ) * m_FinalScale.x;
     m_FinalSize.y = ( area_size.y * m_HeightPercent * m_Scale.y ) / 100.0f + ( m_Height * m_ScreenHeight / 720.0f ) * m_FinalScale.y;
     m_FinalOrigin.x = ( m_FinalSize.x * m_OriginXPercent ) / 100.0f + m_OriginX * m_ScreenHeight * m_FinalScale.x / 720.0f;
