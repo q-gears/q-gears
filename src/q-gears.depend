@@ -23546,7 +23546,7 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1310121790 g:\my\svn\q-gears\src\core\uiwidget.h
+1310129301 g:\my\svn\q-gears\src\core\uiwidget.h
 	<OgreColourValue.h>
 	<OgreString.h>
 	<OgreVector2.h>
@@ -23563,7 +23563,7 @@
 	"Utilites.h"
 	"XmlScreensFile.h"
 
-1310046854 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
+1310129308 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>

@@ -326,17 +326,9 @@ UiWidget::UpdateTransformation()
 
     float local_x = ( ( area_size.x * m_XPercent ) / 100.0f + ( m_X * m_ScreenHeight / 720.0f) * area_scale.x ) - area_origin.x;
     float local_y = ( ( area_size.y * m_YPercent ) / 100.0f + ( m_Y * m_ScreenHeight / 720.0f ) * area_scale.y ) - area_origin.y;
+
     float x = local_x;
     float y = local_y;
-
-
-    LOG_ERROR( m_Name + ", area_size = " + Ogre::StringConverter::toString( area_size ) );
-    LOG_ERROR( m_Name + ", m_XPercent = " + Ogre::StringConverter::toString( m_XPercent ) );
-    LOG_ERROR( m_Name + ", m_X = " + Ogre::StringConverter::toString( m_X ) );
-    LOG_ERROR( m_Name + ", area_scale = " + Ogre::StringConverter::toString( area_scale ) );
-    LOG_ERROR( m_Name + ", area_origin = " + Ogre::StringConverter::toString( area_origin ) );
-
-
 
     if( area_rotation != 0 )
     {

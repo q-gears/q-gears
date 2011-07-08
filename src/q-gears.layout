@@ -100,8 +100,8 @@
 	<File name="core\UiSprite.h" open="0" top="0" tabpos="0">
 		<Cursor position="42" topLine="0" />
 	</File>
-	<File name="core\UiWidget.cpp" open="1" top="1" tabpos="0">
-		<Cursor position="5898" topLine="255" />
+	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5898" topLine="245" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="2">
 		<Cursor position="4437" topLine="102" />
