@@ -26,16 +26,16 @@ public:
 
 private:
     UiSprite();
-    void CreateQuadVertexBuffer();
-    void DestroyQuadVertexBuffer();
+    void CreateVertexBuffer();
+    void DestroyVertexBuffer();
 
 private:
     Ogre::MaterialPtr                   m_Material;
     Ogre::SceneManager*                 m_SceneManager;
     Ogre::RenderSystem*                 m_RenderSystem;
 
-    Ogre::RenderOperation               m_QuadRenderOp;
-    Ogre::HardwareVertexBufferSharedPtr m_QuadVertexBuffer;
+    Ogre::RenderOperation               m_RenderOp;
+    Ogre::HardwareVertexBufferSharedPtr m_VertexBuffer;
 };
 
 

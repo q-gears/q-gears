@@ -7,15 +7,6 @@ Console
 
 
 
-DebugText
-{
-    type        truetype
-    source      courier.ttf
-    size        18
-}
-
-
-
 FieldMessageText
 {
     type        truetype

@@ -25,7 +25,7 @@ UiSprite::UiSprite( const Ogre::String& name, const Ogre::String& path_name, UiW
 
 UiSprite::~UiSprite()
 {
-    DestroyQuadVertexBuffer();
+    DestroyVertexBuffer();
 }
 
 
@@ -52,7 +52,7 @@ UiSprite::Initialise()
     tex->setNumMipmaps( -1 );
     tex->setTextureFiltering( Ogre::TFO_NONE );
 
-    CreateQuadVertexBuffer();
+    CreateVertexBuffer();
 }
 
 
@@ -61,6 +61,50 @@ void
 UiSprite::Update()
 {
     UiWidget::Update();
+}
+
+
+
+void
+UiSprite::OnResize()
+{
+    UiWidget::OnResize();
+
+    UpdateGeometry();
+}
+
+
+
+void
+UiSprite::Render()
+{
+    if( m_Visible == true )
+    {
+        if( m_RenderOp.vertexData->vertexCount != 0 )
+        {
+            m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
+            m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
+            m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
+
+            m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
+
+            m_RenderSystem->setScissorTest( true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom );
+            m_RenderSystem->_render( m_RenderOp );
+            m_RenderSystem->setScissorTest( false );
+        }
+    }
+
+    UiWidget::Render();
+}
+
+
+
+void
+UiSprite::SetImage( const Ogre::String& image )
+{
+    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
+    Ogre::TextureUnitState* tex = pass->getTextureUnitState( 0 );
+    tex->setTextureName( image );
 }
 
 
@@ -121,7 +165,7 @@ UiSprite::UpdateGeometry()
     float new_x4 = ( x4 / m_ScreenWidth ) * 2 - 1;
     float new_y4 = -( ( y4 / m_ScreenHeight ) * 2 - 1 );
 
-    float* writeIterator = ( float* ) m_QuadVertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
+    float* writeIterator = ( float* ) m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
 
     *writeIterator++ = new_x1;
     *writeIterator++ = new_y1;
@@ -183,64 +227,20 @@ UiSprite::UpdateGeometry()
     *writeIterator++ = 0;
     *writeIterator++ = 1;
 
-    m_QuadRenderOp.vertexData->vertexCount = 6;
+    m_RenderOp.vertexData->vertexCount = 6;
 
-    m_QuadVertexBuffer->unlock();
+    m_VertexBuffer->unlock();
 }
 
 
 
 void
-UiSprite::OnResize()
+UiSprite::CreateVertexBuffer()
 {
-    UiWidget::OnResize();
+    m_RenderOp.vertexData = new Ogre::VertexData;
+    m_RenderOp.vertexData->vertexStart = 0;
 
-    UpdateGeometry();
-}
-
-
-
-void
-UiSprite::Render()
-{
-    if( m_Visible == true )
-    {
-        if( m_QuadRenderOp.vertexData->vertexCount != 0 )
-        {
-            m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
-            m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
-            m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
-
-            m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
-
-            m_RenderSystem->setScissorTest( true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom );
-            m_RenderSystem->_render( m_QuadRenderOp );
-            m_RenderSystem->setScissorTest( false );
-        }
-    }
-
-    UiWidget::Render();
-}
-
-
-
-void
-UiSprite::SetImage( const Ogre::String& image )
-{
-    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
-    Ogre::TextureUnitState* tex = pass->getTextureUnitState( 0 );
-    tex->setTextureName( image );
-}
-
-
-
-void
-UiSprite::CreateQuadVertexBuffer()
-{
-    m_QuadRenderOp.vertexData = new Ogre::VertexData;
-    m_QuadRenderOp.vertexData->vertexStart = 0;
-
-    Ogre::VertexDeclaration* vDecl = m_QuadRenderOp.vertexData->vertexDeclaration;
+    Ogre::VertexDeclaration* vDecl = m_RenderOp.vertexData->vertexDeclaration;
 
     size_t offset = 0;
     vDecl->addElement( 0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
@@ -249,19 +249,19 @@ UiSprite::CreateQuadVertexBuffer()
     offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT4 );
     vDecl->addElement( 0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES );
 
-    m_QuadVertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), 6, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
+    m_VertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), 6, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
 
-    m_QuadRenderOp.vertexData->vertexBufferBinding->setBinding( 0, m_QuadVertexBuffer );
-    m_QuadRenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
-    m_QuadRenderOp.useIndexes = false;
+    m_RenderOp.vertexData->vertexBufferBinding->setBinding( 0, m_VertexBuffer );
+    m_RenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
+    m_RenderOp.useIndexes = false;
 }
 
 
 
 void
-UiSprite::DestroyQuadVertexBuffer()
+UiSprite::DestroyVertexBuffer()
 {
-    delete m_QuadRenderOp.vertexData;
-    m_QuadRenderOp.vertexData = 0;
-    m_QuadVertexBuffer.setNull();
+    delete m_RenderOp.vertexData;
+    m_RenderOp.vertexData = 0;
+    m_VertexBuffer.setNull();
 }

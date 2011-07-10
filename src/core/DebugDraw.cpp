@@ -286,7 +286,7 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
     }
 
     float* writeIterator = ( float* ) m_TextVertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
-    writeIterator += m_TextRenderOp.vertexData->vertexCount * 9;
+    writeIterator += m_TextRenderOp.vertexData->vertexCount * 6;
 
     float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();

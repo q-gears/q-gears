@@ -20423,7 +20423,7 @@
 	"Event.h"
 	"gui/TextArea.h"
 
-1306971021 d:\my\1\svn\q-gears\src\core\gui\textarea.h
+1310233952 d:\my\1\svn\q-gears\src\core\gui\textarea.h
 	<OgreOverlayContainer.h>
 	<OgreFont.h>
 	"../library/tinyxml/tinyxml.h"
@@ -21122,7 +21122,7 @@
 	"Timer.h"
 	"Utilites.h"
 
-1308467449 source:d:\my\1\svn\q-gears\src\core\debugdraw.cpp
+1310284926 source:d:\my\1\svn\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -23585,7 +23585,7 @@
 	"ScriptManager.h"
 	"UiAnimation.h"
 
-1310066600 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
+1310283240 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
@@ -23690,12 +23690,13 @@
 1308847892 d:\my\1\svn\q-gears\src\core\xmlscreensfile.h
 	"XmlFile.h"
 
-1310053739 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
+1310288787 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
 	"UiManager.h"
 	"UiSprite.h"
+	"UiTextArea.h"
 	"UiWidget.h"
 
 1309981319 d:\my\1\svn\q-gears\src\core\xmlscreenfile.h
@@ -23707,13 +23708,13 @@
 	"Logger.h"
 	"XmlScreenFile.h"
 
-1310053739 source:d:\my\1\svn\q-gears\src\core\uisprite.cpp
+1310234191 source:d:\my\1\svn\q-gears\src\core\uisprite.cpp
 	"UiSprite.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
 	"Logger.h"
 
-1310053739 d:\my\1\svn\q-gears\src\core\uisprite.h
+1310234098 d:\my\1\svn\q-gears\src\core\uisprite.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
@@ -23736,11 +23737,9 @@
 	<OgreVector2.h>
 	<vector>
 
-1310066210 source:d:\my\1\svn\q-gears\src\core\uianimation.cpp
+1310094951 source:d:\my\1\svn\q-gears\src\core\uianimation.cpp
 	"UiAnimation.h"
 	<OgreVector2.h>
-	<OgreStringConverter.h>
-	"Logger.h"
 	"UiWidget.h"
 
 1310045167 g:\my\svn\q-gears\src\core\uianimation.h
@@ -23751,5 +23750,19 @@
 1310045017 source:g:\my\svn\q-gears\src\core\uianimation.cpp
 	"UiAnimation.h"
 	<OgreVector2.h>
+	"UiWidget.h"
+
+1310288432 source:d:\my\1\svn\q-gears\src\core\uitextarea.cpp
+	"UiTextArea.h"
+	<OgreFontManager.h>
+	<OgreHardwareBufferManager.h>
+	<OgreMaterialManager.h>
+	"Logger.h"
+
+1310288852 d:\my\1\svn\q-gears\src\core\uitextarea.h
+	<OgreFont.h>
+	<OgreHardwareVertexBuffer.h>
+	<OgreRenderQueueListener.h>
+	<OgreRoot.h>
 	"UiWidget.h"
 

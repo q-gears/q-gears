@@ -88,7 +88,7 @@ UiWidget::Initialise()
 
     m_AnimationCurrent = NULL;
     m_AnimationDefault = "Idle";
-
+    m_AnimationState = UiAnimation::DEFAULT;
     m_Colour = Ogre::ColourValue( 1, 1, 1, 1 );
 
     ScriptManager::getSingleton().AddEntity( "Ui." + m_PathName );
@@ -99,7 +99,7 @@ UiWidget::Initialise()
 void
 UiWidget::Update()
 {
-    if( m_AnimationCurrent != NULL )
+    if( m_AnimationCurrent != NULL && m_Visible == true )
     {
         float delta_time = Timer::getSingleton().GetGameTimeDelta();
         float time = m_AnimationCurrent->GetTime();
@@ -124,6 +124,10 @@ UiWidget::Update()
         }
 
         OnResize();
+    }
+    else if( m_AnimationCurrent == NULL && m_AnimationState == UiAnimation::DEFAULT )
+    {
+        PlayAnimation( m_AnimationDefault, UiAnimation::DEFAULT, 0, -1 );
     }
 
 
@@ -259,7 +263,9 @@ UiWidget::PlayAnimation( const Ogre::String& animation, UiAnimation::State state
         }
     }
 
-
+    // stop current state and animation
+    m_AnimationCurrent = NULL;
+    m_AnimationState = UiAnimation::ONCE;
     LOG_ERROR( "Widget '" + m_Name + "' doesn't has animation '" + animation + "'." );
 }
 

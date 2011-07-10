@@ -4,6 +4,7 @@
 #include "ScriptManager.h"
 #include "UiManager.h"
 #include "UiSprite.h"
+#include "UiTextArea.h"
 #include "UiWidget.h"
 
 
@@ -63,7 +64,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
     while( node != NULL )
     {
         // parse widgets
-        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && ( node->ValueStr() == "widget" || node->ValueStr() == "sprite" ) )
+        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && ( node->ValueStr() == "widget" || node->ValueStr() == "sprite" || node->ValueStr() == "text_area" ) )
         {
             Ogre::String name = GetString( node, "name" );
             if( name != "" )
@@ -73,6 +74,10 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( node->ValueStr() == "sprite" )
                 {
                     widget2 = new UiSprite( name, base_name + "." + name, widget );
+                }
+                else if( node->ValueStr() == "text_area" )
+                {
+                    widget2 = new UiTextArea( name, base_name + "." + name, widget );
                 }
                 else
                 {
@@ -87,6 +92,27 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     if( image != "" )
                     {
                         ( ( UiSprite* )widget2 )->SetImage( image );
+                    }
+                }
+
+
+
+                if( node->ValueStr() == "text_area" )
+                {
+                    Ogre::String text = GetString( node, "text", "" );
+                    if( text != "" )
+                    {
+                        ( ( UiTextArea* )widget2 )->SetText( text );
+                    }
+
+                    Ogre::String font = GetString( node, "font", "" );
+                    if( font != "" )
+                    {
+                        Ogre::StringVector data = Ogre::StringUtil::split( font, " " );
+                        if( data.size() > 1 )
+                        {
+                            ( ( UiTextArea* )widget2 )->SetFont( data[ 0 ], Ogre::StringConverter::parseReal( data[ 1 ] ) );
+                        }
                     }
                 }
 
@@ -211,6 +237,10 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( node->ValueStr() == "sprite" )
                 {
                     ( ( UiSprite* )widget2 )->UpdateGeometry();
+                }
+                else if( node->ValueStr() == "text_area" )
+                {
+                    ( ( UiTextArea* )widget2 )->UpdateGeometry();
                 }
 
 
