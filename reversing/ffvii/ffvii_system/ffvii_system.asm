@@ -16770,23 +16770,17 @@ A3 = w[S0 + 0];
 [GP + 78] = h(hu[S0 + 12]); // number of letters in window string
 [GP + 7c] = w((bu[S0 + 19] >> 2) & 1); // WMODE style
 
-func1d6a8;
+func1d6a8; // render font
 
-8001F370	sll    v0, v0, $10
-8001F374	sra    v0, v0, $10
-8001F378	lh     v1, $000a(s0)
-8001F37C	addiu  v0, v0, $0010
-8001F380	addiu  v1, v1, $fffd (=-$3)
-8001F384	slt    v1, v1, v0
-8001F388	beq    v1, zero, L1f398 [$8001f398]
-8001F38C	nop
-8001F390	j      L1f39c [$8001f39c]
-8001F394	sb     s4, $0018(s0)
+if (h[S0 + a] - 3 < V0 + 10)
+{
+    [S0 + 18] = b(1);
+}
+else
+{
+    [S0 + 18] = b(0);
+}
 
-L1f398:	; 8001F398
-8001F398	sb     zero, $0018(s0)
-
-L1f39c:	; 8001F39C
 8001F39C	sll    v1, s2, $10
 8001F3A0	sra    v1, v1, $10
 8001F3A4	sll    v0, v1, $01

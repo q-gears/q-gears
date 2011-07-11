@@ -199,18 +199,18 @@
 +0e [][]     WINDOW current height. Set during dialog init (height / 4) (8 - min value).
 +10 [][]     text scrolling value.
 +12 [][]     number of letters in window string.
-+14 [][]     Bytes in window string.
-+16 [][]     Current row in string. Incremented during copy.
-+18 []
++14 [][]     bytes in window string.
++16 [][]     current row in string. Incremented during copy.
++18 []       store here i if window oreflowed by height during render. 0 otherwise.
 +19 []       WMODE style.
-+1a []       Show pointer.
++1a []       show pointer.
 +1b []       WSPCL type.
 +1c []
 +1d []       WNUMB number of digits in number.
 +1e [][]
 +20 [][][][] WNUMB number.
-+24 [][]     Pointer X.
-+26 [][]     Pointer Y.
++24 [][]     pointer X.
++26 [][]     pointer Y.
 +28 []       WSPCL x.
 +29 []
 +2a []       WSPCL y.
