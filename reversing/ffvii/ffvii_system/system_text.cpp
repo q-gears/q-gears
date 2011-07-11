@@ -294,8 +294,8 @@ L1d6ec:	; 8001D6EC
                             }
 
                             letter = bu[message];
-                            S6 = 0;
-                            S4 = S4 + (letter / 15) * 0d; // letter row in texture * 0xd
+                            S6 = (letter % 15) * 0c; // x in texture
+                            S4 = S4 + (letter / 15) * 0c; // y in texture
                             S5 = letter + S7; // opcode + offset in table if extended opcode used
                             A1 = w[800707c0] + S5; // offset to font padding
 
