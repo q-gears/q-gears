@@ -35,7 +35,7 @@
         <sprite name="BottomRight" image="ui/screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" show="true" />
     </widget>
 
-    <text_area name="Text" align="center" valign="middle" text="Akari is a good girl." font="FFVIIFont 48" show="true">
+    <text_area name="Text" align="center" valign="middle" text="Akari is a good girl." font="FFVIIFont" show="true">
         <animation name="Idle1" length="3"
             rotation="0:900, 3:0"
         />

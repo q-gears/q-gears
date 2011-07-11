@@ -1,7 +1,7 @@
 #ifndef XML_SCREEN_FILE_H
 #define XML_SCREEN_FILE_H
 
-#include "uiWidget.h"
+#include "UiWidget.h"
 #include "XmlFile.h"
 
 

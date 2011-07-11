@@ -29,7 +29,7 @@ XmlScreenFile::LoadScreen()
 
     if( node == NULL || node->ValueStr() != "screen" )
     {
-        LOG_ERROR( m_File.ValueStr() + " is not a valid fields map file! No <map> in root." );
+        LOG_ERROR( m_File.ValueStr() + " is not a valid screen file! No <screen> in root." );
         return;
     }
 
