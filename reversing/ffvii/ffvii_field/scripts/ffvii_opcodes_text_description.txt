@@ -56,7 +56,7 @@ FEE5 - usual letter.
 FEE6 - usual letter.
 FEE7 - usual letter.
 FEE8 - usual letter.
-FEE9 - increment byte data by 1. Write this byte to string. (max letter width formater)
+FEE9 - increment byte data by 1. Write this byte to string. (mono width formater)
 FEEA - unused (messed address)
 FEEB - unused (messed address)
 FEEC - unused (messed address)

@@ -15320,10 +15320,10 @@ L1d61c:	; 8001D61C
 
 
 
-//////////////////////////////////////////////////////////
-func1d6a8
+////////////////////////////////
+// func1d6a8
 8001D6A8-8001DE08
-//////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
@@ -16661,7 +16661,7 @@ L1f144:	; 8001F144
 
 8001F1BC	addiu  sp, sp, $ff58 (=-$a8)
 8001F1C0	sw     s3, $008c(sp)
-8001F1C4	addu   s3, a0, zero
+S3 = A0;
 8001F1C8	sw     s1, $0084(sp)
 8001F1CC	addu   s1, a1, zero
 8001F1D0	sw     s6, $0098(sp)
@@ -16711,7 +16711,7 @@ L1f25c:	; 8001F25C
 8001F278	nop
 8001F27C	beq    v0, zero, L1f658 [$8001f658]
 8001F280	nop
-8001F284	sw     zero, $0080(gp)
+[GP + 80] = w(0);
 8001F288	sw     zero, $0258(gp)
 8001F28C	sw     zero, $02ac(gp)
 8001F290	lbu    v0, $001a(s0)
@@ -16757,27 +16757,21 @@ L1f2f4:	; 8001F2F4
 
 L1f318:	; 8001F318
 8001F318	sra    v1, v1, $10
-8001F31C	sll    v0, v1, $01
-8001F320	addu   v0, v0, v1
-8001F324	sll    v0, v0, $04
-8001F328	addu   s0, v0, s3
-8001F32C	lw     a3, $0000(s0)
-8001F330	lbu    v1, $0019(s0)
-8001F334	lh     a1, $0010(s0)
-8001F338	lh     a2, $0008(s0)
-8001F33C	ori    v0, zero, $0007
-8001F340	sh     v0, $0070(gp)
-8001F344	lhu    v0, $0012(s0)
-8001F348	ori    a0, zero, $0008
-8001F34C	sh     zero, $0074(gp)
-8001F350	sh     zero, $0072(gp)
-8001F354	addiu  a1, a1, $0006
-8001F358	srl    v1, v1, $02
-8001F35C	andi   v1, v1, $0001
-8001F360	sw     v1, $007c(gp)
-8001F364	sh     v0, $0078(gp)
-8001F368	jal    func1d6a8 [$8001d6a8]
-8001F36C	addiu  a2, a2, $fffd (=-$3)
+S0 = S3 + V1 * 30; // pointer to window structure
+
+A0 = 8; // start of string
+A1 = h[S0 + 10] + 6; // text scrolling value
+A2 = h[S0 + 8] - 3; // dialog width
+A3 = w[S0 + 0];
+
+[GP + 70] = h(7);
+[GP + 72] = h(0);
+[GP + 74] = h(0);
+[GP + 78] = h(hu[S0 + 12]); // number of letters in window string
+[GP + 7c] = w((bu[S0 + 19] >> 2) & 1); // WMODE style
+
+func1d6a8;
+
 8001F370	sll    v0, v0, $10
 8001F374	sra    v0, v0, $10
 8001F378	lh     v1, $000a(s0)

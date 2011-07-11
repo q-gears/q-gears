@@ -11,15 +11,15 @@
 
 80062f24 offset to some message related data.
 
-80063048        [800707c0]  font padding file.
+80063048 start of font padding file.
 
-800707be [][] battle result stored here. Loaded by 0x23 BTRLD.
+800707be [][]     battle result stored here. Loaded by 0x23 BTRLD.
 
-8007078C [] array of enitys lines data. (size 0x01).
+8007078c []       array of enitys lines data. (size 0x01).
 
-800707C0 offset to font padding file.
+800707c0 [][][][] offset to font padding file.
 
-800716c4 offset to sector 5 triggers.
+800716c4 [][][][] offset to sector 5 triggers.
 
 800716d0 [] store 0 or 4 here during random encounter.
 
@@ -188,35 +188,36 @@
 
 8008325C [] array of model default animation.
 
-8008326C []       windows parent entity (size 0x01).
-80083274 [][][][] windows data (size 0x30). Pointer to dialog string.
-80083278 [][]     windows data (size 0x30). WINDOW x.
-8008327A [][]     windows data (size 0x30). WINDOW y.
-8008327C [][]     windows data (size 0x30). WINDOW width.
-8008327E [][]     windows data (size 0x30). WINDOW height.
-80083280 [][]     windows data (size 0x30). WINDOW current width. Set during dialog init (width / 4) (8 - min value).
-80083282 [][]     windows data (size 0x30). WINDOW current height. Set during dialog init (height / 4) (8 - min value).
-80083284 [][]     windows data (size 0x30). Text scrolling value.
-80083286 [][]     windows data (size 0x30). Letters in window string.
-80083288 [][]     windows data (size 0x30). Bytes in window string.
-8008328A [][]     windows data (size 0x30). Current row in string. Incremented during copy.
-8008328C []
-8008328D []       windows data (size 0x30). WMODE style.
-8008328E []       windows data (size 0x30). Show pointer.
-8008328F []       windows data (size 0x30). WSPCL type.
-80083290 []
-80083291 []       windows data (size 0x30). WNUMB number of digits in number.
-80083292 [][]
-80083294 [][][][] windows data (size 0x30). WNUMB number.
-80083298 [][]     windows data (size 0x30). Pointer X.
-8008329A [][]     windows data (size 0x30). Pointer Y.
-8008329C []       windows data (size 0x30). WSPCL x.
-8008329D []
-8008329E []       windows data (size 0x30). WSPCL y.
-8008329F []
-800832A0 [][]     windows data (size 0x30). window state.
-800832A2 []       windows data (size 0x30). WMODE cbc.
-800832A3 []
+8008326c []       windows parent entity (size 0x01).
+80083274  windows data (size 0x30).
++00 [][][][] pointer to dialog string.
++04 [][]     WINDOW x.
++06 [][]     WINDOW y.
++08 [][]     WINDOW width.
++0a [][]     WINDOW height.
++0c [][]     WINDOW current width. Set during dialog init (width / 4) (8 - min value).
++0e [][]     WINDOW current height. Set during dialog init (height / 4) (8 - min value).
++10 [][]     text scrolling value.
++12 [][]     number of letters in window string.
++14 [][]     Bytes in window string.
++16 [][]     Current row in string. Incremented during copy.
++18 []
++19 []       WMODE style.
++1a []       Show pointer.
++1b []       WSPCL type.
++1c []
++1d []       WNUMB number of digits in number.
++1e [][]
++20 [][][][] WNUMB number.
++24 [][]     Pointer X.
++26 [][]     Pointer Y.
++28 []       WSPCL x.
++29 []
++2a []       WSPCL y.
++2b []
++2c [][]     window state.
++2e []       WMODE cbc.
++2f []
 
 800833F8 array of script running state. 0x00 - not started, 0x01 - running, 0x02 - finished. (size 0x8 0x1).
 
@@ -418,14 +419,14 @@
 
 800E0738 digit->letter assosiation array (10-26 letters from character table)
 
-800E4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
-800E4234 reading offsets in dialog in field. One for each window. (size 0x4).
-800E424C total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
-800E4274 offset to ID block.
-800E4278 [][] name reading offset for dialog windows. (size 0x2).
-800E4280 [][] current variable for windows. (size 0x2).
-800E48F0 [] store FF here during end of SPLIT.
-800E4944 text for windows to diaplay. (size 0x100)
+800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
+800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
+800e424c total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
+800e4274 offset to ID block.
+800e4278 [][] name reading offset for dialog windows. (size 0x2).
+800e4280 [][] current variable for windows. (size 0x2).
+800e48f0 [] store FF here during end of SPLIT.
+800e4944 texts for windows to diaplay. (size 0x100)
 800e4d48 offsets for getting variable from memory block for windows. 8 for each window. (size 0x10 0x2)
 
 // MIM data
