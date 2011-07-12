@@ -1,43 +1,48 @@
-#ifndef UI_SPRITE_H
-#define UI_SPRITE_H
+#ifndef UI_FONT_H
+#define UI_FONT_H
 
-#include <OgreHardwareVertexBuffer.h>
-#include <OgreRenderQueueListener.h>
-#include <OgreRoot.h>
-
-#include "UiWidget.h"
+#include <OgreString.h>
 
 
 
-class UiSprite : public UiWidget
+struct UiCharData
 {
-public:
-    UiSprite( const Ogre::String& name );
-    UiSprite( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent );
-    virtual ~UiSprite();
-
-    void Initialise();
-    virtual void Update();
-    virtual void OnResize();
-    virtual void Render();
-
-    void SetImage( const Ogre::String& image );
-    void UpdateGeometry();
-
-private:
-    UiSprite();
-    void CreateVertexBuffer();
-    void DestroyVertexBuffer();
-
-private:
-    Ogre::MaterialPtr                   m_Material;
-    Ogre::SceneManager*                 m_SceneManager;
-    Ogre::RenderSystem*                 m_RenderSystem;
-
-    Ogre::RenderOperation               m_RenderOp;
-    Ogre::HardwareVertexBufferSharedPtr m_VertexBuffer;
+    int char_code;
+    int x;
+    int y;
+    int width;
+    int height;
+    int pre;
+    int post;
 };
 
 
 
-#endif // UI_SPRITE_H
+class UiFont
+{
+public:
+    UiFont( const Ogre::String& name );
+    virtual ~UiFont();
+
+    const Ogre::String GetName() const;
+
+    void SetImageName( const Ogre::String& image );
+    const Ogre::String GetImageName() const;
+
+    void SetHeight( const int height );
+    const int GetHeight() const;
+
+    void AddCharData( const UiCharData& data );
+    const UiCharData GetCharData( const int char_code ) const;
+
+private:
+    Ogre::String              m_Name;
+
+    Ogre::String              m_ImageName;
+    int                       m_Height;
+    std::vector< UiCharData > m_CharData;
+};
+
+
+
+#endif // UI_FONT_H

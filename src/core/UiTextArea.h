@@ -1,11 +1,11 @@
 #ifndef UI_TEXT_AREA_H
 #define UI_TEXT_AREA_H
 
-#include <OgreFont.h>
 #include <OgreHardwareVertexBuffer.h>
 #include <OgreRenderQueueListener.h>
 #include <OgreRoot.h>
 
+#include "UiFont.h"
 #include "UiWidget.h"
 
 
@@ -30,7 +30,7 @@ public:
     };
     void SetTextAlignment( const TextAlignment alignment );
     void SetText( const Ogre::String& text );
-    void SetFont( const Ogre::String& font, const float size );
+    void SetFont( const Ogre::String& font );
     void UpdateGeometry();
 
 private:
@@ -39,6 +39,7 @@ private:
     void DestroyVertexBuffer();
 
 private:
+    Ogre::MaterialPtr                   m_Material;
     Ogre::SceneManager*                 m_SceneManager;
     Ogre::RenderSystem*                 m_RenderSystem;
 
@@ -46,8 +47,7 @@ private:
     Ogre::RenderOperation               m_RenderOp;
     Ogre::HardwareVertexBufferSharedPtr m_VertexBuffer;
 
-    Ogre::FontPtr                       m_Font;
-    int                                 m_FontHeight;
+    UiFont*                             m_Font;
     TextAlignment                       m_TextAlignment;
     Ogre::String                        m_Text;
 };

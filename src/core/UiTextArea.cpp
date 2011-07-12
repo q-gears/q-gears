@@ -5,6 +5,7 @@
 #include <OgreMaterialManager.h>
 
 #include "Logger.h"
+#include "UiManager.h"
 
 
 
@@ -34,8 +35,8 @@ UiTextArea::~UiTextArea()
 void
 UiTextArea::Initialise()
 {
+    m_Font = NULL;
     m_MaxLetters = 0;
-    m_FontHeight = 16;
     m_TextAlignment = UiTextArea::LEFT;
     m_Text = "";
 
@@ -43,21 +44,6 @@ UiTextArea::Initialise()
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
 
     CreateVertexBuffer();
-
-    m_Font = Ogre::FontManager::getSingleton().getByName( "CourierNew" );
-    if( m_Font.isNull() )
-    {
-        LOG_ERROR( "Could not find font \"CourierNew\" for ui draw." );
-        return;
-    }
-    m_Font->load();
-    Ogre::Pass* pass = m_Font->getMaterial()->getTechnique( 0 )->getPass( 0 );
-    pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
-    pass->setCullingMode( Ogre::CULL_NONE );
-    pass->setDepthCheckEnabled( false );
-    pass->setDepthWriteEnabled( false );
-    pass->setLightingEnabled( false );
-    pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 }
 
 
@@ -91,7 +77,7 @@ UiTextArea::Render()
             m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
             m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
 
-            m_SceneManager->_setPass( m_Font->getMaterial()->getTechnique( 0 )->getPass( 0 ), true, false );
+            m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
 
             m_RenderSystem->setScissorTest( true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom );
             m_RenderSystem->_render( m_RenderOp );
@@ -121,16 +107,18 @@ UiTextArea::SetText( const Ogre::String& text )
 
 
 void
-UiTextArea::SetFont( const Ogre::String& font, const float size )
+UiTextArea::SetFont( const Ogre::String& font )
 {
-    m_Font = Ogre::FontManager::getSingleton().getByName( font );
-    if( m_Font.isNull() )
+    m_Font = UiManager::getSingleton().GetFont( font );
+
+    if( m_Font == NULL )
     {
-        LOG_ERROR( "Could not find font \"" + font + "\" for ui draw." );
+        LOG_ERROR( "Could not find font \"" + font + "\" for \"Ui." + m_PathName + "\"." );
         return;
     }
-    m_Font->load();
-    Ogre::Pass* pass = m_Font->getMaterial()->getTechnique( 0 )->getPass( 0 );
+
+    m_Material = Ogre::MaterialManager::getSingleton().create( "Ui." + m_PathName, "General" );
+    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
     pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
     pass->setCullingMode( Ogre::CULL_NONE );
     pass->setDepthCheckEnabled( false );
@@ -138,7 +126,12 @@ UiTextArea::SetFont( const Ogre::String& font, const float size )
     pass->setLightingEnabled( false );
     pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
-    m_FontHeight = size;
+    pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
+    pass->setAlphaRejectValue( 0 );
+    Ogre::TextureUnitState* tex = pass->createTextureUnitState();
+    tex->setTextureName( m_Font->GetImageName() );
+    tex->setNumMipmaps( -1 );
+    tex->setTextureFiltering( Ogre::TFO_NONE );
 }
 
 
@@ -146,23 +139,30 @@ UiTextArea::SetFont( const Ogre::String& font, const float size )
 void
 UiTextArea::UpdateGeometry()
 {
+    if( m_Font == NULL )
+    {
+        LOG_ERROR( "Font for \"Ui." + m_PathName + "\" if not set." );
+        return;
+    }
+
     if( m_Text.size() > m_MaxLetters )
     {
-        LOG_ERROR( "Max number of text reached. Can't render text \"" + m_Text + "\". Max number of letters is " + Ogre::StringConverter::toString( m_MaxLetters ) + "." );
+        LOG_ERROR( "Max number of text reached in \"Ui." + m_PathName + "\". Can't render text \"" + m_Text + "\". Max number of letters is " + Ogre::StringConverter::toString( m_MaxLetters ) + "." );
         return;
     }
 
     float* writeIterator = ( float* ) m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
     m_RenderOp.vertexData->vertexCount = 0;
 
-    float new_font_height = m_FontHeight * m_ScreenHeight / 720.0f;
+    float new_font_height = m_Font->GetHeight() * m_ScreenHeight / 720.0f;
 
     float length = 0;
     if( m_TextAlignment != LEFT )
     {
         for( int i = 0; i < m_Text.size(); ++i )
         {
-            length += m_Font->getGlyphAspectRatio( m_Text[ i ] ) * new_font_height;
+            UiCharData char_data = m_Font->GetCharData( m_Text[ i ] );
+            length += ( char_data.pre + char_data.width + char_data.post ) * m_ScreenHeight / 720.0f;
         }
 
         if( m_TextAlignment == CENTER )
@@ -186,8 +186,10 @@ UiTextArea::UpdateGeometry()
 
     for( int i = 0; i < m_Text.size(); ++i )
     {
-        float char_width = m_Font->getGlyphAspectRatio( m_Text[ i ] ) * new_font_height;
-        float local_x2 = local_x1 + char_width;
+        UiCharData char_data = m_Font->GetCharData( m_Text[ i ] );
+
+        local_x1 += char_data.pre * m_ScreenHeight / 720.0f;
+        float local_x2 = local_x1 + char_data.width * m_ScreenHeight / 720.0f;
 
         int x1, y1, x2, y2, x3, y3, x4, y4;
 
@@ -235,7 +237,7 @@ UiTextArea::UpdateGeometry()
         float new_x4 = ( x4 / m_ScreenWidth ) * 2 - 1;
         float new_y4 = -( ( y4 / m_ScreenHeight ) * 2 - 1 );
 
-        local_x1 += char_width;
+        local_x1 += ( char_data.width + char_data.post ) * m_ScreenHeight / 720.0f;
 
         const Ogre::Font::UVRect& uv = m_Font->getGlyphTexCoords( m_Text[ i ] );
 

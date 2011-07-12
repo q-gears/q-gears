@@ -6,6 +6,7 @@
 #include "Logger.h"
 #include "ScriptManager.h"
 #include "Utilites.h"
+#include "XmlFontsFile.h"
 #include "XmlScreensFile.h"
 
 
@@ -25,6 +26,11 @@ UiManager::~UiManager()
 {
     Ogre::Root::getSingleton().getSceneManager( "Scene" )->removeRenderQueueListener( this );
 
+    for( int i = 0; i < m_Fonts.size(); ++i )
+    {
+        delete m_Fonts[ i ];
+    }
+
     for( int i = 0; i < m_Widgets.size(); ++i )
     {
         delete m_Widgets[ i ];
@@ -36,6 +42,9 @@ UiManager::~UiManager()
 void
 UiManager::Initialise()
 {
+    XmlFontsFile fonts( "./data/ui/fonts.xml" );
+    fonts.LoadFonts();
+
     XmlScreensFile screens( "./data/ui/screens.xml" );
     screens.LoadScreens();
 }
@@ -60,6 +69,30 @@ UiManager::OnResize()
     {
         m_Widgets[ i ]->OnResize();
     }
+}
+
+
+
+void
+UiManager::AddFont( UiFont* font )
+{
+    m_Fonts.push_back( font );
+}
+
+
+
+UiFont*
+UiManager::GetFont( const Ogre::String& name )
+{
+    for( int i = 0; i < m_Fonts.size(); ++i )
+    {
+        if( m_Fonts[ i ]->GetName() == name )
+        {
+            return m_Fonts[ i ];
+        }
+    }
+
+    return NULL;
 }
 
 

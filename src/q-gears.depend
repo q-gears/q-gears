@@ -23572,9 +23572,10 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1309087671 d:\my\1\svn\q-gears\src\core\uimanager.h
+1310495169 d:\my\1\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>
 	<OgreSingleton.h>
+	"UiFont.h"
 	"UiWidget.h"
 
 1310053739 d:\my\1\svn\q-gears\src\core\uiwidget.h
@@ -23594,13 +23595,14 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1309449571 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
+1310500914 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	<OgreRoot.h>
 	<OgreStringVector.h>
 	"Logger.h"
 	"ScriptManager.h"
 	"Utilites.h"
+	"XmlFontsFile.h"
 	"XmlScreensFile.h"
 
 1309168100 g:\my\svn\q-gears\src\core\configcmdmanagercommands.h
@@ -23699,8 +23701,8 @@
 	"UiTextArea.h"
 	"UiWidget.h"
 
-1309981319 d:\my\1\svn\q-gears\src\core\xmlscreenfile.h
-	"uiWidget.h"
+1310397594 d:\my\1\svn\q-gears\src\core\xmlscreenfile.h
+	"UiWidget.h"
 	"XmlFile.h"
 
 1308847892 source:d:\my\1\svn\q-gears\src\core\xmlscreensfile.cpp
@@ -23765,4 +23767,13 @@
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
 	"UiWidget.h"
+
+1310501594 d:\my\1\svn\q-gears\src\core\uifont.h
+	<OgreString.h>
+
+1310500627 source:d:\my\1\svn\q-gears\src\core\uifont.cpp
+	"UiFont.h"
+
+1310397594 d:\my\1\svn\q-gears\src\core\xmlfontsfile.h
+	"XmlFile.h"
 

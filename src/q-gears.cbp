@@ -109,6 +109,8 @@
 		<Unit filename="core\Timer.h" />
 		<Unit filename="core\UiAnimation.cpp" />
 		<Unit filename="core\UiAnimation.h" />
+		<Unit filename="core\UiFont.cpp" />
+		<Unit filename="core\UiFont.h" />
 		<Unit filename="core\UiManager.cpp" />
 		<Unit filename="core\UiManager.h" />
 		<Unit filename="core\UiSprite.cpp" />
@@ -123,6 +125,10 @@
 		<Unit filename="core\Walkmesh.h" />
 		<Unit filename="core\XmlFile.cpp" />
 		<Unit filename="core\XmlFile.h" />
+		<Unit filename="core\XmlFontFile.cpp" />
+		<Unit filename="core\XmlFontFile.h" />
+		<Unit filename="core\XmlFontsFile.cpp" />
+		<Unit filename="core\XmlFontsFile.h" />
 		<Unit filename="core\XmlMapFile.cpp" />
 		<Unit filename="core\XmlMapFile.h" />
 		<Unit filename="core\XmlMapsFile.cpp" />
