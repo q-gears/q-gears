@@ -233,23 +233,21 @@ L1d6ec:	; 8001D6EC
                             8001DA2C	lui    a0, $8006
                             8001DA30	lw     a0, $2fc4(a0)
                             8001DA34	addiu  v0, a1, $0014
-                            8001DA38	lui    at, $8006
-                            8001DA3C	sw     v0, $2f24(at)
+                            [80062f24] = w(V0);
+
                             message = message + 1;
                             system_add_render_packet_to_queue;
 
-                            8001DA48	addu   a0, zero, zero
-                            8001DA4C	ori    a1, zero, $0001
-                            8001DA50	ori    a2, zero, $03c0
-                            8001DA58	ori    v0, zero, $0100
-                            8001DA5C	sh     zero, $0010(sp)
-                            8001DA60	sh     zero, $0012(sp)
-                            8001DA64	sh     v0, $0014(sp)
-                            8001DA68	sh     v0, $0016(sp)
+                            A0 = 0;
+                            A1 = 1;
+                            A2 = 3c0;
+                            A3 = 100;
+                            [SP + 10] = h(0);
+                            [SP + 12] = h(0);
+                            [SP + 14] = h(100);
+                            [SP + 16] = h(100);
 
                             [GP + 78] = h(h[GP + 78] - 1);
-
-                            A3 = 100;
                             system_create_texture_page_settings_for_packet;
 
                             8001DA7C	addu   a0, zero, zero

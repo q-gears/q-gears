@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="..\common\Logger.h" open="0" top="0" tabpos="0">
+		<Cursor position="599" topLine="0" />
+	</File>
+	<File name="src\FontFile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="19577" topLine="199" />
+	</File>
+	<File name="src\Main.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="119" topLine="0" />
+	</File>
+	<File name="src\Main.h" open="0" top="0" tabpos="3">
+		<Cursor position="113" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

@@ -4,3 +4,4 @@ utilites/ffvii_field_dat_dumper/compile/
 *.log
 src/compile_d/
 reversing/utilites/hack_multiply/compile/
+utilites/ffvii_font_exporter/compile/
