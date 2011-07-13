@@ -6,7 +6,7 @@
 
 
 
-void LoadTimFileToVram(File* file, int tim_offset, Vram* vram);
+void LoadTimFileToVram( File* file, int tim_offset, Vram* vram );
 
 
 

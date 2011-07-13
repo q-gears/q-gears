@@ -4896,7 +4896,7 @@
 1310477613 g:\my\svn\q-gears\utilites\ffvii_font_exporter\src\fontfile.h
 	"../../common/File.h"
 
-1310479431 source:g:\my\svn\q-gears\utilites\ffvii_font_exporter\src\main.cpp
+1310561003 source:g:\my\svn\q-gears\utilites\ffvii_font_exporter\src\main.cpp
 	"Main.h"
 	<Ogre.h>
 	<stdio.h>
@@ -4904,6 +4904,7 @@
 	"../../common/BinGZipFile.h"
 	"../../common/FileSystem.h"
 	"../../common/Logger.h"
+	"../../common/TimToVram.h"
 	"FontFile.h"
 
 1310475330 g:\my\svn\q-gears\utilites\ffvii_font_exporter\src\main.h
@@ -4916,4 +4917,35 @@
 	<zlib.h>
 	"Logger.h"
 	"BinGZipFile.h"
+
+1310560941 g:\my\svn\q-gears\utilites\common\timtovram.h
+	"File.h"
+	"Vram.h"
+
+1303973075 g:\my\svn\q-gears\utilites\common\vram.h
+	"TypeDefine.h"
+	"Surface.h"
+
+1308031628 g:\my\svn\q-gears\utilites\common\surface.h
+	<Ogre.h>
+
+1305267711 source:g:\my\svn\q-gears\utilites\common\ogregenutilites.cpp
+	"OgreGenUtilites.h"
+	"Logger.h"
+
+1303973076 g:\my\svn\q-gears\utilites\common\ogregenutilites.h
+	<Ogre.h>
+	"Logger.h"
+	"Vram.h"
+
+1305267711 source:g:\my\svn\q-gears\utilites\common\timtovram.cpp
+	"TimToVram.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+
+1305206125 source:g:\my\svn\q-gears\utilites\common\vram.cpp
+	"Vram.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+	<string.h>
 

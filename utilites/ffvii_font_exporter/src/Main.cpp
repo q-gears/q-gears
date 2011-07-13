@@ -8,6 +8,7 @@
 #include "../../common/BinGZipFile.h"
 #include "../../common/FileSystem.h"
 #include "../../common/Logger.h"
+#include "../../common/TimToVram.h"
 
 #include "FontFile.h"
 
@@ -50,6 +51,14 @@ main( int argc, char *argv[] )
         File* font_padding = file->ExtractGZip( 2 );
         FontFile font( font_padding );
         font.Export( "export_en/ui/fonts/ffvii_en.xml", true );
+
+        font_graf->WriteFile( "font.tim" );
+
+        Vram* vram = new Vram();
+        LoadTimFileToVram( font_graf, 0, vram );
+        vram->Save( "text.jpg" );
+        //CreateTextureFromVram(const Ogre::PixelBox& pb, vram, const int start_x, const int start_y, 0x100, 0x1f0, const int texture_x, const int texture_y, 0);
+
         delete file;
     }
 

@@ -43,6 +43,12 @@
 		<Unit filename="..\common\FileSystem.h" />
 		<Unit filename="..\common\Logger.cpp" />
 		<Unit filename="..\common\Logger.h" />
+		<Unit filename="..\common\OgreGenUtilites.cpp" />
+		<Unit filename="..\common\OgreGenUtilites.h" />
+		<Unit filename="..\common\TimToVram.cpp" />
+		<Unit filename="..\common\TimToVram.h" />
+		<Unit filename="..\common\Vram.cpp" />
+		<Unit filename="..\common\Vram.h" />
 		<Unit filename="src\FontFile.cpp" />
 		<Unit filename="src\FontFile.h" />
 		<Unit filename="src\Main.cpp" />
