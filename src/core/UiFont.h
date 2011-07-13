@@ -29,6 +29,10 @@ public:
     void SetImageName( const Ogre::String& image );
     const Ogre::String GetImageName() const;
 
+    void SetImageSize( const int width, const int height );
+    const int GetImageWidth() const;
+    const int GetImageHeight() const;
+
     void SetHeight( const int height );
     const int GetHeight() const;
 
@@ -39,6 +43,8 @@ private:
     Ogre::String              m_Name;
 
     Ogre::String              m_ImageName;
+    int                       m_ImageWidth;
+    int                       m_ImageHeight;
     int                       m_Height;
     std::vector< UiCharData > m_CharData;
 };

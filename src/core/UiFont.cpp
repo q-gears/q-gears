@@ -7,6 +7,8 @@
 UiFont::UiFont( const Ogre::String& name ):
     m_Name( name ),
     m_ImageName( "" ),
+    m_ImageWidth( 0 ),
+    m_ImageHeight( 0 ),
     m_Height( 0 )
 {
 }
@@ -39,6 +41,31 @@ const Ogre::String
 UiFont::GetImageName() const
 {
     return m_ImageName;
+}
+
+
+
+void
+UiFont::SetImageSize( const int width, const int height )
+{
+    m_ImageWidth = width;
+    m_ImageHeight = height;
+}
+
+
+
+const int
+UiFont::GetImageWidth() const
+{
+    return m_ImageWidth;
+}
+
+
+
+const int
+UiFont::GetImageHeight() const
+{
+    return m_ImageHeight;
 }
 
 

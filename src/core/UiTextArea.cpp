@@ -154,7 +154,7 @@ UiTextArea::UpdateGeometry()
     float* writeIterator = ( float* ) m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
     m_RenderOp.vertexData->vertexCount = 0;
 
-    float new_font_height = m_Font->GetHeight() * m_ScreenHeight / 720.0f;
+
 
     float length = 0;
     if( m_TextAlignment != LEFT )
@@ -175,14 +175,8 @@ UiTextArea::UpdateGeometry()
 
     float local_x1 = -m_FinalOrigin.x;
     float local_y1 = -m_FinalOrigin.y;
-    float local_y2 = local_y1 + new_font_height;
     float x = m_FinalTranslate.x;
     float y = m_FinalTranslate.y;
-
-    //LOG_ERROR( "local_x1 = " + Ogre::StringConverter::toString( local_x1 ) + "." );
-    //LOG_ERROR( "local_y1 = " + Ogre::StringConverter::toString( local_y1 ) + "." );
-    //LOG_ERROR( "local_y2 = " + Ogre::StringConverter::toString( local_y2 ) + "." );
-    //LOG_ERROR( "x = " + Ogre::StringConverter::toString( x ) + ". y = " + Ogre::StringConverter::toString( y ) + "." );
 
     for( int i = 0; i < m_Text.size(); ++i )
     {
@@ -190,12 +184,13 @@ UiTextArea::UpdateGeometry()
 
         local_x1 += char_data.pre * m_ScreenHeight / 720.0f;
         float local_x2 = local_x1 + char_data.width * m_ScreenHeight / 720.0f;
+        float local_y2 = local_y1 + char_data.height * m_ScreenHeight / 720.0f;
 
         int x1, y1, x2, y2, x3, y3, x4, y4;
 
-        //LOG_ERROR( m_Name + ", rotation = " + Ogre::StringConverter::toString( rotation ) );
-        //LOG_ERROR( "local_x1 = " + Ogre::StringConverter::toString( local_x1 ) + ", local_y1 = " + Ogre::StringConverter::toString( local_y1 ) );
-        //LOG_ERROR( "local_x2 = " + Ogre::StringConverter::toString( local_x2 ) + ", local_y2 = " + Ogre::StringConverter::toString( local_y2 ) );
+        LOG_ERROR( m_Name );
+        LOG_ERROR( "local_x1 = " + Ogre::StringConverter::toString( local_x1 ) + ", local_y1 = " + Ogre::StringConverter::toString( local_y1 ) );
+        LOG_ERROR( "local_x2 = " + Ogre::StringConverter::toString( local_x2 ) + ", local_y2 = " + Ogre::StringConverter::toString( local_y2 ) );
 
         if( m_FinalRotation != 0 )
         {
@@ -239,7 +234,23 @@ UiTextArea::UpdateGeometry()
 
         local_x1 += ( char_data.width + char_data.post ) * m_ScreenHeight / 720.0f;
 
-        const Ogre::Font::UVRect& uv = m_Font->getGlyphTexCoords( m_Text[ i ] );
+        float width = m_Font->GetImageWidth();
+        float height = m_Font->GetImageHeight();
+        float left = ( float )char_data.x / width;
+        float right = ( float )( char_data.x + char_data.width ) / width;
+        float top = ( float )char_data.y / height;
+        float bottom = ( float )( char_data.y + char_data.height ) / height;
+
+        LOG_ERROR( "width = " + Ogre::StringConverter::toString( width ) + "." );
+        LOG_ERROR( "height = " + Ogre::StringConverter::toString( height ) + "." );
+        LOG_ERROR( "char_data.x = " + Ogre::StringConverter::toString( char_data.x ) + "." );
+        LOG_ERROR( "char_data.y = " + Ogre::StringConverter::toString( char_data.y ) + "." );
+        LOG_ERROR( "char_data.width = " + Ogre::StringConverter::toString( char_data.width ) + "." );
+        LOG_ERROR( "char_data.height = " + Ogre::StringConverter::toString( char_data.height ) + "." );
+        LOG_ERROR( "left = " + Ogre::StringConverter::toString( left ) + "." );
+        LOG_ERROR( "right = " + Ogre::StringConverter::toString( right ) + "." );
+        LOG_ERROR( "top = " + Ogre::StringConverter::toString( top ) + "." );
+        LOG_ERROR( "bottom = " + Ogre::StringConverter::toString( bottom ) + "." );
 
         *writeIterator++ = new_x1;
         *writeIterator++ = new_y1;
@@ -248,8 +259,8 @@ UiTextArea::UpdateGeometry()
         *writeIterator++ = m_Colour.g;
         *writeIterator++ = m_Colour.b;
         *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.left;
-        *writeIterator++ = uv.top;
+        *writeIterator++ = left;
+        *writeIterator++ = top;
 
         *writeIterator++ = new_x2;
         *writeIterator++ = new_y2;
@@ -258,8 +269,8 @@ UiTextArea::UpdateGeometry()
         *writeIterator++ = m_Colour.g;
         *writeIterator++ = m_Colour.b;
         *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.right;
-        *writeIterator++ = uv.top;
+        *writeIterator++ = right;
+        *writeIterator++ = top;
 
         *writeIterator++ = new_x3;
         *writeIterator++ = new_y3;
@@ -268,8 +279,8 @@ UiTextArea::UpdateGeometry()
         *writeIterator++ = m_Colour.g;
         *writeIterator++ = m_Colour.b;
         *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.right;
-        *writeIterator++ = uv.bottom;
+        *writeIterator++ = right;
+        *writeIterator++ = bottom;
 
         *writeIterator++ = new_x1;
         *writeIterator++ = new_y1;
@@ -278,8 +289,8 @@ UiTextArea::UpdateGeometry()
         *writeIterator++ = m_Colour.g;
         *writeIterator++ = m_Colour.b;
         *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.left;
-        *writeIterator++ = uv.top;
+        *writeIterator++ = left;
+        *writeIterator++ = top;
 
         *writeIterator++ = new_x3;
         *writeIterator++ = new_y3;
@@ -288,8 +299,8 @@ UiTextArea::UpdateGeometry()
         *writeIterator++ = m_Colour.g;
         *writeIterator++ = m_Colour.b;
         *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.right;
-        *writeIterator++ = uv.bottom;
+        *writeIterator++ = right;
+        *writeIterator++ = bottom;
 
         *writeIterator++ = new_x4;
         *writeIterator++ = new_y4;
@@ -298,8 +309,8 @@ UiTextArea::UpdateGeometry()
         *writeIterator++ = m_Colour.g;
         *writeIterator++ = m_Colour.b;
         *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.left;
-        *writeIterator++ = uv.bottom;
+        *writeIterator++ = left;
+        *writeIterator++ = bottom;
 
         m_RenderOp.vertexData->vertexCount += 6;
     }

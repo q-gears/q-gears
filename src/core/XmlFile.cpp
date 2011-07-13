@@ -11,7 +11,7 @@ XmlFile::XmlFile( const Ogre::String& file ):
 {
     m_NormalFile = m_File.LoadFile();
 
-    if (m_NormalFile == false)
+    if( m_NormalFile == false )
     {
         LOG_ERROR( "Can't open " + file + ". TinyXml Error: " + m_File.ErrorDesc() );
     }
@@ -45,9 +45,9 @@ XmlFile::GetBool( TiXmlNode* node, const Ogre::String& tag, bool def ) const
 
 
 const int
-XmlFile::GetInt( TiXmlNode* node, const Ogre::String& tag ) const
+XmlFile::GetInt( TiXmlNode* node, const Ogre::String& tag, int def ) const
 {
-    int ret = 0;
+    int ret = def;
 
     if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {
@@ -98,6 +98,26 @@ XmlFile::GetString( TiXmlNode* node, const Ogre::String& tag, const Ogre::String
 
     return ret;
 }
+
+
+
+const Ogre::UTFString
+XmlFile::GetUTFString( TiXmlNode* node, const Ogre::String& tag, const Ogre::UTFString& def ) const
+{
+    Ogre::UTFString ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = ( *string ).c_str();
+        }
+    }
+
+    return ret;
+}
+
 
 
 /*

@@ -30,149 +30,45 @@ XmlFontFile::LoadFont()
         return;
     }
 
-    Ogre::String base_name = GetString( node, "name" );
-    Ogre::String script = GetString( node, "script" );
-    if( script != "" )
+    Ogre::String name = GetString( node, "name", "" );
+    Ogre::String image = GetString( node, "image", "" );
+    Ogre::Vector2 size = GetVector2( node, "image_size", Ogre::Vector2::ZERO );
+    int height = GetInt( node, "height", 0 );
+
+    if( name != "" && image != "" && size.x != 0 && size.y != 0 )
     {
-        ScriptManager::getSingleton().RunFile( script );
-    }
+        UiFont* font = new UiFont( name );
+        font->SetImageName( image );
+        font->SetImageSize( ( int )size.x, ( int )size.y );
+        font->SetHeight( height );
 
-    UiWidget* widget = new UiWidget( base_name );
-    bool show = GetBool( node, "show", false );
-    if( show == true )
-    {
-        widget->Show();
-    }
+        node = node->FirstChild();
 
-    node = node->FirstChild();
-    if( node != NULL )
-    {
-        LoadScreenRecursive( node, base_name, widget );
-    }
-
-    UiManager::getSingleton().AddWidget( widget );
-}
-
-
-
-void
-XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_name, UiWidget* widget )
-{
-    while( node != NULL )
-    {
-        // parse widgets
-        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && ( node->ValueStr() == "widget" || node->ValueStr() == "sprite" || node->ValueStr() == "text_area" ) )
+        while( node != NULL )
         {
-            Ogre::String name = GetString( node, "name" );
-            if( name != "" )
+            if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "char" )
             {
-                UiWidget* widget2;
+                UiCharData data;
 
-                if( node->ValueStr() == "sprite" )
+                Ogre::UTFString name = GetUTFString( node, "name", "" );
+                if( name != "" )
                 {
-                    widget2 = new UiSprite( name, base_name + "." + name, widget );
-                }
-                else if( node->ValueStr() == "text_area" )
-                {
-                    widget2 = new UiTextArea( name, base_name + "." + name, widget );
-                }
-                else
-                {
-                    widget2 = new UiWidget( name, base_name + "." + name, widget );
+                    data.char_code = *( name.c_str() );
                 }
 
+                data.x = GetInt( node, "x", 0 );
+                data.y = GetInt( node, "y", 0 );
+                data.width = GetInt( node, "width", 0 );
+                data.height = GetInt( node, "height", 0 );
+                data.pre = GetInt( node, "pre", 0 );
+                data.post = GetInt( node, "post", 0 );
 
-
-                if( node->ValueStr() == "sprite" )
-                {
-                    Ogre::String image = GetString( node, "image" );
-                    if( image != "" )
-                    {
-                        ( ( UiSprite* )widget2 )->SetImage( image );
-                    }
-                }
-
-
-
-                if( node->ValueStr() == "text_area" )
-                {
-                    Ogre::String text = GetString( node, "text", "" );
-                    if( text != "" )
-                    {
-                        ( ( UiTextArea* )widget2 )->SetText( text );
-                    }
-
-                    Ogre::String font = GetString( node, "font", "" );
-                    if( font != "" )
-                    {
-                        Ogre::StringVector data = Ogre::StringUtil::split( font, " " );
-                        if( data.size() > 1 )
-                        {
-                            ( ( UiTextArea* )widget2 )->SetFont( data[ 0 ], Ogre::StringConverter::parseReal( data[ 1 ] ) );
-                        }
-                    }
-                }
-
-
-
-                Ogre::Vector3 colour = GetVector3( node, "colour", Ogre::Vector3( 1, 1, 1 ) );
-                widget2->SetColour( colour.x, colour.y, colour.z );
-
-                float alpha = GetFloat( node, "alpha", 1 );
-                widget2->SetAlpha( alpha );
-
-
-
-
-                Ogre::Vector2 scale = GetVector2( node, "scale", Ogre::Vector2( 1.0f, 1.0f ) );
-                widget2->SetScale( scale );
-
-
-
-                widget2->SetRotation( GetFloat( node, "rotation", 0.0f ) );
-
-
-
-                widget2->SetScissor( GetBool( node, "scissor", false ) );
-
-
-
-                bool show = GetBool( node, "show", false );
-                if( show == true )
-                {
-                    widget2->Show();
-                }
-
-
-
-                widget2->UpdateTransformation();
-
-
-
-                if( node->ValueStr() == "sprite" )
-                {
-                    ( ( UiSprite* )widget2 )->UpdateGeometry();
-                }
-                else if( node->ValueStr() == "text_area" )
-                {
-                    ( ( UiTextArea* )widget2 )->UpdateGeometry();
-                }
-
-
-
-                widget->AddChild( widget2 );
-
-                TiXmlNode* node2 = node->FirstChild();
-                if( node2 != NULL )
-                {
-                    LoadScreenRecursive( node2, base_name + "." + name, widget2 );
-                }
+                font->AddCharData( data );
             }
-            else
-            {
-                LOG_ERROR( "There is no name in entity with base name " + base_name );
-            }
+
+            node = node->NextSibling();
         }
-        node = node->NextSibling();
+
+        UiManager::getSingleton().AddFont( font );
     }
 }

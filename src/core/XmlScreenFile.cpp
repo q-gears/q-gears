@@ -108,11 +108,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     Ogre::String font = GetString( node, "font", "" );
                     if( font != "" )
                     {
-                        Ogre::StringVector data = Ogre::StringUtil::split( font, " " );
-                        if( data.size() > 1 )
-                        {
-                            ( ( UiTextArea* )widget2 )->SetFont( data[ 0 ], Ogre::StringConverter::parseReal( data[ 1 ] ) );
-                        }
+                        ( ( UiTextArea* )widget2 )->SetFont( font );
                     }
                 }
 
