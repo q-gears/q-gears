@@ -9,6 +9,7 @@
 #include "../../common/FileSystem.h"
 #include "../../common/Logger.h"
 #include "../../common/TimToVram.h"
+#include "../../common/OgreGenUtilites.h"
 
 #include "FontFile.h"
 
@@ -56,8 +57,19 @@ main( int argc, char *argv[] )
 
         Vram* vram = new Vram();
         LoadTimFileToVram( font_graf, 0, vram );
-        vram->Save( "text.jpg" );
-        //CreateTextureFromVram(const Ogre::PixelBox& pb, vram, const int start_x, const int start_y, 0x100, 0x1f0, const int texture_x, const int texture_y, 0);
+        vram->Save( "text" );
+
+        Ogre::TexturePtr ptex;
+        Ogre::HardwarePixelBufferSharedPtr buffer;
+        ptex = Ogre::TextureManager::getSingleton().createManual( "DynaTex", "General", Ogre::TEX_TYPE_2D, 256, 256, 0, Ogre::PF_R8G8B8A8, Ogre::TU_STATIC );
+        buffer = ptex->getBuffer( 0, 0 );
+        buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
+        const Ogre::PixelBox& pb = buffer->getCurrentLock();
+        CreateTextureFromVram( pb, vram, 0, 0, 0x80, 0x1f7, 0x380, 0x100, 0 );
+        Ogre::Image image;
+        image.loadDynamicImage( ( Ogre::uchar* )pb.data, 256, 256, Ogre::PF_R8G8B8A8 );
+        image.save( "export_en/ui/fonts/ffvii_en.png" );
+        buffer->unlock();
 
         delete file;
     }

@@ -205,7 +205,7 @@ FontFile::Export( const Ogre::String &export_file, bool english )
     text.push_back( 0xfe );
     export_text->Log( text );
     text.clear();
-    export_text->LogW( "<font name=\"FFVIIFont\" image=\"ui/fonts/ffvii_en_font.png\">\n" );
+    export_text->LogW( "<font name=\"FFVIIFont\" image=\"ui/fonts/ffvii_en.png\" image_size=\"256 256\" height=\"16\">\n" );
 
     int pos = 0;
 

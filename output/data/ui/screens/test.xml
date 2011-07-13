@@ -35,7 +35,7 @@
         <sprite name="BottomRight" image="ui/screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" show="true" />
     </widget>
 
-    <text_area name="Text" align="center" valign="middle" text="0000" font="FFVIIFont" show="true" />
+    <text_area name="Text" align="center" valign="middle" text="000011112222Akari" font="FFVIIFont" show="true" />
 
     <sprite name="Dialog2" image="ui/screens/ff7_logo.png" align="center" valign="bottom" y="-150" origin_x="50%" origin_y="50%" width="1000" height="714" scale="0.3 0.3" />
 </screen>
