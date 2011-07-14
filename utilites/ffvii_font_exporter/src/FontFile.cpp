@@ -218,12 +218,15 @@ FontFile::Export( const Ogre::String &export_file, bool english )
                 export_text->LogW( "    <char name=\"" );
                 if( english_chars[ i ] == 0x2200 )
                 {
-                    export_text->LogW( "\\" );
+                    export_text->LogW( "&quot;" );
                 }
-                text.push_back( english_chars[ i ] >> 8 );
-                text.push_back( english_chars[ i ] & 0xff );
-                export_text->Log( text );
-                text.clear();
+                else
+                {
+                    text.push_back( english_chars[ i ] >> 8 );
+                    text.push_back( english_chars[ i ] & 0xff );
+                    export_text->Log( text );
+                    text.clear();
+                }
                 export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( ( i % 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " y=\"" + Ogre::StringConverter::toString( ( i / 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " width=\"12\" height=\"12\"" );

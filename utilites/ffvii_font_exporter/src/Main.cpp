@@ -79,6 +79,24 @@ main( int argc, char *argv[] )
         File* font_padding = file->ExtractGZip( 2 );
         FontFile font( font_padding );
         font.Export( "export_jp/ui/fonts/ffvii_jp.xml", false );
+        font_graf->WriteFile( "font.tim" );
+
+        Vram* vram = new Vram();
+        LoadTimFileToVram( font_graf, 0, vram );
+        vram->Save( "text" );
+
+        Ogre::TexturePtr ptex;
+        Ogre::HardwarePixelBufferSharedPtr buffer;
+        ptex = Ogre::TextureManager::getSingleton().createManual( "DynaTex", "General", Ogre::TEX_TYPE_2D, 256, 256, 0, Ogre::PF_R8G8B8A8, Ogre::TU_STATIC );
+        buffer = ptex->getBuffer( 0, 0 );
+        buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
+        const Ogre::PixelBox& pb = buffer->getCurrentLock();
+        CreateTextureFromVram( pb, vram, 0, 0, 0x80, 0x1f7, 0x380, 0x100, 0 , false );
+        Ogre::Image image;
+        image.loadDynamicImage( ( Ogre::uchar* )pb.data, 256, 256, Ogre::PF_R8G8B8A8 );
+        image.save( "export_jp/ui/fonts/ffvii_jp.png" );
+        buffer->unlock();
+
         delete file;
     }
 

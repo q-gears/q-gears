@@ -27,87 +27,99 @@ L1d6ec:	; 8001D6EC
                 }
                 else
                 {
-                    V1 = A0 - fa;
-
                     if (A0 == fa || A0 == fb || A0 == fc || A0 == fd || A0 == fe) // FA FB FC FD FE
                     {
-                        8001D74C	addu   s3, zero, zero
-                        8001D750	sll    v0, v1, $02
-                        8001D754	lui    at, $8001
-                        8001D758	addiu  at, at, $0300
-                        8001D75C	addu   at, at, v0
-                        8001D760	lw     v0, $0000(at)
-                        8001D764	nop
-                        8001D768	jr     v0 
-                        8001D76C	nop
+                        S3 = 0;
 
-                        message = message + 1;
-                        8001D774	ori    s4, zero, $0084
-                        8001D778	lw     v0, $02ac(gp)
-                        8001D77C	j      L1d7c4 [$8001d7c4]
-                        8001D780	ori    s7, zero, $00e7
-                        message = message + 1;
-                        8001D788	addu   s4, zero, zero
-                        8001D78C	ori    s3, zero, $0010
-                        8001D790	lw     v0, $02ac(gp)
-                        8001D794	j      L1d7c4 [$8001d7c4]
-                        8001D798	ori    s7, zero, $01b9
-                        message = message + 1;
-                        8001D7A0	ori    s4, zero, $0084
-                        8001D7A4	ori    s3, zero, $0010
-                        8001D7A8	lw     v0, $02ac(gp)
-                        8001D7AC	j      L1d7c4 [$8001d7c4]
-                        8001D7B0	ori    s7, zero, $02a0
-                        message = message + 1;
-                        8001D7B8	ori    s4, zero, $0084
-                        8001D7BC	lw     v0, $02ac(gp)
-                        8001D7C0	ori    s7, zero, $0372
+                        switch( A0 )
+                        {
+                            case fa:
+                            {
+                                message = message + 1;
+                                [GP + 2ac] = w(w[GP + 2ac] + 1);
+                                S4 = 84;
+                                S7 = e7;
+                                8001D7CC	j      L1dab0 [$8001dab0]
+                            }
+                            break;
 
-                        L1d7c4:	; 8001D7C4
-                        8001D7C4	addiu  v0, v0, $0001
-                        8001D7C8	sw     v0, $02ac(gp)
-                        8001D7CC	j      L1dab0 [$8001dab0]
-                        8001D7D0	nop
-                        8001D7D4	lw     v1, $02ac(gp)
-                        message = message + 1;
-                        8001D7DC	addiu  v0, v1, $0001
-                        8001D7E0	sw     v0, $02ac(gp)
-                        V0 = bu[message];
+                            case fb:
+                            {
+                                message = message + 1;
+                                [GP + 2ac] = w(w[GP + 2ac] + 1);
+                                S4 = 0;
+                                S7 = 1b9;
+                                S3 = 10
+                                8001D7CC	j      L1dab0 [$8001dab0]
+                            }
+                            break;
 
-                        8001D7EC	sltiu  v0, v0, $00d2
-                        8001D7F0	beq    v0, zero, L1d808 [$8001d808]
-                        8001D7F4	addiu  v0, v1, $0002
-                        8001D7F8	ori    s4, zero, $0084
-                        8001D7FC	ori    s3, zero, $0010
-                        8001D800	j      L1dab0 [$8001dab0]
-                        8001D804	ori    s7, zero, $0444
+                            case fc:
+                            {
+                                message = message + 1;
+                                [GP + 2ac] = w(w[GP + 2ac] + 1);
+                                S4 = 84;
+                                S7 = 2a0;
+                                S3 = 10
+                                8001D7CC	j      L1dab0 [$8001dab0]
+                            }
+                            break;
 
-                        L1d808:	; 8001D808
-                        8001D808	sw     v0, $02ac(gp)
-                        A0 = bu[message];
-                        V1 = A0 & ff;
-                        if (V1 < da)
-                        {
-                            [GP + 70] = h(A0 - d2);
-                            message = message + 1;
-                            8001D828	j      L1dd68 [$8001dd68]
-                        }
-                        if (V1 == da)
-                        {
-                            [GP + 72] = hu(hu[GP + 72] ^ 1);
-                            message = message + 1;
-                            8001D86C	j      L1dd68 [$8001dd68]
-                        }
-                        else if (V1 == db)
-                        {
-                            [GP + 74] = hu(hu[GP + 74] ^ 1);
-                            message = message + 1;
-                            8001D86C	j      L1dd68 [$8001dd68]
-                        }
-                        else if (V1 == e9)
-                        {
-                            [GP + 80] = w(w[GP + 80] ^ 1);
-                            message = message + 1;
+                            case fd:
+                            {
+                                message = message + 1;
+                                [GP + 2ac] = w(w[GP + 2ac] + 1);
+                                S4 = 84;
+                                S7 = 372;
+                                8001D7CC	j      L1dab0 [$8001dab0]
+                            }
+                            break;
+
+                            case fe:
+                            {
+                                message = message + 1;
+                                [GP + 2ac] = w(w[GP + 2ac] + 1);
+
+                                V0 = bu[message];
+                                if (V0 >= d2)
+                                {
+                                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+
+                                    A0 = bu[message];
+                                    V1 = A0 & ff;
+                                    if (V1 < da)
+                                    {
+                                        [GP + 70] = h(A0 - d2);
+                                        message = message + 1;
+                                        8001D828	j      L1dd68 [$8001dd68]
+                                    }
+                                    if (V1 == da)
+                                    {
+                                        [GP + 72] = hu(hu[GP + 72] ^ 1);
+                                        message = message + 1;
+                                        8001D86C	j      L1dd68 [$8001dd68]
+                                    }
+                                    else if (V1 == db)
+                                    {
+                                        [GP + 74] = hu(hu[GP + 74] ^ 1);
+                                        message = message + 1;
+                                        8001D86C	j      L1dd68 [$8001dd68]
+                                    }
+                                    else if (V1 == e9)
+                                    {
+                                        [GP + 80] = w(w[GP + 80] ^ 1);
+                                        message = message + 1;
+                                    }
+                                }
+                                else
+                                {
+                                    S4 = 84;
+                                    S3 = 10;
+                                    S7 = 444;
+                                    8001D800	j      L1dab0 [$8001dab0]
+                                }
+                            }
+                            break;
                         }
                     }
                     else

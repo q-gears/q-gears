@@ -188,9 +188,9 @@ UiTextArea::UpdateGeometry()
 
         int x1, y1, x2, y2, x3, y3, x4, y4;
 
-        LOG_ERROR( m_Name );
-        LOG_ERROR( "local_x1 = " + Ogre::StringConverter::toString( local_x1 ) + ", local_y1 = " + Ogre::StringConverter::toString( local_y1 ) );
-        LOG_ERROR( "local_x2 = " + Ogre::StringConverter::toString( local_x2 ) + ", local_y2 = " + Ogre::StringConverter::toString( local_y2 ) );
+        //LOG_ERROR( m_Name );
+        //LOG_ERROR( "local_x1 = " + Ogre::StringConverter::toString( local_x1 ) + ", local_y1 = " + Ogre::StringConverter::toString( local_y1 ) );
+        //LOG_ERROR( "local_x2 = " + Ogre::StringConverter::toString( local_x2 ) + ", local_y2 = " + Ogre::StringConverter::toString( local_y2 ) );
 
         if( m_FinalRotation != 0 )
         {
@@ -241,16 +241,16 @@ UiTextArea::UpdateGeometry()
         float top = ( float )char_data.y / height;
         float bottom = ( float )( char_data.y + char_data.height ) / height;
 
-        LOG_ERROR( "width = " + Ogre::StringConverter::toString( width ) + "." );
-        LOG_ERROR( "height = " + Ogre::StringConverter::toString( height ) + "." );
-        LOG_ERROR( "char_data.x = " + Ogre::StringConverter::toString( char_data.x ) + "." );
-        LOG_ERROR( "char_data.y = " + Ogre::StringConverter::toString( char_data.y ) + "." );
-        LOG_ERROR( "char_data.width = " + Ogre::StringConverter::toString( char_data.width ) + "." );
-        LOG_ERROR( "char_data.height = " + Ogre::StringConverter::toString( char_data.height ) + "." );
-        LOG_ERROR( "left = " + Ogre::StringConverter::toString( left ) + "." );
-        LOG_ERROR( "right = " + Ogre::StringConverter::toString( right ) + "." );
-        LOG_ERROR( "top = " + Ogre::StringConverter::toString( top ) + "." );
-        LOG_ERROR( "bottom = " + Ogre::StringConverter::toString( bottom ) + "." );
+        //LOG_ERROR( "width = " + Ogre::StringConverter::toString( width ) + "." );
+        //LOG_ERROR( "height = " + Ogre::StringConverter::toString( height ) + "." );
+        //LOG_ERROR( "char_data.x = " + Ogre::StringConverter::toString( char_data.x ) + "." );
+        //LOG_ERROR( "char_data.y = " + Ogre::StringConverter::toString( char_data.y ) + "." );
+        //LOG_ERROR( "char_data.width = " + Ogre::StringConverter::toString( char_data.width ) + "." );
+        //LOG_ERROR( "char_data.height = " + Ogre::StringConverter::toString( char_data.height ) + "." );
+        //LOG_ERROR( "left = " + Ogre::StringConverter::toString( left ) + "." );
+        //LOG_ERROR( "right = " + Ogre::StringConverter::toString( right ) + "." );
+        //LOG_ERROR( "top = " + Ogre::StringConverter::toString( top ) + "." );
+        //LOG_ERROR( "bottom = " + Ogre::StringConverter::toString( bottom ) + "." );
 
         *writeIterator++ = new_x1;
         *writeIterator++ = new_y1;

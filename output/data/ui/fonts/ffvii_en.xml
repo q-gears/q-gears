@@ -1,6 +1,7 @@
-<font name="FFVIIFont" image="ui/fonts/ffvii_en.png" image_size="256 256" height="16">
+﻿<font name="FFVIIFont" image="ui/fonts/ffvii_en.png" image_size="256 256" height="16">
     <char name=" " x="0" y="0" width="12" height="12" leading="0" trailing="-9" />
     <char name="!" x="12" y="0" width="12" height="12" leading="2" trailing="-7" />
+    <char name="&quot;" x="24" y="0" width="12" height="12" leading="2" trailing="-4" />
     <char name="#" x="36" y="0" width="12" height="12" leading="0" trailing="-2" />
     <char name="$" x="48" y="0" width="12" height="12" leading="0" trailing="-5" />
     <char name="%" x="60" y="0" width="12" height="12" leading="0" trailing="-2" />
