@@ -52,12 +52,11 @@ main( int argc, char *argv[] )
         File* font_padding = file->ExtractGZip( 2 );
         FontFile font( font_padding );
         font.Export( "export_en/ui/fonts/ffvii_en.xml", true );
-
-        font_graf->WriteFile( "font.tim" );
+        //font_graf->WriteFile( "font.tim" );
 
         Vram* vram = new Vram();
         LoadTimFileToVram( font_graf, 0, vram );
-        vram->Save( "text" );
+        //vram->Save( "text" );
 
         Ogre::TexturePtr ptex;
         Ogre::HardwarePixelBufferSharedPtr buffer;
@@ -65,7 +64,7 @@ main( int argc, char *argv[] )
         buffer = ptex->getBuffer( 0, 0 );
         buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
         const Ogre::PixelBox& pb = buffer->getCurrentLock();
-        CreateTextureFromVram( pb, vram, 0, 0, 0x80, 0x1f7, 0x380, 0x100, 0 );
+        CreateTextureFromVram( pb, vram, 0, 0, 0x80, 0x1f7, 0x380, 0x100, 0 , false );
         Ogre::Image image;
         image.loadDynamicImage( ( Ogre::uchar* )pb.data, 256, 256, Ogre::PF_R8G8B8A8 );
         image.save( "export_en/ui/fonts/ffvii_en.png" );

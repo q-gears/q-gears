@@ -162,7 +162,7 @@ UiTextArea::UpdateGeometry()
         for( int i = 0; i < m_Text.size(); ++i )
         {
             UiCharData char_data = m_Font->GetCharData( m_Text[ i ] );
-            length += ( char_data.pre + char_data.width + char_data.post ) * m_ScreenHeight / 720.0f;
+            length += ( char_data.pre + char_data.width + char_data.post ) * m_FinalScale.x * m_ScreenHeight / 720.0f;
         }
 
         if( m_TextAlignment == CENTER )
@@ -182,9 +182,9 @@ UiTextArea::UpdateGeometry()
     {
         UiCharData char_data = m_Font->GetCharData( m_Text[ i ] );
 
-        local_x1 += char_data.pre * m_ScreenHeight / 720.0f;
-        float local_x2 = local_x1 + char_data.width * m_ScreenHeight / 720.0f;
-        float local_y2 = local_y1 + char_data.height * m_ScreenHeight / 720.0f;
+        local_x1 += char_data.pre * m_FinalScale.x * m_ScreenHeight / 720.0f;
+        float local_x2 = local_x1 + char_data.width * m_FinalScale.x * m_ScreenHeight / 720.0f;
+        float local_y2 = local_y1 + char_data.height * m_FinalScale.y * m_ScreenHeight / 720.0f;
 
         int x1, y1, x2, y2, x3, y3, x4, y4;
 
@@ -232,7 +232,7 @@ UiTextArea::UpdateGeometry()
         float new_x4 = ( x4 / m_ScreenWidth ) * 2 - 1;
         float new_y4 = -( ( y4 / m_ScreenHeight ) * 2 - 1 );
 
-        local_x1 += ( char_data.width + char_data.post ) * m_ScreenHeight / 720.0f;
+        local_x1 += ( char_data.width + char_data.post ) * m_FinalScale.x * m_ScreenHeight / 720.0f;
 
         float width = m_Font->GetImageWidth();
         float height = m_Font->GetImageHeight();

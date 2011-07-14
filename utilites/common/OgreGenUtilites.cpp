@@ -5,95 +5,50 @@
 
 
 void
-CreateTextureFromVram(const Ogre::PixelBox& pb, Vram* vram, const int start_x, const int start_y, const int clut_x, const int clut_y, const int texture_x, const int texture_y, const int bpp)
+CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, const int start_y, const int clut_x, const int clut_y, const int texture_x, const int texture_y, const int bpp, const bool transparency )
 {
-    for (u32 y = 0; y < 256; ++y)
+    for( u32 y = 0; y < 256; ++y )
     {
-        u32* data = static_cast<u32*>(pb.data) + (y + start_y) * pb.rowPitch;
+        u32* data = static_cast< u32* >( pb.data ) + ( y + start_y ) * pb.rowPitch;
 
-        for (u32 x = 0; x < 256; ++x)
+        for( u32 x = 0; x < 256; ++x )
         {
             if (bpp == 0)
             {
                 u8 pixel = vram->GetU8(texture_x * 2 + x / 2, texture_y + y);
 
-                u16 clut1 = vram->GetU16(clut_x * 2 + (pixel & 0xf) * 2, clut_y);
-                u16 clut2 = vram->GetU16(clut_x * 2 + (pixel >> 4) * 2, clut_y);
+                u16 clut1 = vram->GetU16( clut_x * 2 + ( pixel & 0xf ) * 2, clut_y );
+                u16 clut2 = vram->GetU16( clut_x * 2 + ( pixel >> 4 ) * 2, clut_y );
 
                 u32 ogre_pixel1 = (((clut1 & 0x1f) * 255 / 31) << 0x18) | ((((clut1 >>  5) & 0x1f) * 255 / 31) << 0x10) | ((((clut1 >> 10) & 0x1f) * 255 / 31) << 0x8) | 0;
 
                 u8 stp = (clut1 & 0x8000) >> 15;
-                if (stp == 0 && (ogre_pixel1 & 0xffffff00) == 0)
-                {
-                    ogre_pixel1 |= 0;
-                }
-                else if (stp == 0 && (ogre_pixel1 & 0xffffff00) != 0)
-                {
-                    ogre_pixel1 |= 255;
-                }
-                else if (stp == 1 && (ogre_pixel1 & 0xffffff00) == 0)
-                {
-                    ogre_pixel1 |= 255;
-                }
-                else if (stp == 1 && (ogre_pixel1 & 0xffffff00) != 0)
-                {
-                    ogre_pixel1 |= 255 / 4;
-                }
+                AddTransparency( ogre_pixel1, transparency, stp );
 
                 u32 ogre_pixel2 = (((clut2 & 0x1f) * 255 / 31) << 0x18) | ((((clut2 >>  5) & 0x1f) * 255 / 31) << 0x10) | ((((clut2 >> 10) & 0x1f) * 255 / 31) << 0x8) | 0;
 
                 stp = (clut2 & 0x8000) >> 15;
-                if (stp == 0 && (ogre_pixel2 & 0xffffff00) == 0)
-                {
-                    ogre_pixel2 |= 0;
-                }
-                else if (stp == 0 && (ogre_pixel2 & 0xffffff00) != 0)
-                {
-                    ogre_pixel2 |= 255;
-                }
-                else if (stp == 1 && (ogre_pixel2 & 0xffffff00) == 0)
-                {
-                    ogre_pixel2 |= 255;
-                }
-                else if (stp == 1 && (ogre_pixel2 & 0xffffff00) != 0)
-                {
-                    ogre_pixel2 |= 255 / 4;
-                }
+                AddTransparency( ogre_pixel2, transparency, stp );
 
-                data[start_x + x] = ogre_pixel1;
+                data[ start_x + x ] = ogre_pixel1;
                 ++x;
-                data[start_x + x] = ogre_pixel2;
+                data[ start_x + x ] = ogre_pixel2;
             }
-            else if (bpp == 1)
+            else if( bpp == 1 )
             {
-                u8 pixel = vram->GetU8(texture_x * 2 + x, texture_y + y);
-                u16 clut = vram->GetU16(clut_x + pixel * 2, clut_y);
+                u8 pixel = vram->GetU8( texture_x * 2 + x, texture_y + y );
+                u16 clut = vram->GetU16( clut_x + pixel * 2, clut_y );
 
-                u32 ogre_pixel = (((clut & 0x1f) * 255 / 31) << 0x18) | ((((clut >>  5) & 0x1f) * 255 / 31) << 0x10) | ((((clut >> 10) & 0x1f) * 255 / 31) << 0x8) | 0;
+                u32 ogre_pixel = ( ( ( clut & 0x1f ) * 255 / 31 ) << 0x18 ) | ( ( ( ( clut >>  5 ) & 0x1f ) * 255 / 31 ) << 0x10 ) | ( ( ( ( clut >> 10 ) & 0x1f ) * 255 / 31 ) << 0x8 ) | 0;
 
-                u8 stp = (clut & 0x8000) >> 15;
-                if (stp == 0 && (ogre_pixel & 0xffffff00) == 0)
-                {
-                    ogre_pixel |= 0;
-                }
-                else if (stp == 0 && (ogre_pixel & 0xffffff00) != 0)
-                {
-                    ogre_pixel |= 255;
-                }
-                else if (stp == 1 && (ogre_pixel & 0xffffff00) == 0)
-                {
-                    ogre_pixel |= 255;
-                }
-                else if (stp == 1 && (ogre_pixel & 0xffffff00) != 0)
-                {
-                    ogre_pixel |= 255 / 4;
-                }
+                u8 stp = ( clut & 0x8000 ) >> 15;
+                AddTransparency( ogre_pixel, transparency, stp );
 
-                data[start_x + x] = ogre_pixel;
+                data[ start_x + x ] = ogre_pixel;
             }
-            else if (bpp == -1)
+            else if( bpp == -1 )
             {
-                data[start_x + x] = 0xffffffff;
+                data[ start_x + x ] = 0xffffffff;
             }
         }
     }
@@ -113,7 +68,7 @@ CreateTexture(Vram* vram, const MeshData& mesh_data, const Ogre::String& texture
 
     for (int i = 0; i < textures.size(); ++i)
     {
-        CreateTextureFromVram(pb, vram, textures[i].start_x, textures[i].start_y, textures[i].palette_x, textures[i].palette_y, textures[i].texture_x, textures[i].texture_y, textures[i].bpp);
+        CreateTextureFromVram(pb, vram, textures[i].start_x, textures[i].start_y, textures[i].palette_x, textures[i].palette_y, textures[i].texture_x, textures[i].texture_y, textures[i].bpp, true );
     }
 
     Ogre::Image image;
@@ -188,4 +143,41 @@ AddTexture(TexForGen& texture, VectorTexForGen& textures, Logger* logger)
     textures.push_back(texture);
 
     //logger->Log("Startx:" + ToHexString(texture.start_x, 4, '0') + ", Starty:" + ToHexString(texture.start_y, 4, '0') + "\n");
+}
+
+
+
+void
+AddTransparency( u32& colour, const bool transparency, const bool stp )
+{
+    if( transparency == false )
+    {
+        if( stp == false && ( colour & 0xffffff00 ) == 0 )
+        {
+            colour |= 0;
+        }
+        else
+        {
+            colour |= 255;
+        }
+    }
+    else
+    {
+        if( stp == false && ( colour & 0xffffff00 ) == 0 )
+        {
+            colour |= 0;
+        }
+        else if( stp == false && ( colour & 0xffffff00 ) != 0 )
+        {
+            colour |= 255;
+        }
+        else if( stp == true && ( colour & 0xffffff00 ) == 0)
+        {
+            colour |= 255;
+        }
+        else if( stp == true && ( colour & 0xffffff00 ) != 0)
+        {
+            colour |= 255 / 4;
+        }
+    }
 }

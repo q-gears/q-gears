@@ -37,15 +37,15 @@ struct TexForGen
     }
 };
 
-typedef std::vector<TexForGen> VectorTexForGen;
+typedef std::vector< TexForGen > VectorTexForGen;
 
 
 
-void CreateTexture(Vram* vram, const MeshData& mesh_data, const Ogre::String& texture_file_name, const VectorTexForGen& textures);
-void CreateMaterial(const Ogre::String& material_name, const Ogre::String& material_file_name, const Ogre::String& texture_name, const Ogre::String& vertex_program, const Ogre::String& fragment_program);
-void CreateTextureFromVram(const Ogre::PixelBox& pb, Vram* vram, const int start_x, const int start_y, const int clut_x, const int clut_y, const int texture_x, const int texture_y, const int bpp);
-void AddTexture(TexForGen& texture, VectorTexForGen& textures, Logger* logger);
-
+void CreateTexture( Vram* vram, const MeshData& mesh_data, const Ogre::String& texture_file_name, const VectorTexForGen& textures );
+void CreateMaterial( const Ogre::String& material_name, const Ogre::String& material_file_name, const Ogre::String& texture_name, const Ogre::String& vertex_program, const Ogre::String& fragment_program );
+void CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, const int start_y, const int clut_x, const int clut_y, const int texture_x, const int texture_y, const int bpp, const bool transparency );
+void AddTexture( TexForGen& texture, VectorTexForGen& textures, Logger* logger );
+void AddTransparency( u32& colour, const bool transparency, const bool stp );
 
 
 #endif
