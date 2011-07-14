@@ -21076,7 +21076,7 @@
 1308847892 d:\my\1\svn\q-gears\src\core\xmlmapfile.h
 	"XmlFile.h"
 
-1310053739 d:\my\1\svn\q-gears\src\core\xmlfile.h
+1310580653 d:\my\1\svn\q-gears\src\core\xmlfile.h
 	"tinyxml/tinyxml.h"
 	<OgreColourValue.h>
 	<OgreMatrix4.h>
@@ -23771,11 +23771,12 @@
 	<OgreRoot.h>
 	"UiWidget.h"
 
-1310501594 d:\my\1\svn\q-gears\src\core\uifont.h
+1310580653 d:\my\1\svn\q-gears\src\core\uifont.h
 	<OgreString.h>
 
-1310500627 source:d:\my\1\svn\q-gears\src\core\uifont.cpp
+1310580653 source:d:\my\1\svn\q-gears\src\core\uifont.cpp
 	"UiFont.h"
+	"Logger.h"
 
 1310397594 d:\my\1\svn\q-gears\src\core\xmlfontsfile.h
 	"XmlFile.h"

@@ -99,7 +99,7 @@ UiTextArea::SetTextAlignment( const TextAlignment alignment )
 
 
 void
-UiTextArea::SetText( const Ogre::String& text )
+UiTextArea::SetText( const Ogre::UTFString& text )
 {
     m_Text = text;
 }

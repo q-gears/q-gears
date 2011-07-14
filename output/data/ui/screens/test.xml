@@ -1,4 +1,4 @@
-<screen name="TestScreen" script="ui/screens/test.lua" show="true">
+﻿<screen name="TestScreen" script="ui/screens/test.lua" show="true">
     <widget name="Dialog0" origin_x="50%" origin_y="50%" width="344" height="486" show="true">
         <sprite name="Center" image="ui/screens/test1.jpg" x="3" y="3" width="100%-6" height="100%-6" show="true" />
         <sprite name="Top" image="ui/screens/border_t.png" x="8" y="0" width="100%-16" height="8" show="true" />
@@ -35,7 +35,7 @@
         <sprite name="BottomRight" image="ui/screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" show="true" />
     </widget>
 
-    <text_area name="Text" align="center" valign="middle" text="000011112222Akari" font="FFVIIFont" show="true" scale="3 3" />
+    <text_area name="Text" align="left" valign="middle" x="100" text="ビッグス 「さすが、ソルジャー！ でもよ、反神羅（しんら）グループ【アバランチ】に ソルジャーが参加するなんてスゲエよな！」" font="FFVIIFont" show="true" />
 
     <sprite name="Dialog2" image="ui/screens/ff7_logo.png" align="center" valign="bottom" y="-150" origin_x="50%" origin_y="50%" width="1000" height="714" scale="0.3 0.3" />
 </screen>

@@ -205,12 +205,13 @@ FontFile::Export( const Ogre::String &export_file, bool english )
     text.push_back( 0xfe );
     export_text->Log( text );
     text.clear();
-    export_text->LogW( "<font name=\"FFVIIFont\" image=\"ui/fonts/ffvii_en.png\" image_size=\"256 256\" height=\"16\">\n" );
 
     int pos = 0;
 
     if( english == true )
     {
+        export_text->LogW( "<font name=\"FFVIIFont\" image=\"ui/fonts/ffvii_en.png\" image_size=\"256 256\" height=\"16\">\n" );
+
         for (int i = 0; i < 256; ++i)
         {
             if( english_chars[ i ] != 0x0000 && english_chars[ i ] != 0x0D00 )
@@ -230,8 +231,8 @@ FontFile::Export( const Ogre::String &export_file, bool english )
                 export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( ( i % 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " y=\"" + Ogre::StringConverter::toString( ( i / 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " width=\"12\" height=\"12\"" );
-                export_text->LogW( " leading=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
-                export_text->LogW( " trailing=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
+                export_text->LogW( " pre=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
+                export_text->LogW( " post=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
             }
 
             ++pos;
@@ -239,6 +240,8 @@ FontFile::Export( const Ogre::String &export_file, bool english )
     }
     else
     {
+        export_text->LogW( "<font name=\"FFVIIFont\" image=\"ui/fonts/ffvii_jp.png\" image_size=\"512 256\" height=\"16\">\n" );
+
         for (int i = 0; i < 256; ++i)
         {
             if( japanese_chars[ i ] != 0x0000 && japanese_chars[ i ] != 0x0D00 )
@@ -251,12 +254,14 @@ FontFile::Export( const Ogre::String &export_file, bool english )
                 export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( ( i % 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " y=\"" + Ogre::StringConverter::toString( ( i / 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " width=\"12\" height=\"12\"" );
-                export_text->LogW( " leading=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
-                export_text->LogW( " trailing=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
+                export_text->LogW( " pre=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
+                export_text->LogW( " post=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
             }
 
             ++pos;
         }
+
+        pos = 0xe7;
 
         for (int i = 0; i < 256; ++i)
         {
@@ -268,14 +273,16 @@ FontFile::Export( const Ogre::String &export_file, bool english )
                 export_text->Log( text );
                 text.clear();
                 export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( ( i % 0x15 ) * 0xc ) + "\"" );
-                export_text->LogW( " y=\"" + Ogre::StringConverter::toString( ( i / 0x15 ) * 0xc ) + "\"" );
+                export_text->LogW( " y=\"" + Ogre::StringConverter::toString( 0x84 + ( i / 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " width=\"12\" height=\"12\"" );
-                export_text->LogW( " leading=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
-                export_text->LogW( " trailing=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
+                export_text->LogW( " pre=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
+                export_text->LogW( " post=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
             }
 
             ++pos;
         }
+
+        pos = 0x1b9;
 
         for (int i = 0; i < 256; ++i)
         {
@@ -286,15 +293,17 @@ FontFile::Export( const Ogre::String &export_file, bool english )
                 text.push_back( japanese_chars_fb[ i ] & 0xff );
                 export_text->Log( text );
                 text.clear();
-                export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( ( i % 0x15 ) * 0xc ) + "\"" );
+                export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( 256 + ( i % 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " y=\"" + Ogre::StringConverter::toString( ( i / 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " width=\"12\" height=\"12\"" );
-                export_text->LogW( " leading=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
-                export_text->LogW( " trailing=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
+                export_text->LogW( " pre=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
+                export_text->LogW( " post=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
             }
 
             ++pos;
         }
+
+        pos = 0x2a0;
 
         for (int i = 0; i < 256; ++i)
         {
@@ -305,15 +314,17 @@ FontFile::Export( const Ogre::String &export_file, bool english )
                 text.push_back( japanese_chars_fc[ i ] & 0xff );
                 export_text->Log( text );
                 text.clear();
-                export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( ( i % 0x15 ) * 0xc ) + "\"" );
-                export_text->LogW( " y=\"" + Ogre::StringConverter::toString( ( i / 0x15 ) * 0xc ) + "\"" );
+                export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( 256 + ( i % 0x15 ) * 0xc ) + "\"" );
+                export_text->LogW( " y=\"" + Ogre::StringConverter::toString( 0x84 + ( i / 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " width=\"12\" height=\"12\"" );
-                export_text->LogW( " leading=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
-                export_text->LogW( " trailing=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
+                export_text->LogW( " pre=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
+                export_text->LogW( " post=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
             }
 
             ++pos;
         }
+
+        pos = 0x372;
 
         for (int i = 0; i < 256; ++i)
         {
@@ -325,14 +336,16 @@ FontFile::Export( const Ogre::String &export_file, bool english )
                 export_text->Log( text );
                 text.clear();
                 export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( ( i % 0x15 ) * 0xc ) + "\"" );
-                export_text->LogW( " y=\"" + Ogre::StringConverter::toString( ( i / 0x15 ) * 0xc ) + "\"" );
+                export_text->LogW( " y=\"" + Ogre::StringConverter::toString( 0x84 + ( i / 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " width=\"12\" height=\"12\"" );
-                export_text->LogW( " leading=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
-                export_text->LogW( " trailing=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
+                export_text->LogW( " pre=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
+                export_text->LogW( " post=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
             }
 
             ++pos;
         }
+
+        pos = 0x444;
 
         for (int i = 0; i < 256; ++i)
         {
@@ -343,11 +356,11 @@ FontFile::Export( const Ogre::String &export_file, bool english )
                 text.push_back( japanese_chars_fe[ i ] & 0xff );
                 export_text->Log( text );
                 text.clear();
-                export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( ( i % 0x15 ) * 0xc ) + "\"" );
-                export_text->LogW( " y=\"" + Ogre::StringConverter::toString( ( i / 0x15 ) * 0xc ) + "\"" );
+                export_text->LogW( "\" x=\"" + Ogre::StringConverter::toString( 256 + ( i % 0x15 ) * 0xc ) + "\"" );
+                export_text->LogW( " y=\"" + Ogre::StringConverter::toString( 0x84 + ( i / 0x15 ) * 0xc ) + "\"" );
                 export_text->LogW( " width=\"12\" height=\"12\"" );
-                export_text->LogW( " leading=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
-                export_text->LogW( " trailing=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
+                export_text->LogW( " pre=\"" + Ogre::StringConverter::toString( GetU8( pos ) >> 5 ) + "\"" );
+                export_text->LogW( " post=\"" + Ogre::StringConverter::toString( ( GetU8( pos ) & 0x1f ) - 12 ) + "\" />\n" );
             }
 
             ++pos;

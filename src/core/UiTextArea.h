@@ -4,6 +4,7 @@
 #include <OgreHardwareVertexBuffer.h>
 #include <OgreRenderQueueListener.h>
 #include <OgreRoot.h>
+#include <OgreUTFString.h>
 
 #include "UiFont.h"
 #include "UiWidget.h"
@@ -29,7 +30,7 @@ public:
         CENTER
     };
     void SetTextAlignment( const TextAlignment alignment );
-    void SetText( const Ogre::String& text );
+    void SetText( const Ogre::UTFString& text );
     void SetFont( const Ogre::String& font );
     void UpdateGeometry();
 
@@ -49,7 +50,7 @@ private:
 
     UiFont*                             m_Font;
     TextAlignment                       m_TextAlignment;
-    Ogre::String                        m_Text;
+    Ogre::UTFString                     m_Text;
 };
 
 

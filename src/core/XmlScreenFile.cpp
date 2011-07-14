@@ -99,7 +99,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
                 if( node->ValueStr() == "text_area" )
                 {
-                    Ogre::String text = GetString( node, "text", "" );
+                    Ogre::UTFString text = GetUTFString( node, "text", "" );
                     if( text != "" )
                     {
                         ( ( UiTextArea* )widget2 )->SetText( text );
