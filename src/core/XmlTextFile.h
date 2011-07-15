@@ -1,9 +1,6 @@
-// $Id$
+#ifndef XML_TEXT_FILE_H
+#define XML_TEXT_FILE_H
 
-#ifndef XML_TEXT_FILE_h
-#define XML_TEXT_FILE_h
-
-#include "TextManager.h"
 #include "XmlFile.h"
 
 
@@ -11,16 +8,12 @@
 class XmlTextFile : public XmlFile
 {
 public:
-    explicit XmlTextFile(const Ogre::String& file);
-    virtual ~XmlTextFile(void);
+    XmlTextFile( const Ogre::String& file );
+    virtual ~XmlTextFile();
 
-    void LoadAllTexts(TextDataVector& texts);
-
-private:
-    bool       m_NormalFile;
-    xmlNodePtr m_RootNode;
+    void LoadText();
 };
 
 
 
-#endif // XML_TEXT_FILE_h
+#endif // XML_TEXT_FILE_H

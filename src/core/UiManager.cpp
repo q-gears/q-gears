@@ -8,6 +8,7 @@
 #include "Utilites.h"
 #include "XmlFontsFile.h"
 #include "XmlScreensFile.h"
+#include "XmlTextsFile.h"
 
 
 
@@ -42,10 +43,10 @@ UiManager::~UiManager()
 void
 UiManager::Initialise()
 {
-    XmlFontsFile fonts( "./data/ui/fonts.xml" );
+    XmlFontsFile fonts( "./data/fonts.xml" );
     fonts.LoadFonts();
 
-    XmlScreensFile screens( "./data/ui/screens.xml" );
+    XmlScreensFile screens( "./data/screens.xml" );
     screens.LoadScreens();
 }
 
@@ -69,6 +70,41 @@ UiManager::OnResize()
     {
         m_Widgets[ i ]->OnResize();
     }
+}
+
+
+
+void
+UiManager::SetLanguage( const Ogre::String& language )
+{
+    UnloadTexts();
+
+    XmlTextsFile texts( "./data/texts.xml" );
+    texts.LoadTexts( language );
+}
+
+
+
+void
+UiManager::AddText( const Ogre::String& name, const Ogre::UTFString& text )
+{
+    m_Texts[ name ] = text;
+}
+
+
+
+void
+UiManager::UnloadTexts()
+{
+    m_Texts.clear();
+}
+
+
+
+const Ogre::UTFString
+UiManager::GetText( const Ogre::String& name )
+{
+    return m_Texts[ name ];
 }
 
 

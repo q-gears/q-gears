@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<map>
+    <script file_name="maps/test/test_ffvii_2.lua" />
+    <entity_model name="Cloud" file_name="models/field/units/cloud.mesh" position="0 -2 0" direction="180" />
+    <entity_model name="Background" file_name="models/battle/stages/reactor_1.mesh" position="0 0 0" direction="0" />
+    <entity_model name="GuardScorpion" file_name="models/battle/units/guard_scorpion.mesh" position="0 7 0" direction="0" />
+    <entity_model name="Grunt" file_name="models/battle/units/grunt.mesh" position="1 3 0" direction="0" />
+    <entity_model name="FirstRay" file_name="models/battle/units/first_ray.mesh" position="-1 2.5 0" direction="0" />
+    <entity_model name="GuardHound" file_name="models/battle/units/guard_hound.mesh" position="3 2.5 0" direction="0" />
+    <entity_model name="MonoDrive" file_name="models/battle/units/mono_drive.mesh" position="-3 2.5 0" direction="0" />
+    <entity_model name="Mp" file_name="models/battle/units/mp.mesh" position="-5 2.5 0" direction="0" />
+    <entity_model name="Sweeper" file_name="models/battle/units/sweeper.mesh" position="5 2.5 0" direction="0" />
+</map>

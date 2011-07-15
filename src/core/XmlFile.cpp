@@ -120,33 +120,28 @@ XmlFile::GetUTFString( TiXmlNode* node, const Ogre::String& tag, const Ogre::UTF
 
 
 
-/*
 const Ogre::UTFString
-XmlFile::GetText(TiXmlNode* node) const
+XmlFile::GetText( TiXmlNode* node, const Ogre::UTFString& def ) const
 {
-    Ogre::UTFString ret = "";
+    Ogre::UTFString ret = def;
 
-    for (xmlNodePtr node2 = node->xmlChildrenNode; node2 != NULL; node2 = node2->next)
+    node = node->FirstChild();
+    while( node != NULL )
     {
-        if (node2->type == XML_TEXT_NODE)
+        if( node->Type() == TiXmlNode::TINYXML_TEXT )
         {
-            xmlBufferPtr buffer = xmlBufferCreateSize(1024);
-            int res = xmlNodeBufGetContent(buffer, node2);
-            if (res == -1)
+            TiXmlText* childText = node->ToText();
+            if( childText )
             {
-                Ogre::LogManager::getSingletonPtr()->logMessage("[ERROR] Failed to read text.");
+                ret = childText->Value();
             }
-            else
-            {
-                ret = (const char*)(xmlBufferContent(buffer));
-            }
-            xmlBufferFree(buffer);
         }
+
+        node = node->NextSibling();
     }
 
     return ret;
 }
-*/
 
 
 

@@ -1,60 +1,45 @@
-// $Id$
-
-#include <OgreLogManager.h>
-
 #include "XmlTextFile.h"
 
+#include "Logger.h"
+#include "UiManager.h"
 
 
-XmlTextFile::XmlTextFile(const Ogre::String& file):
-    XmlFile(file)
+
+XmlTextFile::XmlTextFile( const Ogre::String& file ):
+    XmlFile( file )
 {
-    if (m_File != NULL)
-    {
-        m_RootNode = xmlDocGetRootElement(m_File);
-
-        if (m_RootNode == NULL || xmlStrEqual(m_RootNode->name, BAD_CAST "texts") == false)
-        {
-            m_NormalFile = false;
-            Ogre::LogManager::getSingletonPtr()->logMessage("XML text Manager: " + file + " is not a valid texts file! No <texts> in root.");
-        }
-        else
-        {
-            m_NormalFile = true;
-        }
-    }
-    else
-    {
-        m_NormalFile = false;
-    }
 }
 
 
 
-XmlTextFile::~XmlTextFile(void)
+XmlTextFile::~XmlTextFile()
 {
 }
 
 
 
 void
-XmlTextFile::LoadAllTexts(TextDataVector& texts)
+XmlTextFile::LoadText()
 {
-    if (m_NormalFile != true)
+    TiXmlNode* node = m_File.RootElement();
+
+    if( node == NULL || node->ValueStr() != "texts" )
     {
+        LOG_ERROR( "UI Text Manager: " + m_File.ValueStr() + " is not a valid text file! No <texts> in root." );
         return;
     }
 
-    for (xmlNodePtr node = m_RootNode->xmlChildrenNode; node != NULL; node = node->next)
+    node = node->FirstChild();
+    while( node != NULL )
     {
-        if (xmlStrEqual(node->name, BAD_CAST "dialog"))
+        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "text" )
         {
-            TextData text;
-            text.name   = GetString(node, "name");
-            text.text   = GetText(node);
-            text.width  = GetInt(node, "width");
-            text.height = GetInt(node, "height");
-            texts.push_back(text);
+            Ogre::String name = GetString( node, "name" );
+            Ogre::UTFString text = GetText( node );
+
+            UiManager::getSingleton().AddText( name, text );
         }
+
+        node = node->NextSibling();
     }
 }

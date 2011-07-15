@@ -117,8 +117,6 @@
 		<Unit filename="core\UiSprite.h" />
 		<Unit filename="core\UiTextArea.cpp" />
 		<Unit filename="core\UiTextArea.h" />
-		<Unit filename="core\UiTextManager.cpp" />
-		<Unit filename="core\UiTextManager.h" />
 		<Unit filename="core\UiWidget.cpp" />
 		<Unit filename="core\UiWidget.h" />
 		<Unit filename="core\Utilites.cpp" />
@@ -139,6 +137,10 @@
 		<Unit filename="core\XmlScreenFile.h" />
 		<Unit filename="core\XmlScreensFile.cpp" />
 		<Unit filename="core\XmlScreensFile.h" />
+		<Unit filename="core\XmlTextFile.cpp" />
+		<Unit filename="core\XmlTextFile.h" />
+		<Unit filename="core\XmlTextsFile.cpp" />
+		<Unit filename="core\XmlTextsFile.h" />
 		<Unit filename="core\XmlWalkmeshFile.cpp" />
 		<Unit filename="core\XmlWalkmeshFile.h" />
 		<Unit filename="core\gui\TextArea.cpp" />

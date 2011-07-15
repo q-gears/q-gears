@@ -276,7 +276,7 @@ CmdMap( const Ogre::StringVector& params )
 
     EntityManager::getSingleton().Clear();
 
-    XmlMapsFile xml( "./data/game_data/maps.xml" );
+    XmlMapsFile xml( "./data/maps.xml" );
     Ogre::String file_name = xml.GetMapFileNameByName( params[ 1 ] );
 
     XmlMapFile xml_map( "./data/" + file_name );
@@ -288,7 +288,7 @@ CmdMap( const Ogre::StringVector& params )
 void
 CmdMapCompletion( Ogre::StringVector& complete_params )
 {
-    XmlMapsFile xml( "./data/game_data/maps.xml" );
+    XmlMapsFile xml( "./data/maps.xml" );
     xml.GetMapNames( complete_params );
 }
 

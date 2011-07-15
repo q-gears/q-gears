@@ -15,7 +15,6 @@
 #include "core/ScriptManager.h"
 #include "core/Timer.h"
 #include "core/UiManager.h"
-#include "core/UiTextManager.h"
 #include "core/particles/ParticleSystemManager.h"
 
 
@@ -46,7 +45,7 @@ main(int argc, char *argv[])
     root->initialise( false );
     Ogre::NameValuePairList misc;
     misc[ "title" ] = QG_VERSION_NAME;
-    window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
+    window = root->createRenderWindow( "QGearsWindow", 1280, 720, false, &misc );
 
 
 
@@ -87,8 +86,8 @@ main(int argc, char *argv[])
     // create This earlier than DisplayFrameListener cause it can fire event there
     CameraManager* camera_manager = new CameraManager();
     EntityManager* entity_manager = new EntityManager();
-    UiTextManager* text_manager = new UiTextManager();
     UiManager* ui_manager = new UiManager();
+    ui_manager->SetLanguage( "English" );
     Console* console = new Console();
 
     // init after game managers because it attach them to script
@@ -127,7 +126,6 @@ main(int argc, char *argv[])
     // destroy before script manager because it removes things from it.
     delete entity_manager;
     delete ui_manager;
-    delete text_manager;
     delete script_manager;
     delete console;
     delete camera_manager;

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<languages>
-    <language name="English">
-        <texts file="game_data/texts/english/menu.xml" />
-    </language>
-    <language name="Japanese">
-        <texts file="game_data/texts/japanese/menu.xml" />
-    </language>
-</languages>

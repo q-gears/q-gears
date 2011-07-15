@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<musics>
+    <music name="test" file_name="musics/test.ogg" loop="0" />
+</musics>

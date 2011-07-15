@@ -3,6 +3,7 @@
 
 #include <OgreRenderQueueListener.h>
 #include <OgreSingleton.h>
+#include <OgreUTFString.h>
 
 #include "UiFont.h"
 #include "UiWidget.h"
@@ -19,6 +20,11 @@ public:
     void Update();
     void OnResize();
 
+    void SetLanguage( const Ogre::String& language );
+    void AddText( const Ogre::String& name, const Ogre::UTFString& text );
+    void UnloadTexts();
+    const Ogre::UTFString GetText( const Ogre::String& name );
+
     void AddFont( UiFont* font );
     UiFont* GetFont( const Ogre::String& name );
 
@@ -29,6 +35,7 @@ public:
     void renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
 
 private:
+    std::map< Ogre::String, Ogre::UTFString > m_Texts;
     std::vector< UiFont* > m_Fonts;
     std::vector< UiWidget* > m_Widgets;
 };

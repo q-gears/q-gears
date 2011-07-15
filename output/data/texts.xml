@@ -1,0 +1,8 @@
+<texts>
+    <language name="English">
+        <text file="texts/english/menu.xml" />
+    </language>
+    <language name="Japanese">
+        <text file="texts/japanese/menu.xml" />
+    </language>
+</texts>
