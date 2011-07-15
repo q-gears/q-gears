@@ -76,15 +76,18 @@ main( int argc, char *argv[] )
     {
         BinGZipFile* file = new BinGZipFile( "data/jp/WINDOW.BIN" );
         File* font_graf    = file->ExtractGZip( 1 );
+        File* font_graf2   = file->ExtractGZip( 2 );
         File* font_padding = file->ExtractGZip( 3 );
         font_padding->WriteFile( "font_padding.dat" );
         FontFile font( font_padding );
         font.Export( "export_jp/ui/fonts/ffvii_jp.xml", false );
-        //font_graf->WriteFile( "font.tim" );
+        font_graf->WriteFile( "font.tim" );
+        font_graf2->WriteFile( "font2.tim" );
 
         Vram* vram = new Vram();
         LoadTimFileToVram( font_graf, 0, vram );
-        //vram->Save( "text" );
+        LoadTimFileToVram( font_graf2, 0, vram );
+        vram->Save( "text" );
 
         Ogre::TexturePtr ptex;
         Ogre::HardwarePixelBufferSharedPtr buffer;

@@ -21958,7 +21958,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1309354495 source:g:\my\svn\q-gears\src\main.cpp
+1310734346 source:g:\my\svn\q-gears\src\main.cpp
 	<OgreRoot.h>
 	<OIS.h>
 	"Main.h"
@@ -21973,6 +21973,7 @@
 	"core/InputManager.h"
 	"core/Logger.h"
 	"core/ScriptManager.h"
+	"core/TextManager.h"
 	"core/Timer.h"
 	"core/UiManager.h"
 	"core/particles/ParticleSystemManager.h"
@@ -23678,7 +23679,7 @@
 1308832354 g:\my\svn\q-gears\src\core\xmlscreensfile.h
 	"XmlFile.h"
 
-1310548824 source:g:\my\svn\q-gears\src\core\xmlscreenfile.cpp
+1310708213 source:g:\my\svn\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -23791,7 +23792,7 @@
 1310377870 g:\my\svn\q-gears\src\core\xmlfontsfile.h
 	"XmlFile.h"
 
-1310554822 source:g:\my\svn\q-gears\src\core\uitextarea.cpp
+1310708213 source:g:\my\svn\q-gears\src\core\uitextarea.cpp
 	"UiTextArea.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -23799,10 +23800,11 @@
 	"Logger.h"
 	"UiManager.h"
 
-1310535243 g:\my\svn\q-gears\src\core\uitextarea.h
+1310708213 g:\my\svn\q-gears\src\core\uitextarea.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
+	<OgreUTFString.h>
 	"UiFont.h"
 	"UiWidget.h"
 
@@ -23820,4 +23822,10 @@
 	"XmlFontsFile.h"
 	"Logger.h"
 	"XmlFontFile.h"
+
+1310734786 g:\my\svn\q-gears\src\core\textmanager.h
+	<OgreSingleton.h>
+	<OgreString.h>
+	<OgreUTFString.h>
+	<map>
 

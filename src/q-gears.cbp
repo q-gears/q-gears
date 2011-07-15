@@ -105,6 +105,8 @@
 		<Unit filename="core\ScriptManager.h" />
 		<Unit filename="core\ScriptManagerBinds.h" />
 		<Unit filename="core\ScriptManagerCommands.h" />
+		<Unit filename="core\TextManager.cpp" />
+		<Unit filename="core\TextManager.h" />
 		<Unit filename="core\Timer.cpp" />
 		<Unit filename="core\Timer.h" />
 		<Unit filename="core\UiAnimation.cpp" />

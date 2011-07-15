@@ -13,6 +13,7 @@
 #include "core/InputManager.h"
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
+#include "core/TextManager.h"
 #include "core/Timer.h"
 #include "core/UiManager.h"
 #include "core/particles/ParticleSystemManager.h"
@@ -86,6 +87,7 @@ main(int argc, char *argv[])
     // create This earlier than DisplayFrameListener cause it can fire event there
     CameraManager* camera_manager = new CameraManager();
     EntityManager* entity_manager = new EntityManager();
+    TextManager* text_manager = new TextManager();
     UiManager* ui_manager = new UiManager();
     Console* console = new Console();
 
@@ -125,6 +127,7 @@ main(int argc, char *argv[])
     // destroy before script manager because it removes things from it.
     delete entity_manager;
     delete ui_manager;
+    delete text_manager;
     delete script_manager;
     delete console;
     delete camera_manager;
