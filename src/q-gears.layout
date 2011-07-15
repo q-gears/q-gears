@@ -82,12 +82,6 @@
 	<File name="core\ScriptManagerBinds.h" open="0" top="0" tabpos="4">
 		<Cursor position="226" topLine="0" />
 	</File>
-	<File name="core\TextManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="454" topLine="0" />
-	</File>
-	<File name="core\TextManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="495" topLine="0" />
-	</File>
 	<File name="core\Timer.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="227" topLine="6" />
 	</File>

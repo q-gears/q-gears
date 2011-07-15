@@ -6,6 +6,7 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 ----------
 * [UI] Add font classes to manage our custom UI fonts. [Akari]
 * [UI] Add fonts for english and japanese characters. [Akari]
+* [UI] Add text manager. [Akari]
 
 2011-07-10
 ----------

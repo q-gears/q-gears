@@ -1,5 +1,5 @@
-#ifndef TEXT_MANAGER_H
-#define TEXT_MANAGER_H
+#ifndef UI_TEXT_MANAGER_H
+#define UI_TEXT_MANAGER_H
 
 #include <OgreSingleton.h>
 #include <OgreString.h>
@@ -8,11 +8,11 @@
 
 
 
-class TextManager : public Ogre::Singleton< TextManager >
+class UiTextManager : public Ogre::Singleton< UiTextManager >
 {
 public:
-    TextManager();
-    virtual ~TextManager();
+    UiTextManager();
+    virtual ~UiTextManager();
 
     void SetLanguage( const Ogre::String& language );
 
@@ -26,4 +26,4 @@ private:
 
 
 
-#endif // TEXT_MANAGER_H
+#endif // UI_TEXT_MANAGER_H
