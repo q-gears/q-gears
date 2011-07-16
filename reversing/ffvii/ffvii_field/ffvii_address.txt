@@ -35,7 +35,7 @@
 
 80071A88 array if priority data. Entity id that request this priority with REQ-type opcodes. (size 0x08 0x01).
 
-80071C0C store that we in line and SLIP byte in line == 1 during move_line_check.
+80071c0c store that we in line and SLIP byte in line == 1 during move_line_check.
 
 80071e2c number of opened windows. Increment this during window initialization. Decrement during closing.
 80071e38 current screen scroll X.
@@ -223,7 +223,7 @@
 
 8008357c offset to model data in 7 block in dat file.
 
-80095D84 number of inited lines.
+80095d84 number of inited lines.
 
 80095dd4 [][] set this to 0 when type 3 fade reach 22.
 
@@ -248,13 +248,13 @@
 
 8009A1C4 [] array of current priority slot used by entity (size 0x01 0x08).
 
-8009abf4        [8009c6e0]  start of game data (message/fade/nfade/walkmesh).
-8009abf4 + 01 []            encounters state (0 - no encounter, 2- encounter).
-8009abf4 + 02 [][]          map to load (gateway activation) or battle to fight.
-8009abf4 + 04 [][]          destination x during map load.
-8009abf4 + 06 [][]          destination y during map load.
-8009abf4 + 0a [][]          background X scroll to this position.
-8009abf4 + 0c [][]          background Y scroll to this position.
+8009abf4 start of game data (message/fade/nfade/walkmesh).
++ 01 []       encounters state (0 - no encounter, 2- encounter).
++ 02 [][]     map to load (gateway activation) or battle to fight.
++ 04 [][]     destination x during map load.
++ 06 [][]     destination y during map load.
++ 0a [][]     background X scroll to this position.
++ 0c [][]     background Y scroll to this position.
 + 10 [][]     field scale (9 bit fixed point).
 + 12 []       set to 0 in 0x6A VWOFT opcode.
 + 13 []       set to 0 in 0x6A VWOFT opcode.
@@ -262,45 +262,52 @@
 + 16 [][]     set to 2-3 bytes in 0x6A VWOFT opcode.
 + 18 [][]     set to 0 in 0x6A VWOFT opcode.
 + 1a [][]     set to 0 in 0x6A VWOFT opcode.
-8009abf4 + 1d []            set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC).
-8009abf4 + 1e []            store entity id to which we scroll background.
-8009abf4 + 1f []            state of scrolling. 0-init 1-action 2-finish.
-8009abf4 + 20 [][]          speed of background scroll. Number of steps?
-8009ABF4 + 22 [][]          destination z during map load.
-8009ABF4 + 24 [][]          rotation during map load.
-8009abf4 + 26 [][]          battle state ?
-8009ABF4 + 28 [][]          number of model.
-8009abf4 + 2a []            manual model id.
-8009ABF4 + 2C [][]          animation for stand. Set in CCANM (XX,-,-,0)
-8009ABF4 + 2E [][]          animation for walk. Set in CCANM (XX,-,-,1)
-8009ABF4 + 30 [][]          animation for stand. Set in CCANM (XX,-,-,2)
-+ 32 []       we store UC byte here.
-8009ABF4 + 33 []            if 1 here model will not automove. And animation will not play.
-8009ABF4 + 34               we store MENU byte here. Checked when call menu.
-8009abf4 + 36 []            check gateways during move or not.
-8009abf4 + 37 []            scroll lock.
-8009abf4 + 38 [][]          0 here when there is no fade.
++ 1d []       set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC).
++ 1e []       store entity id to which we scroll background.
++ 1f []       state of scrolling. 0-init 1-action 2-finish.
++ 20 [][]     speed of background scroll. Number of steps?
++ 22 [][]     destination z during map load.
++ 24 [][]     rotation during map load.
++ 26 [][]     battle state ?
++ 28 [][]     number of model.
++ 2a []       manual model id.
++ 2c [][]     animation for stand. Set in CCANM (XX,-,-,0)
++ 2e [][]     animation for walk. Set in CCANM (XX,-,-,1)
++ 30 [][]     animation for stand. Set in CCANM (XX,-,-,2)
++ 32 []       0 if PC can move. 1 - otherwise.
++ 33 []       if 1 here model will not automove. And animation will not play.
++ 34          we store MENU byte here. Checked when call menu.
++ 36 []       check gateways during move or not.
++ 37 []       scroll lock.
++ 38 [][]     0 here when there is no fade.
 + 3a []       we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode.
-8009ABF4 + 3b []            battle field check on/off (0/1).
-8009abf4 + 3c []            battle table to use (0 or 1).
-8009ABF4 + 44 [][][][]      offset to battle music (global, with field file offset).
++ 3b []       battle field check on/off (0/1).
++ 3c []       battle table to use (0 or 1).
++ 44 [][][][] offset to battle music (global, with field file offset).
 + 48 [][][][] offset to field music (global, with field file offset).
-8009abf4 + 4c [][]          we store FADE and NFADE type here.
-8009abf4 + 4e [][]          we store start value on FADE and zero on NFADE here.
-8009abf4 + 50 [][]          we store FADE and NFADE speed here.
-8009abf4 + 52 [][]          we store FADE R-value here.
-8009abf4 + 54 [][]          we store FADE G-value here.
-8009abf4 + 56 [][]          we store FADE B-value here.
-8009abf4 + 58 [][]          probably current fade R.
-8009abf4 + 5a [][]          probably current fade G.
-8009abf4 + 5c [][]          probably current fade B.
-8009abf4 + 5e [][]          we store NFADE 1/4-byte_value here.
-8009abf4 + 60 [][]          we store NFADE 2/5-byte_value here.
-8009abf4 + 62 [][]          we store NFADE 3/6-byte_value here.
-8009ABF4 + 70 [][][][]      key data. 1000 - up button. 4000 - down button (hold, released or pressed). Checked during ASK pointer movement.
-8009abf4 + 78 [][][][]      key data. 0020 - ok button (hold, released or pressed). Checked during text copy.
-8009ABF4 + 7C [][][][]      key data. (repeat)
-8009ABF4 + 80 [][][][]      key data. 0020 - ok button (hold, released or pressed). Checked during window state check.
++ 4c [][]     we store FADE and NFADE type here.
++ 4e [][]     we store start value on FADE and zero on NFADE here.
++ 50 [][]     we store FADE and NFADE speed here.
++ 52 [][]     we store FADE R-value here.
++ 54 [][]     we store FADE G-value here.
++ 56 [][]     we store FADE B-value here.
++ 58 [][]     probably current fade R.
++ 5a [][]     probably current fade G.
++ 5c [][]     probably current fade B.
++ 5e [][]     we store NFADE 1/4-byte_value here.
++ 60 [][]     we store NFADE 2/5-byte_value here.
++ 62 [][]     we store NFADE 3/6-byte_value here.
++ 70 [][][][] key data.
+                0004 - R2.
+                0008 - L2.
+                0040 - run button.
+                1000 - up button.
+                2000 - right button
+                4000 - down button.
+                8000 - left button
++ 78 [][][][] key data. 0020 - ok button (hold, released or pressed). Checked during text copy.
++ 7c [][][][] key data. (repeat)
++ 80 [][][][] key data. 0020 - ok button (hold, released or pressed). Checked during window state check.
 + 8a []       if 1 we activate X shaking. 0 - deactivate.
 + 8b []       state of shaking single X movement (0 - init, 1 - action)
 + 8c []       random shake array index single X movement.
@@ -340,6 +347,7 @@
 8009c6e0 offset to game data (fade/nfade/walkmesh/key data).
 
 
+8009d5a6 []       enable or disable PC pointer and triangles help.
 
 8009d820 unknown value that checked x & 3 == 0.
 
@@ -417,7 +425,7 @@
 
 800e0228 opcode address table.
 
-800E0738 digit->letter assosiation array (10-26 letters from character table)
+800e0738 digit->letter assosiation array (10-26 letters from character table)
 
 800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
 800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
@@ -425,6 +433,10 @@
 800e4274 offset to ID block.
 800e4278 [][] name reading offset for dialog windows. (size 0x2).
 800e4280 [][] current variable for windows. (size 0x2).
+
+800e48f4 array for some data for arrow or triangle (maybe tex coords). (size 0x28)
+
+
 800e48f0 [] store FF here during end of SPLIT.
 800e4944 texts for windows to diaplay. (size 0x100)
 800e4d48 offsets for getting variable from memory block for windows. 8 for each window. (size 0x10 0x2)
@@ -471,6 +483,8 @@
 80114480 [][] field dialog OK button speed modificator. (size 0x08 0x2).
 
 80114488 we read something from here during reading unknown data in triggers and check if this != 0. If this != 0 then battle will not be activated during field battle check. (0)
+
+80114490 buffer index for something like arrao or triangles.
 
 801144CC [][] store which side we cross here during walkmesh_border_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
 

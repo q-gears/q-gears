@@ -198,22 +198,15 @@ S2 = 0;
 V1 = 0;
 
 loop9bd3c:	; 8009BD3C
-    8009BD3C	lui    at, $800c
-    8009BD40	addu   at, at, v1
-    8009BD44	lh     v0, $1f7a(at)
-    8009BD48	nop
-    8009BD4C	bne    v0, zero, L9bd68 [$8009bd68]
-    8009BD50	nop
-    8009BD54	lui    at, $800c
-    8009BD58	addu   at, at, v1
-    8009BD5C	lh     v0, $1f78(at)
-    8009BD60	addiu  s3, s3, $0001
-    8009BD64	or     s2, s2, v0
+    if (h[800c1f7a + V1] == 0)
+    {
+        S3 = S3 + 1;
+        S2 = S2 | h[800c1f78 + V1];
+    }
 
-    L9bd68:	; 8009BD68
-    8009BD68	addiu  a0, a0, $0001
-    8009BD6C	slti   v0, a0, $0004
-    8009BD74	addiu  v1, v1, $0498
+    A0 = A0 + 1;
+    V1 = V1 + 498;
+    V0 = A0 < 4;
 8009BD70	bne    v0, zero, loop9bd3c [$8009bd3c]
 
 
@@ -1056,19 +1049,6 @@ L7f5c4:	; 8007F5C4
 8007F5C4	addu   v0, zero, zero
 
 L7f5c8:	; 8007F5C8
-8007F5C8	lw     ra, $006c(sp)
-8007F5CC	lw     fp, $0068(sp)
-8007F5D0	lw     s7, $0064(sp)
-8007F5D4	lw     s6, $0060(sp)
-8007F5D8	lw     s5, $005c(sp)
-8007F5DC	lw     s4, $0058(sp)
-8007F5E0	lw     s3, $0054(sp)
-8007F5E4	lw     s2, $0050(sp)
-8007F5E8	lw     s1, $004c(sp)
-8007F5EC	lw     s0, $0048(sp)
-8007F5F0	addiu  sp, sp, $0070
-8007F5F4	jr     ra 
-8007F5F8	nop
 //////////////////////////////////////////////////////////
 
 

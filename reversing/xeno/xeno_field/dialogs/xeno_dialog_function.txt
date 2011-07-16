@@ -2,18 +2,7 @@
 // func7f660
 8007F660	lui    v0, $800b
 8007F664	lw     v0, $d370(v0)
-8007F668	addiu  sp, sp, $ffa8 (=-$58)
-8007F66C	sw     s4, $0040(sp)
 8007F670	addu   s4, a0, zero
-8007F674	sw     s6, $0048(sp)
-8007F678	sw     ra, $0054(sp)
-8007F67C	sw     fp, $0050(sp)
-8007F680	sw     s7, $004c(sp)
-8007F684	sw     s5, $0044(sp)
-8007F688	sw     s3, $003c(sp)
-8007F68C	sw     s2, $0038(sp)
-8007F690	sw     s1, $0034(sp)
-8007F694	sw     s0, $0030(sp)
 8007F698	addiu  v0, v0, $0001
 8007F69C	lui    at, $800b
 8007F6A0	sw     v0, $d370(at)
@@ -380,19 +369,6 @@ loop7fb58:	; 8007FB58
 8007FBC8	and    v0, v0, a2
 8007FBCC	or     v0, v0, v1
 8007FBD0	sw     v0, $0000(s4)
-8007FBD4	lw     ra, $0054(sp)
-8007FBD8	lw     fp, $0050(sp)
-8007FBDC	lw     s7, $004c(sp)
-8007FBE0	lw     s6, $0048(sp)
-8007FBE4	lw     s5, $0044(sp)
-8007FBE8	lw     s4, $0040(sp)
-8007FBEC	lw     s3, $003c(sp)
-8007FBF0	lw     s2, $0038(sp)
-8007FBF4	lw     s1, $0034(sp)
-8007FBF8	lw     s0, $0030(sp)
-8007FBFC	addiu  sp, sp, $0058
-8007FC00	jr     ra 
-8007FC04	nop
 ////////////////////////////////////////////////////////
 
 

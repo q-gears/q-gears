@@ -292,7 +292,7 @@ if (number_of_models > 0)
                         80074EA4 + manual_model_id * 84 + 38] = b(bu[80074EA4 + manual_model_id * 84 + 36]);
                     }
 
-                    V0 = bu[8009ABF4 + 01];
+                    V0 = bu[8009abf4 + 01];
                     if (V0 != 1 && A0 == 1)
                     {
                         funcaba70;
