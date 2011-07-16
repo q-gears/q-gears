@@ -972,7 +972,7 @@ if (V0 == 0)
         V1 = V1 >> c;
         if (V0 < V1)
         {
-            funca1498;
+            field_stop_load_background_in_advance;
 
             [8009abf4 + 01] = b(2);
             [8007ebc8] = b(1);

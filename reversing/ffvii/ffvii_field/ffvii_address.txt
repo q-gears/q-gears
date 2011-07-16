@@ -45,87 +45,73 @@
 800722c4 current entity.
 
 80074ea4        [8009c544]  model related data. (size 0x84)
-80074ea4 + 00 [][]          store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1 (maybe end kawai)
-80074ea4 + 02 [][]          store 0 here in KAWAI opcode.
-80074ea4 + 04 [][][][]      offset to KAWAI opcode data in script (like offset to opcode + 3).
-80074ea4 + 08 []            blinking. 0 - on, 1 - off.
-80074ea4 + 09 []            store 0 here in KAWAI opcode under some curcumstances.
-80074EA4 + 0a
-80074EA4 + 0b
-80074ea4 + 0c [][][][]      x.
-80074EA4 + 10 [][][][]      y.
-80074EA4 + 14 [][][][]      z.
-80074EA4 + 18 [][][][]      x start (in JUMP and LADER).
-80074EA4 + 1C [][][][]      y start (in JUMP and LADER).
-80074EA4 + 20 [][][][]      z start (in JUMP and LADER).
-80074EA4 + 24
-80074EA4 + 25
-80074EA4 + 26
-80074EA4 + 27
-80074EA4 + 28
-80074EA4 + 29
-80074EA4 + 2A
-80074EA4 + 2B
-80074EA4 + 2C [][]          b value for JUMP function.
-80074EA4 + 2E
-80074EA4 + 2F
-80074EA4 + 30 [][]          store number of steps for JUMP and LADER here.
-80074EA4 + 32 [][]          current step for JUMP and LADER.
-80074EA4 + 34
++ 00 [][]     store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1 (maybe end kawai)
++ 02 [][]     store 0 here in KAWAI opcode.
++ 04 [][][][] offset to KAWAI opcode data in script (like offset to opcode + 3).
++ 08 []       blinking. 0 - on, 1 - off.
++ 09 []       store 0 here in KAWAI opcode under some curcumstances.
++ 0c [][][][] x.
++ 10 [][][][] y.
++ 14 [][][][] z.
++ 18 [][][][] x start (in JUMP and LADER).
++ 1c [][][][] y start (in JUMP and LADER).
++ 20 [][][][] z start (in JUMP and LADER).
++ 2c [][]     b value for JUMP function.
++ 30 [][]     store number of steps for JUMP and LADER here.
++ 32 [][]     current step for JUMP and LADER.
 + 35 []       shift addition to move direction.
 + 36 []       move direction (used when calculated movement).
 + 37 []       lock rotation. (1 - direction will not be changed)
 + 38 []       model direction.
-80074EA4 + 39 []            number of steps for turn.
-80074EA4 + 3A []            current step for turn.
-80074EA4 + 3B []            used during TURN (5th argument).
-80074EA4 + 3c [][]          start direction (for TURN), we store model direction here at start of turn.
-80074EA4 + 3E [][]          end direction (for TURN).
-80074EA4 + 40 [][]          real X offset value.
-80074EA4 + 42 [][]          start X offset value.
-80074EA4 + 44 [][]          end X offset value.
-80074EA4 + 46 [][]          real Y offset value.
-80074EA4 + 48 [][]          start Y offset value.
-80074EA4 + 4A [][]          end Y offset value.
-80074EA4 + 4C [][]          real Z offset value.
-80074EA4 + 4E [][]          start Z offset value.
-80074EA4 + 50 [][]          end Z offset value.
-80074EA4 + 52 [][]          steps in offseting.
-80074EA4 + 54 [][]          current step in offsetting.
-80074EA4 + 56 []            type of offsetting (LINEAR SMOOTH INSTANT).
-80074EA4 + 57 []            store current entity id here during CHAR opcode.
-80074EA4 + 58 []            pc entity collide with this entity. (1 - true/0 - false).
-80074EA4 + 59 []            model solidity (0x01 - off/0x00 - on).
-80074EA4 + 5A []            pc entity talk with this entity. (1 - true/0 - false).
-80074EA4 + 5B []            model talkability (0x01 - off/0x00 - on).
-80074EA4 + 5C []            model visibility (0x01 - on/0x00 - off).
-80074EA4 + 5D []            model state.
-                            0 - nothing.
-                            1 - MOVE-type.
-                            3 - JUMP.
-                            4 - up/down LADER.
-                            5 - left/right LADER.
-80074ea4 + 5e []            animation id.
-80074ea4 + 5f
-80074ea4 + 60 [][]          animation speed. Store 10 here during MOVE opcode and animation speed during LADER.
-80074ea4 + 62 [][]          current frame. Store 0 here during MOVE and LADER opcode.
-80074EA4 + 64 [][]          number of frames. Set during MOVE and LADER opcode (animation related. maybe frames number)
-80074EA4 + 66 [][]          store CHAR byte here.
-80074EA4 + 68 [][]          0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
-80074EA4 + 6A [][]          stage of state.
-                            0 - init.
-                            1 - action.
-                            2 - finish.
-80074EA4 + 6C [][]          solid range value.
-80074ea4 + 6e [][]          talk range value.
-80074EA4 + 70 [][]          movement speed. For MOVE-type opcodes.
-80074EA4 + 72 [][]          triangle.
-80074EA4 + 74 [][]          move to triangle (LADER and JUMP).
-80074EA4 + 76
-80074EA4 + 77
-80074EA4 + 78 [][][][]      move to x (MOVE and LADER and JUMP).
-80074EA4 + 7C [][][][]      move to y (MOVE and LADER and JUMP).
-80074EA4 + 80 [][][][]      move to z (MOVE and LADER and JUMP).
++ 39 []       number of steps for turn.
++ 3a []       current step for turn.
++ 3b []       used during TURN (5th argument).
++ 3c [][]     start direction (for TURN), we store model direction here at start of turn.
++ 3e [][]     end direction (for TURN).
++ 40 [][]     real X offset value.
++ 42 [][]     start X offset value.
++ 44 [][]     end X offset value.
++ 46 [][]     real Y offset value.
++ 48 [][]     start Y offset value.
++ 4a [][]     end Y offset value.
++ 4c [][]     real Z offset value.
++ 4e [][]     start Z offset value.
++ 50 [][]     end Z offset value.
++ 52 [][]     steps in offseting.
++ 54 [][]     current step in offsetting.
++ 56 []       type of offsetting (LINEAR SMOOTH INSTANT).
++ 57 []       store current entity id here during CHAR opcode.
++ 58 []       pc entity collide with this entity. (1 - true/0 - false).
++ 59 []       model solidity (0x01 - off/0x00 - on).
++ 5a []       pc entity talk with this entity. (1 - true/0 - false).
++ 5b []       model talkability (0x01 - off/0x00 - on).
++ 5c []       model visibility (0x01 - on/0x00 - off).
++ 5d []       model state.
+                0 - nothing.
+                1 - MOVE-type.
+                3 - JUMP.
+                4 - up/down LADER.
+                5 - left/right LADER.
++ 5e []       animation id.
++ 60 [][]     animation speed. Store 10 here during MOVE opcode and animation speed during LADER.
++ 62 [][]     current frame. Store 0 here during MOVE and LADER opcode.
++ 64 [][]     number of frames. Set during MOVE and LADER opcode (animation related. maybe frames number)
++ 66 [][]     store CHAR byte here.
++ 68 [][]     0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
++ 6a [][]     stage of state.
+                0 - init.
+                1 - action.
+                2 - finish.
++ 6c [][]     solid range value.
++ 6e [][]     talk range value.
++ 70 [][]     movement speed. For MOVE-type opcodes.
++ 72 [][]     triangle.
++ 74 [][]     move to triangle (LADER and JUMP).
++ 78 [][][][] move to x (MOVE and LADER and JUMP).
++ 7c [][][][] move to y (MOVE and LADER and JUMP).
++ 80 [][][][] move to z (MOVE and LADER and JUMP).
+
+
 
 800756E8 [] array of animation state? Store 0 here if we set UC to 0. Store 1 here if we MOVE. (size 0x1)
             0 - play default animation.
@@ -225,6 +211,7 @@
 
 80095d84 number of inited lines.
 
+80095dd0 [][] store here map id to whish trigger player character closer to load it's texture in advance.
 80095dd4 [][] set this to 0 when type 3 fade reach 22.
 
 80095de0 array of stored background palletes (0x20 size).
@@ -249,7 +236,13 @@
 8009A1C4 [] array of current priority slot used by entity (size 0x01 0x08).
 
 8009abf4 start of game data (message/fade/nfade/walkmesh).
-+ 01 []       encounters state (0 - no encounter, 2- encounter).
++ 01 []       some state
+                0 - no encounter.
+                1 - finalize field in this case.
+                2 - encounter.
+                a - set when field reset game by all shifts and start + select.
+                c - set afrer function in d state.
+                d -
 + 02 [][]     map to load (gateway activation) or battle to fight.
 + 04 [][]     destination x during map load.
 + 06 [][]     destination y during map load.
@@ -297,10 +290,18 @@
 + 5e [][]     we store NFADE 1/4-byte_value here.
 + 60 [][]     we store NFADE 2/5-byte_value here.
 + 62 [][]     we store NFADE 3/6-byte_value here.
++ 68 [][][][] key data.
 + 70 [][][][] key data.
-                0004 - R2.
-                0008 - L2.
-                0040 - run button.
+                0001 - L2
+                0002 - R2
+                0004 - L1.
+                0008 - R1.
+                0010 - triangle.
+                0020 - circle.
+                0040 - cross.
+                0080 - square.
+                0100 - select.
+                0800 - start.
                 1000 - up button.
                 2000 - right button
                 4000 - down button.

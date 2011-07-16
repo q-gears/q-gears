@@ -34894,6 +34894,7 @@ func34048:	; 80034048
 
 
 func3408c:	; 8003408C
+// stop background loading
 8003408C	lui    v1, $8007
 80034090	lw     v1, $1a60(v1)
 80034094	addiu  sp, sp, $ffe8 (=-$18)
