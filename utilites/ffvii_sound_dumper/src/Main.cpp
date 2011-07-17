@@ -123,40 +123,40 @@ protected:
 int
 main( int argc, char *argv[] )
 {
-    LOGGER = new Logger( "game.log" );
+    Ogre::Root*         root;
+    Ogre::RenderWindow* window;
+
+    root = new Ogre::Root( "", "" );
+#ifndef _DEBUG
+    root->loadPlugin( "RenderSystem_GL.dll" );
+#else
+    root->loadPlugin( "RenderSystem_GL_d.dll" );
+#endif
+    root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
+    root->initialise( false );
+    Ogre::NameValuePairList misc;
+    misc[ "title" ] = "FFVII Exporter";
+    window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
+
+
+
     FILESYSTEM = new FileSystem();
+    LOGGER = new Logger( "game.log" );
 
     state = GAME;
 
 
 
-    Ogre::Root*         root;
-    Ogre::RenderWindow* window;
-    Ogre::SceneManager* scene_manager;
-    Ogre::Camera*       camera;
-    Ogre::Viewport*     viewport;
-
-    root = new Ogre::Root( "plugins.cfg", "q-gears.cfg", "ogre_qgears.log" );
-
-    if ( root->restoreConfig() == true || root->showConfigDialog() == true )
-    {
-        window = root->initialise( true, "Sound Dumper" );
-    }
-    else
-    {
-        return 0;
-    }
-
     DisplayFrameListener* frame_listener = new DisplayFrameListener( window );
     root->addFrameListener( frame_listener );
 
-    scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
+    Ogre::SceneManager* scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
     scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
 
-    camera = scene_manager->createCamera( "Camera" );
+    Ogre::Camera* camera = scene_manager->createCamera( "Camera" );
     camera->setNearClipDistance( 5 );
 
-    viewport = window->addViewport( camera );
+    Ogre::Viewport* viewport = window->addViewport( camera );
     viewport->setBackgroundColour( Ogre::ColourValue( 0, 0, 0 ) );
     camera->setAspectRatio( Ogre::Real( viewport->getActualWidth()) / Ogre::Real( viewport->getActualHeight() ) );
 

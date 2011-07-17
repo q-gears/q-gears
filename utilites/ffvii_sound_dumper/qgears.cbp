@@ -20,7 +20,6 @@
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
-					<Add library="fmodex" />
 					<Add library="zdll" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
