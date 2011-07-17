@@ -2,7 +2,7 @@
 // handle_update
 S4 = A0;
 
-number_of_models = h[8009ABF4 + 28];
+number_of_models = h[8009abf4 + 28];
 
 if (number_of_models > 0)
 {

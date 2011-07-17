@@ -4426,110 +4426,12 @@ Lba648:	; 800BA648
 800BA658	nop
 
 
-funcba65c:	; 800BA65C
-800BA65C	lui    v0, $8008
-800BA660	lbu    v0, $ebe0(v0)
-800BA664	addiu  sp, sp, $ffe8 (=-$18)
-800BA668	sw     s0, $0010(sp)
-800BA66C	addu   s0, a0, zero
-800BA670	beq    v0, zero, Lba738 [$800ba738]
-800BA674	sw     ra, $0014(sp)
-800BA678	jal    funcd4bfc [$800d4bfc]
-800BA67C	nop
-800BA680	jal    funcbc338 [$800bc338]
-800BA684	nop
-800BA688	jal    funcd7d6c [$800d7d6c]
-800BA68C	nop
-800BA690	jal    funcd7f9c [$800d7f9c]
-800BA694	nop
-800BA698	lui    v0, $800a
-800BA69C	lw     v0, $c6dc(v0)
-800BA6A0	lui    at, $8009
-800BA6A4	sb     zero, $5dcc(at)
-800BA6A8	lui    at, $800a
-800BA6AC	sb     zero, $fe8c(at)
-800BA6B0	lui    at, $8008
-800BA6B4	sb     zero, $ebe0(at)
-800BA6B8	lbu    v0, $0001(v0)
-800BA6BC	nop
-800BA6C0	sltiu  v0, v0, $0005
-800BA6C4	beq    v0, zero, Lba6d4 [$800ba6d4]
-800BA6C8	ori    a0, zero, $004b
-800BA6CC	jal    func429e0 [$800429e0]
-800BA6D0	ori    a1, zero, $000b
 
-Lba6d4:	; 800BA6D4
-800BA6D4	lui    v0, $800a
-800BA6D8	lw     v0, $c6dc(v0)
-800BA6DC	nop
-800BA6E0	lbu    v0, $0000(v0)
-800BA6E4	nop
-800BA6E8	sltiu  v0, v0, $0002
-800BA6EC	beq    v0, zero, Lba6fc [$800ba6fc]
-800BA6F0	ori    a0, zero, $004b
-800BA6F4	jal    func429e0 [$800429e0]
-800BA6F8	ori    a1, zero, $000a
+////////////////////////////////
+// funcba65c
+800BA65C-800BA7C0
+////////////////////////////////
 
-Lba6fc:	; 800BA6FC
-800BA6FC	lui    v1, $800a
-800BA700	lw     v1, $c6dc(v1)
-800BA704	nop
-800BA708	lbu    v0, $0000(v1)
-800BA70C	nop
-800BA710	sltiu  v0, v0, $0003
-800BA714	beq    v0, zero, Lba730 [$800ba730]
-800BA718	ori    a0, zero, $004b
-800BA71C	lbu    v0, $0001(v1)
-800BA720	nop
-800BA724	sltiu  v0, v0, $0006
-800BA728	bne    v0, zero, Lba738 [$800ba738]
-800BA72C	nop
-
-Lba730:	; 800BA730
-800BA730	jal    func429e0 [$800429e0]
-800BA734	ori    a1, zero, $000c
-
-Lba738:	; 800BA738
-800BA738	lui    v1, $800a
-800BA73C	lbu    v1, $9ffc(v1)
-800BA740	ori    v0, zero, $0004
-800BA744	beq    v1, v0, Lba770 [$800ba770]
-800BA748	ori    v0, zero, $0005
-800BA74C	bne    v1, v0, Lba768 [$800ba768]
-800BA750	nop
-800BA754	lui    v0, $8007
-800BA758	lbu    v0, $0788(v0)
-800BA75C	nop
-800BA760	beq    v0, zero, Lba770 [$800ba770]
-800BA764	nop
-
-Lba768:	; 800BA768
-opcode_cycle;
-
-Lba770:	; 800BA770
-800BA770	lui    v0, $8007
-800BA774	lbu    v0, $1e2c(v0)
-800BA778	nop
-800BA77C	beq    v0, zero, Lba7a8 [$800ba7a8]
-800BA780	ori    a1, zero, $0004
-800BA784	lui    a0, $8008
-800BA788	addiu  a0, a0, $3274
-800BA78C	lui    v0, $800a
-800BA790	lw     v0, $c6e0(v0)
-800BA794	nop
-800BA798	lbu    a3, $0000(v0)
-800BA79C	addu   a2, s0, zero
-800BA7A0	jal    func1f1bc [$8001f1bc]
-800BA7A4	xori   a3, a3, $0001
-
-Lba7a8:	; 800BA7A8
-800BA7A8	jal    funcbc438 [$800bc438]
-800BA7AC	addu   a0, s0, zero
-800BA7B0	lw     ra, $0014(sp)
-800BA7B4	lw     s0, $0010(sp)
-800BA7B8	addiu  sp, sp, $0018
-800BA7BC	jr     ra 
-800BA7C0	nop
 
 
 funcba7c4:	; 800BA7C4

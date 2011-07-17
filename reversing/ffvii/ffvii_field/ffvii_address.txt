@@ -227,7 +227,7 @@
 8009A058 save current opcode here.
 8009a05c looks like we read field id from here when loading data.
 
-8009A064 [][][][] script related. In script function. We increase this every opcode (maybe number of proseed opcodes). We go to next entoty after 8 of this.
+8009a064 [][][][] script related. In script function. We increase this every opcode (maybe number of proseed opcodes). We go to next entoty after 8 of this.
 
 8009a074 structures for fade (size 0x30). Index for using fade structure here 80075dec.
 
@@ -259,7 +259,7 @@
 + 1e []       store entity id to which we scroll background.
 + 1f []       state of scrolling. 0-init 1-action 2-finish.
 + 20 [][]     speed of background scroll. Number of steps?
-+ 22 [][]     destination z during map load.
++ 22 [][]     destination z during map load. (most likely triangle id).
 + 24 [][]     rotation during map load.
 + 26 [][]     battle state ?
 + 28 [][]     number of model.

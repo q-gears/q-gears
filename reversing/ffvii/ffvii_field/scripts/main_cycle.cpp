@@ -592,7 +592,6 @@ if (q_1 == 5)
 }
 
 handle_animation_state;
-return;
 ////////////////////////////////
 
 
@@ -669,10 +668,9 @@ else
 
 
 ////////////////////////////////
-// we check talk here
 // funca8304
-V0 = w[8009abf4 + 78];
-if (V0 & 20) // if ok button pressed
+// we check talk here
+if (w[8009abf4 + 78] & 0020) // if ok button pressed
 {
     V0 = w[8009abf4 + 7c];
     if (V0 & 20 == 0) // if ok not repeated
@@ -680,20 +678,11 @@ if (V0 & 20) // if ok button pressed
         S0 = 0;
 
         V0 = h[800965e0]; // pc
-        V1 = V0 * 84;
-        V0 = w[80074eb0 + V1];
-        V0 = V0 >> c;
-        [SP + 10] = w(V0);
+        [SP + 10] = w(w[80074eb0 + V0 * 84] >> c);
+        [SP + 14] = w(w[80074eb4 + V0 * 84] >> c);
+        [SP + 18] = w(w[80074eb8 + V0 * 84] >> c);
 
-        V0 = w[80074eb4 + V1];
-        V0 = V0 >> c;
-        [SP + 14] = w(V0);
-
-        V0 = w[80074eb8 + V1];
-        V0 = V0 >> c;
-        [SP + 18] = w(V0);
-
-        V1 = h[8009ABF4 + 28]; // number of model
+        V1 = h[8009abf4 + 28]; // number of model
 
         if (V1 > 0)
         {
@@ -758,16 +747,13 @@ if (V0 & 20) // if ok button pressed
                 }
 
                 S1 = S1 + 84;
-
-                800A8528	lui    v0, $800a
-                800A852C	lh     v0, $ac1c(v0)
-                800A8530	addiu  s0, s0, $0001
+                V0 = h[8009ac1c];
+                S0 = S0 + 1;
+                S2 = S2 + 2;
                 800A8534	slt    v0, s0, v0
-                800A853C	addiu  s2, s2, $0002
             800A8538	bne    v0, zero, loopa83cc [$800a83cc]
         }
 
-        La8540:	; 800A8540
         A3 = 40;
         V0 = h[8009ac1c];
         A2 = hu[800965e0];
@@ -794,19 +780,14 @@ if (V0 & 20) // if ok button pressed
             800A8590	bne    v0, zero, loopa8564 [$800a8564]
         }
 
-        V1 = h[800965e0];
-        if (A2 != V1)
+        if (A2 != h[800965e0])
         {
-
-            V1 = 40;
             V0 = A3;
-            if (V0 != V1)
+            if (V0 != 40)
             {
                 [80074efe + A2 * 84] = b(1);
             }
         }
     }
 }
-La85dc:	; 800A85DC
-return;
 ////////////////////////////////

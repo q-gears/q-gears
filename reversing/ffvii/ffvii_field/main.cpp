@@ -2,72 +2,22 @@
 // contain move and button update, animation handler and many others
 // model new structure initing also here
 // funca2314
-800A2330	lui    a1, $800a
-800A2334	addiu  a1, a1, $0024
-800A2338	lwl    v0, $0003(a1)
-800A233C	lwr    v0, $0000(a1)
-800A2340	lwl    v1, $0007(a1)
-800A2344	lwr    v1, $0004(a1)
-800A2348	swl    v0, $0013(sp)
-800A234C	swr    v0, $0010(sp)
-800A2350	swl    v1, $0017(sp)
-800A2354	swr    v1, $0014(sp)
-800A2358	lui    a1, $800a
-800A235C	addiu  a1, a1, $002c
-800A2360	lwl    v0, $0003(a1)
-800A2364	lwr    v0, $0000(a1)
-800A2368	lwl    v1, $0007(a1)
-800A236C	lwr    v1, $0004(a1)
-800A2370	swl    v0, $001b(sp)
-800A2374	swr    v0, $0018(sp)
-800A2378	swl    v1, $001f(sp)
-800A237C	swr    v1, $001c(sp)
-800A2380	lui    a1, $800a
-800A2384	addiu  a1, a1, $0034
-800A2388	lwl    v0, $0003(a1)
-800A238C	lwr    v0, $0000(a1)
-800A2390	lwl    v1, $0007(a1)
-800A2394	lwr    v1, $0004(a1)
-800A2398	swl    v0, $0023(sp)
-800A239C	swr    v0, $0020(sp)
-800A23A0	swl    v1, $0027(sp)
-800A23A4	swr    v1, $0024(sp)
-800A23A8	lui    a1, $800a
-800A23AC	addiu  a1, a1, $003c
-800A23B0	lwl    v0, $0003(a1)
-800A23B4	lwr    v0, $0000(a1)
-800A23B8	lwl    v1, $0007(a1)
-800A23BC	lwr    v1, $0004(a1)
-800A23C0	swl    v0, $002b(sp)
-800A23C4	swr    v0, $0028(sp)
-800A23C8	swl    v1, $002f(sp)
-800A23CC	swr    v1, $002c(sp)
-800A23D0	lui    a1, $800a
-800A23D4	addiu  a1, a1, $0044
-800A23D8	lwl    v0, $0003(a1)
-800A23DC	lwr    v0, $0000(a1)
-800A23E0	lwl    v1, $0007(a1)
-800A23E4	lwr    v1, $0004(a1)
-800A23E8	swl    v0, $0033(sp)
-800A23EC	swr    v0, $0030(sp)
-800A23F0	swl    v1, $0037(sp)
-800A23F4	swr    v1, $0034(sp)
-800A23F8	lui    a1, $800a
-800A23FC	addiu  a1, a1, $004c
-800A2400	lwl    v0, $0003(a1)
-800A2404	lwr    v0, $0000(a1)
-800A2408	lwl    v1, $0007(a1)
-800A240C	lwr    v1, $0004(a1)
-800A2410	swl    v0, $003b(sp)
-800A2414	swr    v0, $0038(sp)
-800A2418	swl    v1, $003f(sp)
-800A241C	swr    v1, $003c(sp)
-800A2420	ori    v0, zero, $00a0
-800A2424	lui    at, $8008
-800A2428	sw     v0, $eb90(at)
-800A2434	ori    v1, zero, $0078
-800A2438	lui    at, $8008
-800A243C	sw     v1, $eb94(at)
+
+[SP + 10] = w(800a0024);
+[SP + 14] = w(800a0028);
+[SP + 18] = w(800a002c);
+[SP + 1c] = w(800a0030);
+[SP + 20] = w(800a0034);
+[SP + 24] = w(800a0038);
+[SP + 28] = w(800a003c);
+[SP + 2c] = w(800a0040);
+[SP + 30] = w(800a0044);
+[SP + 34] = w(800a0048);
+[SP + 38] = w(800a004c);
+[SP + 3c] = w(800a0050);
+
+[8007eb90] = w(a0);
+[8007eb94] = w(78);
 
 if (h[800965ec] != 5 && h[800965ec] != d)
 {
@@ -118,7 +68,7 @@ funcab4ac; // init some bebug lines buffer 2
 
 S3 = 1;
 S2 = 8009abf4;
-S4 = S2 + 1;
+S4 = 8009abf4 + 1;
 [80114488] = h(0);
 [801142c8] = h(0);
 [800e4d44] = h(0);
@@ -129,35 +79,19 @@ La25bc:	; 800A25BC
     V0 = S3 << 10;
     if (V0 == 0)
     {
-        800A25C4	lui    v0, $8007
-        800A25C8	lhu    v0, $5dec(v0)
-        800A25CC	nop
-        800A25D0	addiu  v0, v0, $0001
-        800A25D4	lui    at, $8007
-        800A25D8	sh     v0, $5dec(at)
-        800A25DC	lui    v0, $8007
-        800A25E0	lhu    v0, $5dec(v0)
+        [80075dec] = h(hu[80075dec] + 1);
     }
-    La25e4:	; 800A25E4
-    800A25E4	nop
-    800A25E8	lui    v0, $8007
-    800A25EC	lhu    v0, $5dec(v0)
-    800A25F0	nop
-    800A25F4	andi   v0, v0, $0001
-    800A25F8	lui    at, $8007
-    800A25FC	sh     v0, $5dec(at)
-    800A2600	lui    a2, $8007
 
-    La2604:	; 800A2604
-    800A2604	lhu    a2, $5dec(a2)
+    [80075dec] = h(hu[80075dec] + 1);
+
+    A2 = hu[80075dec];
     V1 = h[80075dec];
-    800A2610	ori    a1, zero, $1000
-
+    A1 = 1000;
     S1 = 800e4df0 + V1 * 1789c;
-
-    800A2654	addu   a0, s1, zero
+    A0 = S1;
+    [S2] = b(A2);
     800A2658	jal    func44244 [$80044244]
-    800A265C	sb     a2, $0000(s2)
+
     800A2660	lui    s0, $0001
     800A2664	ori    s0, s0, $748c
     800A2668	addu   s0, s1, s0
@@ -179,12 +113,10 @@ La25bc:	; 800A25BC
     800A26A8	addu   a0, s0, zero
     800A26AC	lui    at, $8011
     800A26B0	sw     v0, $4454(at)
-    800A26B4	jal    funcba65c [$800ba65c]
     800A26B8	sh     v1, $0088(s2)
-    800A26BC	lhu    v0, $002a(s2)
+    funcba65c; // script update here
 
-    La26c0:	; 800A26C0
-    [800965e0] = h(V0);
+    [800965e0] = h(hu[S2 + 2a]);
 
     funca4430; // init screen movement
     funca496c; // make screen movement
@@ -239,51 +171,20 @@ La25bc:	; 800A25BC
 
     V1 = bu[8009abf4 + 1];
 
-    800A279C	lbu    a0, $0001(s2)
-    800A27A0	nop
-    800A27A4	addiu  v0, a0, $fff1 (=-$f)
-    800A27A8	sltiu  v0, v0, $0002
-    800A27AC	bne    v0, zero, La281c [$800a281c]
-    800A27B0	ori    v0, zero, $000d
-    800A27B4	ori    v0, zero, $0011
-    800A27B8	beq    v1, v0, La27dc [$800a27dc]
-    800A27BC	addiu  v0, a0, $ffeb (=-$15)
-    800A27C0	sltiu  v0, v0, $0002
-    800A27C4	bne    v0, zero, La281c [$800a281c]
-    800A27C8	ori    v0, zero, $000d
-    800A27CC	addiu  v0, a0, $ffe9 (=-$17)
-    800A27D0	sltiu  v0, v0, $0002
-    800A27D4	beq    v0, zero, La27e4 [$800a27e4]
-    800A27D8	addiu  v0, a0, $fffa (=-$6)
+    if ((V1 - f >= 2) || (V1 == 11) || (V1 - 15 >= 2) || (V1 - 17 < 2))
+    {
+        [8009c560] = h(d);
+        field_stop_load_background_in_advance;
+        return;
+    }
 
-    La27dc:	; 800A27DC
-    800A27DC	j      La281c [$800a281c]
-    800A27E0	ori    v0, zero, $000d
+    if ((V1 - 6 >= 2) || V1 == 8 || V1 == 9 || V1 == e || (V1 - 12 < 2))
+    {
+        [8009c560] = h(5);
+        field_stop_load_background_in_advance;
+        return;
+    }
 
-    La27e4:	; 800A27E4
-    800A27E4	sltiu  v0, v0, $0002
-    800A27E8	bne    v0, zero, La281c [$800a281c]
-    800A27EC	ori    v0, zero, $0005
-    800A27F0	ori    v0, zero, $0009
-    800A27F4	beq    v1, v0, La2818 [$800a2818]
-    800A27F8	ori    v0, zero, $000e
-    800A27FC	beq    v1, v0, La2818 [$800a2818]
-    800A2800	ori    v0, zero, $0008
-    800A2804	beq    v1, v0, La2818 [$800a2818]
-    800A2808	addiu  v0, a0, $ffee (=-$12)
-    800A280C	sltiu  v0, v0, $0002
-    800A2810	beq    v0, zero, La282c [$800a282c]
-    800A2814	nop
-
-    La2818:	; 800A2818
-    800A2818	ori    v0, zero, $0005
-
-    La281c:	; 800A281C
-    [8009c560] = h(V0);
-    field_stop_load_background_in_advance;
-    return;
-
-    La282c:	; 800A282C
     800A282C	lui    v0, $8011
     800A2830	lw     v0, $4454(v0)
     800A2834	nop
@@ -302,111 +203,77 @@ La25bc:	; 800A25BC
     800A2868	lui    v0, $8011
     800A286C	lhu    v0, $4488(v0)
     800A2870	nop
-    800A2874	bne    v0, zero, La2894 [$800a2894]
-    800A2878	ori    v0, zero, $0005
-    800A287C	lui    at, $800a
-    800A2880	sh     v0, $c560(at)
-    800A2884	ori    v0, zero, $0009
-    800A2888	sb     v0, $0001(s2)
-    800A2890	sh     zero, $0002(s2)
-    field_stop_load_background_in_advance;
-    return;
-
+    if (V0 == 0)
+    {
+        800A2878	ori    v0, zero, $0005
+        800A287C	lui    at, $800a
+        800A2880	sh     v0, $c560(at)
+        800A2884	ori    v0, zero, $0009
+        800A2888	sb     v0, $0001(s2)
+        800A2890	sh     zero, $0002(s2)
+        field_stop_load_background_in_advance;
+        return;
+    }
     La2894:	; 800A2894
-    800A2894	lbu    v1, $0000(s4)
-    if (V1 == 5 || V1 == 1a)
+    if (bu[8009abf4 + 1] == 5 || bu[8009abf4 + 1] == 1a)
     {
         field_stop_load_background_in_advance;
         return;
     }
 
-    800A28A8	ori    v0, zero, $0002
-    800A28AC	bne    v1, v0, La2940 [$800a2940]
-    800A28B0	nop
-    800A28B4	lui    v1, $8009
-    800A28B8	lh     v1, $65e0(v1)
-    800A28BC	nop
-    800A28C0	sll    v0, v1, $05
-    800A28C4	addu   v0, v0, v1
-    800A28C8	sll    v1, v0, $02
-    800A28CC	lui    at, $8007
-    800A28D0	addiu  at, at, $4eb0
-    800A28D4	addu   at, at, v1
-    800A28D8	lw     v0, $0000(at)
-    800A28DC	nop
-    800A28E0	bgez   v0, La28ec [$800a28ec]
-    800A28E4	nop
-    800A28E8	addiu  v0, v0, $0fff
+    if (bu[8009abf4 + 1] == 2)
+    {
+        V1 = h[800965e0]; // manual move entity
 
-    La28ec:	; 800A28EC
-    800A28EC	sra    v0, v0, $0c
-    800A28F0	sh     v0, $0003(s4)
-    800A28F4	lui    at, $8007
-    800A28F8	addiu  at, at, $4eb4
-    800A28FC	addu   at, at, v1
-    800A2900	lw     v0, $0000(at)
-    800A2904	nop
-    800A2908	bgez   v0, La2914 [$800a2914]
-    800A290C	nop
-    800A2910	addiu  v0, v0, $0fff
+        V0 = w[80074ea4 + V1 * 84 + c];
+        if (V0 < 0)
+        {
+            V0 = V0 & fff;
+        }
+        [8009abf4 + 4] = h(V0 >> c);
 
-    La2914:	; 800A2914
-    800A2914	sra    v0, v0, $0c
-    800A2918	sh     v0, $0005(s4)
-    800A291C	lui    at, $8007
-    800A2920	addiu  at, at, $4f16
-    800A2924	addu   at, at, v1
-    800A2928	lhu    v1, $0000(at)
-    800A292C	ori    v0, zero, $0002
-    800A2930	lui    at, $800a
-    800A2934	sh     v0, $c560(at)
-    800A293C	sh     v1, $0021(s4)
-    field_stop_load_background_in_advance;
-    return;
+        V0 = w[80074ea4 + V1 * 84 + 10];
+        if (V0 < 0)
+        {
+            V0 = V0 & fff;
+        }
+        [8009abf4 + 6] = h(V0 >> c);
 
-    La2940:	; 800A2940
-    800A2940	lui    a0, $8011
-    800A2944	lw     a0, $4454(a0)
-    handle_update;
+        [8009c560] = h(2);
+        [8009abf4 + 22] = h(hu[80074ea4 + V1 * 84 + 72]);
 
-    V0 = h[800965E0]; // manual move entity
-    A0 = 80074EA4 + V0 * 84;
-    A1 = 8007E7AC;
+        field_stop_load_background_in_advance;
+        return;
+    }
+
+    A0 = w[80114454];
+    handle_update; // update move/turns/scroll
+
+    V0 = h[800965e0]; // manual move entity
+    A0 = 80074ea4 + V0 * 84 + 0;
+    A1 = 8007e7ac;
     move_talk_to_line;
 
     // check talk
     funca8304;
 
-    800A2984	lui    v0, $8011
-    800A2988	lhu    v0, $4488(v0)
-    800A298C	nop
-    800A2990	beq    v0, zero, La29ac [$800a29ac]
-    800A2994	ori    v0, zero, $0001
-    800A2998	lui    v1, $800a
-    800A299C	lw     v1, $a060(v1)
-    800A29A0	nop
-    800A29A4	bne    v1, v0, La29b4 [$800a29b4]
-    800A29A8	nop
+    if ((hu[80114488] == 0) || (w[8009a060] == 1))
+    {
+        A0 = S1;
+        funca364c; // update background drafts
+    }
 
-    La29ac:	; 800A29AC
     A0 = S1;
-    800A29AC	jal    funca364c [$800a364c]
+    funcaab24; // update models (animations drafts and kawai)
 
-    La29b4:	; 800A29B4
-    800A29B4	jal    funcaab24 [$800aab24]
-    800A29B8	addu   a0, s1, zero
     800A29BC	jal    funcab728 [$800ab728]
-    800A29C0	nop
-    800A29C4	lui    a1, $0001
-    800A29C8	ori    a1, a1, $749c
-    800A29CC	lui    a3, $0001
-    800A29D0	ori    a3, a3, $7490
-    800A29D4	addu   a0, s1, zero
-    800A29D8	addu   a1, s1, a1
-    800A29DC	lui    a2, $8007
-    800A29E0	lw     a2, $1e40(a2)
+
+    A0 = S1;
+    A1 = S1 + 1749c;
+    A2 = w[80071e40];
+    A3 = S1 + 17490;
     800A29E4	jal    funcab5e8 [$800ab5e8]
-    800A29E8	addu   a3, s1, a3
+
     800A29EC	addu   a0, s1, zero
     800A29F0	lui    a2, $8007
     800A29F4	lw     a2, $16c4(a2)
@@ -422,12 +289,13 @@ La25bc:	; 800A25BC
     800A2A1C	sw     v0, $4478(at)
 
     loopa2a20:	; 800A2A20
-    800A2A20	jal    func43dd8 [$80043dd8]
-    800A2A24	ori    a0, zero, $0001
+        A0 = 1;
+        800A2A20	jal    func43dd8 [$80043dd8]
     800A2A28	bne    v0, zero, loopa2a20 [$800a2a20]
-    800A2A2C	nop
+
+    A0 = 1;
     800A2A30	jal    func3cedc [$8003cedc]
-    800A2A34	ori    a0, zero, $0001
+
     800A2A38	lui    v1, $8011
     800A2A3C	lhu    v1, $4488(v1)
     800A2A40	lui    at, $8011
