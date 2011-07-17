@@ -43,6 +43,8 @@
 800589b0 [][][][] we get here default tex page setting and store it to 800589a8 if 8004f7ac == 2, in case of 1 we load only tex X and Y from here.
 800589b4 [][][][] we get here default clut Y setting and store it to 800589ac if 8004f7ac == 0.
 
+800589e8 [][][][] store start of extended text characters here. 0xf8 in japanese.
+
 80058aa0 [][][][] number of channels to activate. Store 2 here when starting new sound.
 
 80058adc [][][][] pointer to some SED file (0391.sed).
@@ -64,6 +66,9 @@
 80058c5c [][][][] we add here number of polygons for which we create packets.
 
 80058c74 [][][][] offset to 80061bbc SPU channel structures.
+
+80059674 struct with data for text.
++1c [][][][] pointer to next character.
 
 80061bbc array of 4 bytes offsets to SPU channel structure at 80065270. We store 0 in appropriate channel when run this channel.
 

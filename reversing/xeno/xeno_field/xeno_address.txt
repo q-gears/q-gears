@@ -1,5 +1,3 @@
-800589e8 [][][][] store start of extended text characters here. 0xf8 in japanese.
-
 80058bc4 [][][][] store here pointer to polygons data block in 3d model file.
 
 80058bd4 [][][][] store here pointer to texture data block in 3d model file.

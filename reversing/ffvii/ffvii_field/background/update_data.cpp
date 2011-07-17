@@ -77,24 +77,16 @@ if ((hu[80114488] != 0) && (bu[8009abf4 + 3a] == 0))
         V0 = 800e4df0;
         if (S2 != V0)
         {
-            800A5E8C	lui    a0, $8010
-            800A5E90	addiu  a0, a0, $0860
-            800A5E94	lui    t0, $8011
-            800A5E98	addiu  t0, t0, $3f90
-            800A5E9C	addiu  a1, t0, $fff8 (=-$8)
-            800A5EA0	lui    v1, $8008
-            800A5EA4	lhu    v1, $eb90(v1)
-            800A5EA8	lui    a2, $8007
-            800A5EAC	lhu    a2, $1e38(a2)
-            800A5EB0	lui    v0, $8008
-            800A5EB4	lhu    v0, $eb94(v0)
-            800A5EB8	lui    a3, $8007
-            800A5EBC	lhu    a3, $1e3c(a3)
-            800A5EC0	addu   v1, v1, a2
-            800A5EC4	addu   v0, v0, a3
-            800A5EC8	addiu  v0, v0, $00e8
-            800A5ED0	sh     v1, $0000(t0)
-            [80113F92] = h(V0);
+            A0 = 80100860;
+            T0 = 80113f90;
+            A1 = T0 - 8;
+            V1 = hu[8007eb90];
+            A2 = hu[80071e38];
+            V0 = hu[8007eb94];
+            A3 = hu[80071e3c];
+            V1 = V1 + A2;
+            [T0] = h(V1);
+            [80113F92] = h(V0 + A3 + e8);
             func44ac0;
         }
         else
