@@ -262,8 +262,8 @@ AkaoParser::PlayMusic( const Ogre::String& file )
 
     if ( m_Music->GetU8( 0 ) == 0x41 && m_Music->GetU8( 1 ) == 0x4b && m_Music->GetU8( 2 ) == 0x41 && m_Music->GetU8( 3 ) == 0x4f) // AKAO
     {
-        int frame_id = m_Music->GetU16LE( 4 );
-        int frame_length = m_Music->GetU16LE( 6 );
+        int music_id = m_Music->GetU16LE( 4 );
+        int length = m_Music->GetU16LE( 6 );
         int reverb_mode = m_Music->GetU16LE( 8 );
 
         //A0 = reverb_mode;

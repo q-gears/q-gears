@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="default" />
+	<File name="..\..\src\AkaoParser.cc" open="1" top="1" tabpos="0">
+		<Cursor position="10645" topLine="203" />
+	</File>
+	<File name="..\..\src\common\typedefs.h" open="0" top="0" tabpos="0">
+		<Cursor position="138" topLine="0" />
+	</File>
+	<File name="..\..\src\engine\SoundManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5784" topLine="240" />
+	</File>
+	<File name="..\..\src\engine\SoundManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="6056" topLine="193" />
+	</File>
+	<File name="..\..\src\main.cc" open="0" top="0" tabpos="0">
+		<Cursor position="1030" topLine="33" />
+	</File>
+</CodeBlocks_layout_file>

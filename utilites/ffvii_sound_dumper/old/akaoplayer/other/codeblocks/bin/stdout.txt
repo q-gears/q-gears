@@ -1,0 +1,24 @@
+[SoundManager] info: initialization successfull.
+unknown opcode: fd 30 04
+unknown opcode: fe 01 00
+unknown opcode: fd 30 04
+unknown opcode: fe 01 00
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start
+Set voice start

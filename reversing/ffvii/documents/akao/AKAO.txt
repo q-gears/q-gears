@@ -1,4 +1,27 @@
-﻿Akao header:
+﻿AKAO description
+
+header
++00 [][][][] AKAO string 0x41 0x4b 0x41 0x4f.
++04 [][]     music id.
++06 [][]     length.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Akao header:
 /-------------------+-----------------------------------------------------------\
 |                   |   0x47  |         |   0x03  |                   |0x46|0x05| - ASERI2.SND
 |      "AKAO"       |   0x3b  |         |   0x04  |     0x22181296    |0x45|0x55| -  OVER2.SND

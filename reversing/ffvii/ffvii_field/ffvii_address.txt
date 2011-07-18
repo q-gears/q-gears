@@ -25,7 +25,7 @@
 
 800716d4 [] store music lock here. MULCK opcode.
 
-800716DC [][] entity array (set to 0 during script initing)
+800716dc [][] entity array (set to 0 during script initing)
 
 8007173c [][] danger counter.
 
