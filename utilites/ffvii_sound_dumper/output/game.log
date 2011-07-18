@@ -207,37 +207,3 @@ UpdateSequence for channel 9
 UpdateSequence for channel 9
     0xE8 set tempo to "379b0000"
     86 [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 0
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 1
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 2
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 3
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 4
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 5
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 6
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 7
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 8
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 9
-    0xE8 set tempo to "3b070000"
-    45 [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 10
-    2c [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 11
-    63 [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 12
-    16 [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 13
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 14
-    8f [UNIMPLEMENTED] UpdateSequence end
-UpdateSequence for channel 9
-    0xE8 set tempo to "3be20000"
-    66 [UNIMPLEMENTED] UpdateSequence end
