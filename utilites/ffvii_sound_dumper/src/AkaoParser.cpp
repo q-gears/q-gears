@@ -318,7 +318,7 @@ AkaoParser::PlayMusic( const Ogre::String& file )
 
 
         u16 offset_to_akao = 0;
-        m_MusicChannelConfig.active_channel_mask = m_Music->GetU32LE( 0x10 ) & 0x00ffffff;
+        m_MusicChannelConfig.active_channel_mask = m_Music->GetU32LE( 0x10 ) & /*0x00ffffff*/ 1;
         u32 channel_mask = m_MusicChannelConfig.active_channel_mask;
         int channel_id = 0;
         for ( u32 bit = 1; channel_mask != 0; bit <<= 1, channel_id += 1 )
@@ -382,7 +382,7 @@ AkaoParser::PlayMusic( const Ogre::String& file )
         [8009a144] = w(0);
         [8009a148] = w(0);
 */
-       m_MusicChannelConfig.tempo_increment_counter = 0;
+        m_MusicChannelConfig.tempo_increment_counter = 0;
 /*
         [8009a150] = h(0);
         [8009a152] = h(0);
@@ -539,8 +539,7 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A1 = hu[S0 + 1c]; // f8
         func395c8;
 */
-        LOGGER->Log( "UpdateSpu::SPU_PITCH channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].pitch ) + ".\n" );
-
+        //LOGGER->Log( "UpdateSpu::SPU_PITCH channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].pitch ) + ".\n" );
         SOUNDMAN->SetVoicePitch( channel_id, channel_data[ channel_id ].pitch );
         channel_data[ channel_id ].spu_update_flags &= ~SPU_PITCH;
     }
@@ -553,8 +552,7 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A2 = h[S0 + 2a]; // 106
         func393c8;
 */
-        LOGGER->Log( "UpdateSpu::SPU_LEFT_VOLUME|SPU_RIGHT_VOLUME channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].left_volume ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].right_volume ) + ".\n" );
-
+        //LOGGER->Log( "UpdateSpu::SPU_LEFT_VOLUME|SPU_RIGHT_VOLUME channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].left_volume ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].right_volume ) + ".\n" );
         SOUNDMAN->SetVoiceVolume( channel_id, channel_data[ channel_id ].left_volume, channel_data[ channel_id ].right_volume );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME );
     }
@@ -566,8 +564,7 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A1 = w[S0 + 8];
         func39644; // we set start address here
 */
-        LOGGER->Log( "UpdateSpu::SPU_START_OFFSET channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].start_offset ) + ".\n" );
-
+        //LOGGER->Log( "UpdateSpu::SPU_START_OFFSET channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].start_offset ) + ".\n" );
         SOUNDMAN->SetVoiceStartAddress( channel_id, channel_data[ channel_id ].start_offset );
         channel_data[ channel_id ].spu_update_flags &= ~SPU_START_OFFSET;
     }
@@ -579,8 +576,7 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A1 = w[S0 + c];
         func396c0;
 */
-        LOGGER->Log( "UpdateSpu::SPU_LOOP_OFFSET channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].loop_offset ) + ".\n" );
-
+        //LOGGER->Log( "UpdateSpu::SPU_LOOP_OFFSET channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].loop_offset ) + ".\n" );
         SOUNDMAN->SetVoiceLoopAddress( channel_id, channel_data[ channel_id ].loop_offset );
         channel_data[ channel_id ].spu_update_flags &= ~SPU_LOOP_OFFSET;
     }
@@ -593,8 +589,7 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A2 = h[S0 + 14]; // f0
         func398ec;
 */
-        LOGGER->Log( "UpdateSpu::SPU_SUSTAIN_RATE|SPU_SUSTAIN_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].sustain_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].sustain_mode ) + ".\n" );
-
+        //LOGGER->Log( "UpdateSpu::SPU_SUSTAIN_RATE|SPU_SUSTAIN_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].sustain_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].sustain_mode ) + ".\n" );
         SOUNDMAN->SetVoiceSustainRate( channel_id, channel_data[ channel_id ].sustain_rate, (SoundManager::SpuRateMode)channel_data[ channel_id ].sustain_mode );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_SUSTAIN_RATE | SPU_SUSTAIN_MODE );
     }
@@ -607,8 +602,7 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A2 = h[S0 + 10]; // ec
         func39850;
 */
-        LOGGER->Log( "UpdateSpu::SPU_ATTACK_RATE|SPU_ATTACK_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].attack_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].attack_mode ) + ".\n" );
-
+        //LOGGER->Log( "UpdateSpu::SPU_ATTACK_RATE|SPU_ATTACK_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].attack_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].attack_mode ) + ".\n" );
         SOUNDMAN->SetVoiceAttackRate( channel_id, channel_data[ channel_id ].attack_rate, ( SoundManager::SpuRateMode )channel_data[ channel_id ].attack_mode );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_ATTACK_RATE | SPU_ATTACK_MODE );
     }
@@ -621,8 +615,7 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A2 = h[S0 + 18]; // f4 // release mode
         func399d0;
 */
-        LOGGER->Log( "UpdateSpu::SPU_RELEASE_RATE|SPU_RELEASE_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].release_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].release_mode ) + ".\n" );
-
+        //LOGGER->Log( "UpdateSpu::SPU_RELEASE_RATE|SPU_RELEASE_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].release_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].release_mode ) + ".\n" );
         SOUNDMAN->SetVoiceReleaseRate( channel_id, channel_data[ channel_id ].release_rate, (SoundManager::SpuRateMode)channel_data[ channel_id ].release_mode );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_RELEASE_RATE | SPU_RELEASE_MODE );
     }
@@ -638,8 +631,7 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A1 = h[S0 + 22]; // fe // sustain level.
         func397c8;
 */
-        LOGGER->Log( "UpdateSpu::SPU_DECAY_RATE|SPU_SUSTAIN_LEVEL channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].decay_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].sustain_level ) + ".\n" );
-
+        //LOGGER->Log( "UpdateSpu::SPU_DECAY_RATE|SPU_SUSTAIN_LEVEL channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].decay_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].sustain_level ) + ".\n" );
         SOUNDMAN->SetVoiceDecayRate( channel_id, channel_data[ channel_id ].decay_rate );
         SOUNDMAN->SetVoiceSustainLevel( channel_id, channel_data[ channel_id ].sustain_level );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_DECAY_RATE | SPU_SUSTAIN_LEVEL );
@@ -677,19 +669,16 @@ AkaoParser::UpdatePlayChannel( bool on, u32 channel_mask )
 void
 AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelConfig& channel_config )
 {
-    std::cout << "UpdateSequence for channel " << channel_id << std::endl;
-    LOGGER->Log( "UpdateSequence for channel " + ToIntString( channel_id ) + "\n" );
+    //LOGGER->Log( "UpdateSequence for channel " + ToIntString( channel_id ) + "\n" );
 
     u8 opcode;
 
     for ( ;; )
     {
         opcode = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer );
-        std::cout << "opcode " << (int)opcode << std::endl;
 
         if ( opcode < 0xa0 )
         {
-            LOGGER->Log( "    " + ToHexString( opcode, 2, '0' ) + " [UNIMPLEMENTED] " );
             channel_data[ channel_id ].akao_sequence_pointer += 1;
             break;
         }
@@ -753,14 +742,14 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             LOGGER->Log( "    0xA3 " );
             channel_data[ channel_id ].volume_multiplier = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
             channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
-            LOGGER->Log( "set volume multiplier to \"" + ToHexString( channel_data[ channel_id ].volume_multiplier, 2, '0' ) + "\"\n" );
+            LOGGER->Log( "Set volume multiplier to \"" + ToHexString( channel_data[ channel_id ].volume_multiplier, 2, '0' ) + "\".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if ( opcode == 0xa5 ) // set pitch correction
         {
             LOGGER->Log( "    0xA5 " );
             channel_data[ channel_id ].pitch_correction = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
-            LOGGER->Log( "set pitch correction to \"" + ToHexString( channel_data[ channel_id ].pitch_correction, 4, '0' ) + "\"\n" );
+            LOGGER->Log( "Set pitch correction to \"" + ToHexString( channel_data[ channel_id ].pitch_correction, 4, '0' ) + "\".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if ( opcode == 0xa6 )
@@ -775,21 +764,21 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         }
         else if ( opcode == 0xa8 ) // set channel volume
         {
-            LOGGER->Log( "    0xA8 [UNIMPLEMENTED] " );
-            LOGGER->Log( "set channel volume to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x17, 8, '0' ) + "\"\n" );
+            LOGGER->Log( "    0xA8 [UNIMPLEMENTED]\n" );
+            //LOGGER->Log( "set channel volume to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x17, 8, '0' ) + "\"\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if ( opcode == 0xa9 ) // set channel volume increase/descrease
         {
-            LOGGER->Log( "    0xA9 [UNIMPLEMENTED] " );
-            LOGGER->Log( "set volume tick to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ), 2, '0' ) + "\" and " );
-            LOGGER->Log( "set change volume to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 ) << 0x17, 8, '0' ) + "\"\n" );
+            LOGGER->Log( "    0xA9 [UNIMPLEMENTED]\n" );
+            //LOGGER->Log( "set volume tick to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ), 2, '0' ) + "\" and " );
+            //LOGGER->Log( "set change volume to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 ) << 0x17, 8, '0' ) + "\"\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if ( opcode == 0xaa ) // set volume pan
         {
-            LOGGER->Log( "    0xAA [UNIMPLEMENTED] " );
-            LOGGER->Log( "set volume pan to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x8, 4, '0' ) + "\"\n" );
+            LOGGER->Log( "    0xAA [UNIMPLEMENTED]\n" );
+            //LOGGER->Log( "set volume pan to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x8, 4, '0' ) + "\"\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if ( opcode == 0xad ) // ???
@@ -805,7 +794,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         else if ( opcode == 0xb4 ) // set wave
         {
             LOGGER->Log( "    0xB4 [UNIMPLEMENTED] " );
-            LOGGER->Log( "set wave data\n" );
+            //LOGGER->Log( "set wave data\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 4;
         }
         else if ( opcode == 0xb5 ) // ???
@@ -815,7 +804,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         }
         else if ( opcode == 0xc2 ) // turn reverb on
         {
-            LOGGER->Log( "    0xC2 [UNIMPLEMENTED] turn reverb on\n" );
+            LOGGER->Log( "    0xC2 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
         else if ( opcode == 0xcc )
@@ -848,14 +837,13 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             LOGGER->Log( "    0xE8 " );
             channel_config.tempo = m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x10;
             channel_config.tempo_increment_counter = 0;
-            LOGGER->Log( "set tempo to \"" + ToHexString( channel_config.tempo, 4, '0' ) + "\"\n" );
+            LOGGER->Log( "Set channel_config.tempo to \"" + ToHexString( channel_config.tempo, 8, '0' ) + "\" and channel_config.tempo_increment_counter to 0.\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if ( opcode == 0xea ) // set reverb depth
         {
-            LOGGER->Log( "    0xEA [UNIMPLEMENTED] " );
-            LOGGER->Log( "set reverb depth to \"" + ToHexString( m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x10, 8, '0' ) + "\"\n" );
-
+            LOGGER->Log( "    0xEA [UNIMPLEMENTED]\n" );
+            //LOGGER->Log( "set reverb depth to \"" + ToHexString( m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x10, 8, '0' ) + "\"\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if ( opcode == 0xec )
@@ -880,17 +868,17 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         }
         else if ( opcode == 0xfd ) // reset timers lower and upper
         {
-            LOGGER->Log( "    0xFD [UNIMPLEMENTED] " );
-            LOGGER->Log( "reset timers that can be readed in field with 0xF7 CHMPH. " );
-            LOGGER->Log( "Values Upper(" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 ), 2, '0' ) + ") " );
-            LOGGER->Log( "Lower(" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ), 2, '0' ) + ")\n" );
+            LOGGER->Log( "    0xFD [UNIMPLEMENTED]\n" );
+            //LOGGER->Log( "reset timers that can be readed in field with 0xF7 CHMPH. " );
+            //LOGGER->Log( "Values Upper(" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 ), 2, '0' ) + ") " );
+            //LOGGER->Log( "Lower(" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ), 2, '0' ) + ")\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if ( opcode == 0xfe ) // reset timers main
         {
-            LOGGER->Log( "    0xFE [UNIMPLEMENTED] " );
-            LOGGER->Log( "reset main timer than increment when all lower and upper timers counted. Can be readed in field with 0xF7 CHMPH. " );
-            LOGGER->Log( "Value(" + ToHexString( m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ), 4, '0' ) + ")\n" );
+            LOGGER->Log( "    0xFE [UNIMPLEMENTED]\n" );
+            //LOGGER->Log( "reset main timer than increment when all lower and upper timers counted. Can be readed in field with 0xF7 CHMPH. " );
+            //LOGGER->Log( "Value(" + ToHexString( m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ), 4, '0' ) + ")\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if ( opcode == 0xff )
@@ -932,6 +920,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 
         if ( opcode >= 0x8f )
         {
+            LOGGER->Log( "    0x" + ToHexString( opcode, 2, '0' ) + " [UNIMPLEMENTED].\n" );
             //[S0 + 6c] = h(0);
             //[S0 + d6] = h(0);
             //[S0 + d8] = h(0);
@@ -939,6 +928,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         }
         else if ( opcode < 0x84 )
         {
+            LOGGER->Log( "    0x" + ToHexString( opcode, 2, '0' ) + " PLAY.\n" );
             u32 calculated_pitch;
 
 /*
@@ -1297,7 +1287,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 
 
 
-    LOGGER->Log( "UpdateSequence end\n" );
+    //LOGGER->Log( "UpdateSequence end\n" );
 }
 
 
@@ -1305,14 +1295,14 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 void
 AkaoParser::InitChannelInstrument( ChannelData* channel_data, int channel_id, int instrument_id )
 {
+    //LOGGER->Log( "Load voice " + Ogre::StringConverter::toString( instrument_id ) + " to channel " + Ogre::StringConverter::toString( channel_id ) + ".\n" );
     InstrumentData data = m_InstrumentData[ instrument_id ];
 
     channel_data[ channel_id ].instrument_id = instrument_id;
     channel_data[ channel_id ].start_offset = data.start_offset;
     channel_data[ channel_id ].loop_offset = data.loop_offset;
-    LOGGER->Log( "Load voice " + Ogre::StringConverter::toString( instrument_id ) + " to channel " + Ogre::StringConverter::toString( channel_id ) + ".\n" );
-    LOGGER->Log( "SPU_ADDRESS_START " + Ogre::StringConverter::toString( data.start_offset ) + "\n" );
-    LOGGER->Log( "SPU_ADDRESS_LOOP " + Ogre::StringConverter::toString( data.loop_offset ) + "\n" );
+    //LOGGER->Log( "SPU_ADDRESS_START " + Ogre::StringConverter::toString( data.start_offset ) + "\n" );
+    //LOGGER->Log( "SPU_ADDRESS_LOOP " + Ogre::StringConverter::toString( data.loop_offset ) + "\n" );
     channel_data[ channel_id ].attack_mode = data.attack_mode;
     channel_data[ channel_id ].sustain_mode = data.sustain_mode;
     channel_data[ channel_id ].release_mode = data.release_mode;
