@@ -133,3 +133,72 @@
 	"engine/SoundManager.hh"
 	"AkaoParser.hh"
 
+1311007042 source:d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\akaoparseropcodes.cc
+	<iostream>
+	<iomanip>
+	"AkaoParser.hh"
+
+1311017637 d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\akaoparser.hh
+	<inttypes.h>
+	<vector>
+	"common/typedefs.h"
+	"AkaoParserOpcodes.hh"
+
+1311009840 d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\common\typedefs.h
+	<inttypes.h>
+	<windows.h>
+
+1311007042 d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\akaoparseropcodes.hh
+
+1311010075 source:d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\engine\soundmanager.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<sys/time.h>
+	"SoundManager.h"
+	"SoundBackend.hh"
+	"backends/SoundBackendSDL.hh"
+	<windows.h>
+
+1311009861 d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\engine\soundmanager.h
+	"../common/typedefs.h"
+
+1311009872 d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\engine\soundbackend.hh
+	"common/typedefs.h"
+	<iostream>
+
+1311009868 d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\engine\backends\soundbackendsdl.hh
+	<SDL/SDL.h>
+	"common/typedefs.h"
+	"engine/SoundBackend.hh"
+
+1311009865 source:d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\engine\backends\soundbackendsdl.cc
+	<SDL/SDL.h>
+	"common/typedefs.h"
+	"engine/backends/SoundBackendSDL.hh"
+
+1311009875 source:d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\main.cc
+	<iostream>
+	<sstream>
+	<iomanip>
+	<SDL/SDL.h>
+	"AkaoParser.hh"
+	"engine/SoundManager.h"
+	"main.hh"
+
+1311007042 d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\main.hh
+
+1311017560 source:d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\akaoparser.cc
+	<string.h>
+	<fstream>
+	<iomanip>
+	<iostream>
+	<vector>
+	"common/typedefs.h"
+	"engine/SoundManager.hh"
+	"AkaoParser.hh"
+
+1311009858 d:\my\1\svn\q-gears\utilites\ffvii_sound_dumper\old\akaoplayer\src\engine\soundmanager.hh
+	<inttypes.h>
+	"common/typedefs.h"
+

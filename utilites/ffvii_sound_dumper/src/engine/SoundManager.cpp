@@ -673,9 +673,6 @@ void SoundManager::PsxChannelStop(u8 arg_channel)
 // +++
 void SoundManager::SetVoiceStartAddress(u8 arg_voice, u32 arg_address)
 {
-		std::cout << "Set voice start" << std::endl;
-    //LOGGER->Log( "Set voice start" );
-
 	if(arg_voice >= 0x18)
 	{
 		std::cout << "*** error: wrong channel!" << std::endl;

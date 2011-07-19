@@ -99,96 +99,96 @@ const s16 AkaoParser::m_AKAO_VOLUME_TABLE_R[256] =
 	  -49,   -36,   -25,   -16,    -9,    -4,    -1,     0
 };
 
-const s16 AkaoParser::m_AKAO_WAVE_TABLE[708] = 
+const s16 AkaoParser::m_AKAO_WAVE_TABLE[708] =
 {
-	  8191,  -8191,  16383, -16383,  24575, -24575,  32767, -32767, 
-	     0,      0,     -2,      0,  32767, -32767,      0,      0, 
-	    -2,      0,   8191,      0,  16383,      0,  24575,      0, 
-	 32767,      0,      0,     -2,  32767,      0,  32767,      0, 
-	     0,     -2,  -8191,      0, -16383,      0, -24575,      0, 
-	-32767,      0,      0,     -2, -32767,      0, -32767,      0, 
-	     0,     -2,      0,   1280,   2530,   4813,   5790,   6625, 
-	  7297,   7789,   8090,   8191,   8092,   7793,   7302,   6632, 
-	  5799,   4823,   3728,   2542,   1293,      0,  -1268,  -2518, 
-	 -3706,  -4803,  -5782,  -6618,  -7292,  -7786,  -8089,  -8192, 
-	 -8095,  -7798,  -7309,  -6641,  -5809,  -4835,  -3741,  -2556, 
-	 -1307,      0,   2561,   5060,   9626,  11580,  13250,  14594, 
-	 15578,  16180,  16383,  16184,  15586,  14605,  13265,  11599, 
-	  9647,   7457,   5085,   2587,      0,  -2536,  -5036,  -7412, 
-	 -9605, -11563, -13235, -14583, -15571, -16177, -16384, -16189, 
-	-15595, -14618, -13281, -11618,  -9669,  -7482,  -5111,  -2614, 
-	     0,   3842,   7590,  14439,  17370,  19875,  21891,  23367, 
-	 24270,  24575,  24276,  23379,  21908,  19898,  17398,  14470, 
-	 11186,   7627,   3881,      0,  -3804,  -7554, -11118, -14408, 
-	-17344, -19853, -21874, -23357, -24265, -24576, -24284, -23393, 
-	-21927, -19922, -17427, -14503, -11223,  -7666,  -3921,      0, 
-	  5123,  10120,  19252,  23161,  26500,  29188,  31157,  32360, 
-	 32767,  32369,  31173,  29211,  26531,  23198,  19294,  14915, 
-	 10170,   5175,      0,  -5072, -10072, -14823, -19210, -23125, 
-	-26470, -29165, -31142, -32353, -32768, -32378, -31190, -29236, 
-	-26562, -23235, -19337, -14963, -10221,  -5227,      0,      0, 
-	   -39,      0,      0,   5123,  10120,  19252,  23161,  26500, 
-	 29188,  31157,  32360,  32767,  32369,  31173,  29211,  26531, 
-	 23198,  19294,  14915,  10170,   5175,      0,  -5072, -10072, 
-	-14823, -19210, -23125, -26470, -29165, -31142, -32353, -32768, 
-	-32378, -31190, -29236, -26562, -23235, -19337, -14963, -10221, 
-	 -5227,      0,      0,    -39,      0,   2530,   4813,   6625, 
-	  7789,   8191,   7793,   6632,   4823,   2542,     13,  -2518, 
-	 -4803,  -6618,  -7786,  -8192,  -7798,  -6641,  -4835,  -2556, 
-	     0,   5060,   9626,  13250,  15578,  16383,  15586,  13265, 
-	  9647,   5085,     26,  -5036,  -9605, -13235, -15571, -16384, 
-	-15595, -13281,  -9669,  -5111,      0,   7590,  14439,  19875, 
-	 23367,  24575,  23379,  19898,  14470,   7627,     39,  -7554, 
-	-14408, -19853, -23357, -24576, -23393, -19922, -14503,  -7666, 
-	     0,  10120,  19252,  26500,  31157,  32767,  31173,  26531, 
-	 19294,  10170,     52, -10072, -19210, -26470, -31142, -32768, 
-	-31190, -26562, -19337, -10221,      0,      0,    -20,      0, 
-	     0,  10120,  19252,  26500,  31157,  32767,  31173,  26531, 
-	 19294,  10170,     52, -10072, -19210, -26470, -31142, -32768, 
-	-31190, -26562, -19337, -10221,      0,      0,    -20,      0, 
-	     0,   2047,   4095,   6143,   8191,   6143,   4095,   2047, 
-	     0,  -2047,  -4095,  -6143,  -8191,  -6143,  -4095,  -2047, 
-	     0,   4095,   8191,  12287,  16383,  12287,   8191,   4095, 
-	     0,  -4095,  -8191, -12287, -16383, -12287,  -8191,  -4095, 
-	     0,   6143,  12287,  18431,  24575,  18431,  12287,   6143, 
-	     0,  -6143, -12287, -18431, -24575, -18431, -12287,  -6143, 
-	     0,   8191,  16383,  24575,  32767,  24575,  16383,   8191, 
-	     0,  -8191, -16383, -24575, -32767, -24575, -16383,  -8191, 
-	     0,      0,    -16,      0,      0,   8191,  16383,  24575, 
-	 32767,  24575,  16383,   8191,      0,  -8191, -16383, -24575, 
-	-32767, -24575, -16383,  -8191,      0,      0,    -16,      0, 
-	     0,  12797,  32005,  -2563,  -4882,  31036,  30160,   2044, 
-	 -3055, -15627,  26127,  13070,  16362, -16671, -29678,   6177, 
-	-20485,  18944, -11289,  -2827,  -7881,  -6189,  21005,   4355, 
-	-20769,  19192,   1862,  28916, -28991, -26855,  13586,  -2560, 
-	  6912, -19223,  15134, -20971, -25400,  26105, -15581,  29176, 
-	 11505, -23036, -27908, -14066, -20471,   4325,   2052, -32767, 
-	  4858,   4376,  -6391,  18424, -27175,  -8932,   6921,   3060, 
-	 31740,   8447, -27644,  32252, -29963, -18665,  29945,  11004, 
-	 -8954, -10253,  -2819,   1544,  -3560,  27103, -17401,  19191, 
-	-30229, -17625,   4361,  32751,  13845,  -4915,  30241, -26603, 
-	 22223, -11258,  13090,  -8218, -20726, -17931, -12792,  23813, 
-	-16402,  -4070,   8424, -24810, -29454, -15641, -11730, -14847, 
-	-17968, -32500,  17187,  10461, -26889,  23612, -24610, -20760, 
-	-18917,  16115,   5128,  -9495,  11275, -20173, -22303,   1498, 
-	  2324,  20002,    -24, -30735,   8688, -29403,  32252,   7408, 
-	 24081,  15848, -14582, -28905,    -16,  27149,    -29,   4851, 
-	  1055,  30732, -15121,  23298,  15618,    754,   5401,  -9515, 
-	-17143, -28135,  -2813,  25309,  14342,   3878, -22277,  -7938, 
-	 -2333,   3586,    528,  17414, -27436, -12022, -22458,   4337, 
-	  6860, -16899,   6704, -24341,  24554, -16624, -17425,  -8421, 
-	-15860,  10976,  16114, -20953,  20481,  -1571,  13841, -21222, 
-	  2015,  27909,   6669, -18725,  27947,  13831,  -1076,  16904, 
-	  3873,  14070, -14330,   1539,   -553,  30743,   1541, -20725, 
-	-27140,   4332, -22770, -21005,  26127, -16910,  -8456,  -7135, 
-	-19993,   -787,  23324, -24311, -13070,  -2573, -25861, -19433, 
-	-27928,  32520,  19450, -30211,  15388,   -785,  -3365,  18973, 
-	 26397, -10497,  26074,  -3588,  28170,   2572,   4600,  18946, 
-	 23548,  -5370, -23059,  12518, -32751, -11724,   2296,  17372, 
-	 -2551, -22798, -26099,  28678,  -2582, -25348, -32482, -21018, 
-	 -6642, -27145, -19708, -25345,  -4118,  -2791,  -1536,  15094, 
-	-14379,  10018, -17608,  17361,  30701,  18696, -12798, -21745, 
-	 15851,  -9462,  25601,  16377,  30450, -27895, -11761,  29925, 
+	  8191,  -8191,  16383, -16383,  24575, -24575,  32767, -32767,
+	     0,      0,     -2,      0,  32767, -32767,      0,      0,
+	    -2,      0,   8191,      0,  16383,      0,  24575,      0,
+	 32767,      0,      0,     -2,  32767,      0,  32767,      0,
+	     0,     -2,  -8191,      0, -16383,      0, -24575,      0,
+	-32767,      0,      0,     -2, -32767,      0, -32767,      0,
+	     0,     -2,      0,   1280,   2530,   4813,   5790,   6625,
+	  7297,   7789,   8090,   8191,   8092,   7793,   7302,   6632,
+	  5799,   4823,   3728,   2542,   1293,      0,  -1268,  -2518,
+	 -3706,  -4803,  -5782,  -6618,  -7292,  -7786,  -8089,  -8192,
+	 -8095,  -7798,  -7309,  -6641,  -5809,  -4835,  -3741,  -2556,
+	 -1307,      0,   2561,   5060,   9626,  11580,  13250,  14594,
+	 15578,  16180,  16383,  16184,  15586,  14605,  13265,  11599,
+	  9647,   7457,   5085,   2587,      0,  -2536,  -5036,  -7412,
+	 -9605, -11563, -13235, -14583, -15571, -16177, -16384, -16189,
+	-15595, -14618, -13281, -11618,  -9669,  -7482,  -5111,  -2614,
+	     0,   3842,   7590,  14439,  17370,  19875,  21891,  23367,
+	 24270,  24575,  24276,  23379,  21908,  19898,  17398,  14470,
+	 11186,   7627,   3881,      0,  -3804,  -7554, -11118, -14408,
+	-17344, -19853, -21874, -23357, -24265, -24576, -24284, -23393,
+	-21927, -19922, -17427, -14503, -11223,  -7666,  -3921,      0,
+	  5123,  10120,  19252,  23161,  26500,  29188,  31157,  32360,
+	 32767,  32369,  31173,  29211,  26531,  23198,  19294,  14915,
+	 10170,   5175,      0,  -5072, -10072, -14823, -19210, -23125,
+	-26470, -29165, -31142, -32353, -32768, -32378, -31190, -29236,
+	-26562, -23235, -19337, -14963, -10221,  -5227,      0,      0,
+	   -39,      0,      0,   5123,  10120,  19252,  23161,  26500,
+	 29188,  31157,  32360,  32767,  32369,  31173,  29211,  26531,
+	 23198,  19294,  14915,  10170,   5175,      0,  -5072, -10072,
+	-14823, -19210, -23125, -26470, -29165, -31142, -32353, -32768,
+	-32378, -31190, -29236, -26562, -23235, -19337, -14963, -10221,
+	 -5227,      0,      0,    -39,      0,   2530,   4813,   6625,
+	  7789,   8191,   7793,   6632,   4823,   2542,     13,  -2518,
+	 -4803,  -6618,  -7786,  -8192,  -7798,  -6641,  -4835,  -2556,
+	     0,   5060,   9626,  13250,  15578,  16383,  15586,  13265,
+	  9647,   5085,     26,  -5036,  -9605, -13235, -15571, -16384,
+	-15595, -13281,  -9669,  -5111,      0,   7590,  14439,  19875,
+	 23367,  24575,  23379,  19898,  14470,   7627,     39,  -7554,
+	-14408, -19853, -23357, -24576, -23393, -19922, -14503,  -7666,
+	     0,  10120,  19252,  26500,  31157,  32767,  31173,  26531,
+	 19294,  10170,     52, -10072, -19210, -26470, -31142, -32768,
+	-31190, -26562, -19337, -10221,      0,      0,    -20,      0,
+	     0,  10120,  19252,  26500,  31157,  32767,  31173,  26531,
+	 19294,  10170,     52, -10072, -19210, -26470, -31142, -32768,
+	-31190, -26562, -19337, -10221,      0,      0,    -20,      0,
+	     0,   2047,   4095,   6143,   8191,   6143,   4095,   2047,
+	     0,  -2047,  -4095,  -6143,  -8191,  -6143,  -4095,  -2047,
+	     0,   4095,   8191,  12287,  16383,  12287,   8191,   4095,
+	     0,  -4095,  -8191, -12287, -16383, -12287,  -8191,  -4095,
+	     0,   6143,  12287,  18431,  24575,  18431,  12287,   6143,
+	     0,  -6143, -12287, -18431, -24575, -18431, -12287,  -6143,
+	     0,   8191,  16383,  24575,  32767,  24575,  16383,   8191,
+	     0,  -8191, -16383, -24575, -32767, -24575, -16383,  -8191,
+	     0,      0,    -16,      0,      0,   8191,  16383,  24575,
+	 32767,  24575,  16383,   8191,      0,  -8191, -16383, -24575,
+	-32767, -24575, -16383,  -8191,      0,      0,    -16,      0,
+	     0,  12797,  32005,  -2563,  -4882,  31036,  30160,   2044,
+	 -3055, -15627,  26127,  13070,  16362, -16671, -29678,   6177,
+	-20485,  18944, -11289,  -2827,  -7881,  -6189,  21005,   4355,
+	-20769,  19192,   1862,  28916, -28991, -26855,  13586,  -2560,
+	  6912, -19223,  15134, -20971, -25400,  26105, -15581,  29176,
+	 11505, -23036, -27908, -14066, -20471,   4325,   2052, -32767,
+	  4858,   4376,  -6391,  18424, -27175,  -8932,   6921,   3060,
+	 31740,   8447, -27644,  32252, -29963, -18665,  29945,  11004,
+	 -8954, -10253,  -2819,   1544,  -3560,  27103, -17401,  19191,
+	-30229, -17625,   4361,  32751,  13845,  -4915,  30241, -26603,
+	 22223, -11258,  13090,  -8218, -20726, -17931, -12792,  23813,
+	-16402,  -4070,   8424, -24810, -29454, -15641, -11730, -14847,
+	-17968, -32500,  17187,  10461, -26889,  23612, -24610, -20760,
+	-18917,  16115,   5128,  -9495,  11275, -20173, -22303,   1498,
+	  2324,  20002,    -24, -30735,   8688, -29403,  32252,   7408,
+	 24081,  15848, -14582, -28905,    -16,  27149,    -29,   4851,
+	  1055,  30732, -15121,  23298,  15618,    754,   5401,  -9515,
+	-17143, -28135,  -2813,  25309,  14342,   3878, -22277,  -7938,
+	 -2333,   3586,    528,  17414, -27436, -12022, -22458,   4337,
+	  6860, -16899,   6704, -24341,  24554, -16624, -17425,  -8421,
+	-15860,  10976,  16114, -20953,  20481,  -1571,  13841, -21222,
+	  2015,  27909,   6669, -18725,  27947,  13831,  -1076,  16904,
+	  3873,  14070, -14330,   1539,   -553,  30743,   1541, -20725,
+	-27140,   4332, -22770, -21005,  26127, -16910,  -8456,  -7135,
+	-19993,   -787,  23324, -24311, -13070,  -2573, -25861, -19433,
+	-27928,  32520,  19450, -30211,  15388,   -785,  -3365,  18973,
+	 26397, -10497,  26074,  -3588,  28170,   2572,   4600,  18946,
+	 23548,  -5370, -23059,  12518, -32751, -11724,   2296,  17372,
+	 -2551, -22798, -26099,  28678,  -2582, -25348, -32482, -21018,
+	 -6642, -27145, -19708, -25345,  -4118,  -2791,  -1536,  15094,
+	-14379,  10018, -17608,  17361,  30701,  18696, -12798, -21745,
+	 15851,  -9462,  25601,  16377,  30450, -27895, -11761,  29925,
 	     0,      0,   -256,      0
 };
 
@@ -218,29 +218,6 @@ AkaoParser::~AkaoParser()
 int AkaoParser::LoadVoiceData(const char *arg_all_file,
 		const char *arg_dat_file)
 {
-    // load instruments adpsm
-    {
-        File* file = new File( arg_all_file );
-
-        u32 address = file->GetU32LE( 0x0 ) / 8;
-        u32 datasize = file->GetU32LE( 0x4 );
-
-        u8* buffer = new u8[ datasize ];
-        file->GetFileBuffer( buffer, 0x10, datasize );
-
-        if ( !SOUNDMAN->PsxWriteDMA( address, buffer, datasize ) )
-        {
-            LOGGER->Log( "[AkaoParser::LoadVoiceData] error: failed to DMA write sample data.\n" );
-        }
-
-        delete[] buffer;
-        delete file;
-    }
-
-
-
-
-
 	// check if this voice data already loaded
 	int filenames_count = m_VoiceFilenames.size();
 	if(filenames_count)
@@ -319,7 +296,7 @@ int AkaoParser::LoadVoiceData(const char *arg_all_file,
 
 		u32 length = voice_file_size - 16 -
 			m_VoiceIndex[last_index].attack_offset;
-	
+
 		u8 *voice = new u8[length];
 		iVoiceF.seekg(m_VoiceIndex[last_index].attack_offset);
 		iVoiceF.read((char *)voice, length);
@@ -561,7 +538,7 @@ void AkaoParser::PeriodicalProcess(int arg_delta)
 	for(int i = 0; i < m_AKAO_CHANNELS_COUNT; ++i)
 	{
 		bool pitch_changed = false;
-		
+
 		// pitch wave processing (opcode B4)
 		if(m_CD[i].wave_delay_current)
 			--m_CD[i].wave_delay_current;
@@ -574,7 +551,7 @@ void AkaoParser::PeriodicalProcess(int arg_delta)
 				// ch[0x76] - here is 2nd parameter of B4
 				m_CD[i].wave_refresh_interval_current =
 					m_CD[i].wave_refresh_interval;
-	
+
 				// wierd...
 				// looks like if we have two zeroes in a row
 				// then 3rd coefficient isn't actual coefficient for
@@ -585,44 +562,44 @@ void AkaoParser::PeriodicalProcess(int arg_delta)
 					m_CD[i].wave_table_index +=
 						m_AKAO_WAVE_TABLE[m_CD[i].wave_table_index + 2];
 				}
-		
+
 				s16 a3;
 				{
 					s32 v0 = m_CD[i].wave_multiplier *
 						m_AKAO_WAVE_TABLE[m_CD[i].wave_table_index];
-	
+
 					a3 = v0 >> 16;
 				}
-						
+
 				++m_CD[i].wave_table_index;
-						
+
 				// write new pitch shift,
 				// if we have other shift that now
 				if(a3 != m_CD[i].pitch_wave_shift)
 				{
 					m_CD[i].pitch_wave_shift = a3;
-												
+
 					if(m_CD[i].pitch_wave_shift >= 0)
 						m_CD[i].pitch_wave_shift *= 2;
-	
+
 					// set flag that we changed pitch
 					pitch_changed = true;
 				}
 			}
 		}
-	
+
 		if(pitch_changed)
 		{
 			// add changes to base pitch
 			u16 current_pitch = m_CD[i].pitch_base +
 				m_CD[i].pitch_unknown1 +
 				m_CD[i].pitch_wave_shift;
-					
+
 			if(m_CD[i].pitch_80062fe6)
 			{
 				cout << "*** WARNING: can't show this message for now!"
 					<< endl;
-	
+
 				s32 v0 = current_pitch * m_CD[i].pitch_80062fe6;
 				if(m_CD[i].pitch_80062fe6 < 0x80)
 				{
@@ -731,7 +708,7 @@ void AkaoParser::OpcodeProcess(int arg_delta)
 				PrintOpcode(i, current_opcode);
 				cout << endl;
 			}
-	
+
 			// see AkaoParserOpcodes.cc
 			CALL_MEMBER_FN(this, m_ProcessOpcode[opcode_index])(i);
 		}
@@ -743,7 +720,7 @@ void AkaoParser::OpcodeProcess(int arg_delta)
 			cout << endl;
 			m_CD[i].current_pos += m_OpcodesParametersCount[opcode_index];
 		}
-	
+
 	}while(current_opcode != 0xa0);
 
 	// channel finished
@@ -781,33 +758,33 @@ void AkaoParser::OpcodeProcess(int arg_delta)
 				u8 pitch_index = current_opcode / 11;
 
 				// save pitch parameters
-				m_CD[i].pitch_saved_parameters = 
+				m_CD[i].pitch_saved_parameters =
 					pitch_index + m_CD[i].pitch_correction * 12;
-	
+
 				// pitch selector
 				pitch_index += m_CD[i].pitch_selector;
-	
+
 				// load selected pitch from table
 				u32 current_pitch = m_VoiceIndex[
 					m_CD[i].voice_index].pitch[pitch_index];
-	
+
 				// apply pitch correction
 				if(m_CD[i].pitch_correction >= 7)
 					current_pitch <<= (m_CD[i].pitch_correction - 6);
 				else if(m_CD[i].pitch_correction < 6)
 					current_pitch >>= (6 - m_CD[i].pitch_correction);
-	
+
 				// pitch modifier
 				if(m_CD[i].pitch_modifier)
 				{
 					current_pitch +=
 						current_pitch * m_CD[i].pitch_modifier /
 						(m_CD[i].pitch_modifier > 0 ? 128 : 256);
-	
+
 					// make sure we are not out of 0xffff range
 					current_pitch = current_pitch & 0xffff;
 				}
-	
+
 				m_CD[i].pitch_base = current_pitch;
 				this->RefreshWaveParameters(i);
 				SpuSetParameter(m_CD[i].spu_config, SPU_PITCH, current_pitch);
@@ -912,43 +889,62 @@ void AkaoParser::SpuUpdate()
 	{
 		SpuConfig &config = m_CD[i].spu_config;
 		u32 flags = config.refresh_flags;
-		
+
 		if(!flags)
 			continue;
 
 		if(flags & SPU_ADDRESS_START)
+        {
+            cout << "UpdateSpu::SPU_START_OFFSET channel " << i << " value:" << config.address_start << endl;
 			SOUNDMAN->SetVoiceStartAddress(i, config.address_start);
+        }
 
 		if(flags & SPU_ADDRESS_LOOP)
+        {
+            cout << "UpdateSpu::SPU_LOOP_OFFSET channel " << i << " value:" << config.address_loop << endl;
 			SOUNDMAN->SetVoiceLoopAddress(i, config.address_loop);
+        }
 
 		if((flags & SPU_VOLUME_LEFT) || (flags & SPU_VOLUME_RIGHT))
-			SOUNDMAN->SetVoiceVolume(i,
-					config.volume_left, config.volume_right);
+        {
+            cout << "UpdateSpu::SPU_LEFT_VOLUME|SPU_RIGHT_VOLUME channel " << i << " value:" << config.volume_left << " " << config.volume_right << endl;
+			SOUNDMAN->SetVoiceVolume(i, config.volume_left, config.volume_right);
+        }
 
 		if(flags & SPU_PITCH)
+        {
+            cout << "UpdateSpu::SPU_PITCH channel " << i << " value:" << config.pitch << endl;
 			SOUNDMAN->SetVoicePitch(i, config.pitch);
+        }
 
 		if((flags & SPU_ATTACK_RATE) || (flags & SPU_ATTACK_MODE))
 		{
-			SOUNDMAN->SetVoiceAttackRate(i, config.attack_rate,
-					(SoundManager::SpuRateMode)config.attack_mode);
+            cout << "UpdateSpu::SPU_ATTACK_RATE|SPU_ATTACK_MODE channel " << i << " value:" << config.attack_rate << " " << config.attack_mode << ends;
+			SOUNDMAN->SetVoiceAttackRate(i, config.attack_rate, (SoundManager::SpuRateMode)config.attack_mode);
 		}
 
 		if(flags & SPU_DECAY_RATE)
+        {
+            cout << "UpdateSpu::SPU_DECAY_RATE channel " << i << " value:" << config.decay_rate << endl;
 			SOUNDMAN->SetVoiceDecayRate(i, config.decay_rate);
+        }
 
 		if((flags & SPU_SUSTAIN_RATE) || (flags & SPU_SUSTAIN_MODE))
-			SOUNDMAN->SetVoiceSustainRate(i, config.sustain_rate,
-					(SoundManager::SpuRateMode)config.sustain_mode);
+        {
+            cout << "UpdateSpu::SPU_SUSTAIN_RATE|SPU_SUSTAIN_MODE channel " << i << " value:" << config.sustain_rate << " " << config.sustain_mode << endl;
+			SOUNDMAN->SetVoiceSustainRate(i, config.sustain_rate, (SoundManager::SpuRateMode)config.sustain_mode);
+        }
 
 		if(flags & SPU_SUSTAIN_LEVEL)
+        {
+            cout << "UpdateSpu::SPU_SUSTAIN_LEVEL channel " << i << " value:" << config.sustain_level << endl;
 			SOUNDMAN->SetVoiceSustainLevel(i, config.sustain_level);
+        }
 
 		if((flags & SPU_RELEASE_RATE) || (flags & SPU_RELEASE_MODE))
 		{
-			SOUNDMAN->SetVoiceReleaseRate(i, config.release_rate,
-					(SoundManager::SpuRateMode)config.release_mode);
+            cout << "UpdateSpu::SPU_RELEASE_RATE|SPU_RELEASE_MODE channel " << i << " value:" << config.release_rate << " " << config.release_mode << endl;;
+			SOUNDMAN->SetVoiceReleaseRate(i, config.release_rate, (SoundManager::SpuRateMode)config.release_mode);
 		}
 
 		// CUSTOM
@@ -973,16 +969,12 @@ void AkaoParser::LoadVoice(int arg_ch, int arg_voice)
 	// save loaded voice index
 	m_CD[arg_ch].voice_index = arg_voice;
 
-	// FIXME!!
-//	SpuSetParameter(m_CD[arg_ch].spu_config, SPU_ADDRESS_START,
-//			m_VoiceIndex[arg_voice].attack_offset);
-//	SpuSetParameter(m_CD[arg_ch].spu_config, SPU_ADDRESS_LOOP,
-//			m_VoiceIndex[arg_voice].loop_offset);	
-	SpuSetParameter(m_CD[arg_ch].spu_config, SPU_ADDRESS_START,
-			m_PsxAttackOffset[arg_voice]);
-	SpuSetParameter(m_CD[arg_ch].spu_config, SPU_ADDRESS_LOOP,
-			m_PsxLoopOffset[arg_voice]);
-	
+    //cout << "Load voice " << arg_voice << " to channel " << arg_ch << endl;
+    //cout << "SPU_ADDRESS_START " << m_PsxAttackOffset[arg_voice] << endl;
+    //cout << "SPU_ADDRESS_LOOP " << m_PsxLoopOffset[arg_voice] << endl;
+	SpuSetParameter(m_CD[arg_ch].spu_config, SPU_ADDRESS_START, m_PsxAttackOffset[arg_voice]);
+	SpuSetParameter(m_CD[arg_ch].spu_config, SPU_ADDRESS_LOOP, m_PsxLoopOffset[arg_voice]);
+
 
 
 	// adsr settings
@@ -1022,7 +1014,7 @@ void AkaoParser::RefreshWaveParameters(int arg_ch)
 	}
 
 	m_CD[arg_ch].wave_multiplier = temp >> 7;
-	
+
 	//	m_CD[i].wave_multiplier =
 	//		(s16)((s32)(((m_CD[i].wave_modifier & 0x7f00) >> 8) *
 	//		(m_CD[i].wave_modifier & 0x8000 ?

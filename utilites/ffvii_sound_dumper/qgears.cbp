@@ -28,6 +28,14 @@
 					<Add directory="$(OGRE_HOME)\lib\opt\release" />
 				</Linker>
 			</Target>
+			<Target title="Debug">
+				<Option output="output\q-gears_d" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add directory="$(OGRE_HOME)\include" />
@@ -38,22 +46,54 @@
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
-		<Unit filename="..\common\File.cpp" />
-		<Unit filename="..\common\File.h" />
-		<Unit filename="..\common\FileSystem.cpp" />
-		<Unit filename="..\common\FileSystem.h" />
-		<Unit filename="..\common\Logger.cpp" />
-		<Unit filename="..\common\Logger.h" />
-		<Unit filename="..\common\TypeDefine.h" />
-		<Unit filename="src\AkaoParser.cpp" />
-		<Unit filename="src\AkaoParser.h" />
-		<Unit filename="src\Main.cpp" />
-		<Unit filename="src\Main.h" />
-		<Unit filename="src\engine\SoundBackend.h" />
-		<Unit filename="src\engine\SoundManager.cpp" />
-		<Unit filename="src\engine\SoundManager.h" />
-		<Unit filename="src\engine\backends\SoundBackendSDL.cpp" />
-		<Unit filename="src\engine\backends\SoundBackendSDL.h" />
+		<Unit filename="..\common\File.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="..\common\File.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="..\common\FileSystem.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="..\common\FileSystem.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="..\common\Logger.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="..\common\Logger.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="..\common\TypeDefine.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\AkaoParser.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\AkaoParser.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\Main.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\Main.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\engine\SoundBackend.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\engine\SoundManager.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\engine\SoundManager.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\engine\backends\SoundBackendSDL.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src\engine\backends\SoundBackendSDL.h">
+			<Option target="Release" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

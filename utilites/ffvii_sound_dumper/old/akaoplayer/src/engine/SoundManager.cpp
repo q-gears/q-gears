@@ -272,6 +272,26 @@ SoundManager::SoundManager()
 
 
 
+	/* dma transfer [sample data from INSTR.ALL] */
+	// temporary writing dma dump gotten with real emu
+	{
+		std::ifstream iF;
+		iF.open("data/dmadump.bin", std::ios_base::binary);
+		u32 datasize = 483264;
+		buffer = new u8[datasize];
+		iF.read((char *)buffer, datasize);
+		iF.close();
+		if(!this->PsxWriteDMA(0x0202, buffer, datasize))
+		{
+			std::cout << "[SoundManager] error: failed to DMA write sample data"
+				<< std::endl;
+			exit(EXIT_FAILURE);
+		}
+		delete [] buffer;
+	}
+
+
+
 	/* another dma transfer [unknown yet] */
 	// temporary writing another dma dump gotten with real emu
 	{

@@ -76,9 +76,11 @@ public:
             m_Keyboard->capture();
         }
 
-        if (m_Timer >= 0.00)
+        static int cycle = 0;
+        if (m_Timer >= 0.003)
         {
-            m_Timer -= 0.01;
+            ++cycle;
+            m_Timer = 0;
             AKAOPARSER->Update();
         }
         m_Timer += evt.timeSinceLastFrame;
@@ -174,7 +176,7 @@ main( int argc, char *argv[] )
     //AKAOPARSER->PlayMusic( "data/music/opening_bombing_mission.snd" );
     //AKAOPARSER->DumpSequenceData( "dump_opening_bombing_mission.txt" );
     AKAOPARSER->PlayMusic( "data/music/aeris_theme.snd" );
-    AKAOPARSER->DumpSequenceData( "dump_aeris_theme.txt" );
+    //AKAOPARSER->DumpSequenceData( "dump_aeris_theme.txt" );
 
 
 

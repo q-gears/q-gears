@@ -115,8 +115,10 @@ AkaoParser::Update()
                 {
                     channel_mask ^= bit;
 
-                    m_MusicChannelData[ channel_id ].pause -= 0x101;
+                    m_MusicChannelData[ channel_id ].pause -= 0x0101;
                     //LOGGER->Log( "pause " + ToHexString( m_MusicChannelData[ channel_id ].pause, 4, '0' ) + "\n" );
+
+                    std::cout << "Channel " << channel_id << " pause " << ( m_MusicChannelData[ channel_id ].pause & 0x00ff ) << std::endl;
 
                     if ( ( m_MusicChannelData[ channel_id ].pause & 0x00ff ) == 0 )
                     {
@@ -316,7 +318,7 @@ AkaoParser::PlayMusic( const Ogre::String& file )
 
 
         u16 offset_to_akao = 0;
-        m_MusicChannelConfig.active_channel_mask = m_Music->GetU32LE( 16 );
+        m_MusicChannelConfig.active_channel_mask = m_Music->GetU32LE( 0x10 ) & 0x00ffffff;
         u32 channel_mask = m_MusicChannelConfig.active_channel_mask;
         int channel_id = 0;
         for ( u32 bit = 1; channel_mask != 0; bit <<= 1, channel_id += 1 )
@@ -418,7 +420,6 @@ AkaoParser::UpdateDynamicSpuParameters()
     if ( m_MusicChannelConfig.active_channel_mask != 0 )
     {
         for_play_channel_mask |= m_MusicChannelConfig.for_play_channel_mask;
-
         u32 channel_mask = m_MusicChannelConfig.active_channel_mask;
         int channel_id = 0;
         for ( u32 bit = 1; channel_mask != 0; bit <<= 1, channel_id += 1 )
@@ -435,6 +436,8 @@ AkaoParser::UpdateDynamicSpuParameters()
                 }
             }
         }
+
+        m_MusicChannelConfig.for_play_channel_mask = 0;
     }
 
 
@@ -536,6 +539,8 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A1 = hu[S0 + 1c]; // f8
         func395c8;
 */
+        LOGGER->Log( "UpdateSpu::SPU_PITCH channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].pitch ) + ".\n" );
+
         SOUNDMAN->SetVoicePitch( channel_id, channel_data[ channel_id ].pitch );
         channel_data[ channel_id ].spu_update_flags &= ~SPU_PITCH;
     }
@@ -548,6 +553,8 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A2 = h[S0 + 2a]; // 106
         func393c8;
 */
+        LOGGER->Log( "UpdateSpu::SPU_LEFT_VOLUME|SPU_RIGHT_VOLUME channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].left_volume ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].right_volume ) + ".\n" );
+
         SOUNDMAN->SetVoiceVolume( channel_id, channel_data[ channel_id ].left_volume, channel_data[ channel_id ].right_volume );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME );
     }
@@ -559,6 +566,8 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A1 = w[S0 + 8];
         func39644; // we set start address here
 */
+        LOGGER->Log( "UpdateSpu::SPU_START_OFFSET channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].start_offset ) + ".\n" );
+
         SOUNDMAN->SetVoiceStartAddress( channel_id, channel_data[ channel_id ].start_offset );
         channel_data[ channel_id ].spu_update_flags &= ~SPU_START_OFFSET;
     }
@@ -570,6 +579,8 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A1 = w[S0 + c];
         func396c0;
 */
+        LOGGER->Log( "UpdateSpu::SPU_LOOP_OFFSET channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].loop_offset ) + ".\n" );
+
         SOUNDMAN->SetVoiceLoopAddress( channel_id, channel_data[ channel_id ].loop_offset );
         channel_data[ channel_id ].spu_update_flags &= ~SPU_LOOP_OFFSET;
     }
@@ -582,6 +593,8 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A2 = h[S0 + 14]; // f0
         func398ec;
 */
+        LOGGER->Log( "UpdateSpu::SPU_SUSTAIN_RATE|SPU_SUSTAIN_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].sustain_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].sustain_mode ) + ".\n" );
+
         SOUNDMAN->SetVoiceSustainRate( channel_id, channel_data[ channel_id ].sustain_rate, (SoundManager::SpuRateMode)channel_data[ channel_id ].sustain_mode );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_SUSTAIN_RATE | SPU_SUSTAIN_MODE );
     }
@@ -594,6 +607,8 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A2 = h[S0 + 10]; // ec
         func39850;
 */
+        LOGGER->Log( "UpdateSpu::SPU_ATTACK_RATE|SPU_ATTACK_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].attack_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].attack_mode ) + ".\n" );
+
         SOUNDMAN->SetVoiceAttackRate( channel_id, channel_data[ channel_id ].attack_rate, ( SoundManager::SpuRateMode )channel_data[ channel_id ].attack_mode );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_ATTACK_RATE | SPU_ATTACK_MODE );
     }
@@ -606,6 +621,8 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A2 = h[S0 + 18]; // f4 // release mode
         func399d0;
 */
+        LOGGER->Log( "UpdateSpu::SPU_RELEASE_RATE|SPU_RELEASE_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].release_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].release_mode ) + ".\n" );
+
         SOUNDMAN->SetVoiceReleaseRate( channel_id, channel_data[ channel_id ].release_rate, (SoundManager::SpuRateMode)channel_data[ channel_id ].release_mode );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_RELEASE_RATE | SPU_RELEASE_MODE );
     }
@@ -621,6 +638,8 @@ AkaoParser::UpdateSpu( ChannelData* channel_data, int channel_id )
         A1 = h[S0 + 22]; // fe // sustain level.
         func397c8;
 */
+        LOGGER->Log( "UpdateSpu::SPU_DECAY_RATE|SPU_SUSTAIN_LEVEL channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].decay_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].sustain_level ) + ".\n" );
+
         SOUNDMAN->SetVoiceDecayRate( channel_id, channel_data[ channel_id ].decay_rate );
         SOUNDMAN->SetVoiceSustainLevel( channel_id, channel_data[ channel_id ].sustain_level );
         channel_data[ channel_id ].spu_update_flags &= ~( SPU_DECAY_RATE | SPU_SUSTAIN_LEVEL );
@@ -642,10 +661,12 @@ AkaoParser::UpdatePlayChannel( bool on, u32 channel_mask )
             if ( on == true )
             {
                 SOUNDMAN->PsxChannelPlay( channel_id );
+                std::cout << "Play channel " << channel_id << std::endl;
             }
             else
             {
                 SOUNDMAN->PsxChannelStop( channel_id );
+                std::cout << "Stop channel " << channel_id << std::endl;
             }
         }
     }
@@ -656,6 +677,7 @@ AkaoParser::UpdatePlayChannel( bool on, u32 channel_mask )
 void
 AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelConfig& channel_config )
 {
+    std::cout << "UpdateSequence for channel " << channel_id << std::endl;
     LOGGER->Log( "UpdateSequence for channel " + ToIntString( channel_id ) + "\n" );
 
     u8 opcode;
@@ -663,6 +685,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
     for ( ;; )
     {
         opcode = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer );
+        std::cout << "opcode " << (int)opcode << std::endl;
 
         if ( opcode < 0xa0 )
         {
@@ -1104,7 +1127,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
                     if (hu[S0 + 54] == 0)
                     {
 */
-                        channel_config.for_play_channel_mask |= 1 << channel_id;
+                        channel_config.for_play_channel_mask |= ( 1 << channel_id );
 /*
                         if (w[S0 + 38] & 00000100)
                         {
@@ -1287,6 +1310,9 @@ AkaoParser::InitChannelInstrument( ChannelData* channel_data, int channel_id, in
     channel_data[ channel_id ].instrument_id = instrument_id;
     channel_data[ channel_id ].start_offset = data.start_offset;
     channel_data[ channel_id ].loop_offset = data.loop_offset;
+    LOGGER->Log( "Load voice " + Ogre::StringConverter::toString( instrument_id ) + " to channel " + Ogre::StringConverter::toString( channel_id ) + ".\n" );
+    LOGGER->Log( "SPU_ADDRESS_START " + Ogre::StringConverter::toString( data.start_offset ) + "\n" );
+    LOGGER->Log( "SPU_ADDRESS_LOOP " + Ogre::StringConverter::toString( data.loop_offset ) + "\n" );
     channel_data[ channel_id ].attack_mode = data.attack_mode;
     channel_data[ channel_id ].sustain_mode = data.sustain_mode;
     channel_data[ channel_id ].release_mode = data.release_mode;
