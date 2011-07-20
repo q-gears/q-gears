@@ -95,7 +95,8 @@ private:
 
         // 0x44 [][][][]
         s32 volume_level;
-
+        // 0x48 [][][][]
+        s32 volume_level_new;
         // 0x4c [][][][]
         s32 pitch_growth;
 

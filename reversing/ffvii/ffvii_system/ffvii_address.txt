@@ -83,6 +83,7 @@
 +03d [][]     pitch modifier. We multiply this with real calculated pitch if +0x54 != 2.
 +040 [][][][] ???
 +044 [][][][] volume level. Often used as 2 top bytes.
++048 [][][][] volume_level_new.
 +04c [][][][] pitch growth. We increment pitch addition by this every frame.
 +050 [][][][] set to -1.
 +054 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d. maybe pitch type?
