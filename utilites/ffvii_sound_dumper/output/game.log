@@ -2,38 +2,1401 @@ Loading file: data/INSTR.ALL
 Loading file: data/INSTR.DAT
 Loading file: data/music/aeris_theme.snd
 Init channel 0 with offset to AKAO 0032
-    0xE8 Set channel_config.tempo to "3be20000" and channel_config.tempo_increment_counter to 0.
-    0xFD [UNIMPLEMENTED]
-    0xFE [UNIMPLEMENTED]
-    0xEA [UNIMPLEMENTED]
-    0xA3 Set volume multiplier to "7f".
+Init channel 1 with offset to AKAO 00bf
+Init channel 2 with offset to AKAO 0126
+Init channel 3 with offset to AKAO 01fa
+Init channel 4 with offset to AKAO 0262
+Init channel 5 with offset to AKAO 02c1
+Init channel 6 with offset to AKAO 032e
+Init channel 7 with offset to AKAO 0390
+Init channel 8 with offset to AKAO 0412
+Init channel 9 with offset to AKAO 0480
+Init channel 10 with offset to AKAO 05a1
+Init channel 11 with offset to AKAO 066f
+Init channel 12 with offset to AKAO 0771
+Init channel 13 with offset to AKAO 0818
+Init channel 14 with offset to AKAO 08a2
+    0xE8 Set tempo to 0x3be20000 and reset tempo increment counter to 0.
+    0xFD Reset upper timer to 0 with bound 0004 and lower timer to 0 with bound 0030.
+    0xFE Reset top timer to 0001.
+    0xEA Set reverb depth to 0x32000000 and reset reverb depth increment counter to 0.
+    0xA3 Set volume multiplier to 0x7f.
     0xC2 [UNIMPLEMENTED]
-    0xAA [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x3400.
     0xA1 [NOT COMPLETE] load instrument "46"
-    0xB4 [UNIMPLEMENTED]     0xB5 [UNIMPLEMENTED]
-    0xFD [UNIMPLEMENTED]
-    0xFE [UNIMPLEMENTED]
-    0xA8 [UNIMPLEMENTED]
-    0x8f [UNIMPLEMENTED].
-    0x8f [UNIMPLEMENTED].
-    0x8f [UNIMPLEMENTED].
-    0x8f [UNIMPLEMENTED].
-    0xA5 Set pitch correction to "0005".
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0a00.
+    0xFD Reset upper timer to 0 with bound 0004 and lower timer to 0 with bound 0030.
+    0xFE Reset top timer to 0001.
+    0xA8 Set volume to 0x18800000 and reset volume_level_change_ticks.
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x3e00.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "46"
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0a00.
+    0xA8 Set volume to 0x18800000 and reset volume_level_change_ticks.
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x4b00.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "31"
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0f00.
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x2d00.
+    0xA1 [NOT COMPLETE] load instrument "48"
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0a00.
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x5500.
+    0xA1 [NOT COMPLETE] load instrument "32"
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0a00.
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x2300.
+    0xA1 [NOT COMPLETE] load instrument "34"
+    0xAD [UNIMPLEMENTED]
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0a00.
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x2300.
+    0xA1 [NOT COMPLETE] load instrument "34"
+    0xAD [UNIMPLEMENTED]
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0a00.
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x5f00.
+    0xA1 [NOT COMPLETE] load instrument "33"
+    0xAD [UNIMPLEMENTED]
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0a00.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x5f00.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "33"
+    0xAD [UNIMPLEMENTED]
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0a00.
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x4000.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "52"
+    0xAD [UNIMPLEMENTED]
+    0xB1 [UNIMPLEMENTED]
+    0xE8 Set tempo to 0x3be20000 and reset tempo increment counter to 0.
+    0xA5 Set pitch correction to 0x0005.
     0x45 PLAY.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x4000.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "52"
+    0xAD [UNIMPLEMENTED]
+    0xB1 [UNIMPLEMENTED]
+    0xA5 Set pitch correction to 0x0005.
+    0x2c PLAY.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x4000.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "52"
+    0xAD [UNIMPLEMENTED]
+    0xB1 [UNIMPLEMENTED]
+    0xA5 Set pitch correction to 0x0004.
+    0x63 PLAY.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x4000.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "52"
+    0xAD [UNIMPLEMENTED]
+    0xB1 [UNIMPLEMENTED]
+    0xA5 Set pitch correction to 0x0004.
+    0x16 PLAY.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x7300.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "84"
+    0xAD [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x1e00.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "47"
+    0x8f UNKNOWN RESETTING.
     0x66 PLAY.
-    0xA6 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
     0x17 PLAY.
+    0xE8 Set tempo to 0x379b0000 and reset tempo increment counter to 0.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xE8 Set tempo to 0x3be20000 and reset tempo increment counter to 0.
     0x03 PLAY.
-    0xA7 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x63 PLAY.
+    0x2c PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
     0x66 PLAY.
     0x2d PLAY.
+    0xE8 Set tempo to 0x379b0000 and reset tempo increment counter to 0.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xE8 Set tempo to 0x3b070000 and reset tempo increment counter to 0.
+    0x45 PLAY.
+    0x2c PLAY.
+    0x63 PLAY.
+    0x16 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xE8 Set tempo to 0x3be20000 and reset tempo increment counter to 0.
+    0x66 PLAY.
+    0xE8 Set tempo to 0x3cbd0000 and reset tempo increment counter to 0.
+    0xA6 Increment pitch correction.
+    0x19 PLAY.
+    0xE8 Set tempo to 0x3d980000 and reset tempo increment counter to 0.
+    0x0e PLAY.
+    0xE8 Set tempo to 0x3e730000 and reset tempo increment counter to 0.
+    0x2f PLAY.
+    0xE8 Set tempo to 0x3f4e0000 and reset tempo increment counter to 0.
+    0x19 PLAY.
+    0xE8 Set tempo to 0x3e730000 and reset tempo increment counter to 0.
+    0xA7 Decrement pitch correction.
+    0x7c PLAY.
+    0xE8 Set tempo to 0x3be20000 and reset tempo increment counter to 0.
+    0xA6 Increment pitch correction.
+    0x0e PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xE8 Set tempo to 0x379b0000 and reset tempo increment counter to 0.
+    0xA7 Decrement pitch correction.
+    0x64 PLAY.
+    0x90 UNKNOWN RESETTING.
+    0x63 PLAY.
+    0x2c PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xE8 Set tempo to 0x33540000 and reset tempo increment counter to 0.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0xAD [UNIMPLEMENTED]
+    0x2d PLAY.
+    0xA8 Set volume to 0x0c000000 and reset volume_level_change_ticks.
+    0xAD [UNIMPLEMENTED]
+    0x01 PLAY.
+    0xA5 Set pitch correction to 0x0005.
+    0x45 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0x91 UNKNOWN RESETTING.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0x91 UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xE8 Set tempo to 0x3be20000 and reset tempo increment counter to 0.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x0f00.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "84"
+    0xAD [UNIMPLEMENTED]
+    0xA5 Set pitch correction to 0x0005.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x45 PLAY.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x2800.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "84"
+    0xAD [UNIMPLEMENTED]
+    0xA5 Set pitch correction to 0x0004.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x45 PLAY.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x4100.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "84"
+    0xAD [UNIMPLEMENTED]
+    0xA5 Set pitch correction to 0x0004.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x2f PLAY.
+    0xA3 Set volume multiplier to 0x7f.
+    0xC2 [UNIMPLEMENTED]
+    0xAA Set volume pan to 0x5a00.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "84"
+    0xAD [UNIMPLEMENTED]
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0xA5 Set pitch correction to 0x0003.
+    0x63 PLAY.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0xA5 Set pitch correction to 0x0003.
+    0x16 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x66 PLAY.
+    0x66 PLAY.
+    0x66 PLAY.
+    0x0e PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0xA5 Set pitch correction to 0x0005.
+    0x44 PLAY.
+    0xA5 Set pitch correction to 0x0004.
+    0x65 PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0x17 PLAY.
+    0xA5 Set pitch correction to 0x0005.
+    0x45 PLAY.
+    0x66 PLAY.
+    0x2e PLAY.
+    0x65 PLAY.
+    0xA6 Increment pitch correction.
+    0x19 PLAY.
+    0x45 PLAY.
+    0x18 PLAY.
+    0x65 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x03 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x00 PLAY.
+    0x63 PLAY.
+    0xA5 Set pitch correction to 0x0006.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0x91 UNKNOWN RESETTING.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA5 Set pitch correction to 0x0005.
+    0x91 UNKNOWN RESETTING.
+    0x03 PLAY.
+    0x03 PLAY.
+    0x2f PLAY.
+    0x63 PLAY.
+    0xA7 Decrement pitch correction.
+    0x63 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x66 PLAY.
+    0xA7 Decrement pitch correction.
+    0x66 PLAY.
+    0xA7 Decrement pitch correction.
+    0x66 PLAY.
+    0x19 PLAY.
+    0x2d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x02 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x2e PLAY.
+    0x2d PLAY.
+    0x2d PLAY.
+    0x01 PLAY.
+    0xA7 Decrement pitch correction.
+    0x2f PLAY.
+    0x66 PLAY.
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x18 PLAY.
+    0xA6 Increment pitch correction.
+    0x03 PLAY.
+    0x2f PLAY.
+    0x65 PLAY.
+    0x02 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0xCC [UNIMPLEMENTED]
+    0x1a PLAY.
+    0xCC [UNIMPLEMENTED]
+    0x1a PLAY.
     0xCC [UNIMPLEMENTED]
     0x1a PLAY.
     0x30 PLAY.
+    0x30 PLAY.
+    0x30 PLAY.
     0x17 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x17 PLAY.
+    0x6e PLAY.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x39 PLAY.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x17 PLAY.
+    0x17 PLAY.
+    0x17 PLAY.
+    0xA7 Decrement pitch correction.
+    0x6f PLAY.
+    0x37 PLAY.
+    0x6e PLAY.
+    0x92 UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0xA7 Decrement pitch correction.
+    0x71 PLAY.
+    0xA6 Increment pitch correction.
+    0x3a PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x71 PLAY.
     0xCD [UNIMPLEMENTED]
     0x3a PLAY.
-    0x2f PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x70 PLAY.
+    0x3a PLAY.
+    0xCD [UNIMPLEMENTED]
+    0x3a PLAY.
+    0xCD [UNIMPLEMENTED]
+    0x3a PLAY.
+    0xA6 Increment pitch correction.
+    0x19 PLAY.
+    0xA6 Increment pitch correction.
     0x19 PLAY.
     0x2f PLAY.
+    0x03 PLAY.
+    0x2f PLAY.
+    0x2f PLAY.
+    0x2f PLAY.
+    0x03 PLAY.
+    0xA7 Decrement pitch correction.
+    0x71 PLAY.
+    0x19 PLAY.
+    0x19 PLAY.
+    0x19 PLAY.
+    0x19 PLAY.
+    0x19 PLAY.
+    0xA7 Decrement pitch correction.
+    0x70 PLAY.
+    0x3a PLAY.
+    0x2f PLAY.
+    0x03 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x2f PLAY.
+    0x2f PLAY.
+    0x2f PLAY.
+    0x19 PLAY.
     0x16 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x6e PLAY.
+    0x4d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x4f PLAY.
+    0x16 PLAY.
+    0x16 PLAY.
+    0x16 PLAY.
+    0x4d PLAY.
+    0x4d PLAY.
+    0xA7 Decrement pitch correction.
+    0x70 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x78 PLAY.
+    0xA6 Increment pitch correction.
+    0x20 PLAY.
+    0x57 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x70 PLAY.
+    0x71 PLAY.
+    0x20 PLAY.
+    0x57 PLAY.
+    0x78 PLAY.
+    0xA6 Increment pitch correction.
+    0x18 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x63 PLAY.
+    0x42 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x63 PLAY.
+    0x63 PLAY.
+    0x42 PLAY.
+    0xA6 Increment pitch correction.
+    0x16 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x19 PLAY.
+    0x45 PLAY.
+    0x66 PLAY.
+    0xA6 Increment pitch correction.
+    0x19 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA5 Set pitch correction to 0x0005.
+    0xA8 Set volume to 0x0c000000 and reset volume_level_change_ticks.
+    0x90 UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x19 PLAY.
+    0x45 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x91 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x66 PLAY.
+    0xA6 Increment pitch correction.
+    0x19 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x19 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x2f PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x43 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0x8f UNKNOWN RESETTING.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x43 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x16 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x79 PLAY.
+    0xA7 Decrement pitch correction.
+    0xA7 Decrement pitch correction.
+    0x7c PLAY.
+    0xA6 Increment pitch correction.
+    0x45 PLAY.
+    0x7c PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x93 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x45 PLAY.
+    0x45 PLAY.
+    0x50 PLAY.
+    0x2f PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x64 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x43 PLAY.
+    0x0c PLAY.
+    0x64 PLAY.
+    0xA7 Decrement pitch correction.
+    0x0e PLAY.
+    0x45 PLAY.
+    0x66 PLAY.
+    0xA6 Increment pitch correction.
+    0x0c PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x93 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x7c PLAY.
+    0xA6 Increment pitch correction.
+    0x0e PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x18 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x4d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x7a PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x4d PLAY.
+    0xA7 Decrement pitch correction.
+    0x19 PLAY.
+    0x50 PLAY.
+    0xA7 Decrement pitch correction.
+    0x7a PLAY.
+    0x7c PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0xA6 Increment pitch correction.
+    0x0d PLAY.
+    0x4f PLAY.
+    0x18 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xCC [UNIMPLEMENTED]
+    0x67 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x43 PLAY.
+    0x64 PLAY.
+    0xA7 Decrement pitch correction.
+    0x19 PLAY.
+    0x7d PLAY.
+    0xCD [UNIMPLEMENTED]
+    0x64 PLAY.
+    0x45 PLAY.
+    0x66 PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x93 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x66 PLAY.
+    0x45 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x0b PLAY.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0x90 UNKNOWN RESETTING.
+    0xA8 Set volume to 0x09800000 and reset volume_level_change_ticks.
+    0x90 UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x42 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x0b PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x63 PLAY.
+    0xA7 Decrement pitch correction.
+    0x0e PLAY.
+    0x45 PLAY.
+    0x66 PLAY.
+    0xA6 Increment pitch correction.
+    0x0c PLAY.
+    0xA5 Set pitch correction to 0x0006.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x0c PLAY.
+    0xA5 Set pitch correction to 0x0004.
+    0xA9 [UNIMPLEMENTED]
+    0x0c PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x7a PLAY.
+    0x43 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x0e PLAY.
+    0x45 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x66 PLAY.
+    0xA6 Increment pitch correction.
+    0x0c PLAY.
+    0x93 UNKNOWN RESETTING.
+    0x64 PLAY.
+    0x0c PLAY.
+    0x92 UNKNOWN RESETTING.
+    0x93 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x7c PLAY.
+    0x66 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x16 PLAY.
+    0x79 PLAY.
+    0x16 PLAY.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x4d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x79 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x4d PLAY.
+    0xA7 Decrement pitch correction.
+    0x19 PLAY.
+    0x50 PLAY.
+    0x7c PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0xA6 Increment pitch correction.
+    0x4e PLAY.
+    0x7a PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x17 PLAY.
+    0x64 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x19 PLAY.
+    0x50 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x7c PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0x93 UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x7a PLAY.
+    0x4e PLAY.
+    0x92 UNKNOWN RESETTING.
+    0x93 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x66 PLAY.
+    0x45 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x0b PLAY.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0xA6 Increment pitch correction.
+    0x0b PLAY.
+    0x42 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x0c PLAY.
+    0xA8 Set volume to 0x07000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x63 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x42 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x0b PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x63 PLAY.
+    0xA7 Decrement pitch correction.
+    0x0e PLAY.
+    0x45 PLAY.
+    0x66 PLAY.
+    0xA6 Increment pitch correction.
+    0x0c PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x0c PLAY.
+    0xA8 Set volume to 0x09800000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x0c PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x7a PLAY.
+    0x43 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x44 PLAY.
+    0xA6 Increment pitch correction.
+    0x0c PLAY.
+    0xA7 Decrement pitch correction.
+    0x0e PLAY.
+    0x45 PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x66 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x0c PLAY.
+    0x92 UNKNOWN RESETTING.
+    0x64 PLAY.
+    0x0c PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x65 PLAY.
+    0x92 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x7c PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x0e PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x16 PLAY.
+    0x7a PLAY.
+    0x17 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x4e PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x79 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x4d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x79 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x4d PLAY.
+    0xA7 Decrement pitch correction.
+    0x19 PLAY.
+    0x50 PLAY.
+    0x7c PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0xA6 Increment pitch correction.
+    0x91 UNKNOWN RESETTING.
+    0xA8 Set volume to 0x09800000 and reset volume_level_change_ticks.
+    0xA5 Set pitch correction to 0x0005.
+    0x91 UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x19 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x50 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x18 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x7b PLAY.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x18 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x18 PLAY.
+    0x7c PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0x0d PLAY.
+    0x65 PLAY.
+    0x0d PLAY.
+    0x0d PLAY.
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x4f PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x64 PLAY.
+    0x43 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0x90 UNKNOWN RESETTING.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0x90 UNKNOWN RESETTING.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x64 PLAY.
+    0x64 PLAY.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x44 PLAY.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x63 PLAY.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x16 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x43 PLAY.
+    0x17 PLAY.
+    0x44 PLAY.
+    0x64 PLAY.
+    0x43 PLAY.
+    0x43 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x18 PLAY.
+    0x18 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x7a PLAY.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA7 Decrement pitch correction.
+    0x4e PLAY.
+    0xAA Set volume pan to 0x6900.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA1 [NOT COMPLETE] load instrument "35"
+    0xAD [UNIMPLEMENTED]
+    0xB4 Set wave refresh interval to 0x0001 , node index to 0x0006 and wave delay (or wave modifier) to 0x60.
+    0xB5 Set wave modifier to 0x0a00.
+    0xA5 Set pitch correction to 0x0002.
+    0x4e PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x65 PLAY.
+    0xA7 Decrement pitch correction.
+    0x4e PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0xA6 Increment pitch correction.
+    0x18 PLAY.
+    0x7b PLAY.
+    0x4f PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x18 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x18 PLAY.
+    0x4f PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x0d PLAY.
+    0x65 PLAY.
+    0xA6 Increment pitch correction.
+    0x18 PLAY.
+    0x44 PLAY.
+    0x7b PLAY.
+    0x7b PLAY.
+    0x0d PLAY.
+    0x0d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x19 PLAY.
+    0x44 PLAY.
+    0x7b PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x4f PLAY.
+    0x2e PLAY.
+    0x4f PLAY.
+    0x4f PLAY.
+    0x4f PLAY.
+    0xA7 Decrement pitch correction.
+    0x7c PLAY.
+    0xA7 Decrement pitch correction.
+    0x7c PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x2f PLAY.
+    0x4f PLAY.
+    0x4f PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x0d PLAY.
+    0x65 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x44 PLAY.
+    0x65 PLAY.
+    0x43 PLAY.
+    0x43 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x0d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x0d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x44 PLAY.
+    0x64 PLAY.
+    0x43 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x45 PLAY.
+    0xA6 Increment pitch correction.
+    0x0e PLAY.
+    0x66 PLAY.
+    0xA6 Increment pitch correction.
+    0x0e PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x46 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x46 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x43 PLAY.
+    0x0c PLAY.
+    0x64 PLAY.
+    0x0c PLAY.
+    0x5a PLAY.
+    0x5a PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x43 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x43 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x66 PLAY.
+    0xA6 Increment pitch correction.
+    0x0d PLAY.
+    0x5a PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x65 PLAY.
+    0x65 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA6 Increment pitch correction.
+    0x0e PLAY.
+    0x2e PLAY.
+    0x65 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x7b PLAY.
+    0x7b PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x17 PLAY.
+    0x7a PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x18 PLAY.
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x18 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x18 PLAY.
+    0x7c PLAY.
+    0x7c PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x0d PLAY.
+    0x65 PLAY.
+    0xA6 Increment pitch correction.
+    0x0d PLAY.
+    0xA6 Increment pitch correction.
+    0x0d PLAY.
+    0x0d PLAY.
+    0x0d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x66 PLAY.
+    0x0d PLAY.
+    0xA6 Increment pitch correction.
+    0x0d PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x4f PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x18 PLAY.
+    0x18 PLAY.
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x50 PLAY.
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x18 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x64 PLAY.
+    0x2d PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0x90 UNKNOWN RESETTING.
+    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
+    0x90 UNKNOWN RESETTING.
+    0x2c PLAY.
+    0x2c PLAY.
+    0xA8 Set volume to 0x16000000 and reset volume_level_change_ticks.
+    0x64 PLAY.
+    0xA8 Set volume to 0x16000000 and reset volume_level_change_ticks.
+    0x64 PLAY.
+    0xA8 Set volume to 0x16000000 and reset volume_level_change_ticks.
+    0x2d PLAY.
+    0xA8 Set volume to 0x16000000 and reset volume_level_change_ticks.
+    0xA6 Increment pitch correction.
+    0x0c PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0x2c PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x2d PLAY.
+    0x0c PLAY.
+    0xA6 Increment pitch correction.
+    0x0c PLAY.
+    0x2d PLAY.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0x2d PLAY.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0x2d PLAY.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0x0c PLAY.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA7 Decrement pitch correction.
+    0x64 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA7 Decrement pitch correction.
+    0x7a PLAY.
+    0x17 PLAY.
+    0xA7 Decrement pitch correction.
+    0x64 PLAY.
+    0xA7 Decrement pitch correction.
+    0x64 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA7 Decrement pitch correction.
+    0x7a PLAY.
+    0x4e PLAY.
+    0xA7 Decrement pitch correction.
+    0x63 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x65 PLAY.
+    0x0d PLAY.
+    0x64 PLAY.
+    0x2d PLAY.
+    0x2f PLAY.
+    0x50 PLAY.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0x2f PLAY.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0x2f PLAY.
+    0x45 PLAY.
+    0x66 PLAY.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x45 PLAY.
+    0x45 PLAY.
+    0x50 PLAY.
+    0x7c PLAY.
+    0x8f UNKNOWN RESETTING.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0xA7 Decrement pitch correction.
+    0x79 PLAY.
+    0xA8 Set volume to 0x18800000 and reset volume_level_change_ticks.
+    0xA7 Decrement pitch correction.
+    0x17 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x50 PLAY.
+    0x50 PLAY.
+    0x79 PLAY.
+    0x17 PLAY.
+    0x4d PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x45 PLAY.
+    0x66 PLAY.
+    0x45 PLAY.
+    0x45 PLAY.
+    0x2f PLAY.
+    0x50 PLAY.
+    0x2f PLAY.
+    0x2f PLAY.
+    0x17 PLAY.
+    0xA6 Increment pitch correction.
+    0x17 PLAY.
+    0x19 PLAY.
+    0x17 PLAY.
+    0x2e PLAY.
+    0x2e PLAY.
+    0x44 PLAY.
+    0x44 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x4e PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0x4e PLAY.
+    0x2c PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x50 PLAY.
+    0xA7 Decrement pitch correction.
+    0x7c PLAY.
+    0xA6 Increment pitch correction.
+    0x2f PLAY.
+    0x7a PLAY.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0x50 PLAY.
+    0xA8 Set volume to 0x13800000 and reset volume_level_change_ticks.
+    0x50 PLAY.
+    0x2d PLAY.
+    0x45 PLAY.
+    0x66 PLAY.
+    0x19 PLAY.
+    0x45 PLAY.
+    0x45 PLAY.
+    0x19 PLAY.
+    0x45 PLAY.
+    0xA7 Decrement pitch correction.
+    0x7c PLAY.
+    0x19 PLAY.
+    0x19 PLAY.
+    0x2f PLAY.
+    0x50 PLAY.
+    0xA6 Increment pitch correction.
+    0x0e PLAY.
+    0x2f PLAY.
+    0x2f PLAY.
+    0x17 PLAY.
+    0x43 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x17 PLAY.
+    0x64 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x17 PLAY.
+    0x17 PLAY.
+    0x64 PLAY.
+    0x43 PLAY.
+    0x17 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xA9 [UNIMPLEMENTED]
+    0xE8 Set tempo to 0x2ac60000 and reset tempo increment counter to 0.
+    0x91 UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0x90 UNKNOWN RESETTING.
+    0xE8 Set tempo to 0x3be20000 and reset tempo increment counter to 0.
+    0xA8 Set volume to 0x0c000000 and reset volume_level_change_ticks.
+    0xA9 [UNIMPLEMENTED]
+    0x18 PLAY.
+    0xA8 Set volume to 0x17800000 and reset volume_level_change_ticks.
+    0x0d PLAY.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0x91 UNKNOWN RESETTING.
+    0xA8 Set volume to 0x16800000 and reset volume_level_change_ticks.
+    0xA7 Decrement pitch correction.
+    0x7b PLAY.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x92 UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA8 Set volume to 0x15800000 and reset volume_level_change_ticks.
+    0x64 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA9 [UNIMPLEMENTED]
+    0x2e PLAY.
+    0xA8 Set volume to 0x16000000 and reset volume_level_change_ticks.
+    0xCC [UNIMPLEMENTED]
+    0x30 PLAY.
+    0x46 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xCD [UNIMPLEMENTED]
+    0xA8 Set volume to 0x17800000 and reset volume_level_change_ticks.
+    0x50 PLAY.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0x8f UNKNOWN RESETTING.
+    0xA8 Set volume to 0x16800000 and reset volume_level_change_ticks.
+    0x45 PLAY.
+    0xA8 Set volume to 0x15800000 and reset volume_level_change_ticks.
+    0x2f PLAY.
+    0xA8 Set volume to 0x14800000 and reset volume_level_change_ticks.
+    0x17 PLAY.

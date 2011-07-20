@@ -614,84 +614,86 @@ void SoundManager::Update()
 }
 
 
-void SoundManager::PsxInstrumentSetReverbDepth(u8 arg_channel,
-	u16 arg_left, u16 arg_right)
+
+void
+SoundManager::PsxChannelPlay( u8 arg_channel )
 {
-	SPUwriteRegister(0x1f801d84, arg_left);
-	SPUwriteRegister(0x1f801d86, arg_right);
+    if( arg_channel < 16 )
+    {
+        // H_SPUon1
+        SPUwriteRegister( 0x1f801d88, 1 << arg_channel );
+    }
+    else if( arg_channel >= 16 && arg_channel < 24 )
+    {
+        // H_SPUon2
+        SPUwriteRegister( 0x1f801d8a, 1 << ( arg_channel - 16 ) );
+    }
 }
 
 
-void SoundManager::PsxChannelPlay(u8 arg_channel)
+
+void
+SoundManager::PsxChannelStop( u8 arg_channel )
 {
-	if(arg_channel < 16)
-		// H_SPUon1
-		SPUwriteRegister(0x1f801d88, 1 << arg_channel);
-	else if(arg_channel >= 16 && arg_channel < 24)
-		// H_SPUon2
-		SPUwriteRegister(0x1f801d8a, 1 << (arg_channel - 16));
-	else
-	{
-		std::cout << "[SoundManager] error: unknown channel ON" << std::endl;
-		exit(EXIT_FAILURE);
-	}
+    if( arg_channel < 16 )
+    {
+        // H_SPUoff1
+        SPUwriteRegister( 0x1f801d8c, 1 << arg_channel );
+    }
+    else if( arg_channel >= 16 && arg_channel < 24 )
+    {
+        // H_SPUoff2
+        SPUwriteRegister( 0x1f801d8e, 1 << ( arg_channel - 16 ) );
+    }
 }
 
 
-void SoundManager::PsxReverbOn(u8 arg_channel)
+
+void
+SoundManager::PsxReverbOn( u8 arg_channel )
 {
-	if(arg_channel < 16)
-		// H_RVBon1
-		SPUwriteRegister(0x1f801d98, 1 << arg_channel);
-	else if(arg_channel >= 16 && arg_channel < 24)
-		// H_RVBon2
-		SPUwriteRegister(0x1f801d9a, 1 << (arg_channel - 16));
-	else
-	{
-		std::cout << "[SoundManager] error: unknown channel REVERB" << std::endl;
-		exit(EXIT_FAILURE);
-	}
+    if( arg_channel < 16 )
+    {
+        // H_RVBon1
+        SPUwriteRegister( 0x1f801d98, 1 << arg_channel );
+    }
+    else if( arg_channel >= 16 && arg_channel < 24 )
+    {
+        // H_RVBon2
+        SPUwriteRegister( 0x1f801d9a, 1 << ( arg_channel - 16 ) );
+    }
 }
 
 
-void SoundManager::PsxChannelStop(u8 arg_channel)
+
+void
+SoundManager::PsxSetReverbDepth( u16 arg_left, u16 arg_right )
 {
-	if(arg_channel < 16)
-		// H_SPUoff1
-		SPUwriteRegister(0x1f801d8c, 1 << arg_channel);
-	else if(arg_channel >= 16 && arg_channel < 24)
-		// H_SPUoff2
-		SPUwriteRegister(0x1f801d8e, 1 << (arg_channel - 16));
-	else
-	{
-		std::cout << "[SoundManager] error: unknown channel OFF" << std::endl;
-		exit(EXIT_FAILURE);
-	}
+    SPUwriteRegister( 0x1f801d84, arg_left );
+    SPUwriteRegister( 0x1f801d86, arg_right );
 }
 
 
-// +++
-void SoundManager::SetVoiceStartAddress(u8 arg_voice, u32 arg_address)
+
+void
+SoundManager::SetVoiceStartAddress( u8 arg_voice, u32 arg_address )
 {
-	if(arg_voice >= 0x18)
-	{
-		std::cout << "*** error: wrong channel!" << std::endl;
-		return;
-	}
+    if( arg_voice < 0x18 )
+    {
+        // if address isn't divisible by 8, it's
+        // increased to the next value divisible by 8
+        if( arg_address % 8 )
+        {
+            arg_address += 8;
+            arg_address &= ~7;
+        }
 
-	// if address isn't divisible by 8, it's
-	// increased to the next value divisible by 8
-	if(arg_address % 8)
-	{
-		arg_address += 8;
-		arg_address &= ~7;
-	}
-
-	SPUwriteRegister(m_PSX_SPU_BASE + arg_voice * 0x10 + 0x06, (u16)(arg_address / 8));
+        SPUwriteRegister( m_PSX_SPU_BASE + arg_voice * 0x10 + 0x06, ( u16 )( arg_address / 8 ) );
+    }
 }
 
 
-// +++
+
 void SoundManager::SetVoiceLoopAddress(u8 arg_voice, u32 arg_address)
 {
 	if(arg_voice >= 0x18)
@@ -3369,8 +3371,6 @@ ENDX:
 
 void SPUasync(unsigned long cycle)
 {
-//	std::cout << "*** SPUasync(0x"<< hex << setw(8) << cycle << ")" << std::endl;
-
 	// clear the watchdog
 	iWatchDog = 0;
 
@@ -3391,20 +3391,13 @@ void SPUasync(unsigned long cycle)
 
 void SPUupdate(void)
 {
-#ifdef DEBUG_OUTPUT
-	std::cout << "*** SPUupdate()" << std::endl;
-#endif
-	SPUasync(0);
+    SPUasync(0);
 }
 
 
 
 void SPUplayADPCMchannel(xa_decode_t *xap)
 {
-#ifdef DEBUG_OUTPUT
-	std::cout << "*** SPUplayADPCMchannel()" << std::endl;
-#endif
-
 	if(!iUseXA)
 		return;
 	if(!xap)

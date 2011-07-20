@@ -76,10 +76,8 @@ public:
             m_Keyboard->capture();
         }
 
-        static int cycle = 0;
         if (m_Timer >= 0.003)
         {
-            ++cycle;
             m_Timer = 0;
             AKAOPARSER->Update();
         }

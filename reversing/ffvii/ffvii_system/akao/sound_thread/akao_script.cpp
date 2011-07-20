@@ -18,8 +18,6 @@ loop30eb8:	; 80030EB8
 a0 94380380
 a2 5C340380
 a4 2C250380
-a6 94200380
-a7 AC200380
 ab F01F0380
 ac 6C2D0380
 ad 082E0380
@@ -29,18 +27,26 @@ b0 D8350380
 b1 342F0380
 b2 982F0380
 b3 CC230380
-b5 18270380
-b6 E0270380FC2F038004280380D428038068290380603003808C290380042A0380982A0380C4300380
+b6 E0270380
+b7 FC2F038004280380D428038068290380603003808C290380042A0380982A0380C4300380
 c0 D8240380
 c1 00250380
 c3 E82C0380
-c4 BC2A0380302B0380B42B0380202C038024320380643203802034038008370380442D0380502D0380283603806C360380
+c4 BC2A0380
+c5 302B0380
+c6 B42B0380
+c7 202C0380
+cb 08370380
+cc 442D0380
+cd 502D0380
+ce 28360380
+cf 6C360380
 d0 582D0380642D038098360380DC360380883703809C370380B0370380C4370380C0250380E82503807C250380B82503808834038070270380F8280380282A0380
 e0 e1 e2 e3 e4 e5 e6 e7 703A0380
 e9 FC1A0380
-eb E41B0380EC34038034350380D837038018380380
-f0 EC320380
-f1 7C330380
+eb E41B0380
+ec EC340380
+ed 34350380
 f2 74220380
 f3 CC350380
 f4 6C1D0380
@@ -345,13 +351,12 @@ if (opcode != a0)
 ////////////////////////////////
 // func318bc
 // next opcode
-T0 = ffff;
-A1 = w[A0 + 0];
+pointer = w[A0 + 0];
 A3 = hu[A0 + b8];
 
 while (true)
 {
-    V1 = bu[A1];
+    V1 = bu[pointer];
 
     if (V1 < 9a)
     {
@@ -361,7 +366,7 @@ while (true)
             [A0 + 6e] = h([A0 + 6e] & fffa);
         }
 
-        return bu[A1];
+        return bu[pointer];
     }
 
     if (V1 < a0)
@@ -369,29 +374,24 @@ while (true)
         return a0;
     }
 
-    V0 = bu[800498a8 + V1];
+    V0 = bu[800498a8 + V1]; // size of opcodes
     if (V0 == 0)
     {
         switch(V1)
         {
             case c9:
             {
-                A1 = A1 + 1;
+                pointer = pointer + 1;
                 A2 = A3 & ffff;
-                V0 = A0 + A2 * 2;
-                V0 = hu[V0 + ba];
-                V1 = bu[A1];
-                V1 = V1 + 1;
 
-                if (V1 == V0)
+                if ((bu[pointer] + 1) == hu[A0 + A2 * 2 + ba])
                 {
-                    A1 = A1 + 1;
-                    A3 = (T0 + A3) & 3;
-
+                    pointer = pointer + 1;
+                    A3 = (A3 + ffff) & 3;
                 }
                 else
                 {
-                    A1 = w[A0 + A3 * 4 + 4] ;
+                    pointer = w[A0 + A3 * 4 + 4] ;
                 }
                 continue;
             }
@@ -399,14 +399,14 @@ while (true)
 
             case ca:
             {
-                A1 = w[A0 + A3 * 4 + 4] ;
+                pointer = w[A0 + A3 * 4 + 4] ;
                 continue;
             }
             break;
 
             case cb cd d1 db:
             {
-                A1 = A1 + 1;
+                pointer = pointer + 1;
                 [A0 + 6c] = h(0);
                 [A0 + 6e] = h(hu[A0 + 6e] & fffa);
                 continue;
@@ -415,44 +415,26 @@ while (true)
 
             case ee:
             {
-                A1 = A1 + 1;
-                80031A24	lbu    a2, $0000(a1)
-                80031A28	addiu  a1, a1, $0001
-                80031A2C	lbu    v0, $0000(a1)
-                80031A30	addiu  a1, a1, $0001
-                80031A34	sll    v0, v0, $08
-                80031A38	addu   v0, a2, v0
-                80031A3C	sll    v0, v0, $10
-                80031A40	sra    v0, v0, $10
-                80031A48	addu   a1, a1, v0
+                pointer = pointer + 1;
+                A2 = h[pointer];
+                pointer = pointer + A2 + 2;
                 continue;
             }
             break;
 
             case ef:
             {
-                80031A04	addiu  a1, a1, $0001
-                80031A08	lbu    a2, $0000(a1)
-                80031A0C	lui    v0, $800a
-                80031A10	lhu    v0, $a152(v0)
-                80031A14	nop
-                80031A18	sltu   v0, v0, a2
-                A1 = A1 + 1;
-                if (V0 == 0)
+                pointer = pointer + 1;
+                A2 = bu[pointer];
+                pointer = pointer + 1;
+                if (hu[8009a152] >= A2)
                 {
-                    80031A24	lbu    a2, $0000(a1)
-                    80031A28	addiu  a1, a1, $0001
-                    80031A2C	lbu    v0, $0000(a1)
-                    80031A30	addiu  a1, a1, $0001
-                    80031A34	sll    v0, v0, $08
-                    80031A38	addu   v0, a2, v0
-                    80031A3C	sll    v0, v0, $10
-                    80031A40	sra    v0, v0, $10
-                    80031A48	addu   a1, a1, v0
+                    A2 = h[pointer];
+                    pointer = pointer + A2 + 2;
                 }
                 else
                 {
-                    A1 = A1 + 2;
+                    pointer = pointer + 2;
                 }
 
                 continue;
@@ -461,30 +443,18 @@ while (true)
 
             case f0 f1:
             {
-                800319A0	addiu  a1, a1, $0001
-                800319A4	sll    v0, a3, $01
-                800319A8	addu   v0, v0, a0
-                800319AC	lhu    v0, $00ba(v0)
-                800319B0	lbu    v1, $0000(a1)
-                800319B4	addiu  v0, v0, $0001
-                if (V1 == V0)
+                pointer = pointer + 1;
+                if (bu[pointer] == (hu[A0 + A3 * 2 + ba] + 1))
                 {
-                    800319BC	addu   v1, a3, t0
-                    800319C0	addiu  a1, a1, $0001
-                    800319C4	lbu    a2, $0000(a1)
-                    800319C8	addiu  a1, a1, $0001
-                    800319CC	lbu    v0, $0000(a1)
-                    800319D0	addiu  a1, a1, $0001
-                    800319D8	andi   a3, v1, $0003
-                    80031A34	sll    v0, v0, $08
-                    80031A38	addu   v0, a2, v0
-                    80031A3C	sll    v0, v0, $10
-                    80031A40	sra    v0, v0, $10
-                    80031A48	addu   a1, a1, v0
+                    V1 = A3 + ffff;
+                    pointer = pointer + 1;
+                    A2 = h[A1];
+                    A3 = V1 & 3;
+                    pointer = pointer + A2 + 2;
                 }
                 else
                 {
-                    A1 = A1 + 3;
+                    pointer = pointer + 3;
                 }
 
                 continue;
@@ -500,7 +470,6 @@ while (true)
         }
     }
 
-    A1 = A1 + V0;
+    pointer = pointer + V0;
 }
-
 ////////////////////////////////

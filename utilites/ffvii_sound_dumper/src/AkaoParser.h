@@ -47,6 +47,11 @@ private:
         SPU_LOOP_OFFSET   = 1 << 16, // 0x00010000
     };
 
+    enum SpuConfigUpdate
+    {
+        SPU_REVERB        = 1 <<  7, // 0x00000080
+    };
+
 
 
     // instrument
@@ -72,29 +77,74 @@ private:
     {
         // 0x00 [][][][]
         u32 akao_sequence_pointer;
+        // 0x04-0x10 [][][][]
+        u32 loop_pointer[ 4 ];
+
+        // 0x18 [][][][] in real here was addreses into wave table, but we store indexes here
+        u32 wave_table_index;
 
         // 0x2c [][][][]
         s32 volume_multiplier;
 
         // 0x30 [][][][]
         u32 pitch_base;
-
-        // 0x36 [][]
-        s16 pitch_addition;
+        // 0x34 [][][][]
+        s32 pitch_addition;
+        // 0x38 [][][][]
+        u32 mirror_update_flags;
 
         // 0x44 [][][][]
         s32 volume_level;
 
+        // 0x4c [][][][]
+        s32 pitch_growth;
+
+        // 0x54 [][]
+        u16 unknown_54;
         // 0x56 [][]
         u16 pause;
         // 0x58 [][]
         int instrument_id;
 
+        // 0x5c [][]
+        u16 volume_level_change_ticks;
+
         // 0x60 [][]
         u16 volume_index;
-
+        // 0x62 [][]
+        u16 unknown_62;
+        // 0x64 [][]
+        u16 unknown_64;
         // 0x66 [][]
         u16 pitch_correction;
+        // 0x68 [][]
+        u16 unknown_68;
+        // 0x6a [][]
+        u16 unknown_6a;
+        // 0x6c [][]
+        u16 unknown_6c;
+        // 0x6e [][]
+        u16 unknown_6e;
+
+        // 0x72 [][]
+        u16 wave_delay;
+        // 0x74 [][]
+        u16 wave_delay_current;
+        // 0x76 [][]
+        u16 wave_refresh_interval;
+        // 0x78 [][]
+        u16 wave_refresh_interval_counter;
+        // 0x7a [][]
+        u16 wave_table_node_index;
+        // 0x7c [][]
+        u16 wave_multiplier;
+        // 0x7e [][]
+        u16 wave_modifier;
+
+        // 0xb8 [][]
+        u16 loop_index;
+        // 0xba-0xc0 [][]
+        u16 loop_count[ 4 ];
 
         // 0xc2 [][]
         u16 saved_pause;
@@ -107,9 +157,14 @@ private:
         s16 pitch_modifier;
         // 0xd0 [][]
         u16 saved_pitch;
-
-        // 0xd6
+        // 0xd2 [][]
+        u16 unknown_d2;
+        // 0xd4 [][]
+        u16 unknown_d4;
+        // 0xd6 [][]
         s16 pitch_addition2;
+        // 0xd8 [][]
+        u16 unknown_d8;
 
         // 0xe0 [][][][]
         u32 spu_update_flags;
@@ -146,19 +201,40 @@ private:
 
     struct ChannelConfig
     {
-        // 8009a108 [][][][]
+        // 0x04 [][][][]
         u32 active_channel_mask;
-        // 8009a10c [][][][]
+        // 0x08 [][][][]
         u32 for_play_channel_mask;
-        // 8009a11c [][][][]
+        // 0x18 [][][][]
         u32 tempo;
-        // 8009a120 [][][][]
+        // 0x1c [][][][]
         u32 tempo_increment;
-        // 8009a124 [][][][]
+        // 0x20 [][][][]
         u32 tempo_counter;
 
-        // 8009a14c [][]
+        // 0x38 [][][][]
+        u32 spu_update_flags;
+
+        // 0x40 [][][][]
+        u32 reverb_depth;
+
+        // 0x48 [][]
         u16 tempo_increment_counter;
+        // 0x4e [][]
+        u16 conditional_value;
+        // 0x50 [][][][]
+        u32 reverb_depth_increment_counter;
+
+        // 0x56 [][]
+        u16 upper_timer_top;
+        // 0x58 [][]
+        u16 upper_timer;
+        // 0x5a [][]
+        u16 lower_timer_top;
+        // 0x5c [][]
+        u16 lower_timer;
+        // 0x5e [][]
+        u16 top_timer;
     };
     ChannelConfig m_MusicChannelConfig;
 
@@ -174,6 +250,8 @@ private:
     void UpdateSpu( ChannelData* channel_data, int channel_id );
     void UpdatePlayChannel( bool on, u32 channel_mask );
     void UpdateSequence( ChannelData* channel_data, int channel_id, ChannelConfig& channel_config );
+
+    const u8 NextSequenceHandle( ChannelData* channel_data, int channel_id, ChannelConfig& channel_config );
 
     void InitChannelInstrument( ChannelData* channel_data, int channel_id, int instrument_id );
 };

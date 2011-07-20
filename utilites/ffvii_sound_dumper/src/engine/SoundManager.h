@@ -17,42 +17,40 @@
 
 class SoundManager
 {
-	public:
-		SoundManager();
-		virtual ~SoundManager();
+public:
+    SoundManager();
+    virtual ~SoundManager();
 
-		void Update();
+    void Update();
 
-		// psx routines
-		void PsxInstrumentSetReverbDepth(u8 arg_channel, u16 arg_left, u16 arg_right);
-		void PsxChannelPlay(u8 arg_channel);
-		void PsxChannelStop(u8 arg_channel);
-		void PsxReverbOn(u8 arg_channel);
+    void PsxChannelPlay(u8 arg_channel);
+    void PsxChannelStop(u8 arg_channel);
+    void PsxReverbOn(u8 arg_channel);
+    void PsxSetReverbDepth( u16 arg_left, u16 arg_right );
 
-		// +++
-		enum SpuRateMode
-		{
-			SPU_VOICE_LINEARIncN = 1,
-			SPU_VOICE_LINEARDecN = 3,
-			SPU_VOICE_EXPIncN    = 5,
-			SPU_VOICE_EXPDec     = 7
-		};
+    enum SpuRateMode
+    {
+        SPU_VOICE_LINEARIncN = 1,
+        SPU_VOICE_LINEARDecN = 3,
+        SPU_VOICE_EXPIncN    = 5,
+        SPU_VOICE_EXPDec     = 7
+    };
 
-		static const u32 m_PSX_SPU_BASE = 0x1F801C00;
+    static const u32 m_PSX_SPU_BASE = 0x1F801C00;
 
-		void SetVoiceStartAddress(u8 arg_voice, u32 arg_address);
-		void SetVoiceLoopAddress(u8 arg_voice, u32 arg_address);
-		void SetVoiceVolume(u8 arg_voice, s16 arg_volume_left, s16 arg_volume_right);
-		void SetVoicePitch(u8 arg_voice, u16 arg_pitch);
-		void SetVoiceAttackRate(u8 arg_voice, u16 arg_rate, SpuRateMode arg_mode);
-		void SetVoiceSustainRate(u8 arg_voice, u16 arg_rate, SpuRateMode arg_mode);
-		void SetVoiceReleaseRate(u8 arg_voice, u16 arg_rate, SpuRateMode arg_mode);
-		void SetVoiceDecayRate(u8 arg_voice, u16 arg_rate);
-		void SetVoiceSustainLevel(u8 arg_voice, u16 arg_level);
+    void SetVoiceStartAddress(u8 arg_voice, u32 arg_address);
+    void SetVoiceLoopAddress(u8 arg_voice, u32 arg_address);
+    void SetVoiceVolume(u8 arg_voice, s16 arg_volume_left, s16 arg_volume_right);
+    void SetVoicePitch(u8 arg_voice, u16 arg_pitch);
+    void SetVoiceAttackRate(u8 arg_voice, u16 arg_rate, SpuRateMode arg_mode);
+    void SetVoiceSustainRate(u8 arg_voice, u16 arg_rate, SpuRateMode arg_mode);
+    void SetVoiceReleaseRate(u8 arg_voice, u16 arg_rate, SpuRateMode arg_mode);
+    void SetVoiceDecayRate(u8 arg_voice, u16 arg_rate);
+    void SetVoiceSustainLevel(u8 arg_voice, u16 arg_level);
 
-		static const u32 m_REGISTER_BASE = 0x1f801c00;
+    static const u32 m_REGISTER_BASE = 0x1f801c00;
 
-		bool PsxWriteDMA(u16 arg_address, u8 *arg_data, u32 arg_length);
+    bool PsxWriteDMA(u16 arg_address, u8 *arg_data, u32 arg_length);
 };
 
 

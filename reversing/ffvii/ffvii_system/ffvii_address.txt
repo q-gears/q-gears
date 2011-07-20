@@ -1,3 +1,4 @@
+800498a8 size of opcodes.
 80049c28 pause table.
 80049c40 default AKAO sequence (only A0 here).
 80049c44 AKAO left volume table (0x100 items 0x2 bytes each)
@@ -8,16 +9,22 @@
 8004aaec [][][][] some flags SPU related. if this &1 == 0 then we write data to SPU directly
 8004aaf4 [][][][] pointer to SPU addreses (0x1f801c00)
 
+8005a6a8 [][]     store reverberation depth left here.
+8005a6aa [][]     store reverberation depth right here.
+
 80062bb8 array of some function pointers (0x4 size).
 +08 [][][][] 80045a24 function. Called when copy data from palette to ram and back.
 +1c [][][][] 80045654 function. Passed as parameter when copy palette to ram.
 +20 [][][][] 80045400 function. Passed as parameter when copy palette from ram.
 80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
+80062f70 [][]     looks like global left right reverberation pan.
 80062f74 [][][][] pointer to 80089580. AKAO scripts. EFFECT.ALL offsets.
 80062f84 [][][][] pointer to 8008a580. AKAO scripts. EFFECT.ALL data.
 
 80062f8c [][][][] store 1 here at start of system_execute_AKAO. We will not add AKAO commands untill this is 0.
+
+80062fb8 [][]     looks like reverberation power.
 
 80062fea [][][][] used as some tempo modificator for AKAO sequenser.
 
@@ -59,34 +66,43 @@
 80097ec8 some other same 0x18 structs for akao channels.
 80099890 some other same 0x18 structs for akao channels.
 +000 [][][][] AKAO sequence pointer.
++004 [][][][] loop point 0.
++008 [][][][] loop point 1.
++00c [][][][] loop point 2.
++010 [][][][] loop point 3.
 +014 [][][][] pointer to mask for AKAO channels in 80083580.
 +018 [][][][] address into wave table.
 +024 [][][][] ???
 +028 [][][][] ???
 +02c [][][][] volume multiplier. Store 0x78 here during init.
 +030 [][][][] base pitch. Summarize 0x30, 0x36 and 0xd6 it to get real pitch.
-+034 [][][][] init with 0.
++034 [][][][] init with 0. pitch related.
 +036 [][]     pitch addition. summarize 0x30, 0x36 and 0xd6 it to get real pitch.
 +038 [][][][] init with 0. Update mirror. If flag is set we update main params from mirror channel (previous 0x108 channel data).
                 0x00000010 - update pitch. We update from +0xf8 from previous channel.
 +03d [][]     pitch modifier. We multiply this with real calculated pitch if +0x54 != 2.
++040 [][][][] ???
 +044 [][][][] volume level. Often used as 2 top bytes.
 +04c [][][][] pitch growth. We increment pitch addition by this every frame.
 +050 [][][][] set to -1.
-+054 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d.
-+056 [][]     set to 0x204 in case of 0x30 command. Set to 0x101.
++054 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d. maybe pitch type?
++056 [][]     pause. Set to 0x204 in case of 0x30 command. Set to 0x101.
 +058 [][]     current instrument.
 +05c [][]     init with 0.
 +060 [][]     store 0x4000 here in case of playing system sound 0x30.
 +062 [][]     set to 0.
 +064 [][]     init with 0. Number of steps for pitch changes?.
 +066 [][]     pitch corrention. Set in 0xa5 opcode.
++06a [][]     ???
 +06c [][]     init with 0.
 +06e [][]     init with 0.
-+076 [][]     wait value until we update left volume. +078 inited from here when left volume updated.
-+078 [][]     something. we descrease this by 1 everytime we update channel struct and when this became 0 we update left volume.
++072 [][]     wave_delay.
++074 [][]     wave_delay_current;
++076 [][]     wave_refresh_interval. Wait value until we update left volume. +078 inited from here when left volume updated.
++078 [][]     wave_refresh_interval_counter. We descrease this by 1 everytime we update channel struct and when this became 0 we update left volume.
++07a [][]     wave_table_index.
 +07c [][]     wave multiplier. Some modificator for pitch modificator +d6.
-+07e [][]     init with 0.
++07e [][]     wave_modifier. Init with 0.
 +080 [][]     init with 0.
 +090 [][]     init with 0.
 +092 [][]     init with 0.
@@ -94,13 +110,18 @@
 +0a0 [][]     init with 0.
 +0a4 [][]     init with 0.
 +0a6 [][]     init with 0.
-+0b8 [][]     init with 0.
++0b8 [][]     index of last saved loop point (0-3). init with 0.
++0ba [][]     something for loop point 0. Set to 0 when save loop point.
++0bc [][]     something for loop point 1. Set to 0 when save loop point.
++0be [][]     something for loop point 2. Set to 0 when save loop point.
++0c0 [][]     something for loop point 3. Set to 0 when save loop point.
 +0c2 [][]     we store here pause after setting it.
-+0c4 [][]     init with 0.
++0c4 [][]     init with 0. pause_multiplier.
 +0cc [][]     init with 0.
 +0ce [][]     init with 0.
 +0d0 [][]     pitch saved parameters.
 +0d2 [][]     init with 0.
++0d4 [][]     ???
 +0d6 [][]     pitch wave shift. Summarize 0x30, 0x36 and 0xd6 it to get real pitch.
 +0d8 [][]     ???
 +0da [][]     init with 0.
@@ -182,30 +203,29 @@
 
 
 
-8009a104 [][][][] some settings for music (0x01- stereo, 0x02 - mono)
-8009a108 [][][][] active music channel mask.
-8009a10c [][][][] channels to be played mask.
+8009a104 start of music channels config
++00 [][][][] some settings for music (0x01- stereo, 0x02 - mono)
++04 [][][][] active music channel mask.
++08 [][][][] channels to be played mask.
++18 [][][][] tempo of music. Used as >> 10.
++1c [][][][] tempo music increment.
++20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
++38 [][][][] we add here 0x00000080 (flag that we need update reverb to spu) each time we increment +40.
++40 [][][][] reverb depth. some value we can increment this by 8009a148 if 8009a154 not 0.
++44 [][][][] increment for +40.
++4a [][]     this is number of times we need to increment tempo (8009a11c) each update by 8009a120.
++4c [][]     AKAO music id for currently playing sequence.
++4e [][]     storage for 0xef conditional jump.
++50 [][]     this is number of times we need to increment +40 each update by +44.
++56 [][]     upper timer equal value.
++58 [][]     upper timer value. When this reach +56 then we reset this to 0 and increment +5e. Stored in CHMPH opcode.
++5a [][]     lower timer equal value.
++5c [][]     lower timer value. When this equal to +5a then we reset this to 0 and increment +58.
++5e [][]     top timer. Stored in CHMPH opcode.
 
-8009a11c [][][][] tempo of music. Used as >> 10.
-8009a120 [][][][] tempo music increment.
-8009a124 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
-
-8009a13c [][][][] we add here 0x00000080 (flag that we need update reverb to spu) each tyme we increment 8009a144.
-
-8009a144 [][][][] reverb depth. some value we can increment this by 8009a148 if 8009a154 not 0.
-8009a148 [][][][] increment for 8009a144.
-8009a14c [][]     this is number of times we need to increment tempo (8009a11c) each update by 8009a120.
-8009a14e [][]     AKAO music id for currently playing sequence.
-
-8009a154 [][]     this is number of times we need to increment 8009a144 each update by 8009a148.
-
-8009a15a [][]     upper timer equal value.
-8009a15c [][]     upper timer value. When this reach 8009a15a then we reset this to 0 and increment 8009a162. Stored in CHMPH opcode.
-8009a15e [][]     lower timer equal value.
-8009a160 [][]     lower timer value. When this equal to 8009a15e then we reset this to 0 and increment 8009a15c.
-8009a162 [][]     upper upper timer. Stored in CHMPH opcode.
-
-
+8009c564 [][][][] store here which reverb channel to update (6 - left and right) in spu update.
+8009c56c [][]     store here reverb depth left in spu update.
+8009c56e [][]     store here reverb depth right in spu update.
 
 8009c6e4 savemap start
 +0054          savemap character name data (0x84 size).

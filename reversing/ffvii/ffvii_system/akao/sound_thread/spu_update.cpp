@@ -3,68 +3,44 @@
 
 S4 = 0;
 
-if (w[8009a13c] & 00000080)
+// update reverb
+if (w[8009a104 + 38] & 00000080)
 {
-    A0 = h[8009a146];
+    reverb_depth = h[8009a104 + 42];
     V1 = hu[80062fb8];
+
     [8009c564] = w(6);
 
     if (V1 < 80)
     {
-        V0 = A0 * V1;
-        8002F8B0	sra    v0, v0, $07
-        8002F8B8	addu   a0, a0, v0
+        reverb_depth = reverb_depth + ((reverb_depth * V1) >> 7);
     }
     else
     {
-        V0 = A0 * V1;
-        8002F8C0	sra    a0, v0, $08
+        reverb_depth = (reverb_depth * V1) >> 8;
     }
 
-    8002F8C4	lui    v1, $8006
-    8002F8C8	lhu    v1, $2f70(v1)
-    8002F8CC	nop
-    8002F8D0	sltiu  v0, v1, $0040
-    if (V0 != 0)
+    V1 = hu[80062f70];
+    if (V1 < 40)
     {
-        8002F8D8	xori   v0, v1, $003f
-        8002F8DC	mult   a0, v0
-        8002F8E0	lui    at, $800a
-        8002F8E4	sh     a0, $c56c(at)
-        8002F8E8	mflo   v0
-        8002F8EC	sra    v0, v0, $06
-        8002F8F0	subu   v0, a0, v0
-        8002F8F4	lui    at, $800a
-        8002F8F8	sh     v0, $c56e(at)
+        [8009c56c] = h(reverb_depth);
+        [8009c56e] = h(reverb_depth - ((reverb_depth * (V1 ^ 3f)) >> 6));
     }
     else
     {
-        8002F904	andi   v0, v1, $003f
-        8002F908	mult   a0, v0
-        8002F90C	lui    at, $800a
-        8002F910	sh     a0, $c56e(at)
-        8002F914	mflo   v0
-        8002F918	sra    v0, v0, $06
-        8002F91C	subu   v0, a0, v0
-        8002F920	lui    at, $800a
-        8002F924	sh     v0, $c56c(at)
+        [8009c56c] = h(reverb_depth - ((reverb_depth * (V1 & 3f)) >> 6));
+        [8009c56e] = h(reverb_depth);
     }
 
-    8002F928	lui    a0, $800a
-    8002F92C	addiu  a0, a0, $c564 (=-$3a9c)
-    8002F930	jal    func3884c [$8003884c]
-    8002F934	nop
-    8002F938	lui    v0, $800a
-    8002F93C	lw     v0, $a13c(v0)
-    8002F940	nop
-    8002F944	xori   v0, v0, $0080
-    8002F948	lui    at, $800a
-    8002F94C	sw     v0, $a13c(at)
+    A0 = 8009c564;
+    func3884c; // update reverb depth left and right
+
+    [8009a104 + 38] = w(w[8009a104 + 38] ^ 00000080);
 }
 
 
 
-if (w[8009a13c] & 00000010)
+if (w[8009a104 + 38] & 00000010)
 {
     8002F968	lui    v0, $800a
     8002F96C	lw     v0, $9fcc(v0)

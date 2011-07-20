@@ -54,6 +54,70 @@ s16 akao_right_volume_table[ 256 ] =
      -225,  -196,  -169,  -144,  -121,  -100,   -81,   -64,   -49,   -36,   -25,   -16,    -9,    -4,    -1,     0
 };
 
+s16 akao_wave_table[ 708 ] =
+{
+      8191,  -8191,  16383, -16383,  24575, -24575,  32767, -32767,     0,      0,     -2,      0,  32767, -32767,      0,      0,
+        -2,      0,   8191,      0,  16383,      0,  24575,      0, 32767,      0,      0,     -2,  32767,      0,  32767,      0,
+         0,     -2,  -8191,      0, -16383,      0, -24575,      0,-32767,      0,      0,     -2, -32767,      0, -32767,      0,
+         0,     -2,      0,   1280,   2530,   4813,   5790,   6625,  7297,   7789,   8090,   8191,   8092,   7793,   7302,   6632,
+      5799,   4823,   3728,   2542,   1293,      0,  -1268,  -2518, -3706,  -4803,  -5782,  -6618,  -7292,  -7786,  -8089,  -8192,
+     -8095,  -7798,  -7309,  -6641,  -5809,  -4835,  -3741,  -2556, -1307,      0,   2561,   5060,   9626,  11580,  13250,  14594,
+     15578,  16180,  16383,  16184,  15586,  14605,  13265,  11599,  9647,   7457,   5085,   2587,      0,  -2536,  -5036,  -7412,
+     -9605, -11563, -13235, -14583, -15571, -16177, -16384, -16189,-15595, -14618, -13281, -11618,  -9669,  -7482,  -5111,  -2614,
+         0,   3842,   7590,  14439,  17370,  19875,  21891,  23367, 24270,  24575,  24276,  23379,  21908,  19898,  17398,  14470,
+     11186,   7627,   3881,      0,  -3804,  -7554, -11118, -14408,-17344, -19853, -21874, -23357, -24265, -24576, -24284, -23393,
+    -21927, -19922, -17427, -14503, -11223,  -7666,  -3921,      0,  5123,  10120,  19252,  23161,  26500,  29188,  31157,  32360,
+     32767,  32369,  31173,  29211,  26531,  23198,  19294,  14915, 10170,   5175,      0,  -5072, -10072, -14823, -19210, -23125,
+    -26470, -29165, -31142, -32353, -32768, -32378, -31190, -29236,-26562, -23235, -19337, -14963, -10221,  -5227,      0,      0,
+       -39,      0,      0,   5123,  10120,  19252,  23161,  26500, 29188,  31157,  32360,  32767,  32369,  31173,  29211,  26531,
+     23198,  19294,  14915,  10170,   5175,      0,  -5072, -10072,-14823, -19210, -23125, -26470, -29165, -31142, -32353, -32768,
+    -32378, -31190, -29236, -26562, -23235, -19337, -14963, -10221, -5227,      0,      0,    -39,      0,   2530,   4813,   6625,
+      7789,   8191,   7793,   6632,   4823,   2542,     13,  -2518, -4803,  -6618,  -7786,  -8192,  -7798,  -6641,  -4835,  -2556,
+         0,   5060,   9626,  13250,  15578,  16383,  15586,  13265,  9647,   5085,     26,  -5036,  -9605, -13235, -15571, -16384,
+    -15595, -13281,  -9669,  -5111,      0,   7590,  14439,  19875, 23367,  24575,  23379,  19898,  14470,   7627,     39,  -7554,
+    -14408, -19853, -23357, -24576, -23393, -19922, -14503,  -7666,     0,  10120,  19252,  26500,  31157,  32767,  31173,  26531,
+     19294,  10170,     52, -10072, -19210, -26470, -31142, -32768,-31190, -26562, -19337, -10221,      0,      0,    -20,      0,
+         0,  10120,  19252,  26500,  31157,  32767,  31173,  26531, 19294,  10170,     52, -10072, -19210, -26470, -31142, -32768,
+    -31190, -26562, -19337, -10221,      0,      0,    -20,      0,     0,   2047,   4095,   6143,   8191,   6143,   4095,   2047,
+         0,  -2047,  -4095,  -6143,  -8191,  -6143,  -4095,  -2047,     0,   4095,   8191,  12287,  16383,  12287,   8191,   4095,
+         0,  -4095,  -8191, -12287, -16383, -12287,  -8191,  -4095,     0,   6143,  12287,  18431,  24575,  18431,  12287,   6143,
+         0,  -6143, -12287, -18431, -24575, -18431, -12287,  -6143,     0,   8191,  16383,  24575,  32767,  24575,  16383,   8191,
+         0,  -8191, -16383, -24575, -32767, -24575, -16383,  -8191,     0,      0,    -16,      0,      0,   8191,  16383,  24575,
+     32767,  24575,  16383,   8191,      0,  -8191, -16383, -24575,-32767, -24575, -16383,  -8191,      0,      0,    -16,      0,
+         0,  12797,  32005,  -2563,  -4882,  31036,  30160,   2044, -3055, -15627,  26127,  13070,  16362, -16671, -29678,   6177,
+    -20485,  18944, -11289,  -2827,  -7881,  -6189,  21005,   4355,-20769,  19192,   1862,  28916, -28991, -26855,  13586,  -2560,
+      6912, -19223,  15134, -20971, -25400,  26105, -15581,  29176, 11505, -23036, -27908, -14066, -20471,   4325,   2052, -32767,
+      4858,   4376,  -6391,  18424, -27175,  -8932,   6921,   3060, 31740,   8447, -27644,  32252, -29963, -18665,  29945,  11004,
+     -8954, -10253,  -2819,   1544,  -3560,  27103, -17401,  19191,-30229, -17625,   4361,  32751,  13845,  -4915,  30241, -26603,
+     22223, -11258,  13090,  -8218, -20726, -17931, -12792,  23813,-16402,  -4070,   8424, -24810, -29454, -15641, -11730, -14847,
+    -17968, -32500,  17187,  10461, -26889,  23612, -24610, -20760,-18917,  16115,   5128,  -9495,  11275, -20173, -22303,   1498,
+      2324,  20002,    -24, -30735,   8688, -29403,  32252,   7408, 24081,  15848, -14582, -28905,    -16,  27149,    -29,   4851,
+      1055,  30732, -15121,  23298,  15618,    754,   5401,  -9515,-17143, -28135,  -2813,  25309,  14342,   3878, -22277,  -7938,
+     -2333,   3586,    528,  17414, -27436, -12022, -22458,   4337,  6860, -16899,   6704, -24341,  24554, -16624, -17425,  -8421,
+    -15860,  10976,  16114, -20953,  20481,  -1571,  13841, -21222,  2015,  27909,   6669, -18725,  27947,  13831,  -1076,  16904,
+      3873,  14070, -14330,   1539,   -553,  30743,   1541, -20725,-27140,   4332, -22770, -21005,  26127, -16910,  -8456,  -7135,
+    -19993,   -787,  23324, -24311, -13070,  -2573, -25861, -19433,-27928,  32520,  19450, -30211,  15388,   -785,  -3365,  18973,
+     26397, -10497,  26074,  -3588,  28170,   2572,   4600,  18946, 23548,  -5370, -23059,  12518, -32751, -11724,   2296,  17372,
+     -2551, -22798, -26099,  28678,  -2582, -25348, -32482, -21018, -6642, -27145, -19708, -25345,  -4118,  -2791,  -1536,  15094,
+    -14379,  10018, -17608,  17361,  30701,  18696, -12798, -21745, 15851,  -9462,  25601,  16377,  30450, -27895, -11761,  29925,
+         0,      0,   -256,      0
+};
+
+u16 akao_wave_tabke_key_nodes[ 16 ] =
+{
+    0, 12, 18, 28, 34, 44, 50, 210, 360, 428, 252, 336, 448, 428, 360, 428
+};
+
+u8 opcode_size[ 96 ] =
+{
+    00, 02, 02, 02, 03, 02, 01, 01, 02, 03, 02, 03, 02, 02, 02, 02, // a0-af
+    03, 02, 02, 01, 04, 02, 01, 02, 04, 02, 01, 02, 03, 02, 01, 02, // b0-bf
+    02, 02, 01, 01, 01, 01, 01, 01, 01, 00, 00, 00, 01, 00, 02, 02, // c0-cf
+    01, 00, 02, 02, 01, 01, 01, 01, 02, 02, 02, 00, 02, 03, 03, 03, // d0-df
+    00, 00, 00, 00, 00, 00, 00, 00, 03, 04, 03, 04, 03, 01, 00, 00, // e0-ef
+    00, 00, 02, 01, 03, 01, 02, 03, 02, 01, 00, 00, 00, 03, 03, 00, // f0-ff
+};
+
 
 
 AkaoParser *AKAOPARSER = NULL;
@@ -118,7 +182,7 @@ AkaoParser::Update()
                     m_MusicChannelData[ channel_id ].pause -= 0x0101;
                     //LOGGER->Log( "pause " + ToHexString( m_MusicChannelData[ channel_id ].pause, 4, '0' ) + "\n" );
 
-                    std::cout << "Channel " << channel_id << " pause " << ( m_MusicChannelData[ channel_id ].pause & 0x00ff ) << std::endl;
+                    //std::cout << "Channel " << channel_id << " pause " << ( m_MusicChannelData[ channel_id ].pause & 0x00ff ) << std::endl;
 
                     if ( ( m_MusicChannelData[ channel_id ].pause & 0x00ff ) == 0 )
                     {
@@ -318,7 +382,7 @@ AkaoParser::PlayMusic( const Ogre::String& file )
 
 
         u16 offset_to_akao = 0;
-        m_MusicChannelConfig.active_channel_mask = m_Music->GetU32LE( 0x10 ) & /*0x00ffffff*/ 1;
+        m_MusicChannelConfig.active_channel_mask = m_Music->GetU32LE( 0x10 ) & 0x00ffffff;
         u32 channel_mask = m_MusicChannelConfig.active_channel_mask;
         int channel_id = 0;
         for ( u32 bit = 1; channel_mask != 0; bit <<= 1, channel_id += 1 )
@@ -335,18 +399,18 @@ AkaoParser::PlayMusic( const Ogre::String& file )
 
                 //[S3 + 14] = w(80083580);
                 m_MusicChannelData[ channel_id ].volume_multiplier = 0x7f;
-                //[S3 + 34] = w(0);
-                //[S3 + 38] = w(0);
+                m_MusicChannelData[ channel_id ].pitch_addition = 0;
+                m_MusicChannelData[ channel_id ].mirror_update_flags = 0;
                 m_MusicChannelData[ channel_id ].volume_level = 0x3fff0000;
                 m_MusicChannelData[ channel_id ].pause = 0x103;
                 //[S3 + 5c] = h(0);
                 //[S3 + 5e] = h(0);
                 m_MusicChannelData[ channel_id ].volume_index = 0x4000;
-                //[S3 + 62] = h(0);
-                //[S3 + 64] = h(0);
-                //[S3 + 6c] = h(0);
-                //[S3 + 6e] = h(0);
-                //[S3 + 7e] = h(0);
+                m_MusicChannelData[ channel_id ].unknown_62 = 0;
+                m_MusicChannelData[ channel_id ].unknown_64 = 0;
+                m_MusicChannelData[ channel_id ].unknown_6c = 0;
+                m_MusicChannelData[ channel_id ].unknown_6e = 0;
+                m_MusicChannelData[ channel_id ].wave_modifier = 0;
                 //[S3 + 80] = h(0);
                 //[S3 + 90] = h(0);
                 //[S3 + 92] = h(0);
@@ -354,13 +418,13 @@ AkaoParser::PlayMusic( const Ogre::String& file )
                 //[S3 + a0] = h(0);
                 //[S3 + a4] = h(0);
                 //[S3 + a6] = h(0);
-                //[S3 + b8] = h(0);
+                m_MusicChannelData[ channel_id ].loop_index = 0;
                 m_MusicChannelData[ channel_id ].saved_pause = 0;
                 m_MusicChannelData[ channel_id ].pause_multiplier = 0;
                 //[S3 + c6] = h(4000);
                 m_MusicChannelData[ channel_id ].pitch_selector = 0;
                 m_MusicChannelData[ channel_id ].pitch_modifier = 0;
-                //[S3 + d2] = h(0);
+                m_MusicChannelData[ channel_id ].unknown_d2 = 0;
                 //[S3 + da] = h(0);
             }
         }
@@ -378,17 +442,23 @@ AkaoParser::PlayMusic( const Ogre::String& file )
         [8009a130] = w(0);
         [8009a134] = w(0);
         [8009a138] = w(0);
-        [8009a13c] = w(0);
-        [8009a144] = w(0);
-        [8009a148] = w(0);
 */
+        m_MusicChannelConfig.spu_update_flags = 0;
+        m_MusicChannelConfig.reverb_depth = 0;
+        //[8009a148] = w(0);
+
         m_MusicChannelConfig.tempo_increment_counter = 0;
+
+        //[8009a150] = h(0);
+        //[8009a152] = h(0);
+        m_MusicChannelConfig.reverb_depth_increment_counter = 0;
+        //[8009a158] = h(0);
+        m_MusicChannelConfig.upper_timer_top = 0;
+        m_MusicChannelConfig.upper_timer = 0;
+        m_MusicChannelConfig.lower_timer_top = 0;
+        m_MusicChannelConfig.lower_timer = 0;
+        m_MusicChannelConfig.top_timer = 0;
 /*
-        [8009a150] = h(0);
-        [8009a152] = h(0);
-        [8009a154] = h(0);
-        [8009a158] = h(0);
-        [8009a15c] = h(0);
         [8009a15e] = h(0);
         [8009a160] = h(0);
         [8009a162] = h(0);
@@ -414,6 +484,39 @@ void
 AkaoParser::UpdateDynamicSpuParameters()
 {
     u32 for_play_channel_mask = 0;
+
+
+
+    if( m_MusicChannelConfig.spu_update_flags & SPU_REVERB )
+    {
+        s16 reverb_depth = m_MusicChannelConfig.reverb_depth >> 0x10;
+        /* looks like update of total reverb volume if this is ever used
+        V1 = hu[80062fb8];
+        if (V1 < 80)
+        {
+            reverb_depth = reverb_depth + ((reverb_depth * V1) >> 7);
+        }
+        else
+        {
+            reverb_depth = (reverb_depth * V1) >> 8;
+        }
+        */
+        u8 pan = 0x40 /*hu[80062f70]*/;
+        s16 left = reverb_depth;
+        s16 right = reverb_depth;
+        if( pan < 0x40 )
+        {
+            right = reverb_depth - ( ( reverb_depth * ( pan ^ 0x3f ) ) >> 6 );
+        }
+        else
+        {
+            left = reverb_depth - ( ( reverb_depth * ( pan & 0x3f ) ) >> 6 );
+        }
+
+        SOUNDMAN->PsxSetReverbDepth( left, right );
+
+        m_MusicChannelConfig.spu_update_flags ^= SPU_REVERB;
+    }
 
 
 
@@ -512,7 +615,7 @@ AkaoParser::UpdatePitchAndVolume( ChannelData* channel_data, int channel_id )
     else*/
     if ( channel_data[ channel_id ].spu_update_flags & SPU_PITCH )
     {
-        new_pitch = channel_data[ channel_id ].pitch_base + channel_data[ channel_id ].pitch_addition + channel_data[ channel_id ].pitch_addition2;
+        new_pitch = channel_data[ channel_id ].pitch_base + ( channel_data[ channel_id ].pitch_addition >> 0x10 ) + channel_data[ channel_id ].pitch_addition2;
     }
 
 
@@ -673,16 +776,16 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 
     u8 opcode;
 
-    for ( ;; )
+    for( ;; )
     {
         opcode = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer );
 
-        if ( opcode < 0xa0 )
+        if( opcode < 0xa0 )
         {
             channel_data[ channel_id ].akao_sequence_pointer += 1;
             break;
         }
-        else if ( opcode == 0xa1 ) // load instrument
+        else if( opcode == 0xa1 ) // load instrument
         {
             LOGGER->Log( "    0xA1 [NOT COMPLETE] " );
             int instrument_id = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
@@ -737,151 +840,214 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if ( opcode == 0xa3 ) // set volume multiplier
+        else if( opcode == 0xa3 ) // set volume multiplier
         {
             LOGGER->Log( "    0xA3 " );
             channel_data[ channel_id ].volume_multiplier = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
             channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
-            LOGGER->Log( "Set volume multiplier to \"" + ToHexString( channel_data[ channel_id ].volume_multiplier, 2, '0' ) + "\".\n" );
+            LOGGER->Log( "Set volume multiplier to 0x" + ToHexString( channel_data[ channel_id ].volume_multiplier, 2, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if ( opcode == 0xa5 ) // set pitch correction
+        else if( opcode == 0xa5 ) // set pitch correction
         {
             LOGGER->Log( "    0xA5 " );
             channel_data[ channel_id ].pitch_correction = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
-            LOGGER->Log( "Set pitch correction to \"" + ToHexString( channel_data[ channel_id ].pitch_correction, 4, '0' ) + "\".\n" );
+            LOGGER->Log( "Set pitch correction to 0x" + ToHexString( channel_data[ channel_id ].pitch_correction, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if ( opcode == 0xa6 )
+        else if( opcode == 0xa6 ) // increment pitch correction
         {
-            LOGGER->Log( "    0xA6 [UNIMPLEMENTED]\n" );
+            LOGGER->Log( "    0xA6 Increment pitch correction.\n" );
+            channel_data[ channel_id ].pitch_correction = ( channel_data[ channel_id ].pitch_correction + 1 ) & 0xf;
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
-        else if ( opcode == 0xa7 ) // ???
+        else if( opcode == 0xa7 ) // decrement pitch correction
         {
-            LOGGER->Log( "    0xA7 [UNIMPLEMENTED]\n" );
+            LOGGER->Log( "    0xA7 Decrement pitch correction.\n" );
+            channel_data[ channel_id ].pitch_correction = ( channel_data[ channel_id ].pitch_correction - 1 ) & 0xf;
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
-        else if ( opcode == 0xa8 ) // set channel volume
+        else if( opcode == 0xa8 ) // set channel volume
         {
-            LOGGER->Log( "    0xA8 [UNIMPLEMENTED]\n" );
-            //LOGGER->Log( "set channel volume to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x17, 8, '0' ) + "\"\n" );
+            LOGGER->Log( "    0xA8 " );
+            channel_data[ channel_id ].volume_multiplier = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
+            channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
+            channel_data[ channel_id ].volume_level_change_ticks = 0;
+            channel_data[ channel_id ].volume_level = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x17;
+            LOGGER->Log( "Set volume to 0x" + ToHexString(channel_data[ channel_id ].volume_level, 8, '0' ) + " and reset volume_level_change_ticks.\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if ( opcode == 0xa9 ) // set channel volume increase/descrease
+        else if( opcode == 0xa9 ) // set channel volume increase/descrease
         {
             LOGGER->Log( "    0xA9 [UNIMPLEMENTED]\n" );
             //LOGGER->Log( "set volume tick to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ), 2, '0' ) + "\" and " );
             //LOGGER->Log( "set change volume to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 ) << 0x17, 8, '0' ) + "\"\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
-        else if ( opcode == 0xaa ) // set volume pan
+        else if( opcode == 0xaa ) // set volume pan
         {
-            LOGGER->Log( "    0xAA [UNIMPLEMENTED]\n" );
-            //LOGGER->Log( "set volume pan to \"" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x8, 4, '0' ) + "\"\n" );
+            LOGGER->Log( "    0xAA " );
+            channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
+            channel_data[ channel_id ].volume_index = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x8;
+            channel_data[ channel_id ].unknown_62 = 0;
+            LOGGER->Log( "Set volume pan to 0x" + ToHexString( channel_data[ channel_id ].volume_index, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if ( opcode == 0xad ) // ???
+        else if( opcode == 0xad ) // ???
         {
             LOGGER->Log( "    0xAD [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if ( opcode == 0xb1 ) // ???
+        else if( opcode == 0xb1 ) // ???
         {
             LOGGER->Log( "    0xB1 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if ( opcode == 0xb4 ) // set wave
+        else if( opcode == 0xb4 ) // set wave
         {
-            LOGGER->Log( "    0xB4 [UNIMPLEMENTED] " );
-            //LOGGER->Log( "set wave data\n" );
+            LOGGER->Log( "    0xB4 " );
+            channel_data[ channel_id ].mirror_update_flags &= 0x00000001;
+
+            u16 value1 = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
+            u16 value2 = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 );
+            u16 value3 = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 3 );
+
+            if( channel_data[ channel_id ].unknown_54 != 0 )
+            {
+                channel_data[ channel_id ].wave_delay = 0;
+
+                if( value1 != 0 )
+                {
+                    channel_data[ channel_id ].wave_modifier = value1 << 0x8;
+                }
+            }
+            else
+            {
+                channel_data[ channel_id ].wave_delay = value1;
+            }
+
+            if( value2 == 0 )
+            {
+                value2 = 0x100;
+            }
+
+            channel_data[ channel_id ].wave_refresh_interval = value2;
+            channel_data[ channel_id ].wave_table_node_index = value3;
+            u16 pitch_base = channel_data[ channel_id ].pitch_base;
+            if( ( channel_data[ channel_id ].wave_modifier & 0x8000 ) == 0 )
+            {
+
+                pitch_base = ( ( pitch_base << 4 ) - pitch_base ) >> 8;
+            }
+
+            channel_data[ channel_id ].wave_multiplier = ( ( ( channel_data[ channel_id ].wave_modifier & 0x7f00 ) >> 8 ) * pitch_base ) >> 7;
+            channel_data[ channel_id ].wave_delay_current = channel_data[ channel_id ].wave_delay;
+            channel_data[ channel_id ].wave_refresh_interval_counter = channel_data[ channel_id ].wave_table_node_index;
+            channel_data[ channel_id ].wave_table_index = akao_wave_tabke_key_nodes[ channel_data[ channel_id ].wave_table_node_index ];
+            LOGGER->Log( "Set wave refresh interval to 0x" + ToHexString( channel_data[ channel_id ].wave_refresh_interval, 4, '0' ) + " " );
+            LOGGER->Log( ", node index to 0x" + ToHexString( channel_data[ channel_id ].wave_table_node_index, 4, '0' ) + " " );
+            LOGGER->Log( "and wave delay (or wave modifier) to 0x" + ToHexString( value1, 2, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 4;
         }
-        else if ( opcode == 0xb5 ) // ???
+        else if( opcode == 0xb5 ) // set wave modifier
         {
-            LOGGER->Log( "    0xB5 [UNIMPLEMENTED]\n" );
+            LOGGER->Log( "    0xB5 " );
+            channel_data[ channel_id ].wave_modifier = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x8;
+            u16 pitch_base = channel_data[ channel_id ].pitch_base;
+            if( ( channel_data[ channel_id ].wave_modifier & 0x8000 ) == 0 )
+            {
+                pitch_base = ( ( pitch_base << 4 ) - pitch_base ) >> 8;
+            }
+            channel_data[ channel_id ].wave_multiplier = ( ( ( channel_data[ channel_id ].wave_modifier & 0x7f00) >> 8 ) * pitch_base ) >> 7;
+            LOGGER->Log( "Set wave modifier to 0x" + ToHexString( channel_data[ channel_id ].wave_modifier, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if ( opcode == 0xc2 ) // turn reverb on
+        else if( opcode == 0xc2 ) // turn reverb on
         {
             LOGGER->Log( "    0xC2 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
-        else if ( opcode == 0xcc )
+        else if( opcode == 0xcc )
         {
             LOGGER->Log( "    0xCC [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
-        else if ( opcode == 0xcd )
+        else if( opcode == 0xcd )
         {
             LOGGER->Log( "    0xCD [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
-        else if ( opcode == 0xd9 )
+        else if( opcode == 0xd9 )
         {
             LOGGER->Log( "    0xD9 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if ( opcode == 0xe0 ) // ???
+        else if( opcode == 0xe0 ) // ???
         {
             LOGGER->Log( "    0xE0 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
-        else if ( opcode == 0xe2 ) // ???
+        else if( opcode == 0xe2 ) // ???
         {
             LOGGER->Log( "    0xE2 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
-        else if ( opcode == 0xe8 ) // set tempo
+        else if( opcode == 0xe8 ) // set tempo
         {
             LOGGER->Log( "    0xE8 " );
             channel_config.tempo = m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x10;
             channel_config.tempo_increment_counter = 0;
-            LOGGER->Log( "Set channel_config.tempo to \"" + ToHexString( channel_config.tempo, 8, '0' ) + "\" and channel_config.tempo_increment_counter to 0.\n" );
+            LOGGER->Log( "Set tempo to 0x" + ToHexString( channel_config.tempo, 8, '0' ) + " and reset tempo increment counter to 0.\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
-        else if ( opcode == 0xea ) // set reverb depth
+        else if( opcode == 0xea ) // set reverb depth
         {
-            LOGGER->Log( "    0xEA [UNIMPLEMENTED]\n" );
-            //LOGGER->Log( "set reverb depth to \"" + ToHexString( m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x10, 8, '0' ) + "\"\n" );
+            LOGGER->Log( "    0xEA " );
+            channel_config.spu_update_flags |= SPU_REVERB;
+            channel_config.reverb_depth = m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x10;
+            channel_config.reverb_depth_increment_counter = 0;
+            LOGGER->Log( "Set reverb depth to 0x" + ToHexString( channel_config.reverb_depth, 8, '0' ) + " and reset reverb depth increment counter to 0.\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
-        else if ( opcode == 0xec )
+        else if( opcode == 0xec )
         {
             LOGGER->Log( "    0xEC [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
-        else if ( opcode == 0xee ) // ???
+        else if( opcode == 0xee ) // ???
         {
             LOGGER->Log( "    0xEE [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
-        else if ( opcode == 0xf0 )
+        else if( opcode == 0xf0 )
         {
             LOGGER->Log( "    0xF0 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 4;
         }
-        else if ( opcode == 0xf1 )
+        else if( opcode == 0xf1 )
         {
             LOGGER->Log( "    0xF1 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 4;
         }
-        else if ( opcode == 0xfd ) // reset timers lower and upper
+        else if( opcode == 0xfd ) // reset timers lower and upper
         {
-            LOGGER->Log( "    0xFD [UNIMPLEMENTED]\n" );
-            //LOGGER->Log( "reset timers that can be readed in field with 0xF7 CHMPH. " );
-            //LOGGER->Log( "Values Upper(" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 ), 2, '0' ) + ") " );
-            //LOGGER->Log( "Lower(" + ToHexString( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ), 2, '0' ) + ")\n" );
+            LOGGER->Log( "    0xFD Reset upper timer to 0 with bound " );
+            channel_config.upper_timer_top = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 );
+            LOGGER->Log( ToHexString( channel_config.upper_timer_top, 4, '0' ) + " and lower timer to 0 with bound " );
+            channel_config.upper_timer = 0;
+            channel_config.lower_timer_top = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
+            LOGGER->Log( ToHexString( channel_config.lower_timer_top, 4, '0' ) + ".\n" );
+            channel_config.lower_timer = 0;
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
-        else if ( opcode == 0xfe ) // reset timers main
+        else if( opcode == 0xfe ) // reset timer top
         {
-            LOGGER->Log( "    0xFE [UNIMPLEMENTED]\n" );
-            //LOGGER->Log( "reset main timer than increment when all lower and upper timers counted. Can be readed in field with 0xF7 CHMPH. " );
-            //LOGGER->Log( "Value(" + ToHexString( m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ), 4, '0' ) + ")\n" );
+            LOGGER->Log( "    0xFE Reset top timer to " );
+            channel_config.top_timer = m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 );
+            LOGGER->Log( ToHexString( channel_config.top_timer, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
-        else if ( opcode == 0xff )
+        else if( opcode == 0xff )
         {
             LOGGER->Log( "    0xFF [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 4;
@@ -895,38 +1061,40 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 
 
 
-    if ( opcode != 0xa0 )
+    if( opcode != 0xa0 )
     {
-        //A0 = S0;
-        //func318bc; // special handling in case of next opcode
-        //A0 = V0;
+        u8 ret_op = NextSequenceHandle( channel_data, channel_id, channel_config );
 
-        if ( channel_data[ channel_id ].pause_multiplier != 0)
+
+
+        if( channel_data[ channel_id ].pause_multiplier != 0)
         {
             channel_data[ channel_id ].pause = channel_data[ channel_id ].pause_multiplier * 0x101;
         }
 
-        if ( ( channel_data[ channel_id ].pause & 0xff ) == 0 )
+        if( ( channel_data[ channel_id ].pause & 0xff ) == 0 )
         {
             channel_data[ channel_id ].pause = akao_pause_table[ opcode % 11 ];
         }
 
-        //if (((A0 - 84) >= b) && (hu[S0 + 6e] & 5) == 0))
-        //{
-            //channel_data[ channel_id ].pause -= 0x0200;
-        //}
+        if( ( ( ret_op - 0x84 ) >= 0xb ) && ( ( channel_data[ channel_id ].unknown_6e & 5 ) == 0 ) )
+        {
+            channel_data[ channel_id ].pause -= 0x0200;
+        }
 
         channel_data[ channel_id ].saved_pause = channel_data[ channel_id ].pause & 0x00ff;
 
-        if ( opcode >= 0x8f )
+
+
+        if( opcode >= 0x8f )
         {
-            LOGGER->Log( "    0x" + ToHexString( opcode, 2, '0' ) + " [UNIMPLEMENTED].\n" );
-            //[S0 + 6c] = h(0);
-            //[S0 + d6] = h(0);
-            //[S0 + d8] = h(0);
-            //[S0 + 6e] = h(hu[S0 + 6e] & fffd);
+            LOGGER->Log( "    0x" + ToHexString( opcode, 2, '0' ) + " UNKNOWN RESETTING.\n" );
+            channel_data[ channel_id ].unknown_6c = 0;
+            channel_data[ channel_id ].unknown_6e &= 0xfffd;
+            channel_data[ channel_id ].pitch_addition2 = 0;
+            channel_data[ channel_id ].unknown_d8 = 0;
         }
-        else if ( opcode < 0x84 )
+        else if( opcode < 0x84 )
         {
             LOGGER->Log( "    0x" + ToHexString( opcode, 2, '0' ) + " PLAY.\n" );
             u32 calculated_pitch;
@@ -1229,65 +1397,181 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             //[S0 + 34] = w(0);
         }
 
-        //[S0 + 6e] = h((hu[S0 + 6e] & fffd) | ((hu[S0 + 6e] & 0001) << 1));
 
-/*
-        if (h[S0 + d2] != 0)
+
+        u16 unknown_d2 = channel_data[ channel_id ].unknown_d2;
+
+        channel_data[ channel_id ].unknown_6e = ( channel_data[ channel_id ].unknown_6e & 0xfffd ) | ( ( channel_data[ channel_id ].unknown_6e & 0x0001 ) << 1 );
+
+        if( unknown_d2 != 0 )
         {
-            channel_data[ channel_id ].saved_pitch += h[S0 + d2];
+            channel_data[ channel_id ].saved_pitch += unknown_d2;
 
-            S2 = channel_data[ channel_id ].saved_pitch + channel_data[ channel_id ].pitch_selector & 0xff;
+            u8 selected_pitch = channel_data[ channel_id ].saved_pitch + channel_data[ channel_id ].pitch_selector;
+            u32 pitch_value = 0;
 
-            if (hu[S0 + 54] == 0)
+            if( channel_data[ channel_id ].unknown_54 == 0 )
             {
-                A0 = m_InstrumentData[ channel_data[ channel_id ].instrument_id ].pitch[ S2 % 12 ];
+                pitch_value = m_InstrumentData[ channel_data[ channel_id ].instrument_id ].pitch[ selected_pitch % 12 ];
 
-                V0 = channel_data[ channel_id ].pitch_modifier;
-                if (V0 != 0)
+                s16 pitch_modifier = channel_data[ channel_id ].pitch_modifier;
+                if( pitch_modifier != 0 )
                 {
-                    if (V0 > 0)
+                    if( pitch_modifier > 0 )
                     {
-                        V0 = (A0 * V0) >> 7;
+                        pitch_modifier = ( pitch_value * pitch_modifier ) >> 7;
                     }
                     else
                     {
-                        V0 = (A0 * V0) >> 8;
+                        pitch_modifier = ( pitch_value * pitch_modifier ) >> 8;
                     }
-                    A0 = (A0 + V0) & ffff;
+                    pitch_value += pitch_modifier;
                 }
-
-                A0 = A0 << 10;
             }
             else
             {
-                A0 = m_InstrumentData[ channel_data[ channel_id ].instrument_id ].pitch[ S2 % 12 ] << 0x10;
+                pitch_value = m_InstrumentData[ channel_data[ channel_id ].instrument_id ].pitch[ selected_pitch %= 12 ];
             }
 
-            S2 = (S2 & ff) / c;
-            V1 = S2 & ff;
+            pitch_value <<= 0x10;
 
-            if (V1 >= 7)
+            selected_pitch /= 12;
+
+            if( selected_pitch >= 7 )
             {
-                A0 = A0 << (V1 - 6);
+                pitch_value <<= selected_pitch - 6;
             }
-            else if (V1 < 6)
+            else if (selected_pitch < 6)
             {
-                A0 = A0 >> (6 - V1);
+                pitch_value >>= 6 - selected_pitch;
             }
 
-            [S0 + 64] = h(hu[S0 + 68]);
-            [S0 + d2] = h(0);
-            [S0 + 4c] = w((A0 + w[S0 + 34] - (w[S0 + 30] << 10)) / hu[S0 + 64]);
+            channel_data[ channel_id ].unknown_64 = channel_data[ channel_id ].unknown_68;
+            channel_data[ channel_id ].unknown_d2 = 0;
+            channel_data[ channel_id ].pitch_growth = (pitch_value + channel_data[ channel_id ].pitch_addition - ( channel_data[ channel_id ].pitch_base << 0x10 ) ) / channel_data[ channel_id ].unknown_64;
         }
-*/
 
-        //[S0 + d4] = h(channel_data[ channel_id ].pitch_selector);
-        //[S0 + 6a] = h(channel_data[ channel_id ].saved_pitch);
+        channel_data[ channel_id ].unknown_d4 = channel_data[ channel_id ].pitch_selector;
+        channel_data[ channel_id ].unknown_6a = channel_data[ channel_id ].saved_pitch;
     }
+}
 
 
 
-    //LOGGER->Log( "UpdateSequence end\n" );
+const u8
+AkaoParser::NextSequenceHandle( ChannelData* channel_data, int channel_id, ChannelConfig& channel_config )
+{
+    u32 pointer = channel_data[ channel_id ].akao_sequence_pointer;
+    u16 loop_index = channel_data[ channel_id ].loop_index;
+
+    while( true )
+    {
+        u8 opcode = m_Music->GetU8( pointer );
+
+        if( opcode < 0x9a )
+        {
+            if( opcode >= 0x8f )
+            {
+                channel_data[ channel_id ].unknown_6c = 0;
+                channel_data[ channel_id ].unknown_6e &= 0xfffa;
+            }
+
+            return opcode;
+        }
+
+        if( opcode < 0xa0 )
+        {
+            return 0xa0;
+        }
+
+
+        u8 size = opcode_size[ opcode - 0xa0 ];
+        if( size == 0 )
+        {
+            switch( opcode )
+            {
+                case 0xc9:
+                {
+                    if( m_Music->GetU8( pointer + 1 ) == channel_data[ channel_id ].loop_count[ loop_index ] )
+                    {
+                        pointer += 2;
+                        loop_index = (loop_index - 1) & 3;
+                    }
+                    else
+                    {
+                        pointer = channel_data[ channel_id ].loop_pointer[ loop_index ];
+                    }
+                    continue;
+                }
+                break;
+
+                case 0xca:
+                {
+                    pointer = channel_data[ channel_id ].loop_pointer[ loop_index ];
+                    continue;
+                }
+                break;
+
+                case 0xcb:
+                case 0xcd:
+                case 0xd1:
+                case 0xdb:
+                {
+                    pointer += 1;
+                    channel_data[ channel_id ].unknown_6c = 0;
+                    channel_data[ channel_id ].unknown_6e &= 0xfffa;
+                    continue;
+                }
+                break;
+
+                case 0xee:
+                {
+                    pointer += 3 + m_Music->GetU16LE( pointer + 1 );
+                    continue;
+                }
+                break;
+
+                case 0xef:
+                {
+                    if( channel_config.conditional_value >= m_Music->GetU8( pointer + 1 ) )
+                    {
+                        pointer += 4 + m_Music->GetU16LE( pointer + 2 );
+                    }
+                    else
+                    {
+                        pointer += 4;
+                    }
+                    continue;
+                }
+                break;
+
+                case 0xf0:
+                case 0xf1:
+                {
+                    if( m_Music->GetU8( pointer + 1 ) == channel_data[ channel_id ].loop_count[ loop_index ] + 1 )
+                    {
+                        loop_index = (loop_index - 1) & 3;
+                        pointer += 4 + m_Music->GetU16LE( pointer + 2 );
+                    }
+                    else
+                    {
+                        pointer += 4;
+                    }
+                    continue;
+                }
+                break;
+
+                default:
+                {
+                    channel_data[ channel_id ].unknown_6c = 0;
+                    channel_data[ channel_id ].unknown_6e &= 0xfffa;
+                    return 0xa0;
+                }
+            }
+        }
+
+        pointer += size;
+    }
 }
 
 
