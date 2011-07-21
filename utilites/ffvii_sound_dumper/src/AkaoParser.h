@@ -81,8 +81,13 @@ private:
         u32 loop_pointer[ 4 ];
 
         // 0x18 [][][][] in real here was addreses into wave table, but we store indexes here
-        u32 wave_table_index;
-
+        u32 wave1_table_index;
+        // 0x1c [][][][]
+        u32 wave2_table_index;
+        // 0x20 [][][][]
+        u32 wave3_table_index;
+        // 0x24 [][]
+        u16 mirror_channel_id;
         // 0x2c [][][][]
         s32 volume_multiplier;
 
@@ -128,19 +133,34 @@ private:
         u16 unknown_6e;
 
         // 0x72 [][]
-        u16 wave_delay;
+        u16 wave1_delay;
         // 0x74 [][]
-        u16 wave_delay_current;
+        u16 wave1_delay_current;
         // 0x76 [][]
-        u16 wave_refresh_interval;
+        u16 wave1_refresh_interval;
         // 0x78 [][]
-        u16 wave_refresh_interval_counter;
+        u16 wave1_refresh_interval_counter;
         // 0x7a [][]
-        u16 wave_table_node_index;
+        u16 wave1_table_node_index;
         // 0x7c [][]
-        u16 wave_multiplier;
+        u16 wave1_multiplier;
         // 0x7e [][]
-        u16 wave_modifier;
+        u16 wave1_modifier;
+
+        // 0x86 [][]
+        u16 wave2_delay;
+        // 0x88 [][]
+        u16 wave2_delay_current;
+
+        // 0x8c [][]
+        u16 wave2_refresh_interval_counter;
+        // 0x8e [][]
+        u16 wave2_table_node_index;
+
+        // 0x9a [][]
+        u16 wave3_refresh_interval_counter;
+        // 0x9c [][]
+        u16 wave3_table_node_index;
 
         // 0xb8 [][]
         u16 loop_index;
@@ -206,6 +226,8 @@ private:
         u32 active_channel_mask;
         // 0x08 [][][][]
         u32 for_play_channel_mask;
+        // 0x0c [][][][]
+        u32 unknown_0c;
         // 0x18 [][][][]
         u32 tempo;
         // 0x1c [][][][]

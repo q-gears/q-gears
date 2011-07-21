@@ -72,6 +72,8 @@
 +010 [][][][] loop point 3.
 +014 [][][][] pointer to mask for AKAO channels in 80083580.
 +018 [][][][] address into wave table.
++01c [][][][] some other address into wave table.
++020 [][][][] some other address into wave table.
 +024 [][][][] ???
 +028 [][][][] ???
 +02c [][][][] volume multiplier. Store 0x78 here during init.
@@ -79,7 +81,11 @@
 +034 [][][][] init with 0. pitch related.
 +036 [][]     pitch addition. summarize 0x30, 0x36 and 0xd6 it to get real pitch.
 +038 [][][][] init with 0. Update mirror. If flag is set we update main params from mirror channel (previous 0x108 channel data).
+                0x00000001 - update wave 1.
+                0x00000002 - update wave 2.
+                0x00000004 - update wave 3.
                 0x00000010 - update pitch. We update from +0xf8 from previous channel.
+                0x00000100 - ???
 +03d [][]     pitch modifier. We multiply this with real calculated pitch if +0x54 != 2.
 +040 [][][][] ???
 +044 [][][][] volume level. Often used as 2 top bytes.
@@ -97,16 +103,20 @@
 +06a [][]     ???
 +06c [][]     init with 0.
 +06e [][]     init with 0.
-+072 [][]     wave_delay.
-+074 [][]     wave_delay_current;
-+076 [][]     wave_refresh_interval. Wait value until we update left volume. +078 inited from here when left volume updated.
-+078 [][]     wave_refresh_interval_counter. We descrease this by 1 everytime we update channel struct and when this became 0 we update left volume.
-+07a [][]     wave_table_index.
-+07c [][]     wave multiplier. Some modificator for pitch modificator +d6.
-+07e [][]     wave_modifier. Init with 0.
++072 [][]     wave1_delay.
++074 [][]     wave1_delay_current;
++076 [][]     wave1_refresh_interval. Wait value until we update left volume. +078 inited from here when left volume updated.
++078 [][]     wave1_refresh_interval_counter. We descrease this by 1 everytime we update channel struct and when this became 0 we update left volume.
++07a [][]     wave1 table key node index.
++07c [][]     wave1 multiplier. Some modificator for pitch modificator +d6.
++07e [][]     wave1_modifier. Init with 0.
 +080 [][]     init with 0.
++08c [][]     wave2_refresh_interval_counter.
++08e [][]     wave2 table key node index.
 +090 [][]     init with 0.
 +092 [][]     init with 0.
++09a [][]     wave3_refresh_interval_counter.
++09c [][]     wave3 table key node index.
 +09e [][]     init with 0.
 +0a0 [][]     init with 0.
 +0a4 [][]     init with 0.
@@ -208,7 +218,8 @@
 +00 [][][][] some settings for music (0x01- stereo, 0x02 - mono)
 +04 [][][][] active music channel mask.
 +08 [][][][] channels to be played mask.
-+18 [][][][] tempo of music. Used as >> 10.
++0c [][][][] some channels mask.
++18 [][][][] tempo of music. Used as >> 0x10.
 +1c [][][][] tempo music increment.
 +20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
 +38 [][][][] we add here 0x00000080 (flag that we need update reverb to spu) each time we increment +40.

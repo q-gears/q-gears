@@ -103,7 +103,7 @@ s16 akao_wave_table[ 708 ] =
          0,      0,   -256,      0
 };
 
-u16 akao_wave_tabke_key_nodes[ 16 ] =
+u16 akao_wave_table_key_nodes[ 16 ] =
 {
     0, 12, 18, 28, 34, 44, 50, 210, 360, 428, 252, 336, 448, 428, 360, 428
 };
@@ -382,7 +382,7 @@ AkaoParser::PlayMusic( const Ogre::String& file )
 
 
         u16 offset_to_akao = 0;
-        m_MusicChannelConfig.active_channel_mask = m_Music->GetU32LE( 0x10 ) & /*0x00ffffff*/ 1;
+        m_MusicChannelConfig.active_channel_mask = m_Music->GetU32LE( 0x10 ) & 0x00ffffff;
         u32 channel_mask = m_MusicChannelConfig.active_channel_mask;
         int channel_id = 0;
         for ( u32 bit = 1; channel_mask != 0; bit <<= 1, channel_id += 1 )
@@ -403,14 +403,14 @@ AkaoParser::PlayMusic( const Ogre::String& file )
                 m_MusicChannelData[ channel_id ].mirror_update_flags = 0;
                 m_MusicChannelData[ channel_id ].volume_level = 0x3fff0000;
                 m_MusicChannelData[ channel_id ].pause = 0x103;
-                //[S3 + 5c] = h(0);
+                m_MusicChannelData[ channel_id ].volume_level_change_ticks = 0;
                 //[S3 + 5e] = h(0);
                 m_MusicChannelData[ channel_id ].volume_index = 0x4000;
                 m_MusicChannelData[ channel_id ].unknown_62 = 0;
                 m_MusicChannelData[ channel_id ].unknown_64 = 0;
                 m_MusicChannelData[ channel_id ].unknown_6c = 0;
                 m_MusicChannelData[ channel_id ].unknown_6e = 0;
-                m_MusicChannelData[ channel_id ].wave_modifier = 0;
+                m_MusicChannelData[ channel_id ].wave1_modifier = 0;
                 //[S3 + 80] = h(0);
                 //[S3 + 90] = h(0);
                 //[S3 + 92] = h(0);
@@ -909,7 +909,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             LOGGER->Log( "    0xB1 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
-        else if( opcode == 0xb4 ) // set wave
+        else if( opcode == 0xb4 ) // set wave 1
         {
             LOGGER->Log( "    0xB4 " );
             channel_data[ channel_id ].mirror_update_flags &= 0x00000001;
@@ -920,16 +920,16 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 
             if( channel_data[ channel_id ].unknown_54 != 0 )
             {
-                channel_data[ channel_id ].wave_delay = 0;
+                channel_data[ channel_id ].wave1_delay = 0;
 
                 if( value1 != 0 )
                 {
-                    channel_data[ channel_id ].wave_modifier = value1 << 0x8;
+                    channel_data[ channel_id ].wave1_modifier = value1 << 0x8;
                 }
             }
             else
             {
-                channel_data[ channel_id ].wave_delay = value1;
+                channel_data[ channel_id ].wave1_delay = value1;
             }
 
             if( value2 == 0 )
@@ -937,35 +937,35 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
                 value2 = 0x100;
             }
 
-            channel_data[ channel_id ].wave_refresh_interval = value2;
-            channel_data[ channel_id ].wave_table_node_index = value3;
+            channel_data[ channel_id ].wave1_refresh_interval = value2;
+            channel_data[ channel_id ].wave1_table_node_index = value3;
             u16 pitch_base = channel_data[ channel_id ].pitch_base;
-            if( ( channel_data[ channel_id ].wave_modifier & 0x8000 ) == 0 )
+            if( ( channel_data[ channel_id ].wave1_modifier & 0x8000 ) == 0 )
             {
 
-                pitch_base = ( ( pitch_base << 4 ) - pitch_base ) >> 8;
+                pitch_base = ( pitch_base * 0xf ) >> 8;
             }
 
-            channel_data[ channel_id ].wave_multiplier = ( ( ( channel_data[ channel_id ].wave_modifier & 0x7f00 ) >> 8 ) * pitch_base ) >> 7;
-            channel_data[ channel_id ].wave_delay_current = channel_data[ channel_id ].wave_delay;
-            channel_data[ channel_id ].wave_refresh_interval_counter = channel_data[ channel_id ].wave_table_node_index;
-            channel_data[ channel_id ].wave_table_index = akao_wave_tabke_key_nodes[ channel_data[ channel_id ].wave_table_node_index ];
-            LOGGER->Log( "Set wave refresh interval to 0x" + ToHexString( channel_data[ channel_id ].wave_refresh_interval, 4, '0' ) + " " );
-            LOGGER->Log( ", node index to 0x" + ToHexString( channel_data[ channel_id ].wave_table_node_index, 4, '0' ) + " " );
-            LOGGER->Log( "and wave delay (or wave modifier) to 0x" + ToHexString( value1, 2, '0' ) + ".\n" );
+            channel_data[ channel_id ].wave1_multiplier = ( ( ( channel_data[ channel_id ].wave1_modifier & 0x7f00 ) >> 8 ) * pitch_base ) >> 7;
+            channel_data[ channel_id ].wave1_delay_current = channel_data[ channel_id ].wave1_delay;
+            channel_data[ channel_id ].wave1_refresh_interval_counter = channel_data[ channel_id ].wave1_table_node_index;
+            channel_data[ channel_id ].wave1_table_index = akao_wave_table_key_nodes[ channel_data[ channel_id ].wave1_table_node_index ];
+            LOGGER->Log( "Set wave1 refresh interval to 0x" + ToHexString( channel_data[ channel_id ].wave1_refresh_interval, 4, '0' ) + " " );
+            LOGGER->Log( ", wave1 node index to 0x" + ToHexString( channel_data[ channel_id ].wave1_table_node_index, 4, '0' ) + " " );
+            LOGGER->Log( "and wave1 delay (or wave1 modifier) to 0x" + ToHexString( value1, 2, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 4;
         }
         else if( opcode == 0xb5 ) // set wave modifier
         {
             LOGGER->Log( "    0xB5 " );
-            channel_data[ channel_id ].wave_modifier = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x8;
+            channel_data[ channel_id ].wave1_modifier = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x8;
             u16 pitch_base = channel_data[ channel_id ].pitch_base;
-            if( ( channel_data[ channel_id ].wave_modifier & 0x8000 ) == 0 )
+            if( ( channel_data[ channel_id ].wave1_modifier & 0x8000 ) == 0 )
             {
-                pitch_base = ( ( pitch_base << 4 ) - pitch_base ) >> 8;
+                pitch_base = ( pitch_base * 0xf ) >> 8;
             }
-            channel_data[ channel_id ].wave_multiplier = ( ( ( channel_data[ channel_id ].wave_modifier & 0x7f00) >> 8 ) * pitch_base ) >> 7;
-            LOGGER->Log( "Set wave modifier to 0x" + ToHexString( channel_data[ channel_id ].wave_modifier, 4, '0' ) + ".\n" );
+            channel_data[ channel_id ].wave1_multiplier = ( ( ( channel_data[ channel_id ].wave1_modifier & 0x7f00) >> 8 ) * pitch_base ) >> 7;
+            LOGGER->Log( "Set wave modifier to 0x" + ToHexString( channel_data[ channel_id ].wave1_modifier, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if( opcode == 0xc2 ) // turn reverb on
@@ -1104,151 +1104,59 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         }
         else if( opcode < 0x84 )
         {
-            u32 calculated_pitch;
+            u32 pitch_base = 0;
 
-/*
-            if (w[S0 + 38] & 00000008)
+            if( channel_data[ channel_id ].mirror_update_flags & 0x00000008 )
             {
-                if (hu[S0 + 54] == 0)
+/*
+                S2 = opcode / b;
+
+                if (hu[channel_data + 54] == 0)
                 {
-                    80031050	lw     v0, $0008(s3)
-                    80031058	or     v0, s5, v0
-                    80031060	sw     v0, $0008(s3)
+                    [channels_config + 8] = w(w[channels_config + 8] | mask);
                 }
                 else
                 {
-                    80031064	lui    v0, $800a
-                    80031068	lw     v0, $9fd0(v0)
-                    8003106C	nop
-                    80031070	or     v0, s5, v0
-                    80031074	lui    at, $800a
-                    80031078	sw     v0, $9fd0(at)
+                    [80099fd0] = w(w[80099fd0] | mask);
                 }
 
-                V1 = (opcode / 0xb) / 0xc;
-                A0 = (opcode / 0xb) % 0xc
-                8003108C	lw     a2, $0014(s0)
+                V1 = (S2 & ff) / c;
+                A0 = (S2 & ff) % c
+                A2 = w[channel_data + 14];
+                A0 = A0 & ff;
 
-                800310A8	andi   a0, a0, $00ff
-                800310AC	sll    v0, a0, $02
-                800310B0	addu   v0, v0, a0
-                800310B4	addu   a2, a2, v0
-                800310B8	lbu    v1, $0000(a2)
-                800310BC	lhu    v0, $0058(s0)
-                800310C0	nop
-                if (V1 != V0)
+                V0 = A0 * 5;
+                A2 = A2 + V0;
+                if (bu[A2] != hu[channel_data + 58])
                 {
-                    800310CC	sh     v1, $0058(s0)
-                    800310D0	lbu    v0, $0000(a2)
-                    800310D4	nop
-                    800310D8	sll    v0, v0, $06
-                    800310DC	lui    at, $8007
-                    800310E0	addiu  at, at, $5f28
-                    800310E4	addu   at, at, v0
-                    800310E8	lw     v0, $0000(at)
-                    800310EC	nop
-                    800310F0	sw     v0, $00e4(s0)
-                    800310F4	lbu    v0, $0000(a2)
-                    800310F8	nop
-                    800310FC	sll    v0, v0, $06
-                    80031100	lui    at, $8007
-                    80031104	addiu  at, at, $5f2c
-                    80031108	addu   at, at, v0
-                    8003110C	lw     v0, $0000(at)
-                    80031110	nop
-                    80031114	sw     v0, $00e8(s0)
-                    80031118	lbu    v0, $0000(a2)
-                    8003111C	nop
-                    80031120	sll    v0, v0, $06
-                    80031124	lui    at, $8007
-                    80031128	addiu  at, at, $5f30
-                    8003112C	addu   at, at, v0
-                    80031130	lbu    v0, $0000(at)
-                    80031134	nop
-                    80031138	sh     v0, $00fa(s0)
-                    8003113C	lbu    v0, $0000(a2)
-                    80031140	nop
-                    80031144	sll    v0, v0, $06
-                    80031148	lui    at, $8007
-                    8003114C	addiu  at, at, $5f31
-                    80031150	addu   at, at, v0
-                    80031154	lbu    v0, $0000(at)
-                    80031158	nop
-                    8003115C	sh     v0, $00fc(s0)
-                    80031160	lbu    v0, $0000(a2)
-                    80031164	nop
-                    80031168	sll    v0, v0, $06
-                    8003116C	lui    at, $8007
-                    80031170	addiu  at, at, $5f32
-                    80031174	addu   at, at, v0
-                    80031178	lbu    v0, $0000(at)
-                    8003117C	nop
-                    80031180	sh     v0, $00fe(s0)
-                    80031184	lbu    v0, $0000(a2)
-                    80031188	nop
-                    8003118C	sll    v0, v0, $06
-                    80031190	lui    at, $8007
-                    80031194	addiu  at, at, $5f33
-                    80031198	addu   at, at, v0
-                    8003119C	lbu    v0, $0000(at)
-                    800311A0	nop
-                    800311A4	sh     v0, $0100(s0)
-                    800311A8	lbu    v0, $0000(a2)
-                    800311AC	nop
-                    800311B0	sll    v0, v0, $06
-                    800311B4	lui    at, $8007
-                    800311B8	addiu  at, at, $5f35
-                    800311BC	addu   at, at, v0
-                    800311C0	lbu    v0, $0000(at)
-                    800311C4	nop
-                    800311C8	sw     v0, $00ec(s0)
-                    800311CC	lbu    v0, $0000(a2)
-                    800311D0	nop
-                    800311D4	sll    v0, v0, $06
-                    800311D8	lui    at, $8007
-                    800311DC	addiu  at, at, $5f36
-                    800311E0	addu   at, at, v0
-                    800311E4	lbu    v1, $0000(at)
-                    800311E8	lw     v0, $0038(s0)
-                    800311EC	nop
-                    800311F0	andi   v0, v0, $0200
-                    800311F8	sw     v1, $00f0(s0)
-                    if (V0 == 0)
+                    [channel_data + 58] = h(bu[A2]);
+                    V0 = bu[A2] * 40;
+                    [channel_data + e4] = w(w[80075f28 + V0]);
+                    [channel_data + e8] = w(w[80075f2c + V0]);
+                    [channel_data + fa] = h(bu[80075f30 + V0]);
+                    [channel_data + fc] = h(bu[80075f31 + V0]);
+                    [channel_data + fe] = h(bu[80075f32 + V0]);
+                    [channel_data + 100] = h(bu[80075f33 + V0]);
+                    [channel_data + ec] = w(bu[80075f35 + V0]);
+                    [channel_data + f0] = w(bu[80075f36 + V0]);
+
+                    if ((w[channel_data + 38] & 200) == 0)
                     {
-                        800311FC	lbu    v0, $0000(a2)
-                        80031200	lui    a0, $0001
-                        80031204	sll    v0, v0, $06
-                        80031208	lui    at, $8007
-                        8003120C	addiu  at, at, $5f34
-                        80031210	addu   at, at, v0
-                        80031214	lbu    v0, $0000(at)
-                        80031218	ori    a0, a0, $ff80
-                        8003121C	sh     v0, $0102(s0)
-                        80031220	lbu    v1, $0000(a2)
-                        80031224	lw     v0, $00e0(s0)
-                        80031228	sll    v1, v1, $06
-                        8003122C	lui    at, $8007
-                        80031230	addiu  at, at, $5f37
-                        80031234	addu   at, at, v1
-                        80031238	lbu    v1, $0000(at)
-                        8003123C	or     v0, v0, a0
-                        80031240	sw     v0, $00e0(s0)
-                        80031248	sw     v1, $00f4(s0)
+                        V0 = bu[A2] * 40;
+                        [channel_data + 102] = h(bu[80075f34 + V0]);
+                        [channel_data + f4] = w(bu[80075f37 + V0]);
+                        [channel_data + e0] = w(w[channel_data + e0] | 1ff80);
                     }
                     else
                     {
-                        8003124C	lui    v1, $0001
-                        80031250	lw     v0, $00e0(s0)
-                        80031254	ori    v1, v1, $bb80
-                        80031258	or     v0, v0, v1
-                        8003125C	sw     v0, $00e0(s0)
+                        [channel_data + e0] = w(w[channel_data + e0] | 1bb80);
                     }
                 }
 
                 V1 = bu[A2 + 1];
 
-                A1 = (opcode / 0xb) / c;
-                V1 = (opcode / 0xb) % c;
+                A1 = (S2 & ff) / c;
+                V1 = (S2 & ff) % c;
 
                 A1 = A1 & ff;
                 A0 = w[80075f38 + bu[A2 + 0] * 40 + V1 * 4];
@@ -1264,144 +1172,141 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
                     A0 = A0 >> V0;
                 }
 
-                [S0 + 44] = w((bu[A2 + 2] + (bu[A2 + 3] << 8)) << 10);
-                [S0 + 60] = h(bu[A2 + 4] << 8);
+                [channel_data + 44] = w((bu[A2 + 2] + (bu[A2 + 3] << 8)) << 10);
+                [channel_data + 60] = h(bu[A2 + 4] << 8);
+*/
             }
             else
-*/
             {
                 u8 pitch_index = opcode / 11 + channel_data[ channel_id ].pitch_correction * 12;
-/*
-                if ((hu[S0 + 6c] != 0) && (hu[S0 + 6a] != 0))
+
+                if( ( channel_data[ channel_id ].unknown_6c != 0 ) && ( channel_data[ channel_id ].unknown_6a != 0 ) )
                 {
-                    [S0 + 68] = h(hu[S0 + 6c]);
-                    [S0 + d2] = h(pitch_index + channel_data[ channel_id ].pitch_selector - hu[S0 + 6a] - hu[S0 + d4]);
-                    channel_data[ channel_id ].saved_pitch = h(hu[S0 + 6a] - channel_data[ channel_id ].pitch_selector - hu[S0 + d4]);
-                    pitch_index = bu[S0 + 6a] + bu[S0 + d4];
+                    channel_data[ channel_id ].unknown_68 = channel_data[ channel_id ].unknown_6c;
+                    channel_data[ channel_id ].unknown_d2 = pitch_index + channel_data[ channel_id ].pitch_selector - channel_data[ channel_id ].unknown_6a - channel_data[ channel_id ].unknown_d4;
+                    channel_data[ channel_id ].saved_pitch = channel_data[ channel_id ].unknown_6a - channel_data[ channel_id ].pitch_selector - channel_data[ channel_id ].unknown_d4;
+                    pitch_index = channel_data[ channel_id ].unknown_6a + channel_data[ channel_id ].unknown_d4;
                 }
                 else
-*/
                 {
                     channel_data[ channel_id ].saved_pitch = pitch_index;
-                    pitch_index += channel_data[ channel_id ].pitch_selector & 0xff;
+                    pitch_index += channel_data[ channel_id ].pitch_selector;
                 }
 
-/*
-                if ((hu[S0 + 6e] & 0002) == 0)
+
+
+                if( ( channel_data[ channel_id ].unknown_6e & 0x0002 ) == 0 )
                 {
-                    if (hu[S0 + 54] == 0)
+                    if( channel_data[ channel_id ].unknown_54 == 0 )
                     {
-*/
                         channel_config.for_play_channel_mask |= ( 1 << channel_id );
-/*
-                        if (w[S0 + 38] & 00000100)
+
+                        if( channel_data[ channel_id ].mirror_update_flags & 0x00000100 )
                         {
-                            V1 = hu[S0 + 24];
-                            if (w[S0 + 24] >= 18)
+                            u16 mirror_channel_id = channel_data[ channel_id ].mirror_channel_id;
+                            if( mirror_channel_id >= 0x18 )
                             {
-                                V1 = V1 - 18;
+                                mirror_channel_id -= 0x18;
                             }
 
-                            [S3 + 8] = w(w[[S3 + 8]] | (1 << V1));
+                            channel_config.for_play_channel_mask |= ( 1 << mirror_channel_id );
                         }
                     }
+/*
                     else
                     {
-                        [80099fd0] = w(w[80099fd0] | S5);
+                        [80099fd0] = w(w[80099fd0] | ( 1 << channel_id ));
                     }
-                    [S0 + 64] = h(0);
-                }
 */
+                    channel_data[ channel_id ].unknown_64 = 0;
+                }
+
+
+
                 u8 mod = pitch_index / 12;
-                calculated_pitch = m_InstrumentData[ channel_data[ channel_id ].instrument_id ].pitch[ pitch_index %= 12 ];
-                if (mod >= 7)
+
+                pitch_base = m_InstrumentData[ channel_data[ channel_id ].instrument_id ].pitch[ pitch_index % 12 ];
+                if( mod >= 7 )
                 {
-                    calculated_pitch <<= ( mod - 6 );
+                    pitch_base <<= ( mod - 6 );
                 }
-                else if (mod < 6)
+                else if( mod < 6 )
                 {
-                    calculated_pitch >>= ( 6 - mod );
+                    pitch_base >>= ( 6 - mod );
                 }
+            }
+
+
+
+            if( channel_data[ channel_id ].unknown_54 == 0 )
+            {
+                channel_config.unknown_0c |= ( 1 << channel_id );
             }
 /*
-            if (hu[S0 + 54] == 0)
-            {
-                [S3 + c] = w(w[S3 + c] | S5);
-            }
             else
             {
-                [80099fd4] = w(w[80099fd4] | S5);
+                [80099fd4] = w(w[80099fd4] | ( 1 << channel_id ));
             }
 */
+
+
             channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME | SPU_PITCH;
 
-            if ( channel_data[ channel_id ].pitch_modifier != 0 )
+
+
+            s16 pitch_modifier = channel_data[ channel_id ].pitch_modifier;
+            if( pitch_modifier != 0 )
             {
-                if ( channel_data[ channel_id ].pitch_modifier > 0 )
+                if( pitch_modifier > 0 )
                 {
-                    calculated_pitch += ( calculated_pitch * channel_data[ channel_id ].pitch_modifier ) >> 7;
+                    pitch_modifier = ( pitch_base * pitch_modifier ) >> 7;
                 }
                 else
                 {
-                    calculated_pitch += ( calculated_pitch * channel_data[ channel_id ].pitch_modifier ) >> 8;
+                    pitch_modifier = ( pitch_base * pitch_modifier ) >> 8;
                 }
 
-                calculated_pitch &= 0xffff;
+                pitch_base = ( pitch_base + pitch_modifier ) & 0xffff;
             }
+            channel_data[ channel_id ].pitch_base = pitch_base;
 
-            channel_data[ channel_id ].pitch_base = calculated_pitch;
-/*
-            if (w[S0 + 38] & 00000001)
+
+
+
+            if( channel_data[ channel_id ].mirror_update_flags & 0x00000001 )
             {
-                8003152C	lhu    v0, $007e(s0)
-                80031534	andi   v1, v0, $7f00
-                80031538	andi   v0, v0, $8000
-                80031540	srl    v1, v1, $08
-                if (V0 != 0)
+                u16 wave1_modifier = ( channel_data[ channel_id ].wave1_modifier & 0x7f00 ) >> 8;
+                if( channel_data[ channel_id ].wave1_modifier & 0x8000 )
                 {
-                    80031548	mult   v1, a0
+                    pitch_base = wave1_modifier * pitch_base;
                 }
                 else
                 {
-                    8003154C	sll    v0, a0, $04
-                    80031550	subu   v0, v0, a0
-                    80031554	srl    v0, v0, $08
-                    80031558	mult   v1, v0
+                    pitch_base = wave1_modifier * ( ( pitch_base * 0xf ) >> 8 );
                 }
 
-                8003155C	mflo   v0
-                80031560	srl    v1, v0, $07
-                80031568	sh     v1, $007c(s0)
-
-                [S0 + 18] = w(w[8004a5cc + hu[S0 + 7a] * 4]);
-                [S0 + 74] = h(hu[S0 + 72]);
-                [S0 + 78] = h(1);
+                channel_data[ channel_id ].wave1_multiplier = pitch_base >> 0x7;
+                channel_data[ channel_id ].wave1_delay_current = channel_data[ channel_id ].wave1_delay;
+                channel_data[ channel_id ].wave1_refresh_interval_counter = 1;
+                channel_data[ channel_id ].wave1_table_index = akao_wave_table_key_nodes[ channel_data[ channel_id ].wave1_table_node_index ];
             }
 
-            if (w[S0 + 38] & 00000002)
+            if( channel_data[ channel_id ].mirror_update_flags & 0X00000002 )
             {
-                [S0 + 1c] = w(w[8004a5cc + hu[S0 + 8e] * 4]);
-                [S0 + 88] = h(hu[S0 + 86]);
-                [S0 + 8c] = h(1);
+                channel_data[ channel_id ].wave2_delay_current = channel_data[ channel_id ].wave2_delay;
+                channel_data[ channel_id ].wave2_refresh_interval_counter = 1;
+                channel_data[ channel_id ].wave2_table_index = akao_wave_table_key_nodes[ channel_data[ channel_id ].wave2_table_node_index ];
             }
 
-            if (w[S0 + 38] & 00000004)
+            if( channel_data[ channel_id ].mirror_update_flags & 0x00000004 )
             {
-                800315E8	lhu    v0, $009c(s0)
-                800315EC	nop
-                800315F0	sll    v0, v0, $02
-                800315F4	lui    at, $8005
-                800315F8	addiu  at, at, $a5cc (=-$5a34)
-                800315FC	addu   at, at, v0
-                80031600	lw     v1, $0000(at)
-                80031604	ori    v0, zero, $0001
-                80031608	sh     v0, $009a(s0)
-                8003160C	sw     v1, $0020(s0)
+                channel_data[ channel_id ].wave3_refresh_interval_counter = 1;
+                channel_data[ channel_id ].wave3_table_index = akao_wave_table_key_nodes[ channel_data[ channel_id ].wave3_table_node_index ];
             }
-*/
-            //[S0 + d6] = h(0);
-            //[S0 + d8] = h(0);
-            //[S0 + 34] = w(0);
+
+            channel_data[ channel_id ].pitch_addition2 = 0;
+            channel_data[ channel_id ].unknown_d8 = 0;
+            channel_data[ channel_id ].pitch_addition = 0;
         }
 
 
@@ -1446,11 +1351,11 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 
             if( selected_pitch >= 7 )
             {
-                pitch_value <<= selected_pitch - 6;
+                pitch_value <<= ( selected_pitch - 6 );
             }
             else if (selected_pitch < 6)
             {
-                pitch_value >>= 6 - selected_pitch;
+                pitch_value >>= ( 6 - selected_pitch );
             }
 
             channel_data[ channel_id ].unknown_64 = channel_data[ channel_id ].unknown_68;

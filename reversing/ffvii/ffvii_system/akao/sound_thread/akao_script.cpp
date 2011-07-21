@@ -258,7 +258,7 @@ if (opcode != a0)
             }
             else
             {
-                V0 = V1 * (A0 * f) >> 8;
+                V0 = V1 * ( (A0 * f) >> 8 );
             }
 
             [channel_data + 7c] = h(V0 >> 7);

@@ -174,6 +174,7 @@ main( int argc, char *argv[] )
     //AKAOPARSER->PlayMusic( "data/music/opening_bombing_mission.snd" );
     //AKAOPARSER->DumpSequenceData( "dump_opening_bombing_mission.txt" );
     AKAOPARSER->PlayMusic( "data/music/aeris_theme.snd" );
+    //AKAOPARSER->PlayMusic( "data/music/opening_bombing_mission.snd" );
     //AKAOPARSER->DumpSequenceData( "dump_aeris_theme.txt" );
 
 
