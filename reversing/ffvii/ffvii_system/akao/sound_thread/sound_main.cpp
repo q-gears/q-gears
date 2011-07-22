@@ -333,63 +333,45 @@ S2 = A2;
 
 if (hu[S0 + 5c] != 0)
 {
-    8002E4A4	lhu    v0, $005c(s0)
-    8002E4A8	lw     v1, $0044(s0)
-    8002E4AC	lw     a0, $0048(s0)
-    8002E4B0	addiu  v0, v0, $ffff (=-$1)
-    8002E4B4	addu   a1, v1, a0
-    8002E4B8	sh     v0, $005c(s0)
-    8002E4BC	lui    v0, $ffe0
-    8002E4C0	and    a0, a1, v0
-    8002E4C4	and    v1, v1, v0
-    if (A0 != V1)
+    [S0 + 5c] = h(hu[S0 + 5c] - 1);
+
+    A1 = w[S0 + 44] + w[S0 + 48];
+
+    if ((A1 & ffe0) != (w[S0 + 44] & ffe0))
     {
         [S0 + e0] = w(w[S0 + e0] | 00000003);
     }
-
-    8002E4E0	sw     a1, $0044(s0)
+    [S0 + 44] = w(A1);
 }
 
 if (hu[S0 + 5e] != 0)
 {
-    8002E4F4	lhu    v0, $005e(s0)
-    8002E4F8	lh     a2, $00c6(s0)
-    8002E4FC	lh     a0, $00c8(s0)
-    8002E500	lw     v1, $0038(s0)
-    8002E504	addiu  v0, v0, $ffff (=-$1)
-    8002E508	addu   a1, a2, a0
-    8002E50C	andi   v1, v1, $0100
-    8002E514	sh     v0, $005e(s0)
-    if (V1 != 0)
+    [S0 + 5e] = h(hu[S0 + 5e] - 1);
+    A1 = h[S0 + c6] + h[S0 + c8];
+
+    if (w[S0 + 38] & 00000100)
     {
-        8002E518	andi   v1, a1, $ff00
-        8002E51C	andi   v0, a2, $ff00
-        if (V1 != V0)
+        if ((A1 & ff00) != (h[S0 + c6] & ff00))
         {
             [S0 + e0] = w(w[S0 + e0] | 00000003);
         }
     }
 
-    8002E538	sh     a1, $00c6(s0)
+    [S0 + c6] = h(A1);
 }
 
 if (hu[S0 + 62] != 0)
 {
-    8002E54C	lhu    v0, $0062(s0)
-    8002E550	lhu    a0, $0060(s0)
-    8002E554	lh     v1, $00ca(s0)
-    8002E558	addiu  v0, v0, $ffff (=-$1)
-    8002E55C	addu   a1, a0, v1
-    8002E560	sh     v0, $0062(s0)
-    8002E564	lhu    v0, $0060(s0)
-    8002E568	andi   v1, a1, $ff00
-    8002E56C	andi   v0, v0, $ff00
-    if (V1 != V0)
+    [S0 + 62] = h(hu[S0 + 62] - 1);
+
+    A1 = hu[S0 + 60] + h[S0 + ca];
+
+    if ((A1 & ff00) != (hu[S0 + 60] & ff00))
     {
         [S0 + e0] = w(w[S0 + e0] | 00000003);
     }
 
-    8002E588	sh     a1, $0060(s0)
+    [S0 + 60] = h(A1);
 }
 
 if (hu[S0 + 74] != 0) // wave1_delay_current
@@ -404,25 +386,14 @@ if (hu[S0 + 88] != 0) // wave2_delay_current
 
 if (hu[S0 + a4] != 0)
 {
-    8002E5DC	lhu    v0, $00a4(s0)
-    8002E5E0	nop
-    8002E5E4	addiu  v0, v0, $ffff (=-$1)
-    8002E5E8	sh     v0, $00a4(s0)
-    8002E5EC	andi   v0, v0, $ffff
-    if (V0 == 0)
+    [S0 + a4] = h(hu[S0 + a4] - 1);
+
+    if (hu[S0 + a4] == 0)
     {
-        8002E5F8	lw     v0, $002c(s1)
-        8002E5FC	nop
-        8002E600	xor    v0, s2, v0
-        8002E604	sw     v0, $002c(s1)
-        8002E608	lui    v0, $800a
-        8002E60C	lw     v0, $a13c(v0)
-        8002E610	nop
-        8002E614	ori    v0, v0, $0010
-        8002E618	lui    at, $800a
-        8002E61C	sw     v0, $a13c(at)
-        8002E620	jal    func2ff4c [$8002ff4c]
-        8002E624	nop
+        [S1 + 2c] = w(w[S1 + 2c] ^ S2);
+        [8009a13c] = w(w[8009a13c] | 00000010);
+
+        func2ff4c;
     }
 }
 
@@ -627,20 +598,21 @@ if (hu[S0 + a0] != 0)
 
 if (hu[S0 + 64] != 0)
 {
-    8002E8F8	lhu    v0, $0064(s0)
-    8002E8FC	lw     v1, $0034(s0)
-    8002E900	lw     a0, $004c(s0)
-    8002E904	addiu  v0, v0, $ffff (=-$1)
-    8002E908	addu   a1, v1, a0
-    8002E90C	sh     v0, $0064(s0)
-    8002E910	lui    v0, $ffff
-    8002E914	and    a0, a1, v0
-    8002E918	and    v1, v1, v0
+    V0 = hu[S0 + 64];
+    V1 = w[S0 + 34];
+    A0 = w[S0 + 4c];
+    V0 = V0 - 1;
+    A1 = V1 + A0;
+    [S0 + 64] = h(V0);
+
+    A0 = A1 & ffff0000;
+    V1 = V1 & ffff0000;
+
     if (A0 != V1)
     {
         [S0 + e0] = w(w[S0 + e0] | 00000010);
     }
 
-    8002E934	sw     a1, $0034(s0)
+    [S0 + 34] = w(A1);
 }
 ////////////////////////////////

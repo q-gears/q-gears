@@ -1,1963 +1,239 @@
 Loading file: data/INSTR.ALL
 Loading file: data/INSTR.DAT
-Loading file: data/music/opening_bombing_mission.snd
-Init channel 0 with offset to AKAO 0034
-Init channel 1 with offset to AKAO 01c0
-Init channel 2 with offset to AKAO 03c0
-Init channel 3 with offset to AKAO 0515
-Init channel 4 with offset to AKAO 068d
-Init channel 5 with offset to AKAO 0883
-Init channel 6 with offset to AKAO 0b21
-Init channel 7 with offset to AKAO 0da9
-Init channel 8 with offset to AKAO 0f58
-Init channel 9 with offset to AKAO 10a9
-Init channel 10 with offset to AKAO 1288
-Init channel 11 with offset to AKAO 1359
-Init channel 12 with offset to AKAO 1635
-Init channel 13 with offset to AKAO 1704
-Init channel 14 with offset to AKAO 1829
-Init channel 15 with offset to AKAO 194a
-    0xE8 Set tempo to 0x53d60000 and reset tempo increment counter to 0.
-    0xFD Reset upper timer to 0 with bound 0004 and lower timer to 0 with bound 0030.
-    0xFE Reset top timer to 0001.
-    0xA3 Set volume multiplier to 0x46.
-    0xEA Set reverb depth to 0x32000000 and reset reverb depth increment counter to 0.
+Loading file: data/music/sensui.snd
+Init channel 0 with offset to AKAO 0018
+Init channel 1 with offset to AKAO 002b
+    0xE8 Set tempo to 0x66a80000 and reset tempo increment counter to 0.
+    0xEA Set reverb depth to 0x50000000 and reset reverb depth increment counter to 0.
+    0xA8 Set volume to 0x06800000 and reset volume_level_change_ticks.
+    0xAA Set volume pan to 0x4000.
     0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x4b00.
-    0xA1 [NOT COMPLETE] load instrument "60"
-    0xA5 Set pitch correction to 0x0006.
-    0xA8 Set volume to 0x00000000 and reset volume_level_change_ticks.
-    0xA9 Set volume tick to 0x00c0 and volume_level_new 0x0002aaaa.
-    0x2c PLAY.
-    0xA3 Set volume multiplier to 0x46.
+    0xA1 [NOT COMPLETE] load instrument "12"
+    0xA5 Set pitch correction to 0x0003.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+    0xAA Set volume pan to 0x4000.
+    0xA8 Set volume to 0x08800000 and reset volume_level_change_ticks.
     0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x3700.
-    0xA1 [NOT COMPLETE] load instrument "60"
-    0x8f PLAY.
-    0xA3 Set volume multiplier to 0x46.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x7300.
-    0xA1 [NOT COMPLETE] load instrument "60"
-    0x8f PLAY.
-    0xA3 Set volume multiplier to 0x46.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x0a00.
-    0xA1 [NOT COMPLETE] load instrument "60"
-    0x8f PLAY.
-    0xA3 Set volume multiplier to 0x46.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x6400.
-    0xA1 [NOT COMPLETE] load instrument "61"
-    0x8f PLAY.
-    0xA3 Set volume multiplier to 0x46.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x1900.
-    0xA1 [NOT COMPLETE] load instrument "61"
-    0x8f PLAY.
-    0xA3 Set volume multiplier to 0x5a.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x1400.
-    0xA1 [NOT COMPLETE] load instrument "18"
-    0xB4 Set wave1 refresh interval to 0x0001 , wave1 node index to 0x0006 and wave1 delay (or wave1 modifier) to 0x30.
-    0xB5 Set wave modifier to 0x0f00.
-    0x8f PLAY.
-    0xA3 Set volume multiplier to 0x5a.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x1400.
-    0xA1 [NOT COMPLETE] load instrument "18"
-    0xB4 Set wave1 refresh interval to 0x0001 , wave1 node index to 0x0006 and wave1 delay (or wave1 modifier) to 0x30.
-    0xB5 Set wave modifier to 0x0f00.
-    0x8f PLAY.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x6e00.
-    0xA1 [NOT COMPLETE] load instrument "63"
-    0xAD [UNIMPLEMENTED]
-af [UNKNOWN]
-    0xaf PLAY.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x6e00.
-    0xA1 [NOT COMPLETE] load instrument "63"
-    0xAD [UNIMPLEMENTED]
-af [UNKNOWN]
-    0xaf PLAY.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x1e00.
-    0xA1 [NOT COMPLETE] load instrument "30"
-    0x8f PLAY.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x6e00.
-    0xA1 [NOT COMPLETE] load instrument "29"
-    0x8f PLAY.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x3200.
-    0xA1 [NOT COMPLETE] load instrument "45"
-    0xA8 Set volume to 0x3b800000 and reset volume_level_change_ticks.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x0a00.
-    0xA1 [NOT COMPLETE] load instrument "4"
-    0x8f PLAY.
-    0xA3 Set volume multiplier to 0x6e.
-    0xC2 [UNIMPLEMENTED]
-    0xAA Set volume pan to 0x6e00.
-    0xA1 [NOT COMPLETE] load instrument "18"
-    0xB4 Set wave1 refresh interval to 0x0001 , wave1 node index to 0x0006 and wave1 delay (or wave1 modifier) to 0x30.
-    0xB5 Set wave modifier to 0x0f00.
-    0x8f PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0xA9 Set volume tick to 0x00c0 and volume_level_new 0x00060000.
-    0x84 PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0xA9 Set volume tick to 0x00c0 and volume_level_new 0x00095555.
-    0x84 PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0xA9 Set volume tick to 0x00c0 and volume_level_new 0x000caaaa.
-    0x84 PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0xA9 Set volume tick to 0x00c0 and volume_level_new 0x00100000.
-    0x84 PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0xA8 Set volume to 0x0e800000 and reset volume_level_change_ticks.
-    0x90 PLAY.
-    0x8f PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0xA5 Set pitch correction to 0x0007.
-    0x2e PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0xA7 Decrement pitch correction.
-    0x7b PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0xA9 Set volume tick to 0x00c0 and volume_level_new 0x00135555.
-    0x84 PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-    0xA6 Increment pitch correction.
-    0x21 PLAY.
-    0x8f PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-    0x8f PLAY.
-    0x8f PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-    0x8f PLAY.
-    0xA8 Set volume to 0x02000000 and reset volume_level_change_ticks.
-    0x90 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
 c8 [UNKNOWN]
     0xc8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-af [UNKNOWN]
-    0xaf PLAY.
-f8 [UNKNOWN]
-    0xf8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c8 [UNKNOWN]
+    0xc8 PLAY.
+c6 [UNKNOWN]
+    0xc6 PLAY.
