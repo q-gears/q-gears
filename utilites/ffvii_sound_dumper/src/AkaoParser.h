@@ -228,6 +228,8 @@ private:
         u32 for_play_channel_mask;
         // 0x0c [][][][]
         u32 unknown_0c;
+        // 0x10 [][][][]
+        u32 unknown_10;
         // 0x18 [][][][]
         u32 tempo;
         // 0x1c [][][][]

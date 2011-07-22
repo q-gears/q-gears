@@ -147,7 +147,6 @@ AkaoParser::Update()
 
     if ( m_MusicChannelConfig.active_channel_mask != 0 )
     {
-
         //V1 = w[80062fea];
         u32 tempo = m_MusicChannelConfig.tempo >> 0x10;
 /*
@@ -164,7 +163,8 @@ AkaoParser::Update()
         }
 */
         m_MusicChannelConfig.tempo_counter += tempo;
-        //LOGGER->Log( ToHexString( m_MusicChannelConfig.tempo_counter, 8, '0' ) + "\n" );
+
+
 
         if ( ( m_MusicChannelConfig.tempo_counter & 0xffff0000 ) /*|| ( w[80062ff8] & 00000004 )*/ )
         {
@@ -180,21 +180,16 @@ AkaoParser::Update()
                     channel_mask ^= bit;
 
                     m_MusicChannelData[ channel_id ].pause -= 0x0101;
-                    //LOGGER->Log( "pause " + ToHexString( m_MusicChannelData[ channel_id ].pause, 4, '0' ) + "\n" );
-
-                    //std::cout << "Channel " << channel_id << " pause " << ( m_MusicChannelData[ channel_id ].pause & 0x00ff ) << std::endl;
 
                     if ( ( m_MusicChannelData[ channel_id ].pause & 0x00ff ) == 0 )
                     {
-                        //A1 = 8009a104;
                         UpdateSequence( m_MusicChannelData, channel_id, m_MusicChannelConfig );
                     }
                     else if ( ( m_MusicChannelData[ channel_id ].pause & 0xff00 ) == 0 )
                     {
                         m_MusicChannelData[ channel_id ].pause |= 0x100;
-
-                        //[8009a114] = w(w[8009a114] | S0);
-                        //[8009a110] = w(w[8009a110] & (0 NOR S0));
+                        m_MusicChannelConfig.unknown_0c &= ~bit;
+                        m_MusicChannelConfig.unknown_10 |= bit;
                     }
 
                     //A0 = S2; // 80096608
@@ -211,31 +206,29 @@ AkaoParser::Update()
                 m_MusicChannelConfig.tempo += m_MusicChannelConfig.tempo_increment;
             }
 
-/*
-            if (hu[8009a154] != 0)
+            if( m_MusicChannelConfig.reverb_depth_increment_counter != 0 )
             {
-                [8009a154] = h(hu[8009a154] - 1);
-                [8009a144] = w(w[8009a144] + w[8009a148]);
-                [8009a13c] = w(w[8009a13c] | 00000080);
+                m_MusicChannelConfig.reverb_depth_increment_counter -= 1;
+                m_MusicChannelConfig.reverb_depth += m_MusicChannelConfig.tempo_increment_counter;
+                m_MusicChannelConfig.spu_update_flags |= SPU_REVERB;
             }
 
-            if (hu[8009a15e] != 0)
+            if( m_MusicChannelConfig.lower_timer_top != 0 )
             {
-                [8009a160] = h(hu[8009a160] + 1);
+                m_MusicChannelConfig.lower_timer += 1;
 
-                if (hu[8009a160] == hu[8009a15e])
+                if( m_MusicChannelConfig.lower_timer == m_MusicChannelConfig.lower_timer_top )   
                 {
-                    [8009a160] = h(0);
-                    [8009a15c] = h(hu[8009a15c] + 1);
+                    m_MusicChannelConfig.lower_timer = 0;
+                    m_MusicChannelConfig.upper_timer += 1;
 
-                    if (hu[8009a15c] == hu[8009a15a])
+                    if( m_MusicChannelConfig.upper_timer == m_MusicChannelConfig.upper_timer_top )
                     {
-                        [8009a15c] = h(0);
-                        [8009a162] = h(hu[8009a162] + 1);
+                        m_MusicChannelConfig.upper_timer = 0;
+                        m_MusicChannelConfig.top_timer += 1;
                     }
                 }
             }
-*/
         }
     }
 }

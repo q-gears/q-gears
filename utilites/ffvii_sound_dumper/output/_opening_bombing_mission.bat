@@ -1,0 +1,1 @@
+start q-gears.exe opening_bombing_mission.snd

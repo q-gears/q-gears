@@ -171,11 +171,16 @@ main( int argc, char *argv[] )
 
 
 
-    //AKAOPARSER->PlayMusic( "data/music/opening_bombing_mission.snd" );
-    //AKAOPARSER->DumpSequenceData( "dump_opening_bombing_mission.txt" );
-    AKAOPARSER->PlayMusic( "data/music/aeris_theme.snd" );
-    //AKAOPARSER->PlayMusic( "data/music/opening_bombing_mission.snd" );
-    //AKAOPARSER->DumpSequenceData( "dump_aeris_theme.txt" );
+    if( argc == 2 )
+    {
+        AKAOPARSER->PlayMusic( Ogre::String( "data/music/") + argv[ 1 ] );
+        AKAOPARSER->DumpSequenceData( Ogre::String( "dump_" ) + argv[ 1 ] + ".txt" );
+    }
+    else
+    {
+        AKAOPARSER->PlayMusic( "data/music/aeris_theme.snd" );
+        AKAOPARSER->DumpSequenceData( "dump_aeris_theme.txt" );
+    }
 
 
 

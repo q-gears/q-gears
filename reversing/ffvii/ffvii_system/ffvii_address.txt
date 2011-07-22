@@ -96,6 +96,7 @@
 +056 [][]     pause. Set to 0x204 in case of 0x30 command. Set to 0x101.
 +058 [][]     current instrument.
 +05c [][]     init with 0.
++05e [][]     ???
 +060 [][]     store 0x4000 here in case of playing system sound 0x30.
 +062 [][]     set to 0.
 +064 [][]     init with 0. Number of steps for pitch changes?.
@@ -111,6 +112,7 @@
 +07c [][]     wave1 multiplier. Some modificator for pitch modificator +d6.
 +07e [][]     wave1_modifier. Init with 0.
 +080 [][]     init with 0.
++088 [][]     wave2_delay_current
 +08c [][]     wave2_refresh_interval_counter.
 +08e [][]     wave2 table key node index.
 +090 [][]     init with 0.

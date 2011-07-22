@@ -305,22 +305,342 @@ L30e04:	; 80030E04
 80030E10	sll    s0, s0, $01
 
 L30e14:	; 80030E14
-80030E14	lui    v0, $800a
-80030E18	lhu    v0, $a158(v0)
-80030E1C	nop
-80030E20	beq    v0, zero, L30e40 [$80030e40]
-80030E24	nop
-80030E28	lui    a0, $800a
-80030E2C	addiu  a0, a0, $a000 (=-$6000)
-80030E30	jal    func2c8dc [$8002c8dc]
-80030E34	nop
-80030E38	lui    at, $800a
-80030E3C	sh     zero, $a158(at)
 
-L30e40:	; 80030E40
+
+V0 = hu[8009a158];
+if (V0 != 0)
+{
+    A0 = 8009a000;
+    80030E30	jal    func2c8dc [$8002c8dc]
+
+    [8009a158] = h(0);
+}
+
 func2e1a8; // read akao commands from other parts of game
 
 80030E48	jal    func30380 [$80030380]
-80030E4C	nop
+
 80030E50	jal    func2fe48 [$8002fe48]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2e478
+S0 = A0;
+S1 = A1;
+S2 = A2;
+
+if (hu[S0 + 5c] != 0)
+{
+    8002E4A4	lhu    v0, $005c(s0)
+    8002E4A8	lw     v1, $0044(s0)
+    8002E4AC	lw     a0, $0048(s0)
+    8002E4B0	addiu  v0, v0, $ffff (=-$1)
+    8002E4B4	addu   a1, v1, a0
+    8002E4B8	sh     v0, $005c(s0)
+    8002E4BC	lui    v0, $ffe0
+    8002E4C0	and    a0, a1, v0
+    8002E4C4	and    v1, v1, v0
+    if (A0 != V1)
+    {
+        [S0 + e0] = w(w[S0 + e0] | 00000003);
+    }
+
+    8002E4E0	sw     a1, $0044(s0)
+}
+
+if (hu[S0 + 5e] != 0)
+{
+    8002E4F4	lhu    v0, $005e(s0)
+    8002E4F8	lh     a2, $00c6(s0)
+    8002E4FC	lh     a0, $00c8(s0)
+    8002E500	lw     v1, $0038(s0)
+    8002E504	addiu  v0, v0, $ffff (=-$1)
+    8002E508	addu   a1, a2, a0
+    8002E50C	andi   v1, v1, $0100
+    8002E514	sh     v0, $005e(s0)
+    if (V1 != 0)
+    {
+        8002E518	andi   v1, a1, $ff00
+        8002E51C	andi   v0, a2, $ff00
+        if (V1 != V0)
+        {
+            [S0 + e0] = w(w[S0 + e0] | 00000003);
+        }
+    }
+
+    8002E538	sh     a1, $00c6(s0)
+}
+
+if (hu[S0 + 62] != 0)
+{
+    8002E54C	lhu    v0, $0062(s0)
+    8002E550	lhu    a0, $0060(s0)
+    8002E554	lh     v1, $00ca(s0)
+    8002E558	addiu  v0, v0, $ffff (=-$1)
+    8002E55C	addu   a1, a0, v1
+    8002E560	sh     v0, $0062(s0)
+    8002E564	lhu    v0, $0060(s0)
+    8002E568	andi   v1, a1, $ff00
+    8002E56C	andi   v0, v0, $ff00
+    if (V1 != V0)
+    {
+        [S0 + e0] = w(w[S0 + e0] | 00000003);
+    }
+
+    8002E588	sh     a1, $0060(s0)
+}
+
+if (hu[S0 + 74] != 0) // wave1_delay_current
+{
+    [S0 + 74] = h(hu[S0 + 74] - 1);
+}
+
+if (hu[S0 + 88] != 0) // wave2_delay_current
+{
+    [S0 + 88] = h(hu[S0 + 88] - 1);
+}
+
+if (hu[S0 + a4] != 0)
+{
+    8002E5DC	lhu    v0, $00a4(s0)
+    8002E5E0	nop
+    8002E5E4	addiu  v0, v0, $ffff (=-$1)
+    8002E5E8	sh     v0, $00a4(s0)
+    8002E5EC	andi   v0, v0, $ffff
+    if (V0 == 0)
+    {
+        8002E5F8	lw     v0, $002c(s1)
+        8002E5FC	nop
+        8002E600	xor    v0, s2, v0
+        8002E604	sw     v0, $002c(s1)
+        8002E608	lui    v0, $800a
+        8002E60C	lw     v0, $a13c(v0)
+        8002E610	nop
+        8002E614	ori    v0, v0, $0010
+        8002E618	lui    at, $800a
+        8002E61C	sw     v0, $a13c(at)
+        8002E620	jal    func2ff4c [$8002ff4c]
+        8002E624	nop
+    }
+}
+
+if (hu[S0 + a6] != 0)
+{
+    8002E638	lhu    v0, $00a6(s0)
+    8002E63C	nop
+    8002E640	addiu  v0, v0, $ffff (=-$1)
+    8002E644	sh     v0, $00a6(s0)
+    8002E648	andi   v0, v0, $ffff
+    if (V0 == 0)
+    {
+        8002E654	lw     v0, $0034(s1)
+        8002E658	nop
+        8002E65C	xor    v0, s2, v0
+        8002E660	jal    func30148 [$80030148]
+        8002E664	sw     v0, $0034(s1)
+    }
+}
+
+if (hu[S0 + 80] != 0)
+{
+    8002E678	lhu    v1, $0080(s0)
+    8002E67C	lhu    v0, $007e(s0)
+    8002E680	lhu    a0, $0082(s0)
+    8002E684	addiu  v1, v1, $ffff (=-$1)
+    8002E688	addu   v0, v0, a0
+    8002E68C	sh     v1, $0080(s0)
+    8002E690	andi   v1, v0, $7f00
+    8002E694	sh     v0, $007e(s0)
+    8002E698	andi   v0, v0, $8000
+    8002E6A0	srl    a0, v1, $08
+    if (V0 != 0)
+    {
+        8002E6A4	lw     v0, $0030(s0)
+        8002E6AC	mult   a0, v0
+    }
+    else
+    {
+        8002E6B0	lw     v0, $0030(s0)
+        8002E6B4	nop
+        8002E6B8	sll    v1, v0, $04
+        8002E6BC	subu   v1, v1, v0
+        8002E6C0	srl    v1, v1, $08
+        8002E6C4	mult   a0, v1
+    }
+
+    8002E6C8	mflo   v0
+    8002E6CC	srl    v1, v0, $07
+    8002E6D0	lhu    v0, $0074(s0)
+    8002E6D4	nop
+    8002E6DC	sh     v1, $007c(s0)
+    if (V0 == 0)
+    {
+        8002E6E0	lhu    v1, $0078(s0)
+        8002E6E4	ori    v0, zero, $0001
+        if (V1 != V0)
+        {
+            8002E6F0	lw     a0, $0018(s0)
+            8002E6F4	nop
+            8002E6F8	lh     v0, $0000(a0)
+            8002E6FC	nop
+            if (V0 == 0)
+            {
+                8002E708	lh     v0, $0002(a0)
+                8002E70C	nop
+                if (V0 == 0)
+                {
+                    8002E718	lh     v0, $0004(a0)
+                    8002E71C	nop
+                    8002E720	sll    v0, v0, $01
+                    8002E724	addu   a0, a0, v0
+                }
+            }
+
+            8002E728	lhu    v1, $007c(s0)
+            8002E72C	lh     v0, $0000(a0)
+            8002E730	nop
+            8002E734	mult   v1, v0
+            8002E738	lh     v1, $00d6(s0)
+            8002E73C	mflo   v0
+            8002E740	sra    a1, v0, $10
+            if (A1 != V1)
+            {
+                8002E750	sh     a1, $00d6(s0)
+
+                [S0 + e0] = w(w[S0 + e0] | 00000010);
+
+                if (A1 >= 0)
+                {
+                    8002E760	sll    v0, a1, $01
+                    8002E764	sh     v0, $00d6(s0)
+                }
+            }
+        }
+    }
+}
+
+if (hu[S0 + 92] != 0)
+{
+    8002E778	lhu    v0, $0092(s0)
+    8002E77C	lhu    v1, $0094(s0)
+    8002E780	addiu  v0, v0, $ffff (=-$1)
+    8002E784	sh     v0, $0092(s0)
+    8002E788	lhu    v0, $0090(s0)
+    8002E78C	lhu    a0, $0088(s0)
+    8002E790	addu   v0, v0, v1
+    8002E798	sh     v0, $0090(s0)
+    if (A0 == 0)
+    {
+        8002E79C	lhu    v1, $008c(s0)
+        8002E7A0	ori    v0, zero, $0001
+        if (V1 != V0)
+        {
+            8002E7AC	lw     a0, $001c(s0)
+            8002E7B0	nop
+            8002E7B4	lh     v0, $0000(a0)
+            8002E7B8	nop
+            if (V0 == 0)
+            {
+                8002E7C4	lh     v0, $0002(a0)
+                8002E7C8	nop
+                if (V0 == 0)
+                {
+                    8002E7D4	lh     v0, $0004(a0)
+                    8002E7D8	nop
+                    8002E7DC	sll    v0, v0, $01
+                    8002E7E0	addu   a0, a0, v0
+                }
+            }
+
+            8002E7E4	lh     v1, $0046(s0)
+            8002E7E8	lw     v0, $002c(s0)
+            8002E7EC	nop
+            8002E7F0	mult   v1, v0
+            8002E7F4	lhu    v1, $0090(s0)
+            8002E7F8	mflo   v0
+            8002E7FC	srl    v1, v1, $08
+            8002E800	srl    v0, v0, $07
+            8002E804	mult   v0, v1
+            8002E808	lh     v1, $0000(a0)
+            8002E80C	mflo   v0
+            8002E810	sll    v0, v0, $09
+            8002E814	sra    a1, v0, $10
+            8002E818	mult   a1, v1
+            8002E81C	lh     v1, $00d8(s0)
+            8002E820	mflo   v0
+            8002E824	sra    a1, v0, $0f
+            if (A1 != V1)
+            {
+                [S0 + e0] = w(w[S0 + e0] | 00000003);
+                8002E834	sh     a1, $00d8(s0)
+            }
+        }
+    }
+}
+
+if (hu[S0 + a0] != 0)
+{
+    8002E850	lhu    v1, $009e(s0)
+    8002E854	lhu    a0, $00a2(s0)
+    8002E858	lhu    v0, $00a0(s0)
+    8002E85C	addu   v1, v1, a0
+    8002E860	sh     v1, $009e(s0)
+    8002E864	lhu    v1, $009a(s0)
+    8002E868	addiu  v0, v0, $ffff (=-$1)
+    8002E86C	sh     v0, $00a0(s0)
+    8002E870	ori    v0, zero, $0001
+    if (V1 != V0)
+    {
+        8002E87C	lw     a0, $0020(s0)
+        8002E880	nop
+        8002E884	lh     v0, $0000(a0)
+        8002E888	nop
+        if (V0 == 0)
+        {
+            8002E894	lh     v0, $0002(a0)
+            8002E898	nop
+            if (V0 == 0)
+            {
+                8002E8A4	lh     v0, $0004(a0)
+                8002E8A8	nop
+                8002E8AC	sll    v0, v0, $01
+                8002E8B0	addu   a0, a0, v0
+            }
+        }
+
+        8002E8B4	lhu    v0, $009e(s0)
+        8002E8B8	lh     v1, $0000(a0)
+        8002E8BC	srl    v0, v0, $08
+        8002E8C0	mult   v0, v1
+        8002E8C4	lh     v1, $00da(s0)
+        8002E8C8	mflo   v0
+        8002E8CC	sra    a1, v0, $0f
+        if (A1 != V1)
+        {
+            [S0 + e0] = w(w[S0 + e0] | 00000003);
+            8002E8DC	sh     a1, $00da(s0)
+        }
+    }
+}
+
+if (hu[S0 + 64] != 0)
+{
+    8002E8F8	lhu    v0, $0064(s0)
+    8002E8FC	lw     v1, $0034(s0)
+    8002E900	lw     a0, $004c(s0)
+    8002E904	addiu  v0, v0, $ffff (=-$1)
+    8002E908	addu   a1, v1, a0
+    8002E90C	sh     v0, $0064(s0)
+    8002E910	lui    v0, $ffff
+    8002E914	and    a0, a1, v0
+    8002E918	and    v1, v1, v0
+    if (A0 != V1)
+    {
+        [S0 + e0] = w(w[S0 + e0] | 00000010);
+    }
+
+    8002E934	sw     a1, $0034(s0)
+}
 ////////////////////////////////
