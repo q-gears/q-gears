@@ -101,7 +101,7 @@ private:
         // 0x44 [][][][]
         s32 volume_level;
         // 0x48 [][][][]
-        s32 volume_level_new;
+        s32 volume_level_add;
         // 0x4c [][][][]
         s32 pitch_growth;
 
@@ -237,6 +237,12 @@ private:
         // 0x20 [][][][]
         u32 tempo_counter;
 
+        // 0x2c [][][][]
+        u32 unknown_2c;
+
+        // 0x34 [][][][]
+        u32 unknown_34;
+
         // 0x38 [][][][]
         u32 spu_update_flags;
 
@@ -277,6 +283,7 @@ private:
     void UpdateSequence( ChannelData* channel_data, int channel_id, ChannelConfig& channel_config );
 
     const u8 NextSequenceHandle( ChannelData* channel_data, int channel_id, ChannelConfig& channel_config );
+    void UpdateCounters( ChannelData* channel_data, int channel_id, ChannelConfig& channel_config );
 
     void InitChannelInstrument( ChannelData* channel_data, int channel_id, int instrument_id );
 };

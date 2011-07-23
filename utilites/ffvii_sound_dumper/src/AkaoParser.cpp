@@ -192,10 +192,7 @@ AkaoParser::Update()
                         m_MusicChannelConfig.unknown_10 |= bit;
                     }
 
-                    //A0 = S2; // 80096608
-                    //A1 = 8009a104;
-                    //A2 = S0;
-                    //80030A28	jal    func2e478 [$8002e478]
+                    UpdateCounters( m_MusicChannelData, channel_id, m_MusicChannelConfig );
                 }
             }
 
@@ -833,6 +830,16 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
+        else if( opcode == 0xa2 ) // pause
+        {
+            LOGGER->Log( "    0xA2 " );
+            u8 value = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
+            channel_data[ channel_id ].pause_multiplier = 0;
+            channel_data[ channel_id ].saved_pause = value;
+            channel_data[ channel_id ].pause = ( value << 8 ) | value;
+            LOGGER->Log( "Set pause to 0x" + ToHexString( value, 2, '0' ) + ".\n" );
+            channel_data[ channel_id ].akao_sequence_pointer += 2;
+        }
         else if( opcode == 0xa3 ) // set volume multiplier
         {
             LOGGER->Log( "    0xA3 " );
@@ -878,9 +885,9 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             value1 = ( value1 == 0 ) ? 0x100 : value1;
             channel_data[ channel_id ].volume_level_change_ticks = value1;
             channel_data[ channel_id ].volume_level &= 0xffff0000;
-            channel_data[ channel_id ].volume_level_new = ( ( value2 << 0x17 ) - channel_data[ channel_id ].volume_level ) / channel_data[ channel_id ].volume_level_change_ticks;
+            channel_data[ channel_id ].volume_level_add = ( ( value2 << 0x17 ) - channel_data[ channel_id ].volume_level ) / channel_data[ channel_id ].volume_level_change_ticks;
             LOGGER->Log( "Set volume tick to 0x" + ToHexString( channel_data[ channel_id ].volume_level_change_ticks, 4, '0' ) + " and " );
-            LOGGER->Log( "volume_level_new 0x" + ToHexString( channel_data[ channel_id ].volume_level_new, 8, '0' ) + ".\n" );
+            LOGGER->Log( "volume_level_add 0x" + ToHexString( channel_data[ channel_id ].volume_level_add, 8, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if( opcode == 0xaa ) // set volume pan
@@ -1481,6 +1488,205 @@ AkaoParser::NextSequenceHandle( ChannelData* channel_data, int channel_id, Chann
 
         pointer += size;
     }
+}
+
+
+
+void
+AkaoParser::UpdateCounters( ChannelData* channel_data, int channel_id, ChannelConfig& channel_config )
+{
+    // update volume level
+    if( channel_data[ channel_id ].volume_level_change_ticks != 0 )
+    {
+        channel_data[ channel_id ].volume_level_change_ticks -= 1;
+
+        s32 volume_level = channel_data[ channel_id ].volume_level + channel_data[ channel_id ].volume_level_add;
+
+        if( ( volume_level & 0xffe0 ) != ( channel_data[ channel_id ].volume_level & 0xffe0 ) )
+        {
+            channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
+        }
+        channel_data[ channel_id ].volume_level = volume_level;
+    }
+
+/*
+    if (hu[S0 + 5e] != 0)
+    {
+        [S0 + 5e] = h(hu[S0 + 5e] - 1);
+        A1 = h[S0 + c6] + h[S0 + c8];
+
+        if (w[S0 + 38] & 00000100)
+        {
+            if ((A1 & ff00) != (h[S0 + c6] & ff00))
+            {
+                [S0 + e0] = w(w[S0 + e0] | 00000003);
+            }
+        }
+
+        [S0 + c6] = h(A1);
+    }
+
+    if (hu[S0 + 62] != 0)
+    {
+        [S0 + 62] = h(hu[S0 + 62] - 1);
+
+        A1 = hu[S0 + 60] + h[S0 + ca];
+
+        if ((A1 & ff00) != (hu[S0 + 60] & ff00))
+        {
+            [S0 + e0] = w(w[S0 + e0] | 00000003);
+        }
+
+        [S0 + 60] = h(A1);
+    }
+
+    if (hu[S0 + 74] != 0) // wave1_delay_current
+    {
+        [S0 + 74] = h(hu[S0 + 74] - 1);
+    }
+
+    if (hu[S0 + 88] != 0) // wave2_delay_current
+    {
+        [S0 + 88] = h(hu[S0 + 88] - 1);
+    }
+
+    if (hu[S0 + a4] != 0)
+    {
+        [S0 + a4] = h(hu[S0 + a4] - 1);
+
+        if (hu[S0 + a4] == 0)
+        {
+            channel_config.unknown_2c ^= ( 1 << channel_id );
+            [8009a13c] = w(w[8009a13c] | 00000010);
+
+            func2ff4c;
+        }
+    }
+
+    if (hu[S0 + a6] != 0)
+    {
+        [S0 + a4] = h(hu[S0 + a4] - 1);
+
+        if (hu[S0 + a4] == 0)
+        {
+            channel_config.unknown_34 ^= ( 1 << channel_id );
+
+            8002E660	jal    func30148 [$80030148]
+        }
+    }
+
+    if (hu[S0 + 80] != 0)
+    {
+        [S0 + 80] = h(hu[S0 + 80] - 1);
+        [S0 + 7e] = h(hu[S0 + 7e] + hu[S0 + 82]);
+
+        A0 = (hu[S0 + 7e] & 7f00) >> 8;
+        if (hu[S0 + 7e] & 8000)
+        {
+            V0 = A0 * w[S0 + 30];
+        }
+        else
+        {
+            V0 = A0 * ((w[S0 + 30] * f) >> 8);
+        }
+        [S0 + 7c] = h(V0 >> 7);
+
+        if (hu[S0 + 74] == 0)
+        {
+            if (hu[S0 + 78] != 1)
+            {
+                A0 = w[S0 + 18];
+                if (h[A0 + 0] == 0)
+                {
+                    if (h[A0 + 2] == 0)
+                    {
+                        A0 = A0 + h[A0 + 4] * 2;
+                    }
+                }
+
+                A1 = (hu[S0 + 7c] * h[A0]) >> 10;
+                if (A1 != h[S0 + d6])
+                {
+                    [S0 + d6] = h(A1);
+                    [S0 + e0] = w(w[S0 + e0] | 00000010);
+
+                    if (A1 >= 0)
+                    {
+                        [S0 + d6] = h(A1 * 2);
+                    }
+                }
+            }
+        }
+    }
+
+    if (hu[S0 + 92] != 0)
+    {
+        [S0 + 92] = h(hu[S0 + 92] - 1);
+        [S0 + 90] = h(hu[S0 + 90] + hu[S0 + 94]);
+
+        if (hu[S0 + 88] == 0)
+        {
+            if (hu[S0 + 8c] != 1)
+            {
+                A0 = w[S0 + 1c];
+                if (h[A0 + 0] == 0)
+                {
+                    V0 = h[A0 + 2];
+                    if (V0 == 0)
+                    {
+                        A0 = A0 + h[A0 + 4] * 2;
+                    }
+                }
+
+                A1 = ((((((h[S0 + 46] * w[S0 + 2c]) >> 7) * (hu[S0 + 90] >> 8)) << 9) >> 10) * h[A0]) >> f;
+                if (A1 != h[S0 + d8])
+                {
+                    [S0 + e0] = w(w[S0 + e0] | 00000003);
+                    [S0 + d8] = h(A1);
+                }
+            }
+        }
+    }
+
+    if (hu[S0 + a0] != 0)
+    {
+        [S0 + a0] = h(hu[S0 + a0] - 1);
+        [S0 + 9e] = h(hu[S0 + 9e] + hu[S0 + a2]);
+
+        if (hu[S0 + 9a] != 1)
+        {
+            A0 = w[S0 + 20];
+            if (h[A0 + 0] == 0)
+            {
+                if (h[A0 + 2] == 0)
+                {
+                    A0 = A0 + h[A0 + 4] * 2;
+                }
+            }
+
+            A1 = ((hu[S0 + 9e] >> 8) * h[A0]) >> f;
+            if (A1 != h[S0 + da])
+            {
+                [S0 + e0] = w(w[S0 + e0] | 00000003);
+                [S0 + da] = h(A1);
+            }
+        }
+    }
+
+    if (hu[S0 + 64] != 0)
+    {
+        [S0 + 64] = h(hu[S0 + 64] - 1);
+
+        A1 = w[S0 + 34] + w[S0 + 4c];
+
+        if ((A1 & ffff0000) != (w[S0 + 34] & ffff0000))
+        {
+            [S0 + e0] = w(w[S0 + e0] | 00000010);
+        }
+
+        [S0 + 34] = w(A1);
+    }
+*/
 }
 
 

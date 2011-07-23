@@ -224,6 +224,7 @@
 +18 [][][][] tempo of music. Used as >> 0x10.
 +1c [][][][] tempo music increment.
 +20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
++2c [][][][] some channels mask.
 +38 [][][][] we add here 0x00000080 (flag that we need update reverb to spu) each time we increment +40.
 +40 [][][][] reverb depth. some value we can increment this by 8009a148 if 8009a154 not 0.
 +44 [][][][] increment for +40.

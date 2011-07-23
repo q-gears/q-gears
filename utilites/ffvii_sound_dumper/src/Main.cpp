@@ -174,12 +174,12 @@ main( int argc, char *argv[] )
     if( argc == 2 )
     {
         AKAOPARSER->PlayMusic( Ogre::String( "data/music/") + argv[ 1 ] );
-        AKAOPARSER->DumpSequenceData( Ogre::String( "dump_" ) + argv[ 1 ] + ".txt" );
+        //AKAOPARSER->DumpSequenceData( Ogre::String( "dump_" ) + argv[ 1 ] + ".txt" );
     }
     else
     {
         AKAOPARSER->PlayMusic( "data/music/aeris_theme.snd" );
-        AKAOPARSER->DumpSequenceData( "dump_aeris_theme.txt" );
+        //AKAOPARSER->DumpSequenceData( "dump_aeris_theme.txt" );
     }
 
 
