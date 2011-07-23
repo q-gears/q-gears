@@ -1,1 +1,0 @@
-start q-gears.exe sensui.snd

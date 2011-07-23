@@ -1,0 +1,1 @@
+start q-gears.exe 2_01_FFVII_Main_Theme.snd
