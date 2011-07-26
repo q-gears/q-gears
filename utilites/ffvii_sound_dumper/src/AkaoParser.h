@@ -57,16 +57,16 @@ private:
     // instrument
     struct InstrumentData
     {
-        u32 start_offset;
-        u32 loop_offset;
-        u8 attack_rate;
-        u8 decay_rate;
-        u8 sustain_level;
-        u8 sustain_rate;
-        u8 release_rate;
-        u8 attack_mode;
-        u8 sustain_mode;
-        u8 release_mode;
+        u32 start_offset; // 0x00
+        u32 loop_offset;  // 0x04
+        u8 attack_rate;   // 0x08
+        u8 decay_rate;    // 0x09
+        u8 sustain_level; // 0x0a
+        u8 sustain_rate;  // 0x0b
+        u8 release_rate;  // 0x0c
+        u8 attack_mode;   // 0x0d
+        u8 sustain_mode;  // 0x0e
+        u8 release_mode;  // 0x0f
         u32 pitch[ 12 ];
     };
     std::vector< InstrumentData > m_InstrumentData;
@@ -114,7 +114,8 @@ private:
 
         // 0x5c [][]
         u16 volume_level_change_ticks;
-
+        // 0x5e [][]
+        u16 unknown_c6_change_ticks;
         // 0x60 [][]
         u16 volume_index;
         // 0x62 [][]
@@ -171,6 +172,10 @@ private:
         u16 saved_pause;
         // 0xc4 [][]
         u16 pause_multiplier;
+        // 0xc6 [][]
+        u16 unknown_c6;
+        // 0xc8 [][]
+        u16 unknown_c8;
 
         // 0xcc [][]
         u16 pitch_selector;
@@ -253,8 +258,8 @@ private:
         u16 tempo_increment_counter;
         // 0x4e [][]
         u16 conditional_value;
-        // 0x50 [][][][]
-        u32 reverb_depth_increment_counter;
+        // 0x50 [][]
+        u16 reverb_depth_increment_counter;
 
         // 0x56 [][]
         u16 upper_timer_top;

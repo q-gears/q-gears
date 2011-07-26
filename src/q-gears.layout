@@ -2,7 +2,7 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
 	<File name="Main.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="467" topLine="3" />
+		<Cursor1 position="2637" topLine="84" />
 	</File>
 	<File name="core\CameraManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1326" topLine="28" />
@@ -113,10 +113,10 @@
 		<Cursor1 position="42" topLine="0" />
 	</File>
 	<File name="core\UiTextArea.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="4796" topLine="156" />
+		<Cursor1 position="5524" topLine="215" />
 	</File>
 	<File name="core\UiTextArea.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="169" topLine="0" />
+		<Cursor1 position="216" topLine="0" />
 	</File>
 	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="5765" topLine="243" />
@@ -134,7 +134,7 @@
 		<Cursor1 position="1969" topLine="80" />
 	</File>
 	<File name="core\XmlFile.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="424" topLine="0" />
+		<Cursor1 position="245" topLine="0" />
 	</File>
 	<File name="core\XmlFontFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="876" topLine="21" />
@@ -158,7 +158,7 @@
 		<Cursor1 position="769" topLine="16" />
 	</File>
 	<File name="core\XmlTextsFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="968" topLine="22" />
+		<Cursor1 position="244" topLine="9" />
 	</File>
 	<File name="core\XmlTextsFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="54" topLine="0" />

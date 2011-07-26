@@ -225,13 +225,16 @@
 +1c [][][][] tempo music increment.
 +20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
 +2c [][][][] some channels mask.
-+38 [][][][] we add here 0x00000080 (flag that we need update reverb to spu) each time we increment +40.
++38 [][][][] scu config update flags.
+                0x00000010 - update noise clock frequency.
+                0x00000080 - update reverb.
 +40 [][][][] reverb depth. some value we can increment this by 8009a148 if 8009a154 not 0.
 +44 [][][][] increment for +40.
 +4a [][]     this is number of times we need to increment tempo (8009a11c) each update by 8009a120.
 +4c [][]     AKAO music id for currently playing sequence.
 +4e [][]     storage for 0xef conditional jump.
 +50 [][]     this is number of times we need to increment +40 each update by +44.
++52 [][]     noise clock frequency.
 +56 [][]     upper timer equal value.
 +58 [][]     upper timer value. When this reach +56 then we reset this to 0 and increment +5e. Stored in CHMPH opcode.
 +5a [][]     lower timer equal value.

@@ -1,13 +1,14 @@
 #ifndef XML_FILE_H
 #define XML_FILE_H
 
-#include "tinyxml/tinyxml.h"
 #include <OgreColourValue.h>
 #include <OgreMatrix4.h>
 #include <OgreString.h>
 #include <OgreVector2.h>
 #include <OgreVector3.h>
 #include <OgreUTFString.h>
+
+#include "library/tinyxml/tinyxml.h"
 
 
 

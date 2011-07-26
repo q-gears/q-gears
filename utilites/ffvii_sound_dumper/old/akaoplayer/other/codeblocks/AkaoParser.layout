@@ -16,7 +16,7 @@
 	<File name="..\..\src\engine\backends\SoundBackendSDL.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="302" topLine="106" />
 	</File>
-	<File name="..\..\src\main.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1030" topLine="33" />
+	<File name="..\..\src\main.cc" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="388" topLine="9" />
 	</File>
 </CodeBlocks_layout_file>

@@ -39,6 +39,7 @@ UiTextArea::Initialise()
     m_MaxLetters = 0;
     m_TextAlignment = UiTextArea::LEFT;
     m_Text = "";
+    m_UseXML = true;
 
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
@@ -101,7 +102,14 @@ UiTextArea::SetTextAlignment( const TextAlignment alignment )
 void
 UiTextArea::SetText( const Ogre::UTFString& text )
 {
-    m_Text = text;
+    if( m_UseXML == true )
+    {
+        m_Text = "<c>" + text + "</c>";
+    }
+    else
+    {
+        m_Text = text;
+    }
 }
 
 
@@ -151,11 +159,6 @@ UiTextArea::UpdateGeometry()
         return;
     }
 
-    float* writeIterator = ( float* ) m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
-    m_RenderOp.vertexData->vertexCount = 0;
-
-
-
     float length = 0;
     if( m_TextAlignment != LEFT )
     {
@@ -173,8 +176,86 @@ UiTextArea::UpdateGeometry()
 
 
 
-    float local_x1 = -m_FinalOrigin.x;
-    float local_y1 = -m_FinalOrigin.y;
+    TextBlockData data;
+    data.local_x1 = -m_FinalOrigin.x;
+    data.local_y1 = -m_FinalOrigin.y;
+    data.position = 0;
+
+    TextStyle style;
+    style.colour = Ogre::ColourValue::White;
+
+    if( m_UseXML == true )
+    {
+        TiXmlDocument doc;
+        doc.SetCondenseWhiteSpace( false );
+        doc.Parse( m_Text.asUTF8_c_str(), NULL, TIXML_ENCODING_UTF8 );
+        TiXmlNode* node = doc.RootElement()->FirstChild();
+        if( node != NULL )
+        {
+            SetTextGeometryFromNode( node, data, style );
+        }
+    }
+    else
+    {
+        SetTextGeometry( m_Text, data, style );
+    }
+}
+
+
+
+void
+UiTextArea::SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const TextStyle& style )
+{
+    LOG_ERROR( "1" );
+    while( node != NULL )
+    {
+    LOG_ERROR( "2" );
+        switch( node->Type() )
+        {
+            case TiXmlNode::TINYXML_TEXT:
+            {
+    LOG_ERROR( "text" );
+                TiXmlText* childText = node->ToText();
+                if( childText )
+                {
+                    SetTextGeometry( childText->Value(), data, style );
+                }
+            }
+            break;
+
+            case TiXmlNode::TINYXML_ELEMENT:
+            {
+                TextStyle style_child;
+                style_child.colour = style.colour;
+
+                Ogre::String name = node->ValueStr();
+                if( name == "colour" )
+                {
+                    style_child.colour = Ogre::StringConverter::parseColourValue( node->ToElement()->Attribute( "value" ) );
+                }
+
+                TiXmlNode* node_child = node->FirstChild();
+                SetTextGeometryFromNode( node_child, data, style_child );
+            }
+            break;
+        }
+
+        node = node->NextSibling();
+    }
+}
+
+
+
+void
+UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, const TextStyle& style )
+{
+    float* writeIterator = ( float* ) m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
+    writeIterator += data.position * 9 * 6;
+    m_RenderOp.vertexData->vertexCount = data.position * 6;
+
+
+    float local_x1 = data.local_x1;
+    float local_y1 = data.local_y1;
     float x = m_FinalTranslate.x;
     float y = m_FinalTranslate.y;
 
@@ -313,9 +394,13 @@ UiTextArea::UpdateGeometry()
         *writeIterator++ = bottom;
 
         m_RenderOp.vertexData->vertexCount += 6;
+        data.position += 1;
     }
 
     m_VertexBuffer->unlock();
+
+    data.local_x1 = local_x1;
+    data.local_y1 = local_y1;
 }
 
 

@@ -8,6 +8,23 @@
 
 #include "UiFont.h"
 #include "UiWidget.h"
+#include "library/tinyxml/tinyxml.h"
+
+
+
+struct TextStyle
+{
+    Ogre::ColourValue colour;
+};
+
+
+
+struct TextBlockData
+{
+    float local_x1;
+    float local_y1;
+    int position;
+};
 
 
 
@@ -33,6 +50,8 @@ public:
     void SetText( const Ogre::UTFString& text );
     void SetFont( const Ogre::String& font );
     void UpdateGeometry();
+    void SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const TextStyle& style );
+    void SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, const TextStyle& style );
 
 private:
     UiTextArea();
@@ -51,6 +70,7 @@ private:
     UiFont*                             m_Font;
     TextAlignment                       m_TextAlignment;
     Ogre::UTFString                     m_Text;
+    bool                                m_UseXML;
 };
 
 

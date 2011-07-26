@@ -214,7 +214,7 @@ AkaoParser::Update()
             {
                 m_MusicChannelConfig.lower_timer += 1;
 
-                if( m_MusicChannelConfig.lower_timer == m_MusicChannelConfig.lower_timer_top )   
+                if( m_MusicChannelConfig.lower_timer == m_MusicChannelConfig.lower_timer_top )
                 {
                     m_MusicChannelConfig.lower_timer = 0;
                     m_MusicChannelConfig.upper_timer += 1;
@@ -779,7 +779,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         {
             LOGGER->Log( "    0xA1 [NOT COMPLETE] " );
             int instrument_id = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
-            LOGGER->Log( "load instrument \"" + ToIntString( instrument_id ) + "\"\n" );
+            LOGGER->Log( "Load instrument " + ToIntString( instrument_id ) + "with 0xA1.\n" );
 
 /*
             A0 = hu[A3 + 24];
@@ -843,7 +843,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         else if( opcode == 0xa3 ) // set volume multiplier
         {
             LOGGER->Log( "    0xA3 " );
-            channel_data[ channel_id ].volume_multiplier = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
+            channel_data[ channel_id ].volume_multiplier = ( s8 )( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) );
             channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
             LOGGER->Log( "Set volume multiplier to 0x" + ToHexString( channel_data[ channel_id ].volume_multiplier, 2, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
@@ -870,10 +870,10 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         else if( opcode == 0xa8 ) // set volume
         {
             LOGGER->Log( "    0xA8 " );
-            channel_data[ channel_id ].volume_multiplier = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
+            channel_data[ channel_id ].volume_multiplier = ( s8 )( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) );
             channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
             channel_data[ channel_id ].volume_level_change_ticks = 0;
-            channel_data[ channel_id ].volume_level = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x17;
+            channel_data[ channel_id ].volume_level = ( s8 )( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) ) << 0x17;
             LOGGER->Log( "Set volume to 0x" + ToHexString(channel_data[ channel_id ].volume_level, 8, '0' ) + " and reset volume_level_change_ticks.\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
@@ -881,7 +881,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         {
             LOGGER->Log( "    0xA9 " );
             u16 value1 = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
-            u16 value2 = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 );
+            s8 value2 = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 );
             value1 = ( value1 == 0 ) ? 0x100 : value1;
             channel_data[ channel_id ].volume_level_change_ticks = value1;
             channel_data[ channel_id ].volume_level &= 0xffff0000;
@@ -973,6 +973,38 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             LOGGER->Log( "    0xC2 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
+        else if( opcode == 0xc8 ) // set loop point
+        {
+            LOGGER->Log( "    0xC8 " );
+            channel_data[ channel_id ].loop_index = ( channel_data[ channel_id ].loop_index + 1 ) & 3;
+            u16 index = channel_data[ channel_id ].loop_index;
+            channel_data[ channel_id ].loop_pointer[ index ] = channel_data[ channel_id ].akao_sequence_pointer + 1;
+            channel_data[ channel_id ].loop_count[ index ] = 0;
+            LOGGER->Log( "Set loop index 0x" + ToHexString( index, 4, '0' ) + ".\n" );
+            channel_data[ channel_id ].akao_sequence_pointer += 1;
+        }
+        else if( opcode == 0xc9 ) // conditional jump
+        {
+            LOGGER->Log( "    0xC9 " );
+
+            u16 value = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
+            value = ( value == 0 ) ? 0x100 : value;
+
+            u16 index = channel_data[ channel_id ].loop_index;
+
+            channel_data[ channel_id ].loop_count[ index ] += 1;
+            if( channel_data[ channel_id ].loop_count[ index ] != value )
+            {
+                channel_data[ channel_id ].akao_sequence_pointer = channel_data[ channel_id ].loop_pointer[ index ];
+                LOGGER->Log( "Repeat conditional jump with index 0x" + ToHexString( index, 4, '0' ) + " and value 0x" + ToHexString( value, 4, '0' ) + ". Current loop count 0x" +  ToHexString( channel_data[ channel_id ].loop_count[ index ], 4, '0' ) + "\n" );
+            }
+            else
+            {
+                channel_data[ channel_id ].loop_index = ( index - 1 ) & 3;
+                LOGGER->Log( "Go through conditional jump with index 0x" + ToHexString( index, 4, '0' ) + " and value 0x" + ToHexString( value, 4, '0' ) + ".\n" );
+            }
+            channel_data[ channel_id ].akao_sequence_pointer += 1;
+        }
         else if( opcode == 0xcc )
         {
             LOGGER->Log( "    0xCC Set unknown_6e to 1.\n" );
@@ -1035,6 +1067,42 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         {
             LOGGER->Log( "    0xF1 [UNIMPLEMENTED]\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 4;
+        }
+        else if( opcode == 0xf2 ) // load instrument
+        {
+            LOGGER->Log( "    0xF2 " );
+            int instrument_id = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
+            LOGGER->Log( "Load instrument " + ToIntString( instrument_id ) + " with 0xF2.\n" );
+
+            InstrumentData data = m_InstrumentData[ instrument_id ];
+
+            if( ( channel_data[ channel_id ].unknown_54 != 0 ) /*|| ( (A2 & w[A1 + c] & w[80099fcc]) == 0 )*/ )
+            {
+                channel_data[ channel_id ].spu_update_flags |= SPU_PITCH;
+                channel_data[ channel_id ].pitch_base = (  channel_data[ channel_id ].pitch_base * data.pitch[ 0 ] ) / m_InstrumentData[ channel_data[ channel_id ].instrument_id ].pitch[ 0 ];
+            }
+
+            channel_data[ channel_id ].instrument_id = instrument_id;
+            channel_data[ channel_id ].start_offset = 0x00076fe0;
+            channel_data[ channel_id ].loop_offset = data.loop_offset;
+            channel_data[ channel_id ].attack_rate = data.attack_rate;
+            channel_data[ channel_id ].decay_rate = data.decay_rate;
+            channel_data[ channel_id ].sustain_level = data.sustain_level;
+            channel_data[ channel_id ].sustain_rate = data.sustain_rate;
+            channel_data[ channel_id ].attack_mode = data.attack_mode;
+            channel_data[ channel_id ].sustain_mode = data.sustain_mode;
+
+            channel_data[ channel_id ].spu_update_flags |= SPU_START_OFFSET | SPU_ATTACK_RATE | SPU_SUSTAIN_RATE | SPU_ATTACK_MODE | SPU_DECAY_RATE | SPU_SUSTAIN_MODE | SPU_SUSTAIN_LEVEL | SPU_LOOP_OFFSET;
+
+            if( ( channel_data[ channel_id ].mirror_update_flags & 0x00000200 ) == 0 )
+            {
+                channel_data[ channel_id ].release_rate = data.release_rate;
+                channel_data[ channel_id ].release_mode = data.release_mode;
+
+                channel_data[ channel_id ].spu_update_flags |= SPU_RELEASE_RATE | SPU_RELEASE_MODE;
+            }
+
+            channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if( opcode == 0xfd ) // reset timers lower and upper
         {
@@ -1509,23 +1577,23 @@ AkaoParser::UpdateCounters( ChannelData* channel_data, int channel_id, ChannelCo
         channel_data[ channel_id ].volume_level = volume_level;
     }
 
-/*
-    if (hu[S0 + 5e] != 0)
+    if( channel_data[ channel_id ].unknown_c6_change_ticks != 0 )
     {
-        [S0 + 5e] = h(hu[S0 + 5e] - 1);
-        A1 = h[S0 + c6] + h[S0 + c8];
+        channel_data[ channel_id ].unknown_c6_change_ticks -= 1;
 
-        if (w[S0 + 38] & 00000100)
+        u16 value = channel_data[ channel_id ].unknown_c6 + channel_data[ channel_id ].unknown_c8;
+
+        if( channel_data[ channel_id ].mirror_update_flags & 0x00000100 )
         {
-            if ((A1 & ff00) != (h[S0 + c6] & ff00))
+            if( ( value & 0xff00 ) != ( channel_data[ channel_id ].unknown_c6 & 0xff00 ) )
             {
-                [S0 + e0] = w(w[S0 + e0] | 00000003);
+                channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
             }
         }
 
-        [S0 + c6] = h(A1);
+        channel_data[ channel_id ].unknown_c6 = value;
     }
-
+/*
     if (hu[S0 + 62] != 0)
     {
         [S0 + 62] = h(hu[S0 + 62] - 1);
