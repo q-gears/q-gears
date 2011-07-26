@@ -231,7 +231,7 @@
 +40 [][][][] reverb depth. some value we can increment this by 8009a148 if 8009a154 not 0.
 +44 [][][][] increment for +40.
 +4a [][]     this is number of times we need to increment tempo (8009a11c) each update by 8009a120.
-+4c [][]     AKAO music id for currently playing sequence.
++4a [][]     AKAO music id for currently playing sequence.
 +4e [][]     storage for 0xef conditional jump.
 +50 [][]     this is number of times we need to increment +40 each update by +44.
 +52 [][]     noise clock frequency.
