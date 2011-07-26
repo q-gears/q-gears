@@ -182,7 +182,7 @@ UiTextArea::UpdateGeometry()
     data.position = 0;
 
     TextStyle style;
-    style.colour = Ogre::ColourValue::White;
+    style.colour = m_Colour;
 
     if( m_UseXML == true )
     {
@@ -206,15 +206,12 @@ UiTextArea::UpdateGeometry()
 void
 UiTextArea::SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const TextStyle& style )
 {
-    LOG_ERROR( "1" );
     while( node != NULL )
     {
-    LOG_ERROR( "2" );
         switch( node->Type() )
         {
             case TiXmlNode::TINYXML_TEXT:
             {
-    LOG_ERROR( "text" );
                 TiXmlText* childText = node->ToText();
                 if( childText )
                 {
@@ -259,9 +256,9 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
     float x = m_FinalTranslate.x;
     float y = m_FinalTranslate.y;
 
-    for( int i = 0; i < m_Text.size(); ++i )
+    for( int i = 0; i < text.size(); ++i )
     {
-        UiCharData char_data = m_Font->GetCharData( m_Text[ i ] );
+        UiCharData char_data = m_Font->GetCharData( text[ i ] );
 
         local_x1 += char_data.pre * m_FinalScale.x * m_ScreenHeight / 720.0f;
         float local_x2 = local_x1 + char_data.width * m_FinalScale.x * m_ScreenHeight / 720.0f;
@@ -336,60 +333,60 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
         *writeIterator++ = new_x1;
         *writeIterator++ = new_y1;
         *writeIterator++ = 0; // z
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
+        *writeIterator++ = style.colour.r;
+        *writeIterator++ = style.colour.g;
+        *writeIterator++ = style.colour.b;
+        *writeIterator++ = style.colour.a;
         *writeIterator++ = left;
         *writeIterator++ = top;
 
         *writeIterator++ = new_x2;
         *writeIterator++ = new_y2;
         *writeIterator++ = 0; // z
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
+        *writeIterator++ = style.colour.r;
+        *writeIterator++ = style.colour.g;
+        *writeIterator++ = style.colour.b;
+        *writeIterator++ = style.colour.a;
         *writeIterator++ = right;
         *writeIterator++ = top;
 
         *writeIterator++ = new_x3;
         *writeIterator++ = new_y3;
         *writeIterator++ = 0; // z
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
+        *writeIterator++ = style.colour.r;
+        *writeIterator++ = style.colour.g;
+        *writeIterator++ = style.colour.b;
+        *writeIterator++ = style.colour.a;
         *writeIterator++ = right;
         *writeIterator++ = bottom;
 
         *writeIterator++ = new_x1;
         *writeIterator++ = new_y1;
         *writeIterator++ = 0; // z
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
+        *writeIterator++ = style.colour.r;
+        *writeIterator++ = style.colour.g;
+        *writeIterator++ = style.colour.b;
+        *writeIterator++ = style.colour.a;
         *writeIterator++ = left;
         *writeIterator++ = top;
 
         *writeIterator++ = new_x3;
         *writeIterator++ = new_y3;
         *writeIterator++ = 0; // z
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
+        *writeIterator++ = style.colour.r;
+        *writeIterator++ = style.colour.g;
+        *writeIterator++ = style.colour.b;
+        *writeIterator++ = style.colour.a;
         *writeIterator++ = right;
         *writeIterator++ = bottom;
 
         *writeIterator++ = new_x4;
         *writeIterator++ = new_y4;
         *writeIterator++ = 0; // z
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
+        *writeIterator++ = style.colour.r;
+        *writeIterator++ = style.colour.g;
+        *writeIterator++ = style.colour.b;
+        *writeIterator++ = style.colour.a;
         *writeIterator++ = left;
         *writeIterator++ = bottom;
 

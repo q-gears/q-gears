@@ -23760,7 +23760,7 @@
 	<OgreVector2.h>
 	"UiWidget.h"
 
-1311611107 source:d:\my\1\svn\q-gears\src\core\uitextarea.cpp
+1311705961 source:d:\my\1\svn\q-gears\src\core\uitextarea.cpp
 	"UiTextArea.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
