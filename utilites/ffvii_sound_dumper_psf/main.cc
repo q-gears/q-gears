@@ -5,7 +5,9 @@
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>
+#include <zlib.h>
 #include <boost/filesystem/operations.hpp>
+#include <boost/crc.hpp>
 #include "typedefs.h"
 #include "walkthrough.hh"
 
@@ -47,18 +49,29 @@ struct PsxExeHeader
 	u32 saved_s0;
 };
 
+struct PsfHeader
+{
+	char magic[3];
+	u8 version;
+	u32 reserved_size;
+	u32 program_size;
+	u32 program_crc;
+};
+
 enum ReaderState
 {
 	RS_MAGIC,
 	RS_FOUND,
-	
+
 	RS_COUNT
 };
 
 static const char *g_MAGIC = "AKAO";
 static const string g_AKAO_EXT("akao");
+static const string g_PSF_EXT("psf");
 static const string g_PSF_DRV_FN("ff7_scus94163_psf_v10.bin");
 static const u32 g_PSF_DRV_OFFSET = 0x1a8800;
+static const u32 g_PSF_SEQ_OFFSET = 0x1c0800;
 static const u32 g_PSX_TEXT_START = 0x800;
 static const u32 g_PSX_TEXT_SIZE = 0x1E0000;
 static const u32 g_PSX_PSF_JUMP_OFFSET = 0x1960;
@@ -70,7 +83,7 @@ struct PatchEntry
 	u32 offset;
 };
 
-static const PatchEntry g_PSX_PSF_PATCHES[4] = 
+static const PatchEntry g_PSX_PSF_PATCHES[4] =
 {
 	{"SOUND/INSTR.ALL" , 0x000e0800},
 	{"SOUND/INSTR.DAT" , 0x00156800},
@@ -96,10 +109,11 @@ int main(int argc, char *argv[])
 	if(argc == 2)
 	{
 		// dump akao frames to directory
-//		create_directory(g_AKAO_EXT);
+		create_directory(g_AKAO_EXT);
 //		walkthrough(string(argv[1]), akao_extract_cb, NULL);
-		
+
 		// create psf driver binary
+		create_directory(g_PSF_EXT);
 		walkthrough(g_AKAO_EXT, psf_create_cb, argv[1]);
 	}
 	else
@@ -135,11 +149,11 @@ void file_read(u8 *r_data, string a_path)
 string int_to_str(int a_value)
 {
 	string result;
-	
+
 	stringstream sS;
 	sS << setfill('0') << setw(2) << a_value;
 	sS >> result;
-	
+
 	return result;
 }
 
@@ -149,7 +163,7 @@ string str_lowercase(string a_str)
 	string result;
 	result.resize(a_str.size());
 	transform(a_str.begin(), a_str.end(), result.begin(), ::tolower);
-	
+
 	return result;
 }
 
@@ -235,7 +249,7 @@ void akao_extract_cb(void *a_data, string a_file)
 		u8 *buffer = new u8[buffer_size];
 		iF.read((char *)buffer, buffer_size);
 		iF.close();
-		
+
 		// detect and extract if compressed
 		if(lzs_detect(buffer, buffer_size))
 		{
@@ -243,7 +257,7 @@ void akao_extract_cb(void *a_data, string a_file)
 			buffer = lzs_extract(buffer_size, buffer_old, buffer_size);
 			delete [] buffer_old;
 		}
-		
+
 		ReaderState state = RS_MAGIC;
 		u32 magic_pos = 0;
 		u32 input_offset = 0;
@@ -260,7 +274,7 @@ void akao_extract_cb(void *a_data, string a_file)
 					++akao_counter;
 				}
 				break;
-			
+
 			case RS_FOUND:
 			{
 				// fill akao header
@@ -268,12 +282,12 @@ void akao_extract_cb(void *a_data, string a_file)
 				memcpy(header.magic, g_MAGIC, strlen(g_MAGIC));
 				memcpy(&header.id, &buffer[input_offset], sizeof(header) - sizeof(header.magic));
 				input_offset += sizeof(header) - sizeof(header.magic);
-				
+
 				// construct save path
 				path output_path(path(g_AKAO_EXT) / (path(str_lowercase(a_file)).stem()
 					+ '_' + string(path(str_lowercase(a_file)).extension(), 1, path(str_lowercase(a_file)).extension().length() - 1)
 					+ '_' + int_to_str(akao_counter) + '.' + g_AKAO_EXT));
-				
+
 				cout << "dumping " << output_path << "... ";
 				ofstream oF;
 				oF.open(output_path.string().c_str(), ios::binary);
@@ -282,17 +296,17 @@ void akao_extract_cb(void *a_data, string a_file)
 				input_offset += header.length;
 				oF.close();
 				cout << "done" << endl;
-				
+
 				magic_pos = 0;
 				state = RS_MAGIC;
 			}
 				break;
-			
+
 			default:
 				;
 			}
 		}
-		
+
 		delete [] buffer;
 	}
 	else
@@ -304,13 +318,15 @@ void akao_extract_cb(void *a_data, string a_file)
 
 void psf_create_cb(void *a_data, string a_file)
 {
+	cout << a_file << endl;
+
 	path data_path((char *)a_data);
-	
+
 	// read full file to memory
 	u8 *buffer = new u8[g_PSX_TEXT_START + g_PSX_TEXT_SIZE];
 	memset(buffer, 0, g_PSX_TEXT_START + g_PSX_TEXT_SIZE);
 	file_read(buffer, (data_path / "SCUS_941.63").string());
-	
+
 	// convert psx executable to psf driver
 	PsxExeHeader &header = *(PsxExeHeader *)buffer;
 	// set maximal possible size to executable
@@ -322,12 +338,35 @@ void psf_create_cb(void *a_data, string a_file)
 		file_read(&buffer[g_PSX_PSF_PATCHES[i].offset], (data_path / g_PSX_PSF_PATCHES[i].filename).string());
 	// inject psf driver payload
 	file_read(&buffer[g_PSF_DRV_OFFSET], g_PSF_DRV_FN);
-	
-	//DEBUG
+
+	// inject akao frame with sequence
+	file_read(&buffer[g_PSF_SEQ_OFFSET], a_file);
+
+	// compress data
+	uLong zlib_length = compressBound(g_PSX_TEXT_START + g_PSX_TEXT_SIZE);
+	Bytef *zlib_data = (Bytef *)malloc(zlib_length);
+
+	if(compress2(zlib_data, &zlib_length, buffer, g_PSX_TEXT_START + g_PSX_TEXT_SIZE, 9) == Z_OK)
 	{
-		ofstream oF("output.bin", ios::binary);
-		oF.write((char *)buffer, g_PSX_TEXT_START + g_PSX_TEXT_SIZE);
+		// write psf
+		PsfHeader psf_header;
+		memcpy(psf_header.magic, "PSF", sizeof(psf_header.magic));
+		psf_header.version = 1;
+		psf_header.reserved_size = 0;
+		psf_header.program_size = zlib_length;
+		psf_header.program_crc = crc32(crc32(0, Z_NULL, 0), zlib_data, zlib_length);
+
+		path output_path(path(g_PSF_EXT) / (path(a_file).stem() + '.' + g_PSF_EXT));
+		ofstream oF(output_path.string().c_str(), ios::binary);
+		oF.write((char *)&psf_header, sizeof(psf_header));
+		oF.write((char *)zlib_data, zlib_length);
 	}
+	else
+	{
+		cout << "error: unable to compress psx executable" << endl;
+	}
+
+	free(zlib_data);
 
 	delete [] buffer;
 }

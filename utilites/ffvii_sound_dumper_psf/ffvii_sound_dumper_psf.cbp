@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="walkthrough" />
+		<Option title="ffvii_sound_dumper_psf" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="output/walkthrough_d" prefix_auto="1" extension_auto="1" />
+				<Option output="output/ffvii_sound_dumper_psf_d" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="output" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
@@ -18,7 +18,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="output/walkthrough_r" prefix_auto="1" extension_auto="1" />
+				<Option output="output/ffvii_sound_dumper_psf_r" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="output" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
@@ -39,6 +39,7 @@
 		<Linker>
 			<Add library="boost_system" />
 			<Add library="boost_filesystem" />
+			<Add library="z" />
 		</Linker>
 		<Unit filename="main.cc" />
 		<Unit filename="typedefs.h" />
