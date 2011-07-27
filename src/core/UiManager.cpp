@@ -27,6 +27,8 @@ UiManager::~UiManager()
 {
     Ogre::Root::getSingleton().getSceneManager( "Scene" )->removeRenderQueueListener( this );
 
+    UnloadTexts();
+
     for( int i = 0; i < m_Fonts.size(); ++i )
     {
         delete m_Fonts[ i ];
@@ -86,9 +88,12 @@ UiManager::SetLanguage( const Ogre::String& language )
 
 
 void
-UiManager::AddText( const Ogre::String& name, const Ogre::UTFString& text )
+UiManager::AddText( const Ogre::String& name, TiXmlNode* text )
 {
-    m_Texts[ name ] = text;
+    UiText ui_text;
+    ui_text.name = name;
+    ui_text.node = text;
+    m_Texts.push_back( ui_text );
 }
 
 
@@ -96,15 +101,27 @@ UiManager::AddText( const Ogre::String& name, const Ogre::UTFString& text )
 void
 UiManager::UnloadTexts()
 {
+    for( int i = 0; i < m_Texts.size(); ++i )
+    {
+        delete m_Texts[ i ].node;
+    }
     m_Texts.clear();
 }
 
 
 
-const Ogre::UTFString
+TiXmlNode*
 UiManager::GetText( const Ogre::String& name )
 {
-    return m_Texts[ name ];
+    for( int i = 0; i < m_Texts.size(); ++i )
+    {
+        if( m_Texts[ i ].name == name )
+        {
+            return m_Texts[ i ].node;
+        }
+    }
+
+    return NULL;
 }
 
 

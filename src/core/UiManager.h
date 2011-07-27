@@ -7,6 +7,7 @@
 
 #include "UiFont.h"
 #include "UiWidget.h"
+#include "library/tinyxml/tinyxml.h"
 
 
 
@@ -21,9 +22,9 @@ public:
     void OnResize();
 
     void SetLanguage( const Ogre::String& language );
-    void AddText( const Ogre::String& name, const Ogre::UTFString& text );
+    void AddText( const Ogre::String& name, TiXmlNode* text );
     void UnloadTexts();
-    const Ogre::UTFString GetText( const Ogre::String& name );
+    TiXmlNode* GetText( const Ogre::String& name );
 
     void AddFont( UiFont* font );
     UiFont* GetFont( const Ogre::String& name );
@@ -35,7 +36,12 @@ public:
     void renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
 
 private:
-    std::map< Ogre::String, Ogre::UTFString > m_Texts;
+    struct UiText
+    {
+        Ogre::String name;
+        TiXmlNode* node;
+    };
+    std::vector< UiText > m_Texts;
     std::vector< UiFont* > m_Fonts;
     std::vector< UiWidget* > m_Widgets;
 };

@@ -35,9 +35,7 @@ XmlTextFile::LoadText()
         if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "text" )
         {
             Ogre::String name = GetString( node, "name" );
-            Ogre::UTFString text = GetText( node );
-
-            UiManager::getSingleton().AddText( name, text );
+            UiManager::getSingleton().AddText( name, node->Clone() );
         }
 
         node = node->NextSibling();

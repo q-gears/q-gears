@@ -20428,7 +20428,7 @@
 	<OgreFont.h>
 	"../library/tinyxml/tinyxml.h"
 
-1306971021 d:\my\1\svn\q-gears\src\core\library\tinyxml\tinyxml.h
+1305379498 d:\my\1\svn\q-gears\src\core\library\tinyxml\tinyxml.h
 	<ctype.h>
 	<stdio.h>
 	<stdlib.h>
@@ -20439,7 +20439,7 @@
 	<sstream>
 	"tinystr.h"
 
-1306971021 d:\my\1\svn\q-gears\src\core\library\tinyxml\tinystr.h
+1305379498 d:\my\1\svn\q-gears\src\core\library\tinyxml\tinystr.h
 	<assert.h>
 	<string.h>
 
@@ -21224,7 +21224,7 @@
 	"Utilites.h"
 	<OgreStringConverter.h>
 
-1310750880 source:d:\my\1\svn\q-gears\src\core\xmlfile.cpp
+1311783011 source:d:\my\1\svn\q-gears\src\core\xmlfile.cpp
 	"XmlFile.h"
 	<OgreStringConverter.h>
 	"Logger.h"
@@ -21811,19 +21811,19 @@
 	<luabind/detail/class_rep.hpp>
 	<luabind/detail/stack_utils.hpp>
 
-1306971021 source:d:\my\1\svn\q-gears\src\core\library\tinyxml\tinystr.cpp
+1305379498 source:d:\my\1\svn\q-gears\src\core\library\tinyxml\tinystr.cpp
 	"tinystr.h"
 
-1306971021 source:d:\my\1\svn\q-gears\src\core\library\tinyxml\tinyxml.cpp
+1305379498 source:d:\my\1\svn\q-gears\src\core\library\tinyxml\tinyxml.cpp
 	<ctype.h>
 	<sstream>
 	<iostream>
 	"tinyxml.h"
 
-1306971021 source:d:\my\1\svn\q-gears\src\core\library\tinyxml\tinyxmlerror.cpp
+1305379498 source:d:\my\1\svn\q-gears\src\core\library\tinyxml\tinyxmlerror.cpp
 	"tinyxml.h"
 
-1306971021 source:d:\my\1\svn\q-gears\src\core\library\tinyxml\tinyxmlparser.cpp
+1311790226 source:d:\my\1\svn\q-gears\src\core\library\tinyxml\tinyxmlparser.cpp
 	<ctype.h>
 	<stddef.h>
 	"tinyxml.h"
@@ -23575,12 +23575,13 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1310752967 d:\my\1\svn\q-gears\src\core\uimanager.h
+1311793697 d:\my\1\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>
 	<OgreSingleton.h>
 	<OgreUTFString.h>
 	"UiFont.h"
 	"UiWidget.h"
+	"library/tinyxml/tinyxml.h"
 
 1310053739 d:\my\1\svn\q-gears\src\core\uiwidget.h
 	<OgreColourValue.h>
@@ -23599,7 +23600,7 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1310753094 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
+1311792760 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	<OgreRoot.h>
 	<OgreStringVector.h>
@@ -23698,7 +23699,7 @@
 1308847892 d:\my\1\svn\q-gears\src\core\xmlscreensfile.h
 	"XmlFile.h"
 
-1310753299 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
+1311792770 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -23760,7 +23761,7 @@
 	<OgreVector2.h>
 	"UiWidget.h"
 
-1311705961 source:d:\my\1\svn\q-gears\src\core\uitextarea.cpp
+1311793093 source:d:\my\1\svn\q-gears\src\core\uitextarea.cpp
 	"UiTextArea.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -23862,7 +23863,7 @@
 1310753118 d:\my\1\svn\q-gears\src\core\xmltextsfile.h
 	"XmlFile.h"
 
-1310754931 source:d:\my\1\svn\q-gears\src\core\xmltextfile.cpp
+1311792396 source:d:\my\1\svn\q-gears\src\core\xmltextfile.cpp
 	"XmlTextFile.h"
 	"Logger.h"
 	"UiManager.h"

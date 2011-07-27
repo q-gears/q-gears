@@ -121,31 +121,6 @@ XmlFile::GetUTFString( TiXmlNode* node, const Ogre::String& tag, const Ogre::UTF
 
 
 
-const Ogre::UTFString
-XmlFile::GetText( TiXmlNode* node, const Ogre::UTFString& def ) const
-{
-    Ogre::UTFString ret = def;
-
-    node = node->FirstChild();
-    while( node != NULL )
-    {
-        if( node->Type() == TiXmlNode::TINYXML_TEXT )
-        {
-            TiXmlText* childText = node->ToText();
-            if( childText )
-            {
-                ret = childText->Value();
-            }
-        }
-
-        node = node->NextSibling();
-    }
-
-    return ret;
-}
-
-
-
 const Ogre::Vector2
 XmlFile::GetVector2( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector2& def ) const
 {

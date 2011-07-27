@@ -185,7 +185,7 @@ UiTextArea::UpdateGeometry()
     TextStyle style;
     style.colour = m_Colour;
 
-    if( m_TextNode == NULL )
+    if( m_TextNode != NULL )
     {
         SetTextGeometryFromNode( m_TextNode, data, style );
     }

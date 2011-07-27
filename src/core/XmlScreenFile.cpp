@@ -102,7 +102,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     Ogre::String text = GetString( node, "text_name", "" );
                     if( text != "" )
                     {
-                        Ogre::UTFString utf = UiManager::getSingleton().GetText( text );
+                        TiXmlNode* utf = UiManager::getSingleton().GetText( text );
                         ( ( UiTextArea* )widget2 )->SetText( utf );
                     }
 
