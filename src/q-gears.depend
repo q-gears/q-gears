@@ -20412,7 +20412,7 @@
 1306971020 d:\my\1\svn\q-gears\src\core\configvar.h
 	<OgreString.h>
 
-1309088084 d:\my\1\svn\q-gears\src\core\console.h
+1311799416 d:\my\1\svn\q-gears\src\core\console.h
 	<OgreLog.h>
 	<OgrePanelOverlayElement.h>
 	<OgreSingleton.h>
@@ -20443,7 +20443,7 @@
 	<assert.h>
 	<string.h>
 
-1308467453 d:\my\1\svn\q-gears\src\core\debugdraw.h
+1311797563 d:\my\1\svn\q-gears\src\core\debugdraw.h
 	<OgreFont.h>
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
@@ -21076,7 +21076,7 @@
 1308847892 d:\my\1\svn\q-gears\src\core\xmlmapfile.h
 	"XmlFile.h"
 
-1311609242 d:\my\1\svn\q-gears\src\core\xmlfile.h
+1311794304 d:\my\1\svn\q-gears\src\core\xmlfile.h
 	<OgreColourValue.h>
 	<OgreMatrix4.h>
 	<OgreString.h>
@@ -21108,7 +21108,7 @@
 1306971020 source:d:\my\1\svn\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1309092806 source:d:\my\1\svn\q-gears\src\core\console.cpp
+1311797927 source:d:\my\1\svn\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
 	<OgreOverlayManager.h>
@@ -21117,12 +21117,13 @@
 	<OgreStringConverter.h>
 	"ConfigCmdManager.h"
 	"ConfigVarManager.h"
+	"DebugDraw.h"
 	"Logger.h"
 	"ScriptManager.h"
 	"Timer.h"
 	"Utilites.h"
 
-1310284926 source:d:\my\1\svn\q-gears\src\core\debugdraw.cpp
+1311798122 source:d:\my\1\svn\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -21158,7 +21159,7 @@
 	"../core/Logger.h"
 	"../core/Timer.h"
 
-1309088310 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
+1311797105 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
 	"GameFrameListner.h"
 	<OgreStringConverter.h>
 	"CameraManager.h"
@@ -21224,7 +21225,7 @@
 	"Utilites.h"
 	<OgreStringConverter.h>
 
-1311783011 source:d:\my\1\svn\q-gears\src\core\xmlfile.cpp
+1311794315 source:d:\my\1\svn\q-gears\src\core\xmlfile.cpp
 	"XmlFile.h"
 	<OgreStringConverter.h>
 	"Logger.h"
@@ -23575,7 +23576,7 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1311793697 d:\my\1\svn\q-gears\src\core\uimanager.h
+1311797589 d:\my\1\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>
 	<OgreSingleton.h>
 	<OgreUTFString.h>
@@ -23600,7 +23601,7 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1311792760 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
+1311797609 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	<OgreRoot.h>
 	<OgreStringVector.h>

@@ -195,7 +195,7 @@ UiManager::ScriptGetWidget( const char* name )
 
 
 void
-UiManager::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation )
+UiManager::renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation )
 {
     if( queueGroupId == Ogre::RENDER_QUEUE_OVERLAY )
     {

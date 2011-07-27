@@ -281,12 +281,12 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
 {
     if( m_TextRenderOp.vertexData->vertexCount + text.size() * 6 > m_TextMaxVertexCount )
     {
-        LOG_ERROR( "Max number of text reached. Can't add text \"" + text + "\". Max number of letters is " + Ogre::StringConverter::toString( m_QuadMaxVertexCount / 6 ) + "." );
+        LOG_ERROR( "Max number of text reached. Can't add text \"" + text + "\". Max number of letters is " + Ogre::StringConverter::toString( m_TextMaxVertexCount / 6 ) + "." );
         return;
     }
 
     float* writeIterator = ( float* ) m_TextVertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
-    writeIterator += m_TextRenderOp.vertexData->vertexCount * 6;
+    writeIterator += m_TextRenderOp.vertexData->vertexCount * 9;
 
     float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
@@ -419,7 +419,7 @@ DebugDraw::Text( const Ogre::Vector3& point, const float x, const float y, const
 
 
 void
-DebugDraw::renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation )
+DebugDraw::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation )
 {
     if( queueGroupId == Ogre::RENDER_QUEUE_OVERLAY )
     {
@@ -569,7 +569,7 @@ DebugDraw::DestroyQuadVertexBuffer()
 void
 DebugDraw::CreateTextVertexBuffer()
 {
-    m_TextMaxVertexCount = 2048 * 6;
+    m_TextMaxVertexCount = 4096 * 6;
     m_TextRenderOp.vertexData = new Ogre::VertexData;
     m_TextRenderOp.vertexData->vertexStart = 0;
 

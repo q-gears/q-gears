@@ -33,7 +33,7 @@ public:
     UiWidget* GetWidget( const Ogre::String& name );
     UiWidget* ScriptGetWidget( const char* name );
 
-    void renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
+    void renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation );
 
 private:
     struct UiText

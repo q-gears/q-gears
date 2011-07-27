@@ -14,30 +14,31 @@
 
 
 
-class Console : public Ogre::Singleton<Console>, public Ogre::LogListener
+class Console : public Ogre::Singleton< Console >, public Ogre::LogListener
 {
 public:
-                    Console();
-                    ~Console();
+    Console();
+    ~Console();
 
-    void            Input(const Event& event);
-    void            Update();
-    void            OnResize();
+    void Input( const Event& event );
+    void Update();
+    void UpdateDraw();
+    void OnResize();
 
-    void            SetToVisible();
-    void            SetToHide();
-    bool            IsVisible() const;
+    void SetToVisible();
+    void SetToHide();
+    bool IsVisible() const;
 
-    void            AddTextToOutput(const Ogre::String& text);
-    void            UpdateOutput();
-    void            ExecuteCommand();
-    void            ExecuteScript();
-    void            CompleteInput();
-    void            ResetAutoCompletion();
-    void            AddInputToHistory();
-    void            SetInputLineFromHistory();
+    void AddTextToOutput( const Ogre::String& text );
+    void UpdateOutput();
+    void ExecuteCommand();
+    void ExecuteScript();
+    void CompleteInput();
+    void ResetAutoCompletion();
+    void AddInputToHistory();
+    void SetInputLineFromHistory();
 
-    virtual void    messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug, const Ogre::String& logName);
+    virtual void messageLogged( const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug, const Ogre::String& logName );
 
 private:
     Ogre::Overlay*                m_Overlay;
@@ -54,9 +55,11 @@ private:
 
     int                           m_LineWidth;
 
+    int                           m_LetterWidth;
+
     TextArea*                     m_OutputTextBox;
     Ogre::Real                    m_OutputTextBoxY;
-    std::list<Ogre::String>       m_OutputLine;
+    std::list< Ogre::String >     m_OutputLine;
     int                           m_MaxOutputLine;
     int                           m_DisplayLine; // bottom of console displays this line
 
@@ -72,7 +75,7 @@ private:
     Ogre::Real                    m_CursorTextBoxX;
     float                         m_CursorBlinkTime;
 
-    std::list<Ogre::String>       m_History;
+    std::list< Ogre::String >     m_History;
     int                           m_HistoryLine;
     int                           m_HistorySize;
 };

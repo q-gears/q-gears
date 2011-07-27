@@ -8,6 +8,7 @@
 
 #include "ConfigCmdManager.h"
 #include "ConfigVarManager.h"
+#include "DebugDraw.h"
 #include "Logger.h"
 #include "ScriptManager.h"
 #include "Timer.h"
@@ -36,6 +37,16 @@ Console::Console():
     m_HistoryLine( -1 ),
     m_HistorySize( 32 )
 {
+    Ogre::FontPtr font = Ogre::FontManager::getSingletonPtr()->getByName( "CourierNew" );
+    if( font.isNull() == false )
+    {
+        m_LetterWidth = font->getGlyphAspectRatio( '_' ) * 16;
+    }
+    else
+    {
+        LOG_ERROR( "Console::frameStarted: Font for console not found." );
+    }
+
     // calculate width and height of console depending on size of application
     m_ConsoleWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getWidth();
     m_ConsoleHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getHeight() / 2.5f;
@@ -81,7 +92,7 @@ Console::Console():
     m_Overlay->add2D( ( Ogre::OverlayContainer* ) m_InputTextBox );
     m_Overlay->add2D( ( Ogre::OverlayContainer* ) m_CursorTextBox );
     m_Overlay->setZOrder( 300 );
-    m_Overlay->show();
+    //m_Overlay->show();
 
     // add as frame and log listner
     Ogre::LogManager::getSingleton().getDefaultLog()->addListener( this );
@@ -335,9 +346,9 @@ Console::Update()
     {
         m_Height += delta_time * m_Speed;
 
-        m_Background->show();
-        m_OutputTextBox->show();
-        m_InputTextBox->show();
+        //m_Background->show();
+        //m_OutputTextBox->show();
+        //m_InputTextBox->show();
 
         if( m_Height >= m_ConsoleHeight )
         {
@@ -361,35 +372,80 @@ Console::Update()
 
     if( m_CursorPosition != m_CursorDrawPosition )
     {
-        Ogre::FontPtr font = Ogre::FontManager::getSingletonPtr()->getByName( "CourierNew" );
-        if( font.isNull() == false )
-        {
-            m_CursorTextBoxX = m_CursorPosition * font->getGlyphAspectRatio( '_' ) * 16;
-            m_CursorDrawPosition = m_CursorPosition;
-        }
-        else
-        {
-            LOG_ERROR( "Console::frameStarted: Font for console not found." );
-        }
-    }
-
-    if( m_Height > 0 )
-    {
-        m_CursorBlinkTime += delta_time;
-        if( ( ( ( int )( m_CursorBlinkTime * 1000 ) ) >> 8 ) & 1 )
-        {
-            m_CursorTextBox->show();
-        }
-        else
-        {
-            m_CursorTextBox->hide();
-        }
+        m_CursorTextBoxX = m_CursorPosition * m_LetterWidth;
+        m_CursorDrawPosition = m_CursorPosition;
     }
 
     m_Background->setPosition( 0, -m_ConsoleHeight + m_Height );
     m_OutputTextBox->setPosition( 5, -m_ConsoleHeight + m_Height );
     m_InputTextBox->setPosition( 12, -20 + m_Height );
     m_CursorTextBox->setPosition( 12 + m_CursorTextBoxX, -19 + m_Height );
+
+    UpdateDraw();
+}
+
+
+
+void
+Console::UpdateDraw()
+{
+    float delta_time = Timer::getSingleton().GetSystemTimeDelta();
+
+    DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
+    DEBUG_DRAW.SetScreenSpace( true );
+
+    std::list< Ogre::String >::iterator i;
+    int row = 1;
+    int rows = ( m_ConsoleHeight - 30 ) / 16;
+    int y = -m_ConsoleHeight + m_Height;
+    int empty = rows - m_DisplayLine;
+    if( empty > 0 )
+    {
+        y += empty * 16;
+    }
+
+    for( i = m_OutputLine.begin(); i != m_OutputLine.end(); ++i, ++row )
+    {
+        if( row > m_DisplayLine - rows && row <= m_DisplayLine )
+        {
+            DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+            DEBUG_DRAW.Text( 5, y, *i );
+            y += 16;
+        }
+    }
+    if( m_DisplayLine != m_OutputLine.size() )
+    {
+        Ogre::String temp = "";
+        for( int i = 0; i < m_LineWidth; ++i )
+        {
+            temp += "^";
+        }
+        DEBUG_DRAW.SetColour( 1, 0, 0, 1 );
+        DEBUG_DRAW.Text( 5, y, temp );
+    }
+
+
+
+    m_CursorBlinkTime += delta_time;
+    if( ( ( ( int )( m_CursorBlinkTime * 1000 ) ) >> 8 ) & 1 )
+    {
+        DEBUG_DRAW.SetColour( 0.88f, 0.88f, 0.88f, 1 );
+        DEBUG_DRAW.Text( 12 + m_CursorTextBoxX, -19 + m_Height, "_" );
+    }
+
+
+    if( m_AutoCompletition.size() > 0 )
+    {
+        DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+        DEBUG_DRAW.Text( 12, -20 + m_Height, m_InputLine);
+        DEBUG_DRAW.SetColour( 0, 1, 0, 1 );
+        DEBUG_DRAW.Text( 12 + ( m_InputLine.size() * m_LetterWidth ), -20 + m_Height, m_AutoCompletition[ m_AutoCompletitionLine ] );
+    }
+    else
+    {
+        DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+        DEBUG_DRAW.Text( 12, -20 + m_Height, m_InputLine );
+    }
 }
 
 
