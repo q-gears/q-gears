@@ -48,6 +48,7 @@ public:
     };
     void SetTextAlignment( const TextAlignment alignment );
     void SetText( const Ogre::UTFString& text );
+    void SetText( TiXmlNode* text );
     void SetFont( const Ogre::String& font );
     void UpdateGeometry();
     void SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const TextStyle& style );
@@ -70,7 +71,7 @@ private:
     UiFont*                             m_Font;
     TextAlignment                       m_TextAlignment;
     Ogre::UTFString                     m_Text;
-    bool                                m_UseXML;
+    TiXmlNode*                          m_TextNode;
 };
 
 

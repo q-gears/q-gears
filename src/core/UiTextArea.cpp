@@ -39,7 +39,7 @@ UiTextArea::Initialise()
     m_MaxLetters = 0;
     m_TextAlignment = UiTextArea::LEFT;
     m_Text = "";
-    m_UseXML = true;
+    m_TextNode = NULL;
 
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
@@ -102,14 +102,15 @@ UiTextArea::SetTextAlignment( const TextAlignment alignment )
 void
 UiTextArea::SetText( const Ogre::UTFString& text )
 {
-    if( m_UseXML == true )
-    {
-        m_Text = "<c>" + text + "</c>";
-    }
-    else
-    {
-        m_Text = text;
-    }
+    m_Text = text;
+}
+
+
+
+void
+UiTextArea::SetText( TiXmlNode* text )
+{
+    m_TextNode = text;
 }
 
 
@@ -184,16 +185,9 @@ UiTextArea::UpdateGeometry()
     TextStyle style;
     style.colour = m_Colour;
 
-    if( m_UseXML == true )
+    if( m_TextNode == NULL )
     {
-        TiXmlDocument doc;
-        doc.SetCondenseWhiteSpace( false );
-        doc.Parse( m_Text.asUTF8_c_str(), NULL, TIXML_ENCODING_UTF8 );
-        TiXmlNode* node = doc.RootElement()->FirstChild();
-        if( node != NULL )
-        {
-            SetTextGeometryFromNode( node, data, style );
-        }
+        SetTextGeometryFromNode( m_TextNode, data, style );
     }
     else
     {
