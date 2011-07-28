@@ -15,23 +15,6 @@ material system/no_model
 
 
 
-material console/background
-{
-    technique
-    {
-        pass
-        {
-            texture_unit
-            {
-                texture system/console.png
-                filtering point point none
-            }
-        }
-    }
-}
-
-
-
 material viewer/grid
 {
     technique

@@ -1,10 +1,6 @@
 #include "Console.h"
 
 #include <OgreFontManager.h>
-#include <OgreOverlayManager.h>
-#include <OgreRenderWindow.h>
-#include <OgreRoot.h>
-#include <OgreStringConverter.h>
 
 #include "ConfigCmdManager.h"
 #include "ConfigVarManager.h"
@@ -54,6 +50,7 @@ Console::Console():
 
     LOG_TRIVIAL( "Created console width " + Ogre::StringConverter::toString( m_ConsoleWidth ) + ", height " + Ogre::StringConverter::toString( m_ConsoleHeight ) );
 
+/*
     // create background for console
     m_Background = ( Ogre::PanelOverlayElement* )Ogre::OverlayManager::getSingleton().createOverlayElement( "Panel", "ConsoleBackground" );
     m_Background->setMetricsMode( Ogre::GMM_PIXELS );
@@ -62,37 +59,12 @@ Console::Console():
     m_Background->setHeight( m_ConsoleHeight );
     m_Background->setMaterialName( "console/background" );
 
-    // create text field for output
-    m_OutputTextBox = new TextArea( "ConsoleOutputText" );
-    m_OutputTextBox->SetCaption( "" );
-    m_OutputTextBox->setMetricsMode( Ogre::GMM_PIXELS );
-    m_OutputTextBox->setPosition( 5, -m_ConsoleHeight );
-    m_OutputTextBox->setFontName( "CourierNew" );
-    m_OutputTextBox->setCharHeight( 16 );
-
-    // create text field for input
-    m_InputTextBox = new TextArea( "ConsoleInputText" );
-    m_InputTextBox->SetCaption( "" );
-    m_InputTextBox->setMetricsMode( Ogre::GMM_PIXELS );
-    m_InputTextBox->setPosition( 12, -20 );
-    m_InputTextBox->setFontName( "CourierNew" );
-    m_InputTextBox->setCharHeight( 16 );
-
-    // create text field for cursor
-    m_CursorTextBox = new TextArea( "ConsoleInputTextCursor" );
-    m_CursorTextBox->SetCaption( "_" );
-    m_CursorTextBox->setMetricsMode( Ogre::GMM_PIXELS );
-    m_CursorTextBox->setPosition( 12, -19 );
-    m_CursorTextBox->setFontName( "CourierNew" );
-    m_CursorTextBox->setCharHeight( 16 );
 
     m_Overlay = Ogre::OverlayManager::getSingleton().create( "Console" );
     m_Overlay->add2D( ( Ogre::OverlayContainer* ) m_Background );
-    m_Overlay->add2D( ( Ogre::OverlayContainer* ) m_OutputTextBox );
-    m_Overlay->add2D( ( Ogre::OverlayContainer* ) m_InputTextBox );
-    m_Overlay->add2D( ( Ogre::OverlayContainer* ) m_CursorTextBox );
     m_Overlay->setZOrder( 300 );
-    //m_Overlay->show();
+    m_Overlay->show();
+*/
 
     // add as frame and log listner
     Ogre::LogManager::getSingleton().getDefaultLog()->addListener( this );
@@ -105,17 +77,13 @@ Console::~Console()
     // remove as listner
     Ogre::LogManager::getSingleton().getDefaultLog()->removeListener( this );
 
-    m_Overlay->remove2D( ( Ogre::OverlayContainer* ) m_OutputTextBox );
-    delete m_OutputTextBox;
-    m_Overlay->remove2D( ( Ogre::OverlayContainer* ) m_InputTextBox );
-    delete m_InputTextBox;
-    m_Overlay->remove2D( ( Ogre::OverlayContainer* ) m_CursorTextBox );
-    delete m_CursorTextBox;
+/*
     m_Overlay->remove2D( ( Ogre::OverlayContainer* ) m_Background );
     Ogre::OverlayManager::getSingleton().destroyOverlayElement( m_Background );
 
 
     Ogre::OverlayManager::getSingleton().destroy( "Console" );
+*/
 }
 
 
@@ -156,7 +124,6 @@ Console::Input( const Event& event )
         }
 
         m_InputLine.clear();
-        m_InputTextBox->SetCaption( m_InputLine );
         m_CursorPosition = 0;
         ResetAutoCompletion();
     }
@@ -193,7 +160,6 @@ Console::Input( const Event& event )
         if( m_DisplayLine > 0 )
         {
             m_DisplayLine -= 1;
-            UpdateOutput();
         }
     }
     // scroll display to next row
@@ -202,7 +168,6 @@ Console::Input( const Event& event )
         if( m_DisplayLine < m_OutputLine.size() )
         {
             m_DisplayLine += 1;
-            UpdateOutput();
         }
     }
     // scroll display to previous row
@@ -211,7 +176,6 @@ Console::Input( const Event& event )
         if( m_DisplayLine > 0 )
         {
             m_DisplayLine -= 1;
-            UpdateOutput();
         }
     }
     // scroll display to next row
@@ -220,7 +184,6 @@ Console::Input( const Event& event )
         if( m_DisplayLine < m_OutputLine.size() )
         {
             m_DisplayLine += 1;
-            UpdateOutput();
         }
     }
     // delete character after cursor
@@ -229,14 +192,12 @@ Console::Input( const Event& event )
         if( m_AutoCompletition.size() > 0 )
         {
             ResetAutoCompletion();
-            m_InputTextBox->SetCaption( m_InputLine );
         }
         else
         {
             if( m_InputLine.size() > 0 && m_CursorPosition < m_InputLine.size() )
             {
                 m_InputLine.erase( m_CursorPosition, 1 );
-                m_InputTextBox->SetCaption( m_InputLine );
             }
         }
     }
@@ -246,7 +207,6 @@ Console::Input( const Event& event )
         if( m_AutoCompletition.size() > 0 )
         {
             ResetAutoCompletion();
-            m_InputTextBox->SetCaption( m_InputLine );
         }
         else
         {
@@ -254,7 +214,6 @@ Console::Input( const Event& event )
             {
                 m_InputLine.erase( m_CursorPosition - 1, 1 );
                 --m_CursorPosition;
-                m_InputTextBox->SetCaption( m_InputLine );
             }
         }
     }
@@ -289,7 +248,6 @@ Console::Input( const Event& event )
     else if ( event.type == ET_KEY_PRESS && event.param1 == OIS::KC_ESCAPE )
     {
         m_InputLine.clear();
-        m_InputTextBox->SetCaption( m_InputLine );
         m_CursorPosition = 0;
         ResetAutoCompletion();
     }
@@ -327,7 +285,6 @@ Console::Input( const Event& event )
                 std::string::iterator i = m_InputLine.begin() + m_CursorPosition;
                 m_InputLine.insert( i, txt );
                 ++m_CursorPosition;
-                m_InputTextBox->SetCaption( m_InputLine );
                 ResetAutoCompletion();
                 break;
             }
@@ -347,8 +304,6 @@ Console::Update()
         m_Height += delta_time * m_Speed;
 
         //m_Background->show();
-        //m_OutputTextBox->show();
-        //m_InputTextBox->show();
 
         if( m_Height >= m_ConsoleHeight )
         {
@@ -362,10 +317,6 @@ Console::Update()
         if( m_Height <= 0 )
         {
             m_Height = 0;
-
-            m_Background->hide();
-            m_OutputTextBox->hide();
-            m_InputTextBox->hide();
             m_Visible = false;
         }
     }
@@ -376,10 +327,7 @@ Console::Update()
         m_CursorDrawPosition = m_CursorPosition;
     }
 
-    m_Background->setPosition( 0, -m_ConsoleHeight + m_Height );
-    m_OutputTextBox->setPosition( 5, -m_ConsoleHeight + m_Height );
-    m_InputTextBox->setPosition( 12, -20 + m_Height );
-    m_CursorTextBox->setPosition( 12 + m_CursorTextBoxX, -19 + m_Height );
+    //m_Background->setPosition( 0, -m_ConsoleHeight + m_Height );
 
     UpdateDraw();
 }
@@ -393,6 +341,10 @@ Console::UpdateDraw()
 
     DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
     DEBUG_DRAW.SetScreenSpace( true );
+    DEBUG_DRAW.SetColour( 0.05f, 0.06f, 0.2f, 1 );
+    DEBUG_DRAW.Quad( 0, 0, m_ConsoleWidth, 0, m_ConsoleWidth, m_Height, 0, m_Height );
+    DEBUG_DRAW.SetColour( 0.18f, 0.22f, 0.74f, 1 );
+    DEBUG_DRAW.Line( 0, m_Height, m_ConsoleWidth, m_Height );
 
     std::list< Ogre::String >::iterator i;
     int row = 1;
@@ -461,18 +413,12 @@ Console::OnResize()
     LOG_TRIVIAL( "Resized console width to " + Ogre::StringConverter::toString( m_ConsoleWidth ) + ", height to " + Ogre::StringConverter::toString( m_ConsoleHeight ) );
 
     // update size and position of background and other fields
-    m_Background->setWidth( m_ConsoleWidth );
-    m_Background->setHeight( m_ConsoleHeight );
-    m_Background->setPosition( 0, -m_ConsoleHeight + m_Height );
-    m_OutputTextBox->setPosition( 5, -m_ConsoleHeight + m_Height );
-    m_InputTextBox->setPosition( 12, -20 + m_Height );
-    m_CursorTextBox->setPosition( 12 + m_CursorTextBoxX, -19 + m_Height );
+    //m_Background->setWidth( m_ConsoleWidth );
+    //m_Background->setHeight( m_ConsoleHeight );
+    //m_Background->setPosition( 0, -m_ConsoleHeight + m_Height );
 
     // update height of already opened console
     m_Height = ( m_Height > m_ConsoleHeight) ? m_ConsoleHeight : m_Height;
-
-    // update output string
-    UpdateOutput();
 }
 
 
@@ -536,7 +482,7 @@ Console::AddTextToOutput( const Ogre::String& text )
                 m_OutputLine.pop_front();
             }
 
-            if (m_OutputLine.size() == m_DisplayLine)
+            if( m_OutputLine.size() == m_DisplayLine )
             {
                 ++m_DisplayLine;
             }
@@ -548,58 +494,20 @@ Console::AddTextToOutput( const Ogre::String& text )
     }
 
     // add one more string if text ended with \n
-    if (text.size() == 0 || str[text.size() - 1] == '\n')
+    if( text.size() == 0 || str[ text.size() - 1 ] == '\n' )
     {
-        if (m_OutputLine.size() >= m_MaxOutputLine)
+        if( m_OutputLine.size() >= m_MaxOutputLine )
         {
             m_OutputLine.pop_front();
         }
 
-        if (m_OutputLine.size() == m_DisplayLine)
+        if( m_OutputLine.size() == m_DisplayLine )
         {
             ++m_DisplayLine;
         }
 
-        m_OutputLine.push_back("");
+        m_OutputLine.push_back( "" );
     }
-
-    UpdateOutput();
-}
-
-
-
-void
-Console::UpdateOutput()
-{
-    int rows = ( m_ConsoleHeight - 30 ) / 16;
-
-    Ogre::String temp = "";
-
-    std::list< Ogre::String >::iterator i;
-    int row = 1;
-    int outputed_row = 0;
-    for( i = m_OutputLine.begin(); i != m_OutputLine.end(); ++i, ++row )
-    {
-        if( row > m_DisplayLine - rows && row <= m_DisplayLine )
-        {
-            temp += ( *i ) + "\n";
-            ++outputed_row;
-        }
-    }
-    if( m_DisplayLine != m_OutputLine.size() )
-    {
-        for( int i = 0; i < m_LineWidth; ++i )
-        {
-            temp += "^";
-        }
-    }
-
-    for( ; outputed_row < rows; ++outputed_row )
-    {
-        temp = "\n" + temp;
-    }
-
-    m_OutputTextBox->SetCaption( temp );
 }
 
 
@@ -791,15 +699,6 @@ Console::CompleteInput()
             m_AutoCompletitionLine = 0;
         }
     }
-
-    if( m_AutoCompletition.size() > 0 )
-    {
-        m_InputTextBox->SetCaption( m_InputLine + m_AutoCompletition[ m_AutoCompletitionLine ] );
-    }
-    else
-    {
-        m_InputTextBox->SetCaption( m_InputLine );
-    }
 }
 
 
@@ -835,7 +734,6 @@ Console::SetInputLineFromHistory()
         if( count == m_HistoryLine )
         {
             m_InputLine = ( *i );
-            m_InputTextBox->SetCaption( m_InputLine );
             m_CursorPosition = m_InputLine.size();
             break;
         }

@@ -45,6 +45,9 @@ private:
     void CreateTextVertexBuffer();
     void DestroyTextVertexBuffer();
 
+    void CreateVertexBuffer();
+    void DestroyVertexBuffer();
+
 private:
     Ogre::SceneManager* m_SceneManager;
     Ogre::RenderSystem* m_RenderSystem;
@@ -78,6 +81,8 @@ private:
     bool                                m_ScreenSpace;
     float                               m_FadeStartSquare; // text start fading from this distance
     float                               m_FadeEndSquare; // text fully faded from this distance
+
+    std::vector< Ogre::RenderOperation > m_RenderOp;
 };
 
 

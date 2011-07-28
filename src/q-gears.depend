@@ -21959,7 +21959,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1310734346 source:g:\my\svn\q-gears\src\main.cpp
+1310807794 source:g:\my\svn\q-gears\src\main.cpp
 	<OgreRoot.h>
 	<OIS.h>
 	"Main.h"
@@ -21974,7 +21974,6 @@
 	"core/InputManager.h"
 	"core/Logger.h"
 	"core/ScriptManager.h"
-	"core/TextManager.h"
 	"core/Timer.h"
 	"core/UiManager.h"
 	"core/particles/ParticleSystemManager.h"
@@ -22008,23 +22007,21 @@
 1305613408 g:\my\svn\q-gears\src\core\configvar.h
 	<OgreString.h>
 
-1309157218 g:\my\svn\q-gears\src\core\console.h
+1311835023 g:\my\svn\q-gears\src\core\console.h
 	<OgreLog.h>
-	<OgrePanelOverlayElement.h>
 	<OgreSingleton.h>
 	<OgreStringVector.h>
 	<OIS.h>
 	<list>
 	<vector>
 	"Event.h"
-	"gui/TextArea.h"
 
 1305007138 g:\my\svn\q-gears\src\core\gui\textarea.h
 	<OgreOverlayContainer.h>
 	<OgreFont.h>
 	"../library/tinyxml/tinyxml.h"
 
-1305007123 g:\my\svn\q-gears\src\core\library\tinyxml\tinyxml.h
+1311833233 g:\my\svn\q-gears\src\core\library\tinyxml\tinyxml.h
 	<ctype.h>
 	<stdio.h>
 	<stdlib.h>
@@ -22035,11 +22032,11 @@
 	<sstream>
 	"tinystr.h"
 
-1305007123 g:\my\svn\q-gears\src\core\library\tinyxml\tinystr.h
+1311833233 g:\my\svn\q-gears\src\core\library\tinyxml\tinystr.h
 	<assert.h>
 	<string.h>
 
-1308552570 g:\my\svn\q-gears\src\core\debugdraw.h
+1311841334 g:\my\svn\q-gears\src\core\debugdraw.h
 	<OgreFont.h>
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
@@ -22553,11 +22550,13 @@
 1305781273 g:\my\svn\q-gears\src\core\timer.h
 	<OgreSingleton.h>
 
-1310535242 g:\my\svn\q-gears\src\core\uimanager.h
+1311833233 g:\my\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>
 	<OgreSingleton.h>
+	<OgreUTFString.h>
 	"UiFont.h"
 	"UiWidget.h"
+	"library/tinyxml/tinyxml.h"
 
 1305007142 g:\my\svn\q-gears\src\core\particles\particlesystemmanager.h
 	<OgreSingleton.h>
@@ -22670,14 +22669,14 @@
 1308821641 g:\my\svn\q-gears\src\core\xmlmapfile.h
 	"XmlFile.h"
 
-1310547290 g:\my\svn\q-gears\src\core\xmlfile.h
-	"tinyxml/tinyxml.h"
+1311833233 g:\my\svn\q-gears\src\core\xmlfile.h
 	<OgreColourValue.h>
 	<OgreMatrix4.h>
 	<OgreString.h>
 	<OgreVector2.h>
 	<OgreVector3.h>
 	<OgreUTFString.h>
+	"library/tinyxml/tinyxml.h"
 
 1305622839 g:\my\svn\q-gears\src\core\xmlmapsfile.h
 	<OgreStringVector.h>
@@ -22702,21 +22701,18 @@
 1305613407 source:g:\my\svn\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1309157218 source:g:\my\svn\q-gears\src\core\console.cpp
+1311846024 source:g:\my\svn\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
-	<OgreOverlayManager.h>
-	<OgreRenderWindow.h>
-	<OgreRoot.h>
-	<OgreStringConverter.h>
 	"ConfigCmdManager.h"
 	"ConfigVarManager.h"
+	"DebugDraw.h"
 	"Logger.h"
 	"ScriptManager.h"
 	"Timer.h"
 	"Utilites.h"
 
-1310362246 source:g:\my\svn\q-gears\src\core\debugdraw.cpp
+1311841422 source:g:\my\svn\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -22831,7 +22827,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1310551244 source:g:\my\svn\q-gears\src\core\xmlfile.cpp
+1311833233 source:g:\my\svn\q-gears\src\core\xmlfile.cpp
 	"XmlFile.h"
 	<OgreStringConverter.h>
 	"Logger.h"
@@ -23415,19 +23411,19 @@
 	<luabind/detail/class_rep.hpp>
 	<luabind/detail/stack_utils.hpp>
 
-1305007127 source:g:\my\svn\q-gears\src\core\library\tinyxml\tinystr.cpp
+1311833233 source:g:\my\svn\q-gears\src\core\library\tinyxml\tinystr.cpp
 	"tinystr.h"
 
-1305007123 source:g:\my\svn\q-gears\src\core\library\tinyxml\tinyxml.cpp
+1311833233 source:g:\my\svn\q-gears\src\core\library\tinyxml\tinyxml.cpp
 	<ctype.h>
 	<sstream>
 	<iostream>
 	"tinyxml.h"
 
-1305007123 source:g:\my\svn\q-gears\src\core\library\tinyxml\tinyxmlerror.cpp
+1311833234 source:g:\my\svn\q-gears\src\core\library\tinyxml\tinyxmlerror.cpp
 	"tinyxml.h"
 
-1305007123 source:g:\my\svn\q-gears\src\core\library\tinyxml\tinyxmlparser.cpp
+1311833234 source:g:\my\svn\q-gears\src\core\library\tinyxml\tinyxmlparser.cpp
 	<ctype.h>
 	<stddef.h>
 	"tinyxml.h"
@@ -23557,7 +23553,7 @@
 	"ScriptManager.h"
 	"UiAnimation.h"
 
-1310550243 source:g:\my\svn\q-gears\src\core\uimanager.cpp
+1311833233 source:g:\my\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	<OgreRoot.h>
 	<OgreStringVector.h>
@@ -23566,6 +23562,7 @@
 	"Utilites.h"
 	"XmlFontsFile.h"
 	"XmlScreensFile.h"
+	"XmlTextsFile.h"
 
 1310362246 source:g:\my\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
@@ -23612,7 +23609,7 @@
 	"XmlScreensFile.h"
 	"XmlTextsFile.h"
 
-1309168100 g:\my\svn\q-gears\src\core\configcmdmanagercommands.h
+1310807794 g:\my\svn\q-gears\src\core\configcmdmanagercommands.h
 	<OgreRenderWindow.h>
 	<OgreRoot.h>
 	<OgreStringConverter.h>
@@ -23683,7 +23680,7 @@
 1308832354 g:\my\svn\q-gears\src\core\xmlscreensfile.h
 	"XmlFile.h"
 
-1310708213 source:g:\my\svn\q-gears\src\core\xmlscreenfile.cpp
+1311833233 source:g:\my\svn\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -23799,7 +23796,7 @@
 1310377870 g:\my\svn\q-gears\src\core\xmlfontsfile.h
 	"XmlFile.h"
 
-1310708213 source:g:\my\svn\q-gears\src\core\uitextarea.cpp
+1311833233 source:g:\my\svn\q-gears\src\core\uitextarea.cpp
 	"UiTextArea.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -23807,13 +23804,14 @@
 	"Logger.h"
 	"UiManager.h"
 
-1310708213 g:\my\svn\q-gears\src\core\uitextarea.h
+1311833233 g:\my\svn\q-gears\src\core\uitextarea.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
 	<OgreUTFString.h>
 	"UiFont.h"
 	"UiWidget.h"
+	"library/tinyxml/tinyxml.h"
 
 1310557475 source:g:\my\svn\q-gears\src\core\xmlfontfile.cpp
 	"XmlFontFile.h"
@@ -23873,6 +23871,22 @@
 	"XmlFile.h"
 
 1310751452 source:d:\my\1\svn\q-gears\src\core\xmltextsfile.cpp
+	"XmlTextsFile.h"
+	"Logger.h"
+	"XmlTextFile.h"
+
+1310807794 g:\my\svn\q-gears\src\core\xmltextsfile.h
+	"XmlFile.h"
+
+1311833233 source:g:\my\svn\q-gears\src\core\xmltextfile.cpp
+	"XmlTextFile.h"
+	"Logger.h"
+	"UiManager.h"
+
+1310807794 g:\my\svn\q-gears\src\core\xmltextfile.h
+	"XmlFile.h"
+
+1310807794 source:g:\my\svn\q-gears\src\core\xmltextsfile.cpp
 	"XmlTextsFile.h"
 	"Logger.h"
 	"XmlTextFile.h"
