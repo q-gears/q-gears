@@ -35,33 +35,33 @@ Walkmesh::Update()
         {
             if( m_Triangles[ i ].access_side[ 0 ] == -1 )
             {
-                DEBUG_DRAW.SetColour( 1, 0, 0, 1 );
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
             }
             else
             {
-                DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
             }
             DEBUG_DRAW.Line3d( m_Triangles[ i ].a, m_Triangles[ i ].b );
             if( m_Triangles[ i ].access_side[ 1 ] == -1 )
             {
-                DEBUG_DRAW.SetColour( 1, 0, 0, 1 );
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
             }
             else
             {
-                DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
             }
             DEBUG_DRAW.Line3d( m_Triangles[ i ].b, m_Triangles[ i ].c );
             if( m_Triangles[ i ].access_side[ 2 ] == -1 )
             {
-                DEBUG_DRAW.SetColour( 1, 0, 0, 1 );
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
             }
             else
             {
-                DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
             }
             DEBUG_DRAW.Line3d( m_Triangles[ i ].c, m_Triangles[ i ].a );
 
-            DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+            DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
             DEBUG_DRAW.SetFadeDistance( 20, 25 );
             Ogre::Vector3 triangle_pos = ( m_Triangles[ i ].a + m_Triangles[ i ].b + m_Triangles[ i ].c) / 3;
             DEBUG_DRAW.Text( triangle_pos, 0, 0, Ogre::StringConverter::toString( i ) );

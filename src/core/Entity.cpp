@@ -81,6 +81,7 @@ Entity::Update()
     // debug output
     if( cv_debug_entity.GetB() == true )
     {
+        DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
         DEBUG_DRAW.SetScreenSpace( true );
         DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.CENTER );
         DEBUG_DRAW.SetFadeDistance( 20, 30 );

@@ -143,8 +143,6 @@
 		<Unit filename="core\XmlTextsFile.h" />
 		<Unit filename="core\XmlWalkmeshFile.cpp" />
 		<Unit filename="core\XmlWalkmeshFile.h" />
-		<Unit filename="core\gui\TextArea.cpp" />
-		<Unit filename="core\gui\TextArea.h" />
 		<Unit filename="core\library\lua\lapi.c">
 			<Option compilerVar="CC" />
 		</Unit>

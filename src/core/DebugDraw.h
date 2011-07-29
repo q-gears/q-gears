@@ -15,8 +15,9 @@ public:
     DebugDraw();
     virtual ~DebugDraw();
 
-    void SetColour( const float r, const float g, const float b, const float a );
+    void SetColour( const Ogre::ColourValue& colour );
     void SetScreenSpace( const bool screen_space );
+    void SetZ( const float z );
     void SetFadeDistance( const float fade_s, const float fade_e );
 
     enum TextAlignment
@@ -79,10 +80,9 @@ private:
     Ogre::MaterialPtr                   m_Material3d;
     Ogre::ColourValue                   m_Colour;
     bool                                m_ScreenSpace;
+    float                               m_Z;
     float                               m_FadeStartSquare; // text start fading from this distance
     float                               m_FadeEndSquare; // text fully faded from this distance
-
-    std::vector< Ogre::RenderOperation > m_RenderOp;
 };
 
 

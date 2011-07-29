@@ -123,7 +123,7 @@ GameFrameListener::frameEnded( const Ogre::FrameEvent& evt )
         const Ogre::RenderTarget::FrameStats& stats = m_Window->getStatistics();
         DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
         DEBUG_DRAW.SetScreenSpace( true );
-        DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
         DEBUG_DRAW.Text( 10, 10, "Current FPS:" + Ogre::StringConverter::toString( stats.lastFPS ) );
     }
 

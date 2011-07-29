@@ -1,6 +1,7 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
+#include <OgreColourValue.h>
 #include <OgreLog.h>
 #include <OgreSingleton.h>
 #include <OgreStringVector.h>
@@ -27,7 +28,7 @@ public:
     void SetToHide();
     bool IsVisible() const;
 
-    void AddTextToOutput( const Ogre::String& text );
+    void AddTextToOutput( const Ogre::String& text, const Ogre::ColourValue& colour = Ogre::ColourValue::White );
     void ExecuteCommand();
     void ExecuteScript();
     void CompleteInput();
@@ -40,34 +41,31 @@ public:
 private:
     int                           m_ConsoleWidth;
     int                           m_ConsoleHeight;
+    int                           m_LineWidth;
+    int                           m_LetterWidth;
 
     bool                          m_ToVisible;
     bool                          m_Visible;
-    int                           m_Speed;
     float                         m_Height;
 
-    int                           m_LineWidth;
-
-    int                           m_LetterWidth;
-
-    Ogre::Real                    m_OutputTextBoxY;
-    std::list< Ogre::String >     m_OutputLine;
-    int                           m_MaxOutputLine;
-    int                           m_DisplayLine; // bottom of console displays this line
-
+    struct OutputLine
+    {
+        Ogre::String text;
+        Ogre::ColourValue colour;
+    };
+    std::list< OutputLine >       m_OutputLine;
+    int                           m_MaxOutputLine; // max number of lines in output list
+    int                           m_DisplayLine;   // bottom of console displays this line
     Ogre::String                  m_InputLine;
-
-    Ogre::StringVector            m_AutoCompletition;
-    int                           m_AutoCompletitionLine;
-
     int                           m_CursorPosition;
-    int                           m_CursorDrawPosition;
-    Ogre::Real                    m_CursorTextBoxX;
     float                         m_CursorBlinkTime;
 
     std::list< Ogre::String >     m_History;
     int                           m_HistoryLine;
     int                           m_HistorySize;
+
+    Ogre::StringVector            m_AutoCompletition;
+    int                           m_AutoCompletitionLine;
 };
 
 

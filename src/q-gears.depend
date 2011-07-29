@@ -20412,16 +20412,15 @@
 1306971020 d:\my\1\svn\q-gears\src\core\configvar.h
 	<OgreString.h>
 
-1311799416 d:\my\1\svn\q-gears\src\core\console.h
+1311962429 d:\my\1\svn\q-gears\src\core\console.h
+	<OgreColourValue.h>
 	<OgreLog.h>
-	<OgrePanelOverlayElement.h>
 	<OgreSingleton.h>
 	<OgreStringVector.h>
 	<OIS.h>
 	<list>
 	<vector>
 	"Event.h"
-	"gui/TextArea.h"
 
 1310233952 d:\my\1\svn\q-gears\src\core\gui\textarea.h
 	<OgreOverlayContainer.h>
@@ -20443,7 +20442,7 @@
 	<assert.h>
 	<string.h>
 
-1311797563 d:\my\1\svn\q-gears\src\core\debugdraw.h
+1311961953 d:\my\1\svn\q-gears\src\core\debugdraw.h
 	<OgreFont.h>
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
@@ -21043,7 +21042,7 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1309198377 source:d:\my\1\svn\q-gears\src\core\cameramanager.cpp
+1311959264 source:d:\my\1\svn\q-gears\src\core\cameramanager.cpp
 	"CameraManager.h"
 	<OgreRenderWindow.h>
 	<OgreRoot.h>
@@ -21108,13 +21107,9 @@
 1306971020 source:d:\my\1\svn\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1311797927 source:d:\my\1\svn\q-gears\src\core\console.cpp
+1311965207 source:d:\my\1\svn\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
-	<OgreOverlayManager.h>
-	<OgreRenderWindow.h>
-	<OgreRoot.h>
-	<OgreStringConverter.h>
 	"ConfigCmdManager.h"
 	"ConfigVarManager.h"
 	"DebugDraw.h"
@@ -21123,7 +21118,7 @@
 	"Timer.h"
 	"Utilites.h"
 
-1311798122 source:d:\my\1\svn\q-gears\src\core\debugdraw.cpp
+1311962836 source:d:\my\1\svn\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -21159,7 +21154,7 @@
 	"../core/Logger.h"
 	"../core/Timer.h"
 
-1311797105 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
+1311963749 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
 	"GameFrameListner.h"
 	<OgreStringConverter.h>
 	"CameraManager.h"
@@ -21190,7 +21185,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1309006032 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
+1311962006 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.h"
 	"ScriptManagerCommands.h"
@@ -21946,14 +21941,14 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1308847892 source:d:\my\1\svn\q-gears\src\core\entity.cpp
+1311965485 source:d:\my\1\svn\q-gears\src\core\entity.cpp
 	"Entity.h"
 	<OgreSceneNode.h>
 	"ConfigVar.h"
 	"DebugDraw.h"
 	"Logger.h"
 
-1307033748 source:d:\my\1\svn\q-gears\src\core\walkmesh.cpp
+1311962016 source:d:\my\1\svn\q-gears\src\core\walkmesh.cpp
 	"Walkmesh.h"
 	"ConfigVar.h"
 	"DebugDraw.h"

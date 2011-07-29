@@ -17,21 +17,20 @@ template<>Console *Ogre::Singleton< Console >::ms_Singleton = NULL;
 
 
 Console::Console():
+    m_ToVisible( false ),
     m_Visible( false ),
-    m_Speed( 1500 ),
     m_Height( 0 ),
 
-    m_OutputTextBoxY( -200 ),
     m_MaxOutputLine( 128 ),
     m_DisplayLine( 0 ),
-
+    m_InputLine( "" ),
     m_CursorPosition( 0 ),
-    m_CursorDrawPosition( 0 ),
-    m_CursorTextBoxX( 0 ),
     m_CursorBlinkTime( 0 ),
 
     m_HistoryLine( -1 ),
-    m_HistorySize( 32 )
+    m_HistorySize( 32 ),
+
+    m_AutoCompletitionLine( 0 )
 {
     Ogre::FontPtr font = Ogre::FontManager::getSingletonPtr()->getByName( "CourierNew" );
     if( font.isNull() == false )
@@ -50,22 +49,6 @@ Console::Console():
 
     LOG_TRIVIAL( "Created console width " + Ogre::StringConverter::toString( m_ConsoleWidth ) + ", height " + Ogre::StringConverter::toString( m_ConsoleHeight ) );
 
-/*
-    // create background for console
-    m_Background = ( Ogre::PanelOverlayElement* )Ogre::OverlayManager::getSingleton().createOverlayElement( "Panel", "ConsoleBackground" );
-    m_Background->setMetricsMode( Ogre::GMM_PIXELS );
-    m_Background->setPosition( 0, -m_ConsoleHeight );
-    m_Background->setWidth( m_ConsoleWidth );
-    m_Background->setHeight( m_ConsoleHeight );
-    m_Background->setMaterialName( "console/background" );
-
-
-    m_Overlay = Ogre::OverlayManager::getSingleton().create( "Console" );
-    m_Overlay->add2D( ( Ogre::OverlayContainer* ) m_Background );
-    m_Overlay->setZOrder( 300 );
-    m_Overlay->show();
-*/
-
     // add as frame and log listner
     Ogre::LogManager::getSingleton().getDefaultLog()->addListener( this );
 }
@@ -76,14 +59,6 @@ Console::~Console()
 {
     // remove as listner
     Ogre::LogManager::getSingleton().getDefaultLog()->removeListener( this );
-
-/*
-    m_Overlay->remove2D( ( Ogre::OverlayContainer* ) m_Background );
-    Ogre::OverlayManager::getSingleton().destroyOverlayElement( m_Background );
-
-
-    Ogre::OverlayManager::getSingleton().destroy( "Console" );
-*/
 }
 
 
@@ -301,9 +276,7 @@ Console::Update()
 
     if( m_ToVisible == true && m_Height < m_ConsoleHeight )
     {
-        m_Height += delta_time * m_Speed;
-
-        //m_Background->show();
+        m_Height += delta_time * 1500;
 
         if( m_Height >= m_ConsoleHeight )
         {
@@ -312,7 +285,7 @@ Console::Update()
     }
     else if( m_ToVisible == false && m_Height > 0 )
     {
-        m_Height -= delta_time * m_Speed;
+        m_Height -= delta_time * 1500;
 
         if( m_Height <= 0 )
         {
@@ -320,14 +293,6 @@ Console::Update()
             m_Visible = false;
         }
     }
-
-    if( m_CursorPosition != m_CursorDrawPosition )
-    {
-        m_CursorTextBoxX = m_CursorPosition * m_LetterWidth;
-        m_CursorDrawPosition = m_CursorPosition;
-    }
-
-    //m_Background->setPosition( 0, -m_ConsoleHeight + m_Height );
 
     UpdateDraw();
 }
@@ -341,12 +306,13 @@ Console::UpdateDraw()
 
     DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
     DEBUG_DRAW.SetScreenSpace( true );
-    DEBUG_DRAW.SetColour( 0.05f, 0.06f, 0.2f, 1 );
+    DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.05f, 0.06f, 0.2f, 1 ) );
+    DEBUG_DRAW.SetZ( -0.5f );
     DEBUG_DRAW.Quad( 0, 0, m_ConsoleWidth, 0, m_ConsoleWidth, m_Height, 0, m_Height );
-    DEBUG_DRAW.SetColour( 0.18f, 0.22f, 0.74f, 1 );
+    DEBUG_DRAW.SetColour( Ogre::ColourValue(  0.18f, 0.22f, 0.74f, 1 ) );
+    DEBUG_DRAW.SetZ( -0.6f );
     DEBUG_DRAW.Line( 0, m_Height, m_ConsoleWidth, m_Height );
 
-    std::list< Ogre::String >::iterator i;
     int row = 1;
     int rows = ( m_ConsoleHeight - 30 ) / 16;
     int y = -m_ConsoleHeight + m_Height;
@@ -356,12 +322,13 @@ Console::UpdateDraw()
         y += empty * 16;
     }
 
+    std::list< OutputLine >::iterator i;
     for( i = m_OutputLine.begin(); i != m_OutputLine.end(); ++i, ++row )
     {
         if( row > m_DisplayLine - rows && row <= m_DisplayLine )
         {
-            DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
-            DEBUG_DRAW.Text( 5, y, *i );
+            DEBUG_DRAW.SetColour( ( *i ).colour );
+            DEBUG_DRAW.Text( 5, y, ( *i ).text );
             y += 16;
         }
     }
@@ -372,7 +339,7 @@ Console::UpdateDraw()
         {
             temp += "^";
         }
-        DEBUG_DRAW.SetColour( 1, 0, 0, 1 );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
         DEBUG_DRAW.Text( 5, y, temp );
     }
 
@@ -381,23 +348,25 @@ Console::UpdateDraw()
     m_CursorBlinkTime += delta_time;
     if( ( ( ( int )( m_CursorBlinkTime * 1000 ) ) >> 8 ) & 1 )
     {
-        DEBUG_DRAW.SetColour( 0.88f, 0.88f, 0.88f, 1 );
-        DEBUG_DRAW.Text( 12 + m_CursorTextBoxX, -19 + m_Height, "_" );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.88f, 0.88f, 0.88f, 1 ) );
+        DEBUG_DRAW.Text( 12 + m_CursorPosition * m_LetterWidth, -19 + m_Height, "_" );
     }
 
 
     if( m_AutoCompletition.size() > 0 )
     {
-        DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
         DEBUG_DRAW.Text( 12, -20 + m_Height, m_InputLine);
-        DEBUG_DRAW.SetColour( 0, 1, 0, 1 );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0, 1, 0, 1 ) );
         DEBUG_DRAW.Text( 12 + ( m_InputLine.size() * m_LetterWidth ), -20 + m_Height, m_AutoCompletition[ m_AutoCompletitionLine ] );
     }
     else
     {
-        DEBUG_DRAW.SetColour( 1, 1, 1, 1 );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
         DEBUG_DRAW.Text( 12, -20 + m_Height, m_InputLine );
     }
+
+    DEBUG_DRAW.SetZ( 0 );
 }
 
 
@@ -411,11 +380,6 @@ Console::OnResize()
     m_LineWidth = ( m_ConsoleWidth - 20 ) / 8;
 
     LOG_TRIVIAL( "Resized console width to " + Ogre::StringConverter::toString( m_ConsoleWidth ) + ", height to " + Ogre::StringConverter::toString( m_ConsoleHeight ) );
-
-    // update size and position of background and other fields
-    //m_Background->setWidth( m_ConsoleWidth );
-    //m_Background->setHeight( m_ConsoleHeight );
-    //m_Background->setPosition( 0, -m_ConsoleHeight + m_Height );
 
     // update height of already opened console
     m_Height = ( m_Height > m_ConsoleHeight) ? m_ConsoleHeight : m_Height;
@@ -449,7 +413,7 @@ Console::IsVisible() const
 
 
 void
-Console::AddTextToOutput( const Ogre::String& text )
+Console::AddTextToOutput( const Ogre::String& text, const Ogre::ColourValue& colour )
 {
     // go through line and add it to output correctly
     const char* str = text.c_str();
@@ -487,7 +451,10 @@ Console::AddTextToOutput( const Ogre::String& text )
                 ++m_DisplayLine;
             }
 
-            m_OutputLine.push_back( output_line );
+            OutputLine line;
+            line.text = output_line;
+            line.colour = colour;
+            m_OutputLine.push_back( line );
             output_line.clear();
             string_size = 0;
         }
@@ -506,7 +473,10 @@ Console::AddTextToOutput( const Ogre::String& text )
             ++m_DisplayLine;
         }
 
-        m_OutputLine.push_back( "" );
+        OutputLine line;
+        line.text = "";
+        line.colour = colour;
+        m_OutputLine.push_back( line );
     }
 }
 
@@ -745,6 +715,11 @@ Console::SetInputLineFromHistory()
 void
 Console::messageLogged( const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug, const Ogre::String& logName )
 {
-    // not output anything down to stack to log
-    AddTextToOutput( logName + ": " + message );
+    Ogre::ColourValue colour = Ogre::ColourValue::White;
+    switch( ( int )lml )
+    {
+        case 2: colour = Ogre::ColourValue( 1, 1, 0, 1 ); break;
+        case 3: colour = Ogre::ColourValue( 1, 0, 0, 1 ); break;
+    }
+    AddTextToOutput( message, colour );
 };

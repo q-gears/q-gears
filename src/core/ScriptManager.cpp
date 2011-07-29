@@ -199,12 +199,12 @@ ScriptManager::Update()
     {
         DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
         DEBUG_DRAW.SetScreenSpace( true );
-        DEBUG_DRAW.SetColour( 0.8, 0.8, 0, 1 );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.8, 0.8, 0, 1 ) );
         DEBUG_DRAW.Text( 10, 34, "Script entity:" );
 
         for( int i = 0; i < m_ScriptEntity.size(); ++i )
         {
-            DEBUG_DRAW.SetColour( 0.5, 0.5, 0.5, 1 );
+            DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.5, 0.5, 0.5, 1 ) );
             Ogre::String text = m_ScriptEntity[ i ].name + ": ";
 
             if( m_ScriptEntity[ i ].queue.size() > 0 )
@@ -213,7 +213,7 @@ ScriptManager::Update()
 
                 if( m_ScriptEntity[ i ].queue[ 0 ].wait == true )
                 {
-                    DEBUG_DRAW.SetColour( 0.8, 0.8, 0, 1 );
+                    DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.8, 0.8, 0, 1 ) );
                     if( m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait != 0 )
                     {
                         text += ":wait( " + Ogre::StringConverter::toString( m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait ) + " )";
