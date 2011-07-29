@@ -27,6 +27,7 @@ DebugDraw::DebugDraw():
     CreateLine3dVertexBuffer();
     CreateQuadVertexBuffer();
     CreateTextVertexBuffer();
+    CreateVertexBuffer();
 
     m_Material = Ogre::MaterialManager::getSingleton().create( "DebugDraw", "General" );
     Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
@@ -76,6 +77,8 @@ DebugDraw::~DebugDraw()
     DestroyLine3dVertexBuffer();
     DestroyQuadVertexBuffer();
     DestroyTextVertexBuffer();
+
+    DestroyVertexBuffer();
 }
 
 
@@ -447,6 +450,16 @@ DebugDraw::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invoc
             m_RenderSystem->_render( m_TextRenderOp );
             m_TextRenderOp.vertexData->vertexCount = 0;
         }
+
+        for( int i = 0; i < m_RenderOp.size(); ++i )
+        {
+            if( m_RenderOp[ i ].vertexData->vertexCount != 0 )
+            {
+                m_SceneManager->_setPass( m_Font->getMaterial()->getTechnique( 0 )->getPass( 0 ), true, false );
+                m_RenderSystem->_render( m_RenderOp[ i ] );
+                m_RenderOp[ i ].vertexData->vertexCount = 0;
+            }
+        }
     }
     else if( queueGroupId == Ogre::RENDER_QUEUE_MAIN )
     {
@@ -598,4 +611,46 @@ DebugDraw::DestroyTextVertexBuffer()
     m_TextRenderOp.vertexData = 0;
     m_TextVertexBuffer.setNull();
     m_TextMaxVertexCount = 0;
+}
+
+
+
+void
+DebugDraw::CreateVertexBuffer()
+{
+    for( int i = 0; i < 4096; ++i )
+    {
+        Ogre::RenderOperation render_op;
+        render_op.vertexData = new Ogre::VertexData();
+        render_op.vertexData->vertexStart = 0;
+
+        Ogre::VertexDeclaration* vDecl = render_op.vertexData->vertexDeclaration;
+
+        size_t offset = 0;
+        vDecl->addElement( 0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
+        offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT3 );
+        vDecl->addElement( 0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE );
+        offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT4 );
+        vDecl->addElement( 0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES );
+
+        Ogre::HardwareVertexBufferSharedPtr vertex_buffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), 6, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
+
+        render_op.vertexData->vertexBufferBinding->setBinding( 0, vertex_buffer );
+        render_op.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
+        render_op.useIndexes = false;
+
+        m_RenderOp.push_back( render_op );
+    }
+}
+
+
+
+void
+DebugDraw::DestroyVertexBuffer()
+{
+    for( int i = 0; i < 4096; ++i )
+    {
+        delete m_RenderOp[ i ].vertexData;
+    }
+    m_RenderOp.clear();
 }
