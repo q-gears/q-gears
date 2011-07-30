@@ -45,6 +45,9 @@ UiSprite::Initialise()
     pass->setLightingEnabled( false );
     pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
+    //pass->setVertexProgram( "Test/Fixed", true );
+    //pass->setFragmentProgram( "Test/Red", true );
+
     pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
     pass->setAlphaRejectValue( 0 );
     Ogre::TextureUnitState* tex = pass->createTextureUnitState();
