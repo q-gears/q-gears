@@ -1,0 +1,11 @@
+vertex_program Test/Fixed glsl
+{
+    source screens/fixed.glsl
+}
+
+
+
+fragment_program Test/Red glsl
+{
+    source screens/red.glsl
+}
