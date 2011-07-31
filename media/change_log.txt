@@ -2,8 +2,14 @@
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 --------------------------------------------------------------------------------
 
+2011-08-01
+----------
+* [UI] Add UI debug draw. [Akari]
+* [UI] Fix prototype loading without name. [Akari]
+
 2011-07-31
 ----------
+* [UI] Add prototypes tags and posibility to define prototype. [Akari]
 * [UI] Add shaders support for UiSprite. Thet can be assigned with "vertex_shader"
        and "fragment_shader" in xml. [Akari, Cloudef]
 

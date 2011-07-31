@@ -1,6 +1,6 @@
 ﻿<screen name="TestScreen" script="screens/test.lua" show="false">
     <widget name="Dialog0" origin_x="50%" origin_y="50%" width="344" height="486" show="true">
-        <prototype name="Unique" prototype="Window" />
+        <prototype prototype="Window" />
 
         <animation name="Idle" length="2"
             scale="0:0.8 0.8, 1:0.5 0.5, 2:0.8 0.8"
@@ -16,7 +16,7 @@
     </widget>
 
     <widget name="Dialog1" align="right" origin_x="50%" origin_y="50%" x="-200" y="300" width="406" height="640" scale="0.6 0.6" rotation="34" show="true" >
-        <prototype name="Unique" prototype="Window">
+        <prototype prototype="Window">
             <sprite name="Center" image="screens/test2.jpg" />
         </prototype>
     </widget>

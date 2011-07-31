@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <screens>
-    <screen file_name="screens/start/start.xml" />
+    <screen file_name="screens/begin_menu/begin_menu.xml" />
     <screen file_name="screens/test.xml" />
 </screens>

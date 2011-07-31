@@ -70,6 +70,7 @@ main( int argc, char *argv[] )
         image.save( "export_en/ui/fonts/ffvii_en.png" );
         buffer->unlock();
 
+        delete vram;
         delete file;
     }
 
@@ -87,7 +88,7 @@ main( int argc, char *argv[] )
         Vram* vram = new Vram();
         LoadTimFileToVram( font_graf, 0, vram );
         LoadTimFileToVram( font_graf2, 0, vram );
-        vram->Save( "text" );
+        //vram->Save( "text" );
 
         Ogre::TexturePtr ptex;
         Ogre::HardwarePixelBufferSharedPtr buffer;
@@ -102,10 +103,32 @@ main( int argc, char *argv[] )
         image.save( "export_jp/ui/fonts/ffvii_jp.png" );
         buffer->unlock();
 
+        delete vram;
         delete file;
     }
 
+    {
+        File sword( "sword.tim" );
 
+        Vram* vram = new Vram();
+        LoadTimFileToVram( &sword, 0, vram );
+        //vram->Save( "sword" );
+
+        Ogre::TexturePtr ptex;
+        Ogre::HardwarePixelBufferSharedPtr buffer;
+        ptex = Ogre::TextureManager::getSingleton().createManual( "DynaTex", "General", Ogre::TEX_TYPE_2D, 256, 256, 0, Ogre::PF_R8G8B8A8, Ogre::TU_STATIC );
+        buffer = ptex->getBuffer( 0, 0 );
+        buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
+        const Ogre::PixelBox& pb = buffer->getCurrentLock();
+        CreateTextureFromVram( pb, vram, 0, 0, 0x0, 0x1e0, 0x0, 0x0, 1 , false );
+
+        Ogre::Image image;
+        image.loadDynamicImage( ( Ogre::uchar* )pb.data, 256, 256, Ogre::PF_R8G8B8A8 );
+        image.save( "sword.png" );
+        buffer->unlock();
+
+        delete vram;
+    }
 
     LOGGER->Log("===================== Stop the game!!!");
 

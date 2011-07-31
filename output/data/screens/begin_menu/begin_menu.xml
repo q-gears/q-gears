@@ -1,0 +1,3 @@
+<screen name="BeginMenu" script="screens/begin_menu/begin_menu.lua" show="true">
+    <sprite name="Sword" image="screens/images/sword.png" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="150" height="150" show="true" />
+</screen>

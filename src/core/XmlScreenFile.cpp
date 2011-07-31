@@ -66,29 +66,29 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
         // parse widgets
         if( node->Type() == TiXmlNode::TINYXML_ELEMENT && ( node->ValueStr() == "widget" || node->ValueStr() == "sprite" || node->ValueStr() == "text_area" || node->ValueStr() == "prototype" ) )
         {
-            Ogre::String name = GetString( node, "name" );
-            if( name != "" )
+            if( node->ValueStr() == "prototype" )
             {
-                UiWidget* widget2;
-
-                if( node->ValueStr() == "prototype" )
+                Ogre::String prototype = GetString( node, "prototype" );
+                if( prototype != "" )
                 {
-                    Ogre::String prototype = GetString( node, "prototype" );
-                    if( prototype != "" )
+                    TiXmlNode* node2 = UiManager::getSingleton().GetPrototype( prototype );
+                    if( node != NULL )
                     {
-                        TiXmlNode* node2 = UiManager::getSingleton().GetPrototype( prototype );
-                        if( node != NULL )
+                        node2 = node2->FirstChild();
+                        if( node2 != NULL )
                         {
-                            node2 = node2->FirstChild();
-                            if( node2 != NULL )
-                            {
-                                LoadScreenRecursive( node2, base_name + "." + name, widget );
-                            }
+                            LoadScreenRecursive( node2, base_name, widget );
                         }
                     }
                 }
-                else
+            }
+            else
+            {
+                Ogre::String name = GetString( node, "name" );
+                if( name != "" )
                 {
+                    UiWidget* widget2;
+
                     if( node->ValueStr() == "sprite" )
                     {
                         widget2 = new UiSprite( name, base_name + "." + name, widget );
@@ -278,10 +278,10 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         LoadScreenRecursive( node2, base_name + "." + name, widget2 );
                     }
                 }
-            }
-            else
-            {
-                LOG_ERROR( "There is no name in entity with base name " + base_name );
+                else
+                {
+                    LOG_ERROR( "There is no name in entity with base name " + base_name );
+                }
             }
         }
         // parse animation data for widget

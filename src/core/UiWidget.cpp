@@ -195,6 +195,16 @@ UiWidget::Update()
         DEBUG_DRAW.Line( x2 - 1, y2, x3 - 1, y3 );
         DEBUG_DRAW.Line( x3, y3, x4, y4 );
         DEBUG_DRAW.Line( x4, y4, x1, y1 );
+
+        // draw translation
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0, 1, 0, 1 ) );
+        Ogre::Vector2 area_translate = ( m_Parent != NULL ) ? m_Parent->GetFinalTranslate() : Ogre::Vector2::ZERO;
+        DEBUG_DRAW.Line( area_translate.x, area_translate.y, x, y );
+        DEBUG_DRAW.Quad( x - 2, y - 2, x + 2, y - 2, x + 2, y + 2, x - 2, y + 2 );
+
+        // draw origin
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0, 0.5, 0, 1 ) );
+        DEBUG_DRAW.Line( x, y, x1, y1 + 1 );
     }
 }
 
