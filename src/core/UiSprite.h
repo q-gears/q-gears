@@ -22,6 +22,8 @@ public:
     virtual void Render();
 
     void SetImage( const Ogre::String& image );
+    void SetVertexShader( const Ogre::String& shader );
+    void SetFragmentShader( const Ogre::String& shader );
     void UpdateGeometry();
 
 private:

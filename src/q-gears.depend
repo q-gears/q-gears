@@ -21107,7 +21107,7 @@
 1306971020 source:d:\my\1\svn\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1311965207 source:d:\my\1\svn\q-gears\src\core\console.cpp
+1311968693 source:d:\my\1\svn\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
 	"ConfigCmdManager.h"
@@ -23568,7 +23568,7 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1311797589 d:\my\1\svn\q-gears\src\core\uimanager.h
+1312038103 d:\my\1\svn\q-gears\src\core\uimanager.h
 	<OgreRenderQueueListener.h>
 	<OgreSingleton.h>
 	<OgreUTFString.h>
@@ -23593,7 +23593,7 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1311797609 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
+1312038057 source:d:\my\1\svn\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	<OgreRoot.h>
 	<OgreStringVector.h>
@@ -23601,6 +23601,7 @@
 	"ScriptManager.h"
 	"Utilites.h"
 	"XmlFontsFile.h"
+	"XmlPrototypesFile.h"
 	"XmlScreensFile.h"
 	"XmlTextsFile.h"
 
@@ -23692,7 +23693,7 @@
 1308847892 d:\my\1\svn\q-gears\src\core\xmlscreensfile.h
 	"XmlFile.h"
 
-1311792770 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
+1312045412 source:d:\my\1\svn\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -23710,13 +23711,13 @@
 	"Logger.h"
 	"XmlScreenFile.h"
 
-1310234191 source:d:\my\1\svn\q-gears\src\core\uisprite.cpp
+1312026563 source:d:\my\1\svn\q-gears\src\core\uisprite.cpp
 	"UiSprite.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
 	"Logger.h"
 
-1310234098 d:\my\1\svn\q-gears\src\core\uisprite.h
+1312025298 d:\my\1\svn\q-gears\src\core\uisprite.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
@@ -23857,7 +23858,7 @@
 1310753118 d:\my\1\svn\q-gears\src\core\xmltextsfile.h
 	"XmlFile.h"
 
-1311792396 source:d:\my\1\svn\q-gears\src\core\xmltextfile.cpp
+1312037887 source:d:\my\1\svn\q-gears\src\core\xmltextfile.cpp
 	"XmlTextFile.h"
 	"Logger.h"
 	"UiManager.h"
@@ -23865,7 +23866,7 @@
 1310748563 d:\my\1\svn\q-gears\src\core\xmltextfile.h
 	"XmlFile.h"
 
-1310751452 source:d:\my\1\svn\q-gears\src\core\xmltextsfile.cpp
+1312019250 source:d:\my\1\svn\q-gears\src\core\xmltextsfile.cpp
 	"XmlTextsFile.h"
 	"Logger.h"
 	"XmlTextFile.h"
@@ -23885,4 +23886,12 @@
 	"XmlTextsFile.h"
 	"Logger.h"
 	"XmlTextFile.h"
+
+1312037796 d:\my\1\svn\q-gears\src\core\xmlprototypesfile.h
+	"XmlFile.h"
+
+1312037948 source:d:\my\1\svn\q-gears\src\core\xmlprototypesfile.cpp
+	"XmlPrototypesFile.h"
+	"Logger.h"
+	"UiManager.h"
 

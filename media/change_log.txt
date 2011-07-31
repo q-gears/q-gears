@@ -2,12 +2,17 @@
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 --------------------------------------------------------------------------------
 
-2011-08-30
+2011-07-31
+----------
+* [UI] Add shaders support for UiSprite. Thet can be assigned with "vertex_shader"
+       and "fragment_shader" in xml. [Akari, Cloudef]
+
+2011-07-30
 ----------
 * [Console] paint error messages to red and warning to yellow. [Akari]
 * [Application] Add setting Z to debug draw to enable depth sorting. [Akari]
 
-2011-08-29
+2011-07-29
 ----------
 * [UI] Ui drawn under debug draw. [Akari]
 * [Console] Make green colour for autocompletition. [Akari]

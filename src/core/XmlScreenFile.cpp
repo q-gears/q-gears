@@ -64,190 +64,219 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
     while( node != NULL )
     {
         // parse widgets
-        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && ( node->ValueStr() == "widget" || node->ValueStr() == "sprite" || node->ValueStr() == "text_area" ) )
+        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && ( node->ValueStr() == "widget" || node->ValueStr() == "sprite" || node->ValueStr() == "text_area" || node->ValueStr() == "prototype" ) )
         {
             Ogre::String name = GetString( node, "name" );
             if( name != "" )
             {
                 UiWidget* widget2;
 
-                if( node->ValueStr() == "sprite" )
+                if( node->ValueStr() == "prototype" )
                 {
-                    widget2 = new UiSprite( name, base_name + "." + name, widget );
-                }
-                else if( node->ValueStr() == "text_area" )
-                {
-                    widget2 = new UiTextArea( name, base_name + "." + name, widget );
+                    Ogre::String prototype = GetString( node, "prototype" );
+                    if( prototype != "" )
+                    {
+                        TiXmlNode* node2 = UiManager::getSingleton().GetPrototype( prototype );
+                        if( node != NULL )
+                        {
+                            node2 = node2->FirstChild();
+                            if( node2 != NULL )
+                            {
+                                LoadScreenRecursive( node2, base_name + "." + name, widget );
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    widget2 = new UiWidget( name, base_name + "." + name, widget );
-                }
-
-
-
-                if( node->ValueStr() == "sprite" )
-                {
-                    Ogre::String image = GetString( node, "image" );
-                    if( image != "" )
+                    if( node->ValueStr() == "sprite" )
                     {
-                        ( ( UiSprite* )widget2 )->SetImage( image );
+                        widget2 = new UiSprite( name, base_name + "." + name, widget );
                     }
-                }
-
-
-
-                if( node->ValueStr() == "text_area" )
-                {
-                    Ogre::String text = GetString( node, "text_name", "" );
-                    if( text != "" )
+                    else if( node->ValueStr() == "text_area" )
                     {
-                        TiXmlNode* utf = UiManager::getSingleton().GetText( text );
-                        ( ( UiTextArea* )widget2 )->SetText( utf );
+                        widget2 = new UiTextArea( name, base_name + "." + name, widget );
+                    }
+                    else
+                    {
+                        widget2 = new UiWidget( name, base_name + "." + name, widget );
                     }
 
-                    Ogre::String font = GetString( node, "font", "" );
-                    if( font != "" )
+                    if( node->ValueStr() == "sprite" )
                     {
-                        ( ( UiTextArea* )widget2 )->SetFont( font );
+                        Ogre::String image = GetString( node, "image" );
+                        if( image != "" )
+                        {
+                            ( ( UiSprite* )widget2 )->SetImage( image );
+                        }
+
+                        Ogre::String vertex_shader = GetString( node, "vertex_shader" );
+                        if( vertex_shader != "" )
+                        {
+                            ( ( UiSprite* )widget2 )->SetVertexShader( vertex_shader );
+                        }
+
+                        Ogre::String fragment_shader = GetString( node, "fragment_shader" );
+                        if( fragment_shader != "" )
+                        {
+                            ( ( UiSprite* )widget2 )->SetFragmentShader( fragment_shader );
+                        }
                     }
-                }
 
 
 
-                Ogre::Vector3 colour = GetVector3( node, "colour", Ogre::Vector3( 1, 1, 1 ) );
-                widget2->SetColour( colour.x, colour.y, colour.z );
+                    if( node->ValueStr() == "text_area" )
+                    {
+                        Ogre::String text = GetString( node, "text_name", "" );
+                        if( text != "" )
+                        {
+                            TiXmlNode* utf = UiManager::getSingleton().GetText( text );
+                            ( ( UiTextArea* )widget2 )->SetText( utf );
+                        }
 
-                float alpha = GetFloat( node, "alpha", 1 );
-                widget2->SetAlpha( alpha );
-
-
-
-
-                Ogre::String align = GetString( node, "align" );
-                if( align != "" )
-                {
-                    widget2->SetAlign( ( align == "center" ) ? UiWidget::CENTER : ( ( align == "right" ) ? UiWidget::RIGHT : UiWidget::LEFT ) );
-                }
-
-
-
-                Ogre::String valign = GetString( node, "valign" );
-                if( valign != "" )
-                {
-                    widget2->SetVerticalAlign( ( valign == "middle" ) ? UiWidget::MIDDLE : ( ( valign == "bottom" ) ? UiWidget::BOTTOM : UiWidget::TOP ) );
-                }
+                        Ogre::String font = GetString( node, "font", "" );
+                        if( font != "" )
+                        {
+                            ( ( UiTextArea* )widget2 )->SetFont( font );
+                        }
+                    }
 
 
 
-                Ogre::String origin_x_str = GetString( node, "origin_x" );
-                if( origin_x_str != "" )
-                {
-                    float x_percent = 0;
-                    float x = 0;
-                    ParsePersent( x_percent, x, origin_x_str );
-                    widget2->SetOriginX( x_percent, x );
-                }
+                    Ogre::Vector3 colour = GetVector3( node, "colour", Ogre::Vector3( 1, 1, 1 ) );
+                    widget2->SetColour( colour.x, colour.y, colour.z );
+
+                    float alpha = GetFloat( node, "alpha", 1 );
+                    widget2->SetAlpha( alpha );
 
 
 
-                Ogre::String origin_y_str = GetString( node, "origin_y" );
-                if( origin_y_str != "" )
-                {
-                    float y_percent = 0;
-                    float y = 0;
-                    ParsePersent( y_percent, y, origin_y_str );
-                    widget2->SetOriginY( y_percent, y );
-                }
+
+                    Ogre::String align = GetString( node, "align" );
+                    if( align != "" )
+                    {
+                        widget2->SetAlign( ( align == "center" ) ? UiWidget::CENTER : ( ( align == "right" ) ? UiWidget::RIGHT : UiWidget::LEFT ) );
+                    }
 
 
 
-                Ogre::String x_str = GetString( node, "x" );
-                if( x_str != "" )
-                {
-                    float x_percent = 0;
-                    float x = 0;
-                    ParsePersent( x_percent, x, x_str );
-                    widget2->SetX( x_percent, x );
-                }
+                    Ogre::String valign = GetString( node, "valign" );
+                    if( valign != "" )
+                    {
+                        widget2->SetVerticalAlign( ( valign == "middle" ) ? UiWidget::MIDDLE : ( ( valign == "bottom" ) ? UiWidget::BOTTOM : UiWidget::TOP ) );
+                    }
 
 
 
-                Ogre::String y_str = GetString( node, "y" );
-                if( y_str != "" )
-                {
-                    float y_percent = 0;
-                    float y = 0;
-                    ParsePersent( y_percent, y, y_str );
-                    widget2->SetY( y_percent, y );
-                }
+                    Ogre::String origin_x_str = GetString( node, "origin_x" );
+                    if( origin_x_str != "" )
+                    {
+                        float x_percent = 0;
+                        float x = 0;
+                        ParsePersent( x_percent, x, origin_x_str );
+                        widget2->SetOriginX( x_percent, x );
+                    }
 
 
 
-                Ogre::String width_str = GetString( node, "width" );
-                if( width_str != "" )
-                {
-                    float width_percent = 0;
-                    float width = 0;
-                    ParsePersent( width_percent, width, width_str );
-                    widget2->SetWidth( width_percent, width );
-                }
+                    Ogre::String origin_y_str = GetString( node, "origin_y" );
+                    if( origin_y_str != "" )
+                    {
+                        float y_percent = 0;
+                        float y = 0;
+                        ParsePersent( y_percent, y, origin_y_str );
+                        widget2->SetOriginY( y_percent, y );
+                    }
 
 
 
-                Ogre::String height_str  = GetString( node, "height" );
-                if( height_str != "" )
-                {
-                    float height_percent = 0;
-                    float height = 0;
-                    ParsePersent( height_percent, height, height_str );
-                    widget2->SetHeight( height_percent, height );
-                }
+                    Ogre::String x_str = GetString( node, "x" );
+                    if( x_str != "" )
+                    {
+                        float x_percent = 0;
+                        float x = 0;
+                        ParsePersent( x_percent, x, x_str );
+                        widget2->SetX( x_percent, x );
+                    }
 
 
 
-                Ogre::Vector2 scale = GetVector2( node, "scale", Ogre::Vector2( 1.0f, 1.0f ) );
-                widget2->SetScale( scale );
+                    Ogre::String y_str = GetString( node, "y" );
+                    if( y_str != "" )
+                    {
+                        float y_percent = 0;
+                        float y = 0;
+                        ParsePersent( y_percent, y, y_str );
+                        widget2->SetY( y_percent, y );
+                    }
 
 
 
-                widget2->SetRotation( GetFloat( node, "rotation", 0.0f ) );
+                    Ogre::String width_str = GetString( node, "width" );
+                    if( width_str != "" )
+                    {
+                        float width_percent = 0;
+                        float width = 0;
+                        ParsePersent( width_percent, width, width_str );
+                        widget2->SetWidth( width_percent, width );
+                    }
 
 
 
-                widget2->SetScissor( GetBool( node, "scissor", false ) );
+                    Ogre::String height_str  = GetString( node, "height" );
+                    if( height_str != "" )
+                    {
+                        float height_percent = 0;
+                        float height = 0;
+                        ParsePersent( height_percent, height, height_str );
+                        widget2->SetHeight( height_percent, height );
+                    }
 
 
 
-                bool show = GetBool( node, "show", false );
-                if( show == true )
-                {
-                    widget2->Show();
-                }
+                    Ogre::Vector2 scale = GetVector2( node, "scale", Ogre::Vector2( 1.0f, 1.0f ) );
+                    widget2->SetScale( scale );
 
 
 
-                widget2->UpdateTransformation();
+                    widget2->SetRotation( GetFloat( node, "rotation", 0.0f ) );
 
 
 
-                if( node->ValueStr() == "sprite" )
-                {
-                    ( ( UiSprite* )widget2 )->UpdateGeometry();
-                }
-                else if( node->ValueStr() == "text_area" )
-                {
-                    ( ( UiTextArea* )widget2 )->UpdateGeometry();
-                }
+                    widget2->SetScissor( GetBool( node, "scissor", false ) );
 
 
 
-                widget->AddChild( widget2 );
+                    bool show = GetBool( node, "show", false );
+                    if( show == true )
+                    {
+                        widget2->Show();
+                    }
 
-                TiXmlNode* node2 = node->FirstChild();
-                if( node2 != NULL )
-                {
-                    LoadScreenRecursive( node2, base_name + "." + name, widget2 );
+
+
+                    widget2->UpdateTransformation();
+
+
+
+                    if( node->ValueStr() == "sprite" )
+                    {
+                        ( ( UiSprite* )widget2 )->UpdateGeometry();
+                    }
+                    else if( node->ValueStr() == "text_area" )
+                    {
+                        ( ( UiTextArea* )widget2 )->UpdateGeometry();
+                    }
+
+
+
+                    widget->AddChild( widget2 );
+
+                    TiXmlNode* node2 = node->FirstChild();
+                    if( node2 != NULL )
+                    {
+                        LoadScreenRecursive( node2, base_name + "." + name, widget2 );
+                    }
                 }
             }
             else

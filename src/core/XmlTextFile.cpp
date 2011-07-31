@@ -25,7 +25,7 @@ XmlTextFile::LoadText()
 
     if( node == NULL || node->ValueStr() != "texts" )
     {
-        LOG_ERROR( "UI Text Manager: " + m_File.ValueStr() + " is not a valid text file! No <texts> in root." );
+        LOG_ERROR( "UI Manager: " + m_File.ValueStr() + " is not a valid text file! No <texts> in root." );
         return;
     }
 

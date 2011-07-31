@@ -306,10 +306,10 @@ Console::UpdateDraw()
 
     DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
     DEBUG_DRAW.SetScreenSpace( true );
-    DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.05f, 0.06f, 0.2f, 1 ) );
+    DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.05f, 0.06f, 0.2f, 0.95f ) );
     DEBUG_DRAW.SetZ( -0.5f );
     DEBUG_DRAW.Quad( 0, 0, m_ConsoleWidth, 0, m_ConsoleWidth, m_Height, 0, m_Height );
-    DEBUG_DRAW.SetColour( Ogre::ColourValue(  0.18f, 0.22f, 0.74f, 1 ) );
+    DEBUG_DRAW.SetColour( Ogre::ColourValue(  0.18f, 0.22f, 0.74f, 0.95f ) );
     DEBUG_DRAW.SetZ( -0.6f );
     DEBUG_DRAW.Line( 0, m_Height, m_ConsoleWidth, m_Height );
 

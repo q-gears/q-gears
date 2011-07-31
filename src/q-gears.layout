@@ -28,8 +28,8 @@
 	<File name="core\ConfigVar.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="62" topLine="0" />
 	</File>
-	<File name="core\Console.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="19742" topLine="658" />
+	<File name="core\Console.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="8664" topLine="298" />
 	</File>
 	<File name="core\Console.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1462" topLine="42" />
@@ -101,13 +101,13 @@
 		<Cursor1 position="658" topLine="17" />
 	</File>
 	<File name="core\UiManager.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1759" topLine="76" />
+		<Cursor1 position="3045" topLine="156" />
 	</File>
 	<File name="core\UiManager.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1095" topLine="17" />
+		<Cursor1 position="1437" topLine="25" />
 	</File>
-	<File name="core\UiSprite.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1458" topLine="26" />
+	<File name="core\UiSprite.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2922" topLine="100" />
 	</File>
 	<File name="core\UiSprite.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="42" topLine="0" />
@@ -119,7 +119,7 @@
 		<Cursor1 position="1850" topLine="50" />
 	</File>
 	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="5765" topLine="243" />
+		<Cursor1 position="3930" topLine="150" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="4284" topLine="114" />
@@ -131,7 +131,7 @@
 		<Cursor1 position="711" topLine="0" />
 	</File>
 	<File name="core\XmlFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="167" topLine="3" />
+		<Cursor1 position="2013" topLine="77" />
 	</File>
 	<File name="core\XmlFile.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="343" topLine="11" />
@@ -146,7 +146,7 @@
 		<Cursor1 position="225" topLine="0" />
 	</File>
 	<File name="core\XmlScreenFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2828" topLine="90" />
+		<Cursor1 position="2268" topLine="59" />
 	</File>
 	<File name="core\XmlScreenFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="427" topLine="0" />
@@ -158,10 +158,10 @@
 		<Cursor1 position="573" topLine="16" />
 	</File>
 	<File name="core\XmlTextsFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="244" topLine="9" />
+		<Cursor1 position="531" topLine="31" />
 	</File>
 	<File name="core\XmlTextsFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="54" topLine="0" />
+		<Cursor1 position="225" topLine="0" />
 	</File>
 	<File name="core\XmlWalkmeshFile.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="55" topLine="0" />
@@ -197,13 +197,13 @@
 		<Cursor1 position="2034" topLine="20" />
 	</File>
 	<File name="core\library\tinyxml\tinyxml.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="4681" topLine="188" />
+		<Cursor1 position="22769" topLine="1071" />
 	</File>
 	<File name="core\library\tinyxml\tinyxml.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="14981" topLine="486" />
+		<Cursor1 position="15217" topLine="493" />
 	</File>
 	<File name="core\library\tinyxml\tinyxmlparser.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="16569" topLine="697" />
+		<Cursor1 position="27613" topLine="1186" />
 	</File>
 	<File name="core\particles\ParticleEmitter.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="804" topLine="6" />

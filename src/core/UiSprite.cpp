@@ -45,9 +45,6 @@ UiSprite::Initialise()
     pass->setLightingEnabled( false );
     pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
-    //pass->setVertexProgram( "Test/Fixed", true );
-    //pass->setFragmentProgram( "Test/Red", true );
-
     pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
     pass->setAlphaRejectValue( 0 );
     Ogre::TextureUnitState* tex = pass->createTextureUnitState();
@@ -108,6 +105,26 @@ UiSprite::SetImage( const Ogre::String& image )
     Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
     Ogre::TextureUnitState* tex = pass->getTextureUnitState( 0 );
     tex->setTextureName( image );
+}
+
+
+
+void
+UiSprite::SetVertexShader( const Ogre::String& shader )
+{
+    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
+    pass->setVertexProgram( shader, true );
+    pass->getVertexProgram()->load();
+}
+
+
+
+void
+UiSprite::SetFragmentShader( const Ogre::String& shader )
+{
+    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
+    pass->setFragmentProgram( shader, true );
+    pass->getFragmentProgram()->load();
 }
 
 

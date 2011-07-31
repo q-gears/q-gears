@@ -7,6 +7,7 @@
 #include "ScriptManager.h"
 #include "Utilites.h"
 #include "XmlFontsFile.h"
+#include "XmlPrototypesFile.h"
 #include "XmlScreensFile.h"
 #include "XmlTextsFile.h"
 
@@ -47,6 +48,9 @@ UiManager::Initialise()
 {
     XmlFontsFile fonts( "./data/fonts.xml" );
     fonts.LoadFonts();
+
+    XmlPrototypesFile prototypes( "./data/screens/prototypes.xml" );
+    prototypes.LoadPrototypes();
 
     XmlScreensFile screens( "./data/screens.xml" );
     screens.LoadScreens();
@@ -111,7 +115,7 @@ UiManager::UnloadTexts()
 
 
 TiXmlNode*
-UiManager::GetText( const Ogre::String& name )
+UiManager::GetText( const Ogre::String& name ) const
 {
     for( int i = 0; i < m_Texts.size(); ++i )
     {
@@ -142,6 +146,33 @@ UiManager::GetFont( const Ogre::String& name )
         if( m_Fonts[ i ]->GetName() == name )
         {
             return m_Fonts[ i ];
+        }
+    }
+
+    return NULL;
+}
+
+
+
+void
+UiManager::AddPrototype( const Ogre::String& name, TiXmlNode* prototype )
+{
+    UiPrototype ui_prototype;
+    ui_prototype.name = name;
+    ui_prototype.node = prototype;
+    m_Prototypes.push_back( ui_prototype );
+}
+
+
+
+TiXmlNode*
+UiManager::GetPrototype( const Ogre::String& name ) const
+{
+    for( int i = 0; i < m_Prototypes.size(); ++i )
+    {
+        if( m_Prototypes[ i ].name == name )
+        {
+            return m_Prototypes[ i ].node;
         }
     }
 

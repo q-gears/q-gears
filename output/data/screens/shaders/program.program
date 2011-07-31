@@ -1,0 +1,11 @@
+vertex_program Ui/Test/Vertex glsl
+{
+    source screens/shaders/pixelisation_v.glsl
+}
+
+
+
+fragment_program Ui/Test/Fragment glsl
+{
+    source screens/shaders/pixelisation_f.glsl
+}

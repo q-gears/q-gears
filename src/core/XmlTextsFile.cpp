@@ -39,9 +39,19 @@ XmlTextsFile::LoadTexts( const Ogre::String& language )
                 TiXmlNode* node2 = node->FirstChild();
                 while( node2 != NULL )
                 {
-                    XmlTextFile text( "./data/" + GetString( node2, "file" ) );
-                    text.LoadText();
-
+                    if( node2->Type() == TiXmlNode::TINYXML_ELEMENT && node2->ValueStr() == "text" )
+                    {
+                        Ogre::String file = GetString( node2, "file" );
+                        if( file != "" )
+                        {
+                            XmlTextFile text( "./data/" + file );
+                            text.LoadText();
+                        }
+                        else
+                        {
+                            LOG_ERROR( "Empty filename in language " + language + "." );
+                        }
+                    }
                     node2 = node2->NextSibling();
                 }
             }
