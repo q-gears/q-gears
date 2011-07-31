@@ -1,5 +1,5 @@
 <prototypes>
-    <prototype name="Button">
+    <prototype name="Window">
         <sprite name="Center" image="screens/test1.jpg" vertex_shader="Ui/Test/Vertex" fragment_shader="Ui/Test/Fragment" x="3" y="3" width="100%-6" height="100%-6" show="true" />
         <sprite name="Top" image="screens/border_t.png" x="8" y="0" width="100%-16" height="8" show="true" />
         <sprite name="Bottom" image="screens/border_b.png" x="8" y="100%-8" width="100%-16" height="8" show="true" />
@@ -9,17 +9,5 @@
         <sprite name="TopRight" image="screens/border_tr.png" x="100%-8" y="0" width="8" height="8" show="true" />
         <sprite name="BottomLeft" image="screens/border_bl.png" x="0" y="100%-8" width="8" height="8" show="true" />
         <sprite name="BottomRight" image="screens/border_br.png" x="100%-8" y="100%-8" width="8" height="8" show="true" />
-
-        <animation name="Idle" length="2"
-            scale="0:0.8 0.8, 1:0.5 0.5, 2:0.8 0.8"
-            x="0:0 172"
-            y="0:0 243"
-        />
-        <animation name="Appear" length="3"
-            scale="0:2 2, 0.5:1.8 1.8, 1:1.6 1.6, 1.5:1.4 1.4, 2:1.2 1.2, 2.5:1 1, 3:0.8 0.8"
-            x="0:100 172, 3:0 172"
-            y="0:0 243, 3:0 243"
-            rotation="0:900, 3:0"
-        />
     </prototype>
 </prototypes>

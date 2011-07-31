@@ -4,6 +4,7 @@
 #include <OgreRoot.h>
 
 #include "ConfigVar.h"
+#include "DebugDraw.h"
 #include "Logger.h"
 #include "ScriptManager.h"
 #include "Timer.h"
@@ -99,7 +100,12 @@ UiWidget::Initialise()
 void
 UiWidget::Update()
 {
-    if( m_AnimationCurrent != NULL && m_Visible == true )
+    if( m_Visible != true )
+    {
+        return;
+    }
+
+    if( m_AnimationCurrent != NULL )
     {
         float delta_time = Timer::getSingleton().GetGameTimeDelta();
         float time = m_AnimationCurrent->GetTime();
@@ -135,6 +141,60 @@ UiWidget::Update()
     for( int i = 0; i < m_Children.size(); ++i )
     {
         m_Children[ i ]->Update();
+    }
+
+
+
+    // debug output
+    if( cv_debug_ui.GetB() == true )
+    {
+        float local_x1 = -m_FinalOrigin.x;
+        float local_y1 = -m_FinalOrigin.y;
+        float local_x2 = m_FinalSize.x + local_x1;
+        float local_y2 = m_FinalSize.y + local_y1;
+        float x = m_FinalTranslate.x;
+        float y = m_FinalTranslate.y;
+
+        DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
+        DEBUG_DRAW.SetScreenSpace( true );
+        DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
+        DEBUG_DRAW.Text( x + 3, y, "Ui." + m_PathName );
+        DEBUG_DRAW.Text( x + 3, y + 12, GetCurrentAnimationName() );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
+
+        int x1, y1, x2, y2, x3, y3, x4, y4;
+
+        if( m_FinalRotation != 0 )
+        {
+            float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
+            float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
+
+            x1 = local_x1 * cos - local_y1 * sin + x;
+            y1 = local_x1 * sin + local_y1 * cos + y;
+            x2 = local_x2 * cos - local_y1 * sin + x;
+            y2 = local_x2 * sin + local_y1 * cos + y;
+            x3 = local_x2 * cos - local_y2 * sin + x;
+            y3 = local_x2 * sin + local_y2 * cos + y;
+            x4 = local_x1 * cos - local_y2 * sin + x;
+            y4 = local_x1 * sin + local_y2 * cos + y;
+        }
+        else
+        {
+            x1 = local_x1 + x;
+            y1 = local_y1 + y;
+            x2 = local_x2 + x;
+            y2 = local_y1 + y;
+            x3 = local_x2 + x;
+            y3 = local_y2 + y;
+            x4 = local_x1 + x;
+            y4 = local_y2 + y;
+        }
+
+        // slightly modify to let show things that are on board of screen
+        DEBUG_DRAW.Line( x1, y1 + 1, x2, y2 + 1 );
+        DEBUG_DRAW.Line( x2 - 1, y2, x3 - 1, y3 );
+        DEBUG_DRAW.Line( x3, y3, x4, y4 );
+        DEBUG_DRAW.Line( x4, y4, x1, y1 );
     }
 }
 
@@ -243,7 +303,12 @@ UiWidget::AddAnimation( UiAnimation *animation )
 const Ogre::String&
 UiWidget::GetCurrentAnimationName() const
 {
-    return m_AnimationCurrent->GetName();
+    if( m_AnimationCurrent != NULL )
+    {
+        return m_AnimationCurrent->GetName();
+    }
+
+    return "";
 }
 
 

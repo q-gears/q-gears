@@ -48,7 +48,7 @@ UiSprite::Initialise()
     pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
     pass->setAlphaRejectValue( 0 );
     Ogre::TextureUnitState* tex = pass->createTextureUnitState();
-    tex->setTextureName( "system/no_texture.png" );
+    tex->setTextureName( "system/blank.png" );
     tex->setNumMipmaps( -1 );
     tex->setTextureFiltering( Ogre::TFO_NONE );
 
