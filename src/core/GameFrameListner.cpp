@@ -175,6 +175,8 @@ bool
 GameFrameListener::keyPressed( const OIS::KeyEvent& event )
 {
     InputManager::getSingleton().ButtonPressed( event.key, event.text, true );
+    if( event.key == OIS::KC_ESCAPE )
+       g_ApplicationState = QG_EXIT;
 
     return true;
 }

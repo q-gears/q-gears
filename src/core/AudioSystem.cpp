@@ -396,11 +396,11 @@ const char* AudioSystem::ALCError(const ALCdevice *device)
          const_cast<ALCdevice *>(m_ALDevice) :
          const_cast<ALCdevice *>(device));
 
-   ALCenum error_code = alcGetError(const_cast<ALCdevice *>(alc_device)));
+   ALCenum error_code = alcGetError(const_cast<ALCdevice *>(alc_device));
    if(error_code == ALC_NO_ERROR)
       return NULL;
    else
-      return alcGetString(device, error_code);
+      return alcGetString(const_cast<ALCdevice *>(device), error_code);
 #else
    return NULL; /* We are perfect */
 #endif
