@@ -1,5 +1,4 @@
 #include "XmlMusicsFile.h"
-#include "XmlMusicFile.h"
 #include "AudioManager.h" /* For default loop */
 #include "Logger.h"
 
@@ -28,8 +27,15 @@ XmlMusicsFile::LoadMusics()
     {
         if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "music" )
         {
-            XmlMusicFile music( GetString( node, "name" ), "./data/" + GetString( node, "file_name" ), GetFloat( node, "loop", AudioManager::getSingleton().m_DEFAULT_LOOP ) );
-            music.LoadMusic();
+            AudioManager &engine = AudioManager::getSingleton();
+
+            AudioManager::Music Music;
+            Music.Name = GetString( node, "name" );
+            Music.File = "./data/" + GetString( node, "file_name" );
+            Music.Loop = GetFloat( node, "loop", AudioManager::getSingleton().m_DEFAULT_LOOP );
+
+            engine.AddMusic(Music);
+
         }
         node = node->NextSibling();
     }
