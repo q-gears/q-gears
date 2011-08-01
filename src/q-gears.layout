@@ -34,8 +34,8 @@
 	<File name="core\Console.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1462" topLine="42" />
 	</File>
-	<File name="core\DebugDraw.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="14072" topLine="404" />
+	<File name="core\DebugDraw.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="6472" topLine="198" />
 	</File>
 	<File name="core\DebugDraw.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="46" topLine="0" />
@@ -53,7 +53,7 @@
 		<Cursor1 position="528" topLine="0" />
 	</File>
 	<File name="core\Event.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="594" topLine="22" />
+		<Cursor1 position="637" topLine="19" />
 	</File>
 	<File name="core\GameFrameListner.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="3261" topLine="111" />
@@ -74,10 +74,10 @@
 		<Cursor1 position="408" topLine="20" />
 	</File>
 	<File name="core\ScriptManager.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2514" topLine="80" />
+		<Cursor1 position="5803" topLine="169" />
 	</File>
-	<File name="core\ScriptManager.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="199" topLine="0" />
+	<File name="core\ScriptManager.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="611" topLine="24" />
 	</File>
 	<File name="core\ScriptManagerBinds.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="226" topLine="0" />
@@ -125,7 +125,7 @@
 		<Cursor1 position="4284" topLine="114" />
 	</File>
 	<File name="core\Utilites.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="4127" topLine="150" />
+		<Cursor1 position="2599" topLine="104" />
 	</File>
 	<File name="core\Utilites.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="711" topLine="0" />

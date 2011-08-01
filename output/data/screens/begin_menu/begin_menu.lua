@@ -3,33 +3,32 @@ if Ui == nil then Ui = {} end
 
 
 Ui.BeginMenu = {
-    on_start = function()
+    on_start = function( self )
         local cursor = ui_manager:get_widget( "BeginMenu.Cursor" )
         cursor:set_default_animation( "Position1" )
-        Ui.BeginMenu.position = 1
+        self.position = 1
         return 0
     end,
 
 
 
-    on_update = function()
---[[
+    on_pressed = function( self, button )
         if button == "X" then
-            if Ui.BeginMenu.position == 1 then
+            if self.position == 1 then
                 script:request_end_sync( "Ui.BeginMenu", "to_start", 0 )
             else
                 script:request_end_sync( "Ui.BeginMenu", "to_continue", 0 )
             end
-        elseif button == "Down" and Ui.BeginMenu.position == 1 then
+        elseif button == "Down" and self.position == 1 then
             local cursor = ui_manager:get_widget( "BeginMenu.Cursor" )
             cursor:set_default_animation( "Position2" )
-            Ui.BeginMenu.position = 2
-        elseif button == "Up" and Ui.BeginMenu.position == 2 then
+            self.position = 2
+        elseif button == "Up" and self.position == 2 then
             local cursor = ui_manager:get_widget( "BeginMenu.Cursor" )
             cursor:set_default_animation( "Position1" )
-            Ui.BeginMenu.position = 1
+            self.position = 1
         end
-]]
+
         return 0
     end,
 

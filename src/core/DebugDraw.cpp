@@ -19,7 +19,11 @@ DebugDraw::DebugDraw():
     m_Z( 0 ),
     m_FadeStartSquare( 999999 ),
     m_FadeEndSquare( 999999 ),
-    m_FontHeight( 16 )
+    m_FontHeight( 16 ),
+    m_LineMaxVertexCount( 0 ),
+    m_Line3dMaxVertexCount( 0 ),
+    m_QuadMaxVertexCount( 0 ),
+    m_TextMaxVertexCount( 0 )
 {
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
@@ -477,7 +481,7 @@ DebugDraw::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invoc
 void
 DebugDraw::CreateLineVertexBuffer()
 {
-    m_LineMaxVertexCount = 128 * 2;
+    m_LineMaxVertexCount = 256 * 2;
     m_LineRenderOp.vertexData = new Ogre::VertexData;
     m_LineRenderOp.vertexData->vertexStart = 0;
 

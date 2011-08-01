@@ -120,7 +120,7 @@ UiWidget::Update()
             }
             m_AnimationSync.clear();
 
-            if( m_AnimationState == UiAnimation::DEFAULT )
+            if( m_AnimationState == UiAnimation::DEFAULT && m_AnimationDefault != "" )
             {
                 // in case of cycled default we need to sync with end
                 time = time + delta_time - m_AnimationCurrent->GetLength();
@@ -244,7 +244,12 @@ void
 UiWidget::Show()
 {
     m_Visible = true;
-    ScriptManager::getSingleton().ScriptRequest( ( "Ui." + m_PathName ).c_str(), "on_show", 0 );
+
+    ScriptEntity* script_entity = ScriptManager::getSingleton().GetScriptEntityByName( "Ui." + m_PathName );
+    if( script_entity != NULL )
+    {
+        ScriptManager::getSingleton().ScriptRequest( script_entity, "on_show", 0, "", false, false );
+    }
 }
 
 
@@ -253,7 +258,11 @@ void
 UiWidget::Hide()
 {
     m_Visible = false;
-    ScriptManager::getSingleton().ScriptRequest( ( "Ui." + m_PathName ).c_str(), "on_hide", 0 );
+    ScriptEntity* script_entity = ScriptManager::getSingleton().GetScriptEntityByName( "Ui." + m_PathName );
+    if( script_entity != NULL )
+    {
+        ScriptManager::getSingleton().ScriptRequest( script_entity, "on_hide", 0, "", false, false );
+    }
 }
 
 

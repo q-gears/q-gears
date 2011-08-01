@@ -1,10 +1,10 @@
 
 uniform sampler2D sceneTex; // 0
-uniform float vx_offset = 0.5;
-uniform float rt_w = 500;
-uniform float rt_h = 500;
-uniform float pixel_w = 15;
-uniform float pixel_h = 10;
+float vx_offset = 0.5;
+float rt_w = 500.0;
+float rt_h = 500.0;
+float pixel_w = 15.0;
+float pixel_h = 10.0;
 
 void main()
 {

@@ -20468,9 +20468,10 @@
 	<OgreCamera.h>
 	<OgreSimpleRenderable.h>
 
-1312196478 d:\my\1\svn\q-gears\src\core\scriptmanager.h
+1312224827 d:\my\1\svn\q-gears\src\core\scriptmanager.h
 	<OgreSingleton.h>
 	<OgreString.h>
+	"Event.h"
 	"library/lua/lua.h"
 	"library/luabind/luabind.hpp"
 
@@ -21118,7 +21119,7 @@
 	"Timer.h"
 	"Utilites.h"
 
-1311962836 source:d:\my\1\svn\q-gears\src\core\debugdraw.cpp
+1312227766 source:d:\my\1\svn\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -21154,7 +21155,7 @@
 	"../core/Logger.h"
 	"../core/Timer.h"
 
-1312196478 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
+1312219962 source:d:\my\1\svn\q-gears\src\core\gameframelistner.cpp
 	"GameFrameListner.h"
 	<OgreStringConverter.h>
 	"CameraManager.h"
@@ -21185,7 +21186,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1312198679 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
+1312227000 source:d:\my\1\svn\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.h"
 	"ScriptManagerCommands.h"
@@ -23584,7 +23585,7 @@
 	"ScriptManager.h"
 	"UiAnimation.h"
 
-1312196478 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
+1312226227 source:d:\my\1\svn\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
