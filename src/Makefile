@@ -14,6 +14,8 @@
 INCLUDE_DIR  := /usr/include
 OGRE_INCLUDE := ${INCLUDE_DIR}/OGRE
 OIS_INCLUDE  := ${INCLUDE_DIR}/OIS
+CFLAGS		 := `pkg-config OGRE OIS openal vorbisfile --cflags`
+CXXFLAGS		 := `pkg-config OGRE OIS openal vorbisfile --cflags`
 LIBS			 := `pkg-config OGRE OIS openal vorbisfile --libs`
 DEBUG			 := 0
 
@@ -70,6 +72,8 @@ endif
 
 ifeq (${DEBUG},1)
 	DEFINES += -D_DEBUG
+	CFLAGS   = -g -O0
+	CXXFLAGS = -g -O0
 endif
 
 # ---- Build defines ----
