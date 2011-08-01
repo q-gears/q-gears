@@ -65,7 +65,6 @@ void AudioManager::Player::PlayFile(const Ogre::String &file)
    boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
    AudioManager &engine = AudioManager::getSingleton();
 
-   printf("Open music %s\n", file.c_str());
 	// open vorbis file
 	if(ov_fopen(const_cast<char *>(file.c_str()), &m_VorbisFile))
 	{
