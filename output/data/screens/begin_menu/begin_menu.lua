@@ -1,3 +1,7 @@
+if Ui == nil then Ui = {} end
+
+
+
 Ui.BeginMenu = {
     on_start = function()
         local cursor = ui_manager:get_widget( "BeginMenu.Cursor" )
@@ -9,8 +13,9 @@ Ui.BeginMenu = {
 
 
     on_update = function()
+--[[
         if button == "X" then
-            if Ui.BeginMenu.Cursor.position == 1 then
+            if Ui.BeginMenu.position == 1 then
                 script:request_end_sync( "Ui.BeginMenu", "to_start", 0 )
             else
                 script:request_end_sync( "Ui.BeginMenu", "to_continue", 0 )
@@ -24,7 +29,7 @@ Ui.BeginMenu = {
             cursor:set_default_animation( "Position1" )
             Ui.BeginMenu.position = 1
         end
-
+]]
         return 0
     end,
 

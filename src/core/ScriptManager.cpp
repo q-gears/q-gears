@@ -252,7 +252,7 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
     {
         if( m_ScriptEntity[ i ].name == entity_name )
         {
-            LOG_WARNING( "Script entity \"" + entity_name + "\" already exist in script manager." );
+            LOG_ERROR( "Script entity \"" + entity_name + "\" already exist in script manager." );
             return;
         }
     }
@@ -280,7 +280,7 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
         }
 
         // check "on_update" script
-        if( luabind::type( table[ "on_start" ] ) == LUA_TFUNCTION )
+        if( luabind::type( table[ "on_update" ] ) == LUA_TFUNCTION )
         {
             QueueScript script;
             script.function = "on_update";
@@ -467,7 +467,7 @@ ScriptManager::ScriptRequest( const char* entity, const char* function, const in
 
     if( script_entity == NULL )
     {
-        LOG_ERROR( "[SCRIPT] script:request: Entity \"" + Ogre::String( entity ) + "\" doesn't exist." );
+        LOG_WARNING( "[SCRIPT] script:request: Entity \"" + Ogre::String( entity ) + "\" doesn't exist." );
         return;
     }
 
