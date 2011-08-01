@@ -4,6 +4,9 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 
 2011-08-01
 ----------
+* [Application] Add quit console command. [Akari]
+* [Script] Scripts now added only if this table or function exist. [Akari]
+* [Script] Add on_update callback to all entities. [Akari]
 * [UI] Add UI debug draw. [Akari]
 * [UI] Fix prototype loading without name. [Akari]
 

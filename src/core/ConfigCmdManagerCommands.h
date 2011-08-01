@@ -9,6 +9,15 @@
 #include "Logger.h"
 #include "XmlMapFile.h"
 #include "XmlMapsFile.h"
+#include "../Main.h"
+
+
+
+void
+CmdQuit( const Ogre::StringVector& params )
+{
+    g_ApplicationState = QG_EXIT;
+}
 
 
 
@@ -414,6 +423,7 @@ CmdViewerCompletion( Ogre::StringVector& complete_params )
 void
 ConfigCmdManager::InitCmd()
 {
+    AddCmd( "quit", "Stops application and quit", "", CmdQuit, NULL );
     AddCmd( "echo", "Print command parameters", "", CmdEcho, NULL );
     AddCmd( "config_var_list", "List of registered config variables", "[<filter substring>]", CmdConfigVarList, NULL );
     AddCmd( "config_cmd_list", "List of registered config commands", "[<filter substring>]", CmdConfigCmdList, NULL );

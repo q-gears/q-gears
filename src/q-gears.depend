@@ -23638,7 +23638,7 @@
 	"ConfigCmdManager.h"
 	"Console.h"
 
-1310747361 d:\my\1\svn\q-gears\src\core\configcmdmanagercommands.h
+1312212562 d:\my\1\svn\q-gears\src\core\configcmdmanagercommands.h
 	<OgreRenderWindow.h>
 	<OgreRoot.h>
 	<OgreStringConverter.h>
@@ -23649,6 +23649,7 @@
 	"Logger.h"
 	"XmlMapFile.h"
 	"XmlMapsFile.h"
+	"../Main.h"
 
 1309011074 d:\my\1\svn\q-gears\src\core\inputmanagercommands.h
 	<OgreStringConverter.h>
