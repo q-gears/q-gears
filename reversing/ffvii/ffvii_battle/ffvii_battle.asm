@@ -18027,7 +18027,7 @@ funcc4dc8:	; 800C4DC8
 800C4E44	jal    func46910 [$80046910]
 800C4E48	addu   a0, s2, zero
 800C4E4C	addu   a0, s2, zero
-800C4E50	jal    func46848 [$80046848]
+800C4E50	jal    system_change_semi_transparency_in_packet [$80046848]
 800C4E54	ori    a1, zero, $0001
 800C4E58	lbu    v0, $0000(s1)
 800C4E5C	nop
@@ -18185,7 +18185,7 @@ funcc5040:	; 800C5040
 800C5098	jal    func468e8 [$800468e8]
 800C509C	addu   a0, s1, zero
 800C50A0	addu   a0, s1, zero
-800C50A4	jal    func46848 [$80046848]
+800C50A4	jal    system_change_semi_transparency_in_packet [$80046848]
 800C50A8	ori    a1, zero, $0001
 800C50AC	lui    a0, $00ff
 800C50B0	ori    a0, a0, $ffff
@@ -29464,7 +29464,7 @@ funcd93e4:	; 800D93E4
 800D942C	ori    v0, zero, $0060
 800D9430	sb     v0, $0007(v1)
 800D9434	lw     a0, $0000(s0)
-800D9438	jal    func46848 [$80046848]
+800D9438	jal    system_change_semi_transparency_in_packet [$80046848]
 800D943C	ori    a1, zero, $0001
 800D9440	lui    v0, $8006
 800D9444	lw     v0, $2f24(v0)
@@ -29888,7 +29888,7 @@ Ld9a78:	; 800D9A78
 800D9A98	ori    v0, zero, $0064
 800D9A9C	sb     v0, $0007(v1)
 800D9AA0	lw     a0, $0000(s0)
-800D9AA4	jal    func46848 [$80046848]
+800D9AA4	jal    system_change_semi_transparency_in_packet [$80046848]
 800D9AA8	ori    a1, zero, $0001
 800D9AAC	lw     a0, $0000(s0)
 800D9AB0	jal    func46870 [$80046870]
@@ -33240,7 +33240,7 @@ Ldcb3c:	; 800DCB3C
 800DCBA0	nop
 800DCBA4	lui    a0, $8016
 800DCBA8	lw     a0, $3c74(a0)
-800DCBAC	jal    func46848 [$80046848]
+800DCBAC	jal    system_change_semi_transparency_in_packet [$80046848]
 800DCBB0	ori    a1, zero, $0001
 800DCBB4	lw     t0, $0120(sp)
 800DCBB8	lui    a0, $8016
@@ -33339,7 +33339,7 @@ Ldccb4:	; 800DCCB4
 800DCD24	nop
 800DCD28	lui    a0, $8016
 800DCD2C	lw     a0, $3c74(a0)
-800DCD30	jal    func46848 [$80046848]
+800DCD30	jal    system_change_semi_transparency_in_packet [$80046848]
 800DCD34	ori    a1, zero, $0001
 800DCD38	lw     t0, $0120(sp)
 800DCD3C	lui    v1, $8016
@@ -40760,7 +40760,7 @@ Le3464:	; 800E3464
 800E355C	lw     a0, $8368(a0)
 800E3560	ori    a1, zero, $0001
 800E3564	sll    a0, a0, $04
-800E3568	jal    func46848 [$80046848]
+800E3568	jal    system_change_semi_transparency_in_packet [$80046848]
 800E356C	addu   a0, a0, s0
 800E3570	ori    a1, zero, $0003
 800E3574	lui    v0, $8010

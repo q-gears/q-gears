@@ -1,4 +1,4 @@
 ﻿<texts>
     <text name="NewGame">NEW GAME</text>
-    <text name="Continue">ビッグス 「<colour value="0 1 0 1">さすが、ソルジャー！</colour> <colour value="1 0 0 1">でもよ、反神羅<colour value="1 0 1 1">（しんら）</colour>グループ【アバランチ】に ソルジャーが参加するなんてスゲエよな！</colour>」</text>
+    <text name="Continue">Continue?</text>
 </texts>

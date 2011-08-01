@@ -8930,7 +8930,7 @@ loop128fc:	; 800128FC
 800128FC	jal    func469b0 [$800469b0]
 80012900	addu   a0, s0, zero
 80012904	addu   a0, s0, zero
-80012908	jal    func46848 [$80046848]
+80012908	jal    system_change_semi_transparency_in_packet [$80046848]
 8001290C	ori    a1, zero, $0001
 80012910	addu   a0, s0, zero
 80012914	jal    func46870 [$80046870]
@@ -9693,7 +9693,7 @@ loop143e0:	; 800143E0
 800143F0	jal    func468fc [$800468fc]
 800143F4	addu   a0, s0, zero
 800143F8	addu   a0, s0, zero
-800143FC	jal    func46848 [$80046848]
+800143FC	jal    system_change_semi_transparency_in_packet [$80046848]
 80014400	ori    a1, zero, $0001
 80014404	addu   a0, s0, zero
 80014408	jal    func46870 [$80046870]
@@ -14867,7 +14867,7 @@ func1cf3c:	; 8001CF3C
 8001CFC4	addu   s1, s5, zero
 8001CFC8	lui    a0, $8006
 8001CFCC	lw     a0, $2f24(a0)
-8001CFD0	jal    func46848 [$80046848]
+8001CFD0	jal    system_change_semi_transparency_in_packet [$80046848]
 8001CFD4	ori    a1, zero, $0001
 
 L1cfd8:	; 8001CFD8
@@ -15015,7 +15015,7 @@ L1cfd8:	; 8001CFD8
 8001D208	addu   s1, s5, zero
 8001D20C	lui    a0, $8006
 8001D210	lw     a0, $2f24(a0)
-8001D214	jal    func46848 [$80046848]
+8001D214	jal    system_change_semi_transparency_in_packet [$80046848]
 8001D218	ori    a1, zero, $0001
 
 L1d21c:	; 8001D21C
@@ -16051,7 +16051,7 @@ L1e4e0:	; 8001E4E0
 8001E8E8	addiu  s1, a1, $0003
 8001E8EC	lui    a0, $8006
 8001E8F0	lw     a0, $2f24(a0)
-8001E8F4	jal    func46848 [$80046848]
+8001E8F4	jal    system_change_semi_transparency_in_packet [$80046848]
 8001E8F8	ori    a1, zero, $0001
 
 L1e8fc:	; 8001E8FC
@@ -16216,7 +16216,7 @@ func1eb2c:	; 8001EB2C
 8001EB60	sb     v0, $0007(v1)
 8001EB64	lui    a0, $8006
 8001EB68	lw     a0, $2f24(a0)
-8001EB6C	jal    func46848 [$80046848]
+8001EB6C	jal    system_change_semi_transparency_in_packet [$80046848]
 8001EB70	ori    a1, zero, $0001
 8001EB74	lui    a0, $8006
 8001EB78	lw     a0, $2f24(a0)
@@ -18501,7 +18501,7 @@ L21580:	; 80021580
 80021598	lw     a0, $0214(gp)
 8002159C	ori    a1, zero, $0001
 800215A0	sll    a0, a0, $04
-800215A4	jal    func46848 [$80046848]
+800215A4	jal    system_change_semi_transparency_in_packet [$80046848]
 800215A8	addu   a0, a0, s0
 800215AC	ori    v1, zero, $0180
 800215B0	lw     v0, $0214(gp)
@@ -20117,7 +20117,7 @@ L22c38:	; 80022C38
 80022D14	lw     a0, $0214(gp)
 80022D18	ori    a1, zero, $0001
 80022D1C	sll    a0, a0, $04
-80022D20	jal    func46848 [$80046848]
+80022D20	jal    system_change_semi_transparency_in_packet [$80046848]
 80022D24	addu   a0, a0, s0
 80022D28	ori    v1, zero, $0180
 80022D2C	lw     v0, $0214(gp)
@@ -20731,7 +20731,7 @@ L23528:	; 80023528
 80023584	lw     a0, $0214(gp)
 80023588	ori    a1, zero, $0001
 8002358C	sll    a0, a0, $04
-80023590	jal    func46848 [$80046848]
+80023590	jal    system_change_semi_transparency_in_packet [$80046848]
 80023594	addu   a0, a0, s1
 80023598	lw     v0, $0214(gp)
 8002359C	ori    v1, zero, $0180
@@ -24601,10 +24601,10 @@ func26a00:	; 80026A00
 
 
 
-//////////////////////////////////////////////////////////
-func26a34
+////////////////////////////////
+// func26a34
 80026A34-80026A90
-//////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
@@ -24746,17 +24746,17 @@ L26c50:	; 80026C50
 
 
 
-////////////////////////////////////////////////////////
+////////////////////////////////
 func26c5c
 80026C5C-80026F40
-////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////////
-func26f44
+////////////////////////////////
+// func26f44
 80026F44-80027088
-////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
@@ -25520,7 +25520,7 @@ func27b84:	; 80027B84
 80027BBC	sb     s2, $0007(v0)
 80027BC0	lui    a0, $8006
 80027BC4	lw     a0, $2f24(a0)
-80027BC8	jal    func46848 [$80046848]
+80027BC8	jal    system_change_semi_transparency_in_packet [$80046848]
 80027BCC	ori    a1, zero, $0001
 80027BD0	lui    v1, $8006
 80027BD4	lw     v1, $2f24(v1)
@@ -25575,7 +25575,7 @@ func27b84:	; 80027B84
 80027C98	sb     s2, $0007(v0)
 80027C9C	lui    a0, $8006
 80027CA0	lw     a0, $2f24(a0)
-80027CA4	jal    func46848 [$80046848]
+80027CA4	jal    system_change_semi_transparency_in_packet [$80046848]
 80027CA8	ori    a1, zero, $0001
 80027CAC	lui    v1, $8006
 80027CB0	lw     v1, $2f24(v1)
@@ -25636,7 +25636,7 @@ func27b84:	; 80027B84
 80027D8C	sb     s2, $0007(v0)
 80027D90	lui    a0, $8006
 80027D94	lw     a0, $2f24(a0)
-80027D98	jal    func46848 [$80046848]
+80027D98	jal    system_change_semi_transparency_in_packet [$80046848]
 80027D9C	ori    a1, zero, $0001
 80027DA0	lui    v1, $8006
 80027DA4	lw     v1, $2f24(v1)
@@ -25691,7 +25691,7 @@ func27b84:	; 80027B84
 80027E68	sb     s2, $0007(v0)
 80027E6C	lui    a0, $8006
 80027E70	lw     a0, $2f24(a0)
-80027E74	jal    func46848 [$80046848]
+80027E74	jal    system_change_semi_transparency_in_packet [$80046848]
 80027E78	ori    a1, zero, $0001
 80027E7C	lhu    v0, $0000(s0)
 80027E80	lhu    v1, $0004(s0)
@@ -25752,7 +25752,7 @@ func27b84:	; 80027B84
 80027F5C	sb     v0, $0007(v1)
 80027F60	lui    a0, $8006
 80027F64	lw     a0, $2f24(a0)
-80027F68	jal    func46848 [$80046848]
+80027F68	jal    system_change_semi_transparency_in_packet [$80046848]
 80027F6C	ori    a1, zero, $0001
 80027F70	lui    v1, $8006
 80027F74	lw     v1, $2f24(v1)
@@ -26192,7 +26192,7 @@ func285ac:	; 800285AC
 800285F8	sw     s3, $001c(sp)
 800285FC	lui    a0, $8006
 80028600	lw     a0, $2f24(a0)
-80028604	jal    func46848 [$80046848]
+80028604	jal    system_change_semi_transparency_in_packet [$80046848]
 80028608	ori    a1, zero, $0001
 8002860C	lui    v0, $8006
 80028610	lw     v0, $2f24(v0)
@@ -26293,7 +26293,7 @@ func285ac:	; 800285AC
 8002878C	nop
 80028790	lui    a0, $8006
 80028794	lw     a0, $2f24(a0)
-80028798	jal    func46848 [$80046848]
+80028798	jal    system_change_semi_transparency_in_packet [$80046848]
 8002879C	ori    a1, zero, $0001
 800287A0	lui    v0, $8006
 800287A4	lw     v0, $2f24(v0)
@@ -26415,7 +26415,7 @@ func28930:	; 80028930
 80028968	sw     s2, $0018(sp)
 8002896C	lui    a0, $8006
 80028970	lw     a0, $2f24(a0)
-80028974	jal    func46848 [$80046848]
+80028974	jal    system_change_semi_transparency_in_packet [$80046848]
 80028978	ori    a1, zero, $0001
 8002897C	lui    a1, $5555
 80028980	ori    a1, a1, $5556
@@ -26518,7 +26518,7 @@ func28930:	; 80028930
 80028B04	subu   s1, s1, s2
 80028B08	lui    a0, $8006
 80028B0C	lw     a0, $2f24(a0)
-80028B10	jal    func46848 [$80046848]
+80028B10	jal    system_change_semi_transparency_in_packet [$80046848]
 80028B14	ori    a1, zero, $0001
 80028B18	lui    v0, $8006
 80028B1C	lw     v0, $2f24(v0)
@@ -26656,7 +26656,7 @@ func28ca0:	; 80028CA0
 80028D20	nop
 80028D24	lui    a0, $8006
 80028D28	lw     a0, $2f24(a0)
-80028D2C	jal    func46848 [$80046848]
+80028D2C	jal    system_change_semi_transparency_in_packet [$80046848]
 80028D30	ori    a1, zero, $0001
 
 L28d34:	; 80028D34
@@ -50507,8 +50507,9 @@ func42dc8:	; 80042DC8
 80042DC8	addiu  t2, zero, $00a0
 80042DCC	jr     t2 
 80042DD0	addiu  t1, zero, $003f
-
 80042DD4	nop
+
+
 80042DD8	sw     a1, $0004(sp)
 80042DDC	sw     a2, $0008(sp)
 80042DE0	sw     a3, $000c(sp)
@@ -54425,7 +54426,7 @@ L46708:	; 80046708
 
 
 ////////////////////////////////
-// func46848
+// system_change_semi_transparency_in_packet
 80046848-8004686C
 ////////////////////////////////
 

@@ -92,20 +92,7 @@ ScriptManager::Update()
 
 
 
-                    // get real table by name
-                    Ogre::StringVector table_path = StringTokenise( m_CurrentScriptId.entity, "." );
-                    luabind::object table = luabind::globals( m_ScriptEntity[ i ].queue[ 0 ].state );
-                    for( int i = 0; i < table_path.size(); ++i )
-                    {
-                        table = table[ table_path[ i ] ];
-
-                        if( luabind::type( table ) != LUA_TTABLE )
-                        {
-                            LOG_WARNING( "Script entity \"" + m_CurrentScriptId.entity + "\" try run script on table \"" + table_path[ i ] + "\" which is not a table." );
-                            table = luabind::object();
-                            break;
-                        }
-                    }
+                    luabind::object table = GetTableByEntityName( m_CurrentScriptId.entity, m_ScriptEntity[ i ].queue[ 0 ].state );
 
 
 
@@ -128,7 +115,10 @@ ScriptManager::Update()
                         if( ret == 0 )
                         {
                             LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' finished." );
-                            RemoveEntityTopScript( m_ScriptEntity[ i ] );
+                            if( m_ScriptEntity[ i ].queue[ 0 ].function != "on_update" )
+                            {
+                                RemoveEntityTopScript( m_ScriptEntity[ i ] );
+                            }
                         }
                         else if( ret == 1 )
                         {
@@ -167,7 +157,10 @@ ScriptManager::Update()
                     if( ret == 0 ) // finished
                     {
                         LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' finished." );
-                        RemoveEntityTopScript( m_ScriptEntity[ i ] );
+                        if( m_ScriptEntity[ i ].queue[ 0 ].function != "on_update" )
+                        {
+                            RemoveEntityTopScript( m_ScriptEntity[ i ] );
+                        }
                     }
                     else if (ret == 1)
                     {
@@ -264,20 +257,49 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
         }
     }
 
-    ScriptEntity script_entity;
-    script_entity.name = entity_name;
+    luabind::object table = GetTableByEntityName( entity_name, m_LuaState );
+    if( table.is_valid() && luabind::type( table ) == LUA_TTABLE )
+    {
 
-    QueueScript script;
-    script.function = "on_start";
-    script.priority = 0;
-    script.state = lua_newthread( m_LuaState );
-    // we dont want thread to be garbage collected so we store it
-    script.state_id = luaL_ref( m_LuaState, LUA_REGISTRYINDEX );
-    script.seconds_to_wait = 0;
-    script.wait = false;
-    script.yield = false;
-    script_entity.queue.push_back( script );
-    m_ScriptEntity.push_back( script_entity );
+        ScriptEntity script_entity;
+        script_entity.name = entity_name;
+
+        // check "on_start" script
+        if( luabind::type( table[ "on_start" ] ) == LUA_TFUNCTION )
+        {
+            QueueScript script;
+            script.function = "on_start";
+            script.priority = 0;
+            script.state = lua_newthread( m_LuaState );
+            // we dont want thread to be garbage collected so we store it
+            script.state_id = luaL_ref( m_LuaState, LUA_REGISTRYINDEX );
+            script.seconds_to_wait = 0;
+            script.wait = false;
+            script.yield = false;
+            script_entity.queue.push_back( script );
+        }
+
+        // check "on_update" script
+        if( luabind::type( table[ "on_start" ] ) == LUA_TFUNCTION )
+        {
+            QueueScript script;
+            script.function = "on_update";
+            script.priority = 999;
+            script.state = lua_newthread( m_LuaState );
+            // we dont want thread to be garbage collected so we store it
+            script.state_id = luaL_ref( m_LuaState, LUA_REGISTRYINDEX );
+            script.seconds_to_wait = 0;
+            script.wait = false;
+            script.yield = false;
+            script_entity.queue.push_back( script );
+        }
+
+        m_ScriptEntity.push_back( script_entity );
+    }
+    else
+    {
+        LOG_WARNING( "Tables for entity \"" + entity_name + "\" doesn't exist." );
+    }
 }
 
 
@@ -321,6 +343,28 @@ ScriptManager::RemoveEntityTopScript( ScriptEntity& entity )
 
         entity.queue.erase( entity.queue.begin() );
     }
+}
+
+
+
+luabind::object
+ScriptManager::GetTableByEntityName( const Ogre::String& name, lua_State* state ) const
+{
+    // get real table by name
+    Ogre::StringVector table_path = StringTokenise( name, "." );
+    luabind::object table = luabind::globals( state );
+    for( int i = 0; i < table_path.size(); ++i )
+    {
+        table = table[ table_path[ i ] ];
+
+        if( luabind::type( table ) != LUA_TTABLE )
+        {
+            LOG_WARNING( "Script entity \"" + name + "\" isn't valid. There is no table \"" + table_path[ i ] + "\"." );
+            return luabind::object();
+        }
+    }
+
+    return table;
 }
 
 

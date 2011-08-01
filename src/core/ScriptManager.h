@@ -74,6 +74,7 @@ public:
     void AddEntityScript( const Ogre::String& entity_name, const Ogre::String& function_name, int priority );
     void RemoveEntityTopScript( ScriptEntity& entity );
 
+    luabind::object GetTableByEntityName( const Ogre::String& name, lua_State* state ) const;
     QueueScript* GetScriptByScriptId( const ScriptId& script ) const;
     ScriptEntity* GetScriptEntityByName( const Ogre::String& name ) const;
     const ScriptId GetCurrentScriptId() const;

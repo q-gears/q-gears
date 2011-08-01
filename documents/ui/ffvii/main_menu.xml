@@ -1,7 +1,0 @@
-<window name = "main_menu_screen">
-    <object name = "hierarchy" type = "objects">
-        <object name = "menu_background" type = "window" prototype = "menu_background" x = "0" y = "0" />
-        <object name = "main_menu_buttons" type = "window" prototype = "main_menu_buttons" x = "0" y = "0" />
-        <object name = "options_buttons" type = "window" prototype = "options_buttons" x = "0" y = "0" />
-    </object>
-</window>

@@ -1421,7 +1421,7 @@ loopabf3c:	; 800ABF3C
 800ABF48	jal    func46870 [$80046870]
 800ABF4C	ori    a1, zero, $0001
 800ABF50	addu   a0, s1, zero
-800ABF54	jal    func46848 [$80046848]
+800ABF54	jal    system_change_semi_transparency_in_packet [$80046848]
 800ABF58	addu   a1, zero, zero
 800ABF5C	ori    a0, zero, $0100
 800ABF60	ori    a1, zero, $01e9

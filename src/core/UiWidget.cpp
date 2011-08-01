@@ -88,7 +88,7 @@ UiWidget::Initialise()
     m_ScissorRight = m_ScreenWidth;
 
     m_AnimationCurrent = NULL;
-    m_AnimationDefault = "Idle";
+    m_AnimationDefault = "";
     m_AnimationState = UiAnimation::DEFAULT;
     m_Colour = Ogre::ColourValue( 1, 1, 1, 1 );
 
@@ -131,7 +131,7 @@ UiWidget::Update()
 
         OnResize();
     }
-    else if( m_AnimationCurrent == NULL && m_AnimationState == UiAnimation::DEFAULT )
+    else if( m_AnimationCurrent == NULL && m_AnimationState == UiAnimation::DEFAULT && m_AnimationDefault != "" )
     {
         PlayAnimation( m_AnimationDefault, UiAnimation::DEFAULT, 0, -1 );
     }

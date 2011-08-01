@@ -18,6 +18,22 @@
 +20 [][][][] 80045400 function. Passed as parameter when copy palette from ram.
 80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
+80062d7c [][]     key data.
+                    0001 - L2
+                    0002 - R2
+                    0004 - L1.
+                    0008 - R1.
+                    0010 - triangle.
+                    0020 - circle.
+                    0040 - cross.
+                    0080 - square.
+                    0100 - select.
+                    0800 - start.
+                    1000 - up button.
+                    2000 - right button
+                    4000 - down button.
+                    8000 - left button
+
 80062f70 [][]     looks like global left right reverberation pan.
 80062f74 [][][][] pointer to 80089580. AKAO scripts. EFFECT.ALL offsets.
 80062f84 [][][][] pointer to 8008a580. AKAO scripts. EFFECT.ALL data.

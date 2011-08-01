@@ -296,7 +296,7 @@ return e3000000 | V1 | V0;
 
 
 ////////////////////////////////
-// func46848
+// system_change_semi_transparency_in_packet
 if (A1 != 0)
 {
     [A0 + 7] = b(bu[A0 + 7] | 2);
@@ -344,7 +344,6 @@ V0 = V0 & ffff
 
 ////////////////////////////////
 // func26a34
-80026A34	addiu  sp, sp, $ffe0 (=-$20)
 80026A38	addu   v0, a0, zero
 80026A3C	addu   v1, a1, zero
 80026A40	addu   t0, a2, zero
@@ -353,7 +352,6 @@ V0 = V0 & ffff
 80026A4C	lw     a0, $2f24(a0)
 80026A50	addu   a2, v1, zero
 80026A54	sw     a3, $0010(sp)
-80026A58	sw     ra, $0018(sp)
 80026A5C	jal    func44a68 [$80044a68]
 80026A60	addu   a3, t0, zero
 80026A64	lui    a1, $8006
@@ -362,12 +360,8 @@ V0 = V0 & ffff
 80026A70	addiu  v0, a1, $000c
 80026A74	lui    at, $8006
 80026A78	sw     v0, $2f24(at)
-80026A7C	jal    system_add_render_packet_to_queue [$80046794]
-80026A80	nop
-80026A84	lw     ra, $0018(sp)
-80026A88	addiu  sp, sp, $0020
-80026A8C	jr     ra 
-80026A90	nop
+
+system_add_render_packet_to_queue;
 ////////////////////////////////
 
 
