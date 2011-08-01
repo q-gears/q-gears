@@ -36,11 +36,18 @@ main(int argc, char *argv[])
 
     // init root early
     root = new Ogre::Root( "", "" );
-#ifndef _DEBUG
-    root->loadPlugin( "RenderSystem_GL.dll" );
+ #ifndef _DEBUG
+#  ifdef __WIN32__
+      root->loadPlugin( "RenderSystem_GL.dll" );
+#  else // Assume Linux for now
+      root->loadPlugin( "./RenderSystem_GL.so" );
+#  endif
 #else
-    root->loadPlugin( "RenderSystem_GL_d.dll" );
-#endif
+#  ifdef __WIN32__
+       root->loadPlugin( "RenderSystem_GL_d.dll" );
+#  else // Assume Linux for now
+       root->loadPlugin( "./RenderSystem_GL_d.so" );
+#  endif
     root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
     root->initialise( false );
     Ogre::NameValuePairList misc;
