@@ -183,7 +183,7 @@ UiTextArea::UpdateGeometry()
     data.position = 0;
 
     TextStyle style;
-    style.colour = m_Colour;
+    style.colour = m_Colour1;
 
     if( m_TextNode != NULL )
     {

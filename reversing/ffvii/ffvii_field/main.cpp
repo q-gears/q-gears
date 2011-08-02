@@ -68,7 +68,6 @@ funcab4ac; // init some bebug lines buffer 2
 
 S3 = 1;
 S2 = 8009abf4;
-S4 = 8009abf4 + 1;
 [80114488] = h(0);
 [801142c8] = h(0);
 [800e4d44] = h(0);
@@ -171,14 +170,14 @@ La25bc:	; 800A25BC
 
     V1 = bu[8009abf4 + 1];
 
-    if ((V1 - f >= 2) || (V1 == 11) || (V1 - 15 >= 2) || (V1 - 17 < 2))
+    if ( V1 == f || V1 == 10 || V1 == 11 || V1 == 15 || V1 == 16 || V1 == 17 || V1 == 18 )
     {
         [8009c560] = h(d);
         field_stop_load_background_in_advance;
         return;
     }
 
-    if ((V1 - 6 >= 2) || V1 == 8 || V1 == 9 || V1 == e || (V1 - 12 < 2))
+    if ( V1 == 6 || V1 == 7 || V1 == 8 || V1 == 9 || V1 == e || V1 == 12 || V1 == 13 )
     {
         [8009c560] = h(5);
         field_stop_load_background_in_advance;

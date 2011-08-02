@@ -1,4 +1,7 @@
 ﻿<texts>
-    <text name="NewGame">NEW GAME</text>
-    <text name="Continue">Continue?</text>
+    <text name="BeginMenu_Continue">Continue?</text>
+    <text name="BeginMenu_NewGame">NEW GAME</text>
+
+    <text name="MainMenu_Gil">Gil</text>
+    <text name="ManiMenu_Time">Time</text>
 </texts>

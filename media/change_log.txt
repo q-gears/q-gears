@@ -2,6 +2,10 @@
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 --------------------------------------------------------------------------------
 
+2011-08-03
+----------
+* [UI] Add colors for each corner of Sprite. Tag "colours" in xml description. [Akari]
+
 2011-08-02
 ----------
 * [Script] Improve debug draw. now all functions in queue displayed along with their priorities. [Akari]

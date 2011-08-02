@@ -82,6 +82,7 @@ public:
     int GetScissorRight() const;
 
     void SetColour( const float r, const float g, const float b );
+    void SetColours( const float r1, const float g1, const float b1, const float r2, const float g2, const float b2, const float r3, const float g3, const float b3, const float r4, const float g4, const float b4 );
     void SetAlpha( const float a );
 
 private:
@@ -98,7 +99,10 @@ protected:
     float                    m_ScreenHeight;
 
     bool                     m_Visible;
-    Ogre::ColourValue        m_Colour;
+    Ogre::ColourValue        m_Colour1;
+    Ogre::ColourValue        m_Colour2;
+    Ogre::ColourValue        m_Colour3;
+    Ogre::ColourValue        m_Colour4;
 
     Align                    m_Align;
     VerticalAlign            m_VerticalAlign;

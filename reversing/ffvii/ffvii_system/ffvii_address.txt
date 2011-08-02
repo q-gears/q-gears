@@ -276,6 +276,7 @@
     +0b []       spirit bonus
     +0c []       dexterity bonus
     +0d []       luck bonus
+    +10          name string.
     +1c []       equipped weapon.
     +1d []       equipped armor.
     +1e []       equipped accessory.
@@ -305,8 +306,10 @@
     +7c [][][][] armor materia slot 8.
     +80 [][][][] exp to next level.
 +04f8 [][][][] party member in slot1-4 (used in battle).
-8009cbe0 party item stock array
-8009d268 [][][][] savemap seconds for timer (set in STTIM).
++04fc party item stock array
++0b7c [][][][] party gil amount
++0b80 [][][][] total seconds played.
++0b84 [][][][] savemap seconds for timer (set in STTIM).
 8009d288 savemap memory bank 1/2 start
 8009d302 []       flags for ui show during battle (0x40 - tagret text shown, 0x80 - underwater timer in battle)
 +0cad [][][]   party member in slot 1-3.

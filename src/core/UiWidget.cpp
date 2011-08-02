@@ -90,7 +90,10 @@ UiWidget::Initialise()
     m_AnimationCurrent = NULL;
     m_AnimationDefault = "";
     m_AnimationState = UiAnimation::DEFAULT;
-    m_Colour = Ogre::ColourValue( 1, 1, 1, 1 );
+    m_Colour1 = Ogre::ColourValue( 1, 1, 1, 1 );
+    m_Colour2 = Ogre::ColourValue( 1, 1, 1, 1 );
+    m_Colour3 = Ogre::ColourValue( 1, 1, 1, 1 );
+    m_Colour4 = Ogre::ColourValue( 1, 1, 1, 1 );
 
     ScriptManager::getSingleton().AddEntity( "Ui." + m_PathName );
 }
@@ -686,9 +689,21 @@ UiWidget::GetScissorRight() const
 void
 UiWidget::SetColour( const float r, const float g, const float b )
 {
-    m_Colour.r = r;
-    m_Colour.g = g;
-    m_Colour.b = b;
+    m_Colour1.r = r; m_Colour1.g = g; m_Colour1.b = b;
+    m_Colour2.r = r; m_Colour2.g = g; m_Colour2.b = b;
+    m_Colour3.r = r; m_Colour3.g = g; m_Colour3.b = b;
+    m_Colour4.r = r; m_Colour4.g = g; m_Colour4.b = b;
+}
+
+
+
+void
+UiWidget::SetColours( const float r1, const float g1, const float b1, const float r2, const float g2, const float b2, const float r3, const float g3, const float b3, const float r4, const float g4, const float b4 )
+{
+    m_Colour1.r = r1; m_Colour1.g = g1; m_Colour1.b = b1;
+    m_Colour2.r = r2; m_Colour2.g = g2; m_Colour2.b = b2;
+    m_Colour3.r = r3; m_Colour3.g = g3; m_Colour3.b = b3;
+    m_Colour4.r = r4; m_Colour4.g = g4; m_Colour4.b = b4;
 }
 
 
@@ -696,5 +711,8 @@ UiWidget::SetColour( const float r, const float g, const float b )
 void
 UiWidget::SetAlpha( const float a )
 {
-    m_Colour.a = a;
+    m_Colour1.a = a;
+    m_Colour2.a = a;
+    m_Colour3.a = a;
+    m_Colour4.a = a;
 }

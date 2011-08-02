@@ -1,0 +1,11 @@
+<screen name="MainMenu" script="screens/main_menu/main_menu.lua" show="true">
+    <widget name="TimeGil" align="right" x="-400" y="492" width="258" height="108" show="true">
+        <prototype prototype="Window" />
+        <text_area name="TimeText" x="12" y="18" text_name="ManiMenu_Time" font="FFVIIFont" scale="3 3" show="true" />
+        <text_area name="GilText" x="15" y="60" text_name="MainMenu_Gil" font="FFVIIFont" scale="3 3" show="true" />
+
+        <animation name="Idle" />
+        <animation name="Appear" />
+        <animation name="Disapear" />
+    </widget>
+</screen>

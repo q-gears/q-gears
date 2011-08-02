@@ -143,8 +143,25 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
 
 
-                    Ogre::Vector3 colour = GetVector3( node, "colour", Ogre::Vector3( 1, 1, 1 ) );
-                    widget2->SetColour( colour.x, colour.y, colour.z );
+                    Ogre::String colours = GetString( node, "colours", "" );
+                    if( colours != "" )
+                    {
+                        Ogre::StringVector colour_string = Ogre::StringUtil::split( colours, "," );
+                        Ogre::Vector3 colour[ 4 ];
+                        for( int i = 0; i < 4; ++i )
+                        {
+                            Ogre::StringUtil::trim( colour_string[ i ] );
+                            colour[ i ] = ( i < colour_string.size() ) ? Ogre::StringConverter::parseVector3( colour_string[ i ] ) : Ogre::Vector3( 1, 1, 1 );
+                        }
+                        widget2->SetColours( colour[ 0 ].x, colour[ 0 ].y, colour[ 0 ].z, colour[ 1 ].x, colour[ 1 ].y, colour[ 1 ].z, colour[ 2 ].x, colour[ 2 ].y, colour[ 2 ].z, colour[ 3 ].x, colour[ 3 ].y, colour[ 3 ].z );
+                    }
+                    else
+                    {
+                        Ogre::Vector3 colour = GetVector3( node, "colour", Ogre::Vector3( 1, 1, 1 ) );
+                        widget2->SetColour( colour.x, colour.y, colour.z );
+                    }
+
+
 
                     float alpha = GetFloat( node, "alpha", 1 );
                     widget2->SetAlpha( alpha );

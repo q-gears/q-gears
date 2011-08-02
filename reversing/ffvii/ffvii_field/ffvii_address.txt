@@ -237,13 +237,13 @@
 
 8009abf4 start of game data (message/fade/nfade/walkmesh).
 + 01 []       some state
-                0 - no encounter.
+                0 - normal field?
                 1 - finalize field in this case.
                 2 - encounter.
                 a - set when field reset game by all shifts and start + select.
-                c - set afrer function in d state.
+                c - set after function in d state.
                 d -
-+ 02 [][]     map to load (gateway activation) or battle to fight.
++ 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu.
 + 04 [][]     destination x during map load.
 + 06 [][]     destination y during map load.
 + 0a [][]     background X scroll to this position.

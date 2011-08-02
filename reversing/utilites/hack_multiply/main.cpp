@@ -66,7 +66,7 @@ int main()
         printf(" - %d\n", V0);
     }
 */
-
+/*
     for (__int64 A0 = 0; A0 <= 100; ++A0)
     {
         printf("%d:", A0);
@@ -75,6 +75,18 @@ int main()
         T0 = T0 >> 0x22;
         T0 = (A0 - T0 * 0x15) * 0xc;
         printf(" - %d\n", T0);
+    }
+*/
+
+    for (__int64 V1 = 0; V1 <= 100; ++V1)
+    {
+        printf("%d:", V1);
+        __int64 V0 = V1 * 0x54;
+        __int64 T3 = V0 * 0x66666667;
+        T3 = T3 >> 0x20;
+        V0 = V0 >> 0x1f;
+        int x = (T3 >> 3) - V0;
+        printf(" - %d\n", x);
     }
 
     return 0;

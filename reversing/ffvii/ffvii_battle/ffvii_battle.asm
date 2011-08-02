@@ -44114,7 +44114,7 @@ Le62f8:	; 800E62F8
 800E6328	lui    v0, $800a
 800E632C	addiu  v0, v0, $d264 (=-$2d9c)
 800E6330	lw     a0, $0000(v0)
-800E6334	jal    func23788 [$80023788]
+800E6334	jal    system_get_hours_from_seconds [$80023788]
 800E6338	nop
 800E633C	sll    a0, s1, $05
 800E6340	addu   a0, a0, s1
