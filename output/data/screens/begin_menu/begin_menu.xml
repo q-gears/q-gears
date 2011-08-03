@@ -4,6 +4,6 @@
         <animation name="Position1" length="0" y="0:0 297" />
         <animation name="Position2" length="0" y="0:0 333" />
     </sprite>
-    <text_area name="Text1" align="center" x="-80" y="297" text_name="BeginMenu_NewGame" font="FFVIIFont" scale="3 3" show="true" />
-    <text_area name="Text2" align="center" x="-80" y="333" text_name="BeginMenu_Continue" font="FFVIIFont" scale="3 3" show="true" />
+    <text_area name="Text1" align="center" x="-80" y="297" text_name="BeginMenuNewGame" font="FFVIIFont" scale="3 3" show="true" />
+    <text_area name="Text2" align="center" x="-80" y="333" text_name="BeginMenuContinue" font="FFVIIFont" scale="3 3" show="true" />
 </screen>

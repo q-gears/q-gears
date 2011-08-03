@@ -1,7 +1,22 @@
 ﻿<texts>
-    <text name="BeginMenu_Continue">Continue?</text>
-    <text name="BeginMenu_NewGame">NEW GAME</text>
+    <text name="BeginMenuContinue">Continue?</text>
+    <text name="BeginMenuNewGame">NEW GAME</text>
 
-    <text name="MainMenu_Gil">Gil</text>
-    <text name="ManiMenu_Time">Time</text>
+
+
+    <text name="MainMenuGil">Gil</text>
+    <text name="MainMenuTime">Time</text>
+
+    <text name="MainMenuLocation">No. 1 Reactor</text>
+
+    <text name="MainMenuItem">Item</text>
+    <text name="MainMenuMagic">Magic</text>
+    <text name="MainMenuMateria">Materia</text>
+    <text name="MainMenuEquip">Equip</text>
+    <text name="MainMenuStatus">Status</text>
+    <text name="MainMenuOrder">Order</text>
+    <text name="MainMenuLimit">Limit</text>
+    <text name="MainMenuConfig">Config</text>
+    <text name="MainMenuPHS">PHS</text>
+    <text name="MainMenuSave">Save</text>
 </texts>

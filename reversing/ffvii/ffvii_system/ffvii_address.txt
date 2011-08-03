@@ -310,13 +310,17 @@
 +0b7c [][][][] party gil amount
 +0b80 [][][][] total seconds played.
 +0b84 [][][][] savemap seconds for timer (set in STTIM).
-8009d288 savemap memory bank 1/2 start
-8009d302 []       flags for ui show during battle (0x40 - tagret text shown, 0x80 - underwater timer in battle)
-+0cad [][][]   party member in slot 1-3.
-
-8009d588 savemap memory bank d/e start
-+0eaa [][]     some value that increments each battle check.
++0ba4 savemap memory bank 1/2 start
++0bc0 (+1c) [][]     menu visibility mask.
++0bc2 (+1e) [][]     menu locking mask.
++0c1e (+7a) []       flags for ui show during battle (0x40 - tagret text shown, 0x80 - underwater timer in battle)
++0ca4 savemap memory bank 3/4 start
++0cad (+09) [][][]   party member in slot 1-3.
++0da4 savemap memory bank b/c start
++0ea4 savemap memory bank d/e start
++0eaa (+06) [][]     some value that increments each battle check.
 +0f0c          field map name for menu (0x17 size).
++0fa4 savemap memory bank 7/f start
 +10a4 [][]     character lock mask. You cant move character from and out party (in game methods)
 +10a6 [][]     character availability mask. Add character here when adding it to party or enable it with opcode.
 +10d8 []       battle speed.
