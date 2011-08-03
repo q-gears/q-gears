@@ -128,7 +128,11 @@ UiWidget::Update()
                 // in case of cycled default we need to sync with end
                 time = time + delta_time - m_AnimationCurrent->GetLength();
                 PlayAnimation( m_AnimationDefault, UiAnimation::DEFAULT, time, -1 );
-                m_AnimationCurrent->AddTime( 0 );
+
+                if( m_AnimationCurrent != NULL ) // check if we can play default animation
+                {
+                    m_AnimationCurrent->AddTime( 0 );
+                }
             }
         }
 
