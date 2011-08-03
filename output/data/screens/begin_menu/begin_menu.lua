@@ -16,15 +16,12 @@ Ui.BeginMenu = {
 
 
 
-    on_pressed = function( self, button )
+    on_button = function( self, button, event )
         local cursor = ui_manager:get_widget( "BeginMenu.Cursor" )
 
-        if button == "X" then
-            if self.position == 1 then
-                --script:request_end_sync( "Ui.BeginMenu", "to_start", 0 )
-            else
-                --script:request_end_sync( "Ui.BeginMenu", "to_continue", 0 )
-            end
+        if button == "X" and event == "Press" then
+            ui_manager:get_widget( "BeginMenu" ):hide()
+            ui_manager:get_widget( "StartMenu" ):show()
         elseif button == "Down" then
             self.position = self.position + 1
             if self.position > self.position_total then

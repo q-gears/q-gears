@@ -8,17 +8,17 @@
 
 
 
-class ConfigVarManager : public Ogre::Singleton<ConfigVarManager>
+class ConfigVarManager : public Ogre::Singleton< ConfigVarManager >
 {
 public:
-                    ConfigVarManager();
+    ConfigVarManager();
 
-    ConfigVar*      Find(const Ogre::String& name) const;
-    int             GetConfigVarNumber();
-    ConfigVar*      GetConfigVar(int i) const;
+    ConfigVar* Find( const Ogre::String& name ) const;
+    const int GetConfigVarNumber() const;
+    ConfigVar* GetConfigVar( const int i ) const;
 
 private:
-    std::vector<ConfigVar*> m_ConfigVars;
+    std::vector< ConfigVar* > m_ConfigVars;
 };
 
 

@@ -8,45 +8,52 @@ Ui.MainMenu = {
 
 
 
-    on_start = function( self )
+    on_show = function( self )
         local characters  = ui_manager:get_widget( "MainMenu.Characters" )
         local menu        = ui_manager:get_widget( "MainMenu.Menu" )
         local menu_cursor = ui_manager:get_widget( "MainMenu.Menu.Cursor" )
         local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
         local location    = ui_manager:get_widget( "MainMenu.Location" )
 
-        menu_cursor:set_default_animation( "Position" .. self.position )
-
         characters:play_animation_stop( "Appear" )
         menu:play_animation_stop( "Appear" )
+        menu_cursor:set_default_animation( "Position" .. self.position )
         timegil:play_animation_stop( "Appear" )
         location:play_animation_stop( "Appear" )
         location:animation_sync()
 
-        return 0
+        return 0;
     end,
 
 
 
-    on_pressed = function( self, button )
+    on_hide = function( self )
+        local characters  = ui_manager:get_widget( "MainMenu.Characters" )
+        local menu        = ui_manager:get_widget( "MainMenu.Menu" )
+        local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
+        local location    = ui_manager:get_widget( "MainMenu.Location" )
+
+        characters:play_animation_stop( "Disappear" )
+        menu:play_animation_stop( "Disappear" )
+        timegil:play_animation_stop( "Disappear" )
+        location:play_animation_stop( "Disappear" )
+        location:animation_sync()
+
+        return 0;
+    end,
+
+
+
+    on_button = function( self, button, event )
         local characters  = ui_manager:get_widget( "MainMenu.Characters" )
         local menu        = ui_manager:get_widget( "MainMenu.Menu" )
         local menu_cursor = ui_manager:get_widget( "MainMenu.Menu.Cursor" )
         local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
         local location    = ui_manager:get_widget( "MainMenu.Location" )
 
-        if button == "Z" then
-            characters:play_animation_stop( "Disappear" )
-            menu:play_animation_stop( "Disappear" )
-            timegil:play_animation_stop( "Disappear" )
-            location:play_animation_stop( "Disappear" )
-            location:animation_sync()
-        elseif button == "S" then
-            characters:play_animation_stop( "Appear" )
-            menu:play_animation_stop( "Appear" )
-            timegil:play_animation_stop( "Appear" )
-            location:play_animation_stop( "Appear" )
-            location:animation_sync()
+        if button == "Z" and event == "Press" then
+            ui_manager:get_widget( "MainMenu" ):hide()
+            ui_manager:get_widget( "BeginMenu" ):show()
         elseif button == "Down" then
             self.position = self.position + 1
             if self.position > self.position_total then

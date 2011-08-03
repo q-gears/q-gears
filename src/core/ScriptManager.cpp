@@ -63,7 +63,8 @@ ScriptManager::~ScriptManager()
 void
 ScriptManager::Input( const Event& event )
 {
-    if( event.type == ET_KEY_PRESS && (
+    if( ( event.type == ET_KEY_PRESS || event.type == ET_KEY_REPEAT ) &&
+                                      (
                                         event.param1 == OIS::KC_LEFT ||
                                         event.param1 == OIS::KC_RIGHT ||
                                         event.param1 == OIS::KC_DOWN ||
@@ -76,7 +77,16 @@ ScriptManager::Input( const Event& event )
     {
         for( int i = 0; i < m_ScriptEntity.size(); ++i )
         {
-            ScriptRequest( &m_ScriptEntity[ i ], "on_pressed", 100, KeyToString( ( OIS::KeyCode )event.param1 ), false, false );
+            Ogre::String argument2 = "";
+            if( event.type == ET_KEY_PRESS )
+            {
+                argument2 = "Press";
+            }
+            else if( event.type == ET_KEY_REPEAT )
+            {
+                argument2 = "Repeat";
+            }
+            ScriptRequest( &m_ScriptEntity[ i ], "on_button", 100, KeyToString( ( OIS::KeyCode )event.param1 ), argument2, false, false );
         }
     }
 }
@@ -181,7 +191,7 @@ ScriptManager::Update()
 
                         try
                         {
-                            ret = luabind::resume_function< int >( table[ m_CurrentScriptId.function ], table, m_ScriptEntity[ i ].queue[ 0 ].argument.c_str() );
+                            ret = luabind::resume_function< int >( table[ m_CurrentScriptId.function ], table, m_ScriptEntity[ i ].queue[ 0 ].argument1.c_str(), m_ScriptEntity[ i ].queue[ 0 ].argument2.c_str() );
                         }
                         catch( luabind::error& e )
                         {
@@ -518,7 +528,7 @@ ScriptManager::ScriptRequest( const char* entity, const char* function, const in
         return;
     }
 
-    bool added = ScriptRequest( script_entity, function, priority, "", false, false );
+    bool added = ScriptRequest( script_entity, function, priority, "", "", false, false );
 
     if( added == false )
     {
@@ -541,7 +551,7 @@ ScriptManager::ScriptRequestStartSync( const char* entity, const char* function,
         return 1;
     }
 
-    bool added = ScriptRequest( script_entity, function, priority, "", true, false );
+    bool added = ScriptRequest( script_entity, function, priority, "", "", true, false );
 
     if( added == false )
     {
@@ -567,7 +577,7 @@ ScriptManager::ScriptRequestEndSync( const char* entity, const char* function, c
         return 1;
     }
 
-    bool added = ScriptRequest( script_entity, function, priority, "", false, true );
+    bool added = ScriptRequest( script_entity, function, priority, "", "", false, true );
 
     if( added == false )
     {
@@ -581,7 +591,7 @@ ScriptManager::ScriptRequestEndSync( const char* entity, const char* function, c
 
 
 bool
-ScriptManager::ScriptRequest( ScriptEntity* script_entity, const Ogre::String& function, const int priority, const Ogre::String& argument, bool start_sync, bool end_sync )
+ScriptManager::ScriptRequest( ScriptEntity* script_entity, const Ogre::String& function, const int priority, const Ogre::String& argument1, const Ogre::String& argument2, bool start_sync, bool end_sync )
 {
     // check "on_pressed" script
     luabind::object table = GetTableByEntityName( script_entity->name, m_LuaState );
@@ -589,7 +599,8 @@ ScriptManager::ScriptRequest( ScriptEntity* script_entity, const Ogre::String& f
     {
         QueueScript script;
         script.function = function;
-        script.argument = argument;
+        script.argument1 = argument1;
+        script.argument2 = argument2;
         script.priority = priority;
         script.state = lua_newthread( m_LuaState );
         // we dont want thread to be garbage collected so we store it

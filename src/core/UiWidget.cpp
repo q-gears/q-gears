@@ -255,7 +255,7 @@ UiWidget::Show()
     ScriptEntity* script_entity = ScriptManager::getSingleton().GetScriptEntityByName( "Ui." + m_PathName );
     if( script_entity != NULL )
     {
-        ScriptManager::getSingleton().ScriptRequest( script_entity, "on_show", 0, "", false, false );
+        ScriptManager::getSingleton().ScriptRequest( script_entity, "on_show", 0, "", "", false, false );
     }
 }
 
@@ -268,7 +268,7 @@ UiWidget::Hide()
     ScriptEntity* script_entity = ScriptManager::getSingleton().GetScriptEntityByName( "Ui." + m_PathName );
     if( script_entity != NULL )
     {
-        ScriptManager::getSingleton().ScriptRequest( script_entity, "on_hide", 0, "", false, false );
+        ScriptManager::getSingleton().ScriptRequest( script_entity, "on_hide", 0, "", "", false, false );
     }
 }
 
@@ -334,7 +334,7 @@ UiWidget::GetCurrentAnimationName() const
         return m_AnimationCurrent->GetName();
     }
 
-    return "";
+    return Ogre::StringUtil::BLANK;
 }
 
 
@@ -398,6 +398,7 @@ void
 UiWidget::ScriptSetDefaultAnimation( const char* animation )
 {
     m_AnimationDefault = Ogre::String( animation );
+    m_AnimationState = UiAnimation::DEFAULT;
 }
 
 

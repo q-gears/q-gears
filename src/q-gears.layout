@@ -73,11 +73,11 @@
 	<File name="core\Module.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="408" topLine="20" />
 	</File>
-	<File name="core\ScriptManager.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="5803" topLine="169" />
+	<File name="core\ScriptManager.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2407" topLine="60" />
 	</File>
 	<File name="core\ScriptManager.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="611" topLine="24" />
+		<Cursor1 position="2726" topLine="82" />
 	</File>
 	<File name="core\ScriptManagerBinds.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="226" topLine="0" />
@@ -118,8 +118,8 @@
 	<File name="core\UiTextArea.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1850" topLine="50" />
 	</File>
-	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2183" topLine="78" />
+	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="8520" topLine="322" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="4284" topLine="114" />
