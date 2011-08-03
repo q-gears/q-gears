@@ -8,7 +8,40 @@ Ui.MainMenu = {
 
 
 
-    on_show = function( self )
+    on_button = function( self, button, event )
+        if ui_manager:get_widget( "MainMenu" ):is_visible() == true then
+            local characters  = ui_manager:get_widget( "MainMenu.Characters" )
+            local menu        = ui_manager:get_widget( "MainMenu.Menu" )
+            local menu_cursor = ui_manager:get_widget( "MainMenu.Menu.Cursor" )
+            local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
+            local location    = ui_manager:get_widget( "MainMenu.Location" )
+
+            if button == "Z" and event == "Press" then
+                script:request_end_sync( "Ui.MainMenu", "hide", 0 )
+                script:request_end_sync( "Ui.BeginMenu", "show", 0 )
+            elseif button == "Down" then
+                self.position = self.position + 1
+                if self.position > self.position_total then
+                    self.position = 1;
+                end
+                menu_cursor:set_default_animation( "Position" .. self.position )
+            elseif button == "Up" then
+                self.position = self.position - 1
+                if self.position <= 0 then
+                    self.position = self.position_total;
+                end
+                menu_cursor:set_default_animation( "Position" .. self.position )
+            end
+        end
+
+        return 0
+    end,
+
+
+
+    show = function( self )
+        ui_manager:get_widget( "MainMenu" ):set_visible( true )
+
         local characters  = ui_manager:get_widget( "MainMenu.Characters" )
         local menu        = ui_manager:get_widget( "MainMenu.Menu" )
         local menu_cursor = ui_manager:get_widget( "MainMenu.Menu.Cursor" )
@@ -27,7 +60,7 @@ Ui.MainMenu = {
 
 
 
-    on_hide = function( self )
+    hide = function( self )
         local characters  = ui_manager:get_widget( "MainMenu.Characters" )
         local menu        = ui_manager:get_widget( "MainMenu.Menu" )
         local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
@@ -39,35 +72,8 @@ Ui.MainMenu = {
         location:play_animation_stop( "Disappear" )
         location:animation_sync()
 
+        ui_manager:get_widget( "MainMenu" ):set_visible( false )
+
         return 0;
-    end,
-
-
-
-    on_button = function( self, button, event )
-        local characters  = ui_manager:get_widget( "MainMenu.Characters" )
-        local menu        = ui_manager:get_widget( "MainMenu.Menu" )
-        local menu_cursor = ui_manager:get_widget( "MainMenu.Menu.Cursor" )
-        local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
-        local location    = ui_manager:get_widget( "MainMenu.Location" )
-
-        if button == "Z" and event == "Press" then
-            ui_manager:get_widget( "MainMenu" ):hide()
-            ui_manager:get_widget( "BeginMenu" ):show()
-        elseif button == "Down" then
-            self.position = self.position + 1
-            if self.position > self.position_total then
-                self.position = 1;
-            end
-            menu_cursor:set_default_animation( "Position" .. self.position )
-        elseif button == "Up" then
-            self.position = self.position - 1
-            if self.position <= 0 then
-                self.position = self.position_total;
-            end
-            menu_cursor:set_default_animation( "Position" .. self.position )
-        end
-
-        return 0
     end,
 }

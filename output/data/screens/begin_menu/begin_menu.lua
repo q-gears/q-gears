@@ -4,7 +4,7 @@ if Ui == nil then Ui = {} end
 
 Ui.BeginMenu = {
     position = 1,
-    position_total = 10,
+    position_total = 2,
 
 
 
@@ -17,25 +17,43 @@ Ui.BeginMenu = {
 
 
     on_button = function( self, button, event )
-        local cursor = ui_manager:get_widget( "BeginMenu.Cursor" )
+        if ui_manager:get_widget( "BeginMenu" ):is_visible() ~= false then
+            local cursor = ui_manager:get_widget( "BeginMenu.Cursor" )
 
-        if button == "X" and event == "Press" then
-            ui_manager:get_widget( "BeginMenu" ):hide()
-            ui_manager:get_widget( "StartMenu" ):show()
-        elseif button == "Down" then
-            self.position = self.position + 1
-            if self.position > self.position_total then
-                self.position = 1;
+            if button == "X" and event == "Press" then
+                script:request_end_sync( "Ui.BeginMenu", "hide", 0 )
+                script:request_end_sync( "Ui.MainMenu", "show", 0 )
+            elseif button == "Down" then
+                self.position = self.position + 1
+                if self.position > self.position_total then
+                    self.position = 1;
+                end
+                cursor:set_default_animation( "Position" .. self.position )
+            elseif button == "Up" then
+                self.position = self.position - 1
+                if self.position <= 0 then
+                    self.position = self.position_total;
+                end
+                cursor:set_default_animation( "Position" .. self.position )
             end
-            cursor:set_default_animation( "Position" .. self.position )
-        elseif button == "Up" then
-            self.position = self.position - 1
-            if self.position <= 0 then
-                self.position = self.position_total;
-            end
-            cursor:set_default_animation( "Position" .. self.position )
         end
 
         return 0
+    end,
+
+
+
+    show = function( self )
+        ui_manager:get_widget( "BeginMenu" ):set_visible( true )
+
+        return 0;
+    end,
+
+
+
+    hide = function( self )
+        ui_manager:get_widget( "BeginMenu" ):set_visible( false )
+
+        return 0;
     end,
 }

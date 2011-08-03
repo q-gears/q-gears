@@ -4,6 +4,11 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 
 2011-08-03
 ----------
+* [UI] Rename xml param show to visible. [Akari]
+* [UI] Add fucntion is_visible. [Akari]
+* [UI] Rename fucntions show and hide to set_sivible( bool ) as in Entity class. [Akari]
+* [UI] Remove on_show and on_hide script calls. [Akari]
+* [UI] Ui debug draw now has 2 stages (with names and without). [Akari]
 * [Script] Rename on_pressed to on_button and add one more param to function - event_type (Repeat, Press). [Akari]
 * [UI] Add colors for each corner of Sprite. Tag "colours" in xml description. [Akari]
 

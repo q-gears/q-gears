@@ -23,8 +23,8 @@ public:
     virtual void OnResize();
     virtual void Render();
 
-    void Show();
-    void Hide();
+    void SetVisible( const bool visible );
+    const bool IsVisible() const;
 
     const Ogre::String& GetName() const;
 

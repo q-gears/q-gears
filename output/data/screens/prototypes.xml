@@ -1,13 +1,13 @@
 <prototypes>
     <prototype name="Window">
-        <sprite name="Top" image="screens/images/border_t.png" x="24" y="0" width="100%-48" height="24" show="true" />
-        <sprite name="Bottom" image="screens/images/border_b.png" x="24" y="100%-24" width="100%-48" height="24" show="true" />
-        <sprite name="Left" image="screens/images/border_l.png" x="0" y="24" width="24" height="100%-48" show="true" />
-        <sprite name="Right" image="screens/images/border_r.png" x="100%-24" y="24" width="24" height="100%-48" show="true" />
-        <sprite name="TopLeft" image="screens/images/border_tl.png" x="0" y="0" width="24" height="24" show="true" />
-        <sprite name="TopRight" image="screens/images/border_tr.png" x="100%-24" y="0" width="24" height="24" show="true" />
-        <sprite name="BottomLeft" image="screens/images/border_bl.png" x="0" y="100%-24" width="24" height="24" show="true" />
-        <sprite name="BottomRight" image="screens/images/border_br.png" x="100%-24" y="100%-24" width="24" height="24" show="true" />
-        <sprite name="Center" x="9" y="9" width="100%-18" height="100%-18" colours="0 0 0.7,0 0 0.5,0 0 0.125,0 0 0.31" show="true" />
+        <sprite name="Top" image="screens/images/border_t.png" x="24" y="0" width="100%-48" height="24" visible="true" />
+        <sprite name="Bottom" image="screens/images/border_b.png" x="24" y="100%-24" width="100%-48" height="24" visible="true" />
+        <sprite name="Left" image="screens/images/border_l.png" x="0" y="24" width="24" height="100%-48" visible="true" />
+        <sprite name="Right" image="screens/images/border_r.png" x="100%-24" y="24" width="24" height="100%-48" visible="true" />
+        <sprite name="TopLeft" image="screens/images/border_tl.png" x="0" y="0" width="24" height="24" visible="true" />
+        <sprite name="TopRight" image="screens/images/border_tr.png" x="100%-24" y="0" width="24" height="24" visible="true" />
+        <sprite name="BottomLeft" image="screens/images/border_bl.png" x="0" y="100%-24" width="24" height="24" visible="true" />
+        <sprite name="BottomRight" image="screens/images/border_br.png" x="100%-24" y="100%-24" width="24" height="24" visible="true" />
+        <sprite name="Center" x="9" y="9" width="100%-18" height="100%-18" colours="0 0 0.7,0 0 0.5,0 0 0.125,0 0 0.31" visible="true" />
     </prototype>
 </prototypes>

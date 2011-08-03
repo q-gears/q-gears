@@ -1,23 +1,23 @@
-<screen name="MainMenu" script="screens/main_menu/main_menu.lua" show="true">
-    <widget name="Characters" align="center" x="-479" y="51" width="782" height="570" show="true">
+<screen name="MainMenu" script="screens/main_menu/main_menu.lua" visible="true">
+    <widget name="Characters" align="center" x="-479" y="51" width="782" height="570" visible="true">
         <prototype prototype="Window" />
         <animation name="Appear" length="0.3" x="0:0 1500,0.3:0 -479" />
         <animation name="Disappear" length="0.3" x="0:0 -479,0.3:0 1500" />
     </widget>
 
-    <widget name="Menu" align="center" x="222" y="15" width="258" height="400" show="true">
+    <widget name="Menu" align="center" x="222" y="15" width="258" height="400" visible="true">
         <prototype prototype="Window" />
-        <text_area name="ItemText" x="48" y="18" text_name="MainMenuItem" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="MagicText" x="48" y="54" text_name="MainMenuMagic" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="MateriaText" x="48" y="90" text_name="MainMenuMateria" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="EquipText" x="48" y="126" text_name="MainMenuEquip" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="StatusText" x="48" y="162" text_name="MainMenuStatus" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="OrderText" x="48" y="198" text_name="MainMenuOrder" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="LimitText" x="48" y="234" text_name="MainMenuLimit" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="ConfigText" x="48" y="270" text_name="MainMenuConfig" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="PHSText" x="48" y="306" text_name="MainMenuPHS" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="SaveText" x="48" y="342" text_name="MainMenuSave" font="FFVIIFont" scale="3 3" show="true" />
-        <sprite name="Cursor" image="screens/images/cursor.png" x="-33" y="24" width="72" height="48" show="true">
+        <text_area name="ItemText" x="48" y="18" text_name="MainMenuItem" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="MagicText" x="48" y="54" text_name="MainMenuMagic" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="MateriaText" x="48" y="90" text_name="MainMenuMateria" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="EquipText" x="48" y="126" text_name="MainMenuEquip" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="StatusText" x="48" y="162" text_name="MainMenuStatus" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="OrderText" x="48" y="198" text_name="MainMenuOrder" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="LimitText" x="48" y="234" text_name="MainMenuLimit" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="ConfigText" x="48" y="270" text_name="MainMenuConfig" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="PHSText" x="48" y="306" text_name="MainMenuPHS" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="SaveText" x="48" y="342" text_name="MainMenuSave" font="FFVIIFont" scale="3 3" visible="true" />
+        <sprite name="Cursor" image="screens/images/cursor.png" x="-33" y="24" width="72" height="48" visible="true">
             <animation name="Position1" length="0" y="0:0 24" />
             <animation name="Position2" length="0" y="0:0 60" />
             <animation name="Position3" length="0" y="0:0 96" />
@@ -33,17 +33,17 @@
         <animation name="Disappear" length="0.3" y="0:0 15,0.3:0 1200" />
     </widget>
 
-    <widget name="TimeGil" align="center" x="222" y="492" width="258" height="108" show="true">
+    <widget name="TimeGil" align="center" x="222" y="492" width="258" height="108" visible="true">
         <prototype prototype="Window" />
-        <text_area name="TimeText" x="12" y="18" text_name="MainMenuTime" font="FFVIIFont" scale="3 3" show="true" />
-        <text_area name="GilText" x="15" y="60" text_name="MainMenuGil" font="FFVIIFont" scale="3 3" show="true" />
+        <text_area name="TimeText" x="12" y="18" text_name="MainMenuTime" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="GilText" x="15" y="60" text_name="MainMenuGil" font="FFVIIFont" scale="3 3" visible="true" />
         <animation name="Appear" length="0.3" x="0:0 -1500,0.3:0 222" />
         <animation name="Disappear" length="0.3" x="0:0 222,0.3:0 -1500" />
     </widget>
 
-    <widget name="Location" align="center" x="-60" y="600" width="540" height="72" show="true">
+    <widget name="Location" align="center" x="-60" y="600" width="540" height="72" visible="true">
         <prototype prototype="Window" />
-        <text_area name="Text" x="24" y="18" text_name="MainMenuLocation" font="FFVIIFont" scale="3 3" show="true" />
+        <text_area name="Text" x="24" y="18" text_name="MainMenuLocation" font="FFVIIFont" scale="3 3" visible="true" />
         <animation name="Appear" length="0.3" y="0:0 -200,0.3:0 600" />
         <animation name="Disappear" length="0.3" y="0:0 600,0.3:0 -200" />
     </widget>

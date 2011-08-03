@@ -41,11 +41,7 @@ XmlScreenFile::LoadScreen()
     }
 
     UiWidget* widget = new UiWidget( base_name );
-    bool show = GetBool( node, "show", false );
-    if( show == true )
-    {
-        widget->Show();
-    }
+    widget->SetVisible( GetBool( node, "visible", false ) );
 
     node = node->FirstChild();
     if( node != NULL )
@@ -264,11 +260,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
 
 
-                    bool show = GetBool( node, "show", false );
-                    if( show == true )
-                    {
-                        widget2->Show();
-                    }
+                    widget2->SetVisible( GetBool( node, "visible", false ) );
 
 
 

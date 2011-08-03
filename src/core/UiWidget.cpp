@@ -11,7 +11,7 @@
 
 
 
-ConfigVar cv_debug_ui( "debug_ui", "Draw ui debug info", "false" );
+ConfigVar cv_debug_ui( "debug_ui", "Draw ui debug info", "0" );
 
 
 
@@ -153,7 +153,7 @@ UiWidget::Update()
 
 
     // debug output
-    if( cv_debug_ui.GetB() == true )
+    if( cv_debug_ui.GetI() >= 1 )
     {
         float local_x1 = -m_FinalOrigin.x;
         float local_y1 = -m_FinalOrigin.y;
@@ -162,11 +162,16 @@ UiWidget::Update()
         float x = m_FinalTranslate.x;
         float y = m_FinalTranslate.y;
 
-        DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
         DEBUG_DRAW.SetScreenSpace( true );
-        DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
-        DEBUG_DRAW.Text( x + 3, y, "Ui." + m_PathName );
-        DEBUG_DRAW.Text( x + 3, y + 12, GetCurrentAnimationName() );
+
+        if( cv_debug_ui.GetI() >= 2 )
+        {
+            DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
+            DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
+            DEBUG_DRAW.Text( x + 3, y, "Ui." + m_PathName );
+            DEBUG_DRAW.Text( x + 3, y + 12, GetCurrentAnimationName() );
+        }
+
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
 
         int x1, y1, x2, y2, x3, y3, x4, y4;
@@ -248,28 +253,17 @@ UiWidget::Render()
 
 
 void
-UiWidget::Show()
+UiWidget::SetVisible( const bool visible )
 {
-    m_Visible = true;
-
-    ScriptEntity* script_entity = ScriptManager::getSingleton().GetScriptEntityByName( "Ui." + m_PathName );
-    if( script_entity != NULL )
-    {
-        ScriptManager::getSingleton().ScriptRequest( script_entity, "on_show", 0, "", "", false, false );
-    }
+    m_Visible = visible;
 }
 
 
 
-void
-UiWidget::Hide()
+const bool
+UiWidget::IsVisible() const
 {
-    m_Visible = false;
-    ScriptEntity* script_entity = ScriptManager::getSingleton().GetScriptEntityByName( "Ui." + m_PathName );
-    if( script_entity != NULL )
-    {
-        ScriptManager::getSingleton().ScriptRequest( script_entity, "on_hide", 0, "", "", false, false );
-    }
+    return m_Visible;
 }
 
 
