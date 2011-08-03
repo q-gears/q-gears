@@ -139,8 +139,8 @@ main(int argc, char *argv[])
     delete script_manager;
     delete console;
     delete camera_manager;
-    delete input_manager;
     delete audio_manager;
+    delete input_manager;
     delete debug_draw;
     delete config_cmd_manager;
     delete config_var_manager;
