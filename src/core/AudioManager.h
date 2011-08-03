@@ -28,18 +28,18 @@ class AudioManager : public Ogre::Singleton<AudioManager>
    {
       public:
       Player(const Ogre::String& id);
-      ~Player(void);
+      ~Player();
 
-      void Play(void);
+      void Play();
       void PlayFile(const Ogre::String& file);
-      void Stop(void);
-      void Pause(void);
+      void Stop();
+      void Pause();
 
       void SetLoop(const float loop);
 
-      const bool IsActive(void);
-      void Update(void);
-      uint64_t GetPosition();
+      const bool IsActive();
+      void Update();
+      float GetPosition();
 
       private:
       Ogre::String   m_ID;
@@ -50,20 +50,20 @@ class AudioManager : public Ogre::Singleton<AudioManager>
       bool           m_StreamFinished;
       ALuint         m_Source;
 
-      ALsizei FillBuffer(void);
+      ALsizei FillBuffer();
    };
 
    public:
-   AudioManager(void);
-   virtual ~AudioManager(void);
+   AudioManager();
+   virtual ~AudioManager();
 
    /* I guess boost uses this? */
    void operator()();
 
-   void Pause(void);
-   void Play(void);
-   void Stop(void);
-   void Update(void);
+   void Pause();
+   void Play();
+   void Stop();
+   void Update();
 
    void AddMusic(const AudioManager::Music &music);
    AudioManager::Music* GetMusic(const Ogre::String& name);
@@ -94,9 +94,9 @@ class AudioManager : public Ogre::Singleton<AudioManager>
    boost::thread *m_UpdateThread;
    bool m_ThreadContinue;
 
-   const bool Init(void);
+   const bool Init();
 
-   const char *ALError(void);
+   const char *ALError();
    const char *ALCError(const ALCdevice *device);
 };
 

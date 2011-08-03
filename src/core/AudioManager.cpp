@@ -37,13 +37,14 @@ AudioManager::Player::Player(const Ogre::String& id) :
 	;
 }
 
-AudioManager::Player::~Player(void)
+AudioManager::Player::~Player()
 {
 	Stop();
 }
 
 
-void AudioManager::Player::Play(void)
+void
+AudioManager::Player::Play()
 {
 	boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
    AudioManager &engine = AudioManager::getSingleton();
@@ -60,7 +61,8 @@ void AudioManager::Player::Play(void)
 }
 
 
-void AudioManager::Player::PlayFile(const Ogre::String &file)
+void
+AudioManager::Player::PlayFile(const Ogre::String &file)
 {
    boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
    AudioManager &engine = AudioManager::getSingleton();
@@ -120,7 +122,8 @@ void AudioManager::Player::PlayFile(const Ogre::String &file)
 }
 
 
-void AudioManager::Player::Stop(void)
+void
+AudioManager::Player::Stop()
 {
    boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
 
@@ -154,7 +157,8 @@ void AudioManager::Player::Stop(void)
 }
 
 
-void AudioManager::Player::Pause(void)
+void
+AudioManager::Player::Pause()
 {
    boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
 
@@ -163,7 +167,8 @@ void AudioManager::Player::Pause(void)
 }
 
 
-const bool AudioManager::Player::IsActive(void)
+const bool
+AudioManager::Player::IsActive()
 {
    boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
 
@@ -179,7 +184,8 @@ void AudioManager::Player::SetLoop(const float loop)
 }
 
 
-ALsizei AudioManager::Player::FillBuffer(void)
+ALsizei
+AudioManager::Player::FillBuffer()
 {
 	ALsizei read = 0;
 
@@ -223,7 +229,8 @@ ALsizei AudioManager::Player::FillBuffer(void)
 }
 
 
-void AudioManager::Player::Update(void)
+void
+AudioManager::Player::Update()
 {
 	// try to fill processed buffers
 	{
@@ -281,7 +288,8 @@ void AudioManager::Player::Update(void)
 }
 
 
-uint64_t AudioManager::Player::GetPosition(void)
+uint64_t
+AudioManager::Player::GetPosition()
 {
    boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
 
@@ -291,7 +299,7 @@ uint64_t AudioManager::Player::GetPosition(void)
 		/ m_VorbisInfo->channels / sizeof(int16_t) - play_offset)) * 1000 / m_VorbisInfo->rate;
 }
 
-AudioManager::AudioManager(void) :
+AudioManager::AudioManager() :
    m_ThreadContinue(true)
 {
    m_Initialized = Init();
@@ -309,7 +317,7 @@ AudioManager::AudioManager(void) :
    musics.LoadMusics();
 }
 
-AudioManager::~AudioManager(void)
+AudioManager::~AudioManager()
 {
    Stop();
    if(m_Initialized)
@@ -327,7 +335,8 @@ AudioManager::~AudioManager(void)
    }
 }
 
-void AudioManager::Play(void)
+void
+AudioManager::Play()
 {
    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
@@ -336,7 +345,8 @@ void AudioManager::Play(void)
       (*it)->Play();
 }
 
-void AudioManager::Pause(void)
+void
+AudioManager::Pause()
 {
    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
@@ -345,7 +355,8 @@ void AudioManager::Pause(void)
       (*it)->Pause();
 }
 
-void AudioManager::Stop(void)
+void
+AudioManager::Stop()
 {
    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
@@ -357,7 +368,8 @@ void AudioManager::Stop(void)
    }
 }
 
-AudioManager::Music* AudioManager::GetMusic( const Ogre::String& name )
+AudioManager::Music*
+AudioManager::GetMusic( const Ogre::String& name )
 {
    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
@@ -373,7 +385,8 @@ AudioManager::Music* AudioManager::GetMusic( const Ogre::String& name )
    return NULL;
 }
 
-void AudioManager::AddMusic(const AudioManager::Music &music)
+void
+AudioManager::AddMusic(const AudioManager::Music &music)
 {
    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
@@ -391,7 +404,8 @@ void AudioManager::AddMusic(const AudioManager::Music &music)
    musicList.push_back(music);
 }
 
-const bool AudioManager::Init(void)
+const bool
+AudioManager::Init()
 {
    m_ALDevice = alcOpenDevice(NULL);
    if(!m_ALDevice)
@@ -417,7 +431,8 @@ const bool AudioManager::Init(void)
 }
 
 /* Should not really bother using this on release build */
-const char* AudioManager::ALError(void)
+const char*
+AudioManager::ALError()
 {
 #if _DEBUG
    ALenum error_code = alGetError();
@@ -430,7 +445,8 @@ const char* AudioManager::ALError(void)
 #endif
 }
 
-const char* AudioManager::ALCError(const ALCdevice *device)
+const char*
+AudioManager::ALCError(const ALCdevice *device)
 {
 #if _DEBUG
    const ALCdevice *alc_device = (device == NULL ?
@@ -447,7 +463,8 @@ const char* AudioManager::ALCError(const ALCdevice *device)
 #endif
 }
 
-void AudioManager::Update(void)
+void
+AudioManager::Update()
 {
    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
@@ -460,7 +477,8 @@ void AudioManager::Update(void)
    }
 }
 
-void AudioManager::operator()()
+void
+AudioManager::operator()()
 {
    while(m_ThreadContinue)
    {
