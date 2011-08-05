@@ -1,0 +1,13 @@
+﻿<font name="FFVIIMenuDigits" image="fonts/ffvii_digits.png" image_size="128 8" height="8">
+    <char name="0" x="0" y="0" width="7" height="8" pre="0" post="0" />
+    <char name="1" x="8" y="0" width="7" height="8" pre="0" post="0" />
+    <char name="2" x="16" y="0" width="7" height="8" pre="0" post="0" />
+    <char name="3" x="24" y="0" width="7" height="8" pre="0" post="0" />
+    <char name="4" x="32" y="0" width="7" height="8" pre="0" post="0" />
+    <char name="5" x="40" y="0" width="7" height="8" pre="0" post="0" />
+    <char name="6" x="48" y="0" width="7" height="8" pre="0" post="0" />
+    <char name="7" x="56" y="0" width="7" height="8" pre="0" post="0" />
+    <char name="8" x="64" y="0" width="7" height="8" pre="0" post="0" />
+    <char name="9" x="72" y="0" width="7" height="8" pre="0" post="0" />
+    <char name=" " x="80" y="0" width="7" height="8" pre="0" post="0" />
+</font>

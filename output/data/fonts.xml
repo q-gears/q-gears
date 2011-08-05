@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <fonts>
     <font file_name="fonts/ffvii_en.xml" />
+    <font file_name="fonts/ffvii_menu.xml" />
+    <font file_name="fonts/ffvii_digits.xml" />
 </fonts>

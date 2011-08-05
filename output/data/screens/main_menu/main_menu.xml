@@ -1,8 +1,12 @@
-<screen name="MainMenu" script="screens/main_menu/main_menu.lua" visible="true">
+<screen name="MainMenu" script="screens/main_menu/main_menu.lua" visible="false">
     <widget name="Characters" align="center" x="-479" y="51" width="782" height="570" visible="true">
         <prototype prototype="Window" />
         <animation name="Appear" length="0.3" x="0:0 1500,0.3:0 -479" />
         <animation name="Disappear" length="0.3" x="0:0 -479,0.3:0 1500" />
+
+        <widget name="Character1" x="306" y="42" width="100%" height="180" visible="true">
+            <prototype prototype="MenuCharacterData" />
+        </widget>
     </widget>
 
     <widget name="Menu" align="center" x="222" y="15" width="258" height="400" visible="true">

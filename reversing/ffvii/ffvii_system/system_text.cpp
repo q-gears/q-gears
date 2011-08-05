@@ -154,7 +154,7 @@ L1d6ec:	; 8001D6EC
                             8001D8FC	sb     v0, $0007(v1)
                             8001D900	lui    a0, $8006
                             8001D904	lw     a0, $2f24(a0)
-                            8001D908	jal    func46870 [$80046870]
+                            8001D908	jal    system_change_brightness_calculation_in_packet [$80046870]
                             8001D90C	ori    a1, zero, $0001
                             8001D910	lw     v0, $007c(gp)
                             8001D914	nop
@@ -328,7 +328,7 @@ L1d6ec:	; 8001D6EC
 
                             A0 = w[80062f24];
                             A1 = 1;
-                            func46870;
+                            system_change_brightness_calculation_in_packet;
 
                             V0 = [GP + 7c];
 
@@ -693,7 +693,7 @@ else
 80026DD8	sll    v0, a2, $01
 80026DDC	addu   v0, v0, a2
 80026DE0	sll    v0, v0, $02
-80026DE4	jal    func46870 [$80046870]
+80026DE4	jal    system_change_brightness_calculation_in_packet [$80046870]
 80026DE8	addu   s2, s2, v0
 80026DEC	lui    v0, $8006
 80026DF0	lw     v0, $2f24(v0)

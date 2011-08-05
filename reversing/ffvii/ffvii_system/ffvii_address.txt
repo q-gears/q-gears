@@ -276,6 +276,7 @@
     +0b []       spirit bonus
     +0c []       dexterity bonus
     +0d []       luck bonus
+    +0e []       current limit level
     +10          name string.
     +1c []       equipped weapon.
     +1d []       equipped armor.

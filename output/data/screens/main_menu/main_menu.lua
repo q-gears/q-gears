@@ -8,6 +8,14 @@ Ui.MainMenu = {
 
 
 
+    on_start = function( self )
+        script:request( "Ui.MainMenu", "show", 0 )
+
+        return 0
+    end,
+
+
+
     on_button = function( self, button, event )
         if ui_manager:get_widget( "MainMenu" ):is_visible() == true then
             local characters  = ui_manager:get_widget( "MainMenu.Characters" )
@@ -47,6 +55,9 @@ Ui.MainMenu = {
         local menu_cursor = ui_manager:get_widget( "MainMenu.Menu.Cursor" )
         local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
         local location    = ui_manager:get_widget( "MainMenu.Location" )
+
+        ui_manager:get_widget( "MainMenu.Menu.PHSText" ):set_visible( false )
+        ui_manager:get_widget( "MainMenu.Menu.SaveText" ):set_colour( 0.4, 0.4, 0.4 )
 
         characters:play_animation_stop( "Appear" )
         menu:play_animation_stop( "Appear" )

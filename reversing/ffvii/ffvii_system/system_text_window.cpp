@@ -16,7 +16,7 @@
 8001E094	sb     s1, $0007(v0)
 8001E098	lui    a0, $8006
 8001E09C	lw     a0, $2f24(a0)
-8001E0A0	jal    func46870 [$80046870]
+8001E0A0	jal    system_change_brightness_calculation_in_packet [$80046870]
 8001E0A4	ori    a1, zero, $0001
 8001E0A8	lhu    v0, $0000(s5)
 8001E0AC	lui    v1, $8006
@@ -84,7 +84,7 @@
 8001E1A4	sb     s1, $0007(v0)
 8001E1A8	lui    a0, $8006
 8001E1AC	lw     a0, $2f24(a0)
-8001E1B0	jal    func46870 [$80046870]
+8001E1B0	jal    system_change_brightness_calculation_in_packet [$80046870]
 8001E1B4	ori    a1, zero, $0001
 8001E1B8	lhu    v0, $0000(s5)
 8001E1BC	lui    v1, $8006
@@ -162,7 +162,7 @@ L1e2a4:	; 8001E2A4
 8001E2D4	sb     s3, $0007(v0)
 8001E2D8	lui    a0, $8006
 8001E2DC	lw     a0, $2f24(a0)
-8001E2E0	jal    func46870 [$80046870]
+8001E2E0	jal    system_change_brightness_calculation_in_packet [$80046870]
 8001E2E4	ori    a1, zero, $0001
 8001E2E8	lhu    v0, $0000(s5)
 8001E2EC	lhu    v1, $0004(s5)
@@ -233,7 +233,7 @@ L1e2a4:	; 8001E2A4
 8001E3F0	sb     s3, $0007(v0)
 8001E3F4	lui    a0, $8006
 8001E3F8	lw     a0, $2f24(a0)
-8001E3FC	jal    func46870 [$80046870]
+8001E3FC	jal    system_change_brightness_calculation_in_packet [$80046870]
 8001E400	ori    a1, zero, $0001
 8001E404	lui    v1, $8006
 8001E408	lw     v1, $2f24(v1)
@@ -302,7 +302,7 @@ L1e4e0:	; 8001E4E0
 8001E4FC	sb     s1, $0007(v0)
 8001E500	lui    a0, $8006
 8001E504	lw     a0, $2f24(a0)
-8001E508	jal    func46870 [$80046870]
+8001E508	jal    system_change_brightness_calculation_in_packet [$80046870]
 8001E50C	ori    a1, zero, $0001
 8001E510	lui    v1, $8006
 8001E514	lw     v1, $2f24(v1)
@@ -353,7 +353,7 @@ L1e4e0:	; 8001E4E0
 8001E5C8	sb     s1, $0007(v0)
 8001E5CC	lui    a0, $8006
 8001E5D0	lw     a0, $2f24(a0)
-8001E5D4	jal    func46870 [$80046870]
+8001E5D4	jal    system_change_brightness_calculation_in_packet [$80046870]
 8001E5D8	ori    a1, zero, $0001
 8001E5DC	lhu    v0, $0000(s5)
 8001E5E0	lhu    v1, $0004(s5)
@@ -407,7 +407,7 @@ L1e4e0:	; 8001E4E0
 8001E6A0	sb     s1, $0007(v0)
 8001E6A4	lui    a0, $8006
 8001E6A8	lw     a0, $2f24(a0)
-8001E6AC	jal    func46870 [$80046870]
+8001E6AC	jal    system_change_brightness_calculation_in_packet [$80046870]
 8001E6B0	ori    a1, zero, $0001
 8001E6B4	lui    v1, $8006
 8001E6B8	lw     v1, $2f24(v1)
@@ -461,7 +461,7 @@ L1e4e0:	; 8001E4E0
 8001E778	sb     s1, $0007(v0)
 8001E77C	lui    a0, $8006
 8001E780	lw     a0, $2f24(a0)
-8001E784	jal    func46870 [$80046870]
+8001E784	jal    system_change_brightness_calculation_in_packet [$80046870]
 8001E788	ori    a1, zero, $0001
 8001E78C	lhu    v0, $0000(s5)
 8001E790	lhu    v1, $0004(s5)

@@ -6,14 +6,88 @@ A0 = A1;
 A1 = A2;
 S1 = A4;
 A2 = A3; // tex page settings
-
-80044A90	jal    func44d64 [$80044d64]
+func44d64;
 
 [S0 + 4] = w(V0);
 A0 = S1;
-80044A9C	jal    func44fa0 [$80044fa0]
+func44fa0;
 
 [S0 + 8] = w(V0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func44fa0
+if (A0 == 0)
+{
+    return 0;
+}
+
+80044FB0	lbu    a1, $0000(a0)
+80044FB4	nop
+80044FB8	srl    a1, a1, $03
+80044FBC	sw     a1, $0000(sp)
+80044FC0	lh     a2, $0004(a0)
+80044FC4	nop
+80044FC8	subu   a2, zero, a2
+80044FCC	andi   a2, a2, $00ff
+80044FD0	sra    a2, a2, $03
+80044FD4	sw     a2, $0008(sp)
+80044FD8	lbu    v0, $0002(a0)
+80044FDC	sll    a1, a1, $0a
+80044FE0	srl    v0, v0, $03
+80044FE4	sw     v0, $0004(sp)
+80044FE8	sll    v0, v0, $0f
+80044FEC	lh     v1, $0006(a0)
+80044FF0	lui    a0, $e200
+80044FF4	or     a1, a1, a0
+80044FF8	or     v0, v0, a1
+80044FFC	subu   v1, zero, v1
+80045000	andi   v1, v1, $00ff
+80045004	sra    v1, v1, $03
+80045008	sll    a0, v1, $05
+8004500C	or     v0, v0, a0
+80045010	or     v0, v0, a2
+80045014	sw     v1, $000c(sp)
+
+L45018:	; 80045018
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func44d64
+if ((bu[80062c00] - 1) < 2)
+{
+    V1 = e1000000;
+    if (A1 != 0)
+    {
+        V1 = V1 | 0800;
+    }
+
+    V0 = A2 & 27ff;
+    if (A0 != 0)
+    {
+        V0 = V0 | 1000;
+    }
+}
+else
+{
+    V1 = e1000000;
+    if (A1 != 0)
+    {
+        V1 = V1 | 0200;
+    }
+
+    V0 = A2 & 09ff;
+    if (A0 != 0)
+    {
+        V0 = V0 | 0400;
+    }
+}
+
+return V1 | V0;
 ////////////////////////////////
 
 
@@ -310,7 +384,7 @@ else
 
 
 ////////////////////////////////
-// func46870
+// system_change_brightness_calculation_in_packet
 if (A1 != 0)
 {
     [A0 + 7] = b(bu[A0 + 7] | 1);
@@ -344,23 +418,16 @@ V0 = V0 & ffff
 
 ////////////////////////////////
 // func26a34
-80026A38	addu   v0, a0, zero
-80026A3C	addu   v1, a1, zero
-80026A40	addu   t0, a2, zero
-80026A44	addu   a1, v0, zero
-80026A48	lui    a0, $8006
-80026A4C	lw     a0, $2f24(a0)
-80026A50	addu   a2, v1, zero
-80026A54	sw     a3, $0010(sp)
-80026A5C	jal    func44a68 [$80044a68]
-80026A60	addu   a3, t0, zero
-80026A64	lui    a1, $8006
-80026A68	lw     a1, $2f24(a1)
-80026A6C	lw     a0, $0280(gp)
-80026A70	addiu  v0, a1, $000c
-80026A74	lui    at, $8006
-80026A78	sw     v0, $2f24(at)
+A4 = A3;
+A3 = A2;
+A2 = A1
+A1 = A0;
+A0 = w[80062f24];
+func44a68;
 
+A0 = w[GP + 280];
+A1 = w[80062f24];
+[80062f24] = w(A1 + c);
 system_add_render_packet_to_queue;
 ////////////////////////////////
 
