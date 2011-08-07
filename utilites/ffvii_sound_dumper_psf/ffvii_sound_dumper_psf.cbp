@@ -35,11 +35,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="/usr/include/upse" />
 		</Compiler>
 		<Linker>
 			<Add library="boost_system" />
 			<Add library="boost_filesystem" />
 			<Add library="z" />
+			<Add library="upse" />
 		</Linker>
 		<Unit filename="main.cc" />
 		<Unit filename="typedefs.h" />
