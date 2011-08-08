@@ -3,11 +3,18 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include <string>
+#include <list>
 #include <cstdlib>
 #include <cstring>
 #include <zlib.h>
+#include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <boost/crc.hpp>
+extern "C"
+{
+#include <upse.h>
+}
+
 #include "typedefs.h"
 #include "walkthrough.hh"
 
@@ -18,14 +25,26 @@ using namespace boost::filesystem;
 
 
 
+static const bool g_WRITE_PSF = false;
+
+
+
 struct AkaoHeader
 {
 	u8 magic[4];
 	u16 id;
 	u16 length;
 	u16 reverb_mode;
-	u8 unused[6];
-};
+	struct TimeStamp
+	{
+		u8 year;
+		u8 month;
+		u8 day;
+		u8 hour;
+		u8 minute;
+		u8 second;
+	} __attribute__((packed)) timestamp;
+} __attribute__((packed));
 
 struct PsxExeHeader
 {
@@ -67,15 +86,18 @@ enum ReaderState
 };
 
 static const char *g_MAGIC = "AKAO";
+static const u8 g_MAGIC2[] = {0x96, 0x12, 0x18, 0x22};
 static const string g_AKAO_EXT("akao");
 static const string g_PSF_EXT("psf");
+static const string g_WAV_EXT("wav");
 static const string g_PSF_DRV_FN("ff7_scus94163_psf_v10.bin");
 static const u32 g_PSF_DRV_OFFSET = 0x1a8800;
 static const u32 g_PSF_SEQ_OFFSET = 0x1c0800;
 static const u32 g_PSX_TEXT_START = 0x800;
-static const u32 g_PSX_TEXT_SIZE = 0x1E0000;
+static const u32 g_PSX_TEXT_SIZE = 0x1e0000;
 static const u32 g_PSX_PSF_JUMP_OFFSET = 0x1960;
 static const u32 g_PSX_PSF_JUMP_DATA = 0x0806e00f;
+static const u32 g_AKAO_OPCODE_TABLE_OFFSET = 0x3a028;
 
 struct PatchEntry
 {
@@ -100,7 +122,11 @@ string str_lowercase(string);
 bool lzs_detect(const u8 *, u32);
 u8 *lzs_extract(u32 &, const u8 *, u32);
 void akao_extract_cb(void *, string);
-void psf_create_cb(void *, string);
+void file_list_cb(void *, string);
+void psf_create(string, list<string> &);
+bool akao_timestamp_valid(const AkaoHeader::TimeStamp &);
+void files_delete_duplicates(list<string> &);
+void psf_decode_wav(string, string);
 
 
 
@@ -110,11 +136,18 @@ int main(int argc, char *argv[])
 	{
 		// dump akao frames to directory
 		create_directory(g_AKAO_EXT);
-//		walkthrough(string(argv[1]), akao_extract_cb, NULL);
+		walkthrough(string(argv[1]), akao_extract_cb, NULL);
 
-		// create psf driver binary
+		// remove duplicates
+		list<string> akao_file_list;
+		walkthrough(g_AKAO_EXT, file_list_cb, &akao_file_list);
+
+		files_delete_duplicates(akao_file_list);
+
+		// create psf tracks
 		create_directory(g_PSF_EXT);
-		walkthrough(g_AKAO_EXT, psf_create_cb, argv[1]);
+		create_directory(g_WAV_EXT);
+		psf_create(argv[1], akao_file_list);
 	}
 	else
 	{
@@ -240,133 +273,314 @@ u8 *lzs_extract(u32 &r_output_size, const u8 *a_input, u32 a_size)
 
 void akao_extract_cb(void *a_data, string a_file)
 {
-	ifstream iF;
-	iF.open(a_file.c_str(), ios::binary);
-	if(iF.is_open())
+	ifstream iF(a_file.c_str(), ios::binary);
+	if(!iF.is_open())
 	{
-		// read full file to memory
-		u32 buffer_size = file_get_size(iF);
-		u8 *buffer = new u8[buffer_size];
-		iF.read((char *)buffer, buffer_size);
-		iF.close();
+		cout << "error: unable to open " << a_file << endl;
+		return;
+	}
 
-		// detect and extract if compressed
-		if(lzs_detect(buffer, buffer_size))
+	// read full file to memory
+	u32 buffer_size = file_get_size(iF);
+	u8 *buffer = new u8[buffer_size];
+	iF.read((char *)buffer, buffer_size);
+	iF.close();
+
+	// detect and extract if compressed
+	if(lzs_detect(buffer, buffer_size))
+	{
+		u8 *buffer_old = buffer;
+		buffer = lzs_extract(buffer_size, buffer_old, buffer_size);
+		delete [] buffer_old;
+	}
+
+	ReaderState state = RS_MAGIC;
+	u32 magic_pos = 0;
+	u32 input_offset = 0;
+	int akao_counter = 0;
+	while(input_offset < buffer_size)
+	{
+		switch(state)
 		{
-			u8 *buffer_old = buffer;
-			buffer = lzs_extract(buffer_size, buffer_old, buffer_size);
-			delete [] buffer_old;
-		}
+		case RS_MAGIC:
+			magic_pos = buffer[input_offset++] == g_MAGIC[magic_pos] ? magic_pos + 1 : 0;
+			if(magic_pos >= strlen(g_MAGIC))
+				state = RS_FOUND;
+			break;
 
-		ReaderState state = RS_MAGIC;
-		u32 magic_pos = 0;
-		u32 input_offset = 0;
-		int akao_counter = 0;
-		while(input_offset < buffer_size)
+		case RS_FOUND:
 		{
-			switch(state)
-			{
-			case RS_MAGIC:
-				magic_pos = buffer[input_offset++] == g_MAGIC[magic_pos] ? magic_pos + 1 : 0;
-				if(magic_pos >= strlen(g_MAGIC))
-				{
-					state = RS_FOUND;
-					++akao_counter;
-				}
-				break;
+			// fill akao header
+			AkaoHeader header;
+			memcpy(header.magic, g_MAGIC, strlen(g_MAGIC));
+			memcpy(&header.id, &buffer[input_offset], sizeof(header) - sizeof(header.magic));
 
-			case RS_FOUND:
+			if(akao_timestamp_valid(header.timestamp))
 			{
-				// fill akao header
-				AkaoHeader header;
-				memcpy(header.magic, g_MAGIC, strlen(g_MAGIC));
-				memcpy(&header.id, &buffer[input_offset], sizeof(header) - sizeof(header.magic));
 				input_offset += sizeof(header) - sizeof(header.magic);
+				++akao_counter;
 
 				// construct save path
 				path output_path(path(g_AKAO_EXT) / (path(str_lowercase(a_file)).stem()
 					+ '_' + string(path(str_lowercase(a_file)).extension(), 1, path(str_lowercase(a_file)).extension().length() - 1)
 					+ '_' + int_to_str(akao_counter) + '.' + g_AKAO_EXT));
 
-				cout << "dumping " << output_path << "... ";
 				ofstream oF;
 				oF.open(output_path.string().c_str(), ios::binary);
 				oF.write((char *)&header, sizeof(header));
 				oF.write((char *)&buffer[input_offset], header.length);
 				input_offset += header.length;
 				oF.close();
-				cout << "done" << endl;
-
-				magic_pos = 0;
-				state = RS_MAGIC;
 			}
-				break;
 
-			default:
-				;
-			}
+			magic_pos = 0;
+			state = RS_MAGIC;
+		}
+			break;
+
+		default:
+			;
+		}
+	}
+
+	cout << "found: " << akao_counter << " ["  << a_file << "]" << endl;
+
+	delete [] buffer;
+}
+
+
+void psf_create(string a_game_path, list<string> &a_file_list)
+{
+	path data_path(a_game_path);
+
+	// read full file to memory
+	u8 *psf_driver = new u8[g_PSX_TEXT_START + g_PSX_TEXT_SIZE];
+	memset(psf_driver, 0, g_PSX_TEXT_START + g_PSX_TEXT_SIZE);
+	file_read(psf_driver, (data_path / "SCUS_941.63").string());
+
+	// convert psx executable to psf driver
+	PsxExeHeader &header = *(PsxExeHeader *)psf_driver;
+
+	// set maximal possible size to executable
+	header.t_size = g_PSX_TEXT_SIZE;
+
+	// set jump offset to psf driver
+	*(u32 *)&psf_driver[g_PSX_PSF_JUMP_OFFSET] = g_PSX_PSF_JUMP_DATA;
+
+	// inject sound data to executable
+	for(u32 i = 0; i < sizeof(g_PSX_PSF_PATCHES) / sizeof(g_PSX_PSF_PATCHES[0]); ++i)
+		file_read(&psf_driver[g_PSX_PSF_PATCHES[i].offset], (data_path / g_PSX_PSF_PATCHES[i].filename).string());
+
+	// inject psf driver payload
+	file_read(&psf_driver[g_PSF_DRV_OFFSET], g_PSF_DRV_FN);
+
+	// patch akao opcode call table to replace
+	// EE opcode (loop back channel stream) with A0 opcode (finish channel stream)
+//	*(u32 *)&psf_driver[g_AKAO_OPCODE_TABLE_OFFSET + 0xee * sizeof(u32)] = *(u32 *)&psf_driver[g_AKAO_OPCODE_TABLE_OFFSET + 0xa0 * sizeof(u32)];
+
+	for(list<string>::iterator it = a_file_list.begin(); it != a_file_list.end(); ++it)
+	{
+		u8 *buffer = new u8[g_PSX_TEXT_START + g_PSX_TEXT_SIZE];
+		memcpy(buffer, psf_driver, g_PSX_TEXT_START + g_PSX_TEXT_SIZE);
+
+		// inject akao frame with sequence
+		file_read(&buffer[g_PSF_SEQ_OFFSET], *it);
+
+		// compress data
+		uLong zlib_length = compressBound(g_PSX_TEXT_START + g_PSX_TEXT_SIZE);
+		u8 *psf_data = (u8 *)malloc(sizeof(PsfHeader) + zlib_length);
+		Bytef *zlib_data = (Bytef *)(psf_data + sizeof(PsfHeader));
+
+		if(compress2(zlib_data, &zlib_length, buffer, g_PSX_TEXT_START + g_PSX_TEXT_SIZE, 9) == Z_OK)
+		{
+			// write psf
+			PsfHeader &psf_header = *(PsfHeader *)psf_data;
+			memcpy(psf_header.magic, "PSF", sizeof(psf_header.magic));
+			psf_header.version = 1;
+			psf_header.reserved_size = 0;
+			psf_header.program_size = zlib_length;
+			psf_header.program_crc = crc32(crc32(0, Z_NULL, 0), zlib_data, zlib_length);
+
+			u32 psf_length = sizeof(psf_header) + zlib_length;
+
+			path output_path(path(g_PSF_EXT) / (path(*it).stem() + '.' + g_PSF_EXT));
+			ofstream oF(output_path.string().c_str(), ios::binary);
+			oF.write((char *)psf_data, psf_length);
+			oF.close();
+
+			psf_decode_wav(path(path(g_WAV_EXT) / (path(*it).stem() + '.' + g_WAV_EXT)).string(), output_path.string());
+		}
+		else
+		{
+			cout << "error: unable to compress psx executable" << endl;
 		}
 
+		free(psf_data);
 		delete [] buffer;
 	}
-	else
+
+	delete [] psf_driver;
+}
+
+
+void file_list_cb(void *a_data, string a_file)
+{
+	list<string> &file_list = *(list<string> *)a_data;
+	file_list.push_back(a_file);
+}
+
+
+bool akao_timestamp_valid(const AkaoHeader::TimeStamp &a_timestamp)
+{
+	static const u8 LIMIT_YEAR   = 0x99;
+	static const u8 LIMIT_MONTH  = 0x12;
+	static const u8 LIMIT_DAY    = 0x31;
+	static const u8 LIMIT_HOUR   = 0x23;
+	static const u8 LIMIT_MINUTE = 0x59;
+	static const u8 LIMIT_SECOND = 0x59;
+
+	return a_timestamp.year <= LIMIT_YEAR &&
+		a_timestamp.month <= LIMIT_MONTH &&
+		a_timestamp.day <= LIMIT_DAY &&
+		a_timestamp.hour <= LIMIT_HOUR &&
+		a_timestamp.minute <= LIMIT_MINUTE &&
+		a_timestamp.second <= LIMIT_SECOND;
+}
+
+
+void files_delete_duplicates(list<string> &r_file_list)
+{
+	for(list<string>::iterator it = r_file_list.begin(); it != r_file_list.end(); ++it)
 	{
-		cout << "error: unable to open " << a_file << endl;
+		ifstream iF1(it->c_str(), ios::binary);
+
+		if(!iF1.is_open())
+			continue;
+
+		u32 buffer1_size = file_get_size(iF1);
+		u8 *buffer1 = new u8[buffer1_size];
+		iF1.read((char *)buffer1, buffer1_size);
+		iF1.close();
+
+		list<string>::iterator jt = it;
+		++jt;
+		while(jt != r_file_list.end())
+		{
+			bool erased = false;
+
+			ifstream iF2(jt->c_str(), ios::binary);
+			if(iF2.is_open())
+			{
+				u32 buffer2_size = file_get_size(iF2);
+				if(buffer1_size == buffer2_size)
+				{
+					u8 *buffer2 = new u8[buffer2_size];
+					iF2.read((char *)buffer2, buffer2_size);
+
+					if(!memcmp(buffer1, buffer2, buffer1_size))
+					{
+						remove(path(*jt));
+						jt = r_file_list.erase(jt);
+						erased = true;
+					}
+
+					delete [] buffer2;
+				}
+			}
+
+			if(!erased)
+				++jt;
+		}
+
+		delete [] buffer1;
 	}
 }
 
 
-void psf_create_cb(void *a_data, string a_file)
+
+static void *upse_open_cb(char *path, char *mode)
 {
-	cout << a_file << endl;
+    return fopen(path, mode);
+}
 
-	path data_path((char *)a_data);
+static size_t upse_read_cb(void *ptr, size_t sz, size_t nmemb, void *file)
+{
+    return fread((FILE *)ptr, sz, nmemb, (FILE *)file);
+}
 
-	// read full file to memory
-	u8 *buffer = new u8[g_PSX_TEXT_START + g_PSX_TEXT_SIZE];
-	memset(buffer, 0, g_PSX_TEXT_START + g_PSX_TEXT_SIZE);
-	file_read(buffer, (data_path / "SCUS_941.63").string());
+static int upse_seek_cb(void *ptr, long offset, int whence)
+{
+    return fseek((FILE *)ptr, offset, whence);
+}
 
-	// convert psx executable to psf driver
-	PsxExeHeader &header = *(PsxExeHeader *)buffer;
-	// set maximal possible size to executable
-	header.t_size = g_PSX_TEXT_SIZE;
-	// set jump offset to psf driver
-	*(u32 *)&buffer[g_PSX_PSF_JUMP_OFFSET] = g_PSX_PSF_JUMP_DATA;
-	// inject sound data to executable
-	for(u32 i = 0; i < sizeof(g_PSX_PSF_PATCHES) / sizeof(g_PSX_PSF_PATCHES[0]); ++i)
-		file_read(&buffer[g_PSX_PSF_PATCHES[i].offset], (data_path / g_PSX_PSF_PATCHES[i].filename).string());
-	// inject psf driver payload
-	file_read(&buffer[g_PSF_DRV_OFFSET], g_PSF_DRV_FN);
+static int upse_close_cb(void *ptr)
+{
+    return fclose((FILE *)ptr);
+}
 
-	// inject akao frame with sequence
-	file_read(&buffer[g_PSF_SEQ_OFFSET], a_file);
 
-	// compress data
-	uLong zlib_length = compressBound(g_PSX_TEXT_START + g_PSX_TEXT_SIZE);
-	Bytef *zlib_data = (Bytef *)malloc(zlib_length);
+static upse_iofuncs_t upse_iofuncs =
+{
+    upse_open_cb,
+    upse_read_cb,
+    upse_seek_cb,
+    upse_close_cb
+};
 
-	if(compress2(zlib_data, &zlib_length, buffer, g_PSX_TEXT_START + g_PSX_TEXT_SIZE, 9) == Z_OK)
+static upse_psf_t *psf_ctx;
+static u32 psf_pos;
+static u32 psf_pos_samples;
+static ofstream *psf_wav_fstream;
+static const u32 g_PSF_FREQUENCY = 44100;
+static const u32 g_PCM_TIME_LIMIT = 6 * 60;
+
+
+void upse_write_audio_cb(unsigned char *data, long bytes, void *unused)
+{
+	psf_pos_samples += bytes / (sizeof(s16) * 2);
+	psf_wav_fstream->write(const_cast<const char *>((char *)data), bytes);
+	if(psf_pos_samples / g_PSF_FREQUENCY >= g_PCM_TIME_LIMIT)
+		upse_stop();
+
+	// show some time
+	psf_pos += ((bytes / 4 * 1000) / 44100);
+	cout << "\r";
+	cout << setfill('0') << "Time: "
+		<< setw(2) << ((u32)(psf_pos / 1000.0) / 60) << ":"
+		<< setw(2) << ((u32)(psf_pos / 1000.0) % 60) << "."
+		<< setw(2) << ((u32)(psf_pos / 10.0) % 100)
+		<< flush;
+}
+
+void psf_decode_wav(string a_out_fn, string a_in_fn)
+{
+	cout << "decoding " << a_in_fn << " => " << a_out_fn << "... " << endl;
+
+	// decode options
+//	upse_set_reverb_mode(0);
+//	upse_set_reverb_no_downsample(1);
+//	upse_set_custom_bios(optarg);
+
+	// set audio write callback
+    upse_set_audio_callback(upse_write_audio_cb, NULL);
+
+	if((psf_ctx = upse_load(const_cast<char *>(a_in_fn.c_str()), &upse_iofuncs)) == NULL)
 	{
-		// write psf
-		PsfHeader psf_header;
-		memcpy(psf_header.magic, "PSF", sizeof(psf_header.magic));
-		psf_header.version = 1;
-		psf_header.reserved_size = 0;
-		psf_header.program_size = zlib_length;
-		psf_header.program_crc = crc32(crc32(0, Z_NULL, 0), zlib_data, zlib_length);
-
-		path output_path(path(g_PSF_EXT) / (path(a_file).stem() + '.' + g_PSF_EXT));
-		ofstream oF(output_path.string().c_str(), ios::binary);
-		oF.write((char *)&psf_header, sizeof(psf_header));
-		oF.write((char *)zlib_data, zlib_length);
-	}
-	else
-	{
-		cout << "error: unable to compress psx executable" << endl;
+		cout << "failed to load " << a_in_fn << endl;
+		return;
 	}
 
-	free(zlib_data);
+	psf_pos = 0;
+	psf_pos_samples = 0;
+	ofstream oF(a_out_fn.c_str(), ios::binary);
+	psf_wav_fstream = &oF;
 
-	delete [] buffer;
+	if(oF.is_open())
+		upse_execute();
+
+	oF.close();
+	upse_free_psf_metadata(psf_ctx);
+
+	// turn off audio write callback
+    upse_set_audio_callback(NULL, NULL);
 }
