@@ -19,14 +19,16 @@
         <text_area name="HpCurrent" x="54" y="69" text_name="CharacterDataHpCurrent" colour="0.9 0.9 0" font="FFVIIMenuDigits" scale="3 3" visible="true" />
         <sprite name="HpSlash" image="screens/images/slash.png" x="138" y="69" width="12" height="24" visible="true" />
         <text_area name="HpMax" x="150" y="69" text_name="CharacterDataHpMax" font="FFVIIMenuDigits" scale="3 3" visible="true" />
-        <sprite name="HpLineShadow" x="54" y="93" width="180" height="6" colours="0.3 0 0, 0.3 0 0, 0 0 0, 0 0 0" visible="true" />
-        <sprite name="HpLine" x="54" y="93" width="30" height="3" colours="0 0.5 1, 0.78 0.78 0.78, 0.78 0.78 0.78, 0 0.5 1" visible="true" />
+        <sprite name="HpLine" x="54" y="93" width="180" height="3" colour="0.3 0 0" visible="true" />
+        <sprite name="HpLineCurrent" x="54" y="93" width="30" height="3" colours="0 0.5 1, 0.78 0.78 0.78, 0.78 0.78 0.78, 0 0.5 1" visible="true" />
+        <sprite name="HpLineShadow" x="54" y="96" width="180" height="3" colour="0 0 0" visible="true" />
         <text_area name="Mp" x="0" y="78" text_name="CharacterDataMp" colour="0 0.9 0.9" font="FFVIIMenuFont" scale="3 3" visible="true" />
         <text_area name="MpCurrent" x="54" y="99" text_name="CharacterDataMpCurrent" font="FFVIIMenuDigits" scale="3 3" visible="true" />
         <sprite name="MpSlash" image="screens/images/slash.png" x="138" y="99" width="12" height="24" visible="true" />
         <text_area name="MpMax" x="150" y="99" text_name="CharacterDataMpMax" font="FFVIIMenuDigits" scale="3 3" visible="true" />
-        <sprite name="MpLineShadow" x="54" y="123" width="180" height="6" colours="0.3 0 0, 0.3 0 0, 0 0 0, 0 0 0" visible="true" />
-        <sprite name="MpLine" x="54" y="123" width="180" height="3" colours="0 1 0.5, 0.78 0.78 0.78, 0.78 0.78 0.78, 0 1 0.5" visible="true" />
+        <sprite name="MpLine" x="54" y="123" width="180" height="3" colour="0.3 0 0" visible="true" />
+        <sprite name="MpLineCurrent" x="54" y="123" width="180" height="3" colours="0 1 0.5, 0.78 0.78 0.78, 0.78 0.78 0.78, 0 1 0.5" visible="true" />
+        <sprite name="MpLineShadow" x="54" y="126" width="180" height="3" colour="0 0 0" visible="true" />
         <text_area name="Status" x="108" y="33" text_name="CharacterDataFury" colour="0.9 0 0.9" font="FFVIIFont" scale="3 3" visible="true" />
     </prototype>
 </prototypes>

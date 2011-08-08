@@ -283,6 +283,7 @@
     +1e []       equipped accessory.
     +1f []       flags (0x10 sadness, 0x20 fury).
     +20 []       char order (0xff normal, 0xfe back row).
+    +21 []       level progress bar (0-255)
     +2c [][]     current hp.
     +2e [][]     max hp (before materia alterations).
     +30 [][]     current mp.

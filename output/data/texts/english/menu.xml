@@ -20,15 +20,17 @@
     <text name="MainMenuPHS">PHS</text>
     <text name="MainMenuSave">Save</text>
 
-    <text name="CharacterDataName">Ex-SOLDIER</text>
+    <text name="CharacterDataName">Akari</text>
     <text name="CharacterDataLv">LV</text>
     <text name="CharacterDataLvNumber">29</text>
     <text name="CharacterDataHp">HP</text>
     <text name="CharacterDataHpCurrent"> 184</text>
-    <text name="CharacterDataHpMax">9999</text>
+    <text name="CharacterDataHpMax">1260</text>
     <text name="CharacterDataMp">MP</text>
-    <text name="CharacterDataMpCurrent"> 999</text>
-    <text name="CharacterDataMpMax"> 999</text>
+    <text name="CharacterDataMpCurrent"> 220</text>
+    <text name="CharacterDataMpMax"> 220</text>
     <text name="CharacterDataFury">Fury</text>
     <text name="CharacterDataSadness">Sadness</text>
+    <text name="CharacterDataNextLevel">next level</text>
+    <text name="CharacterDataLimitLevel">Limit level</text>
 </texts>

@@ -894,7 +894,7 @@ func1e040;
 80024580	sll    v1, v1, $03
 80024584	mult   v1, 66666667
 8002458C	ori    t3, zero, $002e
-80024590	ori    s6, zero, $0012
+
 80024594	sw     t3, $0490(sp)
 800245A0	sra    v1, v1, $1f
 800245A4	mfhi   t3
@@ -904,8 +904,7 @@ func1e040;
 800245B4	addiu  v0, v0, $0013
 800245B8	sw     v0, $0488(sp)
 
-FP = 1d;
-y_pos = 1f;
+y_pos = 11;
 S2 = 0;
 L245bc:	; 800245BC
     V0 = bu[8009cdbc + S2];
@@ -916,12 +915,12 @@ L245bc:	; 800245BC
         S1 = S5 * 84;
 
         A0 = S3 + 66;
-        A1 = y_pos;
+        A1 = y_pos + e;
         A2 = S2;
         func20b68;
 
         A0 = S3 + ((bu[8009c6e4 + 0054 + S1 + 20] ^ 1) & 1) * 18 + 16; // char order
-        A1 = FP;
+        A1 = y_pos + c;
         A2 = 30;
         A3 = 30;
         A4 = 0;
@@ -933,26 +932,23 @@ L245bc:	; 800245BC
         80024668	jal    func1cf3c [$8001cf3c]
 
 
-        80024670	addiu  a0, s3, $00cb
-        80024674	ori    a3, zero, $0006
-        80024678	lw     a1, $0490(sp)
-        8002467C	lui    at, $800a
-        80024680	addiu  at, at, $c759 (=-$38a7)
-        80024684	addu   at, at, s1
-        80024688	lbu    a2, $0000(at)
-        8002468C	ori    v0, zero, $0080
-        80024690	sw     v0, $0010(sp)
-        80024694	ori    v0, zero, $0020
-        80024698	sw     v0, $0014(sp)
+
+        A0 = S3 + cb;
+        A1 = w[SP + 490];
+        A2 = bu[8009c6e4 + 0054 + S1 + 21]; // level progress bar
+        A3 = 6;
+        A4 = 80;
+        A5 = 20;
+        A6 = 20;
         8002469C	jal    func285ac [$800285ac]
-        800246A0	sw     v0, $0018(sp)
+
         800246A4	lui    at, $800a
         800246A8	addiu  at, at, $c747 (=-$38b9)
         800246AC	addu   at, at, s1
         800246B0	lbu    v0, $0000(at)
         800246B4	ori    t3, zero, $00ff
         800246B8	bne    v0, t3, L24710 [$80024710]
-        800246BC	addu   s4, s6, zero
+
         800246C0	lw     t3, $0478(sp)
         800246C4	nop
         800246C8	sra    v0, t3, $01
@@ -1018,8 +1014,9 @@ L245bc:	; 800245BC
         800247A4	subu   v0, v0, v1
         800247A8	sll    v0, v0, $02
         800247AC	addu   v0, v0, v1
+        A1 = y_pos + 32;
         800247B0	bgez   v0, L247bc [$800247bc]
-        800247B4	addiu  a1, s4, $0031
+
         800247B8	addiu  v0, v0, $00ff
 
         L247bc:	; 800247BC
@@ -1032,7 +1029,7 @@ L245bc:	; 800245BC
         800247D4	sw     t0, $0018(sp)
         800247D8	addiu  s0, s3, $00ca
         800247E4	addu   a0, s0, zero
-        800247E8	addiu  a1, s4, $001b
+        A1 = y_pos + 1c;
         800247F4	ori    a2, zero, $0088
         800247F8	ori    a3, zero, $0008
         800247FC	ori    t3, zero, $0040
@@ -1044,7 +1041,7 @@ L245bc:	; 800245BC
         80024814	jal    func28ca0 [$80028ca0]
         80024818	sw     zero, $001c(sp)
         8002481C	addu   a0, s0, zero
-        80024820	addiu  a1, s4, $0030
+        A1 = y_pos + 31;
         8002482C	ori    a2, zero, $0088
         80024830	ori    a3, zero, $0008
         80024834	ori    t3, zero, $0040
@@ -1062,7 +1059,7 @@ L245bc:	; 800245BC
         80024864	addiu  at, at, $cbdc (=-$3424)
         80024868	addu   at, at, s2
         8002486C	lbu    v0, $0000(at)
-        80024870	addiu  a1, s4, $0027
+        A1 = y_pos + 28;
         80024874	sll    v0, v0, $02
         80024878	addu   v0, v0, t3
         8002487C	lw     v1, $0000(v0)
@@ -1087,25 +1084,21 @@ L245bc:	; 800245BC
         800248CC	jal    func26a34 [$80026a34]
 
 
-        S1 = S3 + ba;
-        A0 = S1;
-        A1 = S4 + 10;
+        A0 = S3 + ba;
+        A1 = y_pos + 11;
         A2 = 80049308; // text "next level"
         A3 = 7;
         func26f44;
 
-        A0 = S1;
-        A1 = S4 + 25;
+        A0 = S3 + ba;
+        A1 = y_pos + 26;
         A2 = 80049314; // text "Limit level"
         A3 = 7;
         func26f44;
     }
 
-    80024908	addiu  fp, fp, $003c
-
     y_pos = y_pos + 3c;
 
-    80024910	addiu  s6, s6, $003c
     80024914	addiu  s2, s2, $0001
     80024918	lw     t3, $0490(sp)
     8002491C	slti   v0, s2, $0003
