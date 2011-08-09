@@ -9,7 +9,7 @@ Ui.MainMenu = {
 
 
     on_start = function( self )
-        script:request( "Ui.MainMenu", "show", 0 )
+        --script:request( "Ui.MainMenu", "show", 0 )
 
         return 0
     end,
@@ -18,11 +18,11 @@ Ui.MainMenu = {
 
     on_button = function( self, button, event )
         if ui_manager:get_widget( "MainMenu" ):is_visible() == true then
-            local characters  = ui_manager:get_widget( "MainMenu.Characters" )
-            local menu        = ui_manager:get_widget( "MainMenu.Menu" )
-            local menu_cursor = ui_manager:get_widget( "MainMenu.Menu.Cursor" )
-            local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
-            local location    = ui_manager:get_widget( "MainMenu.Location" )
+            local characters  = ui_manager:get_widget( "MainMenu.Container.Characters" )
+            local menu        = ui_manager:get_widget( "MainMenu.Container.Menu" )
+            local menu_cursor = ui_manager:get_widget( "MainMenu.Container.Menu.Cursor" )
+            local timegil     = ui_manager:get_widget( "MainMenu.Container.TimeGil" )
+            local location    = ui_manager:get_widget( "MainMenu.Container.Location" )
 
             if button == "Z" and event == "Press" then
                 script:request_end_sync( "Ui.MainMenu", "hide", 0 )
@@ -50,14 +50,14 @@ Ui.MainMenu = {
     show = function( self )
         ui_manager:get_widget( "MainMenu" ):set_visible( true )
 
-        local characters  = ui_manager:get_widget( "MainMenu.Characters" )
-        local menu        = ui_manager:get_widget( "MainMenu.Menu" )
-        local menu_cursor = ui_manager:get_widget( "MainMenu.Menu.Cursor" )
-        local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
-        local location    = ui_manager:get_widget( "MainMenu.Location" )
+        local characters  = ui_manager:get_widget( "MainMenu.Container.Characters" )
+        local menu        = ui_manager:get_widget( "MainMenu.Container.Menu" )
+        local menu_cursor = ui_manager:get_widget( "MainMenu.Container.Menu.Cursor" )
+        local timegil     = ui_manager:get_widget( "MainMenu.Container.TimeGil" )
+        local location    = ui_manager:get_widget( "MainMenu.Container.Location" )
 
-        ui_manager:get_widget( "MainMenu.Menu.PHSText" ):set_visible( false )
-        ui_manager:get_widget( "MainMenu.Menu.SaveText" ):set_colour( 0.4, 0.4, 0.4 )
+        ui_manager:get_widget( "MainMenu.Container.Menu.PHSText" ):set_visible( false )
+        ui_manager:get_widget( "MainMenu.Container.Menu.SaveText" ):set_colour( 0.4, 0.4, 0.4 )
 
         characters:play_animation_stop( "Appear" )
         menu:play_animation_stop( "Appear" )
@@ -72,10 +72,10 @@ Ui.MainMenu = {
 
 
     hide = function( self )
-        local characters  = ui_manager:get_widget( "MainMenu.Characters" )
-        local menu        = ui_manager:get_widget( "MainMenu.Menu" )
-        local timegil     = ui_manager:get_widget( "MainMenu.TimeGil" )
-        local location    = ui_manager:get_widget( "MainMenu.Location" )
+        local characters  = ui_manager:get_widget( "MainMenu.Container.Characters" )
+        local menu        = ui_manager:get_widget( "MainMenu.Container.Menu" )
+        local timegil     = ui_manager:get_widget( "MainMenu.Container.TimeGil" )
+        local location    = ui_manager:get_widget( "MainMenu.Container.Location" )
 
         characters:play_animation_stop( "Disappear" )
         menu:play_animation_stop( "Disappear" )

@@ -20,7 +20,7 @@ public:
 
     void Initialise();
     virtual void Update();
-    virtual void OnResize();
+    void OnResize();
     virtual void Render();
 
     void SetVisible( const bool visible );
@@ -43,7 +43,7 @@ public:
     void ScriptSetDefaultAnimation( const char* animation );
     const int ScriptAnimationSync();
 
-    void UpdateTransformation();
+    virtual void UpdateTransformation();
 
     enum Align
     {
@@ -60,6 +60,7 @@ public:
     void SetAlign( const UiWidget::Align align );
     void SetVerticalAlign( const UiWidget::VerticalAlign valign );
 
+    float GetFinalZ() const;
     Ogre::Vector2 GetFinalOrigin() const;
     Ogre::Vector2 GetFinalTranslate() const;
     Ogre::Vector2 GetFinalSize() const;
@@ -70,6 +71,7 @@ public:
     void SetOriginY( const float percent, const float y );
     void SetX( const float percent, const float x );
     void SetY( const float percent, const float y );
+    void SetZ( const float z );
     void SetWidth( const float percent, const float width );
     void SetHeight( const float percent, const float height );
     void SetScale( const Ogre::Vector2& scale );
@@ -107,8 +109,11 @@ protected:
     Align                    m_Align;
     VerticalAlign            m_VerticalAlign;
 
+    bool                     m_UpdateTransformation;
+
     Ogre::Vector2            m_FinalOrigin;
     Ogre::Vector2            m_FinalTranslate;
+    float                    m_FinalZ;
     Ogre::Vector2            m_FinalSize;
     Ogre::Vector2            m_FinalScale;
     float                    m_FinalRotation;
@@ -121,6 +126,7 @@ protected:
     float                    m_X;
     float                    m_YPercent;
     float                    m_Y;
+    float                    m_Z;
     float                    m_WidthPercent;
     float                    m_Width;
     float                    m_HeightPercent;

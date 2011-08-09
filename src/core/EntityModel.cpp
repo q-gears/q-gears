@@ -101,7 +101,7 @@ EntityModel::PlayAnimation( const Ogre::String& animation, EntityAnimation state
         m_AnimationCurrent = m_Model->getAnimationState( animation );
         m_AnimationCurrent->setLoop( false );
         m_AnimationCurrent->setEnabled( true );
-        m_AnimationCurrent->setTimePosition( start );
+        m_AnimationCurrent->setTimePosition( ( start == -1 ) ? m_AnimationCurrent->getLength() : start );
 
         m_AnimationEndTime = ( end == -1 ) ? m_AnimationCurrent->getLength() : end;
         m_AnimationState = state;

@@ -2,6 +2,14 @@
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-xx
 --------------------------------------------------------------------------------
 
+2011-08-09
+----------
+* [Content] Add begin and main menu prototype. Add idol screen to show UI posibilities. [Akari]
+* [UI] Add spetion parameter start == -1 to play_animation so start it from very end. [Akari]
+* [UI] Add script functions set_alpha and set_z. [Akari]
+* [UI] Add z depth to widgets. [Akari]
+* [UI] Add text_align attribute for <text_area> tag. now text can be centered. [Akari]
+
 2011-08-04
 ----------
 * [UI] Add set_colour to script functions. [Akari]

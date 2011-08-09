@@ -277,6 +277,7 @@
     +0c []       dexterity bonus
     +0d []       luck bonus
     +0e []       current limit level
+    +0f []       current limit bar (0xFF = limit break)
     +10          name string.
     +1c []       equipped weapon.
     +1d []       equipped armor.

@@ -18,8 +18,8 @@ public:
 
     void Initialise();
     virtual void Update();
-    virtual void OnResize();
     virtual void Render();
+    virtual void UpdateTransformation();
 
     void SetImage( const Ogre::String& image );
     void SetVertexShader( const Ogre::String& shader );

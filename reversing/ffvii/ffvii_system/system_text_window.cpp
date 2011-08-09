@@ -1,4 +1,61 @@
 ////////////////////////////////
+// func1eb2c
+8001EB34	addu   s0, a0, zero
+8001EB3C	addu   s1, a1, zero
+packet = w[80062f24];
+[packet + 3] = b(4);
+[packet + 7] = b(64);
+
+A0 = packet;
+A1 = 1;
+system_change_semi_transparency_in_packet;
+
+A0 = packet;
+A1 = 1;
+system_change_brightness_calculation_in_packet;
+
+[packet + 8] = h(S0);
+[packet + a] = h(S1);
+[packet + c] = b(e0);
+[packet + d] = b(8);
+[packet + 10] = h(18);
+[packet + 12] = h(10);
+
+A0 = 100;
+A1 = 1e1;
+func46634;
+
+[packet + e] = h(V0);
+
+8001EBF8	lui    a1, $8006
+8001EBFC	lw     a1, $2f24(a1)
+8001EC00	lui    a0, $8006
+8001EC04	lw     a0, $2fc4(a0)
+8001EC08	addiu  v0, a1, $0014
+8001EC0C	lui    at, $8006
+8001EC10	sw     v0, $2f24(at)
+8001EC14	jal    system_add_render_packet_to_queue [$80046794]
+8001EC18	nop
+8001EC1C	addu   a0, zero, zero
+8001EC20	ori    a1, zero, $0002
+8001EC24	ori    a2, zero, $03c0
+8001EC28	ori    a3, zero, $0100
+8001EC2C	ori    v0, zero, $00ff
+8001EC30	sh     zero, $0010(sp)
+8001EC34	sh     zero, $0012(sp)
+8001EC38	sh     v0, $0014(sp)
+8001EC3C	jal    system_create_texture_page_settings_for_packet [$8004656c]
+8001EC40	sh     v0, $0016(sp)
+8001EC44	addu   a0, zero, zero
+8001EC48	ori    a1, zero, $0001
+8001EC4C	andi   a2, v0, $ffff
+8001EC50	jal    func26a34 [$80026a34]
+8001EC54	addiu  a3, sp, $0010
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func1e040
 8001E048	addu   s5, a0, zero
 8001E064	lh     v0, $0004(s5)

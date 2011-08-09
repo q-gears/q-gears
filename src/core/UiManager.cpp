@@ -230,6 +230,8 @@ UiManager::renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& inv
 {
     if( queueGroupId == Ogre::RENDER_QUEUE_OVERLAY )
     {
+        Ogre::Root::getSingletonPtr()->getRenderSystem()->clearFrameBuffer( Ogre::FBT_DEPTH );
+
         for( int i = 0; i < m_Widgets.size(); ++i)
         {
             m_Widgets[ i ]->Render();

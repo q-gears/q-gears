@@ -81,7 +81,7 @@ int main()
     for (__int64 V1 = 0; V1 <= 100; ++V1)
     {
         printf("%d:", V1);
-        __int64 V0 = V1 * 0x54;
+        __int64 V0 = V1 * 0xb8;
         __int64 T3 = V0 * 0x66666667;
         T3 = T3 >> 0x20;
         V0 = V0 >> 0x1f;

@@ -37,20 +37,22 @@ public:
 
     void Initialise();
     virtual void Update();
-    virtual void OnResize();
     virtual void Render();
+    virtual void UpdateTransformation();
 
-    enum TextAlignment
+    enum TextAlign
     {
         LEFT,
         RIGHT,
         CENTER
     };
-    void SetTextAlignment( const TextAlignment alignment );
+    void SetTextAlign( const TextAlign align );
     void SetText( const Ogre::UTFString& text );
     void SetText( TiXmlNode* text );
     void SetFont( const Ogre::String& font );
     void UpdateGeometry();
+    const float GetTextLengthFromNode( TiXmlNode* node ) const;
+    const float GetTextLength( const Ogre::UTFString& text ) const;
     void SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const TextStyle& style );
     void SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, const TextStyle& style );
 
@@ -69,7 +71,7 @@ private:
     Ogre::HardwareVertexBufferSharedPtr m_VertexBuffer;
 
     UiFont*                             m_Font;
-    TextAlignment                       m_TextAlignment;
+    TextAlign                           m_TextAlign;
     Ogre::UTFString                     m_Text;
     TiXmlNode*                          m_TextNode;
 };

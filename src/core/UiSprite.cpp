@@ -40,8 +40,8 @@ UiSprite::Initialise()
     Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
     pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
     pass->setCullingMode( Ogre::CULL_NONE );
-    pass->setDepthCheckEnabled( false );
-    pass->setDepthWriteEnabled( false );
+    pass->setDepthCheckEnabled( true );
+    pass->setDepthWriteEnabled( true );
     pass->setLightingEnabled( false );
     pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
@@ -66,16 +66,6 @@ UiSprite::Update()
 
 
 void
-UiSprite::OnResize()
-{
-    UiWidget::OnResize();
-
-    UpdateGeometry();
-}
-
-
-
-void
 UiSprite::Render()
 {
     if( m_Visible == true )
@@ -95,6 +85,15 @@ UiSprite::Render()
     }
 
     UiWidget::Render();
+}
+
+
+
+void
+UiSprite::UpdateTransformation()
+{
+    UiWidget::UpdateTransformation();
+    UpdateGeometry();
 }
 
 
@@ -189,7 +188,7 @@ UiSprite::UpdateGeometry()
 
     *writeIterator++ = new_x1;
     *writeIterator++ = new_y1;
-    *writeIterator++ = 0; // z
+    *writeIterator++ = m_FinalZ;
     *writeIterator++ = m_Colour1.r;
     *writeIterator++ = m_Colour1.g;
     *writeIterator++ = m_Colour1.b;
@@ -199,7 +198,7 @@ UiSprite::UpdateGeometry()
 
     *writeIterator++ = new_x2;
     *writeIterator++ = new_y2;
-    *writeIterator++ = 0; // z
+    *writeIterator++ = m_FinalZ;
     *writeIterator++ = m_Colour2.r;
     *writeIterator++ = m_Colour2.g;
     *writeIterator++ = m_Colour2.b;
@@ -209,7 +208,7 @@ UiSprite::UpdateGeometry()
 
     *writeIterator++ = new_x3;
     *writeIterator++ = new_y3;
-    *writeIterator++ = 0; // z
+    *writeIterator++ = m_FinalZ;
     *writeIterator++ = m_Colour3.r;
     *writeIterator++ = m_Colour3.g;
     *writeIterator++ = m_Colour3.b;
@@ -219,7 +218,7 @@ UiSprite::UpdateGeometry()
 
     *writeIterator++ = new_x1;
     *writeIterator++ = new_y1;
-    *writeIterator++ = 0; // z
+    *writeIterator++ = m_FinalZ;
     *writeIterator++ = m_Colour1.r;
     *writeIterator++ = m_Colour1.g;
     *writeIterator++ = m_Colour1.b;
@@ -229,7 +228,7 @@ UiSprite::UpdateGeometry()
 
     *writeIterator++ = new_x3;
     *writeIterator++ = new_y3;
-    *writeIterator++ = 0; // z
+    *writeIterator++ = m_FinalZ;
     *writeIterator++ = m_Colour3.r;
     *writeIterator++ = m_Colour3.g;
     *writeIterator++ = m_Colour3.b;
@@ -239,7 +238,7 @@ UiSprite::UpdateGeometry()
 
     *writeIterator++ = new_x4;
     *writeIterator++ = new_y4;
-    *writeIterator++ = 0; // z
+    *writeIterator++ = m_FinalZ;
     *writeIterator++ = m_Colour4.r;
     *writeIterator++ = m_Colour4.g;
     *writeIterator++ = m_Colour4.b;

@@ -9,8 +9,11 @@ Ui.BeginMenu = {
 
 
     on_start = function( self )
-        local cursor = ui_manager:get_widget( "BeginMenu.Cursor" )
+        local cursor = ui_manager:get_widget( "BeginMenu.Container.Cursor" )
         cursor:set_default_animation( "Position" .. self.position )
+
+        --script:request( "Ui.BeginMenu", "show", 0 )
+
         return 0
     end,
 
@@ -18,11 +21,16 @@ Ui.BeginMenu = {
 
     on_button = function( self, button, event )
         if ui_manager:get_widget( "BeginMenu" ):is_visible() ~= false then
-            local cursor = ui_manager:get_widget( "BeginMenu.Cursor" )
+            local cursor = ui_manager:get_widget( "BeginMenu.Container.Cursor" )
 
             if button == "X" and event == "Press" then
-                script:request_end_sync( "Ui.BeginMenu", "hide", 0 )
-                script:request_end_sync( "Ui.MainMenu", "show", 0 )
+                if self.position == 1 then
+                    script:request_end_sync( "Ui.BeginMenu", "hide", 0 )
+                    script:request_end_sync( "Ui.MainMenu", "show", 0 )
+                else
+                    script:request_end_sync( "Ui.BeginMenu", "hide", 0 )
+                    script:request_end_sync( "Ui.Idol", "show", 0 )
+                end
             elseif button == "Down" then
                 self.position = self.position + 1
                 if self.position > self.position_total then

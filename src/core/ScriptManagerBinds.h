@@ -71,7 +71,9 @@ ScriptManager::InitBinds()
             .def( "play_animation_stop", ( void( UiWidget::* )( const char*, const float, const float ) ) &UiWidget::ScriptPlayAnimationStop )
             .def( "set_default_animation", ( void( UiWidget::* )( const char* ) ) &UiWidget::ScriptSetDefaultAnimation )
             .def( "animation_sync", ( int( UiWidget::* )()) &UiWidget::ScriptAnimationSync, luabind::yield )
-            .def( "set_colour", ( int( UiWidget::* )( const float, const float, const float ) ) &UiWidget::SetColour )
+            .def( "set_colour", ( void( UiWidget::* )( const float, const float, const float ) ) &UiWidget::SetColour )
+            .def( "set_alpha", ( void( UiWidget::* )( const float ) ) &UiWidget::SetAlpha )
+            .def( "set_z", ( void( UiWidget::* )( const float ) ) &UiWidget::SetZ )
     ];
 
     // ui access

@@ -835,7 +835,7 @@ system_draw_single_menu_font_character;
 A0 = w[8009d264];
 system_get_minutes_from_seconds;
 
-A0 = S3;
+A0 = S3 + 32;
 A1 = ac;
 A2 = V0; // minutes
 A3 = 2;
@@ -885,24 +885,9 @@ func26a34;
 A0 = SP + 28
 func1e040;
 
-80024568	lh     v0, $0164(gp)
-8002456C	nop
-80024570	sll    v1, v0, $01
-80024574	addu   v1, v1, v0
-80024578	sll    v1, v1, $03
-8002457C	subu   v1, v1, v0
-80024580	sll    v1, v1, $03
-80024584	mult   v1, 66666667
-8002458C	ori    t3, zero, $002e
 
-80024594	sw     t3, $0490(sp)
-800245A0	sra    v1, v1, $1f
-800245A4	mfhi   t3
-800245A8	sra    v0, t3, $03
-800245AC	subu   v0, v0, v1
-800245B0	addiu  s3, v0, $ff48 (=-$b8)
-800245B4	addiu  v0, v0, $0013
-800245B8	sw     v0, $0488(sp)
+
+S3 = h[GP + 164] * 9.2 - b8;
 
 y_pos = 11;
 S2 = 0;
@@ -934,112 +919,86 @@ L245bc:	; 800245BC
 
 
         A0 = S3 + cb;
-        A1 = w[SP + 490];
+        A1 = y_pos + 1d;
         A2 = bu[8009c6e4 + 0054 + S1 + 21]; // level progress bar
         A3 = 6;
         A4 = 80;
         A5 = 20;
         A6 = 20;
-        8002469C	jal    func285ac [$800285ac]
+        func285ac;
 
-        800246A4	lui    at, $800a
-        800246A8	addiu  at, at, $c747 (=-$38b9)
-        800246AC	addu   at, at, s1
-        800246B0	lbu    v0, $0000(at)
-        800246B4	ori    t3, zero, $00ff
-        800246B8	bne    v0, t3, L24710 [$80024710]
+        V0 = bu[8009c6e4 + 0054 + S1 + f]; // limit progress bar
+        if (V0 == ff)
+        {
+            800246C0	lw     t3, $0478(sp)
+            800246C4	nop
+            800246C8	sra    v0, t3, $01
+            800246CC	andi   v0, v0, $0007
+            800246D0	sll    v1, v0, $01
+            800246D4	addu   v1, v1, v0
+            T2 = bu[8004948c + V1];
+            800246E8	lui    at, $8005
+            800246EC	addiu  at, at, $948d (=-$6b73)
+            800246F0	addu   at, at, v1
+            800246F4	lbu    t1, $0000(at)
+            800246F8	lui    at, $8005
+            800246FC	addiu  at, at, $948e (=-$6b72)
+            80024700	addu   at, at, v1
+            80024704	lbu    t0, $0000(at)
+        }
+        else
+        {
+            V1 = b[8009c757 + S1];
+            if (V1 & 10)
+            {
+                80024730	lui    t2, $8005
+                80024734	lbu    t2, $948c(t2)
+                80024738	lui    t1, $8005
+                8002473C	lbu    t1, $948d(t1)
+                80024740	lui    t0, $8005
+                80024744	lbu    t0, $948e(t0)
+            }
+            else if (V1 & 20)
+            {
+                80024758	lui    t2, $8005
+                8002475C	lbu    t2, $9492(t2)
+                80024760	lui    t1, $8005
+                80024764	lbu    t1, $9493(t1)
+                80024768	lui    t0, $8005
+                8002476C	lbu    t0, $9494(t0)
+            }
+            else
+            {
+                T2 = 80;
+                T1 = 20;
+                T0 = 50;
+            }
+        }
 
-        800246C0	lw     t3, $0478(sp)
-        800246C4	nop
-        800246C8	sra    v0, t3, $01
-        800246CC	andi   v0, v0, $0007
-        800246D0	sll    v1, v0, $01
-        800246D4	addu   v1, v1, v0
-        800246D8	lui    at, $8005
-        800246DC	addiu  at, at, $948c (=-$6b74)
-        800246E0	addu   at, at, v1
-        800246E4	lbu    t2, $0000(at)
-        800246E8	lui    at, $8005
-        800246EC	addiu  at, at, $948d (=-$6b73)
-        800246F0	addu   at, at, v1
-        800246F4	lbu    t1, $0000(at)
-        800246F8	lui    at, $8005
-        800246FC	addiu  at, at, $948e (=-$6b72)
-        80024700	addu   at, at, v1
-        80024704	lbu    t0, $0000(at)
-        80024708	j      L24784 [$80024784]
-        8002470C	sll    v0, s5, $05
-
-        L24710:	; 80024710
-        80024710	lui    at, $800a
-        80024714	addiu  at, at, $c757 (=-$38a9)
-        80024718	addu   at, at, s1
-        8002471C	lbu    v1, $0000(at)
-        80024720	nop
-        80024724	andi   v0, v1, $0010
-        80024728	beq    v0, zero, L24750 [$80024750]
-        8002472C	andi   v0, v1, $0020
-        80024730	lui    t2, $8005
-        80024734	lbu    t2, $948c(t2)
-        80024738	lui    t1, $8005
-        8002473C	lbu    t1, $948d(t1)
-        80024740	lui    t0, $8005
-        80024744	lbu    t0, $948e(t0)
-        80024748	j      L24784 [$80024784]
-        8002474C	sll    v0, s5, $05
-
-        L24750:	; 80024750
-        80024750	beq    v0, zero, L24778 [$80024778]
-        80024754	ori    t2, zero, $0080
-        80024758	lui    t2, $8005
-        8002475C	lbu    t2, $9492(t2)
-        80024760	lui    t1, $8005
-        80024764	lbu    t1, $9493(t1)
-        80024768	lui    t0, $8005
-        8002476C	lbu    t0, $9494(t0)
-        80024770	j      L24784 [$80024784]
-        80024774	sll    v0, s5, $05
-
-        L24778:	; 80024778
-        80024778	ori    t1, zero, $0020
-        8002477C	ori    t0, zero, $0050
         80024780	sll    v0, s5, $05
-
-        L24784:	; 80024784
         80024784	addu   v0, v0, s5
         80024788	sll    v0, v0, $02
-        V1 = bu[8009c747 + V0];
-
-        800247A0	sll    v0, v1, $04
-        800247A4	subu   v0, v0, v1
-        800247A8	sll    v0, v0, $02
-        800247AC	addu   v0, v0, v1
+        V0 = b[8009c747 + V0] * 3d;
         A1 = y_pos + 32;
-        800247B0	bgez   v0, L247bc [$800247bc]
+        A2 = V0 >> 8;
+        A0 = S3 + cb;
+        A3 = 6;
+        A4 = T2;
+        A5 = T1;
+        A6 = T0;
+        func285ac;
 
-        800247B8	addiu  v0, v0, $00ff
-
-        L247bc:	; 800247BC
-        800247BC	sra    a2, v0, $08
-        800247C0	lw     a0, $0488(sp)
-        800247C4	ori    a3, zero, $0006
-        800247C8	sw     t2, $0010(sp)
-        800247CC	sw     t1, $0014(sp)
-        800247D0	jal    func285ac [$800285ac]
-        800247D4	sw     t0, $0018(sp)
-        800247D8	addiu  s0, s3, $00ca
-        800247E4	addu   a0, s0, zero
-        A1 = y_pos + 1c;
-        800247F4	ori    a2, zero, $0088
-        800247F8	ori    a3, zero, $0008
-        800247FC	ori    t3, zero, $0040
-        80024800	sw     t3, $0010(sp)
-        80024804	ori    t3, zero, $0008
-        80024808	sw     t3, $0014(sp)
-        8002480C	ori    t3, zero, $0007
-        80024810	sw     t3, $0018(sp)
+        S0 = S3 + ca;
+        A0 = S0; // x
+        A1 = y_pos + 1c; // y
+        A2 = 88; // tex x
+        A3 = 8; // tex y
+        A4 = 40; // width
+        A5 = 8; // height
+        A6 = 7; // colour
+        A7 = 0;
         80024814	jal    func28ca0 [$80028ca0]
-        80024818	sw     zero, $001c(sp)
+
         8002481C	addu   a0, s0, zero
         A1 = y_pos + 31;
         8002482C	ori    a2, zero, $0088
@@ -1052,7 +1011,8 @@ L245bc:	; 800245BC
         80024848	sw     t3, $0018(sp)
         8002484C	jal    func28ca0 [$80028ca0]
         80024850	sw     zero, $001c(sp)
-        80024854	addiu  a0, s3, $00fa
+
+        A0 = S3 + fa;
         80024858	lui    t3, $8005
         8002485C	addiu  t3, t3, $91d0 (=-$6e30)
         80024860	lui    at, $800a
@@ -1100,10 +1060,7 @@ L245bc:	; 800245BC
     y_pos = y_pos + 3c;
 
     80024914	addiu  s2, s2, $0001
-    80024918	lw     t3, $0490(sp)
     8002491C	slti   v0, s2, $0003
-    80024920	addiu  t3, t3, $003c
-    80024928	sw     t3, $0490(sp)
 80024924	bne    v0, zero, L245bc [$800245bc]
 
 [SP + 28] = h(S3);
@@ -1336,8 +1293,7 @@ L232bc:	; 800232BC
 L232c4:	; 800232C4
 
 800232CC	lw     v1, $0250(gp)
-800232D0	ori    v0, zero, $0018
-800232D4	sw     v0, $00ac(gp)
+[GP + ac] = w(18);
 
 A1 = b;
 A2 = 80049248 + V1 * c; // text "Item"
@@ -1347,8 +1303,7 @@ func26f44;
 800232F4	j      L234c8 [$800234c8]
 800232F8	nop
 800232FC	lw     v1, $027c(gp)
-80023300	ori    v0, zero, $0084
-80023304	sw     v0, $00ac(gp)
+[GP + ac] = w(84);
 
 if (V1 != 1)
 {
@@ -2057,4 +2012,85 @@ if (A0 != 0)
 80027958	nop
 
 L2795c:	; 8002795C
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func285ac
+pos_x = A0;
+packet = w[80062f24];
+col_r = A4;
+col_g = A5;
+col_b = A6;
+pos_y = A1;
+width = A2;
+height = A3;
+
+A0 = packet;
+func46910;
+
+A0 = packet;
+A1 = 1;
+system_change_semi_transparency_in_packet;
+
+[packet + 8] = h(pos_x);
+[packet + a] = h(pos_y);
+[packet + 10] = h(pos_x + width);
+[packet + 12] = h(pos_y);
+[packet + 18] = h(pos_x);
+[packet + 1a] = h(pos_y + height / 2);
+[packet + 20] = h(pos_x + width);
+[packet + 22] = h(pos_y + height / 2);
+[packet + 4] = b(col_r);
+[packet + 5] = b(col_g);
+[packet + 6] = b(col_b);
+[packet + c] = b(col_r);
+[packet + d] = b(col_g);
+[packet + e] = b(col_b);
+[packet + 14] = b(80);
+[packet + 15] = b(80);
+[packet + 16] = b(80);
+[packet + 1c] = b(80);
+[packet + 1d] = b(80);
+[packet + 1e] = b(80);
+
+[80062f24] = w(packet + 24);
+
+A0 = w[GP + 280];
+A1 = packet;
+system_add_render_packet_to_queue;
+
+A0 = w[80062f24];
+80028788	jal    func46910 [$80046910]
+
+A0 = w[80062f24];
+A1 = 1;
+system_change_semi_transparency_in_packet;
+
+[packet + 8] = h(pos_x);
+[packet + a] = h(pos_y + height / 2);
+[packet + 10] = h(pos_x + width);
+[packet + 12] = h(pos_y + height / 2);
+[packet + 18] = h(pos_x);
+[packet + 1a] = h(pos_y + height);
+[packet + 20] = h(pos_x + width);
+[packet + 22] = h(pos_y + height);
+[packet + 4] = b(col_r);
+[packet + 5] = b(col_g);
+[packet + 6] = b(col_b);
+[packet + c] = b(col_r);
+[packet + d] = b(col_g);
+[packet + e] = b(col_b);
+[packet + 14] = b(0);
+[packet + 15] = b(0);
+[packet + 16] = b(0);
+[packet + 1c] = b(0);
+[packet + 1d] = b(0);
+[packet + 1e] = b(0);
+
+A0 = w[GP + 280];
+A1 = w[80062f24];
+[80062f24] = w(A1 + 24);
+system_add_render_packet_to_queue;
 ////////////////////////////////

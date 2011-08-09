@@ -15299,88 +15299,11 @@ loop1def4:	; 8001DEF4
 
 
 
-func1eb2c:	; 8001EB2C
-8001EB2C	addiu  sp, sp, $ffd8 (=-$28)
-8001EB30	sw     s0, $0018(sp)
-8001EB34	addu   s0, a0, zero
-8001EB38	sw     s1, $001c(sp)
-8001EB3C	addu   s1, a1, zero
-8001EB40	lui    v1, $8006
-8001EB44	lw     v1, $2f24(v1)
-8001EB48	ori    v0, zero, $0004
-8001EB4C	sw     ra, $0020(sp)
-8001EB50	sb     v0, $0003(v1)
-8001EB54	lui    v1, $8006
-8001EB58	lw     v1, $2f24(v1)
-8001EB5C	ori    v0, zero, $0064
-8001EB60	sb     v0, $0007(v1)
-8001EB64	lui    a0, $8006
-8001EB68	lw     a0, $2f24(a0)
-8001EB6C	jal    system_change_semi_transparency_in_packet [$80046848]
-8001EB70	ori    a1, zero, $0001
-8001EB74	lui    a0, $8006
-8001EB78	lw     a0, $2f24(a0)
-8001EB7C	jal    system_change_brightness_calculation_in_packet [$80046870]
-8001EB80	ori    a1, zero, $0001
-8001EB84	lui    v0, $8006
-8001EB88	lw     v0, $2f24(v0)
-8001EB8C	ori    a0, zero, $0100
-8001EB90	sh     s0, $0008(v0)
-8001EB94	lui    v0, $8006
-8001EB98	lw     v0, $2f24(v0)
-8001EB9C	ori    a1, zero, $01e1
-8001EBA0	sh     s1, $000a(v0)
-8001EBA4	lui    v1, $8006
-8001EBA8	lw     v1, $2f24(v1)
-8001EBAC	ori    v0, zero, $00e0
-8001EBB0	sb     v0, $000c(v1)
-8001EBB4	lui    v1, $8006
-8001EBB8	lw     v1, $2f24(v1)
-8001EBBC	ori    v0, zero, $0008
-8001EBC0	sb     v0, $000d(v1)
-8001EBC4	lui    v1, $8006
-8001EBC8	lw     v1, $2f24(v1)
-8001EBCC	ori    v0, zero, $0018
-8001EBD0	sh     v0, $0010(v1)
-8001EBD4	lui    v1, $8006
-8001EBD8	lw     v1, $2f24(v1)
-8001EBDC	ori    v0, zero, $0010
-8001EBE0	jal    func46634 [$80046634]
-8001EBE4	sh     v0, $0012(v1)
-8001EBE8	lui    v1, $8006
-8001EBEC	lw     v1, $2f24(v1)
-8001EBF0	nop
-8001EBF4	sh     v0, $000e(v1)
-8001EBF8	lui    a1, $8006
-8001EBFC	lw     a1, $2f24(a1)
-8001EC00	lui    a0, $8006
-8001EC04	lw     a0, $2fc4(a0)
-8001EC08	addiu  v0, a1, $0014
-8001EC0C	lui    at, $8006
-8001EC10	sw     v0, $2f24(at)
-8001EC14	jal    system_add_render_packet_to_queue [$80046794]
-8001EC18	nop
-8001EC1C	addu   a0, zero, zero
-8001EC20	ori    a1, zero, $0002
-8001EC24	ori    a2, zero, $03c0
-8001EC28	ori    a3, zero, $0100
-8001EC2C	ori    v0, zero, $00ff
-8001EC30	sh     zero, $0010(sp)
-8001EC34	sh     zero, $0012(sp)
-8001EC38	sh     v0, $0014(sp)
-8001EC3C	jal    system_create_texture_page_settings_for_packet [$8004656c]
-8001EC40	sh     v0, $0016(sp)
-8001EC44	addu   a0, zero, zero
-8001EC48	ori    a1, zero, $0001
-8001EC4C	andi   a2, v0, $ffff
-8001EC50	jal    func26a34 [$80026a34]
-8001EC54	addiu  a3, sp, $0010
-8001EC58	lw     ra, $0020(sp)
-8001EC5C	lw     s1, $001c(sp)
-8001EC60	lw     s0, $0018(sp)
-8001EC64	addiu  sp, sp, $0028
-8001EC68	jr     ra 
-8001EC6C	nop
+////////////////////////////////
+// func1eb2c
+8001EB2C-8001EC6C
+////////////////////////////////
+
 
 
 func1ec70:	; 8001EC70
@@ -22406,232 +22329,12 @@ L28514:	; 80028514
 800285A8	nop
 
 
-func285ac:	; 800285AC
-800285AC	addiu  sp, sp, $ffc8 (=-$38)
-800285B0	sw     s1, $0014(sp)
-800285B4	addu   s1, a0, zero
-800285B8	lui    a0, $8006
-800285BC	lw     a0, $2f24(a0)
-800285C0	sw     s4, $0020(sp)
-800285C4	lbu    s4, $0048(sp)
-800285C8	sw     s5, $0024(sp)
-800285CC	lbu    s5, $004c(sp)
-800285D0	sw     s6, $0028(sp)
-800285D4	lbu    s6, $0050(sp)
-800285D8	sw     s2, $0018(sp)
-800285DC	addu   s2, a1, zero
-800285E0	sw     s0, $0010(sp)
-800285E4	addu   s0, a2, zero
-800285E8	sw     s7, $002c(sp)
-800285EC	addu   s7, a3, zero
-800285F0	sw     ra, $0030(sp)
-800285F4	jal    func46910 [$80046910]
-800285F8	sw     s3, $001c(sp)
-800285FC	lui    a0, $8006
-80028600	lw     a0, $2f24(a0)
-80028604	jal    system_change_semi_transparency_in_packet [$80046848]
-80028608	ori    a1, zero, $0001
-8002860C	lui    v0, $8006
-80028610	lw     v0, $2f24(v0)
-80028614	addu   s3, s1, zero
-80028618	sh     s3, $0008(v0)
-8002861C	lui    v0, $8006
-80028620	lw     v0, $2f24(v0)
-80028624	addu   v1, s2, zero
-80028628	sh     v1, $000a(v0)
-8002862C	lui    v0, $8006
-80028630	lw     v0, $2f24(v0)
-80028634	addu   s1, s1, s0
-80028638	sh     s1, $0010(v0)
-8002863C	lui    v0, $8006
-80028640	lw     v0, $2f24(v0)
-80028644	nop
-80028648	sh     v1, $0012(v0)
-8002864C	lui    v0, $8006
-80028650	lw     v0, $2f24(v0)
-80028654	nop
-80028658	sh     s3, $0018(v0)
-8002865C	sll    v0, s7, $10
-80028660	sra    s0, v0, $10
-80028664	srl    v0, v0, $1f
-80028668	addu   s0, s0, v0
-8002866C	sra    s0, s0, $01
-80028670	lui    v0, $8006
-80028674	lw     v0, $2f24(v0)
-80028678	addu   s0, s2, s0
-8002867C	sh     s0, $001a(v0)
-80028680	lui    v0, $8006
-80028684	lw     v0, $2f24(v0)
-80028688	nop
-8002868C	sh     s1, $0020(v0)
-80028690	lui    v0, $8006
-80028694	lw     v0, $2f24(v0)
-80028698	nop
-8002869C	sh     s0, $0022(v0)
-800286A0	lui    v0, $8006
-800286A4	lw     v0, $2f24(v0)
-800286A8	nop
-800286AC	sb     s4, $0004(v0)
-800286B0	lui    v0, $8006
-800286B4	lw     v0, $2f24(v0)
-800286B8	nop
-800286BC	sb     s5, $0005(v0)
-800286C0	lui    v0, $8006
-800286C4	lw     v0, $2f24(v0)
-800286C8	nop
-800286CC	sb     s6, $0006(v0)
-800286D0	lui    v0, $8006
-800286D4	lw     v0, $2f24(v0)
-800286D8	nop
-800286DC	sb     s4, $000c(v0)
-800286E0	lui    v0, $8006
-800286E4	lw     v0, $2f24(v0)
-800286E8	nop
-800286EC	sb     s5, $000d(v0)
-800286F0	lui    v0, $8006
-800286F4	lw     v0, $2f24(v0)
-800286F8	nop
-800286FC	sb     s6, $000e(v0)
-80028700	lui    v0, $8006
-80028704	lw     v0, $2f24(v0)
-80028708	ori    v1, zero, $0080
-8002870C	sb     v1, $0014(v0)
-80028710	lui    v0, $8006
-80028714	lw     v0, $2f24(v0)
-80028718	nop
-8002871C	sb     v1, $0015(v0)
-80028720	lui    v0, $8006
-80028724	lw     v0, $2f24(v0)
-80028728	nop
-8002872C	sb     v1, $0016(v0)
-80028730	lui    v0, $8006
-80028734	lw     v0, $2f24(v0)
-80028738	nop
-8002873C	sb     v1, $001c(v0)
-80028740	lui    v0, $8006
-80028744	lw     v0, $2f24(v0)
-80028748	nop
-8002874C	sb     v1, $001d(v0)
-80028750	lui    v0, $8006
-80028754	lw     v0, $2f24(v0)
-80028758	nop
-8002875C	sb     v1, $001e(v0)
-80028760	lui    a1, $8006
-80028764	lw     a1, $2f24(a1)
-80028768	lw     a0, $0280(gp)
-8002876C	addiu  v0, a1, $0024
-80028770	lui    at, $8006
-80028774	sw     v0, $2f24(at)
-80028778	jal    system_add_render_packet_to_queue [$80046794]
-8002877C	addu   s2, s2, s7
-80028780	lui    a0, $8006
-80028784	lw     a0, $2f24(a0)
-80028788	jal    func46910 [$80046910]
-8002878C	nop
-80028790	lui    a0, $8006
-80028794	lw     a0, $2f24(a0)
-80028798	jal    system_change_semi_transparency_in_packet [$80046848]
-8002879C	ori    a1, zero, $0001
-800287A0	lui    v0, $8006
-800287A4	lw     v0, $2f24(v0)
-800287A8	nop
-800287AC	sh     s3, $0008(v0)
-800287B0	lui    v0, $8006
-800287B4	lw     v0, $2f24(v0)
-800287B8	nop
-800287BC	sh     s0, $000a(v0)
-800287C0	lui    v0, $8006
-800287C4	lw     v0, $2f24(v0)
-800287C8	nop
-800287CC	sh     s1, $0010(v0)
-800287D0	lui    v0, $8006
-800287D4	lw     v0, $2f24(v0)
-800287D8	nop
-800287DC	sh     s0, $0012(v0)
-800287E0	lui    v0, $8006
-800287E4	lw     v0, $2f24(v0)
-800287E8	nop
-800287EC	sh     s3, $0018(v0)
-800287F0	lui    v0, $8006
-800287F4	lw     v0, $2f24(v0)
-800287F8	nop
-800287FC	sh     s2, $001a(v0)
-80028800	lui    v0, $8006
-80028804	lw     v0, $2f24(v0)
-80028808	nop
-8002880C	sh     s1, $0020(v0)
-80028810	lui    v0, $8006
-80028814	lw     v0, $2f24(v0)
-80028818	nop
-8002881C	sh     s2, $0022(v0)
-80028820	lui    v0, $8006
-80028824	lw     v0, $2f24(v0)
-80028828	nop
-8002882C	sb     s4, $0004(v0)
-80028830	lui    v0, $8006
-80028834	lw     v0, $2f24(v0)
-80028838	nop
-8002883C	sb     s5, $0005(v0)
-80028840	lui    v0, $8006
-80028844	lw     v0, $2f24(v0)
-80028848	nop
-8002884C	sb     s6, $0006(v0)
-80028850	lui    v0, $8006
-80028854	lw     v0, $2f24(v0)
-80028858	nop
-8002885C	sb     s4, $000c(v0)
-80028860	lui    v0, $8006
-80028864	lw     v0, $2f24(v0)
-80028868	nop
-8002886C	sb     s5, $000d(v0)
-80028870	lui    v0, $8006
-80028874	lw     v0, $2f24(v0)
-80028878	nop
-8002887C	sb     s6, $000e(v0)
-80028880	lui    v0, $8006
-80028884	lw     v0, $2f24(v0)
-80028888	nop
-8002888C	sb     zero, $0014(v0)
-80028890	lui    v0, $8006
-80028894	lw     v0, $2f24(v0)
-80028898	nop
-8002889C	sb     zero, $0015(v0)
-800288A0	lui    v0, $8006
-800288A4	lw     v0, $2f24(v0)
-800288A8	nop
-800288AC	sb     zero, $0016(v0)
-800288B0	lui    v0, $8006
-800288B4	lw     v0, $2f24(v0)
-800288B8	nop
-800288BC	sb     zero, $001c(v0)
-800288C0	lui    v0, $8006
-800288C4	lw     v0, $2f24(v0)
-800288C8	nop
-800288CC	sb     zero, $001d(v0)
-800288D0	lui    v0, $8006
-800288D4	lw     v0, $2f24(v0)
-800288D8	nop
-800288DC	sb     zero, $001e(v0)
-800288E0	lui    a1, $8006
-800288E4	lw     a1, $2f24(a1)
-800288E8	lw     a0, $0280(gp)
-800288EC	addiu  v0, a1, $0024
-800288F0	lui    at, $8006
-800288F4	sw     v0, $2f24(at)
-800288F8	jal    system_add_render_packet_to_queue [$80046794]
-800288FC	nop
-80028900	lw     ra, $0030(sp)
-80028904	lw     s7, $002c(sp)
-80028908	lw     s6, $0028(sp)
-8002890C	lw     s5, $0024(sp)
-80028910	lw     s4, $0020(sp)
-80028914	lw     s3, $001c(sp)
-80028918	lw     s2, $0018(sp)
-8002891C	lw     s1, $0014(sp)
-80028920	lw     s0, $0010(sp)
-80028924	addiu  sp, sp, $0038
-80028928	jr     ra 
-8002892C	nop
+
+////////////////////////////////
+// func285ac
+800285AC-8002892C
+////////////////////////////////
+
 
 
 func28930:	; 80028930
@@ -22857,31 +22560,24 @@ func28930:	; 80028930
 80028C9C	nop
 
 
-func28ca0:	; 80028CA0
+
+////////////////////////////////
+// func28ca0
+80028CA0-80028DFC
 tex_x = A2;
 tex_y = A3;
-
-80028CA0	addiu  sp, sp, $ffc8 (=-$38)
 colour = S6 = A6;
 
-80028CAC	sw     s0, $0010(sp)
 80028CB0	lw     s0, $0054(sp)
-80028CB4	sw     s4, $0020(sp)
 80028CB8	addu   s4, a1, zero
-80028CBC	sw     s5, $0024(sp)
 80028CC0	lhu    s5, $0048(sp)
 80028CC4	ori    a1, zero, $0001
-80028CC8	sw     s7, $002c(sp)
 80028CCC	lhu    s7, $004c(sp)
 80028CD0	lui    v1, $8006
 80028CD4	lw     v1, $2f24(v1)
 80028CD8	ori    v0, zero, $0004
-80028CDC	sw     s1, $0014(sp)
 80028CE0	addu   s1, a0, zero
-80028CE4	sw     s2, $0018(sp)
 80028CE8	addu   s2, a2, zero
-80028CEC	sw     ra, $0030(sp)
-80028CF0	sw     s3, $001c(sp)
 80028CF4	sb     v0, $0003(v1)
 80028CF8	lui    v1, $8006
 80028CFC	lw     v1, $2f24(v1)
@@ -22939,18 +22635,7 @@ L28d34:	; 80028D34
 80028DC4	addiu  v0, v0, $0014
 80028DC8	lui    at, $8006
 80028DCC	sw     v0, $2f24(at)
-80028DD0	lw     ra, $0030(sp)
-80028DD4	lw     s7, $002c(sp)
-80028DD8	lw     s6, $0028(sp)
-80028DDC	lw     s5, $0024(sp)
-80028DE0	lw     s4, $0020(sp)
-80028DE4	lw     s3, $001c(sp)
-80028DE8	lw     s2, $0018(sp)
-80028DEC	lw     s1, $0014(sp)
-80028DF0	lw     s0, $0010(sp)
-80028DF4	addiu  sp, sp, $0038
-80028DF8	jr     ra 
-80028DFC	nop
+////////////////////////////////
 
 
 

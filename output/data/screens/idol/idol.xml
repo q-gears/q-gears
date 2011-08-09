@@ -1,0 +1,40 @@
+<screen name="Idol" script="screens/idol/idol.lua" visible="false">
+    <sprite name="ArrowLeft" image="screens/idol/arrow_left.png" align="center" valign="middle" origin_x="50%" origin_y="50%" x="-150" y="300" width="70" height="50" visible="true">
+        <animation name="Press" length="0.1" scale="0:0.8 0.8,0.1:1 1" />
+    </sprite>
+    <sprite name="ArrowRight" image="screens/idol/arrow_right.png" align="center" valign="middle" origin_x="50%" origin_y="50%" x="150" y="300" width="70" height="50" visible="true">
+        <animation name="Press" length="0.1" scale="0:0.8 0.8,0.1:1 1" />
+    </sprite>
+    <sprite name="Picture1" image="screens/idol/01.jpg" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="300" height="400" visible="true">
+        <prototype name="IdolAnimation" />
+    </sprite>
+    <text_area name="Name1" align="center" valign="middle" x="0" y="300" text_name="IdolsTodaErica" font="FFVIIFont" text_align="center" scale="2 2" visible="true" />
+    <sprite name="Picture2" image="screens/idol/02.jpg" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="300" height="400" visible="true">
+        <prototype name="IdolAnimation" />
+    </sprite>
+    <text_area name="Name2" align="center" valign="middle" x="0" y="300" text_name="IdolsUetoAya" font="FFVIIFont" text_align="center" scale="2 2" visible="true" />
+    <sprite name="Picture3" image="screens/idol/03.jpg" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="300" height="400" visible="true">
+        <prototype name="IdolAnimation" />
+    </sprite>
+    <text_area name="Name3" align="center" valign="middle" x="0" y="300" text_name="IdolsHiranoAya" font="FFVIIFont" text_align="center" scale="2 2" visible="true" />
+    <sprite name="Picture4" image="screens/idol/04.jpg" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="300" height="400" visible="true">
+        <prototype name="IdolAnimation" />
+    </sprite>
+    <text_area name="Name4" align="center" valign="middle" x="0" y="300" text_name="IdolsUetoAya" font="FFVIIFont" text_align="center" scale="2 2" visible="true" />
+    <sprite name="Picture5" image="screens/idol/05.jpg" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="300" height="400" visible="true">
+        <prototype name="IdolAnimation" />
+    </sprite>
+    <text_area name="Name5" align="center" valign="middle" x="0" y="300" text_name="IdolsHorikitaMaki" font="FFVIIFont" text_align="center" scale="2 2" visible="true" />
+    <sprite name="Picture6" image="screens/idol/06.jpg" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="300" height="400" visible="true">
+        <prototype name="IdolAnimation" />
+    </sprite>
+    <text_area name="Name6" align="center" valign="middle" x="0" y="300" text_name="IdolsNakagawaShoko" font="FFVIIFont" text_align="center" scale="2 2" visible="true" />
+    <sprite name="Picture7" image="screens/idol/07.jpg" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="300" height="400" visible="true">
+        <prototype name="IdolAnimation" />
+    </sprite>
+    <text_area name="Name7" align="center" valign="middle" x="0" y="300" text_name="IdolsHorikitaMaki" font="FFVIIFont" text_align="center" scale="2 2" visible="true" />
+    <sprite name="Picture8" image="screens/idol/08.jpg" align="center" valign="middle" origin_x="50%" origin_y="50%" x="0" y="0" width="300" height="400" visible="true">
+        <prototype name="IdolAnimation" />
+    </sprite>
+    <text_area name="Name8" align="center" valign="middle" x="0" y="300" text_name="IdolsHiranoAya" font="FFVIIFont" text_align="center" scale="2 2" visible="true" />
+</screen>

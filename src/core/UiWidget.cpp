@@ -60,6 +60,9 @@ UiWidget::Initialise()
     m_Align = LEFT;
     m_VerticalAlign = TOP;
 
+    m_UpdateTransformation = true;
+
+    m_FinalZ = 0;
     m_FinalOrigin = Ogre::Vector2::ZERO;
     m_FinalTranslate = Ogre::Vector2::ZERO;
     m_FinalSize = Ogre::Vector2( m_ScreenWidth, m_ScreenHeight );
@@ -74,6 +77,7 @@ UiWidget::Initialise()
     m_X = 0;
     m_YPercent = 0;
     m_Y = 0;
+    m_Z = 0;
     m_WidthPercent = 100;
     m_Width = 0;
     m_HeightPercent = 100;
@@ -112,11 +116,15 @@ UiWidget::Update()
     {
         float delta_time = Timer::getSingleton().GetGameTimeDelta();
         float time = m_AnimationCurrent->GetTime();
-        m_AnimationCurrent->AddTime( delta_time );
 
         // if animation ended
         if( time + delta_time >= m_AnimationEndTime )
         {
+            if( time != m_AnimationEndTime)
+            {
+                m_AnimationCurrent->AddTime( m_AnimationEndTime - time );
+            }
+
             for( int i = 0; i < m_AnimationSync.size(); ++i)
             {
                 ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationSync[ i ] );
@@ -128,15 +136,12 @@ UiWidget::Update()
                 // in case of cycled default we need to sync with end
                 time = time + delta_time - m_AnimationCurrent->GetLength();
                 PlayAnimation( m_AnimationDefault, UiAnimation::DEFAULT, time, -1 );
-
-                if( m_AnimationCurrent != NULL ) // check if we can play default animation
-                {
-                    m_AnimationCurrent->AddTime( 0 );
-                }
             }
         }
-
-        OnResize();
+        else
+        {
+            m_AnimationCurrent->AddTime( delta_time );
+        }
     }
     else if( m_AnimationCurrent == NULL && m_AnimationState == UiAnimation::DEFAULT && m_AnimationDefault != "" )
     {
@@ -152,6 +157,12 @@ UiWidget::Update()
 
 
 
+    if( m_UpdateTransformation == true )
+    {
+        UpdateTransformation();
+    }
+
+
     // debug output
     if( cv_debug_ui.GetI() >= 1 )
     {
@@ -163,14 +174,6 @@ UiWidget::Update()
         float y = m_FinalTranslate.y;
 
         DEBUG_DRAW.SetScreenSpace( true );
-
-        if( cv_debug_ui.GetI() >= 2 )
-        {
-            DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
-            DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
-            DEBUG_DRAW.Text( x + 3, y, "Ui." + m_PathName );
-            DEBUG_DRAW.Text( x + 3, y + 12, GetCurrentAnimationName() );
-        }
 
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
 
@@ -210,12 +213,22 @@ UiWidget::Update()
 
         // draw translation
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 0, 1, 0, 1 ) );
+        Ogre::Vector2 area_origin = ( m_Parent != NULL ) ? m_Parent->GetFinalOrigin() : Ogre::Vector2::ZERO;
         Ogre::Vector2 area_translate = ( m_Parent != NULL ) ? m_Parent->GetFinalTranslate() : Ogre::Vector2::ZERO;
-        DEBUG_DRAW.Line( area_translate.x, area_translate.y, x, y );
+        Ogre::Vector2 pos = area_translate - area_origin;
+        DEBUG_DRAW.Line( pos.x, pos.y, x, y );
         DEBUG_DRAW.Quad( x - 2, y - 2, x + 2, y - 2, x + 2, y + 2, x - 2, y + 2 );
 
+        if( cv_debug_ui.GetI() >= 2 )
+        {
+            DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
+            DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
+            DEBUG_DRAW.Text( x1 + 3, y1, "Ui." + m_PathName );
+            DEBUG_DRAW.Text( x1 + 3, y1 + 12, GetCurrentAnimationName() );
+        }
+
         // draw origin
-        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0, 0.5, 0, 1 ) );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
         DEBUG_DRAW.Line( x, y, x1, y1 + 1 );
     }
 }
@@ -228,12 +241,12 @@ UiWidget::OnResize()
     m_ScreenWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     m_ScreenHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
-    UpdateTransformation();
-
     for( int i = 0; i < m_Children.size(); ++i )
     {
         m_Children[ i ]->OnResize();
     }
+
+    m_UpdateTransformation = true;
 }
 
 
@@ -341,7 +354,8 @@ UiWidget::PlayAnimation( const Ogre::String& animation, UiAnimation::State state
         if( m_Animations[ i ]->GetName() == animation )
         {
             m_AnimationCurrent = m_Animations[ i ];
-            m_AnimationCurrent->SetTime( start );
+            m_AnimationCurrent->SetTime( ( start == -1 ) ? m_AnimationCurrent->GetLength() : start );
+            m_AnimationCurrent->AddTime( 0 );
             m_AnimationEndTime = ( end == -1 ) ? m_AnimationCurrent->GetLength() : end;
             m_AnimationState = state;
             return;
@@ -458,6 +472,7 @@ UiWidget::UpdateTransformation()
 
 
 
+    m_FinalZ = ( m_Parent != NULL ) ? m_Parent->GetFinalZ() + m_Z : m_Z;
     m_FinalScale = area_scale * m_Scale;
     m_FinalSize.x = ( area_size.x * m_WidthPercent * m_Scale.x ) / 100.0f + ( m_Width * m_ScreenHeight / 720.0f ) * m_FinalScale.x;
     m_FinalSize.y = ( area_size.y * m_HeightPercent * m_Scale.y ) / 100.0f + ( m_Height * m_ScreenHeight / 720.0f ) * m_FinalScale.y;
@@ -515,6 +530,17 @@ UiWidget::UpdateTransformation()
         m_ScissorLeft = std::max( m_ScissorLeft, std::min( std::min( x1 , x2 ), std::min( x3 , x4 ) ) );
         m_ScissorRight = std::min( m_ScissorRight, std::max( std::max( x1 , x2 ), std::max( x3 , x4 ) ) );
     }
+
+
+
+    m_UpdateTransformation = false;
+
+
+
+    for( int i = 0; i < m_Children.size(); ++i )
+    {
+        m_Children[ i ]->UpdateTransformation();
+    }
 }
 
 
@@ -531,6 +557,14 @@ void
 UiWidget::SetVerticalAlign( const UiWidget::VerticalAlign valign )
 {
     m_VerticalAlign = valign;
+}
+
+
+
+float
+UiWidget::GetFinalZ() const
+{
+    return m_FinalZ;
 }
 
 
@@ -580,6 +614,7 @@ UiWidget::SetOriginX( const float percent, const float x )
 {
     m_OriginXPercent = percent;
     m_OriginX = x;
+    m_UpdateTransformation = true;
 }
 
 
@@ -589,6 +624,7 @@ UiWidget::SetOriginY( const float percent, const float y )
 {
     m_OriginYPercent = percent;
     m_OriginY = y;
+    m_UpdateTransformation = true;
 }
 
 
@@ -598,6 +634,7 @@ UiWidget::SetX( const float percent, const float x )
 {
     m_XPercent = percent;
     m_X = x;
+    m_UpdateTransformation = true;
 }
 
 
@@ -607,6 +644,16 @@ UiWidget::SetY( const float percent, const float y )
 {
     m_YPercent = percent;
     m_Y = y;
+    m_UpdateTransformation = true;
+}
+
+
+
+void
+UiWidget::SetZ( const float z )
+{
+    m_Z = z;
+    m_UpdateTransformation = true;
 }
 
 
@@ -616,6 +663,7 @@ UiWidget::SetWidth( const float percent, const float width )
 {
     m_WidthPercent = percent;
     m_Width = width;
+    m_UpdateTransformation = true;
 }
 
 
@@ -625,6 +673,7 @@ UiWidget::SetHeight( const float percent, const float height )
 {
     m_HeightPercent = percent;
     m_Height = height;
+    m_UpdateTransformation = true;
 }
 
 
@@ -633,6 +682,7 @@ void
 UiWidget::SetScale( const Ogre::Vector2& scale )
 {
     m_Scale = scale;
+    m_UpdateTransformation = true;
 }
 
 
@@ -641,6 +691,7 @@ void
 UiWidget::SetRotation( const float degree )
 {
     m_Rotation = degree;
+    m_UpdateTransformation = true;
 }
 
 
@@ -649,6 +700,7 @@ void
 UiWidget::SetScissor( bool scissor )
 {
     m_Scissor = scissor;
+    m_UpdateTransformation = true;
 }
 
 
@@ -692,6 +744,7 @@ UiWidget::SetColour( const float r, const float g, const float b )
     m_Colour2.r = r; m_Colour2.g = g; m_Colour2.b = b;
     m_Colour3.r = r; m_Colour3.g = g; m_Colour3.b = b;
     m_Colour4.r = r; m_Colour4.g = g; m_Colour4.b = b;
+    m_UpdateTransformation = true;
 }
 
 
@@ -703,6 +756,7 @@ UiWidget::SetColours( const float r1, const float g1, const float b1, const floa
     m_Colour2.r = r2; m_Colour2.g = g2; m_Colour2.b = b2;
     m_Colour3.r = r3; m_Colour3.g = g3; m_Colour3.b = b3;
     m_Colour4.r = r4; m_Colour4.g = g4; m_Colour4.b = b4;
+    m_UpdateTransformation = true;
 }
 
 
@@ -714,4 +768,5 @@ UiWidget::SetAlpha( const float a )
     m_Colour2.a = a;
     m_Colour3.a = a;
     m_Colour4.a = a;
+    m_UpdateTransformation = true;
 }

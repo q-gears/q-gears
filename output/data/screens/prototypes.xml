@@ -1,34 +1,51 @@
 <prototypes>
     <prototype name="Window">
-        <sprite name="Top" image="screens/images/border_t.png" x="24" y="0" width="100%-48" height="24" visible="true" />
-        <sprite name="Bottom" image="screens/images/border_b.png" x="24" y="100%-24" width="100%-48" height="24" visible="true" />
-        <sprite name="Left" image="screens/images/border_l.png" x="0" y="24" width="24" height="100%-48" visible="true" />
-        <sprite name="Right" image="screens/images/border_r.png" x="100%-24" y="24" width="24" height="100%-48" visible="true" />
-        <sprite name="TopLeft" image="screens/images/border_tl.png" x="0" y="0" width="24" height="24" visible="true" />
-        <sprite name="TopRight" image="screens/images/border_tr.png" x="100%-24" y="0" width="24" height="24" visible="true" />
-        <sprite name="BottomLeft" image="screens/images/border_bl.png" x="0" y="100%-24" width="24" height="24" visible="true" />
-        <sprite name="BottomRight" image="screens/images/border_br.png" x="100%-24" y="100%-24" width="24" height="24" visible="true" />
-        <sprite name="Center" x="9" y="9" width="100%-18" height="100%-18" colours="0 0 0.7,0 0 0.5,0 0 0.125,0 0 0.31" visible="true" />
+        <sprite name="Top" image="screens/images/border_t.png" x="8" y="0" width="100%-16" height="8" visible="true" />
+        <sprite name="Bottom" image="screens/images/border_b.png" x="8" y="100%-8" width="100%-16" height="8" visible="true" />
+        <sprite name="Left" image="screens/images/border_l.png" x="0" y="8" width="8" height="100%-16" visible="true" />
+        <sprite name="Right" image="screens/images/border_r.png" x="100%-8" y="8" width="8" height="100%-16" visible="true" />
+        <sprite name="TopLeft" image="screens/images/border_tl.png" x="0" y="0" width="8" height="8" visible="true" />
+        <sprite name="TopRight" image="screens/images/border_tr.png" x="100%-8" y="0" width="8" height="8" visible="true" />
+        <sprite name="BottomLeft" image="screens/images/border_bl.png" x="0" y="100%-8" width="8" height="8" visible="true" />
+        <sprite name="BottomRight" image="screens/images/border_br.png" x="100%-8" y="100%-8" width="8" height="8" visible="true" />
+        <sprite name="Center" x="3" y="3" width="100%-6" height="100%-6" colours="0 0 0.7,0 0 0.5,0 0 0.125,0 0 0.31" visible="true" />
     </prototype>
 
     <prototype name="MenuCharacterData">
-        <text_area name="Name" x="0" y="0" text_name="CharacterDataName" font="FFVIIFont" scale="3 3" visible="true" />
-        <text_area name="Lv" x="0" y="15" text_name="CharacterDataLv" colour="0 0.9 0.9" font="FFVIIMenuFont" scale="3 3" visible="true" />
-        <text_area name="LvNumber" x="54" y="39" text_name="CharacterDataLvNumber" font="FFVIIMenuDigits" scale="3 3" visible="true" />
-        <text_area name="Hp" x="0" y="48" text_name="CharacterDataHp" colour="0 0.9 0.9" font="FFVIIMenuFont" scale="3 3" visible="true" />
-        <text_area name="HpCurrent" x="54" y="69" text_name="CharacterDataHpCurrent" colour="0.9 0.9 0" font="FFVIIMenuDigits" scale="3 3" visible="true" />
-        <sprite name="HpSlash" image="screens/images/slash.png" x="138" y="69" width="12" height="24" visible="true" />
-        <text_area name="HpMax" x="150" y="69" text_name="CharacterDataHpMax" font="FFVIIMenuDigits" scale="3 3" visible="true" />
-        <sprite name="HpLine" x="54" y="93" width="180" height="3" colour="0.3 0 0" visible="true" />
-        <sprite name="HpLineCurrent" x="54" y="93" width="30" height="3" colours="0 0.5 1, 0.78 0.78 0.78, 0.78 0.78 0.78, 0 0.5 1" visible="true" />
-        <sprite name="HpLineShadow" x="54" y="96" width="180" height="3" colour="0 0 0" visible="true" />
-        <text_area name="Mp" x="0" y="78" text_name="CharacterDataMp" colour="0 0.9 0.9" font="FFVIIMenuFont" scale="3 3" visible="true" />
-        <text_area name="MpCurrent" x="54" y="99" text_name="CharacterDataMpCurrent" font="FFVIIMenuDigits" scale="3 3" visible="true" />
-        <sprite name="MpSlash" image="screens/images/slash.png" x="138" y="99" width="12" height="24" visible="true" />
-        <text_area name="MpMax" x="150" y="99" text_name="CharacterDataMpMax" font="FFVIIMenuDigits" scale="3 3" visible="true" />
-        <sprite name="MpLine" x="54" y="123" width="180" height="3" colour="0.3 0 0" visible="true" />
-        <sprite name="MpLineCurrent" x="54" y="123" width="180" height="3" colours="0 1 0.5, 0.78 0.78 0.78, 0.78 0.78 0.78, 0 1 0.5" visible="true" />
-        <sprite name="MpLineShadow" x="54" y="126" width="180" height="3" colour="0 0 0" visible="true" />
-        <text_area name="Status" x="108" y="33" text_name="CharacterDataFury" colour="0.9 0 0.9" font="FFVIIFont" scale="3 3" visible="true" />
+        <text_area name="Name" x="0" y="0" text_name="CharacterDataName" font="FFVIIFont" visible="true" />
+        <text_area name="Lv" x="0" y="5" text_name="CharacterDataLv" colour="0 0.9 0.9" font="FFVIIMenuFont" visible="true" />
+        <text_area name="LvNumber" x="18" y="13" text_name="CharacterDataLvNumber" font="FFVIIMenuDigits" visible="true" />
+        <text_area name="Hp" x="0" y="16" text_name="CharacterDataHp" colour="0 0.9 0.9" font="FFVIIMenuFont" visible="true" />
+        <text_area name="HpCurrent" x="18" y="23" text_name="CharacterDataHpCurrent" colour="0.9 0.9 0" font="FFVIIMenuDigits" visible="true" />
+        <sprite name="HpSlash" image="screens/images/slash.png" x="46" y="23" width="4" height="8" visible="true" />
+        <text_area name="HpMax" x="50" y="23" text_name="CharacterDataHpMax" font="FFVIIMenuDigits" visible="true" />
+        <sprite name="HpLine" x="18" y="31" width="60" height="1" colour="0.3 0 0" visible="true" />
+        <sprite name="HpLineCurrent" x="18" y="31" width="5" height="1" colours="0 0.5 1, 0.78 0.78 0.78, 0.78 0.78 0.78, 0 0.5 1" visible="true" />
+        <sprite name="HpLineShadow" x="18" y="32" width="60" height="1" colour="0 0 0" visible="true" />
+        <text_area name="Mp" x="0" y="26" text_name="CharacterDataMp" colour="0 0.9 0.9" font="FFVIIMenuFont" visible="true" />
+        <text_area name="MpCurrent" x="18" y="33" text_name="CharacterDataMpCurrent" font="FFVIIMenuDigits" visible="true" />
+        <sprite name="MpSlash" image="screens/images/slash.png" x="46" y="33" width="4" height="8" visible="true" />
+        <text_area name="MpMax" x="50" y="33" text_name="CharacterDataMpMax" font="FFVIIMenuDigits"visible="true" />
+        <sprite name="MpLine" x="18" y="41" width="60" height="1" colour="0.3 0 0" visible="true" />
+        <sprite name="MpLineCurrent" x="18" y="41" width="60" height="1" colours="0 1 0.5, 0.78 0.78 0.78, 0.78 0.78 0.78, 0 1 0.5" visible="true" />
+        <sprite name="MpLineShadow" x="18" y="42" width="60" height="1" colour="0 0 0" visible="true" />
+        <text_area name="Status" x="36" y="11" text_name="CharacterDataFury" colour="0.9 0 0.9" font="FFVIIFont" visible="false" />
+    </prototype>
+
+    <prototype name="IdolAnimation">
+        <animation name="LeftToCenter1" length="0.2" x="0:0 -350,0.2:0 0" y="0:0 -120,0.2:0 0" rotation="0:-50,0.2:0" scale="0:1 1,0.2:1.3 1.3" />
+        <animation name="CenterToLeft1" length="0.2" x="0:0 0,0.2:0 -350" y="0:0 0,0.2:0 -120" rotation="0:0,0.2:-50" scale="0:1.3 1.3,0.2:1 1" />
+        <animation name="RightToCenter1" length="0.2" x="0:0 350,0.2:0 0" y="0:0 5,0.2:0 0" rotation="0:5,0.2:0" scale="0:1 1,0.2:1.3 1.3" />
+        <animation name="CenterToRight1" length="0.2" x="0:0 0,0.2:0 350" y="0:0 0,0.2:0 5" rotation="0:0,0.2:5" scale="0:1.3 1.3,0.2:1 1" />
+
+        <animation name="LeftToCenter2" length="0.2" x="0:0 -370,0.2:0 0" y="0:0 150,0.2:0 0" rotation="0:50,0.2:0" scale="0:1 1,0.2:1.3 1.3" />
+        <animation name="CenterToLeft2" length="0.2" x="0:0 0,0.2:0 -370" y="0:0 0,0.2:0 150" rotation="0:0,0.2:50" scale="0:1.3 1.3,0.2:1 1" />
+        <animation name="RightToCenter2" length="0.2" x="0:0 360,0.2:0 0" y="0:0 -170,0.2:0 0" rotation="0:-80,0.2:0" scale="0:1 1,0.2:1.3 1.3" />
+        <animation name="CenterToRight2" length="0.2" x="0:0 0,0.2:0 360" y="0:0 0,0.2:0 -170" rotation="0:0,0.2:-80" scale="0:1.3 1.3,0.2:1 1" />
+
+        <animation name="LeftToCenter3" length="0.2" x="0:0 -390,0.2:0 0" y="0:0 10,0.2:0 0" rotation="0:10,0.2:0" scale="0:1 1,0.2:1.3 1.3" />
+        <animation name="CenterToLeft3" length="0.2" x="0:0 0,0.2:0 -390" y="0:0 0,0.2:0 10" rotation="0:0,0.2:10" scale="0:1.3 1.3,0.2:1 1" />
+        <animation name="RightToCenter3" length="0.2" x="0:0 370,0.2:0 0" y="0:0 160,0.2:0 0" rotation="0:-20,0.2:0" scale="0:1 1,0.2:1.3 1.3" />
+        <animation name="CenterToRight3" length="0.2" x="0:0 0,0.2:0 370" y="0:0 0,0.2:0 160" rotation="0:0,0.2:-20" scale="0:1.3 1.3,0.2:1 1" />
     </prototype>
 </prototypes>

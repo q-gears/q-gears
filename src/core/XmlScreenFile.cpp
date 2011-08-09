@@ -1,4 +1,4 @@
-#include "XmlScreenFile.h"
+ #include "XmlScreenFile.h"
 
 #include "Logger.h"
 #include "ScriptManager.h"
@@ -64,10 +64,10 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
         {
             if( node->ValueStr() == "prototype" )
             {
-                Ogre::String prototype = GetString( node, "prototype" );
-                if( prototype != "" )
+                Ogre::String name = GetString( node, "name" );
+                if( name != "" )
                 {
-                    TiXmlNode* node2 = UiManager::getSingleton().GetPrototype( prototype );
+                    TiXmlNode* node2 = UiManager::getSingleton().GetPrototype( name );
                     if( node != NULL )
                     {
                         node2 = node2->FirstChild();
@@ -134,6 +134,12 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         if( font != "" )
                         {
                             ( ( UiTextArea* )widget2 )->SetFont( font );
+                        }
+
+                        Ogre::String align = GetString( node, "text_align", "" );
+                        if( align != "" )
+                        {
+                            ( ( UiTextArea* )widget2 )->SetTextAlign( ( align == "center" ) ? UiTextArea::CENTER : ( ( align == "right" ) ? UiTextArea::RIGHT : UiTextArea::LEFT ) );
                         }
                     }
 
@@ -261,10 +267,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
 
                     widget2->SetVisible( GetBool( node, "visible", false ) );
-
-
-
-                    widget2->UpdateTransformation();
 
 
 

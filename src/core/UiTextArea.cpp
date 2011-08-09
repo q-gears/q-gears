@@ -37,7 +37,7 @@ UiTextArea::Initialise()
 {
     m_Font = NULL;
     m_MaxLetters = 0;
-    m_TextAlignment = UiTextArea::LEFT;
+    m_TextAlign = UiTextArea::LEFT;
     m_Text = "";
     m_TextNode = NULL;
 
@@ -53,16 +53,6 @@ void
 UiTextArea::Update()
 {
     UiWidget::Update();
-}
-
-
-
-void
-UiTextArea::OnResize()
-{
-    UiWidget::OnResize();
-
-    UpdateGeometry();
 }
 
 
@@ -92,9 +82,18 @@ UiTextArea::Render()
 
 
 void
-UiTextArea::SetTextAlignment( const TextAlignment alignment )
+UiTextArea::UpdateTransformation()
 {
-    m_TextAlignment = alignment;
+    UiWidget::UpdateTransformation();
+    UpdateGeometry();
+}
+
+
+
+void
+UiTextArea::SetTextAlign( const TextAlign align )
+{
+    m_TextAlign = align;
 }
 
 
@@ -161,15 +160,18 @@ UiTextArea::UpdateGeometry()
     }
 
     float length = 0;
-    if( m_TextAlignment != LEFT )
+    if( m_TextAlign != LEFT )
     {
-        for( int i = 0; i < m_Text.size(); ++i )
+        if( m_TextNode != NULL )
         {
-            UiCharData char_data = m_Font->GetCharData( m_Text[ i ] );
-            length += ( char_data.pre + char_data.width + char_data.post ) * m_FinalScale.x * m_ScreenHeight / 720.0f;
+            length =GetTextLengthFromNode( m_TextNode );
+        }
+        else
+        {
+            length =GetTextLength( m_Text );
         }
 
-        if( m_TextAlignment == CENTER )
+        if( m_TextAlign == CENTER )
         {
             length /= 2;
         }
@@ -178,7 +180,7 @@ UiTextArea::UpdateGeometry()
 
 
     TextBlockData data;
-    data.local_x1 = -m_FinalOrigin.x;
+    data.local_x1 = -m_FinalOrigin.x - length;
     data.local_y1 = -m_FinalOrigin.y;
     data.position = 0;
 
@@ -193,6 +195,55 @@ UiTextArea::UpdateGeometry()
     {
         SetTextGeometry( m_Text, data, style );
     }
+}
+
+
+
+const float
+UiTextArea::GetTextLengthFromNode( TiXmlNode* node ) const
+{
+    float length = 0;
+
+    while( node != NULL )
+    {
+        switch( node->Type() )
+        {
+            case TiXmlNode::TINYXML_TEXT:
+            {
+                TiXmlText* childText = node->ToText();
+                if( childText )
+                {
+                    length += GetTextLength( childText->Value() );
+                }
+            }
+            break;
+
+            case TiXmlNode::TINYXML_ELEMENT:
+            {
+                length +=GetTextLengthFromNode( node->FirstChild() );
+            }
+            break;
+        }
+
+        node = node->NextSibling();
+    }
+
+    return length;
+}
+
+
+
+const float
+UiTextArea::GetTextLength( const Ogre::UTFString& text ) const
+{
+    float length = 0;
+    for( int i = 0; i < text.size(); ++i )
+    {
+        UiCharData char_data = m_Font->GetCharData( text[ i ] );
+        length += ( char_data.pre + char_data.width + char_data.post ) * m_FinalScale.x * m_ScreenHeight / 720.0f;
+    }
+
+    return length;
 }
 
 
@@ -326,7 +377,7 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
 
         *writeIterator++ = new_x1;
         *writeIterator++ = new_y1;
-        *writeIterator++ = 0; // z
+        *writeIterator++ = m_FinalZ;
         *writeIterator++ = style.colour.r;
         *writeIterator++ = style.colour.g;
         *writeIterator++ = style.colour.b;
@@ -336,7 +387,7 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
 
         *writeIterator++ = new_x2;
         *writeIterator++ = new_y2;
-        *writeIterator++ = 0; // z
+        *writeIterator++ = m_FinalZ;
         *writeIterator++ = style.colour.r;
         *writeIterator++ = style.colour.g;
         *writeIterator++ = style.colour.b;
@@ -346,7 +397,7 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
 
         *writeIterator++ = new_x3;
         *writeIterator++ = new_y3;
-        *writeIterator++ = 0; // z
+        *writeIterator++ = m_FinalZ;
         *writeIterator++ = style.colour.r;
         *writeIterator++ = style.colour.g;
         *writeIterator++ = style.colour.b;
@@ -356,7 +407,7 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
 
         *writeIterator++ = new_x1;
         *writeIterator++ = new_y1;
-        *writeIterator++ = 0; // z
+        *writeIterator++ = m_FinalZ;
         *writeIterator++ = style.colour.r;
         *writeIterator++ = style.colour.g;
         *writeIterator++ = style.colour.b;
@@ -366,7 +417,7 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
 
         *writeIterator++ = new_x3;
         *writeIterator++ = new_y3;
-        *writeIterator++ = 0; // z
+        *writeIterator++ = m_FinalZ;
         *writeIterator++ = style.colour.r;
         *writeIterator++ = style.colour.g;
         *writeIterator++ = style.colour.b;
@@ -376,7 +427,7 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
 
         *writeIterator++ = new_x4;
         *writeIterator++ = new_y4;
-        *writeIterator++ = 0; // z
+        *writeIterator++ = m_FinalZ;
         *writeIterator++ = style.colour.r;
         *writeIterator++ = style.colour.g;
         *writeIterator++ = style.colour.b;
