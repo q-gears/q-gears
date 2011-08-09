@@ -12,7 +12,7 @@ Ui.BeginMenu = {
         local cursor = ui_manager:get_widget( "BeginMenu.Container.Cursor" )
         cursor:set_default_animation( "Position" .. self.position )
 
-        --script:request( "Ui.BeginMenu", "show", 0 )
+        script:request( "Ui.BeginMenu", "show", 0 )
 
         return 0
     end,
