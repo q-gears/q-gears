@@ -90,6 +90,8 @@ main(int argc, char *argv[])
 
     // init before GameFrameListener, but after ConfigCmdManager
     InputManager* input_manager = new InputManager();
+    AudioManager* audio_manager = new AudioManager();
+
 
     // create This earlier than DisplayFrameListener cause it can fire event there
     CameraManager* camera_manager = new CameraManager();
@@ -137,6 +139,7 @@ main(int argc, char *argv[])
     delete script_manager;
     delete console;
     delete camera_manager;
+    delete audio_manager;
     delete input_manager;
     delete debug_draw;
     delete config_cmd_manager;
