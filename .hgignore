@@ -6,3 +6,7 @@ src/compile_d/
 reversing/utilites/hack_multiply/compile/
 utilites/ffvii_font_exporter/compile/
 utilites/ffvii_sound_dumper/compile/
+utilites/ffvii_battle_model_exporter/compile/
+utilites/ffvii_battle_scene_dumper/compile/
+utilites/xeno_model_dumper/compile/
+utilites/ffvii_field_model_exporter/compile/

@@ -19,7 +19,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
-					<Add library="C:\mingw\lib\zdll.lib" />
+					<Add library="zlib" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
 					<Add directory="$(OGRE_HOME)\lib\opt\release" />
@@ -35,6 +35,8 @@
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
+		<Unit filename="..\common\Logger.cpp" />
+		<Unit filename="..\common\Logger.h" />
 		<Unit filename="src\EnemyFile.cpp" />
 		<Unit filename="src\EnemyFile.h" />
 		<Unit filename="src\FFVIIString.cpp" />

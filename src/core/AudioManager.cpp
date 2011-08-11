@@ -1,124 +1,115 @@
 #include "AudioManager.h"
-#include "XmlMusicsFile.h"
-#include "Logger.h"
+
 #include <list>
 #include <boost/thread.hpp>
 
-template<>AudioManager *Ogre::Singleton<AudioManager>::ms_Singleton = NULL;
+#include "XmlMusicsFile.h"
+#include "Logger.h"
 
-const int      AudioManager::m_CH_BUF_COUNT(2);
-const ALsizei  AudioManager::m_CH_BUF_SIZE(96 * 1024);
-const float    AudioManager::m_DEFAULT_LOOP(-1.0f);
 
-const ALfloat AudioManager::m_LISTENER_POS[3] =
+
+template<>AudioManager *Ogre::Singleton< AudioManager >::ms_Singleton = NULL;
+
+const int      AudioManager::m_CH_BUF_COUNT( 2 );
+const ALsizei  AudioManager::m_CH_BUF_SIZE( 96 * 1024 );
+const float    AudioManager::m_DEFAULT_LOOP( -1.0f );
+const ALfloat  AudioManager::m_LISTENER_POS[ 3 ] = { 0.0f, 0.0f, 0.0f };
+const ALfloat  AudioManager::m_LISTENER_VEL[ 3 ] = { 0.0f, 0.0f, 0.0f };
+const ALfloat  AudioManager::m_LISTENER_ORI[ 6 ] = { 0.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f };
+const uint32_t AudioManager::m_THREAD_SLEEP_TIME( 250 );
+
+
+
+AudioManager::Player::Player( const Ogre::String& id ):
+    m_ID( id ),
+    m_Loop( m_DEFAULT_LOOP ),
+    m_VorbisInfo( NULL ),
+    m_VorbisSection( 0 ),
+    m_StreamFinished( false )
 {
-	0.0f, 0.0f, 0.0f
-};
-
-const ALfloat AudioManager::m_LISTENER_VEL[3] =
-{
-	0.0f, 0.0f, 0.0f
-};
-
-const ALfloat AudioManager::m_LISTENER_ORI[6] =
-{
-	0.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f
-};
-
-const uint32_t AudioManager::m_THREAD_SLEEP_TIME(250);
-
-AudioManager::Player::Player(const Ogre::String& id) :
-	m_ID(id),
-	m_Loop(m_DEFAULT_LOOP),
-	m_VorbisInfo(NULL),
-	m_VorbisSection(0),
-	m_StreamFinished(false)
-{
-	;
 }
+
+
 
 AudioManager::Player::~Player()
 {
-	Stop();
+    Stop();
 }
+
 
 
 void
 AudioManager::Player::Play()
 {
-	boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
-   AudioManager &engine = AudioManager::getSingleton();
+    boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
+    AudioManager &engine = AudioManager::getSingleton();
 
-   AudioManager::Music* Music = engine.GetMusic( m_ID );
-   if(!Music)
-   {
-      LOG_ERROR("No such music found with name '"+m_ID);
-      return;
-   }
+    AudioManager::Music* Music = engine.GetMusic( m_ID );
+    if( !Music )
+    {
+        LOG_ERROR( "No such music found with name \"" + m_ID + "\"." );
+        return;
+    }
 
-   SetLoop( Music->Loop );
-   PlayFile( Music->File );
+    SetLoop( Music->loop );
+    PlayFile( Music->file );
 }
 
 
+
 void
-AudioManager::Player::PlayFile(const Ogre::String &file)
+AudioManager::Player::PlayFile( const Ogre::String &file )
 {
-   boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
-   AudioManager &engine = AudioManager::getSingleton();
+    boost::recursive_mutex::scoped_lock lock( AudioManager::getSingleton().m_UpdateMutex );
 
-	// open vorbis file
-	if(ov_fopen(const_cast<char *>(file.c_str()), &m_VorbisFile))
-	{
-		LOG_ERROR("Can't play file '"+file);
-		return;
-	}
+    // open vorbis file
+    if( ov_fopen( const_cast< char* >( file.c_str() ), &m_VorbisFile ) )
+    {
+        LOG_ERROR( "Can't play file \"" + file + "\"." );
+        return;
+    }
 
-	if(!engine.m_Initialized)
-	{
-		LOG_ERROR("Audio system is not initialized");
-		return;
-	}
+    if( AudioManager::getSingleton().m_Initialized == false )
+    {
+        LOG_ERROR( "Audio system is not initialized" );
+        return;
+    }
 
-	// get file info
-	m_VorbisInfo = ov_info(&m_VorbisFile, -1.0f);
+    // get file info
+    m_VorbisInfo = ov_info( &m_VorbisFile, -1.0f );
 
-	// create sound source
-	alGenSources(1, &m_Source);
+    // create sound source
+    alGenSources( 1, &m_Source );
 
-	// create buffers
-	ALuint buffers[m_CH_BUF_COUNT];
-	alGenBuffers(m_CH_BUF_COUNT, buffers);
+    // create buffers
+    ALuint buffers[ m_CH_BUF_COUNT ];
+    alGenBuffers( m_CH_BUF_COUNT, buffers );
 
-	// set source parameters
-	alSourcei(m_Source, AL_LOOPING, AL_FALSE);
+    // set source parameters
+    alSourcei( m_Source, AL_LOOPING, AL_FALSE );
 
-	// fill buffers
-	for(int i = 0; i < m_CH_BUF_COUNT; ++i)
-	{
-		ALsizei buffer_size = FillBuffer();
+    // fill buffers
+    for( int i = 0; i < m_CH_BUF_COUNT; ++i )
+    {
+        ALsizei buffer_size = FillBuffer();
 
-		if(buffer_size)
-		{
-			alBufferData(buffers[i], m_VorbisInfo->channels == 1 ?
-				AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,
-				(const ALvoid *)AudioManager::getSingleton().m_Buffer,
-				(ALsizei)buffer_size, (ALsizei)m_VorbisInfo->rate);
+        if( buffer_size )
+        {
+            alBufferData( buffers[ i ], m_VorbisInfo->channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, ( const ALvoid* )AudioManager::getSingleton().m_Buffer, ( ALsizei )buffer_size, ( ALsizei )m_VorbisInfo->rate );
+            alSourceQueueBuffers( m_Source, 1, &buffers[ i ] );
+        }
+        else
+        {
+            m_StreamFinished = true;
+            alDeleteBuffers( 1, &buffers[ i ] );
+        }
+    }
 
-			alSourceQueueBuffers(m_Source, 1, &buffers[i]);
-		}
-		else
-		{
-			m_StreamFinished = true;
-			alDeleteBuffers(1, &buffers[i]);
-		}
-	}
+    // start playback
+    alSourcePlay(m_Source);
 
-	// start playback
-	alSourcePlay(m_Source);
-
-	// add player to players list
-	engine.playerList.push_back(this);
+    // add player to players list
+    AudioManager::getSingleton().playerList.push_back(this);
 }
 
 
@@ -152,7 +143,7 @@ AudioManager::Player::Stop()
 	ov_clear(&m_VorbisFile);
 
 	// remove player from list
-   std::list<Player *> &players_list = AudioManager::getSingleton().playerList;
+    std::list<Player *> &players_list = AudioManager::getSingleton().playerList;
 	players_list.erase(find(players_list.begin(), players_list.end(), this));
 }
 
@@ -172,7 +163,7 @@ AudioManager::Player::IsActive()
 {
    boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
 
-   std::list<Player *> &players_list = AudioManager::getSingleton().playerList;
+    std::list<Player *> &players_list = AudioManager::getSingleton().playerList;
 	return find(players_list.begin(), players_list.end(), this) != players_list.end();
 }
 
@@ -246,12 +237,7 @@ AudioManager::Player::Update()
 			{
 				ALuint buffer_id;
 				alSourceUnqueueBuffers(m_Source, 1, &buffer_id);
-
-				alBufferData(buffer_id, m_VorbisInfo->channels == 1 ?
-					AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,
-					(const ALvoid *)AudioManager::getSingleton().m_Buffer,
-					(ALsizei)buffer_size, (ALsizei)m_VorbisInfo->rate);
-
+				alBufferData(buffer_id, m_VorbisInfo->channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, (const ALvoid *)AudioManager::getSingleton().m_Buffer, (ALsizei)buffer_size, (ALsizei)m_VorbisInfo->rate);
 				alSourceQueueBuffers(m_Source, 1, &buffer_id);
 			}
 			// finished reading stream
@@ -291,205 +277,231 @@ AudioManager::Player::Update()
 uint64_t
 AudioManager::Player::GetPosition()
 {
-   boost::recursive_mutex::scoped_lock lock(AudioManager::getSingleton().m_UpdateMutex);
+    boost::recursive_mutex::scoped_lock lock( AudioManager::getSingleton().m_UpdateMutex );
 
-	int play_offset;
-	alGetSourcei(m_Source, AL_SAMPLE_OFFSET, &play_offset);
-	return (ov_pcm_tell(&m_VorbisFile) - (m_CH_BUF_COUNT * m_CH_BUF_SIZE
-		/ m_VorbisInfo->channels / sizeof(int16_t) - play_offset)) * 1000 / m_VorbisInfo->rate;
+    int play_offset;
+    alGetSourcei( m_Source, AL_SAMPLE_OFFSET, &play_offset );
+    return ( ov_pcm_tell( &m_VorbisFile ) - ( m_CH_BUF_COUNT * m_CH_BUF_SIZE / m_VorbisInfo->channels / sizeof( int16_t ) - play_offset ) ) * 1000 / m_VorbisInfo->rate;
 }
 
-AudioManager::AudioManager() :
-   m_ThreadContinue(true)
+
+
+AudioManager::AudioManager():
+    m_ThreadContinue( true )
 {
-   m_Initialized = Init();
-   if(m_Initialized)
-   {
-      LOG_TRIVIAL("AudioManager :: OK");
-      m_Buffer       = new char[m_CH_BUF_SIZE];
-      m_UpdateThread = new boost::thread(boost::ref(*this));
-   }
-   else
-      LOG_WARNING("AudioManager :: Fail");
+    m_Initialized = Init();
+    if( m_Initialized )
+    {
+        LOG_TRIVIAL( "AudioManager initialised." );
+        m_Buffer       = new char[ m_CH_BUF_SIZE ];
+        m_UpdateThread = new boost::thread( boost::ref( *this ) );
+    }
+    else
+    {
+        LOG_ERROR( "AudioManager failed to initialised." );
+    }
 
-   /* Load musics */
-   XmlMusicsFile musics( "./data/musics.xml" );
-   musics.LoadMusics();
+    // Load musics
+    XmlMusicsFile musics( "./data/musics.xml" );
+    musics.LoadMusics();
 }
+
+
 
 AudioManager::~AudioManager()
 {
-   Stop();
-   if(m_Initialized)
-   {
-      LOG_TRIVIAL("AudioManager :: Drop");
-      m_ThreadContinue = false;
-      m_UpdateThread->join();
-      delete m_UpdateThread;
-      delete [] m_Buffer;
+    Stop();
+    if( m_Initialized )
+    {
+        m_ThreadContinue = false;
+        m_UpdateThread->join();
+        delete m_UpdateThread;
+        delete[] m_Buffer;
 
-      alcMakeContextCurrent(NULL);
-      alcDestroyContext(m_ALContext);
-      alcCloseDevice(m_ALDevice);
-      LOG_TRIVIAL("AudioManager :: Destroyed");
-   }
+        alcMakeContextCurrent( NULL );
+        alcDestroyContext( m_ALContext );
+        alcCloseDevice( m_ALDevice );
+        LOG_TRIVIAL( "AudioManager destroyed." );
+    }
 }
+
+
 
 void
 AudioManager::Play()
 {
-   boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
+    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
 
-   for(std::list<AudioManager::Player *>::iterator it = playerList.begin();
-         it != playerList.end(); ++it)
-      (*it)->Play();
+    for( std::list< AudioManager::Player* >::iterator it = playerList.begin(); it != playerList.end(); ++it )
+    {
+        ( *it )->Play();
+    }
 }
+
+
 
 void
 AudioManager::Pause()
 {
-   boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
+    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
 
-   for(std::list<AudioManager::Player *>::iterator it = playerList.begin();
-         it != playerList.end(); ++it)
-      (*it)->Pause();
+    for( std::list< AudioManager::Player* >::iterator it = playerList.begin(); it != playerList.end(); ++it )
+    {
+        ( *it )->Pause();
+    }
 }
+
+
 
 void
 AudioManager::Stop()
 {
-   boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
+    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
 
-   for(std::list<AudioManager::Player *>::iterator it = playerList.begin();
-         it != playerList.end(); ++it)
-   {
-      std::list<AudioManager::Player *>::iterator jt = it++;
-      (*jt)->Stop();
-   }
+    for( std::list< AudioManager::Player* >::iterator it = playerList.begin(); it != playerList.end(); ++it )
+    {
+        std::list< AudioManager::Player* >::iterator jt = it++;
+        ( *jt )->Stop();
+    }
 }
+
+
 
 AudioManager::Music*
 AudioManager::GetMusic( const Ogre::String& name )
 {
-   boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
+    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
 
-   for(std::list<AudioManager::Music>::iterator it = musicList.begin();
-         it != musicList.end(); ++it)
-   {
-      if(it->Name == name)
-      {
-         return &(*it);
-      }
-   }
+    for( std::list< AudioManager::Music >::iterator it = musicList.begin(); it != musicList.end(); ++it )
+    {
+        if( it->name == name )
+        {
+            return &( *it );
+        }
+    }
 
-   return NULL;
+    return NULL;
 }
+
+
 
 void
-AudioManager::AddMusic(const AudioManager::Music &music)
+AudioManager::AddMusic( const AudioManager::Music& music )
 {
-   boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
+    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
 
-   for(std::list<AudioManager::Music>::iterator it = musicList.begin();
-         it != musicList.end(); ++it)
-   {
-      if(it->Name == music.Name)
-      {
-         LOG_ERROR("AudioManager :: Music with name '"+music.Name+"' already exists");
-         return;
-      }
-   }
+    for( std::list< AudioManager::Music >::iterator it = musicList.begin(); it != musicList.end(); ++it )
+    {
+        if( it->name == music.name )
+        {
+            LOG_ERROR( "Music with name '" + music.name + "' already exists." );
+            return;
+        }
+    }
 
-   /* add */
-   musicList.push_back(music);
+    musicList.push_back( music );
 }
+
+
 
 const bool
 AudioManager::Init()
 {
-   m_ALDevice = alcOpenDevice(NULL);
-   if(!m_ALDevice)
-   {
-      LOG_ERROR("AudioManager :: There's no default sound device");
-      return false;
-   }
+    m_ALDevice = alcOpenDevice( NULL );
+    if( !m_ALDevice )
+    {
+        LOG_ERROR( "There's no default sound device." );
+        return false;
+    }
 
-   m_ALContext = alcCreateContext(m_ALDevice, NULL);
-   if(!m_ALContext)
-   {
-      LOG_ERROR("AudioManager :: Could not create context for sound device");
-      return false;
-   }
-   alcMakeContextCurrent(m_ALContext);
+    m_ALContext = alcCreateContext( m_ALDevice, NULL );
+    if( !m_ALContext )
+    {
+        LOG_ERROR( "Could not create context for sound device." );
+        return false;
+    }
+    alcMakeContextCurrent( m_ALContext );
 
-   /* listeners */
-   alListenerfv(AL_POSITION, m_LISTENER_POS);
-   alListenerfv(AL_VELOCITY, m_LISTENER_VEL);
-   alListenerfv(AL_ORIENTATION, m_LISTENER_ORI);
+    // listeners
+    alListenerfv( AL_POSITION, m_LISTENER_POS );
+    alListenerfv( AL_VELOCITY, m_LISTENER_VEL );
+    alListenerfv( AL_ORIENTATION, m_LISTENER_ORI );
 
-   return true;
+    return true;
 }
 
-/* Should not really bother using this on release build */
+
+
 const char*
 AudioManager::ALError()
 {
 #if _DEBUG
-   ALenum error_code = alGetError();
-   if(error_code == AL_NO_ERROR)
-      return NULL;
-   else
-      return alGetString(error_code);
+    ALenum error_code = alGetError();
+    if( error_code == AL_NO_ERROR )
+    {
+        return NULL;
+    }
+    else
+    {
+        return alGetString( error_code );
+    }
 #else
-   return NULL; /* We are perfect */
+    return NULL;
 #endif
 }
+
+
 
 const char*
 AudioManager::ALCError(const ALCdevice *device)
 {
 #if _DEBUG
-   const ALCdevice *alc_device = (device == NULL ?
-         const_cast<ALCdevice *>(m_ALDevice) :
-         const_cast<ALCdevice *>(device));
+    const ALCdevice *alc_device = ( ( device == NULL ) ? const_cast< ALCdevice* >( m_ALDevice ) : const_cast< ALCdevice* >( device ) );
 
-   ALCenum error_code = alcGetError(const_cast<ALCdevice *>(alc_device));
-   if(error_code == ALC_NO_ERROR)
-      return NULL;
-   else
-      return alcGetString(const_cast<ALCdevice *>(device), error_code);
+    ALCenum error_code = alcGetError( const_cast< ALCdevice* >( alc_device ) );
+    if( error_code == ALC_NO_ERROR )
+    {
+        return NULL;
+    }
+    else
+    {
+      return alcGetString( const_cast< ALCdevice* >( device ), error_code );
+    }
 #else
-   return NULL; /* We are perfect */
+    return NULL;
 #endif
 }
+
+
 
 void
 AudioManager::Update()
 {
-   boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
+    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
 
-   std::list<AudioManager::Player*>::iterator it = playerList.begin();
-   while(it != playerList.end())
-   {
-      /* we are erasin in Update() method, so this is important */
-      std::list<AudioManager::Player*>::iterator jt = it++;
-      (*jt)->Update();
-   }
+    std::list< AudioManager::Player* >::iterator it = playerList.begin();
+    while( it != playerList.end() )
+    {
+        // we are erasin in Update() method, so this is important
+        std::list< AudioManager::Player* >::iterator jt = it++;
+        ( *jt )->Update();
+    }
 }
+
+
 
 void
 AudioManager::operator()()
 {
-   while(m_ThreadContinue)
-   {
-      Update();
+    while( m_ThreadContinue )
+    {
+        Update();
 
-      boost::xtime xt;
-      boost::xtime_get(&xt, boost::TIME_UTC);
-      xt.nsec += m_THREAD_SLEEP_TIME * 1000000;
-      boost::thread::sleep(xt);
+        boost::xtime xt;
+        boost::xtime_get( &xt, boost::TIME_UTC );
+        xt.nsec += m_THREAD_SLEEP_TIME * 1000000;
+        boost::thread::sleep( xt );
 
-      m_UpdateThread->yield();
-   }
+        m_UpdateThread->yield();
+    }
 }
-

@@ -4894,3 +4894,112 @@
 1295452066 g:\my\svn\qgears\utilites\xeno_model_dumper\src\animatedmodel.h
 	<Ogre.h>
 
+1306971022 source:d:\my\1\svn\q-gears\utilites\common\file.cpp
+	<cassert>
+	<string.h>
+	"File.h"
+	"FileSystem.h"
+	"Logger.h"
+
+1306971022 d:\my\1\svn\q-gears\utilites\common\file.h
+	"TypeDefine.h"
+	<OgreString.h>
+
+1306971022 d:\my\1\svn\q-gears\utilites\common\typedefine.h
+
+1306971022 d:\my\1\svn\q-gears\utilites\common\filesystem.h
+	<OgreString.h>
+
+1306971022 d:\my\1\svn\q-gears\utilites\common\logger.h
+	<OgreString.h>
+	<OgreUTFString.h>
+
+1306971022 source:d:\my\1\svn\q-gears\utilites\common\filesystem.cpp
+	"FileSystem.h"
+	"Logger.h"
+	<stdio.h>
+
+1306971022 source:d:\my\1\svn\q-gears\utilites\common\logger.cpp
+	"Logger.h"
+	"FileSystem.h"
+	<OgreStringConverter.h>
+
+1313052913 source:d:\my\1\svn\q-gears\utilites\common\ogregenutilites.cpp
+	"OgreGenUtilites.h"
+	"Logger.h"
+
+1313052076 d:\my\1\svn\q-gears\utilites\common\ogregenutilites.h
+	<Ogre.h>
+	"Logger.h"
+	"Vram.h"
+
+1306971022 d:\my\1\svn\q-gears\utilites\common\vram.h
+	"TypeDefine.h"
+	"Surface.h"
+
+1307948251 d:\my\1\svn\q-gears\utilites\common\surface.h
+	<Ogre.h>
+
+1313049037 source:d:\my\1\svn\q-gears\utilites\common\vram.cpp
+	"Vram.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+	<string.h>
+
+1312963958 source:d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\animatedmodel.cpp
+	"AnimatedModel.h"
+	"ModelFile.h"
+	"../../common/File.h"
+	"../../common/Logger.h"
+	"../../common/OgreGenUtilites.h"
+
+1306971030 d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\animatedmodel.h
+	<Ogre.h>
+
+1312971043 d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\modelfile.h
+	"../../common/File.h"
+	"../../common/Logger.h"
+	"../../common/OgreGenUtilites.h"
+
+1313055569 source:d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\fieldmodel.cpp
+	"FieldModel.h"
+	"FieldFile.h"
+	"ModelFile.h"
+	"../../common/File.h"
+	"../../common/Logger.h"
+	"../../common/OgreGenUtilites.h"
+
+1306971030 d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\fieldmodel.h
+	<Ogre.h>
+
+1313056840 source:d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\main.cpp
+	<Ogre.h>
+	<OIS.h>
+	"../../common/FileSystem.h"
+	"../../common/Logger.h"
+	"../../common/OgreGenUtilites.h"
+	"FieldModel.h"
+	"AnimatedModel.h"
+	"ModelFile.h"
+
+1306971030 d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\main.h
+
+1313016716 source:d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\modelfile.cpp
+	"ModelFile.h"
+	"../../common/Logger.h"
+	"../../common/OgreGenUtilites.h"
+	<OgreStringConverter.h>
+
+1312972474 source:d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\archivefile.cpp
+	"ArchiveFile.h"
+
+1312970575 d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\archivefile.h
+	"../../common/File.h"
+
+1313004992 source:d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\fieldfile.cpp
+	"FieldFile.h"
+	"ArchiveFile.h"
+
+1312971249 d:\my\1\svn\q-gears\utilites\xeno_model_dumper\src\fieldfile.h
+	"../../common/File.h"
+

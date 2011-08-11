@@ -29,7 +29,7 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_MoveTarget( Ogre::Vector3( 0, 0, 0 ) ),
     m_MoveAutoRotation( true ),
 
-    m_AnimationDefault( "idle" ),
+    m_AnimationDefault( "Idle" ),
     m_AnimationCurrentName( "" )
 {
     m_ModelNode = m_SceneNode->createChildSceneNode();

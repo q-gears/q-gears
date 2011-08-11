@@ -4753,3 +4753,36 @@
 	<Ogre.h>
 	<vector>
 
+1306971025 source:d:\my\1\svn\q-gears\utilites\ffvii_battle_scene_dumper\src\ffviistring.cpp
+	"FFVIIString.h"
+
+1306971025 d:\my\1\svn\q-gears\utilites\ffvii_battle_scene_dumper\src\ffviistring.h
+	<Ogre.h>
+	<vector>
+
+1306971025 source:d:\my\1\svn\q-gears\utilites\ffvii_battle_scene_dumper\src\main.cpp
+	<iostream>
+	"../../common/FileSystem.h"
+	"../../common/Logger.h"
+	"EnemyFile.h"
+	"PlayerFile.h"
+
+1306971022 d:\my\1\svn\q-gears\utilites\common\filesystem.h
+	<OgreString.h>
+
+1306971022 d:\my\1\svn\q-gears\utilites\common\logger.h
+	<OgreString.h>
+	<OgreUTFString.h>
+
+1306971025 d:\my\1\svn\q-gears\utilites\ffvii_battle_scene_dumper\src\enemyfile.h
+	"../../common/File.h"
+
+1306971022 d:\my\1\svn\q-gears\utilites\common\file.h
+	"TypeDefine.h"
+	<OgreString.h>
+
+1306971022 d:\my\1\svn\q-gears\utilites\common\typedefine.h
+
+1306971025 d:\my\1\svn\q-gears\utilites\ffvii_battle_scene_dumper\src\playerfile.h
+	"../../common/File.h"
+

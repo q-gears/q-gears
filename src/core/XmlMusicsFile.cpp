@@ -1,15 +1,22 @@
 #include "XmlMusicsFile.h"
-#include "AudioManager.h" /* For default loop */
+
+#include "AudioManager.h"
 #include "Logger.h"
+
+
 
 XmlMusicsFile::XmlMusicsFile( const Ogre::String& file ):
     XmlFile( file )
 {
 }
 
+
+
 XmlMusicsFile::~XmlMusicsFile()
 {
 }
+
+
 
 void
 XmlMusicsFile::LoadMusics()
@@ -18,7 +25,7 @@ XmlMusicsFile::LoadMusics()
 
     if( node == NULL || node->ValueStr() != "musics" )
     {
-        LOG_ERROR( "UI XML Manager: " + m_File.ValueStr() + " is not a valid musics file! No <musics> in root." );
+        LOG_ERROR( m_File.ValueStr() + " is not a valid musics file! No <musics> in root." );
         return;
     }
 
@@ -27,14 +34,12 @@ XmlMusicsFile::LoadMusics()
     {
         if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "music" )
         {
-            AudioManager &engine = AudioManager::getSingleton();
+            AudioManager::Music music;
+            music.name = GetString( node, "name" );
+            music.file = "./data/" + GetString( node, "file_name" );
+            music.loop = GetFloat( node, "loop", AudioManager::getSingleton().m_DEFAULT_LOOP );
 
-            AudioManager::Music Music;
-            Music.Name = GetString( node, "name" );
-            Music.File = "./data/" + GetString( node, "file_name" );
-            Music.Loop = GetFloat( node, "loop", AudioManager::getSingleton().m_DEFAULT_LOOP );
-
-            engine.AddMusic(Music);
+            AudioManager::getSingleton().AddMusic( music );
 
         }
         node = node->NextSibling();

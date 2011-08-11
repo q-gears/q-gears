@@ -20383,7 +20383,7 @@
 	"core/UiManager.h"
 	"core/particles/ParticleSystemManager.h"
 
-1309093057 d:\my\1\svn\q-gears\src\main.h
+1312917636 d:\my\1\svn\q-gears\src\main.h
 
 1309087435 d:\my\1\svn\q-gears\src\core\cameramanager.h
 	<OgreCamera.h>
@@ -23758,7 +23758,7 @@
 	<OgreVector2.h>
 	"UiWidget.h"
 
-1312895738 source:d:\my\1\svn\q-gears\src\core\uitextarea.cpp
+1312900706 source:d:\my\1\svn\q-gears\src\core\uitextarea.cpp
 	"UiTextArea.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>

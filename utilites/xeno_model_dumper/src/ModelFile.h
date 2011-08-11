@@ -10,19 +10,19 @@
 class ModelFile : public File
 {
 public:
-    explicit ModelFile(const Ogre::String &file);
-    explicit ModelFile(File* file);
-    ModelFile(File* file, const u32 &offset, const u32 &length);
-    ModelFile(u8* buffer, const u32 &offset, const u32 &length);
+    ModelFile( const Ogre::String &file );
+    ModelFile( File* file );
+    ModelFile( File* file, const u32 offset, const u32 length );
+    ModelFile( u8* buffer, const u32 offset, const u32 length );
     virtual ~ModelFile();
 
-    void GetModel(Ogre::MeshPtr mesh, const MeshData& info, VectorTexForGen& textures, Logger* export_text);
+    void GetModel( Ogre::MeshPtr mesh, const MeshData& info, VectorTexForGen& textures, Logger* export_text );
 
 private:
-    int LoadPoly010305_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const MeshData& info, VectorTexForGen& textures);
-    int LoadPoly04_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const MeshData& info, VectorTexForGen& textures);
-    int LoadPoly090d_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const MeshData& info, VectorTexForGen& textures);
-    int LoadPoly0c_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const MeshData& info, VectorTexForGen& textures);
+    int LoadPoly010305_18( float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const MeshData& info, VectorTexForGen& textures );
+    int LoadPoly04_18( float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const MeshData& info, VectorTexForGen& textures );
+    int LoadPoly090d_18( float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const MeshData& info, VectorTexForGen& textures );
+    int LoadPoly0c_18( float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const MeshData& info, VectorTexForGen& textures );
 
     int TexSettings();
     void SetTexPageSettings();

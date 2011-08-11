@@ -21,7 +21,6 @@
 					<Add library="mingw32" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
-					<Add library="..\..\..\..\..\..\Program Files\mingw\lib\zdll.lib" />
 					<Add directory="$(OGRE_HOME)\lib\opt\release" />
 				</Linker>
 			</Target>
@@ -35,8 +34,6 @@
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
-		<Unit filename="..\common\BinGZipFile.cpp" />
-		<Unit filename="..\common\BinGZipFile.h" />
 		<Unit filename="..\common\File.cpp" />
 		<Unit filename="..\common\File.h" />
 		<Unit filename="..\common\FileSystem.cpp" />
@@ -58,11 +55,9 @@
 		<Unit filename="src\AnimationExtractor.h" />
 		<Unit filename="src\AnimationScriptDumper.cpp" />
 		<Unit filename="src\AnimationScriptDumper.h" />
-		<Unit filename="src\Define.h" />
 		<Unit filename="src\EnemyFile.cpp" />
 		<Unit filename="src\EnemyFile.h" />
 		<Unit filename="src\Main.cpp" />
-		<Unit filename="src\Main.h" />
 		<Unit filename="src\MeshExtractor.cpp" />
 		<Unit filename="src\MeshExtractor.h" />
 		<Unit filename="src\RamEffectFile.cpp" />

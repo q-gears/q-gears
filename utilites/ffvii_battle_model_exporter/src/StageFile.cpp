@@ -43,7 +43,7 @@ StageFile::~StageFile()
 
 
 Ogre::Entity*
-StageFile::GetModel(const StageInfo& info)
+StageFile::GetModel( const StageInfo& info )
 {
     //DumpSettings("exported/" + info.data.name + ".lua");
 
@@ -56,19 +56,19 @@ StageFile::GetModel(const StageInfo& info)
 
 
 
-    Ogre::Bone* root1 = skeleton->createBone("0", 0);
-    Ogre::Bone* root2 = skeleton->createBone("1", 1);
-    root1->addChild(root2);
+    Ogre::Bone* root1 = skeleton->createBone( "0", 0 );
+    Ogre::Bone* root2 = skeleton->createBone( "1", 1 );
+    root1->addChild( root2 );
 
-    Ogre::Animation* anim = skeleton->createAnimation("idle", 1);
-    Ogre::NodeAnimationTrack* track1 = anim->createNodeTrack(0, root1);
+    Ogre::Animation* anim = skeleton->createAnimation( "Idle", 1 );
+    Ogre::NodeAnimationTrack* track1 = anim->createNodeTrack( 0, root1 );
     track1->removeAllKeyFrames();
-    Ogre::TransformKeyFrame* frame1 = track1->createNodeKeyFrame(0);
+    Ogre::TransformKeyFrame* frame1 = track1->createNodeKeyFrame( 0 );
     Ogre::Matrix3 matrix;
-    matrix.FromEulerAnglesYXZ(Ogre::Radian(Ogre::Degree(0)), Ogre::Radian(Ogre::Degree(-90)), Ogre::Radian(Ogre::Degree(0)));
+    matrix.FromEulerAnglesYXZ( Ogre::Radian( Ogre::Degree( 0 ) ), Ogre::Radian( Ogre::Degree( -90 ) ), Ogre::Radian( Ogre::Degree( 0 ) ) );
     Ogre::Quaternion rot;
-    rot.FromRotationMatrix(matrix);
-    frame1->setRotation(rot);
+    rot.FromRotationMatrix( matrix );
+    frame1->setRotation( rot );
 
 
 
@@ -98,15 +98,15 @@ StageFile::GetModel(const StageInfo& info)
 
 
     // create and export textures for model
-    if (textures.size() > 0)
+    if( textures.size() > 0 )
     {
-        int number_of_files = GetU32LE(0x00);
-        int offset_to_texture = GetU32LE(number_of_files * 0x04);
+        int number_of_files = GetU32LE( 0x00 );
+        int offset_to_texture = GetU32LE( number_of_files * 0x04 );
         Vram* vram = new Vram();
 
-        LoadTimFileToVram(this, offset_to_texture, vram);
-
-        CreateTexture(vram, info.data, "exported/models/battle/stages/" + info.data.name + ".png", textures);
+        LoadTimFileToVram( this, offset_to_texture, vram );
+        //vram->Save( "qqq" );
+        CreateTexture( vram, info.data, "exported/models/battle/stages/" + info.data.name + ".png", textures );
         delete vram;
     }
 
@@ -121,14 +121,14 @@ StageFile::GetModel(const StageInfo& info)
     //thisEntity->setDisplaySkeleton(true);
     //thisEntity->setDebugDisplayEnabled(true);
     thisEntity->setVisible(false);
-    thisEntity->getAnimationState("idle")->setEnabled(true);
-    thisEntity->getAnimationState("idle")->setLoop(true);
+    thisEntity->getAnimationState( "Idle" )->setEnabled( true );
+    thisEntity->getAnimationState( "Idle" )->setLoop( true );
     Ogre::SceneNode* thisSceneNode = scene_manager->getRootSceneNode()->createChildSceneNode();
-    thisSceneNode->setPosition(0, 0, 0);
-    thisSceneNode->roll(Ogre::Radian(Ogre::Degree(180.0f)));
-    thisSceneNode->yaw(Ogre::Radian(Ogre::Degree(120.0f)));
-    thisSceneNode->pitch(Ogre::Radian(Ogre::Degree(90.0f)));
-    thisSceneNode->attachObject(thisEntity);
+    thisSceneNode->setPosition( 0, 0, 0 );
+    thisSceneNode->roll( Ogre::Radian( Ogre::Degree( 180.0f ) ) );
+    thisSceneNode->yaw( Ogre::Radian( Ogre::Degree( 120.0f ) ) );
+    thisSceneNode->pitch( Ogre::Radian( Ogre::Degree( 90.0f ) ) );
+    thisSceneNode->attachObject( thisEntity );
 
     return thisEntity;
 }

@@ -15,7 +15,7 @@ extern QG_STATE g_ApplicationState;
 
 
 
-#define QG_VERSION_NAME "Q-Gears v0.20 (2nd alpha ui)"
+#define QG_VERSION_NAME "Q-Gears v0.21 (3rd alpha Run Wild)"
 
 
 

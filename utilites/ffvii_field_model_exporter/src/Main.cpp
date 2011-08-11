@@ -146,9 +146,9 @@ public:
             m_Mouse->capture();
         }
 
-        for (int i = 0; i < entitys.size(); ++i)
+        for( int i = 0; i < entitys.size(); ++i )
         {
-            if (entitys[i]->isVisible() == true)
+            if( entitys[ i ]->isVisible() == true )
             {
                 Ogre::AnimationStateIterator animations = entitys[i]->getAllAnimationStates()->getAnimationStateIterator();
 
@@ -363,42 +363,46 @@ main(int argc, char *argv[])
 {
     Ogre::Root*         root;
     Ogre::RenderWindow* window;
+
+    root = new Ogre::Root( "", "" );
+#ifndef _DEBUG
+    root->loadPlugin( "RenderSystem_GL.dll" );
+#else
+    root->loadPlugin( "RenderSystem_GL_d.dll" );
+#endif
+    root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
+    root->initialise( false );
+    Ogre::NameValuePairList misc;
+    misc[ "title" ] = "FFVII Exporter";
+    window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
+
+
+
     Ogre::SceneManager* scene_manager;
     Ogre::Viewport*     viewport;
 
-    root = new Ogre::Root("plugins.cfg", "q-gears.cfg", "ogre q-gears.log");
+    DisplayFrameListener* frame_listener = new DisplayFrameListener( window );
+    root->addFrameListener( frame_listener );
 
-    if (root->restoreConfig() == true || root->showConfigDialog() == true)
-    {
-        window = root->initialise(true, "FFVII Exporter");
-    }
-    else
-    {
-        return 0;
-    }
+    scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
+    scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
 
-    DisplayFrameListener* frame_listener = new DisplayFrameListener(window);
-    root->addFrameListener(frame_listener);
+    camera = scene_manager->createCamera( "Camera" );
+    camera->setNearClipDistance( 5 );
 
-    scene_manager = root->createSceneManager(Ogre::ST_GENERIC, "Scene");
-    scene_manager->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
+    viewport = window->addViewport( camera );
+    viewport->setBackgroundColour( Ogre::ColourValue( 0, 0, 0 ) );
+    camera->setAspectRatio( Ogre::Real( viewport->getActualWidth() ) / Ogre::Real( viewport->getActualHeight() ) );
 
-    camera = scene_manager->createCamera("Camera");
-    camera->setNearClipDistance(5);
-
-    viewport = window->addViewport(camera);
-    viewport->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
-    camera->setAspectRatio(Ogre::Real(viewport->getActualWidth()) / Ogre::Real(viewport->getActualHeight()));
-
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation("./", "FileSystem", "General");
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation("./exported", "FileSystem", "General");
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./", "FileSystem", "General" );
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./exported", "FileSystem", "General" );
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation("./data/OgreCore.zip", "Zip", "Bootstrap");
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 
 
     FILESYSTEM = new FileSystem();
-    LOGGER = new Logger("game.log");
+    LOGGER = new Logger( "game.log" );
 
 
 
@@ -407,16 +411,16 @@ main(int argc, char *argv[])
 
 
     scene_manager->clearScene();
-    scene_manager->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
+    scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
 
-    scene_manager = Ogre::Root::getSingleton().getSceneManager("Scene");
-    camera = scene_manager->getCamera("Camera");
-    camera->setPosition(10, 5, 10);
-    camera->lookAt(0, 0, 0);
+    scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
+    camera = scene_manager->getCamera( "Camera" );
+    camera->setPosition( 10, 5, 10 );
+    camera->lookAt( 0, 0, 0 );
 
 
 
-    for (int f = 0; f < fields.size(); ++f)
+    for( int f = 0; f < fields.size(); ++f )
     {
         BsxFile model( "data/field/" + fields[f].name + ".bsx" );
         DatFile dat( "data/field/" + fields[f].name + ".dat" );
@@ -447,7 +451,7 @@ main(int argc, char *argv[])
         }
     }
 
-    entitys[0]->setVisible(true);
+    entitys[ 0 ]->setVisible(true);
 
     // debug info
     info_text = new Ogre::TextAreaOverlayElement("DebugText");
@@ -459,7 +463,7 @@ main(int argc, char *argv[])
 
     info_overlay = Ogre::OverlayManager::getSingleton().create("DebugOverlay");
     info_overlay->setZOrder(1);
-    info_overlay->add2D((Ogre::OverlayContainer*)info_text);
+    info_overlay->add2D( ( Ogre::OverlayContainer*)info_text);
     info_overlay->show();
 
 

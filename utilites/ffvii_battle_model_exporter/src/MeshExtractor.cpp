@@ -5,64 +5,33 @@
 #define TEXTURE_BINDING 2
 
 #include "../../common/Logger.h"
+#include "../../common/OgreGenUtilites.h"
 
 
 
 void
-AddTexture(TexForGen& texture, VectorTexForGen& textures)
-{
-    for (int i = 0; i < textures.size(); i++)
-    {
-        if (texture == textures[i])
-        {
-            texture.start_x = textures[i].start_x;
-            texture.start_y = textures[i].start_y;
-            return;
-        }
-    }
-
-    LOGGER->Log("New Texture: X:" + ToHexString(texture.texture_x, 4, '0') + ", Y:" + ToHexString(texture.texture_y, 4, '0') + ", CLUTX:" + ToHexString(texture.palette_x, 4, '0') + ", CLUTY:" + ToHexString(texture.palette_y, 4, '0') + ", bpp:" + ToHexString(texture.bpp, 4, '0') + "\n");
-
-    texture.start_x = 0;
-    texture.start_y = 0;
-    for (int i = 0; i < textures.size(); i++)
-    {
-        if (texture.start_x <= textures[i].start_x)
-        {
-            texture.start_x = textures[i].start_x + 256;
-        }
-    }
-
-    textures.push_back(texture);
-
-    LOGGER->Log("Startx:" + ToHexString(texture.start_x, 4, '0') + ", Starty:" + ToHexString(texture.start_y, 4, '0') + "\n");
-}
-
-
-
-void
-MeshExtractor(const MeshData& mesh_data, const Ogre::String& material_name, File* file, int offset_to_data, VectorTexForGen& textures, const Ogre::MeshPtr& mesh, const Ogre::String& name, int bone_id)
+MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, File* file, int offset_to_data, VectorTexForGen& textures, const Ogre::MeshPtr& mesh, const Ogre::String& name, int bone_id )
 {
     int offset_to_vertex     = offset_to_data;
-    int offset_to_triangle_t = offset_to_vertex + 0x04 + file->GetU32LE(offset_to_vertex);
-    int number_of_triangle_t = file->GetU16LE(offset_to_triangle_t);
-    u16 tpage  = file->GetU16LE(offset_to_triangle_t + 0x02);
+    int offset_to_triangle_t = offset_to_vertex + 0x04 + file->GetU32LE( offset_to_vertex );
+    int number_of_triangle_t = file->GetU16LE( offset_to_triangle_t );
+    u16 tpage  = file->GetU16LE( offset_to_triangle_t + 0x02 );
     int offset_to_quad_t     = offset_to_triangle_t + 0x04 + number_of_triangle_t * 0x10;
-    int number_of_quad_t     = file->GetU16LE(offset_to_quad_t);
+    int number_of_quad_t     = file->GetU16LE( offset_to_quad_t );
     int offset_to_triangle   = offset_to_quad_t + 0x4 + number_of_quad_t * 0x14;
-    int number_of_triangle   = file->GetU16LE(offset_to_triangle);
+    int number_of_triangle   = file->GetU16LE( offset_to_triangle );
     int offset_to_quad       = offset_to_triangle + 0x4 + number_of_triangle * 0x14;
-    int number_of_quad       = file->GetU16LE(offset_to_quad);
+    int number_of_quad       = file->GetU16LE( offset_to_quad );
 
-    Ogre::SubMesh* sub_mesh = mesh->createSubMesh(name);
-    sub_mesh->setMaterialName(material_name);
+    Ogre::SubMesh* sub_mesh = mesh->createSubMesh( name );
+    sub_mesh->setMaterialName( material_name );
     sub_mesh->useSharedVertices = false;
     sub_mesh->operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
 
     // Allocate and prepare vertex data
     sub_mesh->vertexData = new Ogre::VertexData();
     sub_mesh->vertexData->vertexStart = 0;
-    sub_mesh->vertexData->vertexCount = static_cast<size_t>(number_of_triangle_t * 3 + number_of_quad_t * 6 + number_of_triangle * 3 + number_of_quad * 6);
+    sub_mesh->vertexData->vertexCount = static_cast< size_t >( number_of_triangle_t * 3 + number_of_quad_t * 6 + number_of_triangle * 3 + number_of_quad * 6 );
 
     sub_mesh->indexData = new Ogre::IndexData();
     sub_mesh->indexData->indexStart = 0;
@@ -70,42 +39,42 @@ MeshExtractor(const MeshData& mesh_data, const Ogre::String& material_name, File
     sub_mesh->indexData->indexBuffer = Ogre::HardwareBufferManager::getSingleton().createIndexBuffer(
         Ogre::HardwareIndexBuffer::IT_16BIT,
         sub_mesh->indexData->indexCount,
-        Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
-    u16* idata = static_cast<u16*>(sub_mesh->indexData->indexBuffer->lock(Ogre::HardwareBuffer::HBL_DISCARD));
+        Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY );
+    u16* idata = static_cast< u16* >( sub_mesh->indexData->indexBuffer->lock( Ogre::HardwareBuffer::HBL_DISCARD ) );
     u32 cur_index = 0;
 
     Ogre::VertexDeclaration* decl = sub_mesh->vertexData->vertexDeclaration;
     Ogre::VertexBufferBinding* bind = sub_mesh->vertexData->vertexBufferBinding;
     // 1st buffer
-    decl->addElement(POSITION_BINDING, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
+    decl->addElement( POSITION_BINDING, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
     Ogre::HardwareVertexBufferSharedPtr vbuf0 = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
-        decl->getVertexSize(POSITION_BINDING),
+        decl->getVertexSize( POSITION_BINDING ),
         sub_mesh->vertexData->vertexCount,
-        Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
-    bind->setBinding(POSITION_BINDING, vbuf0);
+        Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY );
+    bind->setBinding( POSITION_BINDING, vbuf0 );
 
     // 2nd buffer
-    decl->addElement(COLOUR_BINDING, 0, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE);
+    decl->addElement( COLOUR_BINDING, 0, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE );
     Ogre::HardwareVertexBufferSharedPtr vbuf1 = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
-        decl->getVertexSize(COLOUR_BINDING),
+        decl->getVertexSize( COLOUR_BINDING ),
         sub_mesh->vertexData->vertexCount,
-        Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+        Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY );
     // Set vertex buffer binding so buffer 1 is bound to our colour buffer
-    bind->setBinding(COLOUR_BINDING, vbuf1);
+    bind->setBinding( COLOUR_BINDING, vbuf1 );
 
     // 3rd buffer
-    decl->addElement(TEXTURE_BINDING, 0, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES, 0);
+    decl->addElement( TEXTURE_BINDING, 0, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES, 0 );
     Ogre::HardwareVertexBufferSharedPtr vbuf2 = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
-        decl->getVertexSize(TEXTURE_BINDING),
+        decl->getVertexSize( TEXTURE_BINDING ),
         sub_mesh->vertexData->vertexCount,
-        Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
-    bind->setBinding(TEXTURE_BINDING, vbuf2);
+        Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY );
+    bind->setBinding( TEXTURE_BINDING, vbuf2 );
 
-    float* pPos   = static_cast<float*>(vbuf0->lock(Ogre::HardwareBuffer::HBL_DISCARD));
-    float* tPos   = static_cast<float*>(vbuf2->lock(Ogre::HardwareBuffer::HBL_DISCARD));
+    float* pPos   = static_cast< float* >( vbuf0->lock( Ogre::HardwareBuffer::HBL_DISCARD ) );
+    float* tPos   = static_cast< float* >( vbuf2->lock( Ogre::HardwareBuffer::HBL_DISCARD ) );
 
     Ogre::RenderSystem* rs = Ogre::Root::getSingleton().getRenderSystem();
-    Ogre::RGBA colours[sub_mesh->vertexData->vertexCount];
+    Ogre::RGBA colours[ sub_mesh->vertexData->vertexCount ];
 
 
 
@@ -130,7 +99,7 @@ MeshExtractor(const MeshData& mesh_data, const Ogre::String& material_name, File
         c /= 512;
 
         u16 clut = file->GetU16LE(offset_to_triangle_t + 0x4 + j * 0x10 + 0xa);
-        int clut_x = (clut & 0x003f) << 4;
+        int clut_x = (clut & 0x003f) << 3;
         int clut_y = (clut & 0xffc0) >> 6;
         int bpp    = (tpage >> 0x7) & 0x3;
         int vram_x = (tpage & 0xf) * 64;
@@ -141,7 +110,7 @@ MeshExtractor(const MeshData& mesh_data, const Ogre::String& material_name, File
         texture.texture_x = vram_x;
         texture.texture_y = vram_y;
         texture.bpp = bpp;
-        AddTexture(texture, textures);
+        AddTexture( texture, mesh_data, textures, LOGGER );
 
         Ogre::Vector2 at(0, 0);
         Ogre::Vector2 bt(0, 0);
@@ -212,7 +181,7 @@ MeshExtractor(const MeshData& mesh_data, const Ogre::String& material_name, File
         d /= 512;
 
         u16 clut = file->GetU16LE(offset_to_quad_t + 0x4 + j * 0x14 + 0xa);
-        int clut_x = (clut & 0x003f) << 4;
+        int clut_x = (clut & 0x003f) << 3;
         int clut_y = (clut & 0xffc0) >> 6;
         int bpp    = (tpage >> 0x7) & 0x3;
         int vram_x = (tpage & 0xf) * 64;
@@ -223,7 +192,7 @@ MeshExtractor(const MeshData& mesh_data, const Ogre::String& material_name, File
         texture.texture_x = vram_x;
         texture.texture_y = vram_y;
         texture.bpp = bpp;
-        AddTexture(texture, textures);
+        AddTexture( texture, mesh_data, textures, LOGGER );
 
         Ogre::Vector2 at(0, 0);
         Ogre::Vector2 bt(0, 0);
@@ -314,7 +283,7 @@ MeshExtractor(const MeshData& mesh_data, const Ogre::String& material_name, File
         texture.texture_x = 0;
         texture.texture_y = 0;
         texture.bpp = -1;
-        AddTexture(texture, textures);
+        AddTexture( texture, mesh_data, textures, LOGGER );
 
         Ogre::Vector2 at(0, 0);
         Ogre::Vector2 bt(0, 0);
@@ -388,7 +357,7 @@ MeshExtractor(const MeshData& mesh_data, const Ogre::String& material_name, File
         texture.texture_x = 0;
         texture.texture_y = 0;
         texture.bpp = -1;
-        AddTexture(texture, textures);
+        AddTexture( texture, mesh_data, textures, LOGGER );
 
         Ogre::Vector2 at(0, 0);
         Ogre::Vector2 bt(0, 0);

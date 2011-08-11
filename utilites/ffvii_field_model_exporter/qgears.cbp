@@ -20,7 +20,6 @@
 				<Linker>
 					<Add option="-static-libgcc" />
 					<Add library="mingw32" />
-					<Add library="F:\MinGW32\lib\zlib.lib" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
 					<Add directory="$(OGRE_HOME)\lib\opt\release" />

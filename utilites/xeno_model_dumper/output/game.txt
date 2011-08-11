@@ -1,2 +1,33 @@
-Loading file: data/1500_3.model
-Loading file: data/1501.texture
+Loading file: data/0632
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Assign bones to vertexes
+Loading file: data/0633.raw2
+CreateTexture palette_x="0" palette_y="483" bpp="1".CreateTexture palette_x="0" palette_y="493" bpp="1".CreateTexture palette_x="0" palette_y="491" bpp="0".CreateTexture palette_x="0" palette_y="486" bpp="1".CreateTexture palette_x="0" palette_y="481" bpp="1".CreateTexture palette_x="0" palette_y="490" bpp="1".CreateTexture palette_x="0" palette_y="484" bpp="1".CreateTexture palette_x="0" palette_y="494" bpp="1".CreateTexture palette_x="0" palette_y="489" bpp="1".CreateTexture palette_x="0" palette_y="482" bpp="1".CreateTexture palette_x="0" palette_y="488" bpp="1".CreateTexture palette_x="0" palette_y="487" bpp="1".CreateTexture palette_x="0" palette_y="480" bpp="1".CreateTexture palette_x="0" palette_y="485" bpp="1".CreateTexture palette_x="0" palette_y="492" bpp="1".CreateTexture palette_x="0" palette_y="480" bpp="1".CreateTexture palette_x="0" palette_y="480" bpp="1".CreateTexture palette_x="16" palette_y="491" bpp="0".

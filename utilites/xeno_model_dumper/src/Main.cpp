@@ -1,7 +1,6 @@
 #include <Ogre.h>
 #include <OIS.h>
 
-#include "Main.h"
 #include "../../common/FileSystem.h"
 #include "../../common/Logger.h"
 #include "../../common/OgreGenUtilites.h"
@@ -13,22 +12,21 @@
 std::vector<Ogre::Entity*> entitys;
 Ogre::Camera* camera;
 
-int state;
-
 
 
 class DisplayFrameListener : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener
 {
 public:
     // Constructor takes a RenderWindow because it uses that to determine input context
-    DisplayFrameListener(Ogre::RenderWindow* win):
-        m_Window(win),
-        m_InputManager(0),
-        m_Keyboard(0),
-        m_Mouse(0),
-        m_MouseRotate(false),
-        m_MouseMoveX(0),
-        m_MouseMoveY(0)
+    DisplayFrameListener( Ogre::RenderWindow* win ):
+        m_Window( win ),
+        m_InputManager( 0 ),
+        m_Keyboard( 0 ),
+        m_Mouse( 0 ),
+        m_MouseRotate( false ),
+        m_MouseMoveX( 0 ),
+        m_MouseMoveY( 0 ),
+        m_Exit( false )
     {
         using namespace OIS;
 
@@ -69,13 +67,13 @@ public:
     virtual void
     windowClosed(Ogre::RenderWindow* rw)
     {
-        state = EXIT;
+        m_Exit = true;
     }
 
     bool
     frameStarted(const Ogre::FrameEvent& evt)
     {
-        if (state == EXIT)
+        if( m_Exit == true )
         {
             return false;
         }
@@ -123,12 +121,6 @@ public:
     {
         switch (e.key)
         {
-            case OIS::KC_ESCAPE:
-            {
-                state = EXIT;
-            }
-            break;
-
             case OIS::KC_RIGHT:
             {
             }
@@ -198,6 +190,7 @@ protected:
     float               m_MouseMoveX;
     float               m_MouseMoveY;
     bool                m_MouseRotate;
+    bool                m_Exit;
 };
 
 
@@ -207,19 +200,23 @@ main(int argc, char *argv[])
 {
     Ogre::Root*         root;
     Ogre::RenderWindow* window;
+
+    root = new Ogre::Root( "", "" );
+#ifndef _DEBUG
+    root->loadPlugin( "RenderSystem_GL.dll" );
+#else
+    root->loadPlugin( "RenderSystem_GL_d.dll" );
+#endif
+    root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
+    root->initialise( false );
+    Ogre::NameValuePairList misc;
+    misc[ "title" ] = "Xenogears Exporter";
+    window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
+
+
+
     Ogre::SceneManager* scene_manager;
     Ogre::Viewport*     viewport;
-
-    root = new Ogre::Root("plugins.cfg", "q-gears.cfg", "ogre q-gears.log");
-
-    if (root->restoreConfig() == true || root->showConfigDialog() == true)
-    {
-        window = root->initialise(true, "Xenogears Model Exporter");
-    }
-    else
-    {
-        return 0;
-    }
 
     DisplayFrameListener* frame_listener = new DisplayFrameListener(window);
     root->addFrameListener(frame_listener);
@@ -234,9 +231,7 @@ main(int argc, char *argv[])
     viewport->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
     camera->setAspectRatio(Ogre::Real(viewport->getActualWidth()) / Ogre::Real(viewport->getActualHeight()));
 
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation("./", "FileSystem", "General");
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation("./exported/", "FileSystem", "General");
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation("./data/OgreCore.zip", "Zip", "Bootstrap");
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./exported", "FileSystem", "Game", true );
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
     scene_manager->clearScene();
@@ -252,13 +247,13 @@ main(int argc, char *argv[])
     FILESYSTEM = new FileSystem();
     LOGGER = new Logger("game.txt");
 
-    state = GAME;
-
 
 
     {
         FieldModel model;
-        model.Export("data/1500_3.model", "data/1501.texture");
+        //model.Export("data/0634", "data/0635.raw2");
+        model.Export("data/0632", "data/0633.raw2");
+        //model.Export("data/0608", "data/0609.raw2"); // lahan
     }
 
     {

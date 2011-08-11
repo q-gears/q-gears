@@ -226,19 +226,19 @@ BsxFile::GetModel(Ogre::Entity* entity, const s8 character_id, const Unit& unit,
 
 
 
-        Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager("Scene");
-        Ogre::Entity* thisEntity = scene_manager->createEntity(unit.name, "models/field/units/" + unit.name + ".mesh");
+        Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
+        Ogre::Entity* thisEntity = scene_manager->createEntity( unit.name, "models/field/units/" + unit.name + ".mesh" );
         //thisEntity->setDisplaySkeleton(true);
         //thisEntity->setDebugDisplayEnabled(true);
-        thisEntity->setVisible(false);
-        thisEntity->getAnimationState("idle")->setEnabled(true);
-        thisEntity->getAnimationState("idle")->setLoop(true);
+        thisEntity->setVisible( false );
+        thisEntity->getAnimationState( "Idle" )->setEnabled( true );
+        thisEntity->getAnimationState( "Idle" )->setLoop( true );
         Ogre::SceneNode* thisSceneNode = scene_manager->getRootSceneNode()->createChildSceneNode();
-        thisSceneNode->setPosition(0, 0, 0);
-        thisSceneNode->roll(Ogre::Radian(Ogre::Degree(180.0f)));
-        thisSceneNode->yaw(Ogre::Radian(Ogre::Degree(120.0f)));
-        thisSceneNode->pitch(Ogre::Radian(Ogre::Degree(90.0f)));
-        thisSceneNode->attachObject(thisEntity);
+        thisSceneNode->setPosition( 0, 0, 0 );
+        thisSceneNode->roll( Ogre::Radian( Ogre::Degree( 180.0f ) ) );
+        thisSceneNode->yaw( Ogre::Radian( Ogre::Degree( 120.0f ) ) );
+        thisSceneNode->pitch( Ogre::Radian( Ogre::Degree( 90.0f ) ) );
+        thisSceneNode->attachObject( thisEntity );
 
         return thisEntity;
     }
@@ -252,31 +252,31 @@ BsxFile::GetModel(Ogre::Entity* entity, const s8 character_id, const Unit& unit,
 
 
 void
-BsxFile::CreateTexture(const Ogre::String& name, const int face_id, const VectorTexForGenBsx& textures)
+BsxFile::CreateTexture( const Ogre::String& name, const int face_id, const VectorTexForGenBsx& textures )
 {
     int tex_width = 512;
     int tex_height = 256;
 
     Ogre::TexturePtr ptex;
     Ogre::HardwarePixelBufferSharedPtr buffer;
-    ptex = Ogre::TextureManager::getSingleton().createManual("DynaTex", "General", Ogre::TEX_TYPE_2D, tex_width, tex_height, 0, Ogre::PF_R8G8B8A8, Ogre::TU_STATIC);
-    buffer = ptex->getBuffer(0, 0);
-    buffer->lock(Ogre::HardwareBuffer::HBL_DISCARD);
+    ptex = Ogre::TextureManager::getSingleton().createManual( "DynaTex", "General", Ogre::TEX_TYPE_2D, tex_width, tex_height, 0, Ogre::PF_R8G8B8A8, Ogre::TU_STATIC );
+    buffer = ptex->getBuffer( 0, 0 );
+    buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
     const Ogre::PixelBox& pb = buffer->getCurrentLock();
 
 
 
 
-    for (int i = 0; i < textures.size(); ++i)
+    for( int i = 0; i < textures.size(); ++i )
     {
-        if (textures[i].type == 0 || textures[i].type == 1)
+        if( textures[ i ].type == 0 || textures[ i ].type == 1 )
         {
             TdbFile face_texture( "data/field/field.tdb" );
-            face_texture.CreateTexture(pb, face_id, textures[i].start_x, textures[i].start_y);
+            face_texture.CreateTexture( pb, face_id, textures[ i ].start_x, textures[ i ].start_y );
         }
-        else if (textures[i].type == 2)
+        else if( textures[ i ].type == 2 )
         {
-            CreateTextureFromVram(pb, &m_Vram, textures[i].start_x, textures[i].start_y, textures[i].palette_x, textures[i].palette_y, textures[i].texture_x, textures[i].texture_y, textures[i].bpp);
+            CreateTextureFromVram( pb, &m_Vram, textures[ i ].start_x, textures[ i ].start_y, textures[ i ].palette_x, textures[ i ].palette_y, textures[ i ].texture_x, textures[ i ].texture_y, textures[ i ].bpp, true );
         }
     }
 
@@ -295,32 +295,32 @@ BsxFile::CreateTexture(const Ogre::String& name, const int face_id, const Vector
 void
 BsxFile::ReadBSXTextureToVram()
 {
-    u32 offset_to_models_description = GetU32LE(0x04);
-    u32 offset_to_texture = offset_to_models_description + GetU32LE(offset_to_models_description + 0x08);
+    u32 offset_to_models_description = GetU32LE( 0x04 );
+    u32 offset_to_texture = offset_to_models_description + GetU32LE( offset_to_models_description + 0x08 );
 
-    u32 unknown = GetU32LE(offset_to_texture + 0x04) & 0xffffff00;
+    u32 unknown = GetU32LE( offset_to_texture + 0x04 ) & 0xffffff00;
     //LOGGER->Log(LOGGER_INFO, "WARNING WARNING %04x", unknown);
 
-    u8 number_of_texture = GetU8(offset_to_texture + 0x04);
+    u8 number_of_texture = GetU8( offset_to_texture + 0x04 );
     //LOGGER->Log(LOGGER_INFO, "number_of_texture %04x", number_of_texture);
-    if (number_of_texture == 0)
+    if( number_of_texture == 0 )
     {
         return;
     }
 
-    for (int i = 0; i < number_of_texture; ++i)
+    for( int i = 0; i < number_of_texture; ++i )
     {
-        u16 width     = GetU16LE(offset_to_texture + 0x08 + i * 0x0c + 0x00) * 2;
-        u16 height    = GetU16LE(offset_to_texture + 0x08 + i * 0x0c + 0x02);
-        u16 vram_x    = GetU16LE(offset_to_texture + 0x08 + i * 0x0c + 0x04) * 2;
-        u16 vram_y    = GetU16LE(offset_to_texture + 0x08 + i * 0x0c + 0x06);
-        u32 start     = offset_to_texture + GetU32LE(offset_to_texture + 0x08 + i * 0x0c + 0x08);
+        u16 width     = GetU16LE( offset_to_texture + 0x08 + i * 0x0c + 0x00 ) * 2;
+        u16 height    = GetU16LE( offset_to_texture + 0x08 + i * 0x0c + 0x02 );
+        u16 vram_x    = GetU16LE( offset_to_texture + 0x08 + i * 0x0c + 0x04 ) * 2;
+        u16 vram_y    = GetU16LE( offset_to_texture + 0x08 + i * 0x0c + 0x06 );
+        u32 start     = offset_to_texture + GetU32LE( offset_to_texture + 0x08 + i * 0x0c + 0x08 );
         //LOGGER->Log(LOGGER_INFO, "Store BSX texture to vram %04x %04x", vram_x, vram_y);
-        for (int y = 0; y < height; ++y)
+        for( int y = 0; y < height; ++y )
         {
-            for (int x = 0; x < width; ++x)
+            for( int x = 0; x < width; ++x )
             {
-                m_Vram.PutU8(vram_x + x, vram_y + y, GetU8(start + y * width + x));
+                m_Vram.PutU8( vram_x + x, vram_y + y, GetU8( start + y * width + x ) );
             }
         }
     }

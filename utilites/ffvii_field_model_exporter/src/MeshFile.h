@@ -19,7 +19,7 @@ public:
 
     void         GetData(const Ogre::String& name, const int offset_to_parts, const int number_of_parts, Ogre::MeshPtr mesh, VectorTexForGenBsx& textures);
 
-    void         AddTexture(TexForGenBsx& texture, VectorTexForGenBsx& textures);
+    void         AddTexture( TexForGenBsx& texture, VectorTexForGenBsx& textures );
 
 private:
     int offset_to_4;

@@ -128,7 +128,7 @@ AnimatedModel::Export(const Ogre::String& model_file, const Ogre::String& animat
 
 
 
-    CreateMaterial("" + data.name, "exported/" + data.name + ".material", (textures.size() > 0) ? data.name + ".png" : "");
+    CreateMaterial( "" + data.name, "exported/" + data.name + ".material", (textures.size() > 0) ? data.name + ".png" : "", "", "" );
 
 
 

@@ -6,29 +6,29 @@
 
 
 
-ModelFile::ModelFile(const Ogre::String &file):
-    File(file)
+ModelFile::ModelFile( const Ogre::String& file ):
+    File( file )
 {
 }
 
 
 
-ModelFile::ModelFile(File *file, const u32 &offset, const u32 &length):
-    File(file, offset, length)
+ModelFile::ModelFile( File *file, const u32 offset, const u32 length ):
+    File( file, offset, length )
 {
 }
 
 
 
-ModelFile::ModelFile(u8* buffer, const u32 &offset, const u32 &length):
-    File(buffer, offset, length)
+ModelFile::ModelFile( u8* buffer, const u32 offset, const u32 length ):
+    File( buffer, offset, length )
 {
 }
 
 
 
-ModelFile::ModelFile(File *file):
-    File(file)
+ModelFile::ModelFile( File* file ):
+    File( file )
 {
 }
 
@@ -41,30 +41,30 @@ ModelFile::~ModelFile()
 
 
 void
-ModelFile::GetModel(Ogre::MeshPtr mesh, const MeshData& data, VectorTexForGen& textures, Logger* export_text)
+ModelFile::GetModel( Ogre::MeshPtr mesh, const MeshData& data, VectorTexForGen& textures, Logger* export_text )
 {
     m_ExportLog = export_text;
 
-    int number_of_parts = GetU32LE(0x0);
+    int number_of_parts = GetU32LE( 0x0 );
 
-    m_ExportLog->Log("Model:\nnumber_of_parts: " + Ogre::StringConverter::toString(number_of_parts) + "\n");
+    m_ExportLog->Log( "Model:\nnumber_of_parts: " + Ogre::StringConverter::toString( number_of_parts ) + "\n" );
 
-    for (int part_id = 0; part_id < number_of_parts; ++part_id)
+    for( int part_id = 0; part_id < number_of_parts; ++part_id )
     {
         int pointer_to_part_header = 0x10 + part_id * 0x38;
-        int number_of_poly_blocks = GetU16LE(pointer_to_part_header + 0x6);
-        m_PointerToVertexData = GetU32LE(pointer_to_part_header + 0x08);
-        m_PointerToMeshData = GetU32LE(pointer_to_part_header + 0x10);
-        m_PointerToTextureData = GetU32LE(pointer_to_part_header + 0x14);
+        int number_of_poly_blocks = GetU16LE( pointer_to_part_header + 0x6 );
+        m_PointerToVertexData = GetU32LE( pointer_to_part_header + 0x08 );
+        m_PointerToMeshData = GetU32LE( pointer_to_part_header + 0x10 );
+        m_PointerToTextureData = GetU32LE( pointer_to_part_header + 0x14 );
 
         m_ExportLog->Log(
-            "Part: " + Ogre::StringConverter::toString(part_id) + "\n" +
-            "    number of poly blocks: " + Ogre::StringConverter::toString(number_of_poly_blocks) + "\n"
-            "    pointer to polygon data: " + Ogre::StringConverter::toString(m_PointerToMeshData) + "\n"
-            "    pointer to texture data: " + Ogre::StringConverter::toString(m_PointerToTextureData) + "\n"
+            "Part: " + Ogre::StringConverter::toString( part_id ) + "\n" +
+            "    number of poly blocks: " + Ogre::StringConverter::toString( number_of_poly_blocks ) + "\n"
+            "    pointer to polygon data: " + Ogre::StringConverter::toString( m_PointerToMeshData ) + "\n"
+            "    pointer to texture data: " + Ogre::StringConverter::toString( m_PointerToTextureData ) + "\n"
         );
 
-        for (int poly_block_id = 0; poly_block_id < number_of_poly_blocks; ++poly_block_id)
+        for( int poly_block_id = 0; poly_block_id < number_of_poly_blocks; ++poly_block_id )
         {
             u8 polygon_type = GetU8(m_PointerToMeshData + 0);
             int number_of_polygons = GetU16LE(m_PointerToMeshData + 2);
@@ -86,15 +86,15 @@ ModelFile::GetModel(Ogre::MeshPtr mesh, const MeshData& data, VectorTexForGen& t
 
 
 
-            Ogre::SubMesh* sub_mesh = mesh->createSubMesh(Ogre::StringConverter::toString(part_id) + "_" + Ogre::StringConverter::toString(poly_block_id));
-            sub_mesh->setMaterialName("" + data.name);
+            Ogre::SubMesh* sub_mesh = mesh->createSubMesh( Ogre::StringConverter::toString( part_id ) + "_" + Ogre::StringConverter::toString( poly_block_id ) );
+            sub_mesh->setMaterialName( "xeno/field/" + data.name );
             sub_mesh->useSharedVertices = false;
             sub_mesh->operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
 
             // Allocate and prepare vertex data
             sub_mesh->vertexData = new Ogre::VertexData();
             sub_mesh->vertexData->vertexStart = 0;
-            sub_mesh->vertexData->vertexCount = static_cast<size_t>(number_of_triangles * 3);
+            sub_mesh->vertexData->vertexCount = static_cast< size_t >( number_of_triangles * 3 );
 
             // Index buffer
             sub_mesh->indexData = new Ogre::IndexData();
@@ -206,6 +206,20 @@ ModelFile::GetModel(Ogre::MeshPtr mesh, const MeshData& data, VectorTexForGen& t
 
             // Optimize index data
             sub_mesh->indexData->optimiseVertexCacheTriList();
+
+
+
+            LOGGER->Log( "Assign bones to vertexes\n" );
+
+            int vertex_number = sub_mesh->vertexData->vertexCount;
+            for( int i = 0; i < vertex_number; ++i )
+            {
+                Ogre::VertexBoneAssignment vba;
+                vba.vertexIndex = i;
+                vba.boneIndex = 0;
+                vba.weight = 1.0f;
+                sub_mesh->addBoneAssignment( vba );
+            }
         }
     }
 }
@@ -234,9 +248,9 @@ ModelFile::LoadPoly010305_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, cons
     Ogre::Vector3 c((s16)GetU16LE(m_PointerToVertexData + offset_c * 0x8 + 00),
                     (s16)GetU16LE(m_PointerToVertexData + offset_c * 0x8 + 02),
                     (s16)GetU16LE(m_PointerToVertexData + offset_c * 0x8 + 04));
-    a /= 512;
-    b /= 512;
-    c /= 512;
+    a /= 64;
+    b /= 64;
+    c /= 64;
 
     //m_ExportLog->Log("        polygon: A (" + Ogre::StringConverter::toString(a) + "), B (" + Ogre::StringConverter::toString(b) + "), C (" + Ogre::StringConverter::toString(c) + ").\n");
 
@@ -251,7 +265,7 @@ ModelFile::LoadPoly010305_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, cons
     texture.texture_x = vram_x;
     texture.texture_y = vram_y;
     texture.bpp = bpp;
-    AddTexture(texture, textures, m_ExportLog);
+    AddTexture(texture, info, textures, m_ExportLog);
 
     Ogre::Vector2 at(0, 0);
     Ogre::Vector2 bt(0, 0);
@@ -307,9 +321,9 @@ ModelFile::LoadPoly04_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const Me
     Ogre::Vector3 c((s16)GetU16LE(m_PointerToVertexData + offset_c * 0x8 + 00),
                     (s16)GetU16LE(m_PointerToVertexData + offset_c * 0x8 + 02),
                     (s16)GetU16LE(m_PointerToVertexData + offset_c * 0x8 + 04));
-    a /= 512;
-    b /= 512;
-    c /= 512;
+    a /= 64;
+    b /= 64;
+    c /= 64;
 
     //m_ExportLog->Log("        polygon: A (" + Ogre::StringConverter::toString(a) + "), B (" + Ogre::StringConverter::toString(b) + "), C (" + Ogre::StringConverter::toString(c) + ").\n");
 
@@ -364,10 +378,10 @@ ModelFile::LoadPoly090d_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const 
                     (s16)GetU16LE(m_PointerToVertexData + offset_d * 0x8 + 02),
                     (s16)GetU16LE(m_PointerToVertexData + offset_d * 0x8 + 04));
 
-    a /= 512;
-    b /= 512;
-    c /= 512;
-    d /= 512;
+    a /= 64;
+    b /= 64;
+    c /= 64;
+    d /= 64;
 
     //m_ExportLog->Log("        polygon: A (" + Ogre::StringConverter::toString(a) + "), B (" + Ogre::StringConverter::toString(b) + "), C (" + Ogre::StringConverter::toString(c) + "), D (" + Ogre::StringConverter::toString(d) + ").\n");
 
@@ -382,7 +396,7 @@ ModelFile::LoadPoly090d_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const 
     texture.texture_x = vram_x;
     texture.texture_y = vram_y;
     texture.bpp = bpp;
-    AddTexture(texture, textures, m_ExportLog);
+    AddTexture(texture, info, textures, m_ExportLog);
 
     Ogre::Vector2 at(0, 0);
     Ogre::Vector2 bt(0, 0);
@@ -457,10 +471,10 @@ ModelFile::LoadPoly0c_18(float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const Me
                     (s16)GetU16LE(m_PointerToVertexData + offset_d * 0x8 + 02),
                     (s16)GetU16LE(m_PointerToVertexData + offset_d * 0x8 + 04));
 
-    a /= 512;
-    b /= 512;
-    c /= 512;
-    d /= 512;
+    a /= 64;
+    b /= 64;
+    c /= 64;
+    d /= 64;
 
     //m_ExportLog->Log("        polygon: A (" + Ogre::StringConverter::toString(a) + "), B (" + Ogre::StringConverter::toString(b) + "), C (" + Ogre::StringConverter::toString(c) + "), D (" + Ogre::StringConverter::toString(d) + ").\n");
 

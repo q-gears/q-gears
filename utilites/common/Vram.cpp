@@ -10,6 +10,7 @@ Vram::Vram():
     m_Width( 2048 ),
     m_Height(512)
 {
+    memset( m_Vram, 0, 2048 * 512 );
 }
 
 
@@ -47,10 +48,10 @@ Vram::Save(const Ogre::String& file)
     const Ogre::PixelBox& pb = buffer->getCurrentLock();
     u32* data = static_cast<u32*>(pb.data);
 
-    for (int i = 0, size = m_Width * m_Height / 2; i < size; ++i)
+    for( int i = 0, size = m_Width * m_Height / 2; i < size; ++i )
     {
-        u16 col = (m_Vram[i * 2 + 0] << 8) | m_Vram[i * 2 + 1];
-        data[i] = (((col & 0x1f) * 255 / 31) << 0x18) | ((((col >>  5) & 0x1f) * 255 / 31) << 0x10) | ((((col >> 10) & 0x1f) * 255 / 31) << 0x8) | 0xff;
+        u16 col = ( m_Vram[ i * 2 + 1 ] << 8) | m_Vram[ i * 2 + 0 ];
+        data[ i ] = ( ( ( col & 0x1f ) * 255 / 31 ) << 0x18 ) | ( ( ( ( col >>  5 ) & 0x1f ) * 255 / 31 ) << 0x10 ) | ( ( ( ( col >> 10 ) & 0x1f ) * 255 / 31 ) << 0x8 ) | 0xff;
     }
 
     Ogre::Image image;
@@ -98,8 +99,9 @@ Vram::PutU16( u16 x, u16 y, u16 bytes )
         return;
     }
 
-    m_Vram[ y * m_Width + x + 0 ] = bytes >> 8;
-    m_Vram[ y * m_Width + x + 1 ] = bytes & 0x00ff;
+    // this byte order use to make posible store everything to vram as U8 but get as U16LE
+    m_Vram[ y * m_Width + x + 1 ] = bytes >> 8;
+    m_Vram[ y * m_Width + x + 0 ] = bytes & 0x00ff;
 }
 
 
@@ -113,5 +115,6 @@ Vram::GetU16( u16 x, u16 y ) const
         return 0;
     }
 
-    return ( m_Vram[ y * m_Width + x + 0 ] << 8) | m_Vram[ y * m_Width + x + 1 ];
+    // this byte order use to make posible store everything to vram as U8 but get as U16LE
+    return ( m_Vram[ y * m_Width + x + 1 ] << 8) | m_Vram[ y * m_Width + x + 0 ];
 }

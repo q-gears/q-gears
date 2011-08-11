@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "Main.h"
 #include "../../common/FileSystem.h"
 #include "../../common/Logger.h"
 
@@ -18,8 +17,6 @@ std::vector<EffectInfo> effects_all;
 std::vector<StageInfo> stages_all;
 std::vector<Ogre::Entity*> entitys;
 Ogre::Camera* camera;
-
-u8 state;
 
 Ogre::TextAreaOverlayElement* info_text;
 Ogre::Overlay* info_overlay;
@@ -147,14 +144,16 @@ class DisplayFrameListener : public Ogre::FrameListener, public Ogre::WindowEven
 {
 public:
     // Constructor takes a RenderWindow because it uses that to determine input context
-    DisplayFrameListener(Ogre::RenderWindow* win):
-        m_Window(win),
-        m_InputManager(0),
-        m_Keyboard(0),
-        m_Mouse(0),
-        m_MouseRotate(false),
-        m_MouseMoveX(0),
-        m_MouseMoveY(0)
+    DisplayFrameListener( Ogre::RenderWindow* win ):
+
+        m_Window( win ),
+        m_InputManager( 0 ),
+        m_Keyboard( 0 ),
+        m_Mouse( 0 ),
+        m_MouseRotate( false ),
+        m_MouseMoveX( 0 ),
+        m_MouseMoveY( 0 ),
+        m_Exit( false )
     {
         using namespace OIS;
 
@@ -195,16 +194,17 @@ public:
     virtual void
     windowClosed(Ogre::RenderWindow* rw)
     {
-        state = EXIT;
+        m_Exit = true;
     }
 
     bool
     frameStarted(const Ogre::FrameEvent& evt)
     {
-        if (state == EXIT)
+        if( m_Exit == true )
         {
             return false;
         }
+
 
         if (m_Keyboard)
         {
@@ -273,12 +273,6 @@ public:
     {
         switch (e.key)
         {
-            case OIS::KC_ESCAPE:
-            {
-                state = EXIT;
-            }
-            break;
-
             case OIS::KC_RIGHT:
             {
                 bool change = false;
@@ -435,20 +429,63 @@ protected:
     float               m_MouseMoveX;
     float               m_MouseMoveY;
     bool                m_MouseRotate;
+    bool                m_Exit;
 };
 
 
 
-void
-game_main()
+int
+main(int argc, char *argv[])
 {
-    fill_names();
+    Ogre::Root*         root;
+    Ogre::RenderWindow* window;
 
-    state = GAME;
-
+    root = new Ogre::Root( "", "" );
+#ifndef _DEBUG
+    root->loadPlugin( "RenderSystem_GL.dll" );
+#else
+    root->loadPlugin( "RenderSystem_GL_d.dll" );
+#endif
+    root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
+    root->initialise( false );
+    Ogre::NameValuePairList misc;
+    misc[ "title" ] = "FFVII Exporter";
+    window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
 
 
     Ogre::SceneManager* scene_manager;
+    Ogre::Camera*       camera;
+    Ogre::Viewport*     viewport;
+
+
+
+    DisplayFrameListener* frame_listener = new DisplayFrameListener(window);
+    root->addFrameListener(frame_listener);
+
+    scene_manager = root->createSceneManager(Ogre::ST_GENERIC, "Scene");
+    scene_manager->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
+
+    camera = scene_manager->createCamera("Camera");
+    camera->setNearClipDistance(0.05);
+
+    viewport = window->addViewport(camera);
+    viewport->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+    camera->setAspectRatio(Ogre::Real(viewport->getActualWidth()) / Ogre::Real(viewport->getActualHeight()));
+
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./exported", "FileSystem", "Game", true );
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+
+
+    FILESYSTEM = new FileSystem();
+    LOGGER = new Logger("game.log");
+
+
+
+    fill_names();
+
+
+
     scene_manager = Ogre::Root::getSingleton().getSceneManager("Scene");
     scene_manager->clearScene();
     scene_manager->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
@@ -520,58 +557,6 @@ game_main()
 
 
     LOGGER->Log("===================== Stop the game!!!");
-
-
-
-    return;
-}
-
-
-
-int
-main(int argc, char *argv[])
-{
-    Ogre::Root*         root;
-    Ogre::RenderWindow* window;
-    Ogre::SceneManager* scene_manager;
-    Ogre::Camera*       camera;
-    Ogre::Viewport*     viewport;
-
-    root = new Ogre::Root("plugins.cfg", "q-gears.cfg", "ogre q-gears.log");
-
-    if (root->restoreConfig() == true || root->showConfigDialog() == true)
-    {
-        window = root->initialise(true, "FFVII Model Exporter 0.00 alpha3");
-    }
-    else
-    {
-        return 0;
-    }
-
-    DisplayFrameListener* frame_listener = new DisplayFrameListener(window);
-    root->addFrameListener(frame_listener);
-
-    scene_manager = root->createSceneManager(Ogre::ST_GENERIC, "Scene");
-    scene_manager->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
-
-    camera = scene_manager->createCamera("Camera");
-    camera->setNearClipDistance(0.05);
-
-    viewport = window->addViewport(camera);
-    viewport->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
-    camera->setAspectRatio(Ogre::Real(viewport->getActualWidth()) / Ogre::Real(viewport->getActualHeight()));
-
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./exported", "FileSystem", "Game", true );
-    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-
-
-    FILESYSTEM = new FileSystem();
-    LOGGER = new Logger("game.log");
-
-
-
-    game_main();
 
 
 

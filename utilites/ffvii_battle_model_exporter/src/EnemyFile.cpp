@@ -160,8 +160,8 @@ EnemyFile::GetModel(const EnemyInfo& info)
     //thisEntity->setDisplaySkeleton(true);
     //thisEntity->setDebugDisplayEnabled(true);
     thisEntity->setVisible(false);
-    thisEntity->getAnimationState("idle")->setEnabled(true);
-    thisEntity->getAnimationState("idle")->setLoop(true);
+    thisEntity->getAnimationState("Idle")->setEnabled(true);
+    thisEntity->getAnimationState("Idle")->setLoop(true);
     Ogre::SceneNode* thisSceneNode = scene_manager->getRootSceneNode()->createChildSceneNode();
     thisSceneNode->setPosition(0, 0, 0);
     thisSceneNode->roll(Ogre::Radian(Ogre::Degree(180.0f)));

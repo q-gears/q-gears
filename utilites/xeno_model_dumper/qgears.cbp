@@ -47,10 +47,13 @@
 		<Unit filename="..\common\Vram.h" />
 		<Unit filename="src\AnimatedModel.cpp" />
 		<Unit filename="src\AnimatedModel.h" />
+		<Unit filename="src\ArchiveFile.cpp" />
+		<Unit filename="src\ArchiveFile.h" />
+		<Unit filename="src\FieldFile.cpp" />
+		<Unit filename="src\FieldFile.h" />
 		<Unit filename="src\FieldModel.cpp" />
 		<Unit filename="src\FieldModel.h" />
 		<Unit filename="src\Main.cpp" />
-		<Unit filename="src\Main.h" />
 		<Unit filename="src\ModelFile.cpp" />
 		<Unit filename="src\ModelFile.h" />
 		<Extensions>

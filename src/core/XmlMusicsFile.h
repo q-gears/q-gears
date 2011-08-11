@@ -3,6 +3,8 @@
 
 #include "XmlFile.h"
 
+
+
 class XmlMusicsFile : public XmlFile
 {
 public:
@@ -11,5 +13,7 @@ public:
 
     void LoadMusics();
 };
+
+
 
 #endif // XML_MUSICS_FILE_H
