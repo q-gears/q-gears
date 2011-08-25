@@ -415,7 +415,7 @@ struct where pointer point to size 0x134
 
 
 
-allocated place for skeleton ((number_of_bones + 1) * 0x74)
+allocated place for skeleton ((number_of_bones + 1) * 0x7c)
 +  0 [][]     store 0 here or pointer to parent bone data.
 +  4 []       store 1 here during init.
 +  5 []       store 1 here during init.
@@ -436,9 +436,25 @@ allocated place for skeleton ((number_of_bones + 1) * 0x74)
 + 64 [][][][] store 0 here during init. Bone translation Z.
 + 68 [][][][] pointer to 1st packets buffer.
 + 6c [][][][] pointer to 2nd packets buffer.
-+ 70 [][][][] store 0 here during init.
-+ 74 [][][][] store 0 here during init.
++ 70 [][][][] store 0 here during init. Pointer to some rotation data (allocated place for skeleton animations data).
++ 74 [][][][] store 0 here during init. Pointer to some translation data (allocated place for skeleton animations data).
 + 78 [][][][] store 0 here during init.
+
+
+
+allocated place for skeleton animations data.
++ 00 []       store 1 here.
++ 01 []       store 0 or 1 here (argument 3 from 0x13 animation opcode)
++ 02 []       store argument 0 from 0x13 animation opcode + 3.
++ 03 []       store id of animation file here.
++ 04 [][]     store current rotation X or translation here.
++ 06 [][]     store current rotation Y or translation here.
++ 08 [][]     store current rotation Z or translation here.
++ 0a [][]     store initial or difference between initial and current rotation X or translation here.
++ 0c [][]     store initial or difference between initial and current rotation Y or translation here.
++ 0e [][]     store initial or difference between initial and current rotation Z or translation here.
++ 10 [][]     store 0 here.
++ 12 [][]     store argument 4 from 0x13 animation opcode here or 1 if argument == 0.
 
 
 

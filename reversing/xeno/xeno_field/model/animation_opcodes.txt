@@ -12,22 +12,23 @@
 
 
 ani0
-0A00
+0A 00
 0C00 - reset
 0800
-1000 - set initial bone rotation from given file
+10 00 - set initial bone rotation from given file
 4800
 0000
 
 ani1
-0A00
+0A 00
 0C00 - reset
-4800
-1300 01 00 00 14
-21000000
+48 00
+13 00 01 00 00 14
+2100
 
 ani2
 0A00
-0C00 - reset
-4800
-1300 02 00 00 14 21000000
+0C 00 - reset
+48 00
+13 00 02 00 00 14
+2100

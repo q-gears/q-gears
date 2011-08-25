@@ -3490,59 +3490,11 @@ L1df6e4:	; 801DF6E4
 801DF6EC	nop
 
 
-func1df6f0:	; 801DF6F0
-801DF6F0	lhu    v1, $0004(a0)
-801DF6F4	lhu    v0, $0006(a0)
-801DF6F8	nop
-801DF6FC	sltu   v0, v1, v0
-801DF700	beq    v0, zero, L1df79c [$801df79c]
-801DF704	sll    v0, v1, $02
-801DF708	addu   v0, v0, v1
-801DF70C	lw     v1, $0000(a0)
-801DF710	sll    v0, v0, $02
-801DF714	addu   a3, v0, v1
-801DF718	lbu    v0, $0000(a3)
-801DF71C	nop
-801DF720	bne    v0, zero, L1df7a0 [$801df7a0]
-801DF724	addu   v0, zero, zero
-801DF728	lhu    v0, $0004(a0)
-801DF72C	lhu    a1, $0006(a0)
-801DF730	addiu  v0, v0, $0001
-801DF734	sh     v0, $0004(a0)
-801DF738	lhu    v1, $0004(a0)
-801DF73C	nop
-801DF740	sltu   v0, v1, a1
-801DF744	beq    v0, zero, L1df7a0 [$801df7a0]
-801DF748	addu   v0, a3, zero
-801DF74C	lw     a2, $0000(a0)
-801DF750	sll    v0, v1, $02
 
-loop1df754:	; 801DF754
-801DF754	addu   v0, v0, v1
-801DF758	sll    v0, v0, $02
-801DF75C	addu   v0, v0, a2
-801DF760	lbu    v0, $0000(v0)
-801DF764	nop
-801DF768	beq    v0, zero, L1df7a0 [$801df7a0]
-801DF76C	addu   v0, a3, zero
-801DF770	lhu    v0, $0004(a0)
-801DF774	nop
-801DF778	addiu  v0, v0, $0001
-801DF77C	sh     v0, $0004(a0)
-801DF780	lhu    v1, $0004(a0)
-801DF784	nop
-801DF788	sltu   v0, v1, a1
-801DF78C	bne    v0, zero, loop1df754 [$801df754]
-801DF790	sll    v0, v1, $02
-801DF794	j      L1df7a0 [$801df7a0]
-801DF798	addu   v0, a3, zero
-
-L1df79c:	; 801DF79C
-801DF79C	addu   v0, zero, zero
-
-L1df7a0:	; 801DF7A0
-801DF7A0	jr     ra 
-801DF7A4	nop
+////////////////////////////////
+// func1df6f0
+801DF6F0-801DF7A4
+////////////////////////////////
 
 
 

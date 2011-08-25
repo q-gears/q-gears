@@ -29,7 +29,6 @@ A1 = 0;
 func322bc;
 
 
-00f0
 [SP + f0] = w(0);
 [SP + e0] = w(S4);
 
@@ -185,8 +184,20 @@ F03E1E80 e
 303F1E80 11
 74591E80 12
 68401E80 14
-80411E8024441E8094441E80A8441E80D4441E80E4441E8074591E8074591E80A8451E8068461E8070461E80
-20 AC461E80D4461E8004471E80D0471E8000481E8010481E801C4B1E80944B1E80D44B1E80D44B1E80D44C1E80F84C1E8074591E8074591E801C4D1E8074591E80
+80411E80 15
+24441E80 16
+94441E80 17
+A8441E80 18
+D4441E80 19
+E4441E80 1a
+74591E80 1b
+74591E80 1c
+A8451E80 1d
+68461E80 1e
+70461E80 1f
+AC461E80 20
+04471E80 22
+D0471E8000481E8010481E801C4B1E80944B1E80D44B1E80D44B1E80D44C1E80F84C1E8074591E8074591E801C4D1E8074591E80
 30 584D1E80644D1E80B84D1E80F04E1E80F04E1E80C44D1E80EC4D1E802C4E1E805C4E1E809C4E1E8074591E80F04E1E80004F1E80384F1E8074591E8074591E80
 9C4F1E80 40
 E44F1E80 41
@@ -259,8 +270,7 @@ FC511E80 49
             A1 = w[S4 + 4];
             func1dfe8c;
 
-            A0 = S4;
-            func1e632c;
+            [S4 + 98] = h(-1);
 
             801E44DC	j      L1e5974 [$801e5974]
         }
@@ -432,17 +442,16 @@ FC511E80 49
             {
                 A0 = w[SP + c8];
                 A1 = w[S4 + 4];
-                A2 = S1;
+                A2 = S1; // init animation
                 A3 = S6 & ff;
                 A4 = S5 & ff;
                 A5 = FP;
-                A6 = S2 & ff;
+                A6 = S2 & ff; // animation file id
                 func1df0b4;
             }
 
         [SP + d0] = w(-1);
-        A0 = S4;
-        801E44D4	jal    func1e632c [$801e632c]
+        [S4 + 98] = h(-1);
 
         801E44DC	j      L1e5974 [$801e5974]
 
@@ -810,8 +819,8 @@ FC511E80 49
         L1e44cc:	; 801E44CC
         801E44CC	j      L1e5974 [$801e5974]
         801E44D0	nop
-        801E44D4	jal    func1e632c [$801e632c]
-        801E44D8	addu   a0, s4, zero
+        [S4 + 98] = h(-1);
+
         801E44DC	j      L1e5974 [$801e5974]
         801E44E0	nop
 
@@ -951,27 +960,22 @@ FC511E80 49
 
         L1e46cc:	; 801E46CC
         801E46CC	j      L1e5970 [$801e5970]
-
-        L1e46d0:	; 801E46D0
         801E46D0	addu   s3, s0, zero
 
-        L1e46d4:	; 801E46D4
-        801E46D4	andi   v0, s5, $00ff
+        case 21: // D4461E80
+        {
+            [S4 + 3c] = h(S5 & ff);
 
-        L1e46d8:	; 801E46D8
-        801E46D8	sh     v0, $003c(s4)
-        801E46DC	lw     t3, $00d0(sp)
-        801E46E0	addiu  t2, zero, $ffff (=-$1)
-        801E46E4	beq    t3, t2, L1e46fc [$801e46fc]
-        801E46E8	andi   v0, t3, $0001
-        801E46EC	beq    v0, zero, L1e5974 [$801e5974]
-        801E46F0	nop
-        801E46F4	j      L1e5970 [$801e5970]
-        801E46F8	addu   s3, s0, zero
+            if( ( w[SP + d0] & 1 ) != 0 )
+            {
+                S3 = S0;
+                [SP + e8] = w(0);
+            }
+            801E44DC	j      L1e5974 [$801e5974]
+        }
+        break;
 
-        L1e46fc:	; 801E46FC
-        801E46FC	j      L1e5970 [$801e5970]
-        801E4700	addu   s3, s0, zero
+
         801E4704	lw     t3, $00d0(sp)
         801E4708	addiu  t2, zero, $ffff (=-$1)
         801E470C	beq    t3, t2, L1e47c8 [$801e47c8]
