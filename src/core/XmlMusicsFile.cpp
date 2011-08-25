@@ -37,7 +37,7 @@ XmlMusicsFile::LoadMusics()
             AudioManager::Music music;
             music.name = GetString( node, "name" );
             music.file = "./data/" + GetString( node, "file_name" );
-            music.loop = GetFloat( node, "loop", AudioManager::getSingleton().m_DEFAULT_LOOP );
+            music.loop = GetFloat( node, "loop", -1 );
 
             AudioManager::getSingleton().AddMusic( music );
 

@@ -23,6 +23,8 @@
 					<Add option="-s" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
+					<Add library="OpenAL32" />
+					<Add library="..\output\libboost_thread-mgw45-mt-1_44.dll" />
 				</Linker>
 			</Target>
 			<Target title="Debug">
@@ -66,6 +68,8 @@
 		<Unit filename="Main.cpp" />
 		<Unit filename="Main.h" />
 		<Unit filename="core\Assert.h" />
+		<Unit filename="core\AudioManager.cpp" />
+		<Unit filename="core\AudioManager.h" />
 		<Unit filename="core\CameraManager.cpp" />
 		<Unit filename="core\CameraManager.h" />
 		<Unit filename="core\ConfigCmd.cpp" />
@@ -133,6 +137,8 @@
 		<Unit filename="core\XmlMapFile.h" />
 		<Unit filename="core\XmlMapsFile.cpp" />
 		<Unit filename="core\XmlMapsFile.h" />
+		<Unit filename="core\XmlMusicsFile.cpp" />
+		<Unit filename="core\XmlMusicsFile.h" />
 		<Unit filename="core\XmlPrototypesFile.cpp" />
 		<Unit filename="core\XmlPrototypesFile.h" />
 		<Unit filename="core\XmlScreenFile.cpp" />
@@ -356,12 +362,132 @@
 		<Unit filename="core\library\luabind\wrapper_base.cpp" />
 		<Unit filename="core\library\luabind\wrapper_base.hpp" />
 		<Unit filename="core\library\luabind\yield_policy.hpp" />
+		<Unit filename="core\library\ogg\bitwise.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\ogg\framing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\ogg\ogg\config_types.h.in" />
+		<Unit filename="core\library\ogg\ogg\ogg.h" />
+		<Unit filename="core\library\ogg\ogg\os_types.h" />
 		<Unit filename="core\library\tinyxml\tinystr.cpp" />
 		<Unit filename="core\library\tinyxml\tinystr.h" />
 		<Unit filename="core\library\tinyxml\tinyxml.cpp" />
 		<Unit filename="core\library\tinyxml\tinyxml.h" />
 		<Unit filename="core\library\tinyxml\tinyxmlerror.cpp" />
 		<Unit filename="core\library\tinyxml\tinyxmlparser.cpp" />
+		<Unit filename="core\library\vorbis\analysis.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\backends.h" />
+		<Unit filename="core\library\vorbis\bitrate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\bitrate.h" />
+		<Unit filename="core\library\vorbis\block.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\books\coupled\res_books_51.h" />
+		<Unit filename="core\library\vorbis\books\coupled\res_books_stereo.h" />
+		<Unit filename="core\library\vorbis\books\floor\floor_books.h" />
+		<Unit filename="core\library\vorbis\books\uncoupled\res_books_uncoupled.h" />
+		<Unit filename="core\library\vorbis\codebook.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\codebook.h" />
+		<Unit filename="core\library\vorbis\codec_internal.h" />
+		<Unit filename="core\library\vorbis\envelope.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\envelope.h" />
+		<Unit filename="core\library\vorbis\floor0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\floor1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\highlevel.h" />
+		<Unit filename="core\library\vorbis\info.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\lookup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\lookup.h" />
+		<Unit filename="core\library\vorbis\lookup_data.h" />
+		<Unit filename="core\library\vorbis\lpc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\lpc.h" />
+		<Unit filename="core\library\vorbis\lsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\lsp.h" />
+		<Unit filename="core\library\vorbis\mapping0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\masking.h" />
+		<Unit filename="core\library\vorbis\mdct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\mdct.h" />
+		<Unit filename="core\library\vorbis\misc.h" />
+		<Unit filename="core\library\vorbis\modes\floor_all.h" />
+		<Unit filename="core\library\vorbis\modes\psych_11.h" />
+		<Unit filename="core\library\vorbis\modes\psych_16.h" />
+		<Unit filename="core\library\vorbis\modes\psych_44.h" />
+		<Unit filename="core\library\vorbis\modes\psych_8.h" />
+		<Unit filename="core\library\vorbis\modes\residue_16.h" />
+		<Unit filename="core\library\vorbis\modes\residue_44.h" />
+		<Unit filename="core\library\vorbis\modes\residue_44p51.h" />
+		<Unit filename="core\library\vorbis\modes\residue_44u.h" />
+		<Unit filename="core\library\vorbis\modes\residue_8.h" />
+		<Unit filename="core\library\vorbis\modes\setup_11.h" />
+		<Unit filename="core\library\vorbis\modes\setup_16.h" />
+		<Unit filename="core\library\vorbis\modes\setup_22.h" />
+		<Unit filename="core\library\vorbis\modes\setup_32.h" />
+		<Unit filename="core\library\vorbis\modes\setup_44.h" />
+		<Unit filename="core\library\vorbis\modes\setup_44p51.h" />
+		<Unit filename="core\library\vorbis\modes\setup_44u.h" />
+		<Unit filename="core\library\vorbis\modes\setup_8.h" />
+		<Unit filename="core\library\vorbis\modes\setup_X.h" />
+		<Unit filename="core\library\vorbis\os.h" />
+		<Unit filename="core\library\vorbis\psy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\psy.h" />
+		<Unit filename="core\library\vorbis\registry.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\registry.h" />
+		<Unit filename="core\library\vorbis\res0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\scales.h" />
+		<Unit filename="core\library\vorbis\sharedbook.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\smallft.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\smallft.h" />
+		<Unit filename="core\library\vorbis\synthesis.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\vorbis\codec.h" />
+		<Unit filename="core\library\vorbis\vorbis\vorbisenc.h" />
+		<Unit filename="core\library\vorbis\vorbis\vorbisfile.h" />
+		<Unit filename="core\library\vorbis\vorbisenc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\vorbisfile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\window.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="core\library\vorbis\window.h" />
 		<Unit filename="core\particles\Particle.cpp" />
 		<Unit filename="core\particles\Particle.h" />
 		<Unit filename="core\particles\ParticleAdditionalData.h" />

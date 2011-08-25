@@ -20364,10 +20364,11 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1312229089 source:d:\my\1\svn\q-gears\src\main.cpp
+1313688211 source:d:\my\1\svn\q-gears\src\main.cpp
 	<OgreRoot.h>
 	<OIS.h>
 	"Main.h"
+	"core/AudioManager.h"
 	"core/CameraManager.h"
 	"core/ConfigCmdManager.h"
 	"core/ConfigFile.h"
@@ -20383,7 +20384,7 @@
 	"core/UiManager.h"
 	"core/particles/ParticleSystemManager.h"
 
-1312917636 d:\my\1\svn\q-gears\src\main.h
+1313058317 d:\my\1\svn\q-gears\src\main.h
 
 1309087435 d:\my\1\svn\q-gears\src\core\cameramanager.h
 	<OgreCamera.h>
@@ -21060,7 +21061,7 @@
 	"ConfigCmdManagerCommands.h"
 	"Assert.h"
 
-1306971020 d:\my\1\svn\q-gears\src\core\assert.h
+1313600357 d:\my\1\svn\q-gears\src\core\assert.h
 	<cassert>
 
 1306971020 d:\my\1\svn\q-gears\src\core\configcmdmanagercommands.cpp
@@ -21942,7 +21943,7 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1311965485 source:d:\my\1\svn\q-gears\src\core\entity.cpp
+1313016167 source:d:\my\1\svn\q-gears\src\core\entity.cpp
 	"Entity.h"
 	<OgreSceneNode.h>
 	"ConfigVar.h"
@@ -23897,4 +23898,473 @@
 	"XmlPrototypesFile.h"
 	"Logger.h"
 	"UiManager.h"
+
+1313692171 source:d:\my\1\svn\q-gears\src\core\audiomanager.cpp
+	"AudioManager.h"
+	<list>
+	<boost/thread.hpp>
+	"XmlMusicsFile.h"
+	"Logger.h"
+
+1313689759 d:\my\1\svn\q-gears\src\core\audiomanager.h
+	<OgreSingleton.h>
+	<boost/thread.hpp>
+	<vorbis/vorbisfile.h>
+	<al.h>
+	<alc.h>
+	<AL/al.h>
+	<AL/alc.h>
+
+1312917942 d:\my\1\svn\q-gears\src\core\xmlmusicsfile.h
+	"XmlFile.h"
+
+1313689301 source:d:\my\1\svn\q-gears\src\core\xmlmusicsfile.cpp
+	"XmlMusicsFile.h"
+	"AudioManager.h"
+	"Logger.h"
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\analysis.c
+	<stdio.h>
+	<string.h>
+	<math.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"registry.h"
+	"scales.h"
+	"os.h"
+	"misc.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\vorbis\codec.h
+	<ogg/ogg.h>
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\codec_internal.h
+	"envelope.h"
+	"codebook.h"
+	"psy.h"
+	"bitrate.h"
+	"highlevel.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\envelope.h
+	"mdct.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\mdct.h
+	"vorbis/codec.h"
+
+1269536186 d:\my\1\svn\q-gears\src\core\library\vorbis\codebook.h
+	<ogg/ogg.h>
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\psy.h
+	"smallft.h"
+	"backends.h"
+	"envelope.h"
+
+1269278834 d:\my\1\svn\q-gears\src\core\library\vorbis\smallft.h
+	"vorbis/codec.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\backends.h
+	"codec_internal.h"
+
+1269278834 d:\my\1\svn\q-gears\src\core\library\vorbis\bitrate.h
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"os.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\os.h
+	"config.h"
+	<math.h>
+	<ogg/os_types.h>
+	"misc.h"
+	<malloc.h>
+	<alloca.h>
+	<memory.h>
+	<emmintrin.h>
+
+1269552052 d:\my\1\svn\q-gears\src\core\library\vorbis\misc.h
+	"vorbis/codec.h"
+
+1275503932 d:\my\1\svn\q-gears\src\core\library\vorbis\highlevel.h
+
+1269278834 d:\my\1\svn\q-gears\src\core\library\vorbis\registry.h
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\scales.h
+	<math.h>
+	"os.h"
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\barkmel.c
+	<stdio.h>
+	"scales.h"
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\bitrate.c
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"os.h"
+	"misc.h"
+	"bitrate.h"
+
+1287794064 source:d:\my\1\svn\q-gears\src\core\library\vorbis\block.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"window.h"
+	"mdct.h"
+	"lpc.h"
+	"registry.h"
+	"misc.h"
+
+1269278834 d:\my\1\svn\q-gears\src\core\library\vorbis\window.h
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\lpc.h
+	"vorbis/codec.h"
+
+1287772282 source:d:\my\1\svn\q-gears\src\core\library\vorbis\codebook.c
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codebook.h"
+	"scales.h"
+	"misc.h"
+	"os.h"
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\envelope.c
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<math.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"os.h"
+	"scales.h"
+	"envelope.h"
+	"mdct.h"
+	"misc.h"
+
+1287772282 source:d:\my\1\svn\q-gears\src\core\library\vorbis\floor0.c
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"registry.h"
+	"lpc.h"
+	"lsp.h"
+	"codebook.h"
+	"scales.h"
+	"misc.h"
+	"os.h"
+	"misc.h"
+	<stdio.h>
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\lsp.h
+
+1287772282 source:d:\my\1\svn\q-gears\src\core\library\vorbis\floor1.c
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"registry.h"
+	"codebook.h"
+	"misc.h"
+	"scales.h"
+	<stdio.h>
+
+1288607178 source:d:\my\1\svn\q-gears\src\core\library\vorbis\info.c
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"codebook.h"
+	"registry.h"
+	"window.h"
+	"psy.h"
+	"misc.h"
+	"os.h"
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\lookup.c
+	<math.h>
+	"lookup.h"
+	"lookup_data.h"
+	"os.h"
+	"misc.h"
+	<stdio.h>
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\lookup.h
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\lookup_data.h
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\lpc.c
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	"os.h"
+	"smallft.h"
+	"lpc.h"
+	"scales.h"
+	"misc.h"
+
+1287279408 source:d:\my\1\svn\q-gears\src\core\library\vorbis\lsp.c
+	<math.h>
+	<string.h>
+	<stdlib.h>
+	"lsp.h"
+	"os.h"
+	"misc.h"
+	"lookup.h"
+	"scales.h"
+	"lookup.c"
+	"lookup.c"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\lookup.c
+	<math.h>
+	"lookup.h"
+	"lookup_data.h"
+	"os.h"
+	"misc.h"
+	<stdio.h>
+
+1269552052 source:d:\my\1\svn\q-gears\src\core\library\vorbis\mapping0.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<math.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"codebook.h"
+	"window.h"
+	"registry.h"
+	"psy.h"
+	"misc.h"
+	"os.h"
+	"lpc.h"
+	"lsp.h"
+	"envelope.h"
+	"mdct.h"
+	"psy.h"
+	"scales.h"
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\mdct.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	"vorbis/codec.h"
+	"mdct.h"
+	"os.h"
+	"misc.h"
+
+1288076992 source:d:\my\1\svn\q-gears\src\core\library\vorbis\psy.c
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"masking.h"
+	"psy.h"
+	"os.h"
+	"lpc.h"
+	"smallft.h"
+	"scales.h"
+	"misc.h"
+	<stdio.h>
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\masking.h
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\registry.c
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"registry.h"
+	"misc.h"
+
+1287772282 source:d:\my\1\svn\q-gears\src\core\library\vorbis\res0.c
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"registry.h"
+	"codebook.h"
+	"misc.h"
+	"os.h"
+	<stdio.h>
+
+1313597694 source:d:\my\1\svn\q-gears\src\core\library\vorbis\sharedbook.c
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<ogg/ogg.h>
+	"os.h"
+	"misc.h"
+	"vorbis/codec.h"
+	"codebook.h"
+	"scales.h"
+	<stdio.h>
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\smallft.c
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	"smallft.h"
+	"os.h"
+	"misc.h"
+
+1287073608 source:d:\my\1\svn\q-gears\src\core\library\vorbis\synthesis.c
+	<stdio.h>
+	<ogg/ogg.h>
+	"vorbis/codec.h"
+	"codec_internal.h"
+	"registry.h"
+	"misc.h"
+	"os.h"
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\tone.c
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<string.h>
+
+1269552052 source:d:\my\1\svn\q-gears\src\core\library\vorbis\vorbisenc.c
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	"vorbis/codec.h"
+	"vorbis/vorbisenc.h"
+	"codec_internal.h"
+	"os.h"
+	"misc.h"
+	"modes/setup_44.h"
+	"modes/setup_44u.h"
+	"modes/setup_44p51.h"
+	"modes/setup_32.h"
+	"modes/setup_8.h"
+	"modes/setup_11.h"
+	"modes/setup_16.h"
+	"modes/setup_22.h"
+	"modes/setup_X.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\vorbis\vorbisenc.h
+	"codec.h"
+
+1313596591 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\setup_44.h
+	"floor_all.h"
+	"residue_44.h"
+	"psych_44.h"
+
+1313596610 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\floor_all.h
+	"codec.h"
+	"../backends.h"
+	"../books/floor/floor_books.h"
+
+1313596622 d:\my\1\svn\q-gears\src\core\library\vorbis\books\floor\floor_books.h
+	"../../codebook.h"
+
+1313596652 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\residue_44.h
+	"../vorbis/codec.h"
+	"../backends.h"
+	"../books/coupled/res_books_stereo.h"
+
+1313596675 d:\my\1\svn\q-gears\src\core\library\vorbis\books\coupled\res_books_stereo.h
+	"../../codebook.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\psych_44.h
+
+1313596685 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\setup_44u.h
+	"../modes/residue_44u.h"
+
+1313596696 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\residue_44u.h
+	"../vorbis/codec.h"
+	"../backends.h"
+	"../books/uncoupled/res_books_uncoupled.h"
+
+1313596707 d:\my\1\svn\q-gears\src\core\library\vorbis\books\uncoupled\res_books_uncoupled.h
+	"../../codebook.h"
+
+1313596713 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\setup_44p51.h
+	"../modes/residue_44p51.h"
+
+1313596730 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\residue_44p51.h
+	"../vorbis/codec.h"
+	"../backends.h"
+	"../books/coupled/res_books_51.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\books\coupled\res_books_51.h
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\setup_32.h
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\setup_8.h
+	"psych_8.h"
+	"residue_8.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\psych_8.h
+
+1313596743 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\residue_8.h
+	"../vorbis/codec.h"
+	"../backends.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\setup_11.h
+	"psych_11.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\psych_11.h
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\setup_16.h
+	"psych_16.h"
+	"residue_16.h"
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\psych_16.h
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\residue_16.h
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\setup_22.h
+
+1269466140 d:\my\1\svn\q-gears\src\core\library\vorbis\modes\setup_x.h
+
+1288155240 source:d:\my\1\svn\q-gears\src\core\library\vorbis\vorbisfile.c
+	<stdlib.h>
+	<stdio.h>
+	<errno.h>
+	<string.h>
+	<math.h>
+	"vorbis/codec.h"
+	"vorbis/vorbisfile.h"
+	"os.h"
+	"misc.h"
+
+1272476916 d:\my\1\svn\q-gears\src\core\library\vorbis\vorbis\vorbisfile.h
+	<stdio.h>
+	"codec.h"
+
+1269466140 source:d:\my\1\svn\q-gears\src\core\library\vorbis\window.c
+	<stdlib.h>
+	<math.h>
+	"os.h"
+	"misc.h"
+
+1312480599 source:d:\my\1\svn\q-gears\src\core\library\ogg\bitwise.c
+	<string.h>
+	<stdlib.h>
+	<limits.h>
+	<ogg/ogg.h>
+	<stdio.h>
+
+1312481312 source:d:\my\1\svn\q-gears\src\core\library\ogg\framing.c
+	<stdlib.h>
+	<string.h>
+	<ogg/ogg.h>
+	<stdio.h>
 

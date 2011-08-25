@@ -2,7 +2,7 @@
 #include <OIS.h>
 
 #include "Main.h"
-//#include "core/AudioManager.h"
+#include "core/AudioManager.h"
 #include "core/CameraManager.h"
 #include "core/ConfigCmdManager.h"
 #include "core/ConfigFile.h"
@@ -94,8 +94,8 @@ main(int argc, char *argv[])
 
 
 
-//    AudioManager* audio_manager = new AudioManager();
-
+    AudioManager* audio_manager = new AudioManager();
+    audio_manager->MusicPlay( "loop1" );
 
 
     // create This earlier than DisplayFrameListener cause it can fire event there
@@ -144,7 +144,7 @@ main(int argc, char *argv[])
     delete script_manager;
     delete console;
     delete camera_manager;
-//    delete audio_manager;
+    delete audio_manager;
     delete input_manager;
     delete debug_draw;
     delete config_cmd_manager;

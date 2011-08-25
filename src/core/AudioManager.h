@@ -18,87 +18,79 @@
 class AudioManager : public Ogre::Singleton< AudioManager >
 {
 public:
+    AudioManager();
+    virtual ~AudioManager();
+
+    // boost uses this
+    void operator()();
+
+    void Update();
+    void MusicPause();
+    void MusicPlay( const Ogre::String& name );
+    void MusicStop();
+
     struct Music
     {
         Ogre::String name;
         Ogre::String file;
         float        loop;
     };
+    void AddMusic( const AudioManager::Music& music );
+    AudioManager::Music* GetMusic( const Ogre::String& name );
+
+private:
+    const bool Init();
+    const char* ALError();
+    const char* ALCError( const ALCdevice* device );
 
     class Player
     {
     public:
-        Player(const Ogre::String& id);
+        Player( boost::recursive_mutex* mutex );
         ~Player();
 
-        void Play();
-        void PlayFile(const Ogre::String& file);
-        void Stop();
         void Pause();
+        void Play( const Ogre::String& file );
+        void Stop();
 
-        void SetLoop(const float loop);
+        void SetLoop( const float loop );
 
-        const bool IsActive();
         void Update();
         float GetPosition();
 
     private:
-        Ogre::String   m_ID;
-        float          m_Loop;
-        OggVorbis_File m_VorbisFile;
-        vorbis_info   *m_VorbisInfo;
-        int            m_VorbisSection;
-        bool           m_StreamFinished;
-        ALuint         m_Source;
+        boost::recursive_mutex* m_UpdateMutex;
+        float                   m_Loop;
+        OggVorbis_File          m_VorbisFile;
+        vorbis_info*            m_VorbisInfo;
+        int                     m_VorbisSection;
+        bool                    m_StreamFinished;
+        ALuint                  m_Source;
 
         ALsizei FillBuffer();
     };
 
-public:
-    AudioManager();
-    virtual ~AudioManager();
 
-    /* I guess boost uses this? */
-    void operator()();
 
-    void Pause();
-    void Play();
-    void Stop();
-    void Update();
+private:
+    bool                   m_Initialized;
 
-    void AddMusic( const AudioManager::Music &music );
-    AudioManager::Music* GetMusic( const Ogre::String& name );
+    ALCdevice*             m_ALDevice;
+    ALCcontext*            m_ALContext;
+    char*                  m_Buffer;
 
-    static const float m_DEFAULT_LOOP;
+    boost::recursive_mutex m_UpdateMutex;
+    boost::thread*         m_UpdateThread;
+    bool                   m_ThreadContinue;
 
-    private:
-    std::list<AudioManager::Player*> playerList;
-    std::list<AudioManager::Music> musicList;
+    AudioManager::Player             m_Music;
+    std::list< AudioManager::Music > m_MusicList;
 
     // allocate for every new player two 96Kb buffer chunks
     // every chunk would buffer ~0.5 seconds of 44100Hz stereo 16-bit data
     // in that case we can sleep updating buffers for 250ms
-    static const int m_CH_BUF_COUNT;
-    static const ALsizei m_CH_BUF_SIZE;
-
-    static const ALfloat m_LISTENER_POS[3];
-    static const ALfloat m_LISTENER_VEL[3];
-    static const ALfloat m_LISTENER_ORI[6];
-
-    bool                        m_Initialized;
-    ALCdevice*                  m_ALDevice;
-    ALCcontext*                 m_ALContext;
-    char*                       m_Buffer;
-
-    static const uint32_t m_THREAD_SLEEP_TIME;
-    boost::recursive_mutex m_UpdateMutex;
-    boost::thread *m_UpdateThread;
-    bool m_ThreadContinue;
-
-    const bool Init();
-
-    const char *ALError();
-    const char *ALCError(const ALCdevice *device);
+    static ALsizei m_ChannelBufferSize;
+    static int m_ChannelBufferNumber;
 };
 
 

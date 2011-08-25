@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <musics>
-   <music name="loop1" file_name="musics/loop1.ogg" loop="0" />
+   <music name="loop1" file_name="musics/ffvii_main_theme.mp3" loop="0" />
    <music name="loop2" file_name="musics/loop2.ogg" loop="0" />
    <music name="loop3" file_name="musics/loop3.ogg" loop="0" />
 </musics>

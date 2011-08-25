@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="Main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="3865" topLine="129" />
+	<File name="Main.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2648" topLine="72" />
+	</File>
+	<File name="core\Assert.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="62" topLine="0" />
+	</File>
+	<File name="core\AudioManager.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="7256" topLine="344" />
+	</File>
+	<File name="core\AudioManager.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="905" topLine="29" />
 	</File>
 	<File name="core\CameraManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1326" topLine="28" />
@@ -133,8 +142,8 @@
 	<File name="core\XmlFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="2013" topLine="77" />
 	</File>
-	<File name="core\XmlFile.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="343" topLine="11" />
+	<File name="core\XmlFile.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="555" topLine="11" />
 	</File>
 	<File name="core\XmlFontFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="876" topLine="21" />
@@ -144,6 +153,9 @@
 	</File>
 	<File name="core\XmlMapFile.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="225" topLine="0" />
+	</File>
+	<File name="core\XmlMusicsFile.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="870" topLine="19" />
 	</File>
 	<File name="core\XmlScreenFile.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="4679" topLine="130" />
@@ -182,7 +194,10 @@
 		<Cursor1 position="4664" topLine="134" />
 	</File>
 	<File name="core\library\luabind\detail\policy.hpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8690" topLine="352" />
+		<Cursor1 position="17956" topLine="762" />
+	</File>
+	<File name="core\library\luabind\handle.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2503" topLine="64" />
 	</File>
 	<File name="core\library\luabind\luabind.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1200" topLine="15" />
@@ -204,6 +219,42 @@
 	</File>
 	<File name="core\library\tinyxml\tinyxmlparser.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="27613" topLine="1186" />
+	</File>
+	<File name="core\library\vorbis\books\coupled\res_books_stereo.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="994" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\books\floor\floor_books.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="992" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\books\uncoupled\res_books_uncoupled.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1000" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\modes\floor_all.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="997" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\modes\residue_44.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1034" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\modes\residue_44p51.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="939" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\modes\residue_44u.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1045" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\modes\residue_8.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="969" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\modes\setup_44.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1010" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\modes\setup_44p51.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="936" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\modes\setup_44u.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="983" topLine="0" />
+	</File>
+	<File name="core\library\vorbis\sharedbook.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="16584" topLine="545" />
 	</File>
 	<File name="core\particles\ParticleEmitter.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="804" topLine="6" />
@@ -247,7 +298,7 @@
 	<File name="core\particles\ParticleTechnique.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="806" topLine="6" />
 	</File>
-	<File name="core\particles\renderer\ParticleEntityRenderer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="628" topLine="0" />
+	<File name="core\particles\renderer\ParticleEntityRenderer.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="4193" topLine="138" />
 	</File>
 </CodeBlocks_layout_file>

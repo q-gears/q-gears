@@ -3,6 +3,21 @@ Entity = {}
 i = 0;
 
 
+
+Entity[ "MapChanger" ] = {
+    on_start = function()
+        script:request( "Entity.Cloud", "animation5", 5 )
+        script:request( "Entity.Cloud", "animation1", 1 )
+        script:request( "Entity.Cloud", "animation3", 3 )
+        script:request( "Entity.Cloud", "animation2", 2 )
+        script:request( "Entity.Cloud", "animation4", 4 )
+
+        return 0
+    end,
+}
+
+
+
 Entity[ "Cloud" ] = {
     on_start = function()
         local cloud = entity_manager:get_entity( "Cloud" )
