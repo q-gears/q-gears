@@ -1,0 +1,7 @@
+Model:
+number_of_parts: 1
+Part: 0
+    number of poly blocks: 1
+    pointer to polygon data: 216
+    pointer to texture data: 332
+        polygon type: 13, number of polygons: 14

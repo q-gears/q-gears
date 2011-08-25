@@ -1,0 +1,20 @@
+
+material xeno/field/lahan
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+			alpha_rejection greater 0
+
+			texture_unit
+			{
+				texture models/field/maps/lahan/lahan.png
+				filtering point point none
+			}
+		}
+
+	}
+
+}

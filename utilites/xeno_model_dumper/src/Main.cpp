@@ -38,7 +38,13 @@ public:
         win->getCustomAttribute("WINDOW", &windowHnd);
         windowHndStr << windowHnd;
         pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-
+#if defined __WIN32__
+        pl.insert( std::make_pair( std::string( "w32_mouse" ), std::string( "DISCL_FOREGROUND" ) ) );
+        pl.insert( std::make_pair( std::string( "w32_mouse" ), std::string( "DISCL_NONEXCLUSIVE" ) ) );
+#else
+        pl.insert( std::make_pair( std::string( "x11_mouse_grab" ), std::string( "false" ) ) );
+        pl.insert( std::make_pair( std::string( "x11_mouse_hide" ), std::string( "false" ) ) );
+#endif
         m_InputManager = InputManager::createInputSystem(pl);
 
         m_Keyboard = static_cast<Keyboard*>(m_InputManager->createInputObject(OIS::OISKeyboard, true));
