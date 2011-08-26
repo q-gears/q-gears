@@ -196,8 +196,9 @@ L31c90:	; 80031C90
 80031CA8	ori    t0, t0, $ffff
 V0 = T5;
 A2 = V0 + S1;
-80031CB4	ori    v1, zero, $0020
-80031CB8	lw     a1, $0004(a2)
+V1 = 20;
+A1 = w[A2 + 4];
+
 80031CBC	lhu    a3, $01a8(gp)
 80031CC0	lui    a0, $01e0
 80031CC4	sh     v1, $01a8(gp)

@@ -1,4 +1,35 @@
 ////////////////////////////////
+// field_init_triggered_background_state
+S1 = A0;
+S2 = 0;
+
+loopaa8a4:	; 800AA8A4
+    if( bu[S1 + S2 * 10 + c] != ff ) // enter state
+    {
+        V1 = bu[S1 + S2 * 10 + e]; // default state
+
+        if( V1 == 0 || V1 == 2 || V1 == 4 )
+        {
+            A0 = S1 + S2 * 10;
+            A1 = 1;
+            trigger_background_manipulate;
+        }
+        else if( V1 == 1 || V1 == 3 || V1 == 5 )
+        {
+            A0 = S1 + S2 * 10;
+            A1 = 0;
+            trigger_background_manipulate;
+        }
+    }
+
+    S2 = S2 + 1;
+    V0 = S2 < c;
+800AA904	bne    v0, zero, loopaa8a4 [$800aa8a4]
+////////////////////////////////
+
+
+
+////////////////////////////////
 // field_check_and_set_load_background_in_advance
 A1; // offset to triggers data
 
@@ -84,4 +115,56 @@ if (h[800965e8] == 1)
 
 [80071a5c] = h(0);
 [800965e8] = h(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// trigger_background_manipulate
+A1 = A1 & ff;
+A3 = 0;
+
+switch (A1)
+{
+    // set bit
+    case 0 2 4:
+    {
+        group_id = bu[A0 + c];
+        index_id = bu[A0 + d];
+        A0 = bu[8009abf4 + f2 + group_id];
+
+        V1 = 1 << index_id;
+        V0 = A0 & V1;
+        if (V0 == 0)
+        {
+            A3 = 1;
+        }
+        V0 = V1 | A0;
+
+        [8009abf4 + f2 + group_id] = b(V0);
+    }
+    break;
+
+    // unset bit
+    case 1 2 5:
+    {
+        group_id = bu[A0 + c];
+        index_id = bu[A0 + d];
+        A2 = bu[8009abf4 + f2 + group_id];
+
+        V0 = 1 << index_id;
+        A1 = 0 NOR V0;
+        V0 = A2 | A1;
+        V0 = V0 & ff;
+        if (V0 == ff)
+        {
+            A3 = 1;
+        }
+        V0 = A1 & A2;
+
+        [8009abf4 + f2 + group_id] = b(V0);
+    }
+}
+
+return A3;
 ////////////////////////////////

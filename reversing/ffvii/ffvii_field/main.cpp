@@ -24,29 +24,20 @@ if (h[800965ec] != 5 && h[800965ec] != d)
     funcaa930; // init models and their textures
 }
 
-800A2478	lui    v0, $800a
-800A247C	lw     v0, $a044(v0)
-800A2480	nop
-800A2484	lw     a0, $0000(v0)
-800A2488	nop
-800A248C	addiu  a0, a0, $0004
-800A2490	lui    at, $800e
-800A2494	sw     a0, $4274(at)
-800A2498	lw     v0, $0000(v0)
-800A249C	nop
-800A24A0	lhu    v1, $0000(v0)
-800A24A4	nop
-800A24A8	sll    v0, v1, $01
-800A24AC	addu   v0, v0, v1
-800A24B0	sll    v0, v0, $03
-800A24BC	addu   v0, v0, a0
-800A24C0	lui    at, $8011
-800A24C4	sw     v0, $4458(at)
+
+
+V0 = w[8009a044];
+A0 = w[V0] + 4;
+[800e4274] = w(A0); // offset to walkmesh block
+V0 = w[V0];
+[80114458] = w(A0 + hu[V0] * 18); // walkmesh triangle access block
 
 if (h[800965ec] != 5 && h[800965ec] != 2 && h[800965ec] != d)
 {
-    800A2514	jal    funca5fb4 [$800a5fb4]
+    funca5fb4; // walkmesh related
 }
+
+
 
 A0 = 800e9704; // draft 1st and 2nd layer
 A1 = 800f3344; // draft 3rd and 4th layer
@@ -99,12 +90,11 @@ La25bc:	; 800A25BC
     800A2674	ori    a1, zero, $0001
     800A2678	jal    funcab2b4 [$800ab2b4]
     800A267C	nop
-    800A2680	lui    a0, $8007
-    800A2684	addiu  a0, a0, $1e38
-    800A2688	lui    a1, $8007
-    800A268C	addiu  a1, a1, $1e3c
-    800A2690	jal    funca2f78 [$800a2f78]
-    800A2694	nop
+
+    A0 = 80071e38; // screen scroll X
+    A1 = 80071e3c; // screen scroll Y
+    funca2f78;
+
     800A2698	lui    v1, $8007
     800A269C	lw     v1, $5d00(v1)
     800A26A0	nop
@@ -161,7 +151,7 @@ La25bc:	; 800A25BC
         return;
     }
 
-    if (bu[8009abf4 + 1] == 19)
+    if( bu[8009abf4 + 1] == 19 )
     {
         [8009c560] = h(10);
         field_stop_load_background_in_advance;
@@ -170,57 +160,36 @@ La25bc:	; 800A25BC
 
     V1 = bu[8009abf4 + 1];
 
-    if ( V1 == f || V1 == 10 || V1 == 11 || V1 == 15 || V1 == 16 || V1 == 17 || V1 == 18 )
+    if( V1 == f || V1 == 10 || V1 == 11 || V1 == 15 || V1 == 16 || V1 == 17 || V1 == 18 )
     {
         [8009c560] = h(d);
         field_stop_load_background_in_advance;
         return;
     }
 
-    if ( V1 == 6 || V1 == 7 || V1 == 8 || V1 == 9 || V1 == e || V1 == 12 || V1 == 13 )
+    if( V1 == 6 || V1 == 7 || V1 == 8 || V1 == 9 || V1 == e || V1 == 12 || V1 == 13 )
     {
         [8009c560] = h(5);
         field_stop_load_background_in_advance;
         return;
     }
 
-    800A282C	lui    v0, $8011
-    800A2830	lw     v0, $4454(v0)
-    800A2834	nop
-    800A2838	andi   v0, v0, $0010
-    800A283C	beq    v0, zero, La2894 [$800a2894]
-    800A2840	nop
-    800A2844	lbu    v0, $0034(s2)
-    800A2848	nop
-    800A284C	bne    v0, zero, La2894 [$800a2894]
-    800A2850	nop
-    800A2854	lui    v0, $800e
-    800A2858	lhu    v0, $4d44(v0)
-    800A285C	nop
-    800A2860	bne    v0, zero, La2894 [$800a2894]
-    800A2864	nop
-    800A2868	lui    v0, $8011
-    800A286C	lhu    v0, $4488(v0)
-    800A2870	nop
-    if (V0 == 0)
+    if( ( w[80114454] & 10 ) && ( bu[S2 + 34] == 0 ) && ( hu[800e4d44] == 0 ) && ( hu[80114488] == 0 ) )
     {
-        800A2878	ori    v0, zero, $0005
-        800A287C	lui    at, $800a
-        800A2880	sh     v0, $c560(at)
-        800A2884	ori    v0, zero, $0009
-        800A2888	sb     v0, $0001(s2)
-        800A2890	sh     zero, $0002(s2)
+        [8009c560] = h(5);
+        [S2 + 1] = b(9);
+        [S2 + 2] = h(0);
         field_stop_load_background_in_advance;
         return;
     }
-    La2894:	; 800A2894
+
     if (bu[8009abf4 + 1] == 5 || bu[8009abf4 + 1] == 1a)
     {
         field_stop_load_background_in_advance;
         return;
     }
 
-    if (bu[8009abf4 + 1] == 2)
+    if( bu[8009abf4 + 1] == 2 )
     {
         V1 = h[800965e0]; // manual move entity
 
@@ -265,7 +234,7 @@ La25bc:	; 800A25BC
     A0 = S1;
     funcaab24; // update models (animations drafts and kawai)
 
-    800A29BC	jal    funcab728 [$800ab728]
+    funcab728;
 
     A0 = S1;
     A1 = S1 + 1749c;
@@ -322,43 +291,22 @@ La25bc:	; 800A25BC
     800A2A90	ori    a0, zero, $0001
 
     La2a94:	; 800A2A94
+    A0 = 1;
     800A2A94	jal    func43938 [$80043938]
-    800A2A98	ori    a0, zero, $0001
-    800A2A9C	lui    v0, $8011
-    800A2AA0	lhu    v0, $4488(v0)
-    800A2AA4	nop
-    800A2AA8	bne    v0, zero, La2b04 [$800a2b04]
-    800A2AAC	nop
-    800A2AB0	lui    v0, $8011
-    800A2AB4	lh     v0, $42c8(v0)
-    800A2AB8	nop
-    800A2ABC	bne    v0, zero, La2afc [$800a2afc]
-    800A2AC0	nop
-    800A2AC4	lui    v1, $8007
-    800A2AC8	lhu    v1, $5dec(v1)
-    800A2ACC	nop
-    800A2AD0	sll    v1, v1, $10
-    800A2AD4	sra    v1, v1, $10
-    800A2AD8	sll    v0, v1, $02
-    800A2ADC	addu   v0, v0, v1
-    800A2AE0	sll    v0, v0, $02
-    800A2AE4	lui    at, $8008
-    800A2AE8	addiu  at, at, $eb79 (=-$1487)
-    800A2AEC	addu   at, at, v0
-    800A2AF0	sb     zero, $0000(at)
-    800A2AF4	j      La2b04 [$800a2b04]
-    800A2AF8	nop
 
-    La2afc:	; 800A2AFC
-    800A2AFC	lui    at, $8011
-    800A2B00	sh     zero, $42c8(at)
+    if( hu[80114488] == 0 )
+    {
+        if( h[801142c8] == 0 )
+        {
+            [8007eb79 + h[80075dec] * 14] = b(0);
+        }
+        else
+        {
+            [801142c8] = h(0);
+        }
+    }
 
-    La2b04:	; 800A2B04
-    800A2B04	lui    v0, $8007
-    800A2B08	lhu    v0, $5dec(v0)
-    800A2B0C	nop
-    800A2B10	sll    v0, v0, $10
-    800A2B14	sra    v0, v0, $10
+    V0 = h[80075dec];
     800A2B18	sll    a0, v0, $02
     800A2B1C	addu   a0, a0, v0
     800A2B20	sll    a0, a0, $02
@@ -444,35 +392,12 @@ La25bc:	; 800A25BC
 
     La2c48:	; 800A2C48
     800A2C48	jal    func43f6c [$80043f6c]
-    800A2C4C	nop
-    800A2C50	lui    v1, $8007
-    800A2C54	lhu    v1, $5dec(v1)
-    800A2C58	lui    a0, $8008
-    800A2C5C	addiu  a0, a0, $eb68 (=-$1498)
-    800A2C60	sll    v1, v1, $10
-    800A2C64	sra    v1, v1, $10
-    800A2C68	sll    v0, v1, $02
-    800A2C6C	addu   v0, v0, v1
-    800A2C70	sll    v0, v0, $02
-    800A2C74	lui    v1, $8007
-    800A2C78	lhu    v1, $5dec(v1)
-    800A2C7C	addu   v0, v0, a0
-    800A2C80	lui    at, $8008
-    800A2C84	sw     v0, $ebd8(at)
-    800A2C88	sll    v1, v1, $10
-    800A2C8C	sra    v1, v1, $10
-    800A2C90	sll    v0, v1, $01
-    800A2C94	addu   v0, v0, v1
-    800A2C98	sll    v0, v0, $03
-    800A2C9C	subu   v0, v0, v1
-    800A2CA0	sll    v0, v0, $02
-    800A2CA4	lui    v1, $8011
-    800A2CA8	addiu  v1, v1, $3f2c
-    800A2CAC	addu   v0, v0, v1
-    800A2CB0	lui    at, $8008
-    800A2CB4	sw     v0, $ebd0(at)
+
+    [8007ebd8] = w(8007eb68 + h[80075dec] * 14); // 80075dec - screen buffer index
+    [8007ebd0] = w(80113f2c + h[80075dec] * 5c); // 80075dec - screen buffer index
+
     800A2CB8	jal    funcab310 [$800ab310]
-    800A2CBC	nop
+
     V0 = bu[8009abf4 + 38];
     if (V0 == 0)
     {
@@ -1021,10 +946,10 @@ loopa1ec0:	; 800A1EC0
 800A1EC4	addiu  v1, v1, $ffff (=-$1)
 800A1EC8	bgez   v1, loopa1ec0 [$800a1ec0]
 800A1ECC	addiu  v0, v0, $ffff (=-$1)
-800A1ED0	lui    a0, $8007
-800A1ED4	lw     a0, $16c4(a0)
-800A1ED8	jal    funcaa870 [$800aa870]
-800A1EDC	addiu  a0, a0, $0158
+
+A0 = w[800716c4] + 158; // offset to sector 5 triggers
+field_init_triggered_background_state;
+
 800A1EE0	j      La1ef4 [$800a1ef4]
 800A1EE4	nop
 
@@ -1035,11 +960,10 @@ La1ee8:	; 800A1EE8
 
 La1ef4:	; 800A1EF4
 800A1EF4	jal    funcbb1b4 [$800bb1b4]
-800A1EF8	nop
-800A1EFC	lui    a0, $8008
-800A1F00	addiu  a0, a0, $e7ac (=-$1854)
-800A1F04	jal    line_clear_entity_in_line [$800aa32c]
-800A1F08	nop
+
+A0 = 8007e7ac;
+line_clear_entity_in_line;
+
 800A1F0C	lui    a0, $800f
 800A1F10	addiu  a0, a0, $8df0 (=-$7210)
 800A1F14	lui    at, $8007
@@ -1062,22 +986,13 @@ if (h[800965ec] != 5 && h[800965ec] != d)
 
 if (h[800965ec] == 2)
 {
-    800A1F98	ori    v0, zero, $00f5
-    800A1F9C	lui    s0, $800a
-    800A1FA0	addiu  s0, s0, $a000 (=-$6000)
-    800A1FA4	jal    system_execute_AKAO [$8002da7c]
-    800A1FA8	sh     v0, $0000(s0)
-    800A1FAC	ori    v0, zero, $0018
-    800A1FB0	sh     v0, $0000(s0)
-    800A1FB4	lui    v0, $800a
-    800A1FB8	addiu  v0, v0, $ac3c (=-$53c4)
-    800A1FBC	lw     v1, $0000(v0)
-    800A1FC0	ori    v0, zero, $0004
-    800A1FC4	lui    at, $800a
-    800A1FC8	sw     v0, $a008(at)
-    800A1FCC	lui    at, $800a
-    800A1FD0	sw     v1, $a004(at)
-    800A1FD4	jal    system_execute_AKAO [$8002da7c]
+    [8009a000] = h(f5);
+    system_execute_AKAO;
+
+    [8009a000] = h(18);
+    [8009a004] = w(w[8009ac3c]);
+    [8009a008] = w(4);
+    system_execute_AKAO;
 }
 
 
@@ -1157,11 +1072,11 @@ loopa1fe4:	; 800A1FE4
 800A20E4	sh     v0, $a05c(at)
 800A20E8	sll    v0, v0, $10
 800A20EC	sra    v0, v0, $10
-800A20F0	beq    v0, v1, La2100 [$800a2100]
-800A20F4	nop
-field_stop_load_background_in_advance;
+if (V0 != V1)
+{
+    field_stop_load_background_in_advance;
+}
 
-La2100:	; 800A2100
 800A2100	lui    v0, $800a
 800A2104	lhu    v0, $a05c(v0)
 800A2108	nop
@@ -1291,19 +1206,6 @@ La22a0:	; 800A22A0
 800A22D4	nop
 
 La22d8:	; 800A22D8
+A0 = 0;
 800A22D8	jal    func3cedc [$8003cedc]
-800A22DC	addu   a0, zero, zero
-800A22E0	lw     ra, $0044(sp)
-800A22E4	lw     fp, $0040(sp)
-800A22E8	lw     s7, $003c(sp)
-800A22EC	lw     s6, $0038(sp)
-800A22F0	lw     s5, $0034(sp)
-800A22F4	lw     s4, $0030(sp)
-800A22F8	lw     s3, $002c(sp)
-800A22FC	lw     s2, $0028(sp)
-800A2300	lw     s1, $0024(sp)
-800A2304	lw     s0, $0020(sp)
-800A2308	addiu  sp, sp, $0048
-800A230C	jr     ra 
-800A2310	nop
 ////////////////////////////////

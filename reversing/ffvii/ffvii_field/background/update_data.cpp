@@ -791,3 +791,45 @@ else
     }
 }
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// funca2f78
+800A2F80	jal    func1c808 [$8001c808]
+800A2F84	nop
+800A2F88	lui    v1, $800a
+800A2F8C	lw     v1, $ac5c(v1)
+800A2F90	lui    at, $8011
+800A2F94	sw     v0, $4454(at)
+800A2F98	lui    at, $800a
+800A2F9C	sw     v0, $ac5c(at)
+800A2FA0	lui    at, $800a
+800A2FA4	sw     v1, $ac60(at)
+800A2FA8	xor    v1, v0, v1
+800A2FAC	and    a0, v1, v0
+800A2FB0	nor    v0, zero, v0
+800A2FB4	and    v1, v1, v0
+800A2FB8	lui    at, $800a
+800A2FBC	sw     a0, $ac64(at)
+800A2FC0	lui    at, $800a
+800A2FC4	sw     v1, $ac68(at)
+800A2FC8	jal    func1c8d4 [$8001c8d4]
+800A2FCC	nop
+800A2FD0	lui    v1, $800a
+800A2FD4	lw     v1, $ac6c(v1)
+800A2FD8	lui    at, $8011
+800A2FDC	sw     v0, $4454(at)
+800A2FE0	lui    at, $800a
+800A2FE4	sw     v0, $ac6c(at)
+800A2FE8	lui    at, $800a
+800A2FEC	sw     v1, $ac70(at)
+800A2FF0	xor    v1, v0, v1
+800A2FF4	and    a0, v1, v0
+800A2FF8	lui    at, $800a
+800A2FFC	sw     a0, $ac74(at)
+800A3000	nor    a0, zero, v0
+800A3004	and    v1, v1, a0
+800A3008	lui    at, $800a
+800A300C	sw     v1, $ac78(at)
+////////////////////////////////
