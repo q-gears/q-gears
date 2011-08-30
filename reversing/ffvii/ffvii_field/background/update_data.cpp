@@ -44,7 +44,7 @@ if ((hu[80114488] != 0) && (bu[8009abf4 + 3a] == 0))
     if (V1 != 1)
     {
         A0 = S2 + 41d4;
-        if (S2 == 800e4df0)
+        if( S2 == 800e4df0 )
         {
             A2 = w[80071e40];
             [80113f34] = h(hu[8007eb90] - hu[A2 + 20]);
@@ -73,8 +73,7 @@ if ((hu[80114488] != 0) && (bu[8009abf4 + 3a] == 0))
     }
     else
     {
-        V0 = 800e4df0;
-        if (S2 != V0)
+        if( S2 != 800e4df0 )
         {
             A0 = 80100860;
             T0 = 80113f90;
@@ -295,21 +294,21 @@ else
         800A51F4	subu   v0, v0, t1
         800A51F8	lui    at, $8011
         800A51FC	sh     v0, $4464(at)
-        800A5200	lui    v0, $800e
-        800A5204	addiu  v0, v0, $4df0
-        800A5208	addu   fp, s5, zero
-        800A520C	sh     s4, $0020(sp)
-        800A5210	sh     s7, $0028(sp)
-        800A5218	sh     s6, $0030(sp)
-        if (S2 == V0)
+
+        FP = S5;
+        [SP + 20] = h(S4);
+        [SP + 28] = h(S7);
+        [SP + 30] = h(S6);
+
+        if( S2 == 800e4df0 )
         {
             800A521C	addiu  a0, s2, $41d4
-            800A5220	lui    t0, $8011
-            800A5224	addiu  t0, t0, $3f34
+            T0 = 80113f34;
             V0 = b[8009ac81];
             V1 = b[8009ac8f];
-            800A5238	lhu    a2, $0000(s3)
-            800A523C	lhu    a3, $0000(s1)
+            A2 = hu[S3];
+            A3 = hu[S1];
+
             800A5250	subu   a2, a2, t1
             800A5254	addu   v0, v0, a2
             800A5258	subu   a3, a3, t2
@@ -317,11 +316,11 @@ else
             800A5260	sh     v0, $0000(t0)
             800A5264	lui    at, $8011
             800A5268	sh     v1, $3f36(at)
-            800A526C	jal    func44ac0 [$80044ac0]
             800A5270	addiu  a1, t0, $fff8 (=-$8)
+            800A526C	jal    func44ac0 [$80044ac0]
+
             800A5274	addiu  a0, s2, $4294
-            800A5278	lui    t1, $8011
-            800A527C	addiu  t1, t1, $415c
+            T1 = 8011415c;
             V0 = b[8009ac81];
             V1 = b[8009ac8f];
             800A5290	lhu    a3, $0000(s3)
@@ -335,14 +334,14 @@ else
             800A52C0	addu   v1, v1, a2
             800A52C4	lui    at, $8011
             800A52C8	sh     v1, $415e(at)
-            800A52CC	jal    func44ac0 [$80044ac0]
             800A52D0	addiu  a1, t1, $fff8 (=-$8)
+            800A52CC	jal    func44ac0 [$80044ac0]
+
             800A52D4	addiu  a0, s2, $42d4
-            800A52D8	lui    t1, $8011
-            800A52DC	addiu  t1, t1, $4214
+            T1 = 80114214;
             V0 = b[8009ac81];
             V1 = b[8009ac8f];
-            800A52F0	lhu    a3, $0000(s3)
+            A3 = hu[S3];
             800A52F4	lhu    a2, $0018(sp)
             800A52F8	lhu    t0, $001a(sp)
             800A530C	subu   a3, a3, a2
@@ -353,27 +352,27 @@ else
             800A5320	addu   v1, v1, a2
             800A5324	lui    at, $8011
             800A5328	sh     v1, $4216(at)
-            800A532C	jal    func44ac0 [$80044ac0]
             800A5330	addiu  a1, t1, $fff8 (=-$8)
+            800A532C	jal    func44ac0 [$80044ac0]
+
             800A5334	addiu  a0, s2, $4214
-            800A5338	lui    t0, $8011
-            800A533C	addiu  t0, t0, $3fec
+            T0 = 80113fec;
             V0 = b[8009ac81];
             V1 = b[8009ac8f];
-            800A5350	lhu    a2, $0000(s3)
-            800A5354	lhu    a3, $0000(s1)
-            800A5368	subu   a2, a2, s5
+            A2 = hu[S3] - S5;
+            A3 = hu[S1];
+
             800A536C	addu   v0, v0, a2
             800A5370	subu   a3, a3, s4
             800A5374	addu   v1, v1, a3
             800A5378	sh     v0, $0000(t0)
             800A537C	lui    at, $8011
             800A5380	sh     v1, $3fee(at)
-            800A5384	jal    func44ac0 [$80044ac0]
             800A5388	addiu  a1, t0, $fff8 (=-$8)
+            800A5384	jal    func44ac0 [$80044ac0]
+
             800A538C	addiu  a0, s2, $4254
-            800A5390	lui    t0, $8011
-            800A5394	addiu  t0, t0, $40a4
+            T0 = 801140a4;
             V0 = b[8009ac81];
             V1 = b[8009ac8f];
             800A53A8	lhu    a2, $0000(s3)
@@ -406,11 +405,11 @@ else
             800A5434	sh     v1, $0000(t0)
             800A5438	lui    at, $8011
             800A543C	sh     v0, $3f92(at)
-            800A5440	jal    func44ac0 [$80044ac0]
             800A5444	addiu  a1, t0, $fff8 (=-$8)
+            800A5440	jal    func44ac0 [$80044ac0]
+
             800A5448	addiu  a0, s0, $00c0
-            800A544C	lui    t1, $8011
-            800A5450	addiu  t1, t1, $41b8
+            T1 = 801141b8;
             V1 = b[8009ac81];
             V0 = b[8009ac8f];
             800A5464	lhu    a3, $0000(s3)
@@ -425,11 +424,11 @@ else
             800A5498	addiu  v0, v0, $00e8
             800A549C	lui    at, $8011
             800A54A0	sh     v0, $41ba(at)
-            800A54A4	jal    func44ac0 [$80044ac0]
             800A54A8	addiu  a1, t1, $fff8 (=-$8)
+            800A54A4	jal    func44ac0 [$80044ac0]
+
             800A54AC	addiu  a0, s0, $0100
-            800A54B0	lui    t1, $8011
-            800A54B4	addiu  t1, t1, $4270
+            T1 = 80114270;
             V1 = b[8009ac81];
             V0 = b[8009ac8f];
             800A54C8	lhu    a3, $0000(s3)
@@ -444,11 +443,11 @@ else
             800A54FC	addiu  v0, v0, $00e8
             800A5500	lui    at, $8011
             800A5504	sh     v0, $4272(at)
-            800A5508	jal    func44ac0 [$80044ac0]
             800A550C	addiu  a1, t1, $fff8 (=-$8)
+            800A5508	jal    func44ac0 [$80044ac0]
+
             800A5510	addiu  a0, s0, $0040
-            800A5514	lui    t0, $8011
-            800A5518	addiu  t0, t0, $4048
+            T0 = 80114048;
             V1 = b[8009ac81];
             V0 = b[8009ac8f];
             800A552C	lhu    a2, $0000(s3)
@@ -461,11 +460,11 @@ else
             800A5558	sh     v1, $0000(t0)
             800A555C	lui    at, $8011
             800A5560	sh     v0, $404a(at)
-            800A5564	jal    func44ac0 [$80044ac0]
             800A5568	addiu  a1, t0, $fff8 (=-$8)
+            800A5564	jal    func44ac0 [$80044ac0]
+
             800A556C	addiu  a0, s0, $0080
-            800A5570	lui    t0, $8011
-            800A5574	addiu  t0, t0, $4100
+            T0 = 80114100;
             800A5578	addiu  a1, t0, $fff8 (=-$8)
             V1 = b[8009ac81];
             V0 = b[8009ac8f];
@@ -477,8 +476,7 @@ else
             800A55B0	addu   v0, v0, a3
             800A55B4	addiu  v0, v0, $00e8
             800A55B8	sh     v1, $0000(t0)
-            800A55BC	lui    at, $8011
-            800A55C0	sh     v0, $4102(at)
+            [80114102] = h(V0);
         }
 
         800A55C4	jal    func44ac0 [$80044ac0]

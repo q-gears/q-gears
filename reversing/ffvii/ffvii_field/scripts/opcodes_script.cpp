@@ -371,9 +371,7 @@ if (V0 != priority_id)
 
 if (request_id == 1)
 {
-    V0 = hu[current_script_pointer];
-    V0 = V0 + 3;
-    [current_script_pointer] = h(V0)
+    [current_script_pointer] = h(hu[current_script_pointer] + 3);
     return 0;
 }
 
