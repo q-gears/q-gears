@@ -22,6 +22,17 @@
 +20 [][][][] 80045400 function. Passed as parameter when copy palette from ram.
 80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
+80062d44 GP
++ b4 [][][][] enable or disable input in menu? we only handle input if this == 1. Tutorial opcode readed if this != 1.
++150 [][][][] wait tutorial opcode value.
++174 [][][][] store here pointer to text of tutorial menu.
++220 [][][][] current main menu level (0 1 or 2)
++27c [][][][] enable or disable input in menu? we only handle input if this == 1.
+                    0 - 
+                    1 - enabled
+                    2 - 
+
+
 80062d7c [][]     key data.
                     0001 - L2
                     0002 - R2
@@ -236,6 +247,12 @@
 
 
 
+8009a0c8 array of menu cursor data (0x12 size).
++0b []       vertical cursor position.
++0d []       total number of vertical positions.
+
+
+
 8009a104 start of music channels config
 +00 [][][][] some settings for music (0x01- stereo, 0x02 - mono)
 +04 [][][][] active music channel mask.
@@ -347,7 +364,7 @@
 
 
 
-8009d84c               start of some unit structure (size 0x440).
+8009d84c start of some unit structure (size 0x440).
 +000 []       set exp modifier from temp.
 +001 []       set cover modifier from temp.
 +002 []       strength.  Init with 0. Add strength bonus from weapon. Add base stat + bonus stat.

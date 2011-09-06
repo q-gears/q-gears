@@ -236,9 +236,10 @@
 
 8009abf4 start of game data (message/fade/nfade/walkmesh).
 + 01 []       some state
-                0 - normal field?
+                0 - normal field.
                 1 - finalize field in this case.
                 2 - encounter.
+                9 - tutorial.
                 a - set when field reset game by all shifts and start + select.
                 c - set after function in d state.
                 d -
@@ -436,8 +437,9 @@
 
 800e42d8 some array (size 0x18)
 
+800e48e0 [][][][] store akao offset here when start menu tutorial.
 
-800e48f0 [] store FF here during end of SPLIT.
+800e48f0 []       store FF here during end of SPLIT.
 800e48f4 array for some data for arrow or triangle (maybe tex coords). (size 0x28)
 800e4944 texts for windows to diaplay. (size 0x100)
 800e4d48 offsets for getting variable from memory block for windows. 8 for each window. (size 0x10 0x2)

@@ -1,4 +1,41 @@
 ////////////////////////////////
+// 0x21 TUTOR
+struct = w[8009c6e0];
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+
+if( bu[struct + 1] == 0 )
+{
+    [struct + 1] = b(9);
+    [struct + 2] = h(1);
+    [struct + 26] = h(0);
+    [8007ebe0] = b(1);
+
+    A0 = bu[script + 1];
+    get_akao_offset_in_field;
+
+    [800e48e0] = w(w[8009c6dc] + V0); // store akao offset here
+
+    return 1;
+}
+else if( bu[struct + 1] == 9  && h[struct + 26] == 2 )
+{
+    [struct + 1] = b(0);
+    [struct + 26] = h(0);
+
+    [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 2);
+
+    return 0;
+}
+else
+{
+    return 1;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
 // 0x49 MENU
 struct = w[8009c6e0];
 current_entity = bu[800722c4];

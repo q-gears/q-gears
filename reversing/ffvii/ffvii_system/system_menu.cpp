@@ -1,6 +1,6 @@
 ﻿////////////////////////////////
 // func24a3c
-S0 = 1;
+// A0 - pointer to tutorial settings
 [GP + b4] = w(1);
 
 80024A60	sw     zero, $027c(gp)
@@ -12,23 +12,22 @@ S0 = 1;
 
 80024A74	lui    at, $8006
 80024A78	sb     zero, $2dfd(at)
-80024A7C	bne    a0, zero, L24aa0 [$80024aa0]
-80024A80	addu   a1, zero, zero
-80024A84	addu   a0, zero, zero
-80024A88	jal    func1f6e4 [$8001f6e4]
-80024A8C	addu   a2, zero, zero
-80024A90	lui    at, $8006
-80024A94	sw     zero, $2fa0(at)
-80024A98	j      L24ab0 [$80024ab0]
-80024A9C	nop
+if( A0 == 0 )
+{
+    80024A80	addu   a1, zero, zero
+    80024A84	addu   a0, zero, zero
+    80024A88	jal    func1f6e4 [$8001f6e4]
+    80024A8C	addu   a2, zero, zero
+    80024A90	lui    at, $8006
+    80024A94	sw     zero, $2fa0(at)
+}
+else
+{
+    [GP + 150] = w(14);
+    [GP + 158] = w(A0);
+    [80062fa0] = w(1); // tutorial ON
+}
 
-L24aa0:	; 80024AA0
-80024AA0	jal    func1c484 [$8001c484]
-80024AA4	nop
-80024AA8	lui    at, $8006
-80024AAC	sw     s0, $2fa0(at)
-
-L24ab0:	; 80024AB0
 80024AB0	lui    s0, $800a
 80024AB4	lbu    s0, $d2a4(s0)
 80024AB8	nop
@@ -91,8 +90,8 @@ L24b18:	; 80024B18
 80024B8C	sw     zero, $0214(gp)
 
 L24b90:	; 80024B90
-    80024B90	jal    func1cb48 [$8001cb48]
-    80024B94	nop
+    func1cb48; // tutorial check here
+
     80024B98	lw     v0, $0214(gp)
     80024B9C	nop
     80024BA0	sll    a0, v0, $01
@@ -123,7 +122,7 @@ L24b90:	; 80024B90
     {
         if (w[GP + 27c] != S4)
         {
-            if (S0 & 0010)
+            if( S0 & 0010 )
             {
                 A0 = 28;
                 A1 = ce;
@@ -132,7 +131,7 @@ L24b90:	; 80024B90
                 func26f44; // text
 
                 A0 = 80059320;
-                80024C38	jal    func26b70 [$80026b70]
+                func26b70;
 
                 [S1 + 0] = h(20);
                 [S1 + 2] = h(c8);
@@ -145,7 +144,7 @@ L24b90:	; 80024B90
         }
     }
 
-    80024C64	jal    func1f710 [$8001f710]
+    func1f710; // draw tutorial text
 
     V0 = w[GP + b4];
 
@@ -357,198 +356,11 @@ if( h[A1 + 8] != 0 )
     }
 }
 
+
+
 V1 = hu[80062d7e];
 
-if( V1 & 1000 == 0 ) // up not pressed
-{
-    if( V1 & 4000 == 0 ) // down not pressed
-    {
-        if( V1 & 8000 == 0 ) // left not pressed
-        {
-            if( V1 & 2000 == 0 ) // right not pressed
-            {
-                if( V1 & 0008 ) // R1
-                {
-                    [A1 + 2] = h(h[A1 + 2] + b[A1 + d]);
-
-                    if( h[A1 + 6] - b[A1 + d] < h[A1 + 2] )
-                    {
-                        [A1 + 2] = h(h[A1 + 6] - b[A1 + d]);
-                    }
-                    else
-                    {
-                        A0 = 1;
-                        system_menu_sound;
-                    }
-                }
-                else if( V1 & 0004 ) // L1
-                {
-                    [A1 + 2] = h(hu[A1 + 2] - b[A1 + d]);
-
-                    if( hu[A1 + 2] < 0 )
-                    {
-                        [A1 + 2] = h(0);
-                    }
-                    else
-                    {
-                        A0 = 1;
-                        system_menu_sound;
-                    }
-                }
-            }
-            else // right
-            {
-                if( b[A1 + 10] == 0 )
-                {
-                    [A1 + a] = b(b[A1 + a] + 1);
-
-                    if( b[A1 + a] >= b[A1 + c] )
-                    {
-                        [A1 + a] = b(b[A1 + c] - 1);
-                    }
-                    else
-                    {
-                        A0 = 1;
-                        system_menu_sound;
-                    }
-                }
-                else if( b[A1 + 10] == 1 )
-                {
-                    [A1 + a] = b(b[A1 + a] + 1);
-
-                    if( b[A1 + a] >= b[A1 + c] )
-                    {
-                        [A1 + a] = b(0);
-                    }
-
-                    A0 = 1;
-                    system_menu_sound;
-                }
-                else if( b[A1 + 10] == 2 )
-                {
-                    if( ( b[A1 + a] != b[A1 + c] - 1 ) || ( b[A1 + b] != b[A1 + d] - 1 ) || ( h[A1 + 2] != h[A1 + 6] - b[A1 + d] ) )
-                    {
-                        [A1 + a] = b(b[A1 + a] + 1);
-
-                        if( b[A1 + a] >= b[A1 + c] )
-                        {
-                            [A1 + a] = b(0);
-                            [A1 + b] = b(b[A1 + b] + 1);
-
-                            if( b[A1 + b] >= b[A1 + d] )
-                            {
-                                [A1 + b] = b(b[A1 + d] - 1);
-
-                                if( h[A1 + 2] < h[A1 + 6] - b[A1 + d] )
-                                {
-                                    [A1 + f] = b(-1);
-                                    [A1 + 8] = h(2);
-                                }
-                            }
-                        }
-                        A0 = 1;
-                        system_menu_sound;
-                    }
-                }
-            }
-        }
-        else // left
-        {
-            if( b[A1 + 10] == 0 )
-            {
-                [A1 + a] = b(bu[A1 + a] - 1);
-
-                if( b[A1 + a] < 0 )
-                {
-                    [A1 + a] = b(0);
-                }
-
-                A0 = 1;
-                system_menu_sound;
-            }
-            else if( b[A1 + 10] == 1 )
-            {
-                [A1 + a] = b(bu[A1 + a] - 1);
-                if( bu[A1 + a] < 0 )
-                {
-                    [A1 + a] = b(bu[A1 + c] - 1);
-                }
-
-                A0 = 1;
-                system_menu_sound;
-            }
-            else if( b[A1 + 10] == 2 )
-            {
-                if( ( hu[A1 + a] != 0 ) || ( h[A1 + 2] != 0 ) )
-                {
-                    [A1 + a] = b(bu[A1 + a] - 1);
-                    if( bu[A1 + a] < 0 )
-                    {
-                        [A1 + b] = b(bu[A1 + b] - 1);
-                        [A1 + a] = b(bu[A1 + c] - 1);
-
-                        if( bu[A1 + b] < 0 )
-                        {
-                            [A1 + b] = b(0);
-                            V0 = h[A1 + 2];
-                            if( V0 > 0 )
-                            {
-                                [A1 + 2] = h(V0 - 1);
-                                [A1 + f] = b(-3);
-                                [A1 + 8] = h(1);
-                            }
-                        }
-                    }
-
-                    A0 = 1;
-                    system_menu_sound;
-                }
-            }
-        }
-    }
-    else // down
-    {
-        [A1 + b] = b(bu[A1 + b] + 1);
-
-        if( b[A1 + 11] != 0 )
-        {
-            if( b[A1 + 11] >= 0 && b[A1 + 11] < 3 )
-            {
-                if( b[A1 + b] >= b[A1 + d] )
-                {
-                    [A1 + b] = b(0);
-                }
-
-                A0 = 1;
-                system_menu_sound;
-            }
-        }
-        else
-        {
-            if( b[A1 + b] >= b[A1 + d] )
-            {
-                [A1 + b] = b(b[A1 + d] - 1);
-
-                if( h[A1 + 2] < h[A1 + 6] - b[A1 + d] )
-                {
-                    [A1 + f] = b(-1)
-                    [A1 + 8] = h(2);
-
-                    A0 = 1;
-                    system_menu_sound;
-                }
-            }
-            else
-            {
-                A0 = 1;
-                system_menu_sound;
-            }
-        }
-    }
-
-    return;
-}
-else // up
+if( V1 & 1000 ) // up
 {
     [A1 + b] = b(bu[A1 + b] - 1);
 
@@ -585,6 +397,181 @@ else // up
             A0 = 1;
             system_menu_sound;
         }
+    }
+}
+else if( V1 & 4000 ) // down
+{
+    [A1 + b] = b(bu[A1 + b] + 1);
+
+    if( b[A1 + 11] != 0 )
+    {
+        if( b[A1 + 11] >= 0 && b[A1 + 11] < 3 )
+        {
+            if( b[A1 + b] >= b[A1 + d] )
+            {
+                [A1 + b] = b(0);
+            }
+
+            A0 = 1;
+            system_menu_sound;
+        }
+    }
+    else
+    {
+        if( b[A1 + b] >= b[A1 + d] )
+        {
+            [A1 + b] = b(b[A1 + d] - 1);
+
+            if( h[A1 + 2] < h[A1 + 6] - b[A1 + d] )
+            {
+                [A1 + f] = b(-1)
+                [A1 + 8] = h(2);
+
+                A0 = 1;
+                system_menu_sound;
+            }
+        }
+        else
+        {
+            A0 = 1;
+            system_menu_sound;
+        }
+    }
+}
+else if( V1 & 8000 == 0 ) // left
+{
+    if( b[A1 + 10] == 0 )
+    {
+        [A1 + a] = b(bu[A1 + a] - 1);
+
+        if( b[A1 + a] < 0 )
+        {
+            [A1 + a] = b(0);
+        }
+
+        A0 = 1;
+        system_menu_sound;
+    }
+    else if( b[A1 + 10] == 1 )
+    {
+        [A1 + a] = b(bu[A1 + a] - 1);
+        if( bu[A1 + a] < 0 )
+        {
+            [A1 + a] = b(bu[A1 + c] - 1);
+        }
+
+        A0 = 1;
+        system_menu_sound;
+    }
+    else if( b[A1 + 10] == 2 )
+    {
+        if( ( hu[A1 + a] != 0 ) || ( h[A1 + 2] != 0 ) )
+        {
+            [A1 + a] = b(bu[A1 + a] - 1);
+            if( bu[A1 + a] < 0 )
+            {
+                [A1 + b] = b(bu[A1 + b] - 1);
+                [A1 + a] = b(bu[A1 + c] - 1);
+
+                if( bu[A1 + b] < 0 )
+                {
+                    [A1 + b] = b(0);
+                    V0 = h[A1 + 2];
+                    if( V0 > 0 )
+                    {
+                        [A1 + 2] = h(V0 - 1);
+                        [A1 + f] = b(-3);
+                        [A1 + 8] = h(1);
+                    }
+                }
+            }
+
+            A0 = 1;
+            system_menu_sound;
+        }
+    }
+}
+else if( V1 & 2000 ) // right
+{
+    if( b[A1 + 10] == 0 )
+    {
+        [A1 + a] = b(b[A1 + a] + 1);
+
+        if( b[A1 + a] >= b[A1 + c] )
+        {
+            [A1 + a] = b(b[A1 + c] - 1);
+        }
+        else
+        {
+            A0 = 1;
+            system_menu_sound;
+        }
+    }
+    else if( b[A1 + 10] == 1 )
+    {
+        [A1 + a] = b(b[A1 + a] + 1);
+
+        if( b[A1 + a] >= b[A1 + c] )
+        {
+            [A1 + a] = b(0);
+        }
+
+        A0 = 1;
+        system_menu_sound;
+    }
+    else if( b[A1 + 10] == 2 )
+    {
+        if( ( b[A1 + a] != b[A1 + c] - 1 ) || ( b[A1 + b] != b[A1 + d] - 1 ) || ( h[A1 + 2] != h[A1 + 6] - b[A1 + d] ) )
+        {
+            [A1 + a] = b(b[A1 + a] + 1);
+
+            if( b[A1 + a] >= b[A1 + c] )
+            {
+                [A1 + a] = b(0);
+                [A1 + b] = b(b[A1 + b] + 1);
+
+                if( b[A1 + b] >= b[A1 + d] )
+                {
+                    [A1 + b] = b(b[A1 + d] - 1);
+
+                    if( h[A1 + 2] < h[A1 + 6] - b[A1 + d] )
+                    {
+                        [A1 + f] = b(-1);
+                        [A1 + 8] = h(2);
+                    }
+                }
+            }
+            A0 = 1;
+            system_menu_sound;
+        }
+    }
+}
+else if( V1 & 0008 ) // R1
+{
+    [A1 + 2] = h(h[A1 + 2] + b[A1 + d]);
+
+    if( h[A1 + 6] - b[A1 + d] < h[A1 + 2] )
+    {
+        [A1 + 2] = h(h[A1 + 6] - b[A1 + d]);
+    }
+    else
+    {
+        A0 = 1;
+        system_menu_sound;
+    }
+}
+else if( V1 & 0004 ) // L1
+{
+    [A1 + 2] = h(hu[A1 + 2] - b[A1 + d]);
+
+    if( hu[A1 + 2] < 0 )
+    {
+        [A1 + 2] = h(0);
+    }
+    else
+    {
+        A0 = 1;
+        system_menu_sound;
     }
 }
 ////////////////////////////////
@@ -685,7 +672,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
         }
         else // confirm
         {
-            V0 = b[8009a0e5];
+            V0 = b[8009a0c8 + 12 + b];
 
             if(  bu[8009c6e4 + 4f8 + V0] == ff ) // party member slot
             {
@@ -736,13 +723,13 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                 system_menu_sound;
 
                 [GP + 23c] = w(1);
-                [GP + 2d8] = w(b[8009a0f7]);
+                [GP + 2d8] = w(b[8009a0c8 + 2 * 12 + b]);
             }
             else
             {
                 [GP + 23c] = w(0);
 
-                if( w[GP + 2d8] == b[8009a0f7] )
+                if( w[GP + 2d8] == b[8009a0c8 + 2 * 12 + b] )
                 {
                     V1 = w[GP + 2d8];
                     V1 = bu[8009c6e4 + 04f8 + V1 ];
@@ -760,15 +747,15 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     A0 = 1;
                     system_menu_sound;
 
-                    V1 = b[8009a0f7];
+                    V1 = b[8009a0c8 + 2 * 12 + b];
                     V0 = 8009c6e4 + 04f8 + w[GP + 2d8];
                     [V0] = b(bu[8009cbdc + V1]);
                     A0 = bu[V0];
-                    V0 = b[8009a0f7];
+                    V0 = b[8009a0c8 + 2 * 12 + b];
                     [8009cbdc + V0] = b(A0);
 
                     A3 = SP + 38;
-                    A2 = 8009d84c + b[8009a0f7] * 440;
+                    A2 = 8009d84c + b[8009a0c8 + 2 * 12 + b] * 440;
                     T0 = A2 + 440;
 
                     loop23f64:	; 80023F64
@@ -780,7 +767,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                         A3 = A3 + 10;
                     80023F88	bne    a2, t0, loop23f64 [$80023f64]
 
-                    V1 = b[8009a0f7];
+                    V1 = b[8009a0c8 + 2 * 12 + b];
                     A0 = 8009d84c;
                     V0 = V1 * 440;
                     V1 = w[GP + 2d8];
@@ -817,7 +804,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     S2 = SP + 30;
                     A0 = S2;
                     S3 = 100;
-                    S5 = 8009a0f7;
+                    S5 = 8009a0c8 + 2 * 12 + b;
                     S0 = 1;
                     [SP + 30] = h(S3);
                     [SP + 34] = h(S3);
@@ -1374,8 +1361,8 @@ return (A0 / w[80049484]) * a + (A0 % w[80049484]) / w[80049488];
 80023124	sh     zero, $0018(sp)
 80023128	jal    func26a94 [$80026a94]
 8002312C	sh     v1, $001e(sp)
-80023130	lw     v1, $00b4(gp)
-80023134	nop
+V1 = w[GP + b4];
+
 80023138	sltiu  v0, v1, $0007
 S4 = 0;
 8002313C	beq    v0, zero, L234c8 [$800234c8]
@@ -1410,8 +1397,7 @@ L23180:	; 80023180
 800231A4	nop
 800231A8	jalr   v0 ra
 800231AC	addu   a0, zero, zero
-800231B0	ori    v0, zero, $0003
-800231B4	sw     v0, $00b4(gp)
+[GP + b4] = w(3);
 
 L231b8:	; 800231B8
 800231B8	lw     v1, $01dc(gp)
