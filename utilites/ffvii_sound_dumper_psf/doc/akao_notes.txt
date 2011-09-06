@@ -27,3 +27,8 @@ dd if=INSTR.ALL of=binary_gtest.bin bs=1 seek=919552
 dd if=INSTR.DAT of=binary_gtest.bin bs=1 seek=1402880
 dd if=INSTR2.ALL of=binary_gtest.bin bs=1 seek=1411072
 dd if=INSTR2.DAT of=binary_gtest.bin bs=1 seek=1665024
+
+ROUTINE NOTES:
+0x80030ECC - stream parser
+0x80049828 - opcode jump table
+

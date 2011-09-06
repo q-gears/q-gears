@@ -3,11 +3,11 @@
 
 
 
-#include <string>
+#include <boost/filesystem/path.hpp>
 
 
 
-bool walkthrough(std::string a_path, void (*f_cb)(void *, std::string), void *a_data);
+bool walkthrough(boost::filesystem::path a_path, void (*f_cb)(void *, boost::filesystem::path), void *a_data);
 
 
 

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config output_directory="data" music_xml="musics.xml" music_directory="musics" custom_bios="scph1000.bin" ogg_quality="0.5" dump_psf="0" dump_pcm="0" />
+

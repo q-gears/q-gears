@@ -9,17 +9,15 @@ using namespace boost::filesystem;
 
 
 
-bool walkthrough(std::string a_path, void (*f_cb)(void *, std::string), void *a_data)
+bool walkthrough(path a_path, void (*f_cb)(void *, path), void *a_data)
 {
 	bool result = false;
 
-	path dpath(a_path);
-
-	if(exists(dpath) && is_directory(dpath))
+	if(exists(a_path) && is_directory(a_path))
 	{
 		directory_iterator it_end;
-		
-		for(directory_iterator it(dpath); it != it_end; ++it)
+
+		for(directory_iterator it(a_path); it != it_end; ++it)
 		{
 			if(is_directory(it->status()))
 			{
