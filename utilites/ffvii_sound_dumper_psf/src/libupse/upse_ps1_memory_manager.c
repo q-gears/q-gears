@@ -114,7 +114,10 @@ void upse_ps1_memory_reset()
             memset(psxR, 0, 0x80000);
             upse_set_custom_bios(NULL);
         } else {
-            fread(psxR, 1, 0x80000, f);
+            if(fread(psxR, 1, 0x80000, f) != 0x80000) {
+				_DEBUG("opening custom bios failed");
+				upse_set_custom_bios(NULL);
+            }
             fclose(f);
         }
     }

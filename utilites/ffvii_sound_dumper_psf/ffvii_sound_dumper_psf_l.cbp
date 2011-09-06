@@ -35,7 +35,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="libupse" />
+			<Add directory="src/libupse" />
 		</Compiler>
 		<Linker>
 			<Add library="boost_system" />
@@ -45,82 +45,82 @@
 			<Add library="vorbisenc" />
 			<Add library="tinyxml" />
 		</Linker>
-		<Unit filename="libupse/config.h" />
-		<Unit filename="libupse/upse-debug.h" />
-		<Unit filename="libupse/upse-internal.h" />
-		<Unit filename="libupse/upse-ps1-bios-base.h" />
-		<Unit filename="libupse/upse-ps1-bios-private.h" />
-		<Unit filename="libupse/upse-ps1-counters.h" />
-		<Unit filename="libupse/upse-ps1-dma-manager.h" />
-		<Unit filename="libupse/upse-ps1-executive.h" />
-		<Unit filename="libupse/upse-ps1-hal.h" />
-		<Unit filename="libupse/upse-ps1-memory-manager.h" />
-		<Unit filename="libupse/upse-ps1-spu-abstract.h" />
-		<Unit filename="libupse/upse-ps1-spu-adsr-filter.h" />
-		<Unit filename="libupse/upse-ps1-spu-base.h" />
-		<Unit filename="libupse/upse-ps1-spu-dma-handler.h" />
-		<Unit filename="libupse/upse-ps1-spu-register-io.h" />
-		<Unit filename="libupse/upse-ps1-spu-reverb.h" />
-		<Unit filename="libupse/upse-r3000-abstract.h" />
-		<Unit filename="libupse/upse-spu-internal.h" />
-		<Unit filename="libupse/upse-string.h" />
-		<Unit filename="libupse/upse-types.h" />
-		<Unit filename="libupse/upse.h" />
-		<Unit filename="libupse/upse_bios_manager.c">
+		<Unit filename="src/libupse/config.h" />
+		<Unit filename="src/libupse/upse-debug.h" />
+		<Unit filename="src/libupse/upse-internal.h" />
+		<Unit filename="src/libupse/upse-ps1-bios-base.h" />
+		<Unit filename="src/libupse/upse-ps1-bios-private.h" />
+		<Unit filename="src/libupse/upse-ps1-counters.h" />
+		<Unit filename="src/libupse/upse-ps1-dma-manager.h" />
+		<Unit filename="src/libupse/upse-ps1-executive.h" />
+		<Unit filename="src/libupse/upse-ps1-hal.h" />
+		<Unit filename="src/libupse/upse-ps1-memory-manager.h" />
+		<Unit filename="src/libupse/upse-ps1-spu-abstract.h" />
+		<Unit filename="src/libupse/upse-ps1-spu-adsr-filter.h" />
+		<Unit filename="src/libupse/upse-ps1-spu-base.h" />
+		<Unit filename="src/libupse/upse-ps1-spu-dma-handler.h" />
+		<Unit filename="src/libupse/upse-ps1-spu-register-io.h" />
+		<Unit filename="src/libupse/upse-ps1-spu-reverb.h" />
+		<Unit filename="src/libupse/upse-r3000-abstract.h" />
+		<Unit filename="src/libupse/upse-spu-internal.h" />
+		<Unit filename="src/libupse/upse-string.h" />
+		<Unit filename="src/libupse/upse-types.h" />
+		<Unit filename="src/libupse/upse.h" />
+		<Unit filename="src/libupse/upse_bios_manager.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_bios_base.c">
+		<Unit filename="src/libupse/upse_ps1_bios_base.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_counters.c">
+		<Unit filename="src/libupse/upse_ps1_counters.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_dma_manager.c">
+		<Unit filename="src/libupse/upse_ps1_dma_manager.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_executive.c">
+		<Unit filename="src/libupse/upse_ps1_executive.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_hal.c">
+		<Unit filename="src/libupse/upse_ps1_hal.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_memory_manager.c">
+		<Unit filename="src/libupse/upse_ps1_memory_manager.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_spu_adsr_filter.c">
+		<Unit filename="src/libupse/upse_ps1_spu_adsr_filter.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_spu_base.c">
+		<Unit filename="src/libupse/upse_ps1_spu_base.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_spu_dma_handler.c">
+		<Unit filename="src/libupse/upse_ps1_spu_dma_handler.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_spu_register_io.c">
+		<Unit filename="src/libupse/upse_ps1_spu_register_io.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_ps1_spu_reverb.c">
+		<Unit filename="src/libupse/upse_ps1_spu_reverb.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_r3000_abstract.c">
+		<Unit filename="src/libupse/upse_r3000_abstract.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_r3000_bytecode_evaluator.c">
+		<Unit filename="src/libupse/upse_r3000_bytecode_evaluator.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_string.c">
+		<Unit filename="src/libupse/upse_string.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_unpack_psf.c">
+		<Unit filename="src/libupse/upse_unpack_psf.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="libupse/upse_util.c">
+		<Unit filename="src/libupse/upse_util.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="main.cc" />
-		<Unit filename="typedefs.h" />
-		<Unit filename="walkthrough.cc" />
-		<Unit filename="walkthrough.hh" />
+		<Unit filename="src/main.cc" />
+		<Unit filename="src/typedefs.h" />
+		<Unit filename="src/walkthrough.cc" />
+		<Unit filename="src/walkthrough.hh" />
 		<Extensions>
 			<code_completion />
 			<envvars />

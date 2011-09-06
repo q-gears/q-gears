@@ -246,6 +246,8 @@ static upse_psf_t *_upse_load(char *path, int level, int type, upse_iofuncs_t *_
 {
     void *fp;
     upse_exe_header_t tmpHead;
+    tmpHead.t_addr = 0;
+    tmpHead.t_size = 0;
     unsigned char *in, *out = 0;
     u8 head[4];
     u32 reserved;
