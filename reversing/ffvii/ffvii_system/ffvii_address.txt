@@ -23,7 +23,13 @@
 80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
 80062d44 GP
++ 97 []       ??? some type of text.
++ 98 []       colour of tutorial text window.
++ a0 []       ??? some type of text.
++ a2 [][]     x position of tutorial text window.
++ a4 [][]     y position of tutorial text window.
 + b4 [][][][] enable or disable input in menu? we only handle input if this == 1. Tutorial opcode readed if this != 1.
++ b8 []       number of something.
 +150 [][][][] wait tutorial opcode value.
 +174 [][][][] store here pointer to text of tutorial menu.
 +220 [][][][] current main menu level (0 1 or 2)
@@ -58,6 +64,8 @@
 80062fb8 [][]     looks like reverberation power.
 
 80062fea [][][][] used as some tempo modificator for AKAO sequenser.
+
+800707c0 font width data.
 
 80075f28 INSTR.DAT number of struct with size 0x40
 +00 [][][][] start offset.

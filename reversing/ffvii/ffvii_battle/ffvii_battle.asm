@@ -34467,7 +34467,7 @@ Lddd34:	; 800DDD34
 800DDD88	lw     v0, $0000(s1)
 800DDD8C	addu   a0, s3, zero
 800DDD90	addiu  v0, v0, $0040
-800DDD94	jal    func26b70 [$80026b70]
+800DDD94	jal    system_get_single_string_width [$80026b70]
 800DDD98	sw     v0, $0000(s1)
 800DDD9C	addu   s2, v0, zero
 800DDDA0	srl    s0, s2, $1f
@@ -40303,7 +40303,7 @@ Le2ed8:	; 800E2ED8
 800E2F10	lbu    a1, $004c(v0)
 800E2F14	jal    func15248 [$80015248]
 800E2F18	ori    a2, zero, $0008
-800E2F1C	jal    func26b70 [$80026b70]
+800E2F1C	jal    system_get_single_string_width [$80026b70]
 800E2F20	addu   a0, v0, zero
 800E2F24	sw     v0, $0020(sp)
 
@@ -43707,7 +43707,7 @@ Le5d58:	; 800E5D58
 800E5DC0	nop
 800E5DC4	lui    s0, $800f
 800E5DC8	addiu  s0, s0, $34a6
-800E5DCC	jal    func26b70 [$80026b70]
+800E5DCC	jal    system_get_single_string_width [$80026b70]
 800E5DD0	addu   a0, s0, zero
 800E5DD4	srl    v1, v0, $1f
 800E5DD8	addu   v1, v1, v0
@@ -43779,7 +43779,7 @@ Le5eb4:	; 800E5EB4
 Le5ebc:	; 800E5EBC
 800E5EBC	lui    s0, $800f
 800E5EC0	addiu  s0, s0, $34bc
-800E5EC4	jal    func26b70 [$80026b70]
+800E5EC4	jal    system_get_single_string_width [$80026b70]
 800E5EC8	addu   a0, s0, zero
 800E5ECC	srl    v1, v0, $1f
 800E5ED0	addu   v1, v1, v0
@@ -44470,7 +44470,7 @@ funce6820:	; 800E6820
 800E6824	sw     ra, $0010(sp)
 800E6828	lui    a0, $800f
 800E682C	addiu  a0, a0, $384a
-800E6830	jal    func26b70 [$80026b70]
+800E6830	jal    system_get_single_string_width [$80026b70]
 800E6834	nop
 800E6838	lw     ra, $0010(sp)
 800E683C	addiu  sp, sp, $0018

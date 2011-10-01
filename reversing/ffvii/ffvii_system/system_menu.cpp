@@ -92,31 +92,14 @@ L24b18:	; 80024B18
 L24b90:	; 80024B90
     func1cb48; // tutorial check here
 
-    80024B98	lw     v0, $0214(gp)
-    80024B9C	nop
-    80024BA0	sll    a0, v0, $01
-    80024BA4	addu   a0, a0, v0
-    80024BA8	sll    a0, a0, $02
-    80024BAC	addu   a0, a0, v0
-    80024BB0	sll    a0, a0, $0a
-    80024BB4	lui    v0, $8007
-    80024BB8	addiu  v0, v0, $7f64
-    80024BBC	jal    func269c0 [$800269c0]
-    80024BC0	addu   a0, a0, v0
-    80024BC4	lw     v0, $0214(gp)
-    80024BC8	nop
-    80024BCC	sll    a0, v0, $02
-    80024BD0	addu   a0, a0, v0
-    80024BD4	sll    a0, a0, $04
-    80024BD8	lui    v0, $8007
-    80024BDC	addiu  v0, v0, $9844 (=-$67bc)
-    80024BE0	addu   a0, a0, v0
-    80024BE4	sw     a0, $0160(gp)
+    [80062f24] = w(80077f64 + w[GP + 214] * 3400);
+
+    A0 = 80069844 + w[GP + 214] * 50;
+    [GP + 160] = w(A0);
+    A1 = 14;
     80024BE8	jal    func4418c [$8004418c]
-    80024BEC	ori    a1, zero, $0014
-    80024BF0	lw     a0, $0160(gp)
-    80024BF4	jal    func26a00 [$80026a00]
-    80024BF8	nop
+
+    [GP + 280] = w(w[GP + 160]);
 
     if (w[80062fa0] != 0)
     {
@@ -130,13 +113,13 @@ L24b90:	; 80024B90
                 A3 = 4;
                 func26f44; // text
 
-                A0 = 80059320;
-                func26b70;
+                A0 = 80049320;
+                system_get_single_string_width;
 
-                [S1 + 0] = h(20);
-                [S1 + 2] = h(c8);
-                [S1 + 4] = h(V0 + 10);
-                [S1 + 6] = h(18);
+                [S1 + 0] = h(20); // x
+                [S1 + 2] = h(c8); // y
+                [S1 + 4] = h(V0 + 10); // width
+                [S1 + 6] = h(18); // height
 
                 A0 = S1;
                 func1e040;
