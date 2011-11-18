@@ -29,7 +29,7 @@ Entity[ "Cloud" ] = {
         i = 0;
         local cloud = entity_manager:get_entity( "Cloud" )
         while i < 5 do
-            cloud:play_animation( "idle" )
+            cloud:play_animation( "Idle" )
             i = i + 1
             cloud:animation_sync()
         end
@@ -41,7 +41,7 @@ Entity[ "Cloud" ] = {
         i = 0;
         local cloud = entity_manager:get_entity( "Cloud" )
         while i < 5 do
-            cloud:play_animation( "walk" )
+            cloud:play_animation( "Walk" )
             i = i + 1
             cloud:animation_sync()
         end
@@ -53,7 +53,7 @@ Entity[ "Cloud" ] = {
         i = 0;
         local cloud = entity_manager:get_entity( "Cloud" )
         while i < 5 do
-            cloud:play_animation( "run" )
+            cloud:play_animation( "Run" )
             i = i + 1
             cloud:animation_sync()
         end
@@ -65,7 +65,7 @@ Entity[ "Cloud" ] = {
         i = 0;
         local cloud = entity_manager:get_entity( "Cloud" )
         while i < 5 do
-            cloud:play_animation( "jump" )
+            cloud:play_animation( "Jump" )
             i = i + 1
             cloud:animation_sync()
         end
@@ -77,7 +77,7 @@ Entity[ "Cloud" ] = {
         i = 0;
         local cloud = entity_manager:get_entity( "Cloud" )
         while i < 5 do
-            cloud:play_animation( "talk_no" )
+            cloud:play_animation( "TalkNo" )
             i = i + 1
             cloud:animation_sync()
         end
@@ -91,7 +91,7 @@ Entity[ "Cloud" ] = {
 Entity[ "TreasureChest" ] = {
     on_start = function()
         local chest = entity_manager:get_entity( "TreasureChest" )
-        chest:play_animation_stop( "idle" )
+        chest:play_animation_stop( "Idle" )
         return 0
     end,
 }

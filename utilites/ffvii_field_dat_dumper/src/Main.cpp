@@ -102,9 +102,9 @@ main( int argc, char *argv[] )
     {
         DatFile dat( "data/en/" + fields[ f ].name + ".dat" );
         MimFile mim( "data/en/" + fields[ f ].name + ".mim" );
-        dat.DumpScriptData( "export_en/" + fields[ f ].name + "_script.txt" );
-        dat.DumpTextData( "export_en/" + fields[ f ].name + "_text.txt", true );
-        dat.DumpWalkmeshData( "export_en/" + fields[ f ].name + "_wm.xml" );
+        dat.DumpScriptData(  "export_en/", fields[ f ] );
+        dat.DumpTextData( "export_en/", fields[ f ], true );
+        dat.DumpWalkmeshData( "export_en/", fields[ f ] );
         dat.DumpBackground( "export_en/", fields[ f ], mim );
     }
 
@@ -112,7 +112,7 @@ main( int argc, char *argv[] )
 
 
 
-    LOGGER->Log("===================== Stop the game!!!");
+    LOGGER->Log( "===================== Stop the game!!!" );
 
 
 

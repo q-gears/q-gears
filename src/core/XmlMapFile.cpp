@@ -3,6 +3,7 @@
 #include "EntityManager.h"
 #include "Logger.h"
 #include "ScriptManager.h"
+#include "XmlBackground2DFile.h"
 #include "XmlWalkmeshFile.h"
 
 
@@ -40,6 +41,15 @@ XmlMapFile::LoadMap()
             if( name != "" )
             {
                 XmlWalkmeshFile file( "./data/" + name );
+                file.Load();
+            }
+        }
+        else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "background2d" )
+        {
+            Ogre::String name = GetString( node, "file_name" );
+            if( name != "" )
+            {
+                XmlBackground2DFile file( "./data/" + name );
                 file.Load();
             }
         }

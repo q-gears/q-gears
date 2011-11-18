@@ -3,6 +3,7 @@
 
 #include <OgreSingleton.h>
 
+#include "Background2D.h"
 #include "Entity.h"
 #include "Walkmesh.h"
 
@@ -19,6 +20,7 @@ public:
     void Clear();
 
     Walkmesh* GetWalkmesh();
+    Background2D* GetBackground2D();
     void AddEntityModel( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& direction );
     void AddEntityScript( const Ogre::String& name );
 
@@ -35,6 +37,7 @@ private:
 
 private:
     Walkmesh m_Walkmesh;
+    Background2D m_Background2D;
     std::vector< Entity* > m_EntityModels;
     std::vector< Ogre::String > m_EntityScripts;
 

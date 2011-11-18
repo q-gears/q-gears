@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <map>
+    <2dbackground file_name="startmap_bg.xml" />
     <walkmesh file_name="startmap_wm.xml" />
     <script file_name="startmap.lua" />
     <texts>

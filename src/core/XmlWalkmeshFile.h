@@ -1,7 +1,6 @@
 #ifndef XML_WALKMESH_FILE_H
 #define XML_WALKMESH_FILE_H
 
-#include "Walkmesh.h"
 #include "XmlFile.h"
 
 

@@ -38,8 +38,7 @@ XmlFontFile::LoadFont()
     if( name != "" && image != "" && size.x != 0 && size.y != 0 )
     {
         UiFont* font = new UiFont( name );
-        font->SetImageName( image );
-        font->SetImageSize( ( int )size.x, ( int )size.y );
+        font->SetImage( image, ( int )size.x, ( int )size.y );
         font->SetHeight( height );
 
         node = node->FirstChild();

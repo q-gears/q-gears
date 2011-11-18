@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="..\common\Logger.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="599" topLine="0" />
+	<File name="..\common\Logger.h" open="0" top="0" tabpos="0">
+		<Cursor position="599" topLine="0" />
 	</File>
-	<File name="..\common\Surface.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="3004" topLine="107" />
+	<File name="..\common\Surface.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3004" topLine="107" />
 	</File>
-	<File name="..\common\Surface.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="294" topLine="0" />
+	<File name="..\common\Surface.h" open="0" top="0" tabpos="0">
+		<Cursor position="294" topLine="0" />
 	</File>
-	<File name="src\DatFile.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="124487" topLine="2797" />
+	<File name="src\DatFile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="138798" topLine="3109" />
 	</File>
-	<File name="src\DatFile.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2286" topLine="35" />
+	<File name="src\DatFile.h" open="0" top="0" tabpos="2">
+		<Cursor position="830" topLine="18" />
 	</File>
-	<File name="src\Main.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2545" topLine="74" />
+	<File name="src\Main.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="2545" topLine="74" />
 	</File>
-	<File name="src\Main.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="113" topLine="0" />
+	<File name="src\Main.h" open="0" top="0" tabpos="3">
+		<Cursor position="113" topLine="0" />
 	</File>
-	<File name="src\MimFile.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8265" topLine="222" />
+	<File name="src\MimFile.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="8265" topLine="216" />
 	</File>
-	<File name="src\MimFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="498" topLine="0" />
+	<File name="src\MimFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="498" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

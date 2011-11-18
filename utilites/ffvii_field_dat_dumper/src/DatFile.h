@@ -1,6 +1,7 @@
 #ifndef DATFILE_H
 #define DATFILE_H
 
+#include "../../common/Logger.h"
 #include "../../common/LzsFile.h"
 #include "../../common/Surface.h"
 #include "Main.h"
@@ -38,9 +39,9 @@ public:
     DatFile( u8* buffer, const u32 offset, const u32 length );
     virtual ~DatFile();
 
-    void DumpTextData( const Ogre::String& export_file, bool english );
-    void DumpScriptData( const Ogre::String& export_file );
-    void DumpWalkmeshData( const Ogre::String& export_file );
+    void DumpTextData( const Ogre::String& export_path, const Field& field, bool english );
+    void DumpScriptData( const Ogre::String& export_path, const Field& field );
+    void DumpWalkmeshData( const Ogre::String& export_path, const Field& field );
     void DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim );
     static void DumpSoundOpcodesData( const Ogre::String& export_file );
 
@@ -57,7 +58,7 @@ public:
     Ogre::String ArgumentString( int script, int number );
     Ogre::String OffsetString( int val );
 
-    void AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index, MimFile& mim );
+    void AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index, MimFile& mim, Logger* export_text );
 
 private:
     std::vector< int > m_Dialogs;

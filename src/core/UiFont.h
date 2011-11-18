@@ -26,10 +26,8 @@ public:
 
     const Ogre::String GetName() const;
 
-    void SetImageName( const Ogre::String& image );
+    void SetImage( const Ogre::String& image, const int width, const int height );
     const Ogre::String GetImageName() const;
-
-    void SetImageSize( const int width, const int height );
     const int GetImageWidth() const;
     const int GetImageHeight() const;
 

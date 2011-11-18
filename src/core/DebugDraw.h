@@ -46,9 +46,6 @@ private:
     void CreateTextVertexBuffer();
     void DestroyTextVertexBuffer();
 
-    void CreateVertexBuffer();
-    void DestroyVertexBuffer();
-
 private:
     Ogre::SceneManager* m_SceneManager;
     Ogre::RenderSystem* m_RenderSystem;

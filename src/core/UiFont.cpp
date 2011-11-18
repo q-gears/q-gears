@@ -30,9 +30,11 @@ UiFont::GetName() const
 
 
 void
-UiFont::SetImageName( const Ogre::String& image )
+UiFont::SetImage( const Ogre::String& image, const int width, const int height )
 {
     m_ImageName = image;
+    m_ImageWidth = width;
+    m_ImageHeight = height;
 }
 
 
@@ -41,15 +43,6 @@ const Ogre::String
 UiFont::GetImageName() const
 {
     return m_ImageName;
-}
-
-
-
-void
-UiFont::SetImageSize( const int width, const int height )
-{
-    m_ImageWidth = width;
-    m_ImageHeight = height;
 }
 
 

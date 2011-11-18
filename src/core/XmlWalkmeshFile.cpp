@@ -2,7 +2,7 @@
 
 #include "EntityManager.h"
 #include "Logger.h"
-
+#include "Walkmesh.h"
 
 
 

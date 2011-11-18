@@ -1,5 +1,4 @@
 #include "DatFile.h"
-#include "../../common/Logger.h"
 
 #include <OgreStringConverter.h>
 #include <OgreVector3.h>
@@ -234,18 +233,18 @@ DatFile::~DatFile()
 
 
 void
-DatFile::DumpTextData(const Ogre::String &export_file, bool english)
+DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool english )
 {
-    std::sort(m_Dialogs.begin(), m_Dialogs.end());
-    m_Dialogs.erase(std::unique(m_Dialogs.begin(), m_Dialogs.end()), m_Dialogs.end());
+    std::sort( m_Dialogs.begin(), m_Dialogs.end() );
+    m_Dialogs.erase( std::unique( m_Dialogs.begin(), m_Dialogs.end()), m_Dialogs.end() );
 
-    Logger* export_text = new Logger(export_file);
+    Logger* export_text = new Logger( export_path + "maps/field/" + field.name + "_text.txt" );
 
     // get sector 1 offset (scripts and dialog)
     u32 offset_to_sector  = 0x1C;
-    u16 offset_to_dialogs = GetU16LE(offset_to_sector + 0x04);
+    u16 offset_to_dialogs = GetU16LE( offset_to_sector + 0x04 );
 
-    std::vector<unsigned char> dialog;
+    std::vector< unsigned char > dialog;
     dialog.push_back(0xFF);
     dialog.push_back(0xFE);
 
@@ -256,7 +255,7 @@ DatFile::DumpTextData(const Ogre::String &export_file, bool english)
 
         export_text->Log(dialog);
         dialog.clear();
-        export_text->LogW("<dialog id=\"" + ToIntString(m_Dialogs[i]) + "\">");
+        export_text->LogW( "<dialog id=\"" + ToIntString(m_Dialogs[i]) + "\">" );
 
         for (unsigned char temp = 0x00; ; ++offset)
         {
@@ -552,32 +551,32 @@ DatFile::DumpTextData(const Ogre::String &export_file, bool english)
 
 
 void
-DatFile::DumpScriptData(const Ogre::String &export_file)
+DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 {
-    Logger* export_script = new Logger(export_file);
+    Logger* export_script = new Logger( export_path + "maps/field/" + field.name + "_script.txt" );
 
     // get sector 1 offset (scripts and dialog)
-    u32 start_address = GetU32LE(0);
+    u32 start_address = GetU32LE( 0 );
     u32 offset_to_sector       = 0x1c;
 
-    u8  number_of_entity        = GetU8(offset_to_sector + 0x02);
-    u16 string_offset           = GetU16LE(offset_to_sector + 0x04);
-    u16 number_of_extra_offsets = GetU16LE(offset_to_sector + 0x06);
+    u8  number_of_entity        = GetU8( offset_to_sector + 0x02 );
+    u16 string_offset           = GetU16LE( offset_to_sector + 0x04 );
+    u16 number_of_extra_offsets = GetU16LE( offset_to_sector + 0x06 );
 
-    std::vector<Ogre::String> entity_list;
+    std::vector< Ogre::String > entity_list;
 
-    for (u8 i = 0; i < number_of_entity; ++i)
+    for( u8 i = 0; i < number_of_entity; ++i )
     {
         // get entity name
-        Ogre::String name = Ogre::String(reinterpret_cast<char*>(m_Buffer) + offset_to_sector + 0x20 + i * 0x08);
-        if (name == "")
+        Ogre::String name = Ogre::String( reinterpret_cast< char* >( m_Buffer ) + offset_to_sector + 0x20 + i * 0x08 );
+        if( name == "" )
         {
-            name = "unnamed_" + ToIntString(i);
+            name = "unnamed_" + ToIntString( i );
         }
-        entity_list.push_back(name);
+        entity_list.push_back( name );
     }
 
-    for (u8 i = 0; i < number_of_entity; ++i)
+    for( u8 i = 0; i < number_of_entity; ++i )
     {
         export_script->Log(entity_list[i] + "\n");
         u32 prev_script = 0;
@@ -2203,9 +2202,9 @@ DatFile::DumpScriptData(const Ogre::String &export_file)
                         " );\n"
                     );
 
-                    AdvanceScript(2, script, end);
+                    AdvanceScript( 2, script, end );
                 }
-                else if (opcode == 0xD3) // SLINE
+                else if( opcode == 0xD3 ) // SLINE
                 {
                     u8 type = GetU8(script + 2);
 
@@ -2522,47 +2521,47 @@ DatFile::DumpScriptData(const Ogre::String &export_file)
 
 
 void
-DatFile::DumpWalkmeshData(const Ogre::String &export_file)
+DatFile::DumpWalkmeshData( const Ogre::String& export_path, const Field& field )
 {
-    Logger* export_script = new Logger(export_file);
-    export_script->Log("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<walkmesh>\n");
+    Logger* export_script = new Logger( export_path + "/maps/field/" + field.name + "_wm.xml" );
+    export_script->Log( "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<walkmesh>\n" );
 
     // get sector 2 offset (walkmesh)
-    u32 offset_to_walkmesh = 0x1C + GetU32LE(0x04) - GetU32LE(0x00);
-    u32 number_of_poly = GetU32LE(offset_to_walkmesh);
+    u32 offset_to_walkmesh = 0x1C + GetU32LE( 0x04 ) - GetU32LE( 0x00 );
+    u32 number_of_poly = GetU32LE( offset_to_walkmesh );
 
     int start_walkmesh = offset_to_walkmesh + 0x04;
     int start_access   = offset_to_walkmesh + 0x04 + number_of_poly * 0x18;
 
     Ogre::Vector3 A, B, C;
 
-    for (u32 i = 0; i < number_of_poly; ++i)
+    for( u32 i = 0; i < number_of_poly; ++i )
     {
-        A.x = static_cast<s16>(GetU16LE(start_walkmesh + 0x00)) / 128.0f;
-        A.y = static_cast<s16>(GetU16LE(start_walkmesh + 0x02)) / 128.0f;
-        A.z = static_cast<s16>(GetU16LE(start_walkmesh + 0x04)) / 128.0f;
+        A.x = static_cast< s16 >( GetU16LE( start_walkmesh + 0x00 ) ) / 128.0f;
+        A.y = static_cast< s16 >( GetU16LE( start_walkmesh + 0x02 ) ) / 128.0f;
+        A.z = static_cast< s16 >( GetU16LE( start_walkmesh + 0x04 ) ) / 128.0f;
 
-        B.x = static_cast<s16>(GetU16LE(start_walkmesh + 0x08)) / 128.0f;
-        B.y = static_cast<s16>(GetU16LE(start_walkmesh + 0x0A)) / 128.0f;
-        B.z = static_cast<s16>(GetU16LE(start_walkmesh + 0x0C)) / 128.0f;
+        B.x = static_cast< s16 >( GetU16LE( start_walkmesh + 0x08 ) ) / 128.0f;
+        B.y = static_cast< s16 >( GetU16LE( start_walkmesh + 0x0A ) ) / 128.0f;
+        B.z = static_cast< s16 >( GetU16LE( start_walkmesh + 0x0C ) ) / 128.0f;
 
-        C.x = static_cast<s16>(GetU16LE(start_walkmesh + 0x10)) / 128.0f;
-        C.y = static_cast<s16>(GetU16LE(start_walkmesh + 0x12)) / 128.0f;
-        C.z = static_cast<s16>(GetU16LE(start_walkmesh + 0x14)) / 128.0f;
+        C.x = static_cast< s16 >( GetU16LE( start_walkmesh + 0x10 ) ) / 128.0f;
+        C.y = static_cast< s16 >( GetU16LE( start_walkmesh + 0x12 ) ) / 128.0f;
+        C.z = static_cast< s16 >( GetU16LE( start_walkmesh + 0x14 ) ) / 128.0f;
 
         export_script->Log(
             "    <triangle a=\"" +
-            Ogre::StringConverter::toString(A) +
+            Ogre::StringConverter::toString( A ) +
             "\" b=\"" +
-            Ogre::StringConverter::toString(B) +
+            Ogre::StringConverter::toString( B ) +
             "\" c=\"" +
-            Ogre::StringConverter::toString(C) +
+            Ogre::StringConverter::toString( C ) +
             "\" a_b=\"" +
-            ToIntString((s16)GetU16LE(start_access + 0x00)) +
+            ToIntString( ( s16 )GetU16LE( start_access + 0x00 ) ) +
             "\" b_c=\"" +
-            ToIntString((s16)GetU16LE(start_access + 0x02)) +
+            ToIntString( ( s16 )GetU16LE( start_access + 0x02 ) ) +
             "\" c_a=\"" +
-            ToIntString((s16)GetU16LE(start_access + 0x04)) +
+            ToIntString( ( s16 )GetU16LE( start_access + 0x04 ) ) +
             "\"/>\n"
         );
 
@@ -2571,16 +2570,16 @@ DatFile::DumpWalkmeshData(const Ogre::String &export_file)
         start_access   += 0x06;
     }
 
-    export_script->Log("</walkmesh>");
+    export_script->Log( "</walkmesh>" );
     delete export_script;
 }
 
 
 
 void
-DatFile::DumpSoundOpcodesData(const Ogre::String& export_file)
+DatFile::DumpSoundOpcodesData( const Ogre::String& export_file )
 {
-    std::sort(m_SoundOpcodes.begin(), m_SoundOpcodes.end());
+    std::sort( m_SoundOpcodes.begin(), m_SoundOpcodes.end() );
     m_SoundOpcodes.erase(std::unique(m_SoundOpcodes.begin(), m_SoundOpcodes.end()), m_SoundOpcodes.end());
 
     Logger* export_sound = new Logger(export_file);
@@ -2823,10 +2822,13 @@ DatFile::OffsetString(int val)
 void
 DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim )
 {
-    Logger* export_text = new Logger( export_path + field.name + "_bg.xml" );
+    Logger* export_text = new Logger( export_path + "maps/field/" + field.name + "_bg.xml" );
 
     int width = field.tex_width;
     int height = field.tex_height;
+
+    export_text->Log( "<background2d image=\"maps/field/" + field.name + ".png\">\n" );
+
     full_image = CreateSurface( width, height );
     x_32 = 0; y_32 = 0;
     x_16 = 0; y_16 = 0;
@@ -2890,7 +2892,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             u16 clut_x = ( GetU16LE( s2 + 0x06 ) & 0x003f ) << 4;
 
             LOGGER->Log( "Add layer 1 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + ")\n" );
-            AddTile( 0, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, 0, 0, 0, mim );
+            AddTile( 0, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 999, 0, 0, 0, mim, export_text );
             s2 += 0x08;
         }
     }
@@ -2924,7 +2926,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             u8  index     =   GetU8( s4 + 0x0d );
 
             LOGGER->Log( "Add layer 2 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Depth " + ToIntString( distance ) + ". Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s4 + 0x0c), 4, '0' ) + "\n" );
-            AddTile( 1, dest_x, dest_y, src_x, src_y, clut_x, clut_y, bpp, page_x, page_y, distance, blending, animation, index, mim );
+            AddTile( 1, dest_x, dest_y, src_x, src_y, clut_x, clut_y, bpp, page_x, page_y, distance, blending, animation, index, mim, export_text );
             s4 += 0x0e;
         }
     }
@@ -2962,7 +2964,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             u8  animation =   GetU8( s5 + 0x08 ) & 0x0f;
             u8  index     =   GetU8( s5 + 0x09 );
             LOGGER->Log( "Add layer 3 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
-            AddTile( 2, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim );
+            AddTile( 2, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim, export_text );
             s5 += 0x0a;
         }
     }
@@ -3001,7 +3003,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             u8  index     =   GetU8( s5 + 0x09 );
 
             LOGGER->Log( "Add layer 4 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
-            AddTile( 3, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim );
+            AddTile( 3, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim, export_text );
             s5 += 0x0a;
         }
     }
@@ -3028,15 +3030,18 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
     Ogre::Image image;
     image.loadDynamicImage( ( Ogre::uchar* )pb.data, width, height, Ogre::PF_R8G8B8A8 );
-    image.save( export_path + field.name + ".png" );
+    image.save( export_path + "maps/field/" + field.name + ".png" );
     buffer->unlock();
     Ogre::TextureManager::getSingleton().remove( "DynaTex" );
+
+    export_text->Log( "</background2d>" );
+    delete export_text;
 }
 
 
 
 void
-DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index, MimFile& mim )
+DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index, MimFile& mim, Logger* export_text )
 {
     SurfaceTexData surface;
     surface.page_x = page_x;
@@ -3110,7 +3115,30 @@ DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const
             n_16 = 0;
         }
     }
+
     CopyToSurface( full_image, x, y, sub_image );
+
+    export_text->Log(
+                        "    <tile destination=\"" +
+                        Ogre::StringConverter::toString( dest_x * 3 ) +
+                        " " +
+                        Ogre::StringConverter::toString( dest_y * 3 ) +
+                        "\" width=\"" +
+                        Ogre::StringConverter::toString( sub_image->width * 3 ) +
+                        "\" height=\"" +
+                        Ogre::StringConverter::toString( sub_image->height * 3 ) +
+                        "\" uv1=\"" +
+                        Ogre::StringConverter::toString( x / ( float ) full_image->width ) +
+                        " " +
+                        Ogre::StringConverter::toString( y / ( float ) full_image->height ) +
+                        "\" uv2=\"" +
+                        Ogre::StringConverter::toString( ( x + sub_image->width ) / ( float ) full_image->width ) +
+                        " " +
+                        Ogre::StringConverter::toString( ( y + sub_image->height ) / ( float ) full_image->height ) +
+                        "\" depth=\"" +
+                        Ogre::StringConverter::toString( depth / 1024.0f ) +
+                        "\" />\n"
+    );
 
     delete sub_image;
 }

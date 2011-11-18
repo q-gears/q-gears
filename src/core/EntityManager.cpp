@@ -139,6 +139,14 @@ EntityManager::GetWalkmesh()
 
 
 
+Background2D*
+EntityManager::GetBackground2D()
+{
+    return &m_Background2D;
+}
+
+
+
 void
 EntityManager::AddEntityModel( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& direction )
 {
