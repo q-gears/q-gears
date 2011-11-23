@@ -389,6 +389,27 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
 
 
 
+                Ogre::String alpha = GetString( node, "alpha", "" );
+                if( alpha != "" )
+                {
+                    Ogre::StringVector key_frame = Ogre::StringUtil::split( alpha, "," );
+                    for( int i = 0; i < key_frame.size(); ++i )
+                    {
+                        Ogre::StringUtil::trim( key_frame[ i ] );
+
+                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                        if( data.size() > 1 )
+                        {
+                            UiKeyFrameFloat key;
+                            key.time = Ogre::StringConverter::parseReal( data[ 0 ] );
+                            key.value = Ogre::StringConverter::parseReal( data[ 1 ] );
+                            animation->AddAlphaKeyFrame( key );
+                        }
+                    }
+                }
+
+
+
                 widget->AddAnimation( animation );
             }
         }

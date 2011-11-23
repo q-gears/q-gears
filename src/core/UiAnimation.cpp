@@ -183,6 +183,44 @@ UiAnimation::AddTime( const float time )
 
         m_Widget->SetRotation( value );
     }
+
+
+
+    if( m_Alpha.size() > 0 )
+    {
+        float min_value = m_Alpha[ 0 ].value;
+        float max_value = min_value;
+        float min = 0;
+        float max = m_Length;
+
+        for( int i = 0; i < m_Alpha.size(); ++i )
+        {
+            if( m_Alpha[ i ].time < m_Time && m_Alpha[ i ].time > min )
+            {
+                min_value = m_Alpha[ i ].value;
+                min = m_Alpha[ i ].time;
+            }
+
+            if( m_Alpha[ i ].time >= m_Time && m_Alpha[ i ].time <= max )
+            {
+                max_value = m_Alpha[ i ].value;
+                max = m_Alpha[ i ].time;
+            }
+        }
+
+        float value;
+
+        if( m_Time == 0 )
+        {
+            value = min_value;
+        }
+        else
+        {
+            value = min_value + ( max_value - min_value ) * ( ( m_Time - min ) / ( max - min ) );
+        }
+
+        m_Widget->SetAlpha( value );
+    }
 }
 
 
@@ -255,4 +293,12 @@ void
 UiAnimation::AddRotationKeyFrame( const UiKeyFrameFloat& key_frame )
 {
     m_Rotation.push_back( key_frame );
+}
+
+
+
+void
+UiAnimation::AddAlphaKeyFrame( const UiKeyFrameFloat& key_frame )
+{
+    m_Alpha.push_back( key_frame );
 }

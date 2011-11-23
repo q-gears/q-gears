@@ -2,9 +2,21 @@
 Q-Gears v0.21 (3rd run wild) | 2011-12-2?
 --------------------------------------------------------------------------------
 
+2011-11-23
+----------
+* [Background] Increase buffer for background from 256 to 1024 tiles. [Akari]
+* [Debug] Increase buffer for 3d lines from 128 to 1024 lines. [Akari]
+
+2011-11-22
+----------
+* [Content] Create field map changer and helper function "load_field_map_request". [Akari]
+* [UI] Create fade screen effect. [Akari]
+* [Script] Add system table to handle and customize system specific things. [Akari]
+
 2011-11-18
 ----------
-* [Background] Add 2d background base draw.
+* [UI] Add alpha to animatable parameter. [Akari]
+* [Background] Add 2d background base draw. [Akari]
 
 ================================================================================
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-10

@@ -4,6 +4,8 @@
 #include "EntityManager.h"
 #include "UiManager.h"
 #include "UiWidget.h"
+#include "XmlMapFile.h"
+#include "XmlMapsFile.h"
 
 
 
@@ -16,12 +18,27 @@ ScriptPrint( const char* text )
 
 
 void
+ScriptMap( const char* text )
+{
+    EntityManager::getSingleton().Clear();
+
+    XmlMapsFile xml( "./data/maps.xml" );
+    Ogre::String file_name = xml.GetMapFileNameByName( text );
+
+    XmlMapFile xml_map( "./data/" + file_name );
+    xml_map.LoadMap();
+}
+
+
+
+void
 ScriptManager::InitBinds()
 {
     // globals
     luabind::module( m_LuaState )
     [
-        luabind::def( "print", &ScriptPrint )
+        luabind::def( "print", ( void( * )( const char* ) ) &ScriptPrint ),
+        luabind::def( "map", ( void( * )( const char* ) ) &ScriptMap )
     ];
 
     // entity access
@@ -56,7 +73,7 @@ ScriptManager::InitBinds()
     luabind::module( m_LuaState )
     [
         luabind::class_< EntityManager >( "EntityManager" )
-            .def( "get_entity", ( Entity* ( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntity )
+            .def( "get_entity", ( Entity*( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntity )
     ];
 
     // ui widget access
@@ -70,7 +87,7 @@ ScriptManager::InitBinds()
             .def( "play_animation", ( void( UiWidget::* )( const char*, const float, const float ) ) &UiWidget::ScriptPlayAnimation )
             .def( "play_animation_stop", ( void( UiWidget::* )( const char*, const float, const float ) ) &UiWidget::ScriptPlayAnimationStop )
             .def( "set_default_animation", ( void( UiWidget::* )( const char* ) ) &UiWidget::ScriptSetDefaultAnimation )
-            .def( "animation_sync", ( int( UiWidget::* )()) &UiWidget::ScriptAnimationSync, luabind::yield )
+            .def( "animation_sync", ( int( UiWidget::* )() ) &UiWidget::ScriptAnimationSync, luabind::yield )
             .def( "set_colour", ( void( UiWidget::* )( const float, const float, const float ) ) &UiWidget::SetColour )
             .def( "set_alpha", ( void( UiWidget::* )( const float ) ) &UiWidget::SetAlpha )
             .def( "set_z", ( void( UiWidget::* )( const float ) ) &UiWidget::SetZ )
@@ -80,7 +97,7 @@ ScriptManager::InitBinds()
     luabind::module( m_LuaState )
     [
         luabind::class_< UiManager >( "UiManager" )
-            .def( "get_widget", ( UiWidget* ( UiManager::* )( const char* ) ) &UiManager::ScriptGetWidget )
+            .def( "get_widget", ( UiWidget*( UiManager::* )( const char* ) ) &UiManager::ScriptGetWidget )
     ];
 
     // script access

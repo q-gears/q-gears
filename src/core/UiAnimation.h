@@ -51,6 +51,7 @@ public:
     void AddXKeyFrame( const UiKeyFrameVector2& key_frame );
     void AddYKeyFrame( const UiKeyFrameVector2& key_frame );
     void AddRotationKeyFrame( const UiKeyFrameFloat& key_frame );
+    void AddAlphaKeyFrame( const UiKeyFrameFloat& key_frame );
 
 private:
     UiAnimation();
@@ -65,6 +66,7 @@ private:
     std::vector< UiKeyFrameVector2 > m_X;
     std::vector< UiKeyFrameVector2 > m_Y;
     std::vector< UiKeyFrameFloat >   m_Rotation;
+    std::vector< UiKeyFrameFloat >   m_Alpha;
 };
 
 

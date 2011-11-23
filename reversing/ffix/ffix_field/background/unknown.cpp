@@ -1,13 +1,12 @@
 ////////////////////////////////
 // funcbe158
-800BE15C	addu   t2, a0, zero
-800BE160	lui    v1, $800d
-800BE164	lw     v0, $9da4(v1)
-800BE168	addiu  v1, v1, $9da4 (=-$625c)
-800BE18C	lw     t4, $0030(t2)
+T2 = A0;
+V1 = 800c9da4;
+V0 = w[800c9da4];
+T4 = w[T2 + 30];
 T0 = w[V1 + 10];
-800BE194	lbu    a0, $0000(v0)
-800BE198	lhu    t9, $0026(t2)
+A0 = bu[V0];
+T9 = hu[T2 + 26];
 800BE19C	sll    v0, a0, $02
 800BE1A0	addu   v0, v0, v1
 800BE1A4	lw     s5, $0008(v0)

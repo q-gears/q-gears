@@ -182,7 +182,7 @@ Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& in
 void
 Background2D::CreateVertexBuffer()
 {
-    m_MaxVertexCount = 256 * 6;
+    m_MaxVertexCount = 2048 * 6;
     m_RenderOp.vertexData = new Ogre::VertexData;
     m_RenderOp.vertexData->vertexStart = 0;
 

@@ -3,4 +3,5 @@
     <screen file_name="screens/begin_menu/begin_menu.xml" />
     <screen file_name="screens/main_menu/main_menu.xml" />
     <screen file_name="screens/idol/idol.xml" />
+    <screen file_name="screens/fade/fade.xml" />
 </screens>

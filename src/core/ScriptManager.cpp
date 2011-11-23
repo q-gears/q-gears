@@ -47,6 +47,9 @@ ScriptManager::ScriptManager()
 
     InitBinds();
     InitCmd();
+
+    RunFile( "system/system.lua" );
+    AddEntity( "System.MapChanger" );
 }
 
 

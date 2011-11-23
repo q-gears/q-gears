@@ -24980,7 +24980,7 @@
 	"ScriptManager.h"
 	"UiAnimation.h"
 
-1314721442 m:\q-gears\src\core\uianimation.h
+1321620500 m:\q-gears\src\core\uianimation.h
 	<OgreString.h>
 	<OgreVector2.h>
 	<vector>
@@ -25078,7 +25078,7 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1321449134 source:m:\q-gears\src\core\background2d.cpp
+1322039502 source:m:\q-gears\src\core\background2d.cpp
 	"Background2D.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
@@ -25238,7 +25238,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1314721440 source:m:\q-gears\src\core\scriptmanager.cpp
+1321615628 source:m:\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.h"
 	"ScriptManagerCommands.h"
@@ -25253,13 +25253,15 @@
 	"library/luabind/luabind.hpp"
 	"library/luabind/yield_policy.hpp"
 
-1314721440 m:\q-gears\src\core\scriptmanagerbinds.h
+1321956610 m:\q-gears\src\core\scriptmanagerbinds.h
 	"Console.h"
 	"Logger.h"
 	"Entity.h"
 	"EntityManager.h"
 	"UiManager.h"
 	"UiWidget.h"
+	"XmlMapFile.h"
+	"XmlMapsFile.h"
 
 1314721440 m:\q-gears\src\core\scriptmanagercommands.h
 	"ConfigCmdManager.h"
@@ -25272,7 +25274,7 @@
 	"Timer.h"
 	"ConfigVar.h"
 
-1314721442 source:m:\q-gears\src\core\uianimation.cpp
+1321620630 source:m:\q-gears\src\core\uianimation.cpp
 	"UiAnimation.h"
 	<OgreVector2.h>
 	"UiWidget.h"
@@ -25394,7 +25396,7 @@
 1320053966 m:\q-gears\src\core\xmlwalkmeshfile.h
 	"XmlFile.h"
 
-1306971022 source:m:\q-gears\src\core\xmlmapsfile.cpp
+1321956598 source:m:\q-gears\src\core\xmlmapsfile.cpp
 	"XmlMapsFile.h"
 	"Logger.h"
 
@@ -25403,7 +25405,7 @@
 	"Logger.h"
 	"UiManager.h"
 
-1314721442 source:m:\q-gears\src\core\xmlscreenfile.cpp
+1321620762 source:m:\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
