@@ -1,4 +1,5 @@
 ﻿func155a4
+0x25 - when use limit by usual enemies and not players
 0x28 - w[800f3948] >= 0x40 (struct overflow)
 
 

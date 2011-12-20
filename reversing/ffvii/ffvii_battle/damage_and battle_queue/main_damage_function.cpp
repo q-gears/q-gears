@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////
+﻿////////////////////////////////
 // main damage function
 // funca1798
 address = w[80063014];
@@ -58,7 +58,6 @@ attacker_id = b[attack_stack_offset + 2];
 
 
 
-///////////////////////////////////////////////////////////////////////
 // unknown
 S1 = -1;
 V0 = bu[attack_stack_offset + 3];
@@ -79,7 +78,6 @@ if (V0 & 40)
         V0 = S0 < 2;
     800A18C0	bne    v0, zero, loopa18a8 [$800a18a8]
 }
-///////////////////////////////////////////////////////////////////////
 // store leftover part back
 V0 = bu[attack_stack_offset + 3];
 S0 = V0 & 3F;
@@ -203,7 +201,6 @@ if (w[address + c] < 20)
 
 
 
-///////////////////////////////////////////////////////////////////////
 // unknown
 if (S1 != -1)
 {
@@ -219,7 +216,6 @@ if (S1 != -1)
     V0 = V0 | 00400000;
     [address + 90] = w(V0);
 }
-///////////////////////////////////////////////////////////////////////
 
 
 
@@ -250,10 +246,10 @@ if (attacker_id < 3)
                 {
                     case 0x5 0x6 0x9 0xA 0xB 0x11: // only this actions use megaall
                     {
-                        if (w[address + 90] & 00000200) // if there no target for player of more than one
+                        if( w[address + 90] & 00000200 ) // if there no target for player of more than one
                         {
                             V0 = bu[8009d84c + attacker_id * 440 + 4c + S0 * 6 + 4];
-                            if (V0 != 0)
+                            if( V0 != 0 )
                             {
                                 V0 = V0 - 1;
                                 [8009d84c + attacker_id * 440 + 4c + S0 * 6 + 4] = b(V0); // reduce mega all number of stars
@@ -367,7 +363,7 @@ V0 = w[address + c];
         {
             return;
         }
-//////////////////////
+
 
 switch (V0)
 {
@@ -443,7 +439,7 @@ switch (V0)
     case 0x09:
     {
         action_type_0E; // load player attack data based on equipped weapon
-        048D0A80 // 1C
+        action_type_1C; // set morph (power modifier to 2)
         action_type_09; // calculate and apply damage
     }
     break;
@@ -452,7 +448,7 @@ switch (V0)
     case 0x0A:
     {
         action_type_0E; // load player attack data based on equipped weapon
-        C88C0A80 // 1B
+        action_type_1B; // set death blow (set cricical and reduce hit% by 3)
         action_type_09; // calculate and apply damage
     }
     break;
@@ -500,7 +496,7 @@ switch (V0)
     // limit
     case 0x14:
     {
-        8C770A80 // 6
+        action_type_06;
         action_type_0C; // load attack data
         action_type_09; // calculate and apply damage
     }
@@ -509,7 +505,7 @@ switch (V0)
     // 2x-cut
     case 0x19:
     {
-        A0850A80 // 12
+        action_type_12; // set number of attacks to 2
         action_type_0E; // load player attack data based on equipped weapon
         action_type_09; // calculate and apply damage
     }
@@ -519,7 +515,7 @@ switch (V0)
     case 0x1A:
     {
         action_type_0E; // load player attack data based on equipped weapon
-        948C0A80 // 18
+        action_type_18; // set flash attack (reduce hit% by 2, damage formula 0xb0, add death status and non missable status infliction)
         action_type_09; // calculate and apply damage
     }
     break;
@@ -527,7 +523,7 @@ switch (V0)
     // 4x cut
     case 0x1B:
     {
-        28850A80 // 10
+        action_type_10; // set number of attacks to 4
         action_type_0E; // load player attack data based on equipped weapon
         action_type_09; // calculate and apply damage
     }
@@ -585,281 +581,319 @@ funca304c;
 
 
 
-if (attacker_id < 3)
+// for players
+if( attacker_id < 3 )
 {
-    V0 = w[80063014];
+    action_id = w[address + c];
+    if( action_id != c )
+    {
+        if( action_id < 20 )
+        {
+            A3 = bu[800f5bb8 + attacker_id * 44 + 2a];
+            A2 = 0;
 
-    800A1ED0	lw     v1, $000c(v0)
-    800A1ED4	ori    v0, zero, $000c
-    800A1ED8	beq    v1, v0, La2028 [$800a2028]
-    800A1EDC	slti   v0, v1, $0020
-    800A1EE0	beq    v0, zero, La2028 [$800a2028]
-    800A1EE4	sll    v0, attacker_id, $04
-    800A1EE8	addu   v0, v0, attacker_id
-    800A1EEC	sll    v0, v0, $02
-    800A1EF0	lui    at, $800f
-    800A1EF4	addu   at, at, v0
-    800A1EF8	lbu    a3, $5be2(at)
-    800A1EFC	addu   a2, zero, zero
-    800A1F00	ori    t0, zero, $0003
-    800A1F04	addiu  t1, zero, $ffff (=-$1)
-    800A1F08	lui    a1, $800f
-    800A1F0C	addiu  a1, a1, $7dda
-    800A1F10	addiu  v1, a1, $edac (=-$1254)
-    800A1F14	addu   a0, zero, zero
+            loopa1f18:	; 800A1F18
+                if( bu[attack_stack_offset] != 3 )
+                {
+                    if( ( b[800f6b84 + A2 * 8 + 2] != attacker_id ) || ( bu[800f6b85 + A2 * 8] != A3 ) || ( action_id < 15 ) )
+                    {
+                        [800f6b84 + A2 * 8 + 1] = b(A3); // order
+                        [800f6b84 + A2 * 8 + 2] = b(attacker_id);
+                        [800f6b84 + A2 * 8 + 3] = b(action_id);
+                        [800f6b84 + A2 * 8 + 4] = b(w[address + 10]); // attack index
+                        [800f6b84 + A2 * 8 + 6] = b(w[address + 94]); // attack mask
+                        [800f7dda + A2 * 2] = h(w[address + f0]);
 
-    loopa1f18:	; 800A1F18
-        800A1F18	lbu    v0, $0000(attack_stack_offset)
-        800A1F1C	nop
-        800A1F20	beq    v0, t0, La2010 [$800a2010]
-        800A1F24	nop
-        800A1F28	lb     v0, $0000(v1)
-        800A1F2C	nop
-        800A1F30	bne    v0, attacker_id, La1f70 [$800a1f70]
-        800A1F34	nop
-        800A1F38	lui    at, $800f
-        800A1F3C	addu   at, at, a0
-        800A1F40	lbu    v0, $6b85(at)
-        800A1F44	nop
-        800A1F48	bne    v0, a3, La1f70 [$800a1f70]
-        800A1F4C	nop
-        800A1F50	lui    v0, $8006
-        800A1F54	lw     v0, $3014(v0)
-        800A1F58	nop
-        800A1F5C	lw     v0, $000c(v0)
-        800A1F60	nop
-        800A1F64	slti   v0, v0, $0015
-        800A1F68	beq    v0, zero, La2010 [$800a2010]
-        800A1F6C	nop
+                        V0 = w[address + f8] << 8;
+                        if( V0 != 0 )
+                        {
+                            [800f7dda + A2 * 2] = h(w[address + f0] | V0);
+                        }
 
-        La1f70:	; 800A1F70
-        800A1F70	sb     attacker_id, $0000(v1)
-        800A1F74	lui    at, $800f
-        800A1F78	addu   at, at, a0
-        800A1F7C	sb     a3, $6b85(at)
-        800A1F80	lui    v0, $8006
-        800A1F84	lw     v0, $3014(v0)
-        800A1F88	nop
-        800A1F8C	lw     v0, $000c(v0)
-        800A1F90	lui    at, $800f
-        800A1F94	addu   at, at, a0
-        800A1F98	sb     v0, $6b87(at)
-        800A1F9C	lui    v1, $8006
-        800A1FA0	lw     v1, $3014(v1)
-        800A1FA4	nop
-        800A1FA8	lw     v0, $0010(v1)
-        800A1FAC	lui    at, $800f
-        800A1FB0	addu   at, at, a0
-        800A1FB4	sh     v0, $6b88(at)
-        800A1FB8	lw     v0, $0094(v1)
-        800A1FBC	lui    at, $800f
-        800A1FC0	addu   at, at, a0
-        800A1FC4	sh     v0, $6b8a(at)
-        800A1FC8	lw     a0, $00f0(v1)
-        800A1FCC	nop
-        800A1FD0	sh     a0, $0000(a1)
-        800A1FD4	lw     v0, $00f8(v1)
-        800A1FD8	nop
-        800A1FDC	beq    v0, zero, La1fec [$800a1fec]
-        800A1FE0	sll    v0, v0, $08
-        800A1FE4	or     v0, a0, v0
-        800A1FE8	sh     v0, $0000(a1)
+                        A2 = A2 + 1;
+                        if( A2 < 2 )
+                        {
+                            [800f6b84 + A2 * 8 + 2] = b(-1);
+                        }
+                        break;
+                    }
+                }
 
-        La1fec:	; 800A1FEC
-        800A1FEC	addiu  v1, a2, $0001
-        800A1FF0	slti   v0, v1, $0002
-        800A1FF4	beq    v0, zero, La2028 [$800a2028]
-        800A1FF8	sll    v0, v1, $03
-        800A1FFC	lui    at, $800f
-        800A2000	addu   at, at, v0
-        800A2004	sb     t1, $6b86(at)
-        800A2008	j      La2028 [$800a2028]
-        800A200C	nop
-
-        La2010:	; 800A2010
-        800A2010	addiu  a1, a1, $0002
-        800A2014	addiu  v1, v1, $0008
-        800A2018	addiu  a2, a2, $0001
-        800A2024	addiu  a0, a0, $0008
-        800A201C	slti   v0, a2, $0002
-    800A2020	bne    v0, zero, loopa1f18 [$800a1f18]
+                A2 = A2 + 1;
+                V0 = A2 < 2;
+            800A2020	bne    v0, zero, loopa1f18 [$800a1f18]
+        }
+    }
 }
 
-La2028:	; 800A2028
-800A2028	lui    v1, $8006
-800A202C	lw     v1, $3014(v1)
-800A2030	nop
-800A2034	lw     v0, $0090(v1)
-800A2038	nop
-800A203C	andi   v0, v0, $0800
-800A2040	beq    v0, zero, La2060 [$800a2060]
-800A2044	addu   a0, attacker_id, zero
-800A2048	ori    a1, zero, $0003
-800A204C	ori    a2, zero, $0001
-800A2050	lw     v0, $0094(v1)
-800A2054	addu   a3, zero, zero
-800A2058	jal    funca3e98 [$800a3e98]
-800A205C	sw     v0, $0010(sp)
 
-La2060:	; 800A2060
-800A2060	lui    a0, $8006
-800A2064	lw     a0, $3014(a0)
-800A2068	nop
-800A206C	lw     v1, $0028(a0)
-800A2070	ori    v0, zero, $0006
-800A2074	bne    v1, v0, La2084 [$800a2084]
-800A2078	nop
-800A207C	sw     zero, $0078(a0)
-800A2080	sw     zero, $00a8(a0)
 
-La2084:	; 800A2084
-800A2084	lui    v1, $8006
-800A2088	lw     v1, $3014(v1)
-800A208C	addu   s0, zero, zero
-800A2090	lw     v0, $006c(v1)
-800A2094	ori    s7, zero, $0001
-800A2098	lui    at, $8010
-800A209C	sh     v0, $83d2(at)
-800A20A0	lw     v0, $000c(v1)
-800A20A4	sllv   s3, attacker_id, s7
-800A20A8	lui    at, $8010
-800A20AC	sb     v0, $83a4(at)
-800A20B0	lw     v0, $0010(v1)
-800A20B4	lui    a0, $800f
-800A20B8	addiu  a0, a0, $7dcc
-800A20BC	lui    at, $8010
-800A20C0	sb     v0, $83a5(at)
-800A20C4	lw     v0, $002c(v1)
-800A20C8	addiu  s5, a0, $000c
-800A20CC	lui    at, $8010
-800A20D0	sh     v0, $83ce(at)
-800A20D4	lw     v0, $0044(v1)
-800A20D8	addu   s1, zero, zero
-800A20DC	lui    at, $8010
-800A20E0	sh     v0, $83c8(at)
-800A20E4	lhu    a1, $0000(a0)
-800A20E8	lui    v0, $800f
-800A20EC	lhu    v0, $7de0(v0)
-800A20F0	lw     a0, $0078(v1)
-800A20F4	nor    v0, v0, a1
-800A20F8	and    a0, a0, v0
-800A20FC	sw     a0, $0020(sp)
-800A2100	lw     a0, $00a8(v1)
-800A2104	lw     v1, $007c(v1)
-800A2108	and    fp, a0, v0
-800A210C	and    s6, v1, v0
+if( w[address + 90] & 0800 ) // add cut execution to priority queue
+{
+    A0 = attacker_id;
+    A1 = 3;
+    A2 = 1;
+    A3 = 0;
+    A4 = w[address + 94];
+    funca3e98;
+}
+
+
+
+if( w[address + 28] == 6 ) // action id == sense
+{
+    [address + 78] = w(0);
+    [address + a8] = w(0);
+}
+
+
+
+S0 = 0;
+S3 = 1 << attacker_id;
+S1 = 0;
+[800f83d2] = h(w[address + 6c]);
+[800f83a4] = b(w[address + c]);
+[800f83a5] = b(w[address + 10]);
+[800f83ce] = h(w[address + 2c]);
+[800f83c8] = h(w[address + 44]);
+
+mask1 = w[address + 78] & (hu[800f7de0] NOR hu[800f7dcc]);
+mask2 = w[address + a8] & hu[800f7de0];
+mask3 = w[address + 7c] & hu[800f7de0];
 
 loopa2110:	; 800A2110
-800A2110	srav   v0, s0, s6
-800A2114	andi   v0, v0, $0001
-800A2118	beq    v0, zero, La2140 [$800a2140]
-800A211C	addu   a0, attacker_id, zero
-800A2120	lui    at, $8010
-800A2124	addu   at, at, s1
-800A2128	sh     s3, $83fa(at)
-800A212C	addu   a1, s0, zero
-800A2130	jal    funca6278 [$800a6278]
-800A2134	addu   a2, zero, zero
-800A2138	j      La2218 [$800a2218]
-800A213C	addiu  s0, s0, $0001
-
-La2140:	; 800A2140
-800A2140	lw     t2, $0020(sp)
-800A2144	nop
-800A2148	srav   v0, s0, t2
-800A214C	andi   v0, v0, $0001
-800A2150	beq    v0, zero, La2214 [$800a2214]
-800A2154	nop
-800A2158	lhu    a3, $0000(s5)
-800A215C	nop
-800A2160	srav   v0, s0, a3
-800A2164	andi   v0, v0, $0001
-800A2168	bne    v0, zero, La2214 [$800a2214]
-
-V0 = w[800F83E0 + S1];
-if (V0 & 02404404)
-{
-    V0 = S7 << S0;
-    V0 = A3 | V0;
-    [S5] = h(V0);
-    [800F83FA + S1] = h(S3);
-
-    A0 = S0;
-    A1 = 2;
-    A2 = 0;
-    funca6000;
-
-    800A21B0	srav   v0, s0, fp
-    800A21B4	andi   v0, v0, $0001
-    800A21B8	beq    v0, zero, La2214 [$800a2214]
-    800A21BC	slti   v0, attacker_id, $0004
-    if (V0 == 0)
+    if( ( mask3 >> S0 ) & 1 )
     {
-        A0 = S0;
-        A1 = 2;
-        funca5bc8;
-    }
+        [800f83e0 + S1 + 1a] = h(S3);
 
-    V0 = hu[800F83A4 + 2E];
-    if (V0 & 0004)
-    {
-        [800F83E0 + S1 + 1E] = h(S3);
-        A1 = 5;
+        A0 = attacker_id;
+        A1 = S0;
+        A2 = 0;
+        funca6278;
     }
     else
     {
-        [800F83E0 + S1 + 1C] = h(S3);
-        A1 = 4;
+        if( ( mask1 >> S0 ) & 1 )
+        {
+            if( ( ( S3 >> S0 ) & 1 ) == 0 )
+            {
+                if( w[800f83e0 + S1] & 02404404 )
+                {
+                    [800f7dd8] = h(hu[800f7dd8] | (1 << S0));
+                    [800f83e0 + S1 + 1a] = h(S3);
+
+                    A0 = S0;
+                    A1 = 2;
+                    A2 = 0;
+                    funca6000; // run counter script
+
+                    if( mask2 >> S0 & 1 )
+                    {
+                        if( attacker_id >= 4 )
+                        {
+                            A0 = S0;
+                            A1 = 2;
+                            funca5bc8; // counter attack
+                        }
+
+                        if( hu[800f83a4 + 2e] & 0004 )
+                        {
+                            [800f83e0 + S1 + 1e] = h(S3);
+                            A1 = 5;
+                        }
+                        else
+                        {
+                            [800f83e0 + S1 + 1c] = h(S3);
+                            A1 = 4;
+                        }
+
+                        A0 = S0;
+                        A2 = 0;
+                        funca6000; // run magical or physical counter script
+                    }
+                }
+            }
+        }
     }
 
-    A0 = S0;
-    A2 = 0;
-    funca6000;
+    S0 = S0 + 1;
+    S1 = S1 + 68;
+    V0 = S0 < a;
+800A221C	bne    v0, zero, loopa2110 [$800a2110]
+
+
+
+funca2894; // lucky 7777
+
+
+
+V0 = w[801517b8];
+if( V0 != 0 )
+{
+    [801517b8] = w(V0 - 1);
+}
+else if( attacker_id < 3 )
+{
+    [800f5bb8 + attacker_id * 44 + 2a] = b(bu[800f5bb8 + attacker_id * 44 + 2a] + 1)
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca6278
+800A6280	addu   s1, a0, zero
+800A6288	addu   s0, a1, zero
+800A6290	addu   s5, a2, zero
+800A6298	addu   s3, zero, zero
+800A629C	slti   v0, s0, $0004
+800A62A8	bne    v0, zero, La6324 [$800a6324]
+
+800A62B0	sll    v0, s0, $04
+800A62B4	addu   v0, v0, s0
+800A62B8	sll    a0, v0, $02
+800A62BC	lui    at, $800f
+800A62C0	addu   at, at, a0
+800A62C4	lbu    v1, $5be1(at)
+800A62C8	nop
+800A62CC	andi   v0, v1, $0020
+800A62D0	bne    v0, zero, La6328 [$800a6328]
+800A62D4	sll    v0, s0, $01
+800A62D8	ori    v0, v1, $0020
+800A62DC	lui    at, $800f
+800A62E0	addu   at, at, a0
+800A62E4	sb     v0, $5be1(at)
+800A62E8	slti   v0, s1, $0003
+800A62EC	beq    v0, zero, La6324 [$800a6324]
+800A62F0	sll    v0, s1, $01
+800A62F4	addu   v0, v0, s1
+800A62F8	sll    v0, v0, $02
+800A62FC	addu   v0, v0, s1
+800A6300	sll    v0, v0, $02
+800A6304	lui    at, $800f
+800A6308	addu   at, at, v0
+800A630C	lbu    v1, $5e67(at)
+800A6310	nop
+800A6314	addiu  v1, v1, $0001
+800A6318	lui    at, $800f
+800A631C	addu   at, at, v0
+800A6320	sb     v1, $5e67(at)
+
+La6324:	; 800A6324
+800A6324	sll    v0, s0, $01
+
+La6328:	; 800A6328
+800A6328	addu   v0, v0, s0
+800A632C	sll    v0, v0, $02
+800A6330	addu   v0, v0, s0
+800A6334	sll    s2, v0, $03
+V1 = w[800F83E4 + S2];
+V0 = V1 & 00002000;
+if (V0 == 0)
+{
+    800A6354	lui    s4, $800f
+    800A6358	lbu    s4, $6b9b(s4)
+    V0 = V1 | 00002000;
+    [800F83E4 + S2] = w(V0);
+    800A636C	slti   v0, s1, $0004
+    800A6370	bne    v0, zero, La6380 [$800a6380]
+    800A6374	addu   a0, s0, zero
+    800A6378	jal    funca5bc8 [$800a5bc8]
+    800A637C	addu   a1, zero, zero
+
+    La6380:	; 800A6380
+    800A6380	beq    s1, s0, La63a0 [$800a63a0]
+    800A6384	ori    v0, zero, $0001
+    800A6388	sllv   v0, s1, v0
+    800A638C	lui    at, $8010
+    800A6390	addu   at, at, s2
+    800A6394	sh     v0, $83fa(at)
+    800A6398	j      La63b0 [$800a63b0]
+    800A639C	addu   a0, s0, zero
+
+    La63a0:	; 800A63A0
+    800A63A0	lui    at, $8010
+    800A63A4	addu   at, at, s2
+    800A63A8	sh     zero, $83fa(at)
+    800A63AC	addu   a0, s0, zero
+
+    La63b0:	; 800A63B0
+    800A63B0	ori    a1, zero, $0003
+    800A63B4	jal    funca6000 [$800a6000] // run script 3
+    800A63B8	addu   a2, zero, zero
+    800A63BC	lui    v0, $800f
+    800A63C0	lbu    v0, $6b9b(v0)
+    800A63C4	nop
+    800A63C8	bne    v0, s4, La63d8 [$800a63d8]
+    800A63CC	nop
+    800A63D0	beq    s5, zero, La6430 [$800a6430]
+    800A63D4	sll    v0, s0, $01
+
+    La63d8:	; 800A63D8
+    800A63D8	sll    v0, s0, $01
+    800A63DC	addu   v0, v0, s0
+    800A63E0	sll    v0, v0, $02
+    800A63E4	addu   v0, v0, s0
+    800A63E8	sll    v0, v0, $03
+    800A63EC	lui    at, $8010
+    800A63F0	addu   at, at, v0
+    800A63F4	lw     v0, $83e4(at)
+    800A63F8	nop
+    800A63FC	andi   v0, v0, $1000
+    800A6400	bne    v0, zero, La642c [$800a642c]
+    800A6404	ori    s3, zero, $0001
+    800A6408	ori    v0, zero, $0001
+    800A640C	sllv   v0, s0, v0
+    800A6410	lui    at, $8010
+    800A6414	sh     v0, $83b2(at)
+    800A6418	addu   a0, s0, zero
+    800A641C	ori    a1, zero, $0025
+    800A6420	jal    funcb2b5c [$800b2b5c]
+    800A6424	addu   a2, zero, zero
+    800A6428	ori    s3, zero, $0001
+
+    La642c:	; 800A642C
 }
 
-La2214:	; 800A2214
-800A2214	addiu  s0, s0, $0001
+La6430:	; 800A6430
+800A6350	sll    v0, s0, $01
+800A6430	addu   v0, v0, s0
+800A6434	sll    v0, v0, $02
+800A6438	addu   v0, v0, s0
+800A643C	sll    v0, v0, $03
+800A6440	lui    at, $8010
+800A6444	addu   at, at, v0
+800A6448	lw     v0, $83e4(at)
+800A644C	nop
+800A6450	andi   v0, v0, $1000
+800A6454	beq    v0, zero, La6460 [$800a6460]
+800A6458	nop
+800A645C	ori    s3, zero, $0001
 
-La2218:	; 800A2218
-800A2218	slti   v0, s0, $000a
-800A221C	bne    v0, zero, loopa2110 [$800a2110]
-800A2220	addiu  s1, s1, $0068
-800A2224	jal    funca2894 [$800a2894]
-800A2228	nop
-800A222C	lui    v0, $8015
-800A2230	lw     v0, $17b8(v0)
-800A2234	nop
-800A2238	beq    v0, zero, La2250 [$800a2250]
-800A223C	addiu  v0, v0, $ffff (=-$1)
-800A2240	lui    at, $8015
-800A2244	sw     v0, $17b8(at)
-800A2248	j      La228c [$800a228c]
-800A224C	nop
+La6460:	; 800A6460
+800A6460	beq    s3, zero, La6478 [$800a6478]
+800A6464	nop
+800A6468	bne    s5, zero, La6478 [$800a6478]
+800A646C	nop
+800A6470	jal    funca3488 [$800a3488]
+800A6474	addu   a0, s0, zero
 
-La2250:	; 800A2250
-800A2250	lbu    v0, $0000(attack_stack_offset)
-800A2254	nop
-800A2258	sltiu  v0, v0, $0003
-800A225C	beq    v0, zero, La228c [$800a228c]
-800A2260	sll    v1, attacker_id, $04
-800A2264	addu   v1, v1, attacker_id
-800A2268	sll    v1, v1, $02
-800A226C	lui    at, $800f
-800A2270	addu   at, at, v1
-800A2274	lbu    v0, $5be2(at)
-800A2278	nop
-800A227C	addiu  v0, v0, $0001
-800A2280	lui    at, $800f
-800A2284	addu   at, at, v1
-800A2288	sb     v0, $5be2(at)
-
-La228c:	; 800A228C
-return;
-////////////////////////////////////////////////////
+La6478:	; 800A6478
+800A6478	lw     ra, $0028(sp)
+800A647C	lw     s5, $0024(sp)
+800A6480	lw     s4, $0020(sp)
+800A6484	lw     s3, $001c(sp)
+800A6488	lw     s2, $0018(sp)
+800A648C	lw     s1, $0014(sp)
+800A6490	lw     s0, $0010(sp)
+800A6494	addiu  sp, sp, $0030
+800A6498	jr     ra 
+800A649C	nop
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////
+////////////////////////////////
 // funca8e54
 address = w[80063014];
 
@@ -872,11 +906,11 @@ if (A0 >= 9)
 }
 
 return;
-////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////
+////////////////////////////////
 // funca2bf4
 // A0 - attacker_id (unit id)
 address = w[80063014];
@@ -925,12 +959,11 @@ loopa2c94:	; 800A2C94
 800A2CB0	bne    v0, zero, loopa2c94 [$800a2c94]
 
 return;
-////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-
-////////////////////////////////////////////////////
+////////////////////////////////
 // funca304c
 A0 = 9;
 V0 = SP + 24;
@@ -964,4 +997,4 @@ if (T0 > 0)
         V0 = A0 < T0;
     800A3108	bne    v0, zero, loopa308c [$800a308c]
 }
-////////////////////////////////////////////////////
+////////////////////////////////

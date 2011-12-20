@@ -306,7 +306,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 27 []       store 0 here during init.
 28 []
 29 []       init with 1 in case of player. Add 0x02 bit if weapon is long ranged. Checked if A0 & 80 and then stored A0 & 7F back. Checked if A0 & 04 and then stored A0 & FB back. Init whth 0 in case of enemy. If 0x04 write "XX was cought by surprize" to output string.
-2a
+2a []       ???
 2b
 2c [][][][] some data checked after damage apply in action_type_09 function.
 30 [][][][] some data checked after damage apply in action_type_09 function.
@@ -384,51 +384,58 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f64ec               attack id data from scene file (0x02 size 0x20 records).
 
 800f692c               attack stack data (0x200(all) + 0x8(current)).
-800f692c + 00 []       priority. Init with 0xff (exept current).
-800f692c + 01 []       order inside priority.
-800f692c + 02 []       unit_id.
-
-800f692c + 03 []       action type (0x01 - player attack
-                                    0x02 - player magic
-                                    0x03 - player summon
-                                    0x04 - player item
-                                    0x05 - player steal
-                                    0x06 - player sense
-                                    0x07 - player coin
-                                    0x08 - player throw
-                                    0x09 - player morph
-                                    0x0A - player deathblow
-                                    0x0B - player manipulate
-                                    0x0C - player mime
-                                    0x0D - player enemy skill
-                                    0x0E - ???
-                                    0x0F - ???
-                                    0x10 - ???
-                                    0x11 - player mug
-                                    0x12 - player change
-                                    0x13 - player defend
-                                    0x14 - player limit
-                                    0x15 - this replaces with magic after modification
-                                    0x16 - this replaces with summon after modification
-                                    0x17 - this replaces with item after modification
-                                    0x18 - player slash-all
-                                    0x19 - player 2x-cut
-                                    0x1A - player flash
-                                    0x1B - player 4x-cut
-                                    0x1C - ???
-                                    0x1D - ???
-                                    0x1E - ???
-                                    0x1F - ???
-                                    0x20 - enemy attack
-                                    0x21 - ???
-                                    0x22 - run scripts
-                                    0x23 - ???
-                                    0x24 - ???
-                                    0x25 - ???
-800f692c + 04 [][]     attack index.
-800f692c + 06 [][]     attack mask.
++00 []       priority. Init with 0xff (exept current).
++01 []       order inside priority.
++02 []       unit_id.
++03 []       action type (0x01 - player attack
+                0x02 - player magic
+                0x03 - player summon
+                0x04 - player item
+                0x05 - player steal
+                0x06 - player sense
+                0x07 - player coin
+                0x08 - player throw
+                0x09 - player morph
+                0x0A - player deathblow
+                0x0B - player manipulate
+                0x0C - player mime
+                0x0D - player enemy skill
+                0x0E - ???
+                0x0F - ???
+                0x10 - ???
+                0x11 - player mug
+                0x12 - player change
+                0x13 - player defend
+                0x14 - player limit
+                0x15 - this replaces with magic after modification
+                0x16 - this replaces with summon after modification
+                0x17 - this replaces with item after modification
+                0x18 - player slash-all
+                0x19 - player 2x-cut
+                0x1A - player flash
+                0x1B - player 4x-cut
+                0x1C - ???
+                0x1D - ???
+                0x1E - ???
+                0x1F - ???
+                0x20 - enemy attack
+                0x21 - ???
+                0x22 - run scripts
+                0x23 - ???
+                0x24 - ???
+                0x25 - ???
++04 [][]     attack index.
++06 [][]     attack mask.
 800f692c + 208 + unit_id * 8 + 0 we copy here data during some circumstances in battle queue function.
     +00 []       init with 0xff in case of enemy.
+800f6b84 store here data after command executement for player.
++00 []       priority. Init with 0xff (exept current).
++01 []       order inside priority.
++02 []       unit_id.
++03 []       action type (0x01 - player attack
++04 [][]     attack index.
++06 [][]     attack mask.
+
 
 
 800f6b94      []       array of executed order number for priority. Readed during main battle queue function. Must be different from 800F6B9B to anything happens.
@@ -457,6 +464,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f7dd5      []       number of enemy type 1. Init with 0. Increment for each enemy id 1.
 800f7dd6      []       number of enemy type 2. Init with 0. Increment for each enemy id 2.
 800f7dd8      [][]     store attacker unit mask here. Probably for counter attack. (if priority >= 2)
+800f7dda      [][]     atore here [address + f0] (1f8000f0) for player.
 800f7dde      [][]     store action priority (bu[A0 + 0]) during attack set.
 
 800f7de2 [][]     we increment number stored here by 1 and if it is less than 0x40 than add some action during lucky 7777 in funca2894.
@@ -1270,6 +1278,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f800098 attack index. Attack index in group magic summon enemy skill, limit or attack index in scene data.
 1f8000a0 formula upper
 1f8000a4 formula lower
+1f8000a8 reset it after action if we use sense.
 1f8000ac store high byte of unknown data seted in large_function file + 3 if it not 0 (if greater than 8 store 8). Quater damage.
 1f8000b0 number of multiple attacks.
 1f8000b4 init with 1. Time to caclulate whole cycle of attack (only for 2x and 4x cut).
