@@ -11,10 +11,10 @@
 		<Cursor position="2803" topLine="63" />
 	</File>
 	<File name="core\CameraManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1326" topLine="28" />
+		<Cursor position="1361" topLine="0" />
 	</File>
 	<File name="core\CameraManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="324" topLine="0" />
+		<Cursor position="475" topLine="2" />
 	</File>
 	<File name="core\ConfigCmd.h" open="0" top="0" tabpos="0">
 		<Cursor position="71" topLine="0" />

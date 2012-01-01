@@ -51,7 +51,7 @@ Lb8098:	; 800B8098
 800B809C	sw     v1, $3c74(at)
 800B80A0	jal    funcb8360 [$800b8360]
 800B80A4	ori    a0, zero, $0001
-800B80A8	jal    funcc5cc0 [$800c5cc0]
+funcc5cc0;
 
 funcb8438; // we load field model to packets here
 
@@ -279,4 +279,123 @@ funcbb75c; // create primary and final camera matrix
 800B85D4	addiu  sp, sp, $0018
 800B85D8	jr     ra 
 800B85DC	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcc5cc0:	; 800C5CC0
+[800f9da4] = h(hu[800f9da4] | 2);
+S0 = 800f9da8;
+V1 = h[S0];
+
+if( V1 != -1)
+{
+    V0 = bu[800f9dac];
+    800C5D04	bne    v0, zero, Lc5e58 [$800c5e58]
+    800C5D08	addiu  v0, v0, $ffff (=-$1)
+    800C5D0C	lui    v0, $8010
+    800C5D10	lh     v0, $9daa(v0)
+    800C5D14	nop
+    800C5D18	beq    v0, zero, Lc5d30 [$800c5d30]
+    800C5D1C	nop
+    800C5D20	jal    funcbba40 [$800bba40]
+    800C5D24	ori    a0, zero, $02d7
+    800C5D28	lui    at, $8010
+    800C5D2C	sh     zero, $9daa(at)
+
+    Lc5d30:	; 800C5D30
+    800C5D30	lbu    v0, $0005(s0)
+    800C5D34	nop
+    800C5D38	bne    v0, zero, Lc5e38 [$800c5e38]
+    800C5D3C	addiu  v0, zero, $ffff (=-$1)
+    800C5D40	sh     v0, $0000(s0)
+    800C5D44	addu   a2, zero, zero
+    800C5D48	addu   t0, s0, zero
+    800C5D4C	addiu  a3, zero, $ffff (=-$1)
+    800C5D50	addiu  t1, t0, $017a
+
+    Lc5d54:	; 800C5D54
+    800C5D54	lh     v0, $0000(t0)
+    800C5D58	nop
+    800C5D5C	bne    v0, a3, Lc5e20 [$800c5e20]
+    800C5D60	nop
+    800C5D64	addu   a1, zero, zero
+    800C5D68	sll    a0, a1, $01
+
+    loopc5d6c:	; 800C5D6C
+        800C5D6C	addu   a0, a0, a1
+        800C5D70	addiu  a1, a1, $0001
+        800C5D74	sll    v1, a1, $01
+        800C5D78	addu   v1, v1, a1
+        800C5D7C	sll    v1, v1, $01
+        800C5D80	lui    at, $8010
+        800C5D84	addiu  at, at, $9da8 (=-$6258)
+        800C5D88	addu   at, at, v1
+        800C5D8C	lhu    v0, $0000(at)
+        800C5D90	sll    a0, a0, $01
+        800C5D94	lui    at, $8010
+        800C5D98	addiu  at, at, $9da8 (=-$6258)
+        800C5D9C	addu   at, at, a0
+        800C5DA0	sh     v0, $0000(at)
+        800C5DA4	lui    at, $8010
+        800C5DA8	addiu  at, at, $9dac (=-$6254)
+        800C5DAC	addu   at, at, v1
+        800C5DB0	lbu    v0, $0000(at)
+        800C5DB4	nop
+        800C5DB8	lui    at, $8010
+        800C5DBC	addiu  at, at, $9dac (=-$6254)
+        800C5DC0	addu   at, at, a0
+        800C5DC4	sb     v0, $0000(at)
+        800C5DC8	lui    at, $8010
+        800C5DCC	addiu  at, at, $9dad (=-$6253)
+        800C5DD0	addu   at, at, v1
+        800C5DD4	lbu    v0, $0000(at)
+        800C5DD8	nop
+        800C5DDC	lui    at, $8010
+        800C5DE0	addiu  at, at, $9dad (=-$6253)
+        800C5DE4	addu   at, at, a0
+        800C5DE8	sb     v0, $0000(at)
+        800C5DEC	lui    at, $8010
+        800C5DF0	addiu  at, at, $9daa (=-$6256)
+        800C5DF4	addu   at, at, v1
+        800C5DF8	lhu    v0, $0000(at)
+        800C5DFC	nop
+        [800f9daa + A0] = h(V0);
+        800C5E18	sll    a0, a1, $01
+        800C5E10	slti   v0, a1, $003f
+    800C5E14	bne    v0, zero, loopc5d6c [$800c5d6c]
+
+    800C5E1C	sh     a3, $0000(t1)
+
+    Lc5e20:	; 800C5E20
+    800C5E20	addiu  a2, a2, $0001
+    800C5E24	slti   v0, a2, $0040
+    if( V0 == 0 )
+    {
+        return;
+    }
+
+    800C5E30	j      Lc5d54 [$800c5d54]
+    800C5E34	nop
+
+    Lc5e38:	; 800C5E38
+    800C5E38	lh     a0, $0000(s0)
+    800C5E3C	jal    funcdcf94 [$800dcf94]
+    800C5E40	nop
+    800C5E44	lbu    v0, $0005(s0)
+    800C5E48	nop
+    800C5E4C	addiu  v0, v0, $ffff (=-$1)
+    800C5E54	sb     v0, $0005(s0)
+    return;
+
+    Lc5e58:	; 800C5E58
+    800C5E58	lui    at, $8010
+    800C5E5C	sb     v0, $9dac(at)
+}
+Lc5e60:	; 800C5E60
+A0 = -1;
+800C5E60	jal    funcdcf94 [$800dcf94]
+
+[800f9da3] = h(hu[800f9da4] & fffd);
 ////////////////////////////////

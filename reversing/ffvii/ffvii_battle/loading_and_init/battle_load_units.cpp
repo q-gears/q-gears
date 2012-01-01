@@ -1018,7 +1018,7 @@ if (S4 == 0 || (w[800f83e0 + unit_id * 68 + 0] & 82804c44) == 0) // no statuses 
                                 A3 = w[SP + 1c]; // attack id
                                 [SP + 10] = w(A1);
                                 A1 = priority;
-                                funca3e98;
+                                battle_add_action_to_battle_queue;
                         }
                     }
 
@@ -1145,13 +1145,12 @@ loopa28c0:	; 800A28C0
             {
                 [800f5bb8 + S1 * 44 + 29] = b(bu[800f5bb8 + S1 * 44 + 29] | 80);
 
-                // add action
                 A0 = S1; // unit id
                 A1 = 1; // priority
                 A2 = 1; // action id
                 A3 = 0; // attack id
                 [SP + 10] = w(0); // target mask
-                800A2938	jal    funca3e98 [$800a3e98]
+                battle_add_action_to_battle_queue;
             }
         }
     }

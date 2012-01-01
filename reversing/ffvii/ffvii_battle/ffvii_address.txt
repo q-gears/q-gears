@@ -36,6 +36,8 @@
 
 80063014      [][][][] pointer to temp array for action calculation.
 
+80063560 we copy kernel string here to display.
+
 80063690      command description in kernel
 8006893e      battle and battle-screen text in kernel
 
@@ -210,7 +212,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f3950      [][][][] copy 800f3944 here at start ob battle damage calculation.
 800f3954      [][][][] copy 800f3948 here at start ob battle damage calculation.
 
-800f39f0               berserc toad action stats for player units. Copy first action command for unit here. (size 0x6).
+800f39f0 berserk toad action stats for player units. Copy first action command for unit here. (size 0x6).
     +0 []     Init with ff. Copy action id from temp.
     +1 []     Set default 800707c4 + 0. Set 0 here if weapon is long ranged or if some other condition.
     +2 []     Set default 800707c4 + 1 (target type). Add modified target type here.
@@ -218,7 +220,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +4 []     Copy number of stars from temp (but only in case of w command). Add number of stars in megaall materia in case of command id 5 6 9 a b 11. Set 0xff if actions 0x18,0x19,0x1a,0x1b
     +5 []     Init with 0. Flags (0x01 - mp absorb, 0x02 - hp absorb, 0x08 - steal as well, 0x10 - added cut).
 
-800f3a04               some structure for party units. Copy first action command for unit here. (size 0x6).
+800f3a04 some structure for party units. Copy first action command for unit here. (size 0x6).
     +0 []     Init with ff. Copy action id from temp. Store 1 here. Probably for counter.
     +1 []     Set default 800707c4 + 0. Set 0 here if weapon is long ranged or if some other condition. Set 0 if long ranged, 0x07 otherwise.
     +2 []     Set default 800707c4 + 1 (target type). Add modified target type here. Set 800f5efc+0 (flags from equipped weapon data + 0).
@@ -226,22 +228,27 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +4 []     Copy number of stars from temp (but only in case of w command). Add number of stars in megaall materia in case of command id 5 6 9 a b 11. Set 0xff if actions 0x18,0x19,0x1a,0x1b
     +5 []     Init with 0. Flags (0x01 - mp absorb, 0x02 - hp absorb, 0x08 - steal as well, 0x10 - added cut).
 
-800f3a40               array of some items structures 0x4 size (0x10 items) If some data in here and same user and same item - discard (write ffff).
+800f3a40 array of some items structures 0x4 size (0x10 items) If some data in here and same user and same item - discard (write ffff).
     +0 [][]     id of unit using item
     +2 [][]     index of item
 
-800f4308               some structure that holds 0x80 values with size 0x04 (0x200 0x04 size). We add something here and increment cell so next time we add to next cell.
-800f4308 + 00 []       store attacker id here (player)
-800f4308 + 01 []
-800f4308 + 02 [][]
+800f3a80 string buffer 0x800 size. We can add a lot of strings in one frame but they will be displayed one by one. We use this buffer and array of indexes into it for this.
+800f4280 array of string buffer positions indexed by 800f4304.
+800f4300 [][][][] string buffer position.
+800f4304 [][][][] index into 800f4280.
 
-800f4914      [][][][] 
+800f4308 some structures that holds 0x80 values with size 0x04 (0x200 0x04 size). We add something here and increment cell so next time we add to next cell.
++00 []       store attacker id here (player)
++01 []       we store here 6 at start of battle for player characters.
++02 [][]     we store here 0 at start of battle for player characters.
+
+800f4914      [][][][] array of current slots in 0x200 structures for 800f4308 array. 
 
 800f4920      [][][][] init with 0 at start of attack calculation in action_type_09. Add 0009 flags gefore actual calculation.
 800f4924      [][]     array of something. Copy 800f4938 array gere during cycle of attack. (0xa items)
 800f4938      [][]     array of target mask. Inited with 0 at beginning of damage calculation (just before real calculation) Set all to 0 after copy to 800f4924 (0xa items). Store target mask of attacking unit here (in it's slot)
 800f494c      []       array of something. Inited with 0xff at beginning of damage calculation (just before real calculation) (0xa items)
-800f4958      [][]     init with 0.
+800f4958      [][]     init with 0. Some mask. Related with reflection.
 
 800f4ac0      [][][][] store offset to ai script here during funtion that handles battle opcode.
 800f4ac4      [][][][] pointer to battle temp structure.
@@ -305,7 +312,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 26 []       store 0 here during init.
 27 []       store 0 here during init.
 28 []
-29 []       init with 1 in case of player. Add 0x02 bit if weapon is long ranged. Checked if A0 & 80 and then stored A0 & 7F back. Checked if A0 & 04 and then stored A0 & FB back. Init whth 0 in case of enemy. If 0x04 write "XX was cought by surprize" to output string.
+29 []       add 0x02 bit if weapon is long ranged. Checked if A0 & 80 and then stored A0 & 7F back. Checked if A0 & 04 and then stored A0 & FB back. Init whth 0 in case of enemy. If 0x04 write "XX was cought by surprize" to output string.
+            0x01 - can't steal from this entity. Add for enemy target if we stole something from it. Init with this flag in case of player.
 2a []       ???
 2b
 2c [][][][] some data checked after damage apply in action_type_09 function.
@@ -338,7 +346,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 +24 [][][][] store here 80XXXXXX if unit has materia with materia type lower 4 bitx == 7 (in game there only enemy skill materia whth enemy type 57) where XXXXXX expirience in materia.
 +28 [][][][] store here 80XXXXXX if unit has materia with materia type lower 4 bitx == 7 (in game there only enemy skill materia whth enemy type 57) where XXXXXX expirience in materia.
 
-800f5efc               some player structure. Looks like weapon attack info. (0x18 size)
+800f5efc Struct with weapon attack info for each player. (0x18 size)
 +00 []       target type flags (0x20 - not long range). Set from +0 equipped weapon data.
 +01 []       set from +1 equipped weapon data.
 +02 []       damage formula id. Set from +2 equipped weapon data.
@@ -369,6 +377,14 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +28 []       array of elements (0x8 items)
     +30 []       array of elements influence here (0 - death, 2 - 200%damage, 3 - normal, 4 - 50%damage, 5 - 0%damage, 6 - 100%absorb, 7 - fully recover). (0x8 items)
 
+    +88 []       1st stole item chance.
+    +89 []       2nd stole item chance.
+    +8a []       3rd stole item chance.
+    +8b []       4th stole item chance.
+    +8c [][]     1st stole item id.
+    +8e [][]     2nd stole item id.
+    +90 [][]     3rd stole item id.
+    +92 [][]     4th stole item id.
     +94 [][]     manipulate attack id 0.
     +96 [][]     manipulate attack id 1.
     +98 [][]     manipulate attack id 2.
@@ -777,12 +793,13 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800fa9c0 []       store target id here during executing hurt effect.
 
-800fa9d0               temp array where we store data for attack impact (animation related). Every time we tried to receive pointer via "funca2fd0" we move to next struct element. (size 0xc)
+800fa9d0 temp array where we store data for attack impact (animation related). Every time we tried to receive pointer via "funca2fd0" we move to next struct element. (size 0xc)
 +00 []       store target id here.
 +01 []       store attacker id here.
 +02 []       Set hurt animation script here from 1f8000224.
 +03 []       store -1 here during pointer reciving. Store here index of 800f9f3c additional array.
 +04 [][]     init with 0. Add some flags later.
+                0x0001 - add if we do damage.
 +08 [][][][] store current status of target.
 
 800fafdc []       init with 0.
@@ -807,6 +824,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 
 80151200 some model struct 0x74 size.
++00 [][][][] ???
 +04 [][]     init from +44 from animation description block.
 +06 [][]     init from +46 from animation description block.
 +08 [][]     init from +48 from animation description block.
@@ -1150,16 +1168,30 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80163784 one byte unit array with idle? actions id for each.
 80163790      [][][][] party slots data.
 
+
+
 80163798 array of some struct to where we store data. Probably action to perform. Every time we tried to receive pointer via "funca2f4c" we move to next struct element. There can be 0x40 actions at once (size 0xc)
-    +00 []       init with 0xff. Set attacker id here.
-    +01 []       set 5 here. Set 1f80001c from temp attack here.
-    +02 []       store 0 here during pointer reciving. Set attack effect id here (1F800024).
-    +03 []       store 0 here during pointer reciving. Store 1f800028 (action id) here
-    +04 []       set 0 here.
-    +05 []       set 0 here. We store animation action id here.
-    +06 [][]     set 0 here. Set attack id here (1f800098).
-    +08 [][]     set 0xffff here. Set camera movement id here.
-    +0a [][]     current index in 800f3948. set 0xffff here.
+// 2 - string to display
++00 []       id of unit that init action.
++01 []       2. Type string.
++02 []       init with 0.
++03 []       init with 0.
++05 []       argument of fucnction battle_add_string_to_display than add this.
++06 [][]     string index + 0x100.
++08 [][]     0xffff.
++0a [][]     0xffff.
+// 5 - ???
++00 []       init with 0xff. Set attacker id here.
++01 []       set 5 here. Set 1f80001c from temp attack here.
++02 []       store 0 here during pointer reciving. Set attack effect id here (1F800024).
++03 []       store 0 here during pointer reciving. Store 1f800028 (action id) here
++04 []       set 0 here.
++05 []       set 0 here. We store animation action id here.
++06 [][]     set 0 here. Set attack id here (1f800098).
++08 [][]     set 0xffff here. Set camera movement id here.
++0a [][]     current index in 800f3948. set 0xffff here.
+
+
 
 80163b38 []       init with 0.
 80163b3c []       store 0 here during battle init. This is index to battle camera data in battle setup
@@ -1234,12 +1266,12 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f800014 init with -1. Store attacker id here if specified attack was magic, summon or enemy skill and player has it.
 1f800018 target mask
 1f80001c init with 1.
-1f800020 something from 800a0000. Animation script id.
+1f800020 something from 800a0000. Animation script id to play.
 1F800024 copy D byte from attack data here. (Attack effect id)
 1f800028 action id.
 1f80002c attack id.
 1f800030 attacker mask.
-1F800038 -1. MP cost.
+1f800038 -1. MP cost.
 1f80003c hit%
 1f800040 damage formula id (default action damage formula id). Copy weapon damage formula id here.
 1F800044 attack elements mask.
@@ -1255,6 +1287,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f80006c init with -1. Special attack flags. 0x0004 - magic attack.
                                              0x0002 - if not set - add bit 0x2000 to 0x220
                                              0x0080 - if not set - ignore status effect defense when attempting to inflict.
+                                             0x0200 - if not set - can be reflected
                                              0x0400 - if not set - ignore defense (if this bit is set we calculate defense)
                                              0x2000 - if not set - critical hit in case of physical damage calculation.
 1f800078 we add here target unit mask for current damage calculation if we not attacking self.
@@ -1303,12 +1336,12 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f800200 address 800f5bb8 + target * 44.
 1f800204 address 800f5e60 + target * 34 or -1 in case of not player.
 1f800208 target entity id.
-1f80020c store -1. Set enemy index here (1 2 3) (inly in case of enemy).
+1f80020c store -1. Set enemy index here (1 2 3) (only in case of enemy).
 1f800210 init with 0. Calculated defense.
-1f800214 init with 0. calculated damage.
-1f800218 init with 1f800090 flags. 0x00000001 if we have power modifier 0 and we not add/remove/change statuses and if unit is undamagable (auto-miss).
-                                   0x00000002 add this bit in case of lower function 0 or if we done no damage.
-                                   0x00000020 then we hit target for sure in case of physical attack.
+1f800214 init with 0. Calculated damage.
+1f800218 init with 1f800090 flags. 0x0001 if we have power modifier 0 and we not add/remove/change statuses and if unit is undamagable (auto-miss).
+                                   0x0002 add this bit in case of lower function 0 or if we done no damage.
+                                   0x0020 then we hit target for sure in case of physical attack.
 1f80021c init with 0.
 1f800220 init with 0. attack flag. (0x0001 - heal, 0x0002 - critical damage, 0x0004 - damage to MP)
 1f800224 store hurt action id. Store 33 here if 1f800048 == 0.

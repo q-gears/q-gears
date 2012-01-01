@@ -22,12 +22,25 @@ public:
 
     Ogre::Camera* GetCurrentCamera();
 
+public:
+    enum CameraState
+    {
+        CAMERA_2D,
+        CAMERA_FREE
+    };
+
 private:
     Ogre::Camera* m_Camera;
     Ogre::Viewport* m_Viewport;
 
-    // 3D free related
+    CameraState m_State;
+
+    // camera free related
     bool m_CameraFreeRotate;
+
+    // camera 2D related
+    Ogre::Matrix4 m_CameraViewMatrix;
+    Ogre::Matrix4 m_CameraProjectionMatrix;
 };
 
 

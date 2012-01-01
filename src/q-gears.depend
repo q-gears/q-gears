@@ -24402,7 +24402,7 @@
 
 1314721440 m:\q-gears\src\main.h
 
-1314721440 m:\q-gears\src\core\cameramanager.h
+1322057036 m:\q-gears\src\core\cameramanager.h
 	<OgreCamera.h>
 	<OgreSingleton.h>
 	"Event.h"
@@ -25164,7 +25164,7 @@
 	"Timer.h"
 	"Utilites.h"
 
-1314721440 source:m:\q-gears\src\core\debugdraw.cpp
+1322054424 source:m:\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>

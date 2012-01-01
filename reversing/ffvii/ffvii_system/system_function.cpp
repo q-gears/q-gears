@@ -1,4 +1,104 @@
 ﻿////////////////////////////////
+// system_calculate_total_lure_gil_preemptive_value
+S2 = 0;
+S1 = 0;
+
+[GP + 1d4] = b(10);
+[GP + 1d5] = b(10);
+[GP + 1d6] = b(0);
+[GP + 1d7] = b(10);
+
+// remove underwater timer
+[8009d302] = b(bu[8009d302] & 7f);
+
+
+
+S0 = 0;
+loop176d8:	; 800176D8
+    V1 = bu[8009cbdc + S0];
+    if (V1 != ff)
+    {
+        A0 = S0;
+        system_get_party_player_structure_address_by_party_id;
+        [GP + 11c] = w(V0);
+
+        [GP + 1d4] = b(bu[GP + 1d4] + bu[V0 + 43c]);
+        [GP + 1d6] = b(bu[GP + 1d6] + bu[V0 + 43e]);
+        [GP + 1d7] = b(bu[GP + 1d7] + bu[V0 + 43f]);
+
+        S2 = S2 + bu[V0 + 43d]; // encounter value (enemy lure/away)
+        S1 = S1 + bu[V0 + 437]; // number of stars equipped enemy away materia has
+
+        // if underwater materia equipped add timer to battle ui
+        V0 = bu[V0 + 23];
+        if (V0 & 01)
+        {
+            V0 = bu[8009d302];
+            V0 = V0 | 80;
+            [8009d302] = b(V0);
+        }
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+80017784	bne    v0, zero, loop176d8 [$800176d8]
+
+
+
+V0 = bu[GP + 1d4];
+if (V0 >= 21)
+{
+    [GP + 1d4] = b(20);
+}
+
+
+
+
+if (S2 + 10 >= S1)
+{
+    [GP + 1d5] = b(S2 - S1 + 10);
+}
+else
+{
+    [GP + 1d5] = b(2);
+}
+
+V0 = bu[GP + 1d5];
+if (V0 >= 21)
+{
+    [GP + 1d5] = b(20);
+}
+
+
+
+
+V0 = bu[GP + 1d6];
+if (V0 >= 21)
+{
+    [GP + 1d6] = b(20);
+}
+
+
+
+V0 = bu[GP + 1d7];
+if (V0 >= 56)
+{
+    [GP + 1d7] = b(55);
+}
+
+// if mastered pre emptive
+V0 = bu[GP + 118];
+if (V0 != 0)
+{
+    V0 = bu[GP + 1d7];
+    V0 = V0 | 80;
+    [GP + 1d7] = b(V0);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func44a68
 S0 = A0;
 A0 = A1;

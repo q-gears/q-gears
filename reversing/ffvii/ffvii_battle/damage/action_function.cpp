@@ -1,5 +1,5 @@
 ﻿////////////////////////////////
-// main damage function
+// main action function
 // funca1798
 address = w[80063014];
 
@@ -344,10 +344,10 @@ if (V0 & 04)
     A1 = 7a; // string "XX was cought by surprize" id
     A2 = 1;
     A3 = SP + 18;
-    funcb0ffc; // we copy string here
+    battle_add_string_to_display;
 
     V0 = bu[800F5BB8 + attacker_id * 44 + 29];
-    V0 = V0 & FB;
+    V0 = V0 & fb;
     [800F5BB8 + attacker_id * 44 + 29] = b(V0);
 }
 
@@ -635,7 +635,7 @@ if( w[address + 90] & 0800 ) // add cut execution to priority queue
     A2 = 1;
     A3 = 0;
     A4 = w[address + 94];
-    funca3e98;
+    battle_add_action_to_battle_queue;
 }
 
 
