@@ -1,18 +1,14 @@
 ////////////////////////////////
-// funcb61a4
-a0=80093EB0 a1=00000000 a2=00000F9C a3=801FFF5C 
-v0=00000000 v1=00000001 at=80000000 ra=800AB874 sp=1F8003F0
-
+// field_model_rasterize_3d_vertexes
 A2 = w[A0 + 8]; // pointer to model file
 A1 = w[A2 + 10] + A1 * 28; // pointer to objects data
 
 V1 = w[8006794c];
 V0 = w[V1 + 1c];
-V0 = hu[V0 + a];
-H = V0; // Projection plane distance
+H = hu[V0 + a]; // Projection plane distance
 
 number_of_bones = bu[A2 + 2];
-if (number_of_bones != 0)
+if( number_of_bones != 0 )
 {
     T1 = w[A0 + 20];
     bone_id = 0;

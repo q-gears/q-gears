@@ -51,11 +51,11 @@ if( V1 != -1 )
 
             case 2: // A46F0B80
             {
-                V0 = bu[801590e0];
-                A0 = h[80163798 + V0 * c + 6]; // string index in buffer + 0x100
-                A1 = bu[80163798 + V0 * c + 5]; // string argument
-                A2 = bu[80163798 + V0 * c + 3]; // 0
-                A3 = bu[80163798 + V0 * c + 2]; // 0
+                index = bu[801590e0];
+                A0 = h[80163798 + index * c + 6]; // string index in buffer + 0x100
+                A1 = bu[80163798 + index * c + 5]; // string argument
+                A2 = bu[80163798 + index * c + 3]; // 0
+                A3 = bu[80163798 + index * c + 2]; // 0
                 funcc5c18;
 
                 funcb7fdc;
@@ -67,141 +67,39 @@ if( V1 != -1 )
 
             case 4: // 14700B80
             {
-                800B7014	lui    v0, $800f
-                800B7018	lbu    v0, $7de4(v0)
-                800B701C	nop
-                if( V0 != 0 )
+                if( bu[800f7de4] != 0 )
                 {
-                    800B7028	lui    v0, $8016
-                    800B702C	lbu    v0, $90e0(v0)
-                    800B7030	lui    at, $800f
-                    800B7034	sb     zero, $7de4(at)
-                    800B7038	sll    v1, v0, $01
-                    800B703C	addu   v1, v1, v0
-                    800B7040	sll    v1, v1, $02
-                    800B7044	lui    at, $8016
-                    800B7048	addiu  at, at, $379d
-                    800B704C	addu   at, at, v1
-                    800B7050	lb     v0, $0000(at)
-                    800B7054	nop
-                    800B7058	sll    v0, v0, $08
-                    800B705C	sw     v0, $0000(s4)
-                    800B7060	lui    at, $8016
-                    800B7064	addiu  at, at, $3798
-                    800B7068	addu   at, at, v1
-                    800B706C	lb     a0, $0000(at)
-                    800B7070	nop
-                    800B7074	sll    v1, a0, $01
-                    800B7078	addu   v1, v1, a0
-                    800B707C	sll    v0, v1, $05
-                    800B7080	subu   v0, v0, v1
-                    800B7084	sll    v0, v0, $03
-                    800B7088	subu   v0, v0, a0
-                    800B708C	sll    v0, v0, $02
-                    800B7090	lui    at, $8015
-                    800B7094	addiu  at, at, $18ea
-                    800B7098	addu   at, at, v0
-                    800B709C	lh     v0, $0000(at)
-                    800B70A0	lui    a0, $800c
-                    800B70A4	addiu  a0, a0, $5694
-                    800B70A8	jal    funcbbeac [$800bbeac]
-                    800B70AC	sw     v0, $0000(s3)
-                    800B70B0	lw     a1, $0000(s4)
-                    800B70B4	lw     a0, $0000(s3)
-                    800B70B8	addu   a2, v0, zero
-                    800B70BC	slt    v0, a1, a0
-                    800B70C0	beq    v0, zero, Lb70f8 [$800b70f8]
-                    800B70C4	nop
-                    800B70C8	lui    v1, $8016
-                    800B70CC	lbu    v1, $90e0(v1)
-                    800B70D0	nop
-                    800B70D4	sll    v0, v1, $01
-                    800B70D8	addu   v0, v0, v1
-                    800B70DC	sll    v0, v0, $02
-                    800B70E0	lui    at, $8016
-                    800B70E4	addiu  at, at, $379e
-                    800B70E8	addu   at, at, v0
-                    800B70EC	lh     v1, $0000(at)
-                    800B70F0	j      Lb7124 [$800b7124]
-                    800B70F4	subu   v0, a0, a1
+                    index = bu[801590e0];
+                    unit_id = b[80163798 + index * c + 0];
 
-                    Lb70f8:	; 800B70F8
-                    800B70F8	lui    v1, $8016
-                    800B70FC	lbu    v1, $90e0(v1)
-                    800B7100	nop
-                    800B7104	sll    v0, v1, $01
-                    800B7108	addu   v0, v0, v1
-                    800B710C	sll    v0, v0, $02
-                    800B7110	lui    at, $8016
-                    800B7114	addiu  at, at, $379e
-                    800B7118	addu   at, at, v0
-                    800B711C	lh     v1, $0000(at)
-                    800B7120	subu   v0, a1, a0
+                    [800f7de4] = b(0);
 
-                    Lb7124:	; 800B7124
-                    800B7124	div    v0, v1
-                    800B714C	mflo   v0
-                    800B7150	sll    v1, a2, $05
-                    800B7154	lui    at, $8016
-                    800B7158	addiu  at, at, $297a
-                    800B715C	addu   at, at, v1
-                    800B7160	sh     v0, $0000(at)
-                    800B7164	lui    v1, $8016
-                    800B7168	lbu    v1, $90e0(v1)
-                    800B716C	nop
-                    800B7170	sll    v0, v1, $01
-                    800B7174	addu   v0, v0, v1
-                    800B7178	sll    v0, v0, $02
-                    800B717C	lui    at, $8016
-                    800B7180	addiu  at, at, $3798
-                    800B7184	addu   at, at, v0
-                    800B7188	lb     a0, $0000(at)
-                    800B718C	nop
-                    800B7190	sll    v1, a0, $01
-                    800B7194	addu   v1, v1, a0
-                    800B7198	sll    v0, v1, $05
-                    800B719C	subu   v0, v0, v1
-                    800B71A0	sll    v0, v0, $03
-                    800B71A4	subu   v0, v0, a0
-                    800B71A8	sll    v0, v0, $02
-                    800B71AC	lui    at, $8015
-                    800B71B0	addiu  at, at, $190a
-                    800B71B4	addu   at, at, v0
-                    800B71B8	sb     zero, $0000(at)
-                    800B71BC	lui    v0, $8016
-                    800B71C0	lbu    v0, $90e0(v0)
-                    800B71C4	nop
-                    800B71C8	sll    v1, v0, $01
-                    800B71CC	addu   v1, v1, v0
-                    800B71D0	sll    v1, v1, $02
-                    800B71D4	lui    at, $8016
-                    800B71D8	addiu  at, at, $3798
-                    800B71DC	addu   at, at, v1
-                    800B71E0	lbu    v0, $0000(at)
-                    800B71E4	sll    a0, a2, $05
-                    800B71E8	sll    v0, v0, $18
-                    800B71EC	sra    v0, v0, $18
-                    800B71F0	lui    at, $8016
-                    800B71F4	addiu  at, at, $297e
-                    800B71F8	addu   at, at, a0
-                    800B71FC	sh     v0, $0000(at)
-                    800B7200	lui    at, $8016
-                    800B7204	addiu  at, at, $379e
-                    800B7208	addu   at, at, v1
-                    800B720C	lhu    v0, $0000(at)
-                    800B7210	nop
-                    800B7214	lui    at, $8016
-                    800B7218	addiu  at, at, $297c
-                    800B721C	addu   at, at, a0
-                    800B7220	sh     v0, $0000(at)
-                    800B7224	lui    at, $8016
-                    800B7228	addiu  at, at, $37a0
-                    800B722C	addu   at, at, v1
-                    800B7230	sh     s1, $0000(at)
+                    [1f800004] = w(b[80163798 + index * c + 5] << 8); // animation action id
+                    [1f800008] = w(h[801518ea + unit_id * b9c]);
+
+                    A0 = 800c5694;
+                    funcbbeac;
+                    data_id = V0;
+
+                    if( w[1f800004] < w[1f800008] )
+                    {
+                        V0 = w[1f800008] - w[1f800004];
+                    }
+                    else
+                    {
+                        V0 = w[1f800004] - w[1f800008];
+                    }
+
+                    [8015190a + unit_id * b9c] = b(0);
+
+                    [80162978 + data_id * 20 + 2] = h(V0 / h[80163798 + index * c + 6]);
+                    [80162978 + data_id * 20 + 4] = h(hu[80163798 + index * c + 6]);
+                    [80162978 + data_id * 20 + 6] = h(unit_id);
+
+                    [80163798 + index * c + 8] = h(-1);
                 }
 
                 funcb7fdc;
-
                 if( bu[800f7de4] != 0 )
                 {
                     [801590e0] = b(bu[801590e0] + 1);
@@ -213,13 +111,10 @@ if( V1 != -1 )
 
             case 3: // 3C720B80
             {
-                800B723C	lui    v0, $800f
-                800B7240	lbu    v0, $7de4(v0)
-                800B7244	nop
-                if( V0 != 0 )
+                if( bu[800f7de4] != 0 )
                 {
-                    800B7250	lui    at, $800f
-                    800B7254	sb     zero, $7de4(at)
+                    [800f7de4] = b(0);
+
                     800B7258	jal    funcbb684 [$800bb684]
                     800B725C	nop
                     800B7260	lui    v1, $8016
@@ -331,10 +226,7 @@ if( V1 != -1 )
 
             case 1:
             {
-                800B73E0	lui    v0, $800f
-                800B73E4	lbu    v0, $7de4(v0)
-                800B73E8	nop
-                if( V0 != 0 )
+                if( bu[800f7de4] != 0 )
                 {
                     800B73F4	lui    at, $800f
                     800B73F8	sb     zero, $7de4(at)
