@@ -1,512 +1,416 @@
 ////////////////////////////////
 // funcab3cc
-800AB3CC	lui    v0, $800d
-800AB3D0	lhu    v0, $9d44(v0)
-800AB3D4	addiu  sp, sp, $ff68 (=-$98)
-800AB3D8	sw     s4, $0080(sp)
-800AB3DC	addiu  s4, zero, $0064
-800AB3E0	sw     s1, $0074(sp)
-800AB3E4	addu   s1, zero, zero
-800AB3E8	sw     ra, $0090(sp)
-800AB3EC	sw     s7, $008c(sp)
-800AB3F0	sw     s6, $0088(sp)
-800AB3F4	sw     s5, $0084(sp)
-800AB3F8	sw     s3, $007c(sp)
-800AB3FC	sw     s2, $0078(sp)
-800AB400	andi   v0, v0, $0040
-800AB404	beq    v0, zero, Lab430 [$800ab430]
-800AB408	sw     s0, $0070(sp)
-800AB40C	addiu  a0, sp, $0060
-800AB410	jal    func19ae0c [$8019ae0c]
-800AB414	addu   a1, sp, s4
-800AB418	lw     a0, $0060(sp)
-800AB41C	lw     a1, $0064(sp)
-800AB420	jal    func16c40 [$80016c40]
-800AB424	nop
-800AB428	j      Lab43c [$800ab43c]
-800AB42C	lui    v0, $8006
 
-Lab430:	; 800AB430
-800AB430	jal    funcc0f08 [$800c0f08]
-800AB434	nop
-800AB438	lui    v0, $8006
+if( hu[800c9d44] & 0040 )
+{
+    A0 = SP + 60;
+    A1 = SP + 64;
+    800AB410	jal    func19ae0c [$8019ae0c]
 
-Lab43c:	; 800AB43C
-800AB43C	lw     v0, $794c(v0)
-800AB440	addiu  a0, sp, $0010
-800AB444	lw     v1, $001c(v0)
-800AB448	addu   s3, zero, zero
-800AB44C	lw     a1, $08e4(v1)
-800AB450	lbu    v0, $0008(v1)
-800AB454	lw     a1, $000c(a1)
-800AB458	sll    v0, v0, $02
-800AB45C	lw     a1, $0014(a1)
-800AB460	addu   v1, v1, v0
-800AB464	lh     v0, $0030(a1)
-800AB468	lw     s7, $0010(v1)
-800AB46C	sll    v0, v0, $02
-800AB470	addu   v0, s7, v0
-800AB478	sw     v0, $0010(v1)
-800AB474	jal    funcab110 [$800ab110]
-
-S5 = V0;
-
-800AB480	blez   s5, Lab55c [$800ab55c]
-800AB484	sll    v0, s3, $02
-
-loopab488:	; 800AB488
-800AB488	addu   v0, sp, v0
-800AB48C	lw     v1, $0010(v0)
-800AB490	nop
-800AB494	beq    v1, zero, Lab54c [$800ab54c]
-800AB498	nop
-800AB49C	lw     s2, $0008(v1)
-800AB4A0	lw     v0, $0000(v1)
-800AB4A4	lw     s0, $000c(v1)
-800AB4A8	andi   v0, v0, $0002
-800AB4AC	beq    v0, zero, Lab4f4 [$800ab4f4]
-800AB4B0	addiu  a1, sp, $0068
-800AB4B4	lbu    a0, $003b(s0)
-800AB4B8	jal    funcc768c [$800c768c]
-800AB4BC	addiu  a2, sp, $006a
-800AB4C0	beq    v0, zero, Lab4f4 [$800ab4f4]
-800AB4C4	addiu  a0, sp, $0050
-800AB4C8	lhu    v0, $0068(sp)
-800AB4CC	nop
-800AB4D0	sh     v0, $0050(sp)
-800AB4D4	lhu    v1, $0022(s0)
-800AB4D8	lhu    v0, $006a(sp)
-800AB4DC	addiu  a1, s2, $0024
-800AB4E0	sh     v0, $0054(sp)
-800AB4E4	jal    func30ea4 [$80030ea4]
-800AB4E8	sh     v1, $0052(sp)
-800AB4EC	j      Lab524 [$800ab524]
-800AB4F0	nop
-
-Lab4f4:	; 800AB4F4
-800AB4F4	lhu    v0, $0020(s0)
-800AB4F8	nop
-
-funcab4fc:	; 800AB4FC
-800AB4FC	sh     v0, $0050(sp)
-800AB500	lhu    v0, $0022(s0)
-800AB504	addiu  a0, sp, $0050
-800AB508	addu   v0, v0, s1
-800AB50C	andi   v0, v0, $0fff
-800AB510	sh     v0, $0052(sp)
-800AB514	lhu    v0, $0024(s0)
-800AB518	addiu  a1, s2, $0024
-800AB51C	jal    system_create_matrix_from_angle_with_cpu [$80031244]
-800AB520	sh     v0, $0054(sp)
-
-Lab524:	; 800AB524
-800AB524	lw     v0, $0014(s0)
-800AB528	nop
-800AB52C	sw     v0, $0038(s2)
-800AB530	lw     v0, $0018(s0)
-800AB534	nop
-800AB538	sw     v0, $003c(s2)
-800AB53C	lw     v0, $001c(s0)
-800AB540	addu   a0, s2, zero
-800AB544	jal    funcb7cec [$800b7cec]
-800AB548	sw     v0, $0040(a0)
-
-Lab54c:	; 800AB54C
-800AB54C	addiu  s3, s3, $0001
-800AB550	slt    v0, s3, s5
-800AB554	bne    v0, zero, loopab488 [$800ab488]
-800AB558	sll    v0, s3, $02
-
-Lab55c:	; 800AB55C
-800AB55C	blez   s5, Lab5e0 [$800ab5e0]
-800AB560	addu   s3, zero, zero
-800AB564	addiu  s1, sp, $0010
-
-loopab568:	; 800AB568
-800AB568	lw     v1, $0000(s1)
-800AB56C	nop
-800AB570	beq    v1, zero, Lab5d0 [$800ab5d0]
-800AB574	addiu  a0, zero, $0004
-800AB578	addu   a2, zero, zero
-800AB57C	lw     s0, $000c(v1)
-
-funcab580:	; 800AB580
-800AB580	lui    a1, $0003
-800AB584	lhu    v0, $0036(s0)
-800AB588	lw     s2, $0008(v1)
-800AB58C	jal    func1c7fc [$8001c7fc]
-800AB590	or     a1, v0, a1
-800AB594	addu   v1, v0, zero
-800AB598	beq    v1, zero, Lab5d0 [$800ab5d0]
-800AB59C	sw     v1, $000c(s2)
-800AB5A0	lw     v0, $000c(v1)
-800AB5A4	nop
-800AB5A8	bltz   v0, Lab5d0 [$800ab5d0]
-800AB5AC	addu   v0, v1, v0
-800AB5B0	lw     a0, $0010(v1)
-800AB5B4	nop
-800AB5B8	beq    a0, zero, Lab5d0 [$800ab5d0]
-800AB5BC	sw     v0, $000c(v1)
-800AB5C0	lw     v0, $000c(s2)
-800AB5C4	nop
-800AB5C8	addu   v0, v0, a0
-800AB5CC	sw     v0, $0010(v1)
-
-Lab5d0:	; 800AB5D0
-800AB5D0	addiu  s3, s3, $0001
-800AB5D4	slt    v0, s3, s5
-800AB5D8	bne    v0, zero, loopab568 [$800ab568]
-800AB5DC	addiu  s1, s1, $0004
-
-Lab5e0:	; 800AB5E0
-800AB5E0	blez   s5, Lab64c [$800ab64c]
-800AB5E4	addu   s3, zero, zero
-800AB5E8	addiu  s1, sp, $0010
-
-loopab5ec:	; 800AB5EC
-800AB5EC	lw     v1, $0000(s1)
-800AB5F0	nop
-800AB5F4	beq    v1, zero, Lab638 [$800ab638]
-800AB5F8	nop
-S2 = w[V1 + 8];
-800AB604	lhu    v0, $0000(s2)
-800AB608	lw     s0, $000c(v1)
-800AB60C	andi   v0, v0, $0001
-800AB610	beq    v0, zero, Lab62c [$800ab62c]
-800AB614	nop
-800AB618	lbu    a1, $003a(s0)
-800AB61C	jal    funcba560 [$800ba560]
-800AB620	addu   a0, s2, zero
-800AB624	j      Lab63c [$800ab63c]
-800AB628	addiu  s1, s1, $0004
-
-Lab62c:	; 800AB62C
-A0 = S2;
-A1 = bu[S0 + 3a]; // frame id
-funcb7f14; // we build animation bone matrixes here
+    OFX = w[SP + 60] << 10;
+    OFY = w[SP + 64] << 10;
+}
+else
+{
+    funcc0f08; // set OFX and OFY
+}
 
 
-Lab638:	; 800AB638
-800AB638	addiu  s1, s1, $0004
 
-Lab63c:	; 800AB63C
-800AB63C	addiu  s3, s3, $0001
-800AB640	slt    v0, s3, s5
-800AB644	bne    v0, zero, loopab5ec [$800ab5ec]
-800AB648	nop
+V1 = w[8006794c];
+V1 = w[V1 + 1c];
+V0 = bu[V1 + 8];
+A1 = w[V1 + 8e4];
+A1 = w[A1 + c];
+A1 = w[A1 + 14];
+S7 = w[V1 + 10 + V0 * 4];
+[V1 + 10 + V0 * 4] = w(S7 + h[A1 + 30] * 4);
 
-Lab64c:	; 800AB64C
-800AB64C	lui    v0, $8006
-800AB650	lw     v0, $794c(v0)
-800AB654	nop
-800AB658	lw     v0, $001c(v0)
-800AB65C	nop
-800AB660	addiu  v0, v0, $0018
-800AB664	lw     t4, $0000(v0)
-800AB668	lw     t5, $0004(v0)
-800AB66C	ctc2   t4,vxy0
-800AB670	ctc2   t5,vz0
-800AB674	lw     t4, $0008(v0)
 
-Lab678:	; 800AB678
-800AB678	lw     t5, $000c(v0)
-800AB67C	lw     t6, $0010(v0)
-800AB680	ctc2   t4,vxy1
-800AB684	ctc2   t5,vz1
-800AB688	ctc2   t6,vxy2
-800AB68C	lw     t4, $0014(v0)
-800AB690	lw     t5, $0018(v0)
-800AB694	ctc2   t4,vz2
-800AB698	lw     t6, $001c(v0)
-800AB69C	ctc2   t5,rgb
-800AB6A0	ctc2   t6,otz
-800AB6A4	blez   s5, Lab7a8 [$800ab7a8]
-800AB6A8	addu   s3, zero, zero
-800AB6AC	addiu  t1, sp, $0050
-800AB6B0	addiu  t0, sp, $0058
-800AB6B4	addiu  a3, sp, $006c
-800AB6B8	addiu  v0, zero, $1000
-800AB6BC	subu   a2, v0, s4
-800AB6C0	addiu  a1, sp, $0010
 
-loopab6c4:	; 800AB6C4
-800AB6C4	lw     v1, $0000(a1)
-800AB6C8	nop
-800AB6CC	beq    v1, zero, Lab798 [$800ab798]
+A0 = SP + 10;
+field_add_model_data_pointers;
+number_of_models = V0;
 
-Lab6d0:	; 800AB6D0
-800AB6D0	nop
-800AB6D4	lw     s2, $0008(v1)
-800AB6D8	nop
-800AB6DC	lw     v0, $0020(s2)
-800AB6E0	nop
-800AB6E4	lhu    v0, $0014(v0)
-800AB6E8	nop
-800AB6EC	sh     v0, $0050(sp)
 
-funcab6f0:	; 800AB6F0
-800AB6F0	lw     v0, $0020(s2)
-800AB6F4	nop
-800AB6F8	lhu    v0, $0018(v0)
-800AB6FC	nop
-800AB700	sh     v0, $0052(sp)
-800AB704	lw     v0, $0020(s2)
-800AB708	nop
-800AB70C	lhu    v0, $001c(v0)
-800AB710	nop
-800AB714	sh     v0, $0054(sp)
-800AB718	lwc2   zero, $0000(t1)
-800AB71C	lwc2   at, $0004(t1)
-800AB720	nop
-800AB724	nop
-800AB728	gte_func16t8,r11r12
-800AB72C	swc2   t6, $0000(t0)
-800AB730	swc2   s3, $0000(a3)
-800AB734	lw     a0, $006c(sp)
-800AB738	nop
-800AB73C	bgez   a0, Lab748 [$800ab748]
-800AB740	lui    v0, $8006
-800AB744	addiu  a0, a0, $0003
 
-Lab748:	; 800AB748
-800AB748	lw     v0, $794c(v0)
-800AB74C	nop
-800AB750	lw     v0, $001c(v0)
-800AB754	nop
+// update rotation and translation data with data from scripts
+if( number_of_models < 0 )
+{
+    S3 = 0;
+    loopab488:	; 800AB488
+        V1 = w[SP + 10 + S3 * 4];
+        if( V1 != 0 )
+        {
+            model_data = w[V1 + 8];
+            script = w[V1 + c];
+            if( w[V1 + 0] & 00000002 )
+            {
+                A0 = bu[script + 3b];
+                A1 = SP + 68;
+                A2 = SP + 6a;
+                field_get_x_y_rotation_from_walkmesh_for_model;
 
-funcab758:	; 800AB758
-800AB758	lw     v0, $08e4(v0)
-800AB75C	nop
-800AB760	lw     v0, $000c(v0)
-800AB764	nop
-800AB768	lw     v0, $0014(v0)
-800AB76C	nop
-800AB770	lh     v1, $0030(v0)
-800AB774	sra    v0, a0, $02
-800AB778	addu   v1, v0, v1
-800AB77C	slt    v0, v1, s4
-800AB780	bne    v0, zero, Lab794 [$800ab794]
-800AB784	sw     v1, $006c(sp)
-800AB788	slt    v0, a2, v1
-800AB78C	beq    v0, zero, Lab798 [$800ab798]
-800AB790	nop
+                [SP + 50] = h(hu[SP + 68]);
+                [SP + 52] = h(hu[script + 22]); // Y rotation
+                [SP + 54] = h(hu[SP + 6a]);
 
-Lab794:	; 800AB794
-800AB794	sw     zero, $0000(a1)
+                A0 = SP + 50;
+                A1 = model_data + 24;
+                func30ea4; // create rotation matrix
+            }
+            else
+            {
+                [SP + 50] = h(hu[script + 20]);
+                [SP + 52] = h(hu[script + 22]);
+                [SP + 54] = h(hu[script + 24]);
 
-Lab798:	; 800AB798
-800AB798	addiu  s3, s3, $0001
-800AB79C	slt    v0, s3, s5
-800AB7A0	bne    v0, zero, loopab6c4 [$800ab6c4]
-800AB7A4	addiu  a1, a1, $0004
+                A0 = SP + 50;
+                A1 = model_data + 24;
+                system_create_matrix_from_angle_with_cpu;
+            }
 
-Lab7a8:	; 800AB7A8
-if (S5 > 0)
+            [model_data + 38] = w(w[script + 14]); // X
+            [model_data + 3c] = w(w[script + 18]); // Y
+            [model_data + 40] = w(w[script + 1c]); // Z
+
+            A0 = model_data;
+            funcb7cec; // apply scaling to rotation matrix
+        }
+
+        S3 = S3 + 1;
+        V0 = S3 < number_of_models;
+    800AB554	bne    v0, zero, loopab488 [$800ab488]
+}
+
+
+
+// set up animation file
+// and update local animation offsets to global one
+if( number_of_models > 0 )
+{
+    S3 = 0;
+    loopab568:	; 800AB568
+        V1 = w[SP + 10 + S3 * 4];
+        if( V1 != 0 )
+        {
+            model_data = w[V1 + 8];
+            script = w[V1 + c];
+
+            A0 = 4;
+            A1 = 00030000 | hu[script + 36]; // currently played animation id
+            A2 = 0;
+            func1c7fc; // get address of animation file
+            animation_file = V0;
+
+            [model_data + c] = w(animation_file);
+
+            // if animation file exist update local offsets to global one
+            if( animation_file != 0 )
+            {
+                if( w[animation_file + c] >= 0 )
+                {
+                    [animation_file + c] = w(animation_file + w[animation_file + c]);
+
+                    if( w[animation_file + 10] >= 0 )
+                    {
+                        [animation_file + 10] = w(animation_file + w[animation_file + 10]);
+                    }
+                }
+            }
+        }
+
+        S3 = S3 + 1;
+        V0 = S3 < number_of_models;
+    800AB5D8	bne    v0, zero, loopab568 [$800ab568]
+}
+
+
+
+if( number_of_models > 0 )
+{
+    S3 = 0;
+    loopab5ec:	; 800AB5EC
+        V1 = w[SP + 10 + S3 * 4];
+        if( V1 != 0 )
+        {
+            model_data = w[V1 + 8];
+            script = w[V1 + c];
+
+            if( hu[model_data + 0] & 0001 )
+            {
+                A0 = model_data;
+                A1 = bu[script + 3a]; // frame id
+                funcba560;
+
+            }
+            else
+            {
+                A0 = model_data;
+                A1 = bu[script + 3a]; // frame id
+                funcb7f14; // we build animation bone matrixes here
+            }
+        }
+
+        S3 = S3 + 1;
+        V0 = S3 < number_of_models;
+    800AB644	bne    v0, zero, loopab5ec [$800ab5ec]
+}
+
+
+
+// set main transformation matrix
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+R11R12 = w[V0 + 18];
+R13R21 = w[V0 + 1c];
+R22R23 = w[V0 + 20];
+R31R32 = w[V0 + 24];
+R33 = w[V0 + 28];
+TRX = w[V0 + 2c];
+TRY = w[V0 + 30];
+TRZ = w[V0 + 34];
+
+if( number_of_models > 0 )
+{
+    S3 = 0;
+    loopab6c4:	; 800AB6C4
+        V1 = w[SP + 10 + S3 * 4];
+        if( V1 != 0 )
+        {
+            S2 = w[V1 + 8];
+            V0 = w[S2 + 20];
+            [SP + 50] = h(hu[V0 + 14]);
+            [SP + 52] = h(hu[V0 + 18]);
+            [SP + 54] = h(hu[V0 + 1c]);
+
+            VXY0 = w[SP + 50];
+            VZ0 = w[SP + 54];
+
+            gte_RTPS; // Perspective transform
+
+            [SP + 58] = w(SXY2);
+            [SP + 6c] = w(SZ3);
+
+            V0 = w[8006794c];
+            V0 = w[V0 + 1c];
+            V0 = w[V0 + 8e4];
+            V0 = w[V0 + c];
+            V0 = w[V0 + 14];
+            V1 = w[SP + 6c] / 4 + h[V0 + 30];
+            [SP + 6c] = w(V1);
+            if( V1 < 64 || ( 1000 - 64 ) < V1 )
+            {
+                [SP + 10 + S3 * 4] = w(0);
+            }
+        }
+
+        S3 = S3 + 1;
+        V0 = S3 < number_of_models;
+    800AB7A0	bne    v0, zero, loopab6c4 [$800ab6c4]
+}
+
+
+
+if( number_of_models > 0 )
 {
     S3 = 0;
     S6 = 1;
 
     loopab7b8:	; 800AB7B8
-        V0 = SP + S3 * 4;
-        V1 = w[V0 + 10];
-
-        800AB7C4	beq    v1, zero, Lab898 [$800ab898]
-        800AB7C8	lui    v0, $0010
-        800AB7CC	lui    t2, $1f80
-        800AB7D0	ori    t2, t2, $03fc
-        S2 = w[V1 + 8];
-        800AB7D8	lw     v1, $0000(v1)
-        A0 = w[S2 + 8];
-        800AB7E0	and    v1, v1, v0
-        S4 = bu[A0 + 3]; // number of objects
-        800AB7E8	addu   t0, t2, zero
-        800AB7EC	sw     sp, $0000(t0)
-        800AB7F0	addiu  t0, t0, $fff4 (=-$c)
-        800AB7F4	addu   sp, t0, zero
-        800AB7F8	beq    v1, zero, Lab84c [$800ab84c]
-        800AB7FC	nop
-        800AB800	beq    s4, zero, Lab890 [$800ab890]
-        800AB804	addu   s1, zero, zero
-
-        Lab808:	; 800AB808
-        800AB808	lw     v0, $0014(s2)
-        800AB80C	sllv   v1, s1, s6
-        800AB810	and    v0, v0, v1
-        800AB814	bne    v0, zero, Lab834 [$800ab834]
-        800AB818	addu   a0, s2, zero
-        800AB81C	andi   s0, s1, $00ff
-        800AB820	jal    funcbb508 [$800bb508]
-        800AB824	addu   a1, s0, zero
-        800AB828	addu   a0, s2, zero
-        800AB82C	jal    funcbb714 [$800bb714]
-        800AB830	addu   a1, s0, zero
-
-        Lab834:	; 800AB834
-        800AB834	addiu  s1, s1, $0001
-        800AB838	slt    v0, s1, s4
-        800AB83C	beq    v0, zero, Lab890 [$800ab890]
-        800AB840	nop
-        800AB844	j      Lab808 [$800ab808]
-        800AB848	nop
-
-        Lab84c:	; 800AB84C
-        if (S4 != 0)
+        V1 = w[SP + 10 + S3 * 4];
+        if( V1 != 0 )
         {
-            S1 = 0;
-            loopab854:	; 800AB854
-                if ((w[S2 + 14] & (S6 << S1)) == 0)
+            model_data = w[V1 + 8];
+            A0 = w[model_data + 8];
+            number_of_models = bu[A0 + 3];
+            [1f8003fc] = w(SP);
+            SP = 1f8003f0;
+
+            if( number_of_models != 0 )
+            {
+                if( ( w[V1 + 0] & 00100000 ) == 0 )
                 {
-                    A0 = S2;
-                    A1 = S1;
-                    field_model_rasterize_3d_vertexes;
+                    S1 = 0;
+                    loopab854:	; 800AB854
+                        if( ( w[model_data + 14] & ( S6 << S1 ) ) == 0 )
+                        {
+                            A0 = model_data; // struct with settings
+                            A1 = S1; // model id
+                            field_model_rasterize_3d_vertexes;
 
-                    A0 = S2;
-                    A1 = S1;
-                    funcb5958; // insert data in packets
+                            A0 = model_data;
+                            A1 = S1;
+                            funcb5958; // insert data in packets
+                        }
+
+                        S1 = S1 + 1;
+                        V0 = S1 < number_of_models;
+                    800AB888	bne    v0, zero, loopab854 [$800ab854]
                 }
+                else
+                {
+                    S1 = 0;
+                    Lab808:	; 800AB808
+                        if( ( w[model_data + 14] & ( S6 << S1 ) ) == 0 )
+                        {
+                            A0 = model_data;
+                            A1 = S1;
+                            800AB820	jal    funcbb508 [$800bb508]
 
-                S1 = S1 + 1;
-                V0 = S1 < S4;
-            800AB888	bne    v0, zero, loopab854 [$800ab854]
+                            A0 = model_data;
+                            A1 = S1;
+                            800AB82C	jal    funcbb714 [$800bb714]
+                        }
+
+                        S1 = S1 + 1;
+                        V0 = S1 < number_of_models;
+                    800AB888	bne    v0, zero, Lab808 [$800ab854]
+                }
+            }
+
+            SP = SP + c;
+            SP = w[SP];
         }
 
-        Lab890:	; 800AB890
-        800AB890	addiu  sp, sp, $000c
-        800AB894	lw     sp, $0000(sp)
-
-        Lab898:	; 800AB898
-        800AB898	addiu  s3, s3, $0001
-
-        Lab89c:	; 800AB89C
-        V0 = S3 < S5;
+        S3 = S3 + 1;
+        V0 = S3 < number_of_models;
     800AB8A0	bne    v0, zero, loopab7b8 [$800ab7b8]
 }
 
 
 
-800AB8A8	blez   s5, Lab90c [$800ab90c]
-800AB8AC	addu   s3, zero, zero
-800AB8B0	lui    s1, $8006
-800AB8B4	addiu  s0, sp, $0010
+if( number_of_models > 0 )
+{
+    800AB8AC	addu   s3, zero, zero
+    800AB8B0	lui    s1, $8006
+    800AB8B4	addiu  s0, sp, $0010
 
-loopab8b8:	; 800AB8B8
-800AB8B8	lw     v1, $0000(s0)
-800AB8BC	nop
-800AB8C0	beq    v1, zero, Lab8fc [$800ab8fc]
-800AB8C4	nop
-800AB8C8	lw     v0, $794c(s1)
-800AB8CC	nop
-800AB8D0	lw     v0, $001c(v0)
-800AB8D4	nop
-800AB8D8	lw     v0, $08e4(v0)
-800AB8DC	nop
-800AB8E0	lw     v0, $000c(v0)
-800AB8E4	lw     v1, $000c(v1)
-800AB8E8	lw     v0, $0014(v0)
-800AB8EC	lbu    a1, $003b(v1)
-800AB8F0	lw     a0, $002c(v0)
-800AB8F4	jal    funcac6c0 [$800ac6c0]
-800AB8F8	nop
+    loopab8b8:	; 800AB8B8
+        800AB8B8	lw     v1, $0000(s0)
+        800AB8BC	nop
+        800AB8C0	beq    v1, zero, Lab8fc [$800ab8fc]
+        800AB8C4	nop
+        800AB8C8	lw     v0, $794c(s1)
+        800AB8CC	nop
+        800AB8D0	lw     v0, $001c(v0)
+        800AB8D4	nop
+        800AB8D8	lw     v0, $08e4(v0)
+        800AB8DC	nop
+        800AB8E0	lw     v0, $000c(v0)
+        800AB8E4	lw     v1, $000c(v1)
+        800AB8E8	lw     v0, $0014(v0)
+        800AB8EC	lbu    a1, $003b(v1)
+        800AB8F0	lw     a0, $002c(v0)
+        800AB8F4	jal    funcac6c0 [$800ac6c0]
+        800AB8F8	nop
 
-Lab8fc:	; 800AB8FC
-800AB8FC	addiu  s3, s3, $0001
-800AB900	slt    v0, s3, s5
-800AB904	bne    v0, zero, loopab8b8 [$800ab8b8]
-800AB908	addiu  s0, s0, $0004
+        Lab8fc:	; 800AB8FC
+        800AB8FC	addiu  s3, s3, $0001
+        800AB908	addiu  s0, s0, $0004
+        V0 = S3 < number_of_models;
+    800AB904	bne    v0, zero, loopab8b8 [$800ab8b8]
+}
 
-Lab90c:	; 800AB90C
-800AB90C	blez   s5, Lab9b4 [$800ab9b4]
-800AB910	addu   s3, zero, zero
-800AB914	sll    v0, s3, $02
 
-loopab918:	; 800AB918
-800AB918	addu   v0, sp, v0
-800AB91C	lw     v1, $0010(v0)
-800AB920	nop
-800AB924	beq    v1, zero, Lab9a4 [$800ab9a4]
-800AB928	nop
-800AB92C	lw     v0, $0000(v1)
-800AB930	nop
-800AB934	andi   v0, v0, $1000
-800AB938	bne    v0, zero, Lab9a4 [$800ab9a4]
-800AB93C	nop
-800AB940	lw     s2, $0008(v1)
-800AB944	nop
-800AB948	lw     v0, $0050(s2)
-800AB94C	nop
-800AB950	lhu    v0, $0000(v0)
-800AB954	nop
-800AB958	sltiu  v0, v0, $0002
-800AB95C	bne    v0, zero, Lab9a4 [$800ab9a4]
-800AB960	nop
-800AB964	jal    funcab0b0 [$800ab0b0]
-800AB968	addu   a0, s2, zero
-800AB96C	bne    v0, zero, Lab9a4 [$800ab9a4]
-800AB970	nop
-800AB974	lw     v1, $0050(s2)
-800AB978	nop
-800AB97C	lbu    v0, $002c(v1)
-800AB980	nop
-800AB984	ori    v0, v0, $0001
-800AB988	sb     v0, $002c(v1)
-800AB98C	lw     v0, $0050(s2)
-800AB990	nop
-800AB994	sw     zero, $0034(v0)
-800AB998	lw     v1, $0050(s2)
-800AB99C	addiu  v0, zero, $1000
-800AB9A0	sh     v0, $003a(v1)
 
-Lab9a4:	; 800AB9A4
-800AB9A4	addiu  s3, s3, $0001
-800AB9A8	slt    v0, s3, s5
-800AB9AC	bne    v0, zero, loopab918 [$800ab918]
-800AB9B0	sll    v0, s3, $02
+if( number_of_models > 0 )
+{
+    800AB910	addu   s3, zero, zero
 
-Lab9b4:	; 800AB9B4
-800AB9B4	blez   s5, Lab9f4 [$800ab9f4]
-800AB9B8	addu   s3, zero, zero
-800AB9BC	addiu  s0, sp, $0010
+    loopab918:	; 800AB918
+        800AB914	sll    v0, s3, $02
+        800AB918	addu   v0, sp, v0
+        800AB91C	lw     v1, $0010(v0)
+        800AB920	nop
+        800AB924	beq    v1, zero, Lab9a4 [$800ab9a4]
+        800AB928	nop
+        800AB92C	lw     v0, $0000(v1)
+        800AB930	nop
+        800AB934	andi   v0, v0, $1000
+        800AB938	bne    v0, zero, Lab9a4 [$800ab9a4]
+        800AB93C	nop
+        800AB940	lw     s2, $0008(v1)
+        800AB944	nop
+        800AB948	lw     v0, $0050(s2)
+        800AB94C	nop
+        800AB950	lhu    v0, $0000(v0)
+        800AB954	nop
+        800AB958	sltiu  v0, v0, $0002
+        800AB95C	bne    v0, zero, Lab9a4 [$800ab9a4]
+        800AB960	nop
+        800AB964	jal    funcab0b0 [$800ab0b0]
+        800AB968	addu   a0, s2, zero
+        800AB96C	bne    v0, zero, Lab9a4 [$800ab9a4]
+        800AB970	nop
+        800AB974	lw     v1, $0050(s2)
+        800AB978	nop
+        800AB97C	lbu    v0, $002c(v1)
+        800AB980	nop
+        800AB984	ori    v0, v0, $0001
+        800AB988	sb     v0, $002c(v1)
+        800AB98C	lw     v0, $0050(s2)
+        800AB990	nop
+        800AB994	sw     zero, $0034(v0)
+        800AB998	lw     v1, $0050(s2)
+        800AB99C	addiu  v0, zero, $1000
+        800AB9A0	sh     v0, $003a(v1)
 
-loopab9c0:	; 800AB9C0
-800AB9C0	lw     v1, $0000(s0)
-800AB9C4	nop
-800AB9C8	beq    v1, zero, Lab9e4 [$800ab9e4]
-800AB9CC	nop
-800AB9D0	lw     v0, $0008(v1)
-800AB9D4	nop
-800AB9D8	lw     a0, $0050(v0)
-800AB9DC	jal    funcbb090 [$800bb090]
-800AB9E0	nop
+        Lab9a4:	; 800AB9A4
+        800AB9A4	addiu  s3, s3, $0001
+        800AB9B0	sll    v0, s3, $02
+        V0 = S3 < number_of_models;
+    800AB9AC	bne    v0, zero, loopab918 [$800ab918]
+}
 
-Lab9e4:	; 800AB9E4
-800AB9E4	addiu  s3, s3, $0001
-800AB9E8	slt    v0, s3, s5
-800AB9EC	bne    v0, zero, loopab9c0 [$800ab9c0]
-800AB9F0	addiu  s0, s0, $0004
 
-Lab9f4:	; 800AB9F4
-800AB9F4	addiu  a0, sp, $0010
+
+if( number_of_models > 0 )
+{
+    800AB9B8	addu   s3, zero, zero
+    800AB9BC	addiu  s0, sp, $0010
+
+    loopab9c0:	; 800AB9C0
+        800AB9C0	lw     v1, $0000(s0)
+        800AB9C4	nop
+        if( V1 != 0 )
+        {
+            800AB9D0	lw     v0, $0008(v1)
+            800AB9D4	nop
+            800AB9D8	lw     a0, $0050(v0)
+            800AB9DC	jal    funcbb090 [$800bb090]
+        }
+
+        800AB9E4	addiu  s3, s3, $0001
+        800AB9F0	addiu  s0, s0, $0004
+        V0 = S3 < number_of_models;
+    800AB9EC	bne    v0, zero, loopab9c0 [$800ab9c0]
+}
+
+
+
+A0 = SP + 10;
+A1 = number_of_models;
 800AB9F8	jal    funcb2d10 [$800b2d10]
-800AB9FC	addu   a1, s5, zero
+
 800ABA00	lui    s0, $8006
 800ABA04	lw     v0, $794c(s0)
 800ABA08	nop
 800ABA0C	lw     v0, $001c(v0)
-
-funcaba10:	; 800ABA10
-800ABA10	nop
 800ABA14	lw     v0, $0000(v0)
 800ABA18	nop
 800ABA1C	andi   v0, v0, $0002
-800ABA20	bne    v0, zero, Laba34 [$800aba34]
-800ABA24	addiu  a0, sp, $0010
-800ABA28	jal    funcb1e8c [$800b1e8c]
-800ABA2C	addu   a1, s5, zero
-800ABA30	addiu  a0, sp, $0010
+if( V0 == 0 )
+{
+    A0 = SP + 10;
+    A1 = number_of_models;
+    800ABA28	jal    funcb1e8c [$800b1e8c]
+}
 
-Laba34:	; 800ABA34
+A0 = SP + 10;
+A1 = number_of_models;
 800ABA34	jal    funcac02c [$800ac02c]
-800ABA38	addu   a1, s5, zero
+
 800ABA3C	lw     v0, $794c(s0)
 800ABA40	lui    v1, $800d
 800ABA44	lw     a0, $001c(v0)
@@ -515,23 +419,11 @@ Laba34:	; 800ABA34
 800ABA50	andi   v1, v1, $0040
 800ABA54	sll    v0, v0, $02
 800ABA58	addu   a0, a0, v0
-800ABA5C	bne    v1, zero, Laba6c [$800aba6c]
 800ABA60	sw     s7, $0010(a0)
-800ABA64	jal    funcc0fb0 [$800c0fb0]
-800ABA68	nop
-
-Laba6c:	; 800ABA6C
-800ABA6C	lw     ra, $0090(sp)
-800ABA70	lw     s7, $008c(sp)
-800ABA74	lw     s6, $0088(sp)
-800ABA78	lw     s5, $0084(sp)
-800ABA7C	lw     s4, $0080(sp)
-800ABA80	lw     s3, $007c(sp)
-800ABA84	lw     s2, $0078(sp)
-800ABA88	lw     s1, $0074(sp)
-800ABA8C	lw     s0, $0070(sp)
-800ABA90	jr     ra 
-800ABA94	addiu  sp, sp, $0098
+if( V1 == 0 )
+{
+    800ABA64	jal    funcc0fb0 [$800c0fb0]
+}
 ////////////////////////////////
 
 

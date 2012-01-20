@@ -37,6 +37,8 @@ triangles (size 0x28)
 0x02 : уг
 +04 [][]     group id.
 +06 [][]     normal id.
++08 [][]     x rotation of all models standing this triangle.
++0a [][]     y rotation of all models standing this triangle.
 +0c [][]     1st vertex id.
 +0e [][]     2nd vertex id.
 +10 [][]     3rd vertex id.

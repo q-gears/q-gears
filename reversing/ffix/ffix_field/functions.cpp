@@ -607,8 +607,7 @@ return 1;
 ////////////////////////////////
 // funcc0fb0
 // restore screen offset to GPU
-800C0FB8	jal    func12ad4 [$80012ad4]
-
+func12ad4;
 if( V0 & 2 )
 {
     return 1;
@@ -625,17 +624,16 @@ return 1;
 ////////////////////////////////
 // funcc0f08
 // set screen offset to GPU
-S0 = w[800c9db4] + bu[800ca068 + 75] * 34 + w[A0 + 18];
+A0 = w[800c9db4];
+S0 = A0 + bu[800ca068 + 75] * 34 + w[A0 + 18];
 
-800C0F48	jal    func12ad4 [$80012ad4]
+func12ad4;
 
-if( ( V0 & 2 ) && ( w[80071e34] >= 2 ) )
+if( ( ( V0 & 2 ) == 0 ) || ( w[80071e34] < 2 ) )
 {
-    return 1;
+    OFX = ( h[S0 + 20] + h[800ca068 + c] ) << 10;
+    OFY = ( h[S0 + 22] + h[800ca068 + e] ) << 10;
 }
-
-OFX = ( h[S0 + 20] + h[800ca068 + c] ) << 10;
-OFY = ( h[S0 + 22] + h[800ca068 + e] ) << 10;
 
 return 1;
 ////////////////////////////////

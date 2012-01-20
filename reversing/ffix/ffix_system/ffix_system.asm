@@ -231,51 +231,13 @@ L12aa4:	; 80012AA4
 80012AD0	addiu  sp, sp, $0058
 
 
-func12ad4:	; 80012AD4
-80012AD4	lui    v0, $8007
-80012AD8	lb     v0, $1e32(v0)
-80012ADC	addiu  a0, zero, $0001
-80012AE0	bne    v0, a0, L12af0 [$80012af0]
-80012AE4	addu   v1, zero, zero
-80012AE8	jr     ra 
-80012AEC	addu   v0, a0, zero
+
+////////////////////////////////
+// func12ad4
+80012AD4-80012B54
+////////////////////////////////
 
 
-L12af0:	; 80012AF0
-80012AF0	slti   v0, v0, $0002
-80012AF4	bne    v0, zero, L12b50 [$80012b50]
-80012AF8	lui    v0, $8007
-80012AFC	lw     v0, $1e34(v0)
-80012B00	nop
-80012B04	blez   v0, L12b10 [$80012b10]
-80012B08	addiu  v1, zero, $0001
-80012B0C	addiu  v1, zero, $0003
-
-L12b10:	; 80012B10
-80012B10	lui    v0, $8007
-80012B14	lb     v0, $1e38(v0)
-80012B18	nop
-80012B1C	beq    v0, zero, L12b28 [$80012b28]
-80012B20	lui    v0, $8007
-80012B24	ori    v1, v1, $0010
-
-L12b28:	; 80012B28
-80012B28	lb     v0, $1e31(v0)
-80012B2C	nop
-80012B30	beq    v0, zero, L12b3c [$80012b3c]
-80012B34	lui    v0, $8007
-80012B38	ori    v1, v1, $0004
-
-L12b3c:	; 80012B3C
-80012B3C	lb     v0, $1e30(v0)
-80012B40	nop
-80012B44	bne    v0, a0, L12b50 [$80012b50]
-80012B48	nop
-80012B4C	ori    v1, v1, $0008
-
-L12b50:	; 80012B50
-80012B50	jr     ra 
-80012B54	addu   v0, v1, zero
 
 80012B58	lui    v0, $8007
 80012B5C	lb     v0, $1e32(v0)
@@ -4886,7 +4848,7 @@ func16a28:	; 80016A28
 80016A48	jal    func12fac [$80012fac]
 80016A4C	addu   a0, zero, zero
 80016A50	addiu  a0, zero, $00a0
-80016A54	jal    func16c40 [$80016c40]
+80016A54	jal    system_set_gte_ofx_ofy [$80016c40]
 80016A58	addiu  a1, zero, $0070
 80016A5C	addiu  a0, sp, $0010
 80016A60	addu   a1, zero, zero
@@ -5022,13 +4984,14 @@ func16bb8:	; 80016BB8
 80016C38	nop
 80016C3C	nop
 
-func16c40:	; 80016C40
-80016C40	sll    a0, a0, $10
-80016C44	sll    a1, a1, $10
-80016C48	ctc2   a0,mac0
-80016C4C	ctc2   a1,mac1
-80016C50	jr     ra 
-80016C54	nop
+
+
+////////////////////////////////
+// system_set_gte_ofx_ofy
+80016C40-80016C54
+////////////////////////////////
+
+
 
 80016C58	nop
 80016C5C	nop
@@ -34678,7 +34641,7 @@ L30340:	; 80030340
 80030364	sll    a0, a0, $10
 80030368	sra    a0, a0, $11
 8003036C	sll    a1, a1, $10
-80030370	jal    func16c40 [$80016c40]
+80030370	jal    system_set_gte_ofx_ofy [$80016c40]
 80030374	sra    a1, a1, $11
 80030378	cfc2   s3,mac2
 8003037C	lw     v0, $794c(s0)
@@ -34928,7 +34891,7 @@ L30628:	; 80030628
 8003072C	sw     v0, $0018(s3)
 80030730	lw     a0, $0040(sp)
 80030734	lw     a1, $0044(sp)
-80030738	jal    func16c40 [$80016c40]
+80030738	jal    system_set_gte_ofx_ofy [$80016c40]
 8003073C	nop
 80030740	lw     ra, $007c(sp)
 80030744	lw     fp, $0078(sp)
@@ -35459,15 +35422,13 @@ L30d48:	; 80030D48
 80030EA0	addiu  sp, sp, $0010
 
 
-func30ea4:	; 80030EA4
-80030EA4	addiu  sp, sp, $ffe8 (=-$18)
-80030EA8	sw     ra, $0010(sp)
-80030EAC	jal    func30ee4 [$80030ee4]
-80030EB0	addu   a2, zero, zero
-80030EB4	lw     ra, $0010(sp)
-80030EB8	nop
-80030EBC	jr     ra 
-80030EC0	addiu  sp, sp, $0018
+
+////////////////////////////////
+// func30ea4
+80030EA4-80030EC0
+////////////////////////////////
+
+
 
 80030EC4	addiu  sp, sp, $ffe8 (=-$18)
 80030EC8	sw     ra, $0010(sp)
@@ -35479,259 +35440,11 @@ func30ea4:	; 80030EA4
 80030EE0	addiu  sp, sp, $0018
 
 
-func30ee4:	; 80030EE4
-80030EE4	addiu  sp, sp, $fff8 (=-$8)
-80030EE8	addu   t2, a1, zero
-80030EEC	addu   t5, a2, zero
-80030EF0	sw     s1, $0004(sp)
-80030EF4	sw     s0, $0000(sp)
-80030EF8	lhu    a1, $0000(a0)
-80030EFC	lhu    v0, $0002(a0)
-80030F00	lhu    v1, $0004(a0)
-80030F04	andi   t0, a1, $0fff
-80030F08	andi   a3, v0, $0fff
-80030F0C	andi   v0, a1, $0400
-80030F10	beq    v0, zero, L30f40 [$80030f40]
-80030F14	andi   t1, v1, $0fff
-80030F18	lui    v0, $8007
-80030F1C	addiu  v0, v0, $c1c4 (=-$3e3c)
-80030F20	andi   a0, a1, $03ff
-80030F24	addiu  v1, zero, $0400
-80030F28	subu   v1, v1, a0
-80030F2C	sll    v1, v1, $01
-80030F30	addu   v1, v1, v0
-80030F34	lhu    t3, $0000(v1)
-80030F38	j      L30f5c [$80030f5c]
-80030F3C	andi   v0, t0, $0800
 
-L30f40:	; 80030F40
-80030F40	lui    v1, $8007
-80030F44	addiu  v1, v1, $c1c4 (=-$3e3c)
-80030F48	andi   v0, a1, $03ff
-80030F4C	sll    v0, v0, $01
-80030F50	addu   v0, v0, v1
-80030F54	lhu    t3, $0000(v0)
-80030F58	andi   v0, t0, $0800
-
-L30f5c:	; 80030F5C
-80030F5C	beq    v0, zero, L30f68 [$80030f68]
-80030F60	addiu  a1, zero, $0400
-80030F64	subu   t3, zero, t3
-
-L30f68:	; 80030F68
-80030F68	subu   a0, a1, t0
-80030F6C	and    v0, a0, a1
-80030F70	beq    v0, zero, L30f8c [$80030f8c]
-80030F74	andi   t0, a0, $0fff
-80030F78	lui    v1, $8007
-80030F7C	addiu  v1, v1, $c1c4 (=-$3e3c)
-80030F80	andi   v0, a0, $03ff
-80030F84	j      L30f98 [$80030f98]
-80030F88	subu   v0, a1, v0
-
-L30f8c:	; 80030F8C
-80030F8C	lui    v1, $8007
-80030F90	addiu  v1, v1, $c1c4 (=-$3e3c)
-80030F94	andi   v0, a0, $03ff
-
-L30f98:	; 80030F98
-80030F98	sll    v0, v0, $01
-80030F9C	addu   v0, v0, v1
-80030FA0	lhu    t6, $0000(v0)
-80030FA4	andi   v0, t0, $0800
-80030FA8	beq    v0, zero, L30fb4 [$80030fb4]
-80030FAC	andi   v0, a3, $0400
-80030FB0	subu   t6, zero, t6
-
-L30fb4:	; 80030FB4
-80030FB4	beq    v0, zero, L30fe0 [$80030fe0]
-80030FB8	lui    v0, $8007
-80030FBC	addiu  v0, v0, $c1c4 (=-$3e3c)
-80030FC0	andi   a0, a3, $03ff
-80030FC4	addiu  v1, zero, $0400
-80030FC8	subu   v1, v1, a0
-80030FCC	sll    v1, v1, $01
-80030FD0	addu   v1, v1, v0
-80030FD4	lhu    t4, $0000(v1)
-80030FD8	j      L30ffc [$80030ffc]
-80030FDC	andi   v0, a3, $0800
-
-L30fe0:	; 80030FE0
-80030FE0	lui    v1, $8007
-80030FE4	addiu  v1, v1, $c1c4 (=-$3e3c)
-80030FE8	andi   v0, a3, $03ff
-80030FEC	sll    v0, v0, $01
-80030FF0	addu   v0, v0, v1
-80030FF4	lhu    t4, $0000(v0)
-80030FF8	andi   v0, a3, $0800
-
-L30ffc:	; 80030FFC
-80030FFC	beq    v0, zero, L31008 [$80031008]
-80031000	addiu  a1, zero, $0400
-80031004	subu   t4, zero, t4
-
-L31008:	; 80031008
-80031008	subu   a0, a1, a3
-8003100C	and    v0, a0, a1
-80031010	beq    v0, zero, L3102c [$8003102c]
-80031014	andi   a3, a0, $0fff
-80031018	lui    v1, $8007
-8003101C	addiu  v1, v1, $c1c4 (=-$3e3c)
-80031020	andi   v0, a0, $03ff
-80031024	j      L31038 [$80031038]
-80031028	subu   v0, a1, v0
-
-L3102c:	; 8003102C
-8003102C	lui    v1, $8007
-80031030	addiu  v1, v1, $c1c4 (=-$3e3c)
-80031034	andi   v0, a0, $03ff
-
-L31038:	; 80031038
-80031038	sll    v0, v0, $01
-8003103C	addu   v0, v0, v1
-80031040	lhu    a1, $0000(v0)
-80031044	andi   v0, a3, $0800
-80031048	beq    v0, zero, L31054 [$80031054]
-8003104C	andi   v0, t1, $0400
-80031050	subu   a1, zero, a1
-
-L31054:	; 80031054
-80031054	beq    v0, zero, L31080 [$80031080]
-80031058	lui    v0, $8007
-8003105C	addiu  v0, v0, $c1c4 (=-$3e3c)
-80031060	andi   a0, t1, $03ff
-80031064	addiu  v1, zero, $0400
-80031068	subu   v1, v1, a0
-8003106C	sll    v1, v1, $01
-80031070	addu   v1, v1, v0
-80031074	lhu    a3, $0000(v1)
-80031078	j      L3109c [$8003109c]
-8003107C	andi   v0, t1, $0800
-
-L31080:	; 80031080
-80031080	lui    v1, $8007
-80031084	addiu  v1, v1, $c1c4 (=-$3e3c)
-80031088	andi   v0, t1, $03ff
-8003108C	sll    v0, v0, $01
-80031090	addu   v0, v0, v1
-80031094	lhu    a3, $0000(v0)
-80031098	andi   v0, t1, $0800
-
-L3109c:	; 8003109C
-8003109C	beq    v0, zero, L310a8 [$800310a8]
-800310A0	addiu  t0, zero, $0400
-800310A4	subu   a3, zero, a3
-
-L310a8:	; 800310A8
-800310A8	subu   a0, t0, t1
-800310AC	and    v0, a0, t0
-800310B0	beq    v0, zero, L310cc [$800310cc]
-800310B4	andi   t1, a0, $0fff
-800310B8	lui    v1, $8007
-800310BC	addiu  v1, v1, $c1c4 (=-$3e3c)
-800310C0	andi   v0, a0, $03ff
-800310C4	j      L310d8 [$800310d8]
-800310C8	subu   v0, t0, v0
-
-L310cc:	; 800310CC
-800310CC	lui    v1, $8007
-800310D0	addiu  v1, v1, $c1c4 (=-$3e3c)
-800310D4	andi   v0, a0, $03ff
-
-L310d8:	; 800310D8
-800310D8	sll    v0, v0, $01
-800310DC	addu   v0, v0, v1
-800310E0	lhu    a2, $0000(v0)
-800310E4	andi   v0, t1, $0800
-800310E8	beq    v0, zero, L310f4 [$800310f4]
-800310EC	sll    v0, t3, $10
-800310F0	subu   a2, zero, a2
-
-L310f4:	; 800310F4
-800310F4	sra    v0, v0, $10
-800310F8	sll    a3, a3, $10
-800310FC	sra    a3, a3, $10
-80031100	mult   v0, a3
-80031104	mflo   v1
-80031108	sll    a2, a2, $10
-8003110C	sra    a2, a2, $10
-80031110	mult   v0, a2
-80031114	mflo   t5
-80031118	sll    a1, a1, $10
-8003111C	sra    a1, a1, $10
-80031120	mult   a2, a1
-80031124	sll    v1, v1, $04
-80031128	sra    v1, v1, $10
-8003112C	mflo   s0
-80031130	sll    v0, t4, $10
-80031134	sra    v0, v0, $10
-80031138	mult   v1, v0
-8003113C	sll    a0, t6, $10
-80031140	mflo   t9
-80031144	sra    a0, a0, $10
-80031148	subu   t0, zero, a0
-8003114C	mult   t0, a3
-80031150	mflo   t1
-80031154	nop
-80031158	nop
-8003115C	mult   a2, v0
-80031160	mflo   t7
-80031164	nop
-80031168	nop
-8003116C	mult   v1, a1
-80031170	mflo   t6
-80031174	nop
-80031178	nop
-8003117C	mult   a3, a1
-80031180	mflo   t8
-80031184	sll    v1, t5, $04
-80031188	sra    v1, v1, $10
-8003118C	mult   v1, v0
-80031190	mflo   t4
-80031194	nop
-80031198	nop
-8003119C	mult   a0, a2
-800311A0	mflo   t5
-800311A4	nop
-800311A8	nop
-800311AC	mult   a3, v0
-800311B0	mflo   a3
-800311B4	nop
-800311B8	nop
-800311BC	mult   t0, v0
-800311C0	mflo   a2
-800311C4	nop
-800311C8	nop
-800311CC	mult   a0, a1
-800311D0	sh     t3, $000e(t2)
-800311D4	sra    v0, t1, $0c
-800311D8	sh     v0, $0002(t2)
-800311DC	sra    v0, t5, $0c
-800311E0	sh     v0, $0008(t2)
-800311E4	mflo   a0
-800311E8	sra    v0, a2, $0c
-800311EC	sh     v0, $000c(t2)
-800311F0	mult   v1, a1
-800311F4	sra    v0, a0, $0c
-800311F8	sh     v0, $0010(t2)
-800311FC	subu   v0, s0, t9
-80031200	sra    v0, v0, $0c
-80031204	sh     v0, $0000(t2)
-80031208	addu   v0, t7, t6
-8003120C	sra    v0, v0, $0c
-80031210	sh     v0, $0004(t2)
-80031214	addu   v0, t8, t4
-80031218	sra    v0, v0, $0c
-8003121C	sh     v0, $0006(t2)
-80031220	mflo   v1
-80031224	subu   v0, a3, v1
-80031228	sra    v0, v0, $0c
-8003122C	sh     v0, $000a(t2)
-80031230	lw     s1, $0004(sp)
-80031234	lw     s0, $0000(sp)
-80031238	addu   v0, t2, zero
-8003123C	jr     ra 
-80031240	addiu  sp, sp, $0008
+////////////////////////////////
+// func30ee4
+80030EE4-80031240
+////////////////////////////////
 
 
 
@@ -45381,17 +45094,12 @@ func4ae84:	; 8004AE84
 8004AE98	nop
 
 
-func4ae9c:	; 8004AE9C
-8004AE9C	lui    v0, $8008
-8004AEA0	lw     v1, $aecc(v0)
-8004AEA4	nop
-8004AEA8	beq    v1, zero, L4aeb4 [$8004aeb4]
-8004AEAC	addu   v0, zero, zero
-8004AEB0	lw     v0, $16d8(v1)
 
-L4aeb4:	; 8004AEB4
-8004AEB4	jr     ra 
-8004AEB8	nop
+////////////////////////////////
+// system_get_pointer_to_first_element_in_script_list
+8004AE9C-8004AEB8
+////////////////////////////////
+
 
 
 func4aebc:	; 8004AEBC

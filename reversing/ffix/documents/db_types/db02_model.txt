@@ -1,0 +1,52 @@
+// header
++02 []       number of bones.
++03 []       number of parts.
++0c [][][][] pointer to bones.
++10 [][][][] pointer to parts.
+
+
+
+// bone data
++0 [][]     length.
++3 []       parent bone id.
+
+
+
+// parts data (0x28 size)
++00 [][]     
++02 [][]     number of monochrome textured quads.
++04 [][]     number of monochrome textured triangles.
++06 [][]     number of shaded textured quads.
++08 [][]     number of shaded textured triangles.
++0a [][]     number of gradated quads.
++0c [][]     number of gradated triangles.
++0e [][]     number of monochrome quads.
++10 [][]     number of monochrome triangles.
++13 []       
++14 [][][][] pointer to vertex groups.
++18 [][][][] pointer to vertex data.
++1c [][][][] pointer to mesh data.
+
+
+
+// mesh data
++00 [][]     vertex1 index.
++02 [][]     vertex2 index.
++04 [][]     vertex3 index.
++06 [][]     vertex4 index.
++08 [][]     index for texture coords for vertex1.
++0a [][]     index for texture coords for vertex2.
++0c [][]     index for texture coords for vertex3.
++0e [][]     index for texture coords for vertex4.
++10 []       R.
++11 []       G.
++12 []       B.
++13 []       index of CLUT and texture page info.
++14
++15 []       flags
+             0x01 - if flag set then we enable transparency.
+             0x02 - if flag not set then we cull backface.
+             0x60 - transparency mode (if 0x01 is set).
+             0x80 - 4bit/8bit CLUT (if 0x01 is set).
++16
++17

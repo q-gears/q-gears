@@ -1,24 +1,7 @@
-80067948 [][][][] pointer to field database block.
+800c9d44 [][]     some flags.
+                    0x0040 - checked in funcab3cc. Look like is screen offset inited or not.
 
-80070520 vertex depth list (0x4 per vertex (SZ)).
-
-800711a8 rasterized vertex list (0x4 per vertex (SXY)).
-
-
-
-
-8007b6f4 [][][][] store here byte after opcode. Flags stream. Everytime we call 0xa8 opcode we do something if 1st bit is set and then right shift it by 1.
-8007b6f8 [][][][] if 1 here then we not roll back 1 opcode.
-
-8007b710 [][][][] increment this if some conditions met in 0x9c and 0xe2 opcode.
-
-8007bbd8 [][][][] 0xe3 opcode store value here ([e3][ ][x]).
-
-8007bcb8 script stack address (each item 0x04 size).
-
-8007bcf8 [][][][] pointer to allocated script memory data after system block.
-
-8008b28c character struct (0x90 size)
+800c9db4 [][][][] some pointer.
 
 800c9ddc [][]     number of collisions with triangles sides.
 800c9dde [][]     number of something1. Not used?
@@ -35,6 +18,8 @@
 
 800c9df1 []       set in 0x27 script opcode with 0x7f or 0xff.
 
+800ca068 + c  [][]     x screen offset.
+800ca068 + e  [][]     y screen offset.
 800ca068 + 75 []       id of camera to use in field. Used when selecting background camera.
 
 800ca14c some array of 0xdc size elements.
@@ -89,3 +74,35 @@
 +44 [][][][] offset to some struct from which we get pointer to packets.
 +74 [][][][] VXY0.
 +78 [][][][] VZ0.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// quad packet
++00 [][][][] store 09000000 here.
++04 []       R.
++05 []       G.
++06 []       B.
++07 []       store 0x2c.
++08 [][][][] place for vertex 1
++0c [][]     texture UV for vertex 1.
++0e [][]     CLUT.
++10 [][][][] place for vertex 2
++14 [][]     texture UV for vertex 2.
++16 [][]     texture page info.
++18 [][][][] place for vertex 3
++1c [][]     texture UV for vertex 3.
++20 [][][][] place for vertex 4
++24 [][]     texture UV for vertex 4.

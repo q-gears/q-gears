@@ -21847,7 +21847,7 @@ funcbafec:	; 800BAFEC
 800BB00C	sw     s6, $0028(sp)
 800BB010	sw     s4, $0020(sp)
 800BB014	sw     s1, $0014(sp)
-800BB018	jal    func4ae9c [$8004ae9c]
+800BB018	jal    system_get_pointer_to_first_element_in_script_list [$8004ae9c]
 800BB01C	sw     s0, $0010(sp)
 800BB020	lw     s4, $0000(v0)
 800BB024	lui    v0, $800f
@@ -72598,7 +72598,7 @@ Le6820:	; 800E6820
 800E68AC	sll    v0, v0, $10
 800E68B0	sw     v0, $0114(sp)
 800E68B4	mflo   t0
-800E68B8	jal    func16c40 [$80016c40]
+800E68B8	jal    system_set_gte_ofx_ofy [$80016c40]
 800E68BC	sw     t0, $0160(sp)
 800E68C0	addiu  s0, sp, $00e0
 800E68C4	lw     a0, $0164(sp)
@@ -72838,7 +72838,7 @@ Le6bfc:	; 800E6BFC
 Le6c18:	; 800E6C18
 800E6C18	lw     a0, $0100(sp)
 800E6C1C	lw     a1, $0104(sp)
-800E6C20	jal    func16c40 [$80016c40]
+800E6C20	jal    system_set_gte_ofx_ofy [$80016c40]
 800E6C24	nop
 800E6C28	lw     ra, $013c(sp)
 800E6C2C	lw     fp, $0138(sp)
@@ -73042,7 +73042,7 @@ loope6eb8:	; 800E6EB8
 800E6F20	jal    func639d4 [$800639d4]
 800E6F24	addiu  a0, zero, $0200
 800E6F28	sra    a0, s1, $01
-800E6F2C	jal    func16c40 [$80016c40]
+800E6F2C	jal    system_set_gte_ofx_ofy [$80016c40]
 800E6F30	sra    a1, s5, $01
 800E6F34	lw     v0, $0054(sp)
 800E6F38	addiu  s0, s0, $8d50 (=-$72b0)
@@ -73090,7 +73090,7 @@ loope6eb8:	; 800E6EB8
 800E6FE0	sw     s6, $7274(v0)
 800E6FE4	lw     a0, $0018(sp)
 800E6FE8	lw     a1, $001c(sp)
-800E6FEC	jal    func16c40 [$80016c40]
+800E6FEC	jal    system_set_gte_ofx_ofy [$80016c40]
 800E6FF0	nop
 800E6FF4	lw     ra, $003c(sp)
 800E6FF8	lw     s6, $0038(sp)

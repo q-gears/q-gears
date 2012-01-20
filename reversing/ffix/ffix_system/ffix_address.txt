@@ -1,7 +1,7 @@
 80011a44 [][][][] pointer to something.
 
-
-80067948 [][][][] store here pointer to w[w[w[w[w[8006794c] + 1c] + 8e4] + c] + 4]
+80067944 [][][][] looks like start pointer to all models data. Total size of that block 0xf1700.
+80067948 [][][][] store here pointer to w[w[w[w[w[8006794c] + 1c] + 8e4] + c] + 4]. Pointer to field database block?
 8006794c [][][][] pointer to 8008b000.
 
 80068158 [][][][] store here pointer from 80011a44.
@@ -17,6 +17,15 @@
 +04 []       accessorie id.     
 8006e63c array of character id
 8006ead0 rotation table. Each value 2 bytes each.
+
+80070520 vertex depth list (0x4 per vertex (SZ)).
+800711a8 rasterized vertex list (0x4 per vertex (SXY)).
+
+80071e30 []       something screen settings related.
+80071e31 []       something screen settings related.
+80071e32 []       something screen settings related.
+80071e34 [][][][] something screen settings related.
+80071e38 []       something screen settings related.
 
 80073c40 looks like array of all loaded files. We can search in this.
 +2 [][]     number of files in array
@@ -56,7 +65,7 @@
     + 0d []       wait steps. 0x00 - run script. 0xff - full pause. 0xfe - wait until some value in 8007b9c0 not reach 0 (related with +10). Other values will be discreased by 1 each time script tries to run.
     + 0e []       init with 0. Maybe script state. 0 - init, 1 - stop, 2 - run. If state 0 and we run script - it seted to 2 and not parse script this frame. We run script cycle if this != 3. Set to 3 during some strange circumstances in script system init.
     + 0f []       Some flags. ? in 0x9c and 0xe2 opcode.
-                    0x01 - 
+                    0x01 - active? renderable? visible?
                     0x02 - 
                     0x04 - 
                     0x08 - if set then entity not talkable.
@@ -72,14 +81,16 @@
     + 14 [][][][] current x.
     + 18 [][][][] current y.
     + 1c [][][][] current z.
+    + 20 [][]     x rotation.
     + 22 [][]     y rotation.
+    + 24 [][]     z rotation.
     + 2d []       this is in case of long models. 0x10 - collision radius on direction will be twice as much.
     + 2f []       
     + 30 [][]     set to 0 when set up XYZ position in scripts.
     + 34 [][]     ? in 0x9c and 0xa8 and 0xe2 opcode.
-    + 36 [][]     store +76 here in 0x9c and 0xe2 opcode. Currently played animation id?
+    + 36 [][]     store +76 here in 0x9c and 0xe2 opcode. Current animation id.
     + 38 []       ? in 0xe2 opcode. Store number of frames in current animation here. When start some animations.
-    + 3a []       store +60 here in 0x9c and 0xe2 opcode. Current step in rotation?
+    + 3a []       store +60 here in 0x9c and 0xe2 opcode. Current animation frame id.
     + 3b []       ? in 0xa8 and 0xe2 opcode.
     + 3c []       solid radius.
     + 3d []       talk radius.
@@ -296,7 +307,10 @@
 + 14 [][][][] pointer to 8008b124.
 + 18 [][][][] pointer to 8008b214.
 + 1c [][][][] pointer to 8008b250.
+    +  8 []       index of pointer +10 or +14 to use.
     +  a [][]     Projection plane distance for rasterisation.
+    + 10 [][][][] 1st of some pointer. Referenced by +8.
+    + 14 [][][][] 2nd of some pointer. Referenced by +8.
     main transformation matrix.
     + 18 [][][][] R11R12.
     + 1c [][][][] R13R21.
@@ -331,11 +345,34 @@
     +838 [][][][] pointer to some functions called in func21698 with +34 param from entity script memory in opcode 0x2f.
     +848 []       set up in 0x2a opcode.
     +851 []       (8008BAA1)
-    +8d8 [][][][] ??? some pointer
-    +8e0 [][][][] ??? some pointer
+    +8d8 [][][][] ??? pointet to start of some on 0x14 sized array.
+    +8e0 [][][][] ??? pointer to end of some on 0x14 sized array.
+        // field
+        +  0 [][][][] some flags.
+                        0x00000002 - if set then this model X and Y rotation will be determinated by walkmesh.
+        +  8 [][][][] pointer to model data.
+            +  0 [][]     some flags.
+                            0x0001 - ??? animation related
+                            0x0002 - enable scaling. If this is set then we downscale rotation matrix by +54[][] +56[][] and +58[][].
+            +  8 [][][][] pointer to model file.
+            +  c [][][][] pointer to current animation file.
+            + 10 [][][][] some pointer ??? There is bones * 0x20 + model parts * 0xc + unknown data from all model parts + 00 [][] * 2.
+            + 1c [][][][] pointer to original data for instanced model (the same struct for parent model).
+            + 20 [][][][] pointer to bone matrixes data.
+            + 24 start of root model rotation matrix.
+            + 38 [][][][] x position of model.
+            + 3c [][][][] y position of model.
+            + 40 [][][][] z position of model.
+            + 54 [][]     x scale.
+            + 56 [][]     y scale.
+            + 58 [][]     z scale.
+        +  c [][][][] pointer to script data for model.
     +8e4 [][][][] pointer to 800d1000.
         // field
         +  c [][][][] pointer
+            + 14 [][][][] pointer
+                + 30 [][]     index of something in memory to where pointers 0x8008b000 + 0x1c + 0x10 or +0x14 points.???
+                + 42 []       if this != 0 then we don't update models that exceed data memory limit.
         // battle
         +6f8 [][][][] pointer to some battle struct list.
             +00 [][][][] pointer to next struct in list.
