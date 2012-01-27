@@ -1,6 +1,7 @@
 // header
 +02 []       number of bones.
 +03 []       number of parts.
++06 []       unknown??? some bone id.
 +0c [][][][] pointer to bones.
 +10 [][][][] pointer to parts.
 
@@ -29,6 +30,18 @@
 
 
 
+// vertex groups (0x2 size) array of number of vertexes for each bone
++00 [][]     number of vertexes for bone.
+
+
+
+// vertex data (0x8 size)
++00 [][]     X.
++02 [][]     Y.
++04 [][]     Z.
+
+
+
 // mesh data
 +00 [][]     vertex1 index.
 +02 [][]     vertex2 index.
@@ -50,3 +63,6 @@
              0x80 - 4bit/8bit CLUT (if 0x01 is set).
 +16
 +17
+
+
+

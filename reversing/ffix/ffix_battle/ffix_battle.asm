@@ -5649,7 +5649,7 @@ funcad4e4:	; 800AD4E4
 800AD604	swc2   k0, $0004(a0)
 800AD608	swc2   k1, $0008(a0)
 800AD60C	addiu  a1, sp, $0030
-800AD610	jal    func62c2c [$80062c2c]
+800AD610	jal    system_normalize_vector_A0_to_A1 [$80062c2c]
 800AD614	sw     zero, $0044(sp)
 800AD618	lw     v0, $0030(sp)
 800AD61C	lw     v1, $0038(sp)
@@ -5698,7 +5698,7 @@ Lad640:	; 800AD640
 Lad6bc:	; 800AD6BC
 800AD6BC	sw     zero, $0044(sp)
 800AD6C0	addiu  a0, sp, $0040
-800AD6C4	jal    func62c2c [$80062c2c]
+800AD6C4	jal    system_normalize_vector_A0_to_A1 [$80062c2c]
 800AD6C8	addiu  a1, sp, $0030
 
 Lad6cc:	; 800AD6CC
@@ -33627,7 +33627,7 @@ funcc52b4:	; 800C52B4
 800C531C	subu   v0, v0, v1
 800C5320	sw     v0, $0018(sp)
 800C5324	addiu  a0, sp, $0010
-800C5328	jal    func62c2c [$80062c2c]
+800C5328	jal    system_normalize_vector_A0_to_A1 [$80062c2c]
 800C532C	addiu  a1, sp, $0040
 800C5330	lw     v1, $0048(sp)
 800C5334	lw     v0, $0058(sp)
@@ -33657,7 +33657,7 @@ Lc534c:	; 800C534C
 800C538C	swc2   k1, $0008(s0)
 800C5390	addiu  s1, sp, $0020
 800C5394	addu   a0, s0, zero
-800C5398	jal    func62c2c [$80062c2c]
+800C5398	jal    system_normalize_vector_A0_to_A1 [$80062c2c]
 800C539C	addu   a1, s1, zero
 800C53A0	lw     t4, $0000(s2)
 800C53A4	lw     t5, $0004(s2)
@@ -33675,7 +33675,7 @@ Lc534c:	; 800C534C
 800C53D4	swc2   k0, $0004(s0)
 800C53D8	swc2   k1, $0008(s0)
 800C53DC	addu   a0, s0, zero
-800C53E0	jal    func62c2c [$80062c2c]
+800C53E0	jal    system_normalize_vector_A0_to_A1 [$80062c2c]
 800C53E4	addiu  a1, sp, $0030
 800C53E8	lhu    v0, $0020(sp)
 800C53EC	nop

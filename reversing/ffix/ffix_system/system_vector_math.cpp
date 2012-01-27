@@ -1,4 +1,62 @@
 ////////////////////////////////
+// system_normalize_vector_A0_to_A1
+T0 = w[A0 + 0];
+T1 = w[A0 + 4];
+T2 = w[A0 + 8];
+system_normalize_vector_T0_T1_T2;
+[A1 + 0] = w(T0);
+[A1 + 4] = w(T1);
+[A1 + 8] = w(T2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_normalize_vector_T0_T1_T2
+IR1 = T0;
+IR2 = T1;
+IR3 = T2;
+gte_SQR; // Square of vector.
+T3 = MAC1;
+T4 = MAC2;
+T5 = MAC3;
+V0 = T3 + T4 + T5;
+
+LZCS = V0;
+V1 = LZCR & fffffffe;
+
+
+T3 = V1 - 18;
+T6 = (1f - V1) / 2;
+
+if (T3 >= 0)
+{
+    T4 = V0 << T3;
+
+}
+else
+{
+    T3 = 18 - V1;
+    T4 = V0 >> T3;
+}
+
+T5 = [8004b7fc + (T4 - 40) * 2];
+
+IR0 = T5;
+IR1 = T0;
+IR2 = T1;
+IR3 = T2;
+
+gte_GPF; // IR0 - scale
+
+T0 = MAC1 >> T6;
+T1 = MAC2 >> T6;
+T2 = MAC3 >> T6;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_fully_calulated_square_root
 T1 = 0;
 T2 = 1e;

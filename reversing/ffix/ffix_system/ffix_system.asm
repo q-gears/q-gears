@@ -70974,13 +70974,11 @@ func62c18:	; 80062C18
 80062C20	lw     t2, $0008(a0)
 80062C24	beq    zero, zero, L62c68 [$80062c68]
 80062C28	nop
-
-func62c2c:	; 80062C2C
 80062C2C	lw     t0, $0000(a0)
 80062C30	lw     t1, $0004(a0)
 80062C34	lw     t2, $0008(a0)
 80062C38	addu   a3, ra, zero
-80062C3C	jal    func62c8c [$80062c8c]
+80062C3C	jal    system_normalize_vector_T0_T1_T2 [$80062c8c]
 80062C40	nop
 80062C44	sw     t0, $0000(a1)
 80062C48	sw     t1, $0004(a1)
@@ -70995,7 +70993,7 @@ func62c2c:	; 80062C2C
 
 L62c68:	; 80062C68
 80062C68	addu   a3, ra, zero
-80062C6C	jal    func62c8c [$80062c8c]
+80062C6C	jal    system_normalize_vector_T0_T1_T2 [$80062c8c]
 80062C70	nop
 80062C74	sh     t0, $0000(a1)
 80062C78	sh     t1, $0002(a1)
@@ -71005,59 +71003,13 @@ L62c68:	; 80062C68
 80062C88	nop
 
 
-func62c8c:	; 80062C8C
-80062C8C	mtc2   t0,l13l21
-80062C90	mtc2   t1,l22l23
-80062C94	mtc2   t2,l31l32
-80062C98	nop
-80062C9C	gte_func21zero,r11r12
-80062CA0	mfc2   t3,ofy
-80062CA4	mfc2   t4,h
-80062CA8	mfc2   t5,dqa
-80062CAC	add    t3, t3, t4
-80062CB0	add    v0, t3, t5
-80062CB4	mtc2   v0,zsf4
-80062CB8	nop
-80062CBC	nop
-80062CC0	mfc2   v1,flag
-80062CC4	addiu  at, zero, $fffe (=-$2)
-80062CC8	and    v1, v1, at
-80062CCC	addiu  t6, zero, $001f
-80062CD0	sub    t6, t6, v1
-80062CD4	sra    t6, t6, $01
-80062CD8	addi   t3, v1, $ffe8 (=-$18)
-80062CDC	bltz   t3, L62cec [$80062cec]
-80062CE0	nop
-80062CE4	beq    zero, zero, L62cf8 [$80062cf8]
-80062CE8	sllv   t4, t3, v0
 
-L62cec:	; 80062CEC
-80062CEC	addiu  t3, zero, $0018
-80062CF0	sub    t3, t3, v1
-80062CF4	srav   t4, t3, v0
+////////////////////////////////
+// system_normalize_vector_T0_T1_T2
+80062C8C-80062D48
+////////////////////////////////
 
-L62cf8:	; 80062CF8
-80062CF8	addi   t4, t4, $ffc0 (=-$40)
-80062CFC	sll    t4, t4, $01
-80062D00	lui    t5, $8007
-80062D04	addu   t5, t5, t4
-80062D08	lh     t5, $0270(t5)
-80062D0C	nop
-80062D10	mtc2   t5,l11l12
-80062D14	mtc2   t0,l13l21
-80062D18	mtc2   t1,l22l23
-80062D1C	mtc2   t2,l31l32
-80062D20	nop
-80062D24	nop
-80062D28	gte_func28s0,r11r12
-80062D2C	mfc2   t0,ofy
-80062D30	mfc2   t1,h
-80062D34	mfc2   t2,dqa
-80062D38	srav   t0, t6, t0
-80062D3C	srav   t1, t6, t1
-80062D40	srav   t2, t6, t2
-80062D44	jr     ra 
-80062D48	nop
+
 
 80062D4C	lh     t0, $0000(a0)
 80062D50	lh     t1, $0002(a0)
@@ -71094,7 +71046,7 @@ L62cf8:	; 80062CF8
 80062DCC	ctc2   v1,vxy1
 80062DD0	ctc2   a2,vxy2
 80062DD4	addu   a3, ra, zero
-80062DD8	jal    func62c8c [$80062c8c]
+80062DD8	jal    system_normalize_vector_T0_T1_T2 [$80062c8c]
 80062DDC	nop
 80062DE0	sh     t0, $0000(a1)
 80062DE4	sh     t1, $0002(a1)
@@ -71102,14 +71054,14 @@ L62cf8:	; 80062CF8
 80062DEC	mfc2   t0,r11r12
 80062DF0	mfc2   t1,r13r21
 80062DF4	mfc2   t2,r22r23
-80062DF8	jal    func62c8c [$80062c8c]
+80062DF8	jal    system_normalize_vector_T0_T1_T2 [$80062c8c]
 80062DFC	nop
 80062E00	sh     t0, $0006(a1)
 80062E04	sh     t1, $0008(a1)
 80062E08	sh     t2, $000a(a1)
 80062E0C	addu   t0, t7, zero
 80062E10	addu   t1, t8, zero
-80062E14	jal    func62c8c [$80062c8c]
+80062E14	jal    system_normalize_vector_T0_T1_T2 [$80062c8c]
 80062E18	addu   t2, t9, zero
 80062E1C	sh     t0, $000c(a1)
 80062E20	sh     t1, $000e(a1)

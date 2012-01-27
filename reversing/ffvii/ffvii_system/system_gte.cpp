@@ -275,7 +275,7 @@ IR1 = T0;
 IR2 = T1;
 IR3 = T2;
 
-gte_GPF; // IR0 - scale
+gte_GPF; // General Purpose Interpolation. IR0 - scale
 
 T0 = MAC1 >> T6;
 T1 = MAC2 >> T6;

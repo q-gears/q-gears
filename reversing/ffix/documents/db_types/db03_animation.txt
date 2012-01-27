@@ -12,7 +12,7 @@
 
 
 
-// bone rotation data/bone lower rotation data
+// bone high rotation data/bone lower rotation data
 +00 [][]     static X rotation/offset to dynamic X translation rotation.
 +02 [][]     static Y rotation/offset to dynamic Y translation rotation.
 +04 [][]     static Z rotation/offset to dynamic Z translation rotation.

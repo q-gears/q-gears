@@ -127,6 +127,7 @@ if( number_of_models > 0 )
 
 
 
+// and bone rotation matrixes and translation vectors depending on current frame in animation
 if( number_of_models > 0 )
 {
     S3 = 0;
@@ -141,14 +142,14 @@ if( number_of_models > 0 )
             {
                 A0 = model_data;
                 A1 = bu[script + 3a]; // frame id
-                funcba560;
+                field_update_animation_with_fixed_bones;
 
             }
             else
             {
                 A0 = model_data;
                 A1 = bu[script + 3a]; // frame id
-                funcb7f14; // we build animation bone matrixes here
+                field_update_animation_without_fixed_bones;
             }
         }
 
@@ -171,6 +172,9 @@ TRX = w[V0 + 2c];
 TRY = w[V0 + 30];
 TRZ = w[V0 + 34];
 
+
+
+// don't render model that too far or too close to camera (0x64 - 0x1000-0x64)
 if( number_of_models > 0 )
 {
     S3 = 0;
@@ -178,17 +182,16 @@ if( number_of_models > 0 )
         V1 = w[SP + 10 + S3 * 4];
         if( V1 != 0 )
         {
-            S2 = w[V1 + 8];
-            V0 = w[S2 + 20];
-            [SP + 50] = h(hu[V0 + 14]);
-            [SP + 52] = h(hu[V0 + 18]);
-            [SP + 54] = h(hu[V0 + 1c]);
+            model_data = w[V1 + 8];
+            bone_data = w[model_data + 20];
+            // model root
+            [SP + 50] = h(hu[bone_data + 14]);
+            [SP + 52] = h(hu[bone_data + 18]);
+            [SP + 54] = h(hu[bone_data + 1c]);
 
             VXY0 = w[SP + 50];
             VZ0 = w[SP + 54];
-
             gte_RTPS; // Perspective transform
-
             [SP + 58] = w(SXY2);
             [SP + 6c] = w(SZ3);
 
@@ -199,7 +202,7 @@ if( number_of_models > 0 )
             V0 = w[V0 + 14];
             V1 = w[SP + 6c] / 4 + h[V0 + 30];
             [SP + 6c] = w(V1);
-            if( V1 < 64 || ( 1000 - 64 ) < V1 )
+            if( V1 < 64 || V1 > ( 1000 - 64 ) )
             {
                 [SP + 10 + S3 * 4] = w(0);
             }
@@ -212,28 +215,27 @@ if( number_of_models > 0 )
 
 
 
+
 if( number_of_models > 0 )
 {
     S3 = 0;
-    S6 = 1;
-
     loopab7b8:	; 800AB7B8
         V1 = w[SP + 10 + S3 * 4];
         if( V1 != 0 )
         {
             model_data = w[V1 + 8];
-            A0 = w[model_data + 8];
-            number_of_models = bu[A0 + 3];
+            model_file = w[model_data + 8];
+            number_of_parts = bu[model_file + 3];
             [1f8003fc] = w(SP);
             SP = 1f8003f0;
 
-            if( number_of_models != 0 )
+            if( number_of_parts != 0 )
             {
                 if( ( w[V1 + 0] & 00100000 ) == 0 )
                 {
                     S1 = 0;
                     loopab854:	; 800AB854
-                        if( ( w[model_data + 14] & ( S6 << S1 ) ) == 0 )
+                        if( ( w[model_data + 14] & ( 1 << S1 ) ) == 0 )
                         {
                             A0 = model_data; // struct with settings
                             A1 = S1; // model id
@@ -245,18 +247,18 @@ if( number_of_models > 0 )
                         }
 
                         S1 = S1 + 1;
-                        V0 = S1 < number_of_models;
+                        V0 = S1 < number_of_parts;
                     800AB888	bne    v0, zero, loopab854 [$800ab854]
                 }
                 else
                 {
                     S1 = 0;
                     Lab808:	; 800AB808
-                        if( ( w[model_data + 14] & ( S6 << S1 ) ) == 0 )
+                        if( ( w[model_data + 14] & ( 1 << S1 ) ) == 0 )
                         {
                             A0 = model_data;
                             A1 = S1;
-                            800AB820	jal    funcbb508 [$800bb508]
+                            funcbb508;
 
                             A0 = model_data;
                             A1 = S1;
@@ -264,13 +266,12 @@ if( number_of_models > 0 )
                         }
 
                         S1 = S1 + 1;
-                        V0 = S1 < number_of_models;
+                        V0 = S1 < number_of_parts;
                     800AB888	bne    v0, zero, Lab808 [$800ab854]
                 }
             }
 
-            SP = SP + c;
-            SP = w[SP];
+            SP = w[1f8003fc];
         }
 
         S3 = S3 + 1;
@@ -589,7 +590,7 @@ Lac20c:	; 800AC20C
 800AC254	lw     v0, $000c(v0)
 800AC258	lw     a0, $0008(s2)
 800AC25C	lbu    a1, $003a(v0)
-funcb7f14; // we build animation bone matrixes here
+field_update_animation_without_fixed_bones; // we build animation bone matrixes here
 800AC264	addu   s4, s2, zero
 800AC268	lw     v0, $0008(s2)
 800AC26C	nop

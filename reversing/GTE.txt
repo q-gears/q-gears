@@ -77,6 +77,9 @@ GET REGISTERS
 12  mfc2 GPR, l33       - SXY0      r/w     SX0     SY0     1,15,0          Screen XY coordinate FIFO (Note1)
 13  mfc2 GPR, rbk       - SXY1      r/w     SX1     SY1     1,15,0          Screen XY coordinate FIFO
 14  mfc2 GPR, gbk       - SXY2      r/w     SX2     SY2     1,15,0          Screen XY coordinate FIFO
+17  mfc2 GPR,lr3lg1     - SZ1       r/w     0       SZ1     0,16,0          Screen Z FIFO
+18  mfc2 GPR,lg2lg3     - SZ2       r/w     0       SZ2     0,16,0          Screen Z FIFO
+19  mfc2 GPR,lb1lb2     - SZ3       r/w     0       SZ3     0,16,0          Screen Z FIFO
 22  mfc2 GPR, gfc       - RGB2      r/w     CD2, B2G0, R2   8 bits each     CD2 is the bit pattern of currently executed function
 24  mfc2 GPR, ofx       - MAC0      r/w     MAC0            1,31,0          Sum of products value 1
 25  mfc2 GPR, ofy       - MAC1      r/w     MAC1            1,31,0          Sum of products value 1

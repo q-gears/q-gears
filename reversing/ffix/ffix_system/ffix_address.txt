@@ -311,7 +311,7 @@
     +  a [][]     Projection plane distance for rasterisation.
     + 10 [][][][] 1st of some pointer. Referenced by +8.
     + 14 [][][][] 2nd of some pointer. Referenced by +8.
-    main transformation matrix.
+    main transformation matrix. Camera matrix and translation vector.
     + 18 [][][][] R11R12.
     + 1c [][][][] R13R21.
     + 20 [][][][] R22R23.
@@ -349,23 +349,34 @@
     +8e0 [][][][] ??? pointer to end of some on 0x14 sized array.
         // field
         +  0 [][][][] some flags.
+                        0x00100000 - ???
                         0x00000002 - if set then this model X and Y rotation will be determinated by walkmesh.
         +  8 [][][][] pointer to model data.
             +  0 [][]     some flags.
-                            0x0001 - ??? animation related
+                            0x0001 - if not set then animation update uses fixed bones in animation. Not used otherwise. Fixed bones ignores parent rotation.
                             0x0002 - enable scaling. If this is set then we downscale rotation matrix by +54[][] +56[][] and +58[][].
+            +  2 []       ???
+            +  4 []       bone index which this model attached to.
             +  8 [][][][] pointer to model file.
             +  c [][][][] pointer to current animation file.
             + 10 [][][][] some pointer ??? There is bones * 0x20 + model parts * 0xc + unknown data from all model parts + 00 [][] * 2.
-            + 1c [][][][] pointer to original data for instanced model (the same struct for parent model).
-            + 20 [][][][] pointer to bone matrixes data.
-            + 24 start of root model rotation matrix.
+            + 14 [][][][] model parts mask. If some part bit is seted then it won't be rendered.
+            + 1c [][][][] pointer to main data for attached model (the same struct for main model).
+            + 20 [][][][] pointer to bone rotation matrixes and translation data.
+            + 24 start of root model rotation matrix (0x14 size).
             + 38 [][][][] x position of model.
             + 3c [][][][] y position of model.
             + 40 [][][][] z position of model.
+            + 48 [][]     ???
+            + 4a [][]     ???
+            + 4c [][]     ???
             + 54 [][]     x scale.
             + 56 [][]     y scale.
             + 58 [][]     z scale.
+            + 5a [][]     some top of model. During vertex calculation we lower all vertexes to this point.
+            + 74 [][]     attached model X offset (this is attached model).
+            + 76 [][]     attached model Y offset (this is attached model).
+            + 78 [][]     attached model Z offset (this is attached model).
         +  c [][][][] pointer to script data for model.
     +8e4 [][][][] pointer to 800d1000.
         // field
