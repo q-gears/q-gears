@@ -5,6 +5,7 @@
 
 #include "Background2D.h"
 #include "Entity.h"
+#include "Event.h"
 #include "Walkmesh.h"
 
 
@@ -15,6 +16,7 @@ public:
     EntityManager();
     virtual ~EntityManager();
 
+    void Input( const Event& event );
     void Update();
 
     void Clear();
@@ -24,8 +26,10 @@ public:
     void AddEntityModel( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& direction );
     void AddEntityScript( const Ogre::String& name );
 
-    Entity* GetEntity( const Ogre::String& name );
-    Entity* ScriptGetEntity( const char* name );
+    Entity* GetEntity( const Ogre::String& name ) const;
+    Entity* ScriptGetEntity( const char* name ) const;
+
+    void ScriptSetPlayerEntity( const char* name );
 
 private:
     // movement
@@ -39,6 +43,9 @@ private:
     Walkmesh m_Walkmesh;
     Background2D m_Background2D;
     std::vector< Entity* > m_EntityModels;
+    Entity* m_PlayerEntity;
+    Ogre::Vector3 m_PlayerMove;
+
     std::vector< Ogre::String > m_EntityScripts;
 
     Ogre::SceneNode* m_SceneNode;

@@ -239,7 +239,7 @@ if( number_of_models > 0 )
                         {
                             A0 = model_data; // struct with settings
                             A1 = S1; // model id
-                            field_model_rasterize_3d_vertexes;
+                            field_model_convert_3d_vertexes_into_screen_without_depth_limit;
 
                             A0 = model_data;
                             A1 = S1;
@@ -258,11 +258,11 @@ if( number_of_models > 0 )
                         {
                             A0 = model_data;
                             A1 = S1;
-                            funcbb508;
+                            field_model_convert_3d_vertexes_into_screen_with_depth_limit;
 
                             A0 = model_data;
                             A1 = S1;
-                            800AB82C	jal    funcbb714 [$800bb714]
+                            funcbb714;
                         }
 
                         S1 = S1 + 1;
@@ -283,32 +283,25 @@ if( number_of_models > 0 )
 
 if( number_of_models > 0 )
 {
-    800AB8AC	addu   s3, zero, zero
-    800AB8B0	lui    s1, $8006
-    800AB8B4	addiu  s0, sp, $0010
-
+    S3 = 0;
     loopab8b8:	; 800AB8B8
-        800AB8B8	lw     v1, $0000(s0)
-        800AB8BC	nop
-        800AB8C0	beq    v1, zero, Lab8fc [$800ab8fc]
-        800AB8C4	nop
-        800AB8C8	lw     v0, $794c(s1)
-        800AB8CC	nop
-        800AB8D0	lw     v0, $001c(v0)
-        800AB8D4	nop
-        800AB8D8	lw     v0, $08e4(v0)
-        800AB8DC	nop
-        800AB8E0	lw     v0, $000c(v0)
-        800AB8E4	lw     v1, $000c(v1)
-        800AB8E8	lw     v0, $0014(v0)
-        800AB8EC	lbu    a1, $003b(v1)
-        800AB8F0	lw     a0, $002c(v0)
-        800AB8F4	jal    funcac6c0 [$800ac6c0]
-        800AB8F8	nop
+        V1 = w[SP + 10 + S3 * 4];
+        if( V1 != 0 )
+        {
+            script = w[V1 + c];
 
-        Lab8fc:	; 800AB8FC
-        800AB8FC	addiu  s3, s3, $0001
-        800AB908	addiu  s0, s0, $0004
+            V0 = w[8006794c];
+            V0 = w[V0 + 1c];
+            V0 = w[V0 + 8e4];
+            V0 = w[V0 + c];
+            V0 = w[V0 + 14];
+
+            A0 = w[V0 + 2c];
+            A1 = bu[script + 3b];
+            800AB8F4	jal    funcac6c0 [$800ac6c0]
+        }
+
+        S3 = S3 + 1;
         V0 = S3 < number_of_models;
     800AB904	bne    v0, zero, loopab8b8 [$800ab8b8]
 }
@@ -607,7 +600,7 @@ loopac288:	; 800AC288
 800AC288	andi   s0, s1, $00ff
 800AC28C	addu   a1, s0, zero
 800AC290	lw     a0, $0008(s4)
-800AC294	jal    field_model_rasterize_3d_vertexes [$800b61a4]
+800AC294	jal    field_model_convert_3d_vertexes_into_screen_without_depth_limit [$800b61a4]
 800AC298	addiu  s1, s1, $0001
 800AC29C	lw     a0, $0008(s4)
 800AC2A0	jal    funcbc600 [$800bc600]

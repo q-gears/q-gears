@@ -1,6 +1,9 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+// add this include because this is only common file between everything that uses Input fucntion
+#include <OIS.h>
+
 
 
 enum EventType

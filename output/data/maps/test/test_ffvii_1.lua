@@ -30,6 +30,7 @@ Entity[ "TreasureChest" ] = {
     on_start = function( self )
         local chest = entity_manager:get_entity( "TreasureChest" )
         chest:play_animation_stop( "Idle" )
+        entity_manager:set_player_entity( "TreasureChest" )
         return 0
     end,
 }

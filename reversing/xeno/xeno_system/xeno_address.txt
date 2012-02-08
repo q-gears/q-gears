@@ -70,14 +70,14 @@
 80059674 struct with data for text.
 +1c [][][][] pointer to next character.
 
-80061bbc array of 4 bytes offsets to SPU channel structure at 80065270. We store 0 in appropriate channel when run this channel.
+80061bbc array of 4 bytes offsets to SPU channel structure at 80065270 at offset 0xc4.
 
 80065270 SPU channel structure (0x158 size).
 +048 [][][][] in very first channel here some mask. We remove bit from here when start new sound (in +9a bit index to remove)
 +027 []       channel id.
 +094 [][]     some mask. If 0x0001 is set then we execute sound at this channel and set this to 0x0000.
 +09a []       index of bit to remove or add from +48 mask in first channel when start new sound.
-// c4
+// 0xc4
 +002 [][]     effect flags.
                 0x0010 - this channel used in Channel FM (pitch lfo) mode.
                 0x0020 - this channel used in Channel Noise mode.

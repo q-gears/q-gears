@@ -1,7 +1,7 @@
 // header
 +02 []       number of bones.
 +03 []       number of parts.
-+06 []       unknown??? some bone id.
++06 []       bone id with reseted rotation (always point in bone direction).
 +0c [][][][] pointer to bones.
 +10 [][][][] pointer to parts.
 
@@ -14,7 +14,7 @@
 
 
 // parts data (0x28 size)
-+00 [][]     
++00 [][]     size of all packets.
 +02 [][]     number of monochrome textured quads.
 +04 [][]     number of monochrome textured triangles.
 +06 [][]     number of shaded textured quads.
@@ -23,7 +23,7 @@
 +0c [][]     number of gradated triangles.
 +0e [][]     number of monochrome quads.
 +10 [][]     number of monochrome triangles.
-+13 []       
++13 []       when vertexes inserted in packets - this is value by wich all part depth are lower than naturaly. Used in funcb5958.
 +14 [][][][] pointer to vertex groups.
 +18 [][][][] pointer to vertex data.
 +1c [][][][] pointer to mesh data.

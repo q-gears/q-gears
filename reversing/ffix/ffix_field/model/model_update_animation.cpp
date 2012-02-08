@@ -25,10 +25,10 @@ if( animation_file == 0 )
         [root_matrix + 18] = w(w[V0 + 18]);
         [root_matrix + 1c] = w(w[V0 + 1c]);
 
-        R11R12 = w(root_matrix + 0);
+        R11R12 = w[root_matrix + 0];
         R13R21 = w[root_matrix + 4];
-        R22R23 = w(root_matrix + 8);
-        R31R32 = w(root_matrix + c);
+        R22R23 = w[root_matrix + 8];
+        R31R32 = w[root_matrix + c];
         R33 = w(root_matrix + 10);
 
         VXY0 = w[model_data + 74];

@@ -90,8 +90,8 @@
     + 34 [][]     ? in 0x9c and 0xa8 and 0xe2 opcode.
     + 36 [][]     store +76 here in 0x9c and 0xe2 opcode. Current animation id.
     + 38 []       ? in 0xe2 opcode. Store number of frames in current animation here. When start some animations.
-    + 3a []       store +60 here in 0x9c and 0xe2 opcode. Current animation frame id.
-    + 3b []       ? in 0xa8 and 0xe2 opcode.
+    + 3a []       current animation frame id. Store +60 here in 0x9c and 0xe2 opcode.
+    + 3b []       ? in 0xa8 and 0xe2 opcode. Index of model data struct.
     + 3c []       solid radius.
     + 3d []       talk radius.
     + 3e []       store some window id here.?
@@ -307,10 +307,11 @@
 + 14 [][][][] pointer to 8008b124.
 + 18 [][][][] pointer to 8008b214.
 + 1c [][][][] pointer to 8008b250.
-    +  8 []       index of pointer +10 or +14 to use.
+    +  8 []       frame buffer index. Index of pointer +10 or +14 to use.
     +  a [][]     Projection plane distance for rasterisation.
-    + 10 [][][][] 1st of some pointer. Referenced by +8.
-    + 14 [][][][] 2nd of some pointer. Referenced by +8.
+    + 10 [][][][] 1st frame buffer depth stack. Referenced by +8.
+    + 14 [][][][] 2nd frame buffer depth stack. Referenced by +8.
+        depth queue: in each 4 bytes (depth) are pointer to first packet in stack. 1st 4 bytes in packet contain part of pointer (without leading 0x80) to next packet with this depth.
     main transformation matrix. Camera matrix and translation vector.
     + 18 [][][][] R11R12.
     + 1c [][][][] R13R21.
@@ -349,13 +350,13 @@
     +8e0 [][][][] ??? pointer to end of some on 0x14 sized array.
         // field
         +  0 [][][][] some flags.
-                        0x00100000 - ???
                         0x00000002 - if set then this model X and Y rotation will be determinated by walkmesh.
+                        0x00100000 - if set then we use depth limit when convert 3d vertexes to screen space and insert them to packets.
+        +  4 [][][][] ???
         +  8 [][][][] pointer to model data.
             +  0 [][]     some flags.
                             0x0001 - if not set then animation update uses fixed bones in animation. Not used otherwise. Fixed bones ignores parent rotation.
                             0x0002 - enable scaling. If this is set then we downscale rotation matrix by +54[][] +56[][] and +58[][].
-            +  2 []       ???
             +  4 []       bone index which this model attached to.
             +  8 [][][][] pointer to model file.
             +  c [][][][] pointer to current animation file.
@@ -367,22 +368,30 @@
             + 38 [][][][] x position of model.
             + 3c [][][][] y position of model.
             + 40 [][][][] z position of model.
-            + 48 [][]     ???
-            + 4a [][]     ???
-            + 4c [][]     ???
+            + 44 [][][][] offset to array of model parts data (size 0xc).
+                +  0
+                +  4 [][][][] pointer to part packets.
+                +  8
+            + 48 [][]     static bone X offset.
+            + 4a [][]     static bone Y offset.
+            + 4c [][]     static bone Z offset.
             + 54 [][]     x scale.
             + 56 [][]     y scale.
             + 58 [][]     z scale.
-            + 5a [][]     some top of model. During vertex calculation we lower all vertexes to this point.
+            + 5a [][]     Y top limit for model. During vertex calculation we lower all vertexes to this point. And not render packet if all vertexes in poly exceed this value.
             + 74 [][]     attached model X offset (this is attached model).
             + 76 [][]     attached model Y offset (this is attached model).
             + 78 [][]     attached model Z offset (this is attached model).
         +  c [][][][] pointer to script data for model.
     +8e4 [][][][] pointer to 800d1000.
         // field
+        +  0 [][][][] some flags.
+                        0x00000200 - ???
         +  c [][][][] pointer
             + 14 [][][][] pointer
-                + 30 [][]     index of something in memory to where pointers 0x8008b000 + 0x1c + 0x10 or +0x14 points.???
+                + 1c [][][][] ???
+                + 2c [][][][] ???
+                + 30 [][]     some depth for depth buffer (shifted by >>2)
                 + 42 []       if this != 0 then we don't update models that exceed data memory limit.
         // battle
         +6f8 [][][][] pointer to some battle struct list.

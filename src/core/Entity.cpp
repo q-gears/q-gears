@@ -352,7 +352,7 @@ Entity::ScriptMoveWalkmesh( const float x, const float y )
 {
     m_MoveTarget = Ogre::Vector3( x, y, 0 );
     m_MoveState = MOVE_WALKMESH;
-    LOG_TRIVIAL( "[SCRIPT] Set for move to walkmesh position \"" + Ogre::StringConverter::toString( m_MoveTarget ) + "\" entity \"" + m_Name + "\"." );
+    LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set move to walkmesh position \"" + Ogre::StringConverter::toString( m_MoveTarget ) + "\"." );
 }
 
 

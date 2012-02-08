@@ -106,6 +106,7 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
         {
             ScriptManager::getSingleton().Input( input_event_array[ i ] );
             CameraManager::getSingleton().Input( input_event_array[ i ] );
+            EntityManager::getSingleton().Input( input_event_array[ i ] );
         }
     }
 

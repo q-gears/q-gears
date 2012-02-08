@@ -74,6 +74,7 @@ ScriptManager::InitBinds()
     [
         luabind::class_< EntityManager >( "EntityManager" )
             .def( "get_entity", ( Entity*( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntity )
+            .def( "set_player_entity", ( void( EntityManager::* )( const char* ) ) &EntityManager::ScriptSetPlayerEntity )
     ];
 
     // ui widget access

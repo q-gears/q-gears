@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="..\common\File.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1697" topLine="63" />
+	</File>
+	<File name="..\common\File.h" open="0" top="0" tabpos="0">
+		<Cursor position="413" topLine="3" />
+	</File>
+	<File name="..\common\FileSystem.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="..\common\Logger.h" open="0" top="0" tabpos="0">
+		<Cursor position="97" topLine="0" />
+	</File>
+	<File name="..\common\TypeDefine.h" open="0" top="0" tabpos="0">
+		<Cursor position="216" topLine="0" />
+	</File>
+	<File name="src\Main.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="38" topLine="0" />
+	</File>
+	<File name="src\engine\SoundBackend.h" open="0" top="0" tabpos="5">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="src\engine\SoundManager.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="15802" topLine="661" />
+	</File>
+	<File name="src\engine\SoundManager.h" open="0" top="0" tabpos="2">
+		<Cursor position="6064" topLine="198" />
+	</File>
+	<File name="src\engine\backends\SoundBackendSDL.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="2145" topLine="0" />
+	</File>
+	<File name="src\engine\backends\SoundBackendSDL.h" open="0" top="0" tabpos="4">
+		<Cursor position="183" topLine="6" />
+	</File>
+</CodeBlocks_layout_file>

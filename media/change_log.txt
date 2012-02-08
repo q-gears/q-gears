@@ -2,6 +2,12 @@
 Q-Gears v0.21 (3rd run wild) | 2011-12-2?
 --------------------------------------------------------------------------------
 
+2011-02-08
+----------
+* [Entity] Add basic player movement. [Akari]
+* [Script] Add script function "set_player_entity" to make entity controlled by player. [Akari]
+* [Entity] Add player controlled entities. [Akari]
+
 2011-11-23
 ----------
 * [Background] Increase buffer for background from 256 to 1024 tiles. [Akari]

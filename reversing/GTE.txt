@@ -96,6 +96,7 @@ GET REGISTERS
 18  swc2 s2, MEMORY     - SZ2       r/w     0       SZ2     0,16, 0         Screen Z FIFO
 19  swc2 s3, MEMORY     - SZ3       r/w     0       SZ3     0,16, 0         Screen Z FIFO
 22  swc2 s6, MEMORY     - RGB2      r/w     CD2, B2G0, R2   8 bits each     CD2 is the bit pattern of currently executed function
+24  swc2 t8, MEMORY     - MAC0      r/w     MAC0            1,31,0          Sum of products value 1
 25  swc2 t9, MEMORY     - MAC1      r/w     MAC1            1,31,0          Sum of products value 1
 26  swc2 k0, MEMORY     - MAC2      r/w     MAC2            1,31,0          Sum of products value 1
 27  swc2 k1, MEMORY     - MAC3      r/w     MAC3            1,31,0          Sum of products value 1
