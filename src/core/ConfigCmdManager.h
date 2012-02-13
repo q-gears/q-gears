@@ -8,29 +8,29 @@
 
 
 
-class ConfigCmdManager : public Ogre::Singleton<ConfigCmdManager>
+class ConfigCmdManager : public Ogre::Singleton< ConfigCmdManager >
 {
 public:
     ConfigCmdManager();
     ~ConfigCmdManager();
 
-    void                AddCmd(const Ogre::String& name, const Ogre::String& description, const Ogre::String& params_description, ConfigCmdHandler handler, ConfigCmdCompletion completion);
+    void                AddCmd( const Ogre::String& name, const Ogre::String& description, const Ogre::String& params_description, ConfigCmdHandler handler, ConfigCmdCompletion completion );
 
-    void                ExecuteString(const Ogre::String& cmd_string);
+    void                ExecuteString( const Ogre::String& cmd_string );
 
     // return command with specified name
-    ConfigCmd*          Find(const Ogre::String& name) const;
+    ConfigCmd*          Find( const Ogre::String& name ) const;
     int                 GetConfigCmdNumber();
-    ConfigCmd*          GetConfigCmd(int i) const;
+    ConfigCmd*          GetConfigCmd( size_t i ) const;
 
 private:
     // forbid copy
-    ConfigCmdManager(const ConfigCmdManager& rhs);
-    ConfigCmdManager operator =(const ConfigCmdManager& rhs);
+    ConfigCmdManager( const ConfigCmdManager& rhs );
+    ConfigCmdManager operator =( const ConfigCmdManager& rhs );
 
     void InitCmd();
 
-    std::vector<ConfigCmd*> m_Commands;
+    std::vector< ConfigCmd* > m_Commands;
 };
 
 

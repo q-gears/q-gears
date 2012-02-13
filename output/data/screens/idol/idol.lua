@@ -1,8 +1,8 @@
-if Ui == nil then Ui = {} end
+if UiContainer == nil then UiContainer = {} end
 
 
 
-Ui.Idol = {
+UiContainer.Idol = {
     picture_number = 8,
     picture_state = {},
     picture_animation_number = 3,
@@ -11,7 +11,7 @@ Ui.Idol = {
 
 
     on_start = function( self )
-        --script:request( "Ui.Idol", "show", 0 )
+        --script:request( "UiContainer.Idol", "show", 0 )
 
         for i = 1, self.picture_number, 1 do
             self.picture_state[ i ] = {}
@@ -40,8 +40,8 @@ Ui.Idol = {
     on_button = function( self, button, event )
         if ui_manager:get_widget( "Idol" ):is_visible() ~= false then
             if button == "Z" and event == "Press" then
-                script:request_end_sync( "Ui.Idol", "hide", 0 )
-                script:request_end_sync( "Ui.BeginMenu", "show", 0 )
+                script:request_end_sync( "UiContainer.Idol", "hide", 0 )
+                script:request_end_sync( "UiContainer.BeginMenu", "show", 0 )
             elseif button == "Left" then
                 if self.picture_current < self.picture_number then
 

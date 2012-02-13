@@ -18,7 +18,7 @@ ConfigCmdManager::ConfigCmdManager()
 
 ConfigCmdManager::~ConfigCmdManager()
 {
-    for( int i = 0; i < m_Commands.size(); ++i )
+    for( size_t i = 0; i < m_Commands.size(); ++i )
     {
         delete m_Commands[ i ];
     }
@@ -33,7 +33,7 @@ ConfigCmdManager::AddCmd( const Ogre::String& name, const Ogre::String& descript
     QGEARS_ASSERT( handler, "Null command handler." );
 
     // see if command already added
-    for( int i = 0; i < m_Commands.size(); ++i )
+    for( size_t i = 0; i < m_Commands.size(); ++i )
     {
         QGEARS_ASSERT( m_Commands[ i ]->GetName() != name, "Command already exist." );
     }
@@ -53,7 +53,7 @@ ConfigCmdManager::ExecuteString( const Ogre::String& cmd_string )
 ConfigCmd*
 ConfigCmdManager::Find( const Ogre::String& name ) const
 {
-    for( int i = 0; i < m_Commands.size(); ++i )
+    for( size_t i = 0; i < m_Commands.size(); ++i )
     {
         if( m_Commands[ i ]->GetName() == name )
         {
@@ -75,7 +75,7 @@ ConfigCmdManager::GetConfigCmdNumber()
 
 
 ConfigCmd*
-ConfigCmdManager::GetConfigCmd( int i ) const
+ConfigCmdManager::GetConfigCmd( size_t i ) const
 {
     if( i < m_Commands.size() )
     {

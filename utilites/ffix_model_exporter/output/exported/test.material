@@ -1,0 +1,13 @@
+
+material ffix/field_model/test
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+		}
+
+	}
+
+}

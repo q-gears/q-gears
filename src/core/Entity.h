@@ -27,6 +27,15 @@ enum MoveState
 
 
 
+enum ActionType
+{
+    AT_NONE,
+    AT_LINEAR,
+    AT_SMOOTH
+};
+
+
+
 class Entity
 {
 public:
@@ -72,17 +81,36 @@ public:
     const MoveState     GetMoveState() const;
     void                SetMoveSpeed( const float speed );
     const float         GetMoveSpeed() const;
+    void                SetMoveSpeedRun( const float speed );
+    const float         GetMoveSpeedRun() const;
     void                SetMoveTarget( const Ogre::Vector3& target );
     const Ogre::Vector3 GetMoveTarget() const;
     void                SetMoveTriangleId( const int triangle );
     const int           GetMoveTriangleId() const;
     void                SetMoveAutoRotation( const bool rotate );
     const bool          GetMoveAutoRotation() const;
+    void                SetMoveAutoAnimation( const bool animate );
+    const bool          GetMoveAutoAnimation() const;
+    const Ogre::String& GetMoveAnimationIdleName() const;
+    const Ogre::String& GetMoveAnimationWalkName() const;
+    const Ogre::String& GetMoveAnimationRunName() const;
     void                ScriptMoveWalkmesh( const float x, const float y );
+
+    // offset related
+    void                ScriptOffsetToPosition( const float x, const float y, const float z, const ActionType type, const float seconds );
+    const int           ScriptOffsetSync();
+    void                UnsetOffseting();
+    const Ogre::Vector3 GetOffsetPositionStart() const;
+    const Ogre::Vector3 GetOffsetPositionEnd() const;
+    const ActionType    GetOffsetType() const;
+    const float         GetOffsetStepSeconds() const;
+    void                SetOffsetCurrentStepSeconds( const float seconds );
+    const float         GetOffsetCurrentStepSeconds() const;
 
     // animation related
     const Ogre::String& GetCurrentAnimationName() const;
     virtual void        PlayAnimation( const Ogre::String& animation, EntityAnimation state, const float start, const float end ) = 0;
+    virtual void        PlayAnimationLooped( const Ogre::String& animation ) = 0;
     void                ScriptPlayAnimation( const char* name );
     void                ScriptPlayAnimationStop( const char* name );
     void                ScriptPlayAnimation( const char* name, const float start, const float end );
@@ -120,9 +148,22 @@ protected:
     // move related
     MoveState               m_MoveState;
     float                   m_MoveSpeed;
+    float                   m_MoveSpeedRun;
     Ogre::Vector3           m_MoveTarget;
     int                     m_MoveTriangleId;
     bool                    m_MoveAutoRotation;
+    bool                    m_MoveAutoAnimation;
+    Ogre::String            m_MoveAnimationIdle;
+    Ogre::String            m_MoveAnimationWalk;
+    Ogre::String            m_MoveAnimationRun;
+
+    // offset related
+    Ogre::Vector3           m_OffsetPositionStart;
+    Ogre::Vector3           m_OffsetPositionEnd;
+    ActionType              m_OffsetType;
+    float                   m_OffsetStepSeconds;
+    float                   m_OffsetCurrentStepSeconds;
+    std::vector< ScriptId > m_OffsetSync;
 
     // animation
     Ogre::String            m_AnimationCurrentName;

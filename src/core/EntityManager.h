@@ -34,24 +34,28 @@ public:
 private:
     // movement
     const bool SetEntityOnWalkmesh( Entity* entity );
-    void PerformWalkmeshMove( Entity* entity );
+    const bool PerformWalkmeshMove( Entity* entity );
     const bool WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, const Ogre::Vector2& move_vector );
     const bool CheckSolidCollisions( Entity* entity, Ogre::Vector3& position );
     void SetEntityDirectionByVector( Entity* entity, const Ogre::Vector2& vector );
 
+    void SetNextOffsetStep( Entity* entity );
+
 private:
-    Walkmesh m_Walkmesh;
-    Background2D m_Background2D;
-    std::vector< Entity* > m_EntityModels;
-    Entity* m_PlayerEntity;
-    Ogre::Vector3 m_PlayerMove;
+    Walkmesh                    m_Walkmesh;
+    Background2D                m_Background2D;
+
+    Ogre::String                m_EntityTableName;
+    std::vector< Entity* >      m_EntityModels;
+    Entity*                     m_PlayerEntity;
+    Ogre::Vector3               m_PlayerMove;
 
     std::vector< Ogre::String > m_EntityScripts;
 
-    Ogre::SceneNode* m_SceneNode;
+    Ogre::SceneNode*            m_SceneNode;
 
-    Ogre::Entity* m_Grid;
-    Ogre::Entity* m_Axis;
+    Ogre::Entity*               m_Grid;
+    Ogre::Entity*               m_Axis;
 };
 
 

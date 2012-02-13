@@ -8,17 +8,18 @@
 class EntityModel : public Entity
 {
 public:
-    EntityModel( const Ogre::String& name, const Ogre::String file_name, Ogre::SceneNode* node );
-    virtual ~EntityModel();
+                        EntityModel( const Ogre::String& name, const Ogre::String file_name, Ogre::SceneNode* node );
+    virtual             ~EntityModel();
 
-    virtual void Update();
+    virtual void        Update();
 
     // model related
-    virtual void SetVisible( const bool visible );
-    virtual const bool IsVisible() const;
+    virtual void        SetVisible( const bool visible );
+    virtual const bool  IsVisible() const;
 
     // animation related
-    virtual void PlayAnimation( const Ogre::String& animation, EntityAnimation state, const float start, const float end );
+    virtual void        PlayAnimation( const Ogre::String& animation, EntityAnimation state, const float start, const float end );
+    virtual void        PlayAnimationLooped( const Ogre::String& animation );
 
 private:
     EntityModel();

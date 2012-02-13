@@ -32,7 +32,7 @@ CmdEcho( const Ogre::StringVector& params )
 
     Ogre::String text = "";
 
-    for( int i = 1; i < params.size(); ++i )
+    for( size_t i = 1; i < params.size(); ++i )
     {
         if( i != 1 )
         {

@@ -2532,8 +2532,6 @@ Laaba0:	; 800AABA0
 800AABB8	lbu    v1, $0039(a0)
 800AABBC	addu   s2, v0, zero
 800AABC0	addiu  v1, v1, $0001
-
-funcaabc4:	; 800AABC4
 800AABC4	sb     v1, $0039(a0)
 
 Laabc8:	; 800AABC8

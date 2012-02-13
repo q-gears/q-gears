@@ -1,6 +1,47 @@
 ================================================================================
-Q-Gears v0.21 (3rd run wild) | 2011-12-2?
+Q-Gears v0.23 (5th cool guys chose to fight) | 2012-09-??
 --------------------------------------------------------------------------------
+
+To Do
+----------
+* Add battles and all it's features from FFVII 1st mission until reactor blow.
+
+================================================================================
+Q-Gears v0.22 (4th blow for a win) | 2012-06-??
+--------------------------------------------------------------------------------
+
+To Do
+----------
+* [Content] All FFVII fields maps from 1st mission until reactor blow must be fully playable.
+* [Sound] Implement all sounds that used in FFVII 1st mission until reactor blow. [Akari]
+* [Content] Add FFVII fields maps from 1st mission until reactor blow.
+
+================================================================================
+Q-Gears v0.21 (3rd run wild) | 2012-03-??
+--------------------------------------------------------------------------------
+
+To Do
+----------
+* [Content] Add FFVII fields maps startmap mdstin md1_1 and md1_2 maps and transitions between them.
+* [Background] Implement all background features that used in FFVII 1st mission until reactor blow. [Akari]
+* [Content] Add few Xenogears field models with animation (robots).
+* [Content] Add few FFIX field models with animation.
+* [Entity] Implement all movement features that was in v0.17.
+
+
+
+2011-02-14
+----------
+* [Entity] Add auto play animation on move. [Akari]
+
+2011-02-11
+----------
+* [Script] Rename Ui and Entity tables to UiContainer and EntityContainer to avoid name collision with Entity class. [Akari]
+* [Entity] Return all offseting fucntionality from v0.17. [Akari]
+
+2011-02-09
+----------
+* [Console] Fix bug when only slash was entered. [Akari]
 
 2011-02-08
 ----------

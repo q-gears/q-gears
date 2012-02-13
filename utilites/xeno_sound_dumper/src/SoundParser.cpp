@@ -67,9 +67,7 @@ SoundParser::UpdateSpu()
             // +24 >> 2 attack mode
             // +27 attack rate
             //LOGGER->Log( "UpdateSpu::SPU_ATTACK_RATE|SPU_ATTACK_MODE channel " + Ogre::StringConverter::toString( channel_id ) + " value:" + Ogre::StringConverter::toString( channel_data[ channel_id ].attack_rate ) + " " + Ogre::StringConverter::toString( channel_data[ channel_id ].attack_mode ) + ".\n" );
-            SOUNDMAN->SetVoiceAttackRate( channel_id, channel_data[ channel_id ].attack_rate, ( SoundManager::SpuRateMode )channel_data[ channel_id ].attack_mode );
-
-            [spu + channel_id * 10 + 8] = h(bu[spu + channel_id * 10 + 8] + (bu[channel_data + 27] << 8) + ((bu[channel_data + 24] >> 2) << f)); // attack mode and rate
+            SOUNDMAN->SetVoiceAttackRate( channel_id, channel_data[ channel_id ].attack_rate, ( SoundManager::SpuRateMode )( channel_data[ channel_id ].attack_mode >> 2) );
         }
 
         if (spu_update_flags & 0020)

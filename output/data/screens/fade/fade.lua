@@ -1,8 +1,8 @@
-if Ui == nil then Ui = {} end
+if UiContainer == nil then UiContainer = {} end
 
 
 
-Ui.Fade = {
+UiContainer.Fade = {
     fade_in = function( self )
         local fade = ui_manager:get_widget( "Fade.Screen" )
         fade:play_animation_stop( "FadeIn" )

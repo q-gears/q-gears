@@ -26,8 +26,20 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
 
     m_MoveState( NONE ),
     m_MoveSpeed( 0.5f ),
+    m_MoveSpeedRun( 1.5f ),
     m_MoveTarget( Ogre::Vector3( 0, 0, 0 ) ),
+    m_MoveTriangleId( -1 ),
     m_MoveAutoRotation( true ),
+    m_MoveAutoAnimation( true ),
+    m_MoveAnimationIdle( "Idle" ),
+    m_MoveAnimationWalk( "Walk" ),
+    m_MoveAnimationRun( "Run" ),
+
+    m_OffsetPositionStart( 0.0f, 0.0f, 0.0f ),
+    m_OffsetPositionEnd( 0.0f, 0.0f, 0.0f ),
+    m_OffsetType( AT_NONE ),
+    m_OffsetStepSeconds( 0 ),
+    m_OffsetCurrentStepSeconds( 0 ),
 
     m_AnimationDefault( "Idle" ),
     m_AnimationCurrentName( "" )
@@ -300,6 +312,22 @@ Entity::GetMoveSpeed() const
 
 
 void
+Entity::SetMoveSpeedRun( const float speed )
+{
+    m_MoveSpeedRun = speed;
+}
+
+
+
+const float
+Entity::GetMoveSpeedRun() const
+{
+    return m_MoveSpeedRun;
+}
+
+
+
+void
 Entity::SetMoveTarget( const Ogre::Vector3& target )
 {
     m_MoveTarget = target;
@@ -348,11 +376,149 @@ Entity::GetMoveAutoRotation() const
 
 
 void
+Entity::SetMoveAutoAnimation( const bool animate )
+{
+    m_MoveAutoAnimation = animate;
+}
+
+
+
+const bool
+Entity::GetMoveAutoAnimation() const
+{
+    return m_MoveAutoAnimation;
+}
+
+
+
+const Ogre::String&
+Entity::GetMoveAnimationIdleName() const
+{
+    return m_MoveAnimationIdle;
+}
+
+
+
+const Ogre::String&
+Entity::GetMoveAnimationWalkName() const
+{
+    return m_MoveAnimationWalk;
+}
+
+
+
+const Ogre::String&
+Entity::GetMoveAnimationRunName() const
+{
+    return m_MoveAnimationRun;
+}
+
+
+
+void
 Entity::ScriptMoveWalkmesh( const float x, const float y )
 {
     m_MoveTarget = Ogre::Vector3( x, y, 0 );
     m_MoveState = MOVE_WALKMESH;
     LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set move to walkmesh position \"" + Ogre::StringConverter::toString( m_MoveTarget ) + "\"." );
+}
+
+
+
+void
+Entity::ScriptOffsetToPosition( const float x, const float y, const float z, const ActionType type, const float seconds )
+{
+    LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set offset to position \"" + Ogre::StringConverter::toString( Ogre::Vector3( x, y, z ) ) + "'." );
+
+    Ogre::Vector3 position = Ogre::Vector3( x, y, z );
+
+    if( type == AT_NONE )
+    {
+        this->SetOffset( position );
+        return;
+    }
+
+    m_OffsetPositionStart = GetOffset();
+    m_OffsetPositionEnd = position;
+    m_OffsetType = type;
+    m_OffsetStepSeconds = seconds;
+    m_OffsetCurrentStepSeconds = 0;
+}
+
+
+
+const int
+Entity::ScriptOffsetSync()
+{
+    ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
+
+    LOG_TRIVIAL( "[SCRIPT] Wait entity \"" + m_Name + "\" offset for function \"" + script.function + "\" in script entity \"" + script.entity + "\"." );
+
+    m_OffsetSync.push_back( script );
+    return -1;
+}
+
+
+
+void
+Entity::UnsetOffseting()
+{
+    m_OffsetType = AT_NONE;
+
+    for( int i = 0; i < m_OffsetSync.size(); ++i)
+    {
+        ScriptManager::getSingleton().ContinueScriptExecution( m_OffsetSync[ i ] );
+    }
+    m_OffsetSync.clear();
+}
+
+
+
+const Ogre::Vector3
+Entity::GetOffsetPositionStart() const
+{
+    return m_OffsetPositionStart;
+}
+
+
+
+const Ogre::Vector3
+Entity::GetOffsetPositionEnd() const
+{
+    return m_OffsetPositionEnd;
+}
+
+
+
+const ActionType
+Entity::GetOffsetType() const
+{
+    return m_OffsetType;
+}
+
+
+
+const float
+Entity::GetOffsetStepSeconds() const
+{
+    return m_OffsetStepSeconds;
+}
+
+
+
+void
+Entity::SetOffsetCurrentStepSeconds( const float seconds )
+{
+    m_OffsetCurrentStepSeconds = ( seconds > m_OffsetStepSeconds ) ? m_OffsetStepSeconds : seconds;
+    m_OffsetCurrentStepSeconds = ( m_OffsetCurrentStepSeconds < 0 ) ? 0 : m_OffsetCurrentStepSeconds;
+}
+
+
+
+const float
+Entity::GetOffsetCurrentStepSeconds() const
+{
+    return m_OffsetCurrentStepSeconds;
 }
 
 

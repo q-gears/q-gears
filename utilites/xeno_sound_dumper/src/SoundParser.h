@@ -52,18 +52,19 @@ private:
         u32 start_offset;
         // 0x20
         u32 loop_offset;
+        // 0x24
+        u8 attack_mode;
+        // 0x27
+        u8 attack_rate;
 
 
 
-        // 0xec [][][][]
-        u32 attack_mode;
         // 0xf0 [][][][]
         u32 sustain_mode;
         // 0xf4 [][][][]
         u32 release_mode;
 
-        // 0xfa [][]
-        u16 attack_rate;
+
         // 0xfc [][]
         u16 decay_rate;
         // 0xfe [][]

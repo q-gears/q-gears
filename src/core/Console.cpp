@@ -91,7 +91,10 @@ Console::Input( const Event& event )
         // backslashed text are console commands, otherwise - script commands
         if( '\\' == m_InputLine[ 0 ] || '/' == m_InputLine[ 0 ] )
         {
-            ExecuteCommand();
+            if( m_InputLine.size() > 1 )
+            {
+                ExecuteCommand();
+            }
         }
         else
         {

@@ -1,8 +1,8 @@
-if Ui == nil then Ui = {} end
+if UiContainer == nil then UiContainer = {} end
 
 
 
-Ui.BeginMenu = {
+UiContainer.BeginMenu = {
     position = 1,
     position_total = 2,
 
@@ -12,7 +12,7 @@ Ui.BeginMenu = {
         local cursor = ui_manager:get_widget( "BeginMenu.Container.Cursor" )
         cursor:set_default_animation( "Position" .. self.position )
 
-        --script:request( "Ui.BeginMenu", "show", 0 )
+        --script:request( "UiContainer.BeginMenu", "show", 0 )
 
         return 0
     end,
@@ -25,11 +25,11 @@ Ui.BeginMenu = {
 
             if button == "X" and event == "Press" then
                 if self.position == 1 then
-                    script:request_end_sync( "Ui.BeginMenu", "hide", 0 )
-                    script:request_end_sync( "Ui.MainMenu", "show", 0 )
+                    script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
+                    script:request_end_sync( "UiContainer.MainMenu", "show", 0 )
                 else
-                    script:request_end_sync( "Ui.BeginMenu", "hide", 0 )
-                    script:request_end_sync( "Ui.Idol", "show", 0 )
+                    script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
+                    script:request_end_sync( "UiContainer.Idol", "show", 0 )
                 end
             elseif button == "Down" then
                 self.position = self.position + 1

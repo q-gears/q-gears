@@ -82,18 +82,16 @@ Lb65bc:	; 800B65BC
 
 
 
-        800B680C	lhu    v0, $0004(t2)
+        V0 = hu[T2 + 4];
         if( V0 != 0 )
         {
-            800B6818	addu   t3, zero, zero
-            800B681C	addiu  t1, t5, $0006
-            800B6820	addiu  a1, t4, $001d
+            T3 = 0;
+            T1 = T5 + 6;
+            A1 = T4 + 1d;
 
             Lb6824:	; 800B6824
-                800B6824	addiu  v0, zero, $0007
-                800B6828	sb     v0, $ffe6(a1)
-                800B682C	addiu  v0, zero, $0024
-                800B6830	sb     v0, $ffea(a1)
+                [A1 - 1a] = b(7);
+                [A1 - 16] = b(24);
                 800B6834	lbu    v0, $0002(t1)
                 800B6838	nop
                 800B683C	sb     v0, $ffe7(a1)

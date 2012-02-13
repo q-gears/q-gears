@@ -88,6 +88,8 @@ GET REGISTERS
 31  mfc2 GPR, flag      - LZCR      r       LZCR            6,6,0           Leading zero count result (Note 4)
 
 // data registers
+9   swc2 t1, MEMORY     - IR1       r/w     Sign    IR1     1,3,12          Intermediate value 1. Format may differ
+10  swc2 t2, MEMORY     - IR2       r/w     Sign    IR2     1,3,12          Intermediate value 2. Format may differ
 11  swc2 t3, MEMORY     - IR3       r/w     Sign    IR3     1,3,12          Intermediate value 3. Format may differ
 12  swc2 t4, MEMORY     - SXY0      r/w     SX0     SY0     1,15, 0         Screen XY coordinate FIFO (Note1)
 13  swc2 t5, MEMORY     - SXY1      r/w     SX1     SY1     1,15, 0         Screen XY coordinate FIFO

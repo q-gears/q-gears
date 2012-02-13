@@ -1,149 +1,49 @@
-[19:59:06] (EE) ModuleManager created.
-[19:59:06] (II) Loading file: data/field/0
-[19:59:06] (II) file 00, data 14000008
-[19:59:06] (II) file 01, data 1b000148
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 00000158
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0003002c, this 0000001c)
-[19:59:06] (II) pointer_to_tim 000063f4 with size 00030014
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0003002c, this 0000001c)
-[19:59:06] (II) IMAGE: VramPositionX (0500) VramPositionY (0000) Width (768) Height (256)
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007003c, this 0003002c)
-[19:59:06] (II) pointer_to_tim 00036408 with size 00040014
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007003c, this 0003002c)
-[19:59:06] (II) IMAGE: VramPositionX (0000) VramPositionY (0100) Width (1024) Height (256)
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007604c, this 0007003c)
-[19:59:06] (II) pointer_to_tim 0007641c with size 00006014
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007604c, this 0007003c)
-[19:59:06] (II) IMAGE: VramPositionX (0680) VramPositionY (0100) Width (128) Height (192)
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007a05c, this 0007604c)
-[19:59:06] (II) pointer_to_tim 0007c430 with size 00004014
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007a05c, this 0007604c)
-[19:59:06] (II) IMAGE: VramPositionX (0000) VramPositionY (00e0) Width (512) Height (32)
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007d86c, this 0007a05c)
-[19:59:06] (II) pointer_to_tim 00080444 with size 00003814
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007d86c, this 0007a05c)
-[19:59:06] (II) IMAGE: VramPositionX (0200) VramPositionY (00e0) Width (512) Height (28)
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007da94, this 0007d86c)
-[19:59:06] (II) pointer_to_tim 00083c58 with size 0000022c
-[19:59:06] (II) file 00, data 17000008
-[19:59:06] (II) file 01, data 04006240
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 000063d8
-[19:59:06] (II) found it again (next 0007da94, this 0007d86c)
-[19:59:06] (II) IMAGE: VramPositionX (0200) VramPositionY (00ff) Width (512) Height (1)
-[19:59:06] (II) file 00, data 14000008
-[19:59:06] (II) file 01, data 1b000148
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 00000158
-[19:59:06] (II) pointer_to_1b_1 84000
-[19:59:06] (II) file 00, data 02000034
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 00084048
-[19:59:06] (II) file 00, data 02000034
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 00084048
-[19:59:06] (II) REAL MODEL 'zidane' ID 155b
-[19:59:06] (II) file 00, data 02000034
-[19:59:06] (II) found it
-[19:59:06] (II) pointers_address 00084048
-[19:59:06] (II) found it again (next 000031b0, this 00000018)
-[19:59:06] (II) pointer_to_model 00084060 with size 0000319c
-[19:59:06] (II) Add root
-[19:59:06] (II) Skeleton bone-0 length-8 parent-0
-[19:59:06] (II) Skeleton bone-1 length-0 parent-0
-[19:59:06] (II) Skeleton bone-2 length-5a parent-1
-[19:59:06] (II) Skeleton bone-3 length-f parent-2
-[19:59:06] (II) Skeleton bone-4 length-4c parent-3
-[19:59:06] (II) Skeleton bone-5 length-5a parent-1
-[19:59:06] (II) Skeleton bone-6 length-32 parent-5
-[19:59:06] (II) Skeleton bone-7 length-38 parent-6
-[19:59:06] (II) Skeleton bone-8 length-3f parent-7
-[19:59:06] (II) Skeleton bone-9 length-1a parent-8
-[19:59:06] (II) Skeleton bone-a length-5a parent-1
-[19:59:06] (II) Skeleton bone-b length-32 parent-a
-[19:59:06] (II) Skeleton bone-c length-38 parent-b
-[19:59:06] (II) Skeleton bone-d length-3f parent-c
-[19:59:06] (II) Skeleton bone-e length-1a parent-d
-[19:59:06] (II) Skeleton bone-f length-0 parent-0
-[19:59:06] (II) Skeleton bone-10 length-28 parent-f
-[19:59:06] (II) Skeleton bone-11 length-1b parent-10
-[19:59:06] (II) Skeleton bone-12 length-42 parent-11
-[19:59:06] (II) Skeleton bone-13 length-57 parent-12
-[19:59:06] (II) Skeleton bone-14 length-28 parent-f
-[19:59:06] (II) Skeleton bone-15 length-1b parent-14
-[19:59:06] (II) Skeleton bone-16 length-42 parent-15
-[19:59:06] (II) Skeleton bone-17 length-57 parent-16
-[19:59:06] (II) offset_to_part: 00000074
-[19:59:20] (II) ===================== Stop the game!!!
+Loading file: data/field/1.model
+Skeleton bone-2 length-8 parent-0
+bone1 2, bone2 3
+Skeleton bone-3 length-0 parent-0
+bone1 4, bone2 5
+Skeleton bone-4 length-90 parent-1
+bone1 6, bone2 7
+Skeleton bone-5 length-15 parent-2
+bone1 8, bone2 9
+Skeleton bone-6 length-76 parent-3
+bone1 10, bone2 11
+Skeleton bone-7 length-90 parent-1
+bone1 12, bone2 13
+Skeleton bone-8 length-50 parent-5
+bone1 14, bone2 15
+Skeleton bone-9 length-56 parent-6
+bone1 16, bone2 17
+Skeleton bone-10 length-63 parent-7
+bone1 18, bone2 19
+Skeleton bone-11 length-26 parent-8
+bone1 20, bone2 21
+Skeleton bone-12 length-90 parent-1
+bone1 22, bone2 23
+Skeleton bone-13 length-50 parent-10
+bone1 24, bone2 25
+Skeleton bone-14 length-56 parent-11
+bone1 26, bone2 27
+Skeleton bone-15 length-63 parent-12
+bone1 28, bone2 29
+Skeleton bone-16 length-26 parent-13
+bone1 30, bone2 31
+Skeleton bone-17 length-0 parent-0
+bone1 32, bone2 33
+Skeleton bone-18 length-40 parent-15
+bone1 34, bone2 35
+Skeleton bone-19 length-27 parent-16
+bone1 36, bone2 37
+Skeleton bone-20 length-66 parent-17
+bone1 38, bone2 39
+Skeleton bone-21 length-87 parent-18
+bone1 40, bone2 41
+Skeleton bone-22 length-40 parent-15
+bone1 42, bone2 43
+Skeleton bone-23 length-27 parent-20
+bone1 44, bone2 45
+Skeleton bone-24 length-66 parent-21
+bone1 46, bone2 47
+Skeleton bone-25 length-87 parent-22
+bone1 48, bone2 49

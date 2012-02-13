@@ -78,7 +78,7 @@ ScriptManager::Input( const Event& event )
                                         event.param1 == OIS::KC_Z
                                       ) )
     {
-        for( int i = 0; i < m_ScriptEntity.size(); ++i )
+        for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
         {
             Ogre::String argument2 = "";
             if( event.type == ET_KEY_PRESS )
@@ -100,7 +100,7 @@ void
 ScriptManager::Update()
 {
     // resort all queue. This will give us correct info for debug draw.
-    for( int i = 0; i < m_ScriptEntity.size(); ++i )
+    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
     {
         if( m_ScriptEntity[ i ].queue.size() > 0 )
         {
@@ -122,7 +122,7 @@ ScriptManager::Update()
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.8, 0.8, 0, 1 ) );
         DEBUG_DRAW.Text( 10, 34, "Script entity:" );
 
-        for( int i = 0; i < m_ScriptEntity.size(); ++i )
+        for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
         {
             Ogre::String text = m_ScriptEntity[ i ].name;
 
@@ -159,7 +159,7 @@ ScriptManager::Update()
 
 
 
-    for( int i = 0; i < m_ScriptEntity.size(); ++i )
+    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
     {
         if( m_ScriptEntity[ i ].queue.size() > 0 )
         {
@@ -310,7 +310,7 @@ ScriptManager::RunFile( const Ogre::String& file )
 void
 ScriptManager::AddEntity( const Ogre::String& entity_name )
 {
-    for( int i = 0; i < m_ScriptEntity.size(); ++i )
+    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
     {
         if( m_ScriptEntity[ i ].name == entity_name )
         {
@@ -368,7 +368,7 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
 void
 ScriptManager::RemoveEntity( const Ogre::String& entity_name )
 {
-    for( int i = 0; i < m_ScriptEntity.size(); ++i )
+    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
     {
         if( m_ScriptEntity[ i ].name == entity_name )
         {
@@ -414,7 +414,7 @@ ScriptManager::GetTableByEntityName( const Ogre::String& name, lua_State* state 
     // get real table by name
     Ogre::StringVector table_path = StringTokenise( name, "." );
     luabind::object table = luabind::globals( state );
-    for( int i = 0; i < table_path.size(); ++i )
+    for( size_t i = 0; i < table_path.size(); ++i )
     {
         table = table[ table_path[ i ] ];
 
@@ -432,11 +432,11 @@ ScriptManager::GetTableByEntityName( const Ogre::String& name, lua_State* state 
 QueueScript*
 ScriptManager::GetScriptByScriptId( const ScriptId& script ) const
 {
-    for(int i = 0; i < m_ScriptEntity.size(); ++i )
+    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
     {
         if( script.entity == m_ScriptEntity[ i ].name )
         {
-            for( int j = 0; j < m_ScriptEntity[ i ].queue.size(); ++j )
+            for( size_t j = 0; j < m_ScriptEntity[ i ].queue.size(); ++j )
             {
                 if( script.function == m_ScriptEntity[ i ].queue[ j ].function )
                 {
@@ -456,7 +456,7 @@ ScriptManager::GetScriptByScriptId( const ScriptId& script ) const
 ScriptEntity*
 ScriptManager::GetScriptEntityByName( const Ogre::String& name ) const
 {
-    for(int i = 0; i < m_ScriptEntity.size(); ++i )
+    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
     {
         if( name == m_ScriptEntity[ i ].name )
         {

@@ -26137,7 +26137,7 @@
 1328639646 k:\q-gears\src\core\event.h
 	<OIS.h>
 
-1306971022 k:\q-gears\src\core\configcmdmanager.h
+1329163962 k:\q-gears\src\core\configcmdmanager.h
 	<OgreSingleton.h>
 	<vector>
 	"ConfigCmd.h"
@@ -26174,7 +26174,7 @@
 	<OgreRoot.h>
 	<OgreSingleton.h>
 
-1328639440 k:\q-gears\src\core\entitymanager.h
+1329163672 k:\q-gears\src\core\entitymanager.h
 	<OgreSingleton.h>
 	"Background2D.h"
 	"Entity.h"
@@ -26187,7 +26187,7 @@
 	<OgreRoot.h>
 	<OgreSingleton.h>
 
-1314721440 k:\q-gears\src\core\entity.h
+1329163508 k:\q-gears\src\core\entity.h
 	<OgreString.h>
 	"EntityCollision.h"
 	"EntityDirection.h"
@@ -26701,7 +26701,7 @@
 1320215944 k:\q-gears\src\core\uifont.h
 	<OgreString.h>
 
-1314721442 k:\q-gears\src\core\uiwidget.h
+1328937886 k:\q-gears\src\core\uiwidget.h
 	<OgreColourValue.h>
 	<OgreString.h>
 	<OgreVector2.h>
@@ -26826,12 +26826,12 @@
 1306971022 source:k:\q-gears\src\core\configcmd.cpp
 	"ConfigCmd.h"
 
-1314721440 source:k:\q-gears\src\core\configcmdmanager.cpp
+1329163904 source:k:\q-gears\src\core\configcmdmanager.cpp
 	"ConfigCmdManager.h"
 	"ConfigCmdManagerCommands.h"
 	"Assert.h"
 
-1314721440 k:\q-gears\src\core\configcmdmanagercommands.h
+1329164238 k:\q-gears\src\core\configcmdmanagercommands.h
 	<OgreRenderWindow.h>
 	<OgreRoot.h>
 	<OgreStringConverter.h>
@@ -26882,7 +26882,7 @@
 1314721440 source:k:\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1314721440 source:k:\q-gears\src\core\console.cpp
+1328722180 source:k:\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
 	"ConfigCmdManager.h"
@@ -26909,17 +26909,17 @@
 	"EntityDirection.h"
 	<OgreHardwareBufferManager.h>
 
-1314721440 source:k:\q-gears\src\core\entitymodel.cpp
+1329163986 source:k:\q-gears\src\core\entitymodel.cpp
 	"EntityModel.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
 	"../core/Logger.h"
 	"../core/Timer.h"
 
-1306971022 k:\q-gears\src\core\entitymodel.h
+1329162078 k:\q-gears\src\core\entitymodel.h
 	"Entity.h"
 
-1328639334 source:k:\q-gears\src\core\gameframelistner.cpp
+1329163992 source:k:\q-gears\src\core\gameframelistner.cpp
 	"GameFrameListner.h"
 	<OgreStringConverter.h>
 	"CameraManager.h"
@@ -26950,7 +26950,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1328639848 source:k:\q-gears\src\core\scriptmanager.cpp
+1329164000 source:k:\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.h"
 	"ScriptManagerCommands.h"
@@ -26965,7 +26965,7 @@
 	"library/luabind/luabind.hpp"
 	"library/luabind/yield_policy.hpp"
 
-1328635778 k:\q-gears\src\core\scriptmanagerbinds.h
+1328936628 k:\q-gears\src\core\scriptmanagerbinds.h
 	"Console.h"
 	"Logger.h"
 	"Entity.h"
@@ -27019,7 +27019,7 @@
 1314721442 k:\q-gears\src\core\xmltextsfile.h
 	"XmlFile.h"
 
-1314721442 source:k:\q-gears\src\core\uisprite.cpp
+1328937818 source:k:\q-gears\src\core\uisprite.cpp
 	"UiSprite.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
@@ -27031,7 +27031,7 @@
 	<OgreRoot.h>
 	"UiWidget.h"
 
-1314721442 source:k:\q-gears\src\core\uitextarea.cpp
+1328937800 source:k:\q-gears\src\core\uitextarea.cpp
 	"UiTextArea.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -27048,7 +27048,7 @@
 	"UiWidget.h"
 	"library/tinyxml/tinyxml.h"
 
-1314721442 source:k:\q-gears\src\core\uiwidget.cpp
+1328938112 source:k:\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
@@ -27820,14 +27820,14 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1328634040 source:k:\q-gears\src\core\entity.cpp
+1329163206 source:k:\q-gears\src\core\entity.cpp
 	"Entity.h"
 	<OgreSceneNode.h>
 	"ConfigVar.h"
 	"DebugDraw.h"
 	"Logger.h"
 
-1328643030 source:k:\q-gears\src\core\entitymanager.cpp
+1329163730 source:k:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -27836,5 +27836,4 @@
 	"Logger.h"
 	"ScriptManager.h"
 	"Timer.h"
-	"Utilites.h"
 

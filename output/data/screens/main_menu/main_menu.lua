@@ -1,15 +1,15 @@
-if Ui == nil then Ui = {} end
+if UiContainer == nil then UiContainer = {} end
 
 
 
-Ui.MainMenu = {
+UiContainer.MainMenu = {
     position = 1,
     position_total = 10,
 
 
 
     on_start = function( self )
-        --script:request( "Ui.MainMenu", "show", 0 )
+        --script:request( "UiContainer.MainMenu", "show", 0 )
 
         return 0
     end,
@@ -25,8 +25,8 @@ Ui.MainMenu = {
             local location    = ui_manager:get_widget( "MainMenu.Container.Location" )
 
             if button == "Z" and event == "Press" then
-                script:request_end_sync( "Ui.MainMenu", "hide", 0 )
-                script:request_end_sync( "Ui.BeginMenu", "show", 0 )
+                script:request_end_sync( "UiContainer.MainMenu", "hide", 0 )
+                script:request_end_sync( "UiContainer.BeginMenu", "show", 0 )
             elseif button == "Down" then
                 self.position = self.position + 1
                 if self.position > self.position_total then

@@ -42,7 +42,7 @@
 
 
 
-// mesh data
+// textured monochrome quads data (0x18 size)
 +00 [][]     vertex1 index.
 +02 [][]     vertex2 index.
 +04 [][]     vertex3 index.

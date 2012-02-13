@@ -36,7 +36,7 @@ UiSprite::Initialise()
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
 
-    m_Material = Ogre::MaterialManager::getSingleton().create( "Ui." + m_PathName, "General" );
+    m_Material = Ogre::MaterialManager::getSingleton().create( m_UiTableName + "." + m_PathName, "General" );
     Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
     pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
     pass->setCullingMode( Ogre::CULL_NONE );

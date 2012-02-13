@@ -98,15 +98,15 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
 
     bool console_active = Console::getSingleton().IsVisible();
 
-    for( int i = 0; i < input_event_array.size(); ++i )
+    for( size_t i = 0; i < input_event_array.size(); ++i )
     {
         Console::getSingleton().Input( input_event_array[ i ] );
 
         if( console_active != true )
         {
+            EntityManager::getSingleton().Input( input_event_array[ i ] );
             ScriptManager::getSingleton().Input( input_event_array[ i ] );
             CameraManager::getSingleton().Input( input_event_array[ i ] );
-            EntityManager::getSingleton().Input( input_event_array[ i ] );
         }
     }
 

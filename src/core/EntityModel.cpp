@@ -43,7 +43,7 @@ EntityModel::Update()
         if( stop_check == true )
         {
             //LOG_TRIVIAL( "Animation finished for entity \"" + m_Name + "\"." );
-            for( int i = 0; i < m_AnimationSync.size(); ++i)
+            for( size_t i = 0; i < m_AnimationSync.size(); ++i)
             {
                 ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationSync[ i ] );
             }
@@ -110,4 +110,22 @@ EntityModel::PlayAnimation( const Ogre::String& animation, EntityAnimation state
     {
         LOG_ERROR( "Animation '" + animation + "' doesn't exist in model '" + m_Model->getName() + "'." );
     }
+}
+
+
+
+void
+EntityModel::PlayAnimationLooped( const Ogre::String& animation )
+{
+    float time = 0;
+    if( m_AnimationCurrent != NULL &&                                               // if some animation is played
+        m_Model->getAllAnimationStates()->hasAnimationState( animation ) == true && // and we want to play animation that exist (use this to avoid exception)
+        m_AnimationCurrent == m_Model->getAnimationState( animation ) )             // and animation we want is the animation that currently playing
+    {
+        time = ( m_AnimationCurrent->hasEnded() != true ) ?
+            m_AnimationCurrent->getTimePosition() :
+            m_AnimationCurrent->getTimePosition() - m_AnimationCurrent->getLength();
+    }
+
+    PlayAnimation( animation, DEFAULT, time, -1 );
 }

@@ -44,6 +44,7 @@ SideOfVector( const Ogre::Vector2& point, const Ogre::Vector2& p1, const Ogre::V
 
 
 EntityManager::EntityManager():
+    m_EntityTableName( "EntityContainer" ),
     m_PlayerEntity( NULL ),
     m_PlayerMove( Ogre::Vector3::ZERO )
 {
@@ -126,10 +127,22 @@ EntityManager::Update()
 
 
 
-    for( int i = 0; i < m_EntityModels.size(); ++i )
+    for( size_t i = 0; i < m_EntityModels.size(); ++i )
     {
         m_EntityModels[ i ]->Update();
 
+
+
+        // update offseting
+        if( m_EntityModels[ i ]->GetOffsetType() != AT_NONE )
+        {
+            SetNextOffsetStep( m_EntityModels[ i ] );
+        }
+
+
+
+        // update movement
+        bool move = false;
         if( m_EntityModels[ i ]->GetMoveState() == MOVE_WALKMESH )
         {
             // try set entity on walkmesh it it's still don't has triangle
@@ -144,10 +157,34 @@ EntityManager::Update()
             // perform move
             if( m_EntityModels[ i ]->GetMoveState() == MOVE_WALKMESH )
             {
-                PerformWalkmeshMove( m_EntityModels[ i ] );
+                move = PerformWalkmeshMove( m_EntityModels[ i ] );
+            }
+        }
+
+
+
+        // we perform move so play acording animation if needed
+        if( m_EntityModels[ i ]->GetMoveAutoAnimation() == true )
+        {
+            if( move == true )
+            {
+                if( m_EntityModels[ i ]->GetMoveSpeed() >= m_EntityModels[ i ]->GetMoveSpeedRun() )
+                {
+                    m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationRunName() );
+                }
+                else
+                {
+                    m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationWalkName() );
+                }
+            }
+            else
+            {
+                m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationIdleName() );
             }
         }
     }
+
+
 
     m_Walkmesh.Update();
 }
@@ -159,17 +196,17 @@ EntityManager::Clear()
 {
     m_Walkmesh.Clear();
 
-    for( int i = 0; i < m_EntityModels.size(); ++i )
+    for( size_t i = 0; i < m_EntityModels.size(); ++i )
     {
-        ScriptManager::getSingleton().RemoveEntity( "Entity." + m_EntityModels[ i ]->GetName() );
+        ScriptManager::getSingleton().RemoveEntity( m_EntityTableName + "." + m_EntityModels[ i ]->GetName() );
         delete m_EntityModels[ i ];
     }
     m_EntityModels.clear();
     m_PlayerEntity = NULL;
 
-    for( int i = 0; i < m_EntityScripts.size(); ++i )
+    for( size_t i = 0; i < m_EntityScripts.size(); ++i )
     {
-        ScriptManager::getSingleton().RemoveEntity( "Entity." + m_EntityScripts[ i ] );
+        ScriptManager::getSingleton().RemoveEntity( m_EntityTableName + "." + m_EntityScripts[ i ] );
     }
 
     m_SceneNode->removeAndDestroyAllChildren();
@@ -203,8 +240,7 @@ EntityManager::AddEntityModel( const Ogre::String& name, const Ogre::String& fil
 
     m_EntityModels.push_back( entity );
 
-    ScriptManager::getSingleton().AddEntity( "Entity." + entity->GetName() );
-    SetEntityOnWalkmesh( entity ); // temporary
+    ScriptManager::getSingleton().AddEntity( m_EntityTableName + "." + entity->GetName() );
 }
 
 
@@ -213,7 +249,7 @@ void
 EntityManager::AddEntityScript( const Ogre::String& name )
 {
     m_EntityScripts.push_back( name );
-    ScriptManager::getSingleton().AddEntity( "Entity." + name );
+    ScriptManager::getSingleton().AddEntity( m_EntityTableName + "." + name );
 }
 
 
@@ -221,7 +257,7 @@ EntityManager::AddEntityScript( const Ogre::String& name )
 Entity*
 EntityManager::GetEntity( const Ogre::String& name ) const
 {
-    for( int i = 0; i < m_EntityModels.size(); ++i )
+    for( size_t i = 0; i < m_EntityModels.size(); ++i )
     {
         if( m_EntityModels[ i ]->GetName() == name )
         {
@@ -245,7 +281,7 @@ EntityManager::ScriptGetEntity( const char* name ) const
 void
 EntityManager::ScriptSetPlayerEntity( const char* name )
 {
-    for( int i = 0; i < m_EntityModels.size(); ++i )
+    for( size_t i = 0; i < m_EntityModels.size(); ++i )
     {
         if( m_EntityModels[ i ]->GetName() == name )
         {
@@ -288,7 +324,7 @@ EntityManager::SetEntityOnWalkmesh( Entity* entity )
     // if our coords doesn't match any triangle
     if( triangles.size() == 0 )
     {
-        LOG_ERROR( "Can't find any triangle to place entity \"" + entity->GetName() + "\" on walkmesh. Entity will not be added." );
+        LOG_ERROR( "Can't find any triangle to place entity \"" + entity->GetName() + "\" on walkmesh." );
         return false;
     }
 
@@ -314,7 +350,7 @@ EntityManager::SetEntityOnWalkmesh( Entity* entity )
     // first try to set on top triangle less than current pos of entity
     float pos_z = position3.z;
     int triangle_id = -1;
-    for( int i = 0; i < triangles.size(); ++i )
+    for( size_t i = 0; i < triangles.size(); ++i )
     {
         if( triangles[ i ].second <= pos_z )
         {
@@ -326,7 +362,7 @@ EntityManager::SetEntityOnWalkmesh( Entity* entity )
     // if every triangle are higher than entity
     if( triangle_id == -1 )
     {
-        for( int i = 0; i < triangles.size(); ++i )
+        for( size_t i = 0; i < triangles.size(); ++i )
         {
             if( triangles[ i ].second >= pos_z )
             {
@@ -342,7 +378,7 @@ EntityManager::SetEntityOnWalkmesh( Entity* entity )
 
 
 
-void
+const bool
 EntityManager::PerformWalkmeshMove( Entity* entity )
 {
     Ogre::Vector3 start_point = entity->GetPosition();
@@ -363,7 +399,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     // if we still need to move but speed ot time don't allow us to do this just return for now
     if( direction.isZeroLength() == true )
     {
-        return;
+        return false;
     }
 
     int current_triangle = entity->GetMoveTriangleId();
@@ -371,7 +407,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     {
         entity->SetMoveState( NONE );
         LOG_ERROR( "Entity not placed on walkmesh and can't move.");
-        return;
+        return false;
     }
 
     //LOG_TRIVIAL( "Start position calculation." );
@@ -617,7 +653,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     {
         LOG_WARNING( "Can't move to specified position.");
         entity->SetMoveState( NONE );
-        return;
+        return false;
     }
 
 
@@ -639,6 +675,8 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
 
     entity->SetPosition( end_point );
 
+
+
     // if we come to destination point - finish movement
     Ogre::Vector3 final = entity->GetMoveTarget() - end_point;
     if( Ogre::Vector2( final.x, final.y ).length() <= 0.01 )
@@ -646,7 +684,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         entity->SetMoveState( NONE );
     }
 
-    return;
+    return true;
 }
 
 
@@ -744,7 +782,7 @@ EntityManager::CheckSolidCollisions( Entity* entity, Ogre::Vector3& position )
     }
 
     //Ogre::LogManager* log = Ogre::LogManager::getSingletonPtr();
-    for( int i = 0; i < m_EntityModels.size(); ++i )
+    for( size_t i = 0; i < m_EntityModels.size(); ++i )
     {
         if( m_EntityModels[ i ]->IsSolid() == false )
         {
@@ -789,4 +827,32 @@ EntityManager::CheckSolidCollisions( Entity* entity, Ogre::Vector3& position )
 
     //LOGGER->Log(LOGGER_INFO, "Not collide with entity");
     return false;
+}
+
+
+
+void
+EntityManager::SetNextOffsetStep( Entity* entity )
+{
+    ActionType type = entity->GetOffsetType();
+    float steps = entity->GetOffsetStepSeconds();
+    float step = entity->GetOffsetCurrentStepSeconds();
+
+    Ogre::Vector3 start = entity->GetOffsetPositionStart();
+    Ogre::Vector3 end = entity->GetOffsetPositionEnd();
+
+    float x = step / steps;
+    float smooth_modifier = ( type == AT_SMOOTH ) ? -2 * x * x * x + 3 * x * x : x;
+    Ogre::Vector3 current = start + ( end - start ) * smooth_modifier;
+
+    entity->SetOffset( current );
+
+    if (step == steps)
+    {
+        entity->UnsetOffseting();
+    }
+    else
+    {
+        entity->SetOffsetCurrentStepSeconds( step + Timer::getSingleton().GetGameTimeDelta() );
+    }
 }

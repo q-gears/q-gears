@@ -91,6 +91,8 @@ private:
     UiWidget();
 
 protected:
+    static Ogre::String      m_UiTableName;
+
     Ogre::String             m_Name;
     Ogre::String             m_PathName;
 
