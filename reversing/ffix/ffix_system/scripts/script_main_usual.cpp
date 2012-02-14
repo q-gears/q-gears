@@ -757,7 +757,7 @@ case 3a: // B42C0480
     if ((A0 != 0) && (hu[A0 + 34] != ffff))
     {
         A0 = bu[A0 + 3b];
-        80042CDC	jal    func1e350 [$8001e350]
+        func1e350;
 
         if (V0 != 0)
         {

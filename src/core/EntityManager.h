@@ -40,6 +40,7 @@ private:
     void SetEntityDirectionByVector( Entity* entity, const Ogre::Vector2& vector );
 
     void SetNextOffsetStep( Entity* entity );
+    void SetNextTurnStep( Entity* entity );
 
 private:
     Walkmesh                    m_Walkmesh;

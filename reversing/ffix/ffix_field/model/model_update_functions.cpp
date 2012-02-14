@@ -416,11 +416,11 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     800ACCC8	ctc2   t6,otz
 
     V0 = SP + 24;
+    T5 = hu[V0 + 4];
+    T4 = hu[V0 + 0];
+    T5 = T5 << 10;
+    T4 = T4 | T5;
 
-    800ACCD0	lhu    t5, $0004(v0)
-    800ACCD4	lhu    t4, $0000(v0)
-    800ACCD8	sll    t5, t5, $10
-    800ACCDC	or     t4, t4, t5
     800ACCE0	mtc2   t4,r11r12
     800ACCE4	lwc2   at, $0008(v0)
 

@@ -30,6 +30,12 @@ To Do
 
 
 
+2011-02-15
+----------
+* [Entity] Return all turn fucntionality from v0.17. [Akari]
+* [Entity] Add move_sync function. [Akari]
+* [Entity] Fix solid and talk radius debug draw. [Akari]
+
 2011-02-14
 ----------
 * [Entity] Add auto play animation on move. [Akari]

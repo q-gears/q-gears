@@ -17,7 +17,7 @@ EntityModel::EntityModel( const Ogre::String& name, const Ogre::String file_name
     m_Model = scene_manager->createEntity( m_Name, file_name );
     m_Model->setVisible( true );
 
-    PlayAnimation( m_AnimationDefault, DEFAULT, 0, -1 );
+    PlayAnimation( m_AnimationDefault, EA_DEFAULT, 0, -1 );
 
     m_ModelNode->attachObject( m_Model );
 }
@@ -49,11 +49,11 @@ EntityModel::Update()
             }
             m_AnimationSync.clear();
 
-            if( m_AnimationState == DEFAULT )
+            if( m_AnimationState == EA_DEFAULT )
             {
                 float time = ( m_AnimationCurrent->hasEnded() != true ) ? m_AnimationCurrent->getTimePosition() : 0;
 
-                PlayAnimation( m_AnimationDefault, DEFAULT, time, -1 );
+                PlayAnimation( m_AnimationDefault, EA_DEFAULT, time, -1 );
 
                 m_AnimationCurrent->addTime( delta_time );
             }
@@ -127,5 +127,5 @@ EntityModel::PlayAnimationLooped( const Ogre::String& animation )
             m_AnimationCurrent->getTimePosition() - m_AnimationCurrent->getLength();
     }
 
-    PlayAnimation( animation, DEFAULT, time, -1 );
+    PlayAnimation( animation, EA_DEFAULT, time, -1 );
 }

@@ -121,7 +121,7 @@ EntityManager::Update()
     {
         m_PlayerMove *= m_PlayerEntity->GetMoveSpeed() * Timer::getSingleton().GetGameTimeDelta();
         m_PlayerEntity->SetMoveTarget( m_PlayerEntity->GetPosition() + m_PlayerMove );
-        m_PlayerEntity->SetMoveState( MOVE_WALKMESH );
+        m_PlayerEntity->SetMoveState( MS_WALKMESH );
         m_PlayerMove = Ogre::Vector3::ZERO;
     }
 
@@ -141,21 +141,29 @@ EntityManager::Update()
 
 
 
+        // update turning
+        if( m_EntityModels[ i ]->GetTurnType() != AT_NONE )
+        {
+            SetNextTurnStep( m_EntityModels[ i ] );
+        }
+
+
+
         // update movement
         bool move = false;
-        if( m_EntityModels[ i ]->GetMoveState() == MOVE_WALKMESH )
+        if( m_EntityModels[ i ]->GetMoveState() == MS_WALKMESH )
         {
             // try set entity on walkmesh it it's still don't has triangle
             if( m_EntityModels[ i ]->GetMoveTriangleId() == -1 )
             {
                 if( SetEntityOnWalkmesh( m_EntityModels[ i ] ) == false )
                 {
-                    m_EntityModels[ i ]->SetMoveState( NONE );
+                    m_EntityModels[ i ]->UnsetMove();
                 }
             }
 
             // perform move
-            if( m_EntityModels[ i ]->GetMoveState() == MOVE_WALKMESH )
+            if( m_EntityModels[ i ]->GetMoveState() == MS_WALKMESH )
             {
                 move = PerformWalkmeshMove( m_EntityModels[ i ] );
             }
@@ -388,7 +396,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     // if we already in point to where we want to move - finish movement
     //if( direction.length() <= 0.01 )
     {
-        //entity->SetMoveState( NONE );
+        //entity->UnsetMove();
         //return;
     }
 
@@ -405,7 +413,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     int current_triangle = entity->GetMoveTriangleId();
     if( current_triangle == -1 )
     {
-        entity->SetMoveState( NONE );
+        entity->UnsetMove();
         LOG_ERROR( "Entity not placed on walkmesh and can't move.");
         return false;
     }
@@ -652,7 +660,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         first_entity_check    != false || second_entity_check   != false || third_entity_check    != false )
     {
         LOG_WARNING( "Can't move to specified position.");
-        entity->SetMoveState( NONE );
+        entity->UnsetMove();
         return false;
     }
 
@@ -681,7 +689,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     Ogre::Vector3 final = entity->GetMoveTarget() - end_point;
     if( Ogre::Vector2( final.x, final.y ).length() <= 0.01 )
     {
-        entity->SetMoveState( NONE );
+        entity->UnsetMove();
     }
 
     return true;
@@ -849,10 +857,38 @@ EntityManager::SetNextOffsetStep( Entity* entity )
 
     if (step == steps)
     {
-        entity->UnsetOffseting();
+        entity->UnsetOffset();
     }
     else
     {
         entity->SetOffsetCurrentStepSeconds( step + Timer::getSingleton().GetGameTimeDelta() );
+    }
+}
+
+
+
+void
+EntityManager::SetNextTurnStep( Entity* entity )
+{
+    ActionType type = entity->GetTurnType();
+    float steps = entity->GetTurnStepSeconds();
+    float step = entity->GetTurnCurrentStepSeconds();
+
+    Ogre::Degree start = entity->GetTurnDirectionStart();
+    Ogre::Degree end = entity->GetTurnDirectionEnd();
+
+    float x = step / steps;
+    float smooth_modifier = ( type == AT_SMOOTH ) ? -2 * x * x * x + 3 * x * x : x;
+    Ogre::Degree direction = start + ( end - start ) * smooth_modifier;
+
+    entity->SetDirection( direction );
+
+    if( step == steps )
+    {
+        entity->UnsetTurn();
+    }
+    else
+    {
+        entity->SetTurnCurrentStepSeconds( step + Timer::getSingleton().GetGameTimeDelta() );
     }
 }

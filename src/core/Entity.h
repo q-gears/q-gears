@@ -11,18 +11,18 @@
 
 enum EntityAnimation
 {
-    DEFAULT,
-    ONCE
+    EA_DEFAULT,
+    EA_ONCE
 };
 
 
 
 enum MoveState
 {
-    NONE,
-    MOVE_WALKMESH,
-    MOVE_LINEAR,
-    JUMP
+    MS_NONE,
+    MS_WALKMESH,
+    MS_LINEAR,
+    LS_JUMP
 };
 
 
@@ -32,6 +32,15 @@ enum ActionType
     AT_NONE,
     AT_LINEAR,
     AT_SMOOTH
+};
+
+
+
+enum TurnDirection
+{
+    TD_CLOCKWISE,
+    TD_ANTICLOCKWISE,
+    TD_CLOSEST
 };
 
 
@@ -95,17 +104,32 @@ public:
     const Ogre::String& GetMoveAnimationWalkName() const;
     const Ogre::String& GetMoveAnimationRunName() const;
     void                ScriptMoveWalkmesh( const float x, const float y );
+    const int           ScriptMoveSync();
+    void                UnsetMove();
 
     // offset related
     void                ScriptOffsetToPosition( const float x, const float y, const float z, const ActionType type, const float seconds );
     const int           ScriptOffsetSync();
-    void                UnsetOffseting();
+    void                UnsetOffset();
     const Ogre::Vector3 GetOffsetPositionStart() const;
     const Ogre::Vector3 GetOffsetPositionEnd() const;
     const ActionType    GetOffsetType() const;
     const float         GetOffsetStepSeconds() const;
     void                SetOffsetCurrentStepSeconds( const float seconds );
     const float         GetOffsetCurrentStepSeconds() const;
+
+    // turn related
+    void                ScriptTurnToDirection( const float direction, const TurnDirection turn_direction, const ActionType turn_type, const float seconds );
+    void                ScriptTurnToModel( Entity* entity, const TurnDirection turn_direction, const float seconds );
+    const int           ScriptTurnSync();
+    void                SetTurn( const Ogre::Degree& direction_to, const TurnDirection turn_direction, const ActionType turn_type, const float seconds );
+    void                UnsetTurn();
+    const Ogre::Degree  GetTurnDirectionStart() const;
+    const Ogre::Degree  GetTurnDirectionEnd() const;
+    const ActionType    GetTurnType() const;
+    const float         GetTurnStepSeconds() const;
+    void                SetTurnCurrentStepSeconds( const float seconds );
+    const float         GetTurnCurrentStepSeconds() const;
 
     // animation related
     const Ogre::String& GetCurrentAnimationName() const;
@@ -156,6 +180,7 @@ protected:
     Ogre::String            m_MoveAnimationIdle;
     Ogre::String            m_MoveAnimationWalk;
     Ogre::String            m_MoveAnimationRun;
+    std::vector< ScriptId > m_MoveSync;
 
     // offset related
     Ogre::Vector3           m_OffsetPositionStart;
@@ -164,6 +189,14 @@ protected:
     float                   m_OffsetStepSeconds;
     float                   m_OffsetCurrentStepSeconds;
     std::vector< ScriptId > m_OffsetSync;
+
+    // turn related
+    Ogre::Degree            m_TurnDirectionStart;
+    Ogre::Degree            m_TurnDirectionEnd;
+    ActionType              m_TurnType;
+    float                   m_TurnStepSeconds;
+    float                   m_TurnCurrentStepSeconds;
+    std::vector< ScriptId > m_TurnSync;
 
     // animation
     Ogre::String            m_AnimationCurrentName;

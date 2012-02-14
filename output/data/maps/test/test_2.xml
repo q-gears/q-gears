@@ -4,7 +4,7 @@
     <walkmesh file_name="maps/test/test_1_wm.xml" />
 
 
-
+    <entity_model name="Player" file_name="models/field/units/cloud.mesh" position="0 -1 0" direction="0" />
 
     <entity_model name="Watcher1" file_name="models/field/units/guard.mesh" position="7.5 1.5 2" direction="0" />
     <entity_model name="Lifter" file_name="models/field/units/guard.mesh" position="0 3 0" direction="180" />

@@ -61,8 +61,12 @@ ScriptManager::InitBinds()
             .def( "get_move_speed", ( float( Entity::* )() ) &Entity::GetMoveSpeed )
             .def( "move_auto_rotation", ( void( Entity::* )( const bool ) ) &Entity::SetMoveAutoRotation )
             .def( "move_walkmesh", ( int( Entity::* )( const float, const float ) ) &Entity::ScriptMoveWalkmesh )
+            .def( "move_sync", ( int( Entity::* )() ) &Entity::ScriptMoveSync, luabind::yield )
             .def( "offset_to_position", ( void( Entity::* )( const float, const float, const float, const ActionType, const float ) ) &Entity::ScriptOffsetToPosition )
             .def( "offset_sync", ( int( Entity::* )() ) &Entity::ScriptOffsetSync, luabind::yield )
+            .def( "turn_to_model", ( void( Entity::* )( Entity*, const TurnDirection, const float ) )&Entity::ScriptTurnToModel )
+            .def( "turn_to_direction", ( void( Entity::* )( const float, const TurnDirection, const ActionType, const float ) )&Entity::ScriptTurnToDirection )
+            .def( "turn_sync", ( int( Entity::* )() ) &Entity::ScriptTurnSync, luabind::yield )
             .def( "play_animation", ( void( Entity::* )( const char* ) ) &Entity::ScriptPlayAnimation )
             .def( "play_animation_stop", ( void( Entity::* )( const char* ) ) &Entity::ScriptPlayAnimationStop )
             .def( "play_animation", ( void( Entity::* )( const char*, const float, const float ) ) &Entity::ScriptPlayAnimation )
@@ -74,7 +78,11 @@ ScriptManager::InitBinds()
             [
                 luabind::value( "NONE", AT_NONE ),
                 luabind::value( "LINEAR", AT_LINEAR ),
-                luabind::value( "SMOOTH", AT_SMOOTH )
+                luabind::value( "SMOOTH", AT_SMOOTH ),
+
+                luabind::value( "CLOCKWISE", TD_CLOCKWISE ),
+                luabind::value( "ANTICLOCKWISE", TD_ANTICLOCKWISE ),
+                luabind::value( "CLOSEST", TD_CLOSEST )
             ]
     ];
 

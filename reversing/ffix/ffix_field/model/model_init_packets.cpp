@@ -1,11 +1,13 @@
 ////////////////////////////////
 // funcb6584
-T4 = w[A0 + 10];
-A0 = w[A0 + 8];
+model_data = A0;
 
-[A0 + 18] = w(A1); // first data from 0x12 file
-V0 = bu[S0 + 3];
-V1 = w[A0 + 44];
+T4 = w[model_data + 10];
+model_file = S0 = w[model_data + 8];
+
+[model_data + 18] = w(A1); // first data from 0x12 file
+V0 = bu[model_file + 3];
+V1 = w[model_data + 44];
 if( V0 == 0 )
 {
     return;
@@ -17,7 +19,7 @@ S1 = 8;
 S2 = 38;
 Lb65bc:	; 800B65BC
     V0 = T7 * 28;
-    V1 = w[S0 + 10];
+    V1 = w[model_file + 10];
     T2 = V1 + V0;
     T6 = w[T2 + 24];
     T8 = 0;
@@ -50,7 +52,7 @@ Lb65bc:	; 800B65BC
                 [T4 + T3 * 28 + 24] = h(hu[V1 + V0 * 2]);
 
 
-                V0 = w[A0 + 18] + bu[T5 + T3 * 18 + 13] * 4;
+                V0 = w[model_data + 18] + bu[T5 + T3 * 18 + 13] * 4;
                 [T4 + T3 * 28 + e] = h(hu[V0 + 2]); // CLUT
                 A3 = hu[V0 + 0] & ffdf; // reset blending by default
                 [T4 + T3 * 28 + 16] = h(A3);
@@ -92,15 +94,9 @@ Lb65bc:	; 800B65BC
             Lb6824:	; 800B6824
                 [A1 - 1a] = b(7);
                 [A1 - 16] = b(24);
-                800B6834	lbu    v0, $0002(t1)
-                800B6838	nop
-                800B683C	sb     v0, $ffe7(a1)
-                800B6840	lbu    v0, $0003(t1)
-                800B6844	nop
-                800B6848	sb     v0, $ffe8(a1)
-                800B684C	lbu    v0, $0004(t1)
-                800B6850	nop
-                800B6854	sb     v0, $ffe9(a1)
+                [A1 - 19] = b(bu[T1 + 2]);
+                [A1 - 18] = b(bu[T1 + 3]);
+                [A1 - 17] = b(bu[T1 + 4]);
                 800B6858	lhu    v0, $0006(t1)
                 800B685C	lw     v1, $0020(t2)
                 800B6860	sll    v0, v0, $01
