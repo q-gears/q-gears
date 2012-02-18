@@ -92,8 +92,8 @@ public:
     const float         GetMoveSpeed() const;
     void                SetMoveSpeedRun( const float speed );
     const float         GetMoveSpeedRun() const;
-    void                SetMoveTarget( const Ogre::Vector3& target );
-    const Ogre::Vector3 GetMoveTarget() const;
+    void                SetMovePosition( const Ogre::Vector3& target );
+    const Ogre::Vector3 GetMovePosition() const;
     void                SetMoveTriangleId( const int triangle );
     const int           GetMoveTriangleId() const;
     void                SetMoveAutoRotation( const bool rotate );
@@ -103,7 +103,8 @@ public:
     const Ogre::String& GetMoveAnimationIdleName() const;
     const Ogre::String& GetMoveAnimationWalkName() const;
     const Ogre::String& GetMoveAnimationRunName() const;
-    void                ScriptMoveWalkmesh( const float x, const float y );
+    void                ScriptMoveToPosition( const float x, const float y );
+    void                ScriptMoveToEntity( Entity* entity );
     const int           ScriptMoveSync();
     void                UnsetMove();
 
@@ -120,10 +121,11 @@ public:
 
     // turn related
     void                ScriptTurnToDirection( const float direction, const TurnDirection turn_direction, const ActionType turn_type, const float seconds );
-    void                ScriptTurnToModel( Entity* entity, const TurnDirection turn_direction, const float seconds );
+    void                ScriptTurnToEntity( Entity* entity, const TurnDirection turn_direction, const float seconds );
     const int           ScriptTurnSync();
-    void                SetTurn( const Ogre::Degree& direction_to, const TurnDirection turn_direction, const ActionType turn_type, const float seconds );
+    void                SetTurn( const Ogre::Degree& direction_to, Entity* entity, const TurnDirection turn_direction, const ActionType turn_type, const float seconds );
     void                UnsetTurn();
+    const Ogre::Degree  CalculateTurnAngle( const Ogre::Degree& start, const Ogre::Degree& end ) const;
     const Ogre::Degree  GetTurnDirectionStart() const;
     const Ogre::Degree  GetTurnDirectionEnd() const;
     const ActionType    GetTurnType() const;
@@ -144,6 +146,7 @@ public:
 
 private:
     Entity();
+    const Ogre::Degree  GetDirectionToEntity( Entity* entity ) const;
 
 protected:
     Ogre::String            m_Name;
@@ -173,7 +176,9 @@ protected:
     MoveState               m_MoveState;
     float                   m_MoveSpeed;
     float                   m_MoveSpeedRun;
-    Ogre::Vector3           m_MoveTarget;
+    Ogre::Vector3           m_MovePosition;
+    Entity*                 m_MoveEntity;
+    float                   m_MoveStopDistance;
     int                     m_MoveTriangleId;
     bool                    m_MoveAutoRotation;
     bool                    m_MoveAutoAnimation;
@@ -191,8 +196,10 @@ protected:
     std::vector< ScriptId > m_OffsetSync;
 
     // turn related
+    TurnDirection           m_TurnDirection;
     Ogre::Degree            m_TurnDirectionStart;
     Ogre::Degree            m_TurnDirectionEnd;
+    Entity*                 m_TurnEntity;
     ActionType              m_TurnType;
     float                   m_TurnStepSeconds;
     float                   m_TurnCurrentStepSeconds;

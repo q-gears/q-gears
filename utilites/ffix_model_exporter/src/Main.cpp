@@ -75,6 +75,7 @@ fill_names()
     data.name = "test";
     ModelInfo model;
     model.data = data;
+    model.animations.push_back( "2.animation" );
     models.push_back( model );
 }
 
@@ -176,19 +177,19 @@ public:
 */
         if( m_Keyboard->isKeyDown( OIS::KC_A ) )
         {
-            camera->moveRelative( Ogre::Vector3( -0.01, 0, 0 ) );
+            camera->moveRelative( Ogre::Vector3( -0.001, 0, 0 ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_D ) )
         {
-            camera->moveRelative( Ogre::Vector3( 0.01, 0, 0 ) );
+            camera->moveRelative( Ogre::Vector3( 0.001, 0, 0 ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_W ) )
         {
-            camera->moveRelative( Ogre::Vector3( 0, 0, -0.01 ) );
+            camera->moveRelative( Ogre::Vector3( 0, 0, -0.001 ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_S ) )
         {
-            camera->moveRelative( Ogre::Vector3( 0, 0,  0.01 ) );
+            camera->moveRelative( Ogre::Vector3( 0, 0,  0.001 ) );
         }
         if( m_MouseRotate == true )
         {
@@ -395,7 +396,7 @@ main( int argc, char* argv[] )
     scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
 
     camera = scene_manager->createCamera( "Camera" );
-    camera->setNearClipDistance( 5 );
+    camera->setNearClipDistance( 0.01f );
 
     viewport = window->addViewport( camera );
     viewport->setBackgroundColour( Ogre::ColourValue( 0, 0, 0 ) );
@@ -465,7 +466,7 @@ main( int argc, char* argv[] )
 
     // TEMP
 
-    ModelFile model( "data/field/1.model" );
+    ModelFile model( "./data/field/1.model" );
     Ogre::Entity* exported_entity = model.GetModel( models[ 0 ] );
     if( exported_entity != NULL )
     {

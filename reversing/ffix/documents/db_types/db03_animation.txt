@@ -7,7 +7,7 @@
              0x0001 - if flag is set, then we use X root static translation.
              0x0002 - if flag is set, then we use Y root static translation.
              0x0004 - if flag is set, then we use Z root static translation.
-+0c [][][][] offset to bone rotation data.
++0c [][][][] offset to bone high rotation data.
 +10 [][][][] offset to bone lower rotation data.
 
 

@@ -99,16 +99,16 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
 
         Ogre::Vector3 a( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x4 ) );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_a * 0x8 + 0x6 ) * 500 );
         Ogre::Vector3 b( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x4 ) );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_b * 0x8 + 0x6 ) * 500 );
         Ogre::Vector3 c( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x4 ) );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_c * 0x8 + 0x6 ) * 500 );
         Ogre::Vector3 d( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_d * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_d * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_d * 0x8 + 0x4 ) );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_d * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_d * 0x8 + 0x6 ) * 500 );
         a /= 512;
         b /= 512;
         c /= 512;
@@ -203,13 +203,13 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
 
         Ogre::Vector3 a( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x4 ) );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_a * 0x8 + 0x6 ) * 500 );
         Ogre::Vector3 b( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x4 ) );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_b * 0x8 + 0x6 ) * 500 );
         Ogre::Vector3 c( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x4 ) );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_c * 0x8 + 0x6 ) * 500 );
         a /= 512;
         b /= 512;
         c /= 512;

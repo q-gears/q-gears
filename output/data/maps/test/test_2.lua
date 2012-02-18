@@ -1,140 +1,7 @@
 --[[
-
--- chaser slow
-chaser_slow = field:load_model("Chaser_Slow", 30);
-chaser_slow:set_position_triangle(0, -50, 0, 1);
-chaser_slow:set_speed(50);
-chaser_slow:set_solid_range(35);
-chaser_slow:set_visible(true);
-
--- chaser1
-chaser1 = field:load_model("Chasers_Speed1", 40);
-chaser1:set_position_triangle(0, 50, 0, 1);
-chaser1:set_speed(500);
-chaser1:set_solid_range(15);
-chaser1:set_visible(true);
-chaser1:set_solid(true);
-
--- chaser2
-chaser2 = field:load_model("Chasers_Speed2", 40);
-chaser2:set_position_triangle(-100, 100, 0, 1);
-chaser2:set_speed(500);
-chaser2:set_solid_range(15);
-chaser2:set_visible(true);
-chaser2:set_solid(true);
-
--- chaser3
-chaser3 = field:load_model("Chasers_Speed3", 40);
-chaser3:set_position_triangle(100, 100, 0, 1);
-chaser3:set_speed(500);
-chaser3:set_solid_range(15);
-chaser3:set_visible(true);
-chaser3:set_solid(true);
-]]
-
-
-
-
---[[
 -- message conf
 message:set_clickable(1, false);
-
-
-
-
-
-entity["Chaser_Slow"] = {
-    on_start = function(self)
-        script:wait(1);
-
-        while true do
-            chaser_slow:set_solid(true);
-            chaser_slow:move_to_model(player, false);
-            chaser_slow:set_solid(false);
-            script:wait(5);
-        end;
-
-        return 0;
-    end;
-
-    on_collide = function(self)
-        return 0;
-    end;
-};
-
-
-
-entity["Chasers_Speed1"] = {
-    on_start = function(self)
-        script:wait(1);
-
-        while true do
-            chaser1:set_position_triangle(0, 50, 0, 1);
-            chaser1:move_to_model(player, false);
-        end;
-
-        return 0;
-    end;
-
-    on_collide = function(self)
-        return 0;
-    end;
-};
-
-
-
-entity["Chasers_Speed2"] = {
-    on_start = function(self)
-        script:wait(1);
-
-        while true do
-            chaser2:set_position_triangle(-100, 100, 0, 1);
-            chaser2:move_to_model(player, false);
-        end;
-
-        return 0;
-    end;
-
-    on_collide = function(self)
-        return 0;
-    end;
-};
-
-
-
-entity["Chasers_Speed3"] = {
-    on_start = function(self)
-        script:wait(1);
-
-        while true do
-            chaser3:set_position_triangle(100, 100, 0, 1);
-            chaser3:move_to_model(player, false);
-        end;
-
-        return 0;
-    end;
-
-    on_collide = function(self)
-        return 0;
-    end;
-};
 ]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -196,16 +63,119 @@ EntityContainer[ "Player" ] = {
     end,
 
     on_collide = function( self )
-        return 0;
+        return 0
     end,
 }
 
 
 
+EntityContainer[ "Chaser_Slow" ] = {
+    on_start = function( self )
+        local chaser_slow = entity_manager:get_entity( "Chaser_Slow" )
+        local player = entity_manager:get_entity( "Player" )
+
+        chaser_slow:set_move_speed( 0.5 )
+        chaser_slow:set_solid_radius( 0.35 )
+        chaser_slow:move_auto_animation( false )
+
+        script:wait( 1 )
+
+        while true do
+            chaser_slow:set_solid( true )
+            chaser_slow:move_to_entity( player )
+            chaser_slow:move_sync()
+            chaser_slow:set_solid( false )
+            script:wait( 5 )
+        end
+
+        return 0
+    end,
+
+    on_collide = function( self )
+        return 0
+    end,
+}
 
 
 
+EntityContainer[ "Chasers_Speed1" ] = {
+    on_start = function( self )
+        local chaser1 = entity_manager:get_entity( "Chasers_Speed1" )
+        local player = entity_manager:get_entity( "Player" )
 
+        chaser1:set_move_speed( 5 );
+        chaser1:set_solid_radius( 0.15 );
+        chaser1:set_solid( true );
+
+        script:wait( 1 )
+
+        while true do
+            --chaser1:set_position_triangle( 100, 100, 0, 1 )
+            chaser1:move_to_entity( player )
+            chaser1:move_sync()
+        end
+
+        return 0
+    end,
+
+    on_collide = function( self )
+        return 0
+    end,
+}
+
+
+
+EntityContainer[ "Chasers_Speed2" ] = {
+    on_start = function( self )
+        local chaser2 = entity_manager:get_entity( "Chasers_Speed2" )
+        local player = entity_manager:get_entity( "Player" )
+
+        chaser2:set_move_speed( 5 );
+        chaser2:set_solid_radius( 0.15 );
+        chaser2:set_solid( true );
+
+        script:wait( 1 )
+
+        while true do
+            --chaser2:set_position_triangle( 100, 100, 0, 1 )
+            chaser2:move_to_entity( player )
+            chaser2:move_sync()
+        end
+
+        return 0
+    end,
+
+    on_collide = function( self )
+        return 0
+    end,
+}
+
+
+
+EntityContainer[ "Chasers_Speed3" ] = {
+    on_start = function( self )
+        local chaser3 = entity_manager:get_entity( "Chasers_Speed3" )
+        local player = entity_manager:get_entity( "Player" )
+
+        chaser3:set_move_speed( 5 );
+        chaser3:set_solid_radius( 0.15 );
+        chaser3:set_solid( true );
+
+        script:wait( 1 )
+
+        while true do
+            --chaser3:set_position_triangle( 100, 100, 0, 1 )
+            chaser3:move_to_entity( player )
+            chaser3:move_sync()
+        end
+
+        return 0
+    end,
+
+    on_collide = function( self )
+        return 0
+    end,
+}
 
 
 
@@ -221,21 +191,21 @@ EntityContainer[ "Watcher1" ] = {
         script:wait( 1 )
 
         while true do
-            watcher1:turn_to_model( player, Entity.CLOSEST, 2 )
+            watcher1:turn_to_entity( player, Entity.CLOSEST, 2 )
             watcher1:turn_sync()
             script:wait( 0.5 )
             watcher1:turn_to_direction( 0, Entity.CLOSEST, Entity.SMOOTH, 2 )
             watcher1:turn_sync()
             script:wait( 1 )
-            watcher1:move_walkmesh( 7.5, -6.5 )
+            watcher1:move_to_position( 7.5, -6.5 )
             watcher1:move_sync()
-            watcher1:turn_to_model( player, Entity.CLOSEST, 2 )
+            watcher1:turn_to_entity( player, Entity.CLOSEST, 2 )
             watcher1:turn_sync()
             script:wait( 0.5 )
             watcher1:turn_to_direction( 180, Entity.CLOSEST, Entity.SMOOTH, 2 )
             watcher1:turn_sync()
             script:wait( 1 )
-            watcher1:move_walkmesh( 7.5, 1.5 )
+            watcher1:move_to_position( 7.5, 1.5 )
             watcher1:move_sync()
         end
 

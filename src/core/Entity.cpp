@@ -25,9 +25,11 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_Talkable( false ),
 
     m_MoveState( MS_NONE ),
-    m_MoveSpeed( 0.5f ),
-    m_MoveSpeedRun( 1.5f ),
-    m_MoveTarget( Ogre::Vector3( 0, 0, 0 ) ),
+    m_MoveSpeed( 0.9f ),
+    m_MoveSpeedRun( 3.6f ),
+    m_MovePosition( Ogre::Vector3( 0, 0, 0 ) ),
+    m_MoveEntity( NULL ),
+    m_MoveStopDistance( 0 ),
     m_MoveTriangleId( -1 ),
     m_MoveAutoRotation( true ),
     m_MoveAutoAnimation( true ),
@@ -41,8 +43,10 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_OffsetStepSeconds( 0 ),
     m_OffsetCurrentStepSeconds( 0 ),
 
+    m_TurnDirection( TD_CLOSEST ),
     m_TurnDirectionStart( 0 ),
     m_TurnDirectionEnd( 0 ),
+    m_TurnEntity( NULL ),
     m_TurnType( AT_NONE ),
     m_TurnStepSeconds( 0 ),
     m_TurnCurrentStepSeconds( 0 ),
@@ -116,8 +120,27 @@ Entity::Update()
         if( m_MoveState == MS_WALKMESH )
         {
             DEBUG_DRAW.Text( entity_pos, 0, 48, "Triangle: " + Ogre::StringConverter::toString( m_MoveTriangleId ) );
-            DEBUG_DRAW.Text( entity_pos, 0, 60, "Target: " + Ogre::StringConverter::toString( m_MoveTarget ) );
+            DEBUG_DRAW.Text( entity_pos, 0, 60, "Target position: " + Ogre::StringConverter::toString( m_MovePosition ) );
         }
+    }
+
+
+
+    if( m_MoveEntity != NULL )
+    {
+        m_MovePosition = m_MoveEntity->GetPosition();
+        m_MoveStopDistance = GetSolidRadius() + m_MoveEntity->GetSolidRadius();
+    }
+
+
+
+    if( m_TurnEntity != NULL )
+    {
+        Ogre::Degree angle = GetDirectionToEntity( m_TurnEntity );
+
+        angle = CalculateTurnAngle( m_TurnDirectionStart, angle );
+
+        m_TurnDirectionEnd = angle;
     }
 }
 
@@ -334,17 +357,17 @@ Entity::GetMoveSpeedRun() const
 
 
 void
-Entity::SetMoveTarget( const Ogre::Vector3& target )
+Entity::SetMovePosition( const Ogre::Vector3& target )
 {
-    m_MoveTarget = target;
+    m_MovePosition = target;
 }
 
 
 
 const Ogre::Vector3
-Entity::GetMoveTarget() const
+Entity::GetMovePosition() const
 {
-    return m_MoveTarget;
+    return m_MovePosition;
 }
 
 
@@ -422,11 +445,27 @@ Entity::GetMoveAnimationRunName() const
 
 
 void
-Entity::ScriptMoveWalkmesh( const float x, const float y )
+Entity::ScriptMoveToPosition( const float x, const float y )
 {
-    m_MoveTarget = Ogre::Vector3( x, y, 0 );
     m_MoveState = MS_WALKMESH;
-    LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set move to walkmesh position \"" + Ogre::StringConverter::toString( m_MoveTarget ) + "\"." );
+
+    m_MovePosition = Ogre::Vector3( x, y, 0 );
+    m_MoveEntity = NULL;
+    m_MoveStopDistance = 0;
+    LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set move to walkmesh position \"" + Ogre::StringConverter::toString( m_MovePosition ) + "\"." );
+}
+
+
+
+void
+Entity::ScriptMoveToEntity( Entity* entity )
+{
+    m_MoveState = MS_WALKMESH;
+
+    m_MovePosition = entity->GetPosition();
+    m_MoveEntity = entity;
+    m_MoveStopDistance = GetSolidRadius() + entity->GetSolidRadius();
+    LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set move to entity \"" + entity->GetName() + "\"." );
 }
 
 
@@ -448,6 +487,9 @@ void
 Entity::UnsetMove()
 {
     m_MoveState = MS_NONE;
+
+    m_MoveEntity = NULL;
+    m_MoveStopDistance = 0;
 
     for( size_t i = 0; i < m_MoveSync.size(); ++i)
     {
@@ -559,33 +601,24 @@ Entity::GetOffsetCurrentStepSeconds() const
 void
 Entity::ScriptTurnToDirection( const float direction, const TurnDirection turn_direction, const ActionType turn_type, const float seconds )
 {
-    SetTurn( Ogre::Degree( direction ), turn_direction, turn_type, seconds );
+    SetTurn( Ogre::Degree( direction ), NULL, turn_direction, turn_type, seconds );
     LOG_TRIVIAL("[SCRIPT] Entity \"" + m_Name + "\" turn to angle \"" + Ogre::StringConverter::toString( direction ) + "\".");
 }
 
 
 
 void
-Entity::ScriptTurnToModel( Entity* model, const TurnDirection turn_direction, const float seconds )
+Entity::ScriptTurnToEntity( Entity* entity, const TurnDirection turn_direction, const float seconds )
 {
-    if( model == NULL || model == this )
+    if( entity == NULL || entity == this )
     {
-        LOG_ERROR("[SCRIPT] Turn to model: Invalid model pointer (NUUL or this).");
+        LOG_ERROR("[SCRIPT] Turn to entity: Invalid entity pointer (NUUL or this).");
         return;
     }
 
-    Ogre::Vector3 pos1 = GetPosition();
-    Ogre::Vector3 pos2 = model->GetPosition();
-
-    // calculate direction to point
-    Ogre::Vector2 up( 0.0f, -1.0f );
-    Ogre::Vector2 dir( pos2.x - pos1.x, pos2.y - pos1.y );
-    // angle between vectors
-    Ogre::Degree angle( Ogre::Radian( acosf( dir.dotProduct( up ) / ( dir.length() * up.length() ) ) ) );
-    angle = ( dir.x < 0 ) ? Ogre::Degree( 360 ) - angle : angle;
-
-    SetTurn( angle, turn_direction, AT_SMOOTH, seconds );
-    LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" turn to model at position \"" + Ogre::StringConverter::toString( pos2 ) + "\" with angle \"" + Ogre::StringConverter::toString( angle ) + "\".");
+    Ogre::Degree angle = GetDirectionToEntity( entity );
+    SetTurn( angle, entity, turn_direction, AT_SMOOTH, seconds );
+    LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" turn to entity \"" + entity->GetName() + ".");
 }
 
 
@@ -604,7 +637,7 @@ Entity::ScriptTurnSync()
 
 
 void
-Entity::SetTurn( const Ogre::Degree& direction_to, const TurnDirection turn_direction, const ActionType turn_type, const float seconds )
+Entity::SetTurn( const Ogre::Degree& direction_to, Entity* entity, const TurnDirection turn_direction, const ActionType turn_type, const float seconds )
 {
     if( turn_type == AT_NONE )
     {
@@ -612,56 +645,14 @@ Entity::SetTurn( const Ogre::Degree& direction_to, const TurnDirection turn_dire
         return;
     }
 
+    m_TurnDirection = turn_direction;
+
     Ogre::Degree angle_start = GetDirection();
+    Ogre::Degree angle_end = CalculateTurnAngle( angle_start, direction_to );
 
+    m_TurnEntity = entity;
     m_TurnDirectionStart = angle_start;
-
-
-
-    m_TurnDirectionEnd = direction_to;
-    switch( turn_direction )
-    {
-        case TD_CLOCKWISE:
-        {
-            if( direction_to <= angle_start )
-            {
-                m_TurnDirectionEnd = direction_to + Ogre::Degree( 360 );
-            }
-        }
-        break;
-
-        case TD_ANTICLOCKWISE:
-        {
-            if( direction_to >= angle_start )
-            {
-                m_TurnDirectionEnd = direction_to - Ogre::Degree( 360 );
-            }
-        }
-        break;
-
-        case TD_CLOSEST:
-        {
-            Ogre::Degree delta = direction_to - angle_start;
-
-            delta = ( delta < Ogre::Degree( 0 ) ) ? -delta : delta;
-
-            if( delta > Ogre::Degree( 180 ) )
-            {
-                if( angle_start < direction_to )
-                {
-                    m_TurnDirectionEnd = direction_to - Ogre::Degree( 360 );
-                }
-                else
-                {
-                    m_TurnDirectionEnd = direction_to + Ogre::Degree( 360 );
-                }
-            }
-        }
-        break;
-    }
-
-
-
+    m_TurnDirectionEnd = angle_end;
     m_TurnType = turn_type;
     m_TurnStepSeconds = seconds;
     m_TurnCurrentStepSeconds = 0;
@@ -679,6 +670,57 @@ Entity::UnsetTurn()
         ScriptManager::getSingleton().ContinueScriptExecution( m_TurnSync[ i ] );
     }
     m_TurnSync.clear();
+}
+
+
+
+const Ogre::Degree
+Entity::CalculateTurnAngle( const Ogre::Degree& start, const Ogre::Degree& end ) const
+{
+    Ogre::Degree ret = end;
+
+    switch( m_TurnDirection )
+    {
+        case TD_CLOCKWISE:
+        {
+            if( end <= start )
+            {
+                ret = end + Ogre::Degree( 360 );
+            }
+        }
+        break;
+
+        case TD_ANTICLOCKWISE:
+        {
+            if( end >= start )
+            {
+                ret = end - Ogre::Degree( 360 );
+            }
+        }
+        break;
+
+        case TD_CLOSEST:
+        {
+            Ogre::Degree delta = end - start;
+
+            delta = ( delta < Ogre::Degree( 0 ) ) ? -delta : delta;
+
+            if( delta > Ogre::Degree( 180 ) )
+            {
+                if( start < end )
+                {
+                    ret = end - Ogre::Degree( 360 );
+                }
+                else
+                {
+                    ret = end + Ogre::Degree( 360 );
+                }
+            }
+        }
+        break;
+    }
+
+    return ret;
 }
 
 
@@ -789,4 +831,19 @@ Entity::ScriptAnimationSync()
 
     m_AnimationSync.push_back( script );
     return -1;
+}
+
+
+
+const Ogre::Degree
+Entity::GetDirectionToEntity( Entity* entity ) const
+{
+    Ogre::Vector3 current_point = GetPosition();
+    Ogre::Vector3 direction_point = entity->GetPosition();
+
+    Ogre::Vector2 up(0.0f, -1.0f);
+    Ogre::Vector2 dir( direction_point.x - current_point.x, direction_point.y - current_point.y );
+    // angle between vectors
+    Ogre::Degree angle( Ogre::Radian( acosf( dir.dotProduct( up ) / ( dir.length() * up.length() ) ) ) );
+    return ( dir.x < 0 ) ? Ogre::Degree( 360 ) - angle : angle;
 }

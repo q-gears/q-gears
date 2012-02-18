@@ -98,7 +98,7 @@ else
     }
     else
     {
-        V1 = hu[animation_file + 6];
+        V1 = hu[animation_file + 8];
         [S2 + 1c] = w(h[animation_file + V1 + frame_id * 2]);
     }
 

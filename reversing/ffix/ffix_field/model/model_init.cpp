@@ -352,61 +352,38 @@ switch( S5 )
         A2 = S7;
         funcb2100;
         V1 = V0;
-
-        800ABF6C	bne    v1, zero, Labf94 [$800abf94]
-        800ABF70	addiu  v0, zero, $0011
-        800ABF74	addiu  v0, zero, $0013
-        800ABF78	beq    s5, v0, Labf90 [$800abf90]
-        800ABF7C	addu   a0, s3, zero
-        800ABF80	addu   a1, s6, zero
-        800ABF84	jal    funcb21a0 [$800b21a0]
-        800ABF88	addu   a2, s7, zero
-        800ABF8C	addu   v1, v0, zero
-
-        Labf90:	; 800ABF90
-        800ABF90	addiu  v0, zero, $0011
-
-        Labf94:	; 800ABF94
-        800ABF94	beq    s5, v0, Labfd8 [$800abfd8]
-        800ABF98	slti   v0, s5, $0012
-        800ABF9C	beq    v0, zero, Labfb4 [$800abfb4]
-        800ABFA0	addiu  v0, zero, $0010
-        800ABFA4	beq    s5, v0, Labfd0 [$800abfd0]
-        800ABFA8	nop
-        800ABFAC	j      Labff8 [$800abff8]
-        800ABFB0	nop
-
-        Labfb4:	; 800ABFB4
-        800ABFB4	addiu  v0, zero, $0012
-        800ABFB8	beq    s5, v0, Labfe0 [$800abfe0]
-        800ABFBC	addiu  v0, zero, $0013
-        800ABFC0	beq    s5, v0, Labfec [$800abfec]
-        800ABFC4	addu   a0, s3, zero
-        800ABFC8	j      Labff8 [$800abff8]
-        800ABFCC	nop
+        if( V1 == 0 )
+        {
+            if( S3 != 13 )
+            {
+                A0 = S3;
+                A1 = S6;
+                A2 = S7
+                800ABF84	jal    funcb21a0 [$800b21a0]
+                V1 = V0;
+            }
+        }
 
         if( S5 == 10 )
         {
-            Labfd0:	; 800ABFD0
-            800ABFD0	j      Labff8 [$800abff8]
-            800ABFD4	sh     fp, $0008(v1)
+            [V1 + 8] = h(FP);
         }
         else if( S5 == 11 )
         {
-            Labfd8:	; 800ABFD8
-            800ABFD8	j      Labff8 [$800abff8]
-            800ABFDC	sh     fp, $000a(v1)
+            [V1 + a] = h(FP);
         }
-
-        Labfe0:	; 800ABFE0
-        800ABFE0	sltu   v0, zero, fp
-        800ABFE4	j      Labff8 [$800abff8]
-        800ABFE8	sb     v0, $0001(v1)
-
-        Labfec:	; 800ABFEC
-        800ABFEC	addu   a1, s6, zero
-        800ABFF0	jal    funcb2218 [$800b2218]
-        800ABFF4	addu   a2, s7, zero
+        else if( S5 == 12 )
+        {
+            [V1 + 1] = b(FP > 0);
+        }
+        else if( S5 == 13 )
+        {
+            800ABFC4	addu   a0, s3, zero
+            800ABFEC	addu   a1, s6, zero
+            800ABFF4	addu   a2, s7, zero
+            800ABFF0	jal    funcb2218 [$800b2218]
+        }
+        break;
 }
 Labff8:	; 800ABFF8
 return 0;
@@ -689,21 +666,21 @@ Laaebc:	; 800AAEBC
 
 ////////////////////////////////
 // funcb2100
+script = w[A0 + c];
+
 V0 = w[8006794c];
 V0 = w[V0 + 1c];
 V0 = w[V0 + 8e4];
-T0 = A1 & ffff;
 V0 = w[V0 + c];
-A1 = w[V0 + 14];
-script = w[A0 + c];
-V1 = bu[A1 + 4b];
-V0 = w[A1 + 58] + V1 * c;
+field = w[V0 + 14];
+V1 = bu[field + 4b];
+V0 = w[field + 58] + V1 * c;
 V1 = V0 - c;
 
 loopb2150:	; 800B2150
     if( bu[V1 + 0] == bu[script + 3b] )
     {
-        if( hu[V1 + 4] == T0 )
+        if( hu[V1 + 4] == A1 & ffff )
         {
             if( h[V1 + 6] == ((A2 << 10) >> 10) )
             {
@@ -712,7 +689,7 @@ loopb2150:	; 800B2150
         }
     }
     V1 = V1 - c;
-    V0 = V1 < A1;
+    V0 = V1 < field;
 800B2188	beq    v0, zero, loopb2150 [$800b2150]
 
 return 0;

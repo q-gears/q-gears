@@ -3,6 +3,8 @@
 #include <Ogre.h>
 
 #include "../../common/Logger.h"
+#include "AnimationExtractor.h"
+#include "DrawSkeleton.h"
 #include "MeshExtractor.h"
 
 
@@ -77,7 +79,18 @@ ModelFile::GetModel( const ModelInfo& info )
 
 
 
-    for( int i = 0; i < number_of_parts; ++i )
+    //AnimationExtractor( skeleton, info, m_Skeleton );
+
+
+
+    // draw skeleton
+    {
+        DrawSkeleton( m_Skeleton, mesh );
+    }
+
+
+
+    for( int i = 0; i < 1/*number_of_parts*/; ++i )
     {
         MeshExtractor( info.data, "ffix/field_model/" + info.data.name, this, offset_to_parts + i * 0x28, textures, mesh );
     }
@@ -117,7 +130,7 @@ ModelFile::GetModel( const ModelInfo& info )
 
 
 
-    CreateMaterial( "ffix/field_model/" + info.data.name, "exported/" + info.data.name + ".material", ( textures.size() > 0 ) ? info.data.name + ".png" : "", "", "" );
+    //CreateMaterial( "ffix/field_model/" + info.data.name, "exported/" + info.data.name + ".material", ( textures.size() > 0 ) ? info.data.name + ".png" : "", "", "" );
 
 
 
@@ -126,8 +139,8 @@ ModelFile::GetModel( const ModelInfo& info )
     //thisEntity->setDisplaySkeleton(true);
     //thisEntity->setDebugDisplayEnabled(true);
     thisEntity->setVisible( false );
-    //thisEntity->getAnimationState("Idle")->setEnabled(true);
-    //thisEntity->getAnimationState("Idle")->setLoop(true);
+    //thisEntity->getAnimationState( info.animations[ 0 ] )->setEnabled(true);
+    //thisEntity->getAnimationState( info.animations[ 0 ] )->setLoop(true);
     Ogre::SceneNode* thisSceneNode = scene_manager->getRootSceneNode()->createChildSceneNode();
     thisSceneNode->setPosition( 0, 0, 0 );
     thisSceneNode->roll( Ogre::Radian( Ogre::Degree( 180.0f ) ) );

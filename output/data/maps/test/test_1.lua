@@ -5,7 +5,7 @@ EntityContainer = {}
 EntityContainer[ "Cloud" ] = {
     on_start = function( self )
         local cloud = entity_manager:get_entity( "Cloud" )
-        cloud:move_walkmesh( 1, 1 )
+        cloud:move_to_position( 1, 1 )
         return 0
     end,
 

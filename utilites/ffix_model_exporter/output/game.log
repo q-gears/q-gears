@@ -1,4 +1,4 @@
-Loading file: data/field/1.model
+Loading file: ./data/field/1.model
 Skeleton bone-2 length-8 parent-0
 bone1 2, bone2 3
 Skeleton bone-3 length-0 parent-0
@@ -47,3 +47,26 @@ Skeleton bone-24 length-66 parent-21
 bone1 46, bone2 47
 Skeleton bone-25 length-87 parent-22
 bone1 48, bone2 49
+bone 1 start0 0 0 end 0 0 0
+bone 2 start0 0 0 end 0 0 0
+bone 3 start0 0.175781 0 end 0 0.175781 0
+bone 4 start0 0.205078 0 end 0 0.205078 0
+bone 5 start0 0 0 end 0 0 0
+bone 6 start0 0.175781 0 end 0 0.175781 0
+bone 7 start0 0.273438 0 end 0 0.273438 0
+bone 8 start0 0.382812 0 end 0 0.382812 0
+bone 9 start0 0.505859 0 end 0 0.505859 0
+bone 10 start0 0 0 end 0 0 0
+bone 11 start0 0.175781 0 end 0 0.175781 0
+bone 12 start0 0.273438 0 end 0 0.273438 0
+bone 13 start0 0.382812 0 end 0 0.382812 0
+bone 14 start0 0.505859 0 end 0 0.505859 0
+bone 15 start0 0 0 end 0 0 0
+bone 16 start0 0 0 end 0 0 0
+bone 17 start0 0.078125 0 end 0 0.078125 0
+bone 18 start0 0.130859 0 end 0 0.130859 0
+bone 19 start0 0.259766 0 end 0 0.259766 0
+bone 20 start0 0 0 end 0 0 0
+bone 21 start0 0.078125 0 end 0 0.078125 0
+bone 22 start0 0.130859 0 end 0 0.130859 0
+bone 23 start0 0.259766 0 end 0 0.259766 0

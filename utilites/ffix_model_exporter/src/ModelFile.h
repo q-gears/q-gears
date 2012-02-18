@@ -10,6 +10,7 @@ struct ModelInfo
 {
     MeshData                  data;
     Ogre::String              file_name;
+    std::vector<Ogre::String> animations;
 };
 
 
@@ -18,6 +19,9 @@ struct Bone
 {
     int length;
     int parent_id;
+
+    float tx, ty, tz;
+    float rx, ry, rz;
 };
 typedef std::vector< Bone > Skeleton;
 

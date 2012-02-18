@@ -5,6 +5,7 @@
 
 #include "ConfigVar.h"
 #include "EntityModel.h"
+#include "InputManager.h"
 #include "Logger.h"
 #include "ScriptManager.h"
 #include "Timer.h"
@@ -120,7 +121,7 @@ EntityManager::Update()
     if( m_PlayerEntity != NULL && m_PlayerMove != Ogre::Vector3::ZERO )
     {
         m_PlayerMove *= m_PlayerEntity->GetMoveSpeed() * Timer::getSingleton().GetGameTimeDelta();
-        m_PlayerEntity->SetMoveTarget( m_PlayerEntity->GetPosition() + m_PlayerMove );
+        m_PlayerEntity->SetMovePosition( m_PlayerEntity->GetPosition() + m_PlayerMove );
         m_PlayerEntity->SetMoveState( MS_WALKMESH );
         m_PlayerMove = Ogre::Vector3::ZERO;
     }
@@ -150,7 +151,8 @@ EntityManager::Update()
 
 
         // update movement
-        bool move = false;
+        bool is_move = false;
+        bool is_run = InputManager::getSingleton().IsButtonPressed( OIS::KC_X );
         if( m_EntityModels[ i ]->GetMoveState() == MS_WALKMESH )
         {
             // try set entity on walkmesh it it's still don't has triangle
@@ -165,7 +167,31 @@ EntityManager::Update()
             // perform move
             if( m_EntityModels[ i ]->GetMoveState() == MS_WALKMESH )
             {
-                move = PerformWalkmeshMove( m_EntityModels[ i ] );
+                float store_speed = m_EntityModels[ i ]->GetMoveSpeed();
+
+                if( m_PlayerEntity == m_EntityModels[ i ] && is_run == true )
+                {
+                    m_EntityModels[ i ]->SetMoveSpeed( store_speed * 4 );
+                }
+
+                is_move = PerformWalkmeshMove( m_EntityModels[ i ] );
+
+                if( m_EntityModels[ i ]->GetMoveAutoAnimation() == true )
+                {
+                    if( is_move == true )
+                    {
+                        if( m_EntityModels[ i ]->GetMoveSpeed() >= m_EntityModels[ i ]->GetMoveSpeedRun() )
+                        {
+                            m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationRunName() );
+                        }
+                        else
+                        {
+                            m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationWalkName() );
+                        }
+                    }
+                }
+
+                m_EntityModels[ i ]->SetMoveSpeed( store_speed );
             }
         }
 
@@ -174,18 +200,7 @@ EntityManager::Update()
         // we perform move so play acording animation if needed
         if( m_EntityModels[ i ]->GetMoveAutoAnimation() == true )
         {
-            if( move == true )
-            {
-                if( m_EntityModels[ i ]->GetMoveSpeed() >= m_EntityModels[ i ]->GetMoveSpeedRun() )
-                {
-                    m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationRunName() );
-                }
-                else
-                {
-                    m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationWalkName() );
-                }
-            }
-            else
+            if( is_move == false )
             {
                 m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationIdleName() );
             }
@@ -390,7 +405,7 @@ const bool
 EntityManager::PerformWalkmeshMove( Entity* entity )
 {
     Ogre::Vector3 start_point = entity->GetPosition();
-    Ogre::Vector3 move_vector = entity->GetMoveTarget() - start_point;
+    Ogre::Vector3 move_vector = entity->GetMovePosition() - start_point;
     Ogre::Vector2 direction( move_vector.x, move_vector.y );
 
     // if we already in point to where we want to move - finish movement
@@ -686,7 +701,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
 
 
     // if we come to destination point - finish movement
-    Ogre::Vector3 final = entity->GetMoveTarget() - end_point;
+    Ogre::Vector3 final = entity->GetMovePosition() - end_point;
     if( Ogre::Vector2( final.x, final.y ).length() <= 0.01 )
     {
         entity->UnsetMove();

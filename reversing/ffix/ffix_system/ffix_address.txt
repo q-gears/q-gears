@@ -393,6 +393,14 @@
                 + 2c [][][][] ???
                 + 30 [][]     some depth for depth buffer (shifted by >>2)
                 + 42 []       if this != 0 then we don't update models that exceed data memory limit.
+                + 4b []       some index.
+                + 58 [][][][] pointer to array of 0xc structs where +4b index points.
+                    + 0 []       model id (stored in script +3b).
+                    + 1 []       ??? maybe enable sound or disable
+                    + 4 [][]     ???
+                    + 6 [][]     ???
+                    + 8 [][]     ??? maybe walk sound
+                    + a [][]     ??? maybe run sound
         // battle
         +6f8 [][][][] pointer to some battle struct list.
             +00 [][][][] pointer to next struct in list.

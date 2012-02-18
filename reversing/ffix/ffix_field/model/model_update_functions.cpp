@@ -175,26 +175,26 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     }
 
     A0 = h[V0 + 52];
+    V0 = A1 >> 6;
+    V0 = V0 << 6;
+    V0 = V1 - V0;
+    V0 = V0 << 10;
+    S3 = V0 >> f;
+    A2 = A0;
+    if( V0 < 0 )
+    {
+        A2 = A0 + ff;
+    }
 
-    800AC7D4	sra    v0, a1, $06
-    800AC7D8	sll    v0, v0, $06
-    800AC7DC	subu   v0, v1, v0
-    800AC7E0	sll    v0, v0, $10
-    800AC7E4	sra    s3, v0, $0f
-    800AC7E8	bgez   a0, Lac7f4 [$800ac7f4]
-    800AC7EC	addu   a2, a0, zero
-    800AC7F0	addiu  a2, a0, $00ff
-
-    Lac7f4:	; 800AC7F4
-    800AC7F4	addu   s5, zero, zero
-    800AC7F8	addiu  s4, s3, $001f
-    800AC7FC	sra    v0, a2, $08
-    800AC800	sll    v0, v0, $08
-    800AC804	subu   v0, a0, v0
+    S5 = 0;
+    S4 = S3 + 1f;
+    V0 = A2 >> 8;
+    V0 = V0 << 8;
+    V0 = A0 - V0;
     V0 = V0 << 10;
     S1 = V0 >> 10;
-    800AC810	addiu  s2, s1, $001f
-    800AC818	addu   s7, s5, zero
+    S2 = S1 + 1f;
+    S7 = S5;
 
     S0 = SP + 30;
     Lac81c:	; 800AC81C
@@ -330,15 +330,14 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
         if( V0 != 0 )
         {
             V1 = e6000002;
-            800ACB5C	lw     a1, $0000(s0)
-            800ACB60	addiu  v0, zero, $0002
-            800ACB64	addiu  a1, a1, $0028
-            800ACB68	sb     v0, $0003(a1)
-            800ACB6C	sw     v1, $0004(a1)
-            800ACB70	sw     zero, $0008(a1)
+            A1 = w[S0];
+            V0 = 2;
+            A1 = A1 + 28;
+            [A1 + 3] = b(V0);
+            [A1 + 4] = w(V1);
+            [A1 + 8] = w(0);
             A0 = w[S0];
             800ACB78	jal    func62b4c [$80062b4c]
-            800ACB7C	nop
 
             A0 = S6;
             A1 = w[S0];
@@ -573,18 +572,18 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     V0 = w[A3 + 8e4];
     V0 = w[V0 + c];
 
-    800AD01C	sra    v1, a1, $02
-    800AD020	lw     v0, $0014(v0)
-    800AD024	lw     t1, $0070(sp)
-    800AD028	lh     a0, $0030(v0)
-    800AD02C	addu   a1, v1, t1
-    800AD030	subu   v0, zero, a0
-    800AD034	slt    v0, v0, a1
+    V1 = A1 >> 2;
+    V0 = w[V0 + 14];
+    T1 = w[SP + 70];
+    A0 = h[V0 + 30];
+    A1 = V1 + T1;
+    V0 = 0 - A0;
+    V0 = V0 < A1;
     if( V0 != 0 )
     {
-        800AD03C	addiu  v0, zero, $1000
-        800AD040	subu   v0, v0, a0
-        800AD044	slt    v0, a1, v0
+        V0 = 1000;
+        V0 = V0 - A0;
+        V0 = A1 < V0;
         if( V0 != 0 )
         {
             A2 = 00ffffff;

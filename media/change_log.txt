@@ -30,6 +30,14 @@ To Do
 
 
 
+2011-02-19
+----------
+* [Script] Add move_auto_animation function for entity. [Akari]
+* [EntityManager] Add handling for player run button. [Akari]
+* [Entity] Return all move fucntionality from v0.17. [Akari]
+* [Script] Rename move_walkmesh to move_to_position. [Akari]
+* [Entity] Turn to model now correctly turns to model if model moves during turn. [Akari]
+
 2011-02-15
 ----------
 * [Entity] Return all turn fucntionality from v0.17. [Akari]
