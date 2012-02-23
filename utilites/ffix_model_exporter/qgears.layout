@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="src\Main.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="13765" topLine="441" />
+	<File name="src\AnimationExtractor.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="4061" topLine="67" />
 	</File>
-	<File name="src\MeshExtractor.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1321" topLine="10" />
+	<File name="src\DrawSkeleton.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2574" topLine="49" />
 	</File>
-	<File name="src\ModelFile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2177" topLine="41" />
+	<File name="src\DrawSkeleton.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="259" topLine="0" />
+	</File>
+	<File name="src\Main.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1992" topLine="62" />
+	</File>
+	<File name="src\MeshExtractor.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1514" topLine="0" />
+	</File>
+	<File name="src\ModelFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="4254" topLine="104" />
+	</File>
+	<File name="src\ModelFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="267" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

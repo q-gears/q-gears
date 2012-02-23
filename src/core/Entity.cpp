@@ -51,6 +51,10 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_TurnStepSeconds( 0 ),
     m_TurnCurrentStepSeconds( 0 ),
 
+    m_LinearMovement( LM_UP_TO_DOWN ),
+    m_LinearStart( 0.0f, 0.0f, 0.0f ),
+    m_LinearEnd( 0.0f, 0.0f, 0.0f ),
+
     m_AnimationDefault( "Idle" ),
     m_AnimationCurrentName( "" )
 {
@@ -778,6 +782,87 @@ const Ogre::String&
 Entity::GetCurrentAnimationName() const
 {
     return m_AnimationCurrentName;
+}
+
+
+
+void
+Entity::LinearToPosition(const float x, const float y, const float z, const int triangle_id, const ClimbMovement movement)
+{
+    if (m_ScriptInfo.entity_id != -1)
+    {
+        Ogre::LogManager::getSingletonPtr()->logMessage("[SCRIPT ERROR] Climb to position: Entity already doing some action (MOVING, JUMPING or CLIMBING) and waiting till it ends.");
+        return 1;
+    }
+    m_ScriptInfo = m_FieldScriptManager->GetCurrentScriptInfo();
+
+    this->SetClimb(Ogre::Vector3(x, y, z), triangle_id, movement);
+
+    Ogre::LogManager::getSingletonPtr()->logMessage("[SCRIPT] Climb to position '" + Ogre::StringConverter::toString(Ogre::Vector3(x, y, z)) + "'.");
+
+    return -1;
+}
+
+
+
+const int
+Entity::ScriptLinearSync()
+{
+}
+
+
+
+void
+Entity::SetLinear( const Ogre::Vector3& end, const LinearMovement movement )
+{
+    Ogre::Vector3 start = this->GetPosition();
+    Ogre::Vector3 end_start = end - start;
+    float steps = end_start.length() / 120;
+
+    m_State = CLIMB;
+    m_ClimbMovement = movement;
+    m_ClimbStart = m_SceneNode->getPosition();
+    m_ClimbEnd = end;
+    m_StepSeconds = steps;
+    m_CurrentStepSeconds = 0;
+}
+
+
+
+void
+Entity::UnsetLinear( const bool end )
+{
+    m_State = STAND;
+
+    if (m_ScriptInfo.entity_id != -1)
+    {
+        m_FieldScriptManager->ContinueEntityScriptExecution(m_ScriptInfo);
+        m_ScriptInfo.entity_id = -1;
+    }
+}
+
+
+
+const LinearMovement
+Entity::GetLinearMovement() const
+{
+    return m_LinearMovement;
+}
+
+
+
+const Ogre::Vector3&
+Entity::GetLinearStart() const
+{
+    return m_LinearStart;
+}
+
+
+
+const Ogre::Vector3&
+Entity::GetLinearEnd() const
+{
+    return m_LinearEnd;
 }
 
 

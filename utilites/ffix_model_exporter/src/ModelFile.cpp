@@ -63,23 +63,29 @@ ModelFile::GetModel( const ModelInfo& info )
     for( int i = 0; i < number_of_bones; ++i )
     {
         Bone bone;
-        bone.parent_id = ( s8 )GetU8( offset_to_bones + i * 0x04 + 0x03 );
+        bone.parent_id = ( i != 0 ) ? ( s8 )GetU8( offset_to_bones + i * 0x04 + 0x03 ) : -1;
         bone.length    = ( s16 )GetU16LE( offset_to_bones + i * 0x04 + 0x00 );
         m_Skeleton.push_back(bone);
 
         Ogre::Bone* bone1 = skeleton->createBone( Ogre::StringConverter::toString( i * 2 + 2 ), i * 2 + 2 );
         Ogre::Bone* bone2 = skeleton->createBone( Ogre::StringConverter::toString( i * 2 + 3 ), i * 2 + 3 );
 
-        LOGGER->Log( "Skeleton bone-" + Ogre::StringConverter::toString( i + 2 ) + " length-" + Ogre::StringConverter::toString( bone.length ) + " parent-" + Ogre::StringConverter::toString( bone.parent_id ) + "\n" );
-        LOGGER->Log( "bone1 " + Ogre::StringConverter::toString( i * 2 + 2 ) + ", bone2 " + Ogre::StringConverter::toString( i * 2 + 3 ) + "\n" );
+        LOGGER->Log( "Add skeleton bone: bone_id = " + Ogre::StringConverter::toString( i ) + ", length = " + Ogre::StringConverter::toString( bone.length ) + ", parent = " + Ogre::StringConverter::toString( bone.parent_id ) + ".\n" );
 
-        skeleton->getBone( bone.parent_id * 2 + 1 )->addChild( bone1 );
+        if( bone.parent_id == -1 )
+        {
+            skeleton->getBone( 1 )->addChild( bone1 );
+        }
+        else
+        {
+            skeleton->getBone( bone.parent_id * 2 + 3 )->addChild( bone1 );
+        }
         bone1->addChild( bone2 );
     }
 
 
 
-    //AnimationExtractor( skeleton, info, m_Skeleton );
+    AnimationExtractor( skeleton, info, m_Skeleton );
 
 
 
@@ -90,7 +96,7 @@ ModelFile::GetModel( const ModelInfo& info )
 
 
 
-    for( int i = 0; i < 1/*number_of_parts*/; ++i )
+    for( int i = 0; i < number_of_parts; ++i )
     {
         MeshExtractor( info.data, "ffix/field_model/" + info.data.name, this, offset_to_parts + i * 0x28, textures, mesh );
     }
@@ -107,7 +113,7 @@ ModelFile::GetModel( const ModelInfo& info )
     mesh->_setBounds( aabb, false );
     mesh->_setBoundingSphereRadius( 999 );
 
-    mesh->setSkeletonName( "models/" + info.data.name + ".skeleton" );
+    mesh->setSkeletonName( "" + info.data.name + ".skeleton" );
 
     Ogre::MeshSerializer ser;
     ser.exportMesh( mesh.getPointer(), "exported/" + info.data.name + ".mesh" );
@@ -139,8 +145,8 @@ ModelFile::GetModel( const ModelInfo& info )
     //thisEntity->setDisplaySkeleton(true);
     //thisEntity->setDebugDisplayEnabled(true);
     thisEntity->setVisible( false );
-    //thisEntity->getAnimationState( info.animations[ 0 ] )->setEnabled(true);
-    //thisEntity->getAnimationState( info.animations[ 0 ] )->setLoop(true);
+    thisEntity->getAnimationState( info.animations[ 0 ] )->setEnabled(true);
+    thisEntity->getAnimationState( info.animations[ 0 ] )->setLoop(true);
     Ogre::SceneNode* thisSceneNode = scene_manager->getRootSceneNode()->createChildSceneNode();
     thisSceneNode->setPosition( 0, 0, 0 );
     thisSceneNode->roll( Ogre::Radian( Ogre::Degree( 180.0f ) ) );

@@ -41,6 +41,7 @@ private:
 
     void SetNextOffsetStep( Entity* entity );
     void SetNextTurnStep( Entity* entity );
+    void SetNextClimbStep( Entity* entity );
 
 private:
     Walkmesh                    m_Walkmesh;

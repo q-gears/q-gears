@@ -45,6 +45,16 @@ enum TurnDirection
 
 
 
+enum LinearMovement
+{
+    LM_UP_TO_DOWN,
+    LM_DOWN_TO_UP,
+    LM_LEFT_TO_RIGHT,
+    LM_RIGHT_TO_LEFT
+};
+
+
+
 class Entity
 {
 public:
@@ -133,6 +143,15 @@ public:
     void                SetTurnCurrentStepSeconds( const float seconds );
     const float         GetTurnCurrentStepSeconds() const;
 
+    // linear related
+    void                 ScriptLinearToPosition( const float x, const float y, const float z, const LinearMovement movement );
+    const int            ScriptLinearSync();
+    void                 SetLinear( const Ogre::Vector3& end, const LinearMovement movement );
+    void                 UnsetLinear( const bool end );
+    const LinearMovement GetLinearMovement() const;
+    const Ogre::Vector3& GetLinearStart() const;
+    const Ogre::Vector3& GetLinearEnd() const;
+
     // animation related
     const Ogre::String& GetCurrentAnimationName() const;
     virtual void        PlayAnimation( const Ogre::String& animation, EntityAnimation state, const float start, const float end ) = 0;
@@ -204,6 +223,11 @@ protected:
     float                   m_TurnStepSeconds;
     float                   m_TurnCurrentStepSeconds;
     std::vector< ScriptId > m_TurnSync;
+
+    // linear movement related
+    LinearMovement          m_LinearMovement;
+    Ogre::Vector3           m_LinearStart;
+    Ogre::Vector3           m_LinearEnd;
 
     // animation
     Ogre::String            m_AnimationCurrentName;

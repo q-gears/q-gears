@@ -99,16 +99,16 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
 
         Ogre::Vector3 a( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_a * 0x8 + 0x6 ) * 500 );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x4 ) );
         Ogre::Vector3 b( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_b * 0x8 + 0x6 ) * 500 );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x4 ) );
         Ogre::Vector3 c( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_c * 0x8 + 0x6 ) * 500 );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x4 ) );
         Ogre::Vector3 d( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_d * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_d * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_d * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_d * 0x8 + 0x6 ) * 500 );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_d * 0x8 + 0x4 ) );
         a /= 512;
         b /= 512;
         c /= 512;
@@ -189,6 +189,30 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
         idata[ cur_index + 4 ] = cur_index + 4;
         idata[ cur_index + 5 ] = cur_index + 5;
 
+        Ogre::VertexBoneAssignment vba;
+        vba.weight = 1.0f;
+
+        vba.vertexIndex = cur_index + 0;
+        vba.boneIndex = file->GetU8( pointer_to_vertex_data + index_a * 0x8 + 0x6 ) * 2 + 1;
+        sub_mesh->addBoneAssignment( vba );
+        vba.vertexIndex = cur_index + 1;
+        vba.boneIndex = file->GetU8( pointer_to_vertex_data + index_c * 0x8 + 0x6 ) * 2 + 1;
+        sub_mesh->addBoneAssignment( vba );
+        vba.vertexIndex = cur_index + 2;
+        vba.boneIndex = file->GetU8( pointer_to_vertex_data + index_b * 0x8 + 0x6 ) * 2 + 1;
+        sub_mesh->addBoneAssignment( vba );
+        vba.vertexIndex = cur_index + 3;
+        vba.boneIndex = file->GetU8( pointer_to_vertex_data + index_b * 0x8 + 0x6 ) * 2 + 1;
+        sub_mesh->addBoneAssignment( vba );
+        vba.vertexIndex = cur_index + 4;
+        vba.boneIndex = file->GetU8( pointer_to_vertex_data + index_c * 0x8 + 0x6 ) * 2 + 1;
+        sub_mesh->addBoneAssignment( vba );
+        vba.vertexIndex = cur_index + 5;
+        vba.boneIndex = file->GetU8( pointer_to_vertex_data + index_d * 0x8 + 0x6 ) * 2 + 1;
+        sub_mesh->addBoneAssignment( vba );
+
+
+
         cur_index += 6;
         pointer_to_mesh_data += 0x18;
     }
@@ -203,13 +227,13 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
 
         Ogre::Vector3 a( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_a * 0x8 + 0x6 ) * 500 );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_a * 0x8 + 0x4 ) );
         Ogre::Vector3 b( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_b * 0x8 + 0x6 ) * 500 );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_b * 0x8 + 0x4 ) );
         Ogre::Vector3 c( ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x0 ),
                          ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x2 ),
-                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x4 ) + file->GetU8( pointer_to_vertex_data + index_c * 0x8 + 0x6 ) * 500 );
+                         ( s16 )file->GetU16LE( pointer_to_vertex_data + index_c * 0x8 + 0x4 ) );
         a /= 512;
         b /= 512;
         c /= 512;
@@ -269,6 +293,19 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
         idata[ cur_index + 1 ] = cur_index + 1;
         idata[ cur_index + 2 ] = cur_index + 2;
 
+        Ogre::VertexBoneAssignment vba;
+        vba.weight = 1.0f;
+
+        vba.vertexIndex = cur_index + 0;
+        vba.boneIndex = file->GetU8( pointer_to_vertex_data + index_a * 0x8 + 0x6 ) * 2 + 1;
+        sub_mesh->addBoneAssignment( vba );
+        vba.vertexIndex = cur_index + 1;
+        vba.boneIndex = file->GetU8( pointer_to_vertex_data + index_c * 0x8 + 0x6 ) * 2 + 1;
+        sub_mesh->addBoneAssignment( vba );
+        vba.vertexIndex = cur_index + 2;
+        vba.boneIndex = file->GetU8( pointer_to_vertex_data + index_b * 0x8 + 0x6 ) * 2 + 1;
+        sub_mesh->addBoneAssignment( vba );
+
         cur_index += 3;
         pointer_to_mesh_data += 0x14;
     }
@@ -282,20 +319,4 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
     sub_mesh->indexData->indexBuffer->unlock();
     // Optimize index data
     sub_mesh->indexData->optimiseVertexCacheTriList();
-/*
-    if (bone_id != -1)
-    {
-        LOGGER->Log("Assign bones to vertexes\n");
-
-        int vertex_number = sub_mesh->vertexData->vertexCount;
-        for (int i = 0; i < vertex_number; ++i)
-        {
-            Ogre::VertexBoneAssignment vba;
-            vba.vertexIndex = i;
-            vba.boneIndex = bone_id;
-            vba.weight = 1.0f;
-            sub_mesh->addBoneAssignment(vba);
-        }
-    }
-*/
 }

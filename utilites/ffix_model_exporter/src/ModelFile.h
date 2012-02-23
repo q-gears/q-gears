@@ -17,11 +17,13 @@ struct ModelInfo
 
 struct Bone
 {
-    int length;
+    Bone():
+        length( 0 ),
+        parent_id( -1 )
+    {
+    }
+    float length;
     int parent_id;
-
-    float tx, ty, tz;
-    float rx, ry, rz;
 };
 typedef std::vector< Bone > Skeleton;
 

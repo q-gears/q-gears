@@ -45,6 +45,10 @@
 		<Unit filename="..\common\OgreGenUtilites.h" />
 		<Unit filename="..\common\Vram.cpp" />
 		<Unit filename="..\common\Vram.h" />
+		<Unit filename="src\AnimationExtractor.cpp" />
+		<Unit filename="src\AnimationExtractor.h" />
+		<Unit filename="src\DrawSkeleton.cpp" />
+		<Unit filename="src\DrawSkeleton.h" />
 		<Unit filename="src\Main.cpp" />
 		<Unit filename="src\MeshExtractor.cpp" />
 		<Unit filename="src\MeshExtractor.h" />

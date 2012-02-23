@@ -75,7 +75,7 @@ fill_names()
     data.name = "test";
     ModelInfo model;
     model.data = data;
-    model.animations.push_back( "2.animation" );
+    model.animations.push_back( "15.animation" );
     models.push_back( model );
 }
 
@@ -152,7 +152,7 @@ public:
         {
             m_Mouse->capture();
         }
-/*
+
         for( int i = 0; i < entitys.size(); ++i )
         {
             if( entitys[ i ]->isVisible() == true )
@@ -174,22 +174,22 @@ public:
                 break;
             }
         }
-*/
+
         if( m_Keyboard->isKeyDown( OIS::KC_A ) )
         {
-            camera->moveRelative( Ogre::Vector3( -0.001, 0, 0 ) );
+            camera->moveRelative( Ogre::Vector3( -0.005, 0, 0 ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_D ) )
         {
-            camera->moveRelative( Ogre::Vector3( 0.001, 0, 0 ) );
+            camera->moveRelative( Ogre::Vector3( 0.005, 0, 0 ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_W ) )
         {
-            camera->moveRelative( Ogre::Vector3( 0, 0, -0.001 ) );
+            camera->moveRelative( Ogre::Vector3( 0, 0, -0.005 ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_S ) )
         {
-            camera->moveRelative( Ogre::Vector3( 0, 0,  0.001 ) );
+            camera->moveRelative( Ogre::Vector3( 0, 0,  0.005 ) );
         }
         if( m_MouseRotate == true )
         {
@@ -466,7 +466,7 @@ main( int argc, char* argv[] )
 
     // TEMP
 
-    ModelFile model( "./data/field/1.model" );
+    ModelFile model( "./data/field/zidane.model" );
     Ogre::Entity* exported_entity = model.GetModel( models[ 0 ] );
     if( exported_entity != NULL )
     {

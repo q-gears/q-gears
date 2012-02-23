@@ -6,6 +6,8 @@ EntityContainer[ "Cloud" ] = {
     on_start = function( self )
         local cloud = entity_manager:get_entity( "Cloud" )
         cloud:move_to_position( 1, 1 )
+        cloud:move_sync()
+
         return 0
     end,
 
@@ -26,11 +28,12 @@ EntityContainer[ "Cloud" ] = {
 
 
 
-EntityContainer[ "TreasureChest" ] = {
+EntityContainer[ "Player" ] = {
     on_start = function( self )
-        local chest = entity_manager:get_entity( "TreasureChest" )
-        chest:play_animation_stop( "Idle" )
-        entity_manager:set_player_entity( "TreasureChest" )
+        local player = entity_manager:get_entity( "Player" )
+        player:play_animation_stop( "Idle" )
+        player:set_solid( true )
+        entity_manager:set_player_entity( "Player" )
         return 0
     end,
 }

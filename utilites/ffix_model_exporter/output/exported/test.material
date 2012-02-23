@@ -22,7 +22,7 @@ material Skeleton
     {
         pass
         {
-            ambient 1.0 0.0 0.0
+            ambient vertexcolour
             cull_hardware none
             polygon_mode wireframe
         }

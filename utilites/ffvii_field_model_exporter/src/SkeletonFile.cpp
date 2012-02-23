@@ -42,10 +42,10 @@ SkeletonFile::GetData( std::vector< s16 >& skeleton_length, const int offset_to_
 {
     if (skeleton.isNull() == false)
     {
-        Ogre::Bone* root = skeleton->createBone("0", 0);
+        Ogre::Bone* root = skeleton->createBone( "0", 0 );
     }
 
-    for (u32 i = 0; i < number_of_bones; ++i)
+    for( u32 i = 0; i < number_of_bones; ++i )
     {
         s16 length    = GetU16LE(offset_to_bones + i * 0x04 + 0x00);
         s8  parent_id = GetU8(offset_to_bones + i * 0x04 + 0x02);
