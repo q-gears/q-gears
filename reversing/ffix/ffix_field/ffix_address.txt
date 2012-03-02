@@ -75,34 +75,3 @@
 +74 [][][][] VXY0.
 +78 [][][][] VZ0.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// quad packet
-+00 [][][][] store 09000000 here.
-+04 []       R.
-+05 []       G.
-+06 []       B.
-+07 []       store 0x2c.
-+08 [][][][] place for vertex 1
-+0c [][]     texture UV for vertex 1.
-+0e [][]     CLUT.
-+10 [][][][] place for vertex 2
-+14 [][]     texture UV for vertex 2.
-+16 [][]     texture page info.
-+18 [][][][] place for vertex 3
-+1c [][]     texture UV for vertex 3.
-+20 [][][][] place for vertex 4
-+24 [][]     texture UV for vertex 4.

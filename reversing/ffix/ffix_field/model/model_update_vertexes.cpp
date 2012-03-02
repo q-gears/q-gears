@@ -262,7 +262,7 @@ mesh_data = w[part_data + 1c];
 
 
 number_of_quads = hu[part_data + 2]; // number of quads
-if (number_of_quads != 0)
+if( number_of_quads != 0 )
 {
     loopb5a18:	; 800B5A18
         vertex1 = h[mesh_data + 0];

@@ -24,13 +24,14 @@ To Do
 ----------
 * [Content] Add FFVII fields maps startmap mdstin md1_1 and md1_2 maps and transitions between them.
 * [Background] Implement all background features that used in FFVII 1st mission until reactor blow. [Akari]
-* [Content] Add few Xenogears field models with animation (robots).
-* [Content] Add few FFIX field models with animation.
+* [Content] Add few Xenogears field models with animation (robots) at least one.
 * [Entity] Implement all movement features that was in v0.17.
 
+2011-03-03
+----------
+* [Export FFIX] Finish first version of FFIX field model exporter and add Zidane to demo. [Akari]
 
-
-2011-02-19
+2012-02-19
 ----------
 * [Script] Add move_auto_animation function for entity. [Akari]
 * [EntityManager] Add handling for player run button. [Akari]
@@ -38,26 +39,26 @@ To Do
 * [Script] Rename move_walkmesh to move_to_position. [Akari]
 * [Entity] Turn to model now correctly turns to model if model moves during turn. [Akari]
 
-2011-02-15
+2012-02-15
 ----------
 * [Entity] Return all turn fucntionality from v0.17. [Akari]
 * [Entity] Add move_sync function. [Akari]
 * [Entity] Fix solid and talk radius debug draw. [Akari]
 
-2011-02-14
+2012-02-14
 ----------
 * [Entity] Add auto play animation on move. [Akari]
 
-2011-02-11
+2012-02-11
 ----------
 * [Script] Rename Ui and Entity tables to UiContainer and EntityContainer to avoid name collision with Entity class. [Akari]
 * [Entity] Return all offseting fucntionality from v0.17. [Akari]
 
-2011-02-09
+2012-02-09
 ----------
 * [Console] Fix bug when only slash was entered. [Akari]
 
-2011-02-08
+2012-02-08
 ----------
 * [Entity] Add basic player movement. [Akari]
 * [Script] Add script function "set_player_entity" to make entity controlled by player. [Akari]

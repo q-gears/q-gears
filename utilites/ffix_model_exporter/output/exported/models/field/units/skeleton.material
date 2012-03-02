@@ -1,12 +1,10 @@
-
-material model/field/zidane
+material Skeleton
 {
     technique
     {
         pass
         {
-            ambient 0.0 1.0 1.0
-            cull_hardware none
+            ambient vertexcolour
             polygon_mode wireframe
         }
     }

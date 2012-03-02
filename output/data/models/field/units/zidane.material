@@ -1,0 +1,20 @@
+
+material ffix/field_model/zidane
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+			alpha_rejection greater 0
+
+			texture_unit
+			{
+				texture models/field/units/zidane.png
+				filtering point point none
+			}
+		}
+
+	}
+
+}

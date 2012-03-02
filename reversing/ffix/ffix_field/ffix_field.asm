@@ -112,10 +112,8 @@ funca8198:	; 800A8198
 800A81EC	addiu  a0, zero, $0001
 800A81F0	addu   a0, zero, zero
 800A81F4	lw     a1, $794c(s0)
-800A81F8	lui    v0, $800b
 800A81FC	lw     v1, $001c(a1)
-800A8200	addiu  v0, v0, $ab30 (=-$54d0)
-800A8204	sw     v0, $0838(v1)
+[V1 + 838] = w(800aab30);
 800A8208	lui    v0, $800b
 800A820C	lw     v1, $001c(a1)
 800A8210	addiu  v0, v0, $0124
@@ -2597,40 +2595,7 @@ Laafc4:	; 800AAFC4
 
 ////////////////////////////////
 // funcaafd4
-800AAFD4
-S0 = A0;
-S1 = A1;
-S2 = A2;
-S3 = A3;
-
-A0 = 8;
-A1 = S0;
-A2 = 120000;
-func1c7fc;
-
-A2 = V0;
-
-V0 = bu[A2 + 1];
-if (V0 - 1 >= 0)
-{
-    loopab034:	; 800AB034
-        if (hu[A2 + 4] == S0 & ffff))
-        {
-            V0 = A2 + 4 + w[A2 + 8] & 00ffffff;
-            [S1] = w(V0);
-            V0 = V0 + bu[A2 + b] * 4;
-            [S2] = w(V0);
-            [S3] = w(V0 + bu[A2 + b] * 4);
-
-            return;
-        }
-
-        A2 = A2 + c;
-        V1 = V1 - 1;
-    800AB088	bgez   v1, loopab034 [$800ab034]
-}
-
-800AB0AC
+800AAFD4-800AB0AC
 ////////////////////////////////
 
 

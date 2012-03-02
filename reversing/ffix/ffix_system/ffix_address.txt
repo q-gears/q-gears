@@ -343,7 +343,7 @@
     +774 some array of 0x40 items (0x1 size).
     +80c [][][][] store here script pointer + 2c.
     +810 [][][][] store here script pointer + 4.
-    +838 [][][][] pointer to some functions called in func21698 with +34 param from entity script memory in opcode 0x2f.
+    +838 [][][][] pointer to some functions called in func21698 with +34 param from entity script memory in opcode 0x2f. Looks like model init.
     +848 []       set up in 0x2a opcode.
     +851 []       (8008BAA1)
     +8d8 [][][][] ??? pointet to start of some on 0x14 sized array.
@@ -360,8 +360,11 @@
             +  4 []       bone index which this model attached to.
             +  8 [][][][] pointer to model file.
             +  c [][][][] pointer to current animation file.
-            + 10 [][][][] some pointer ??? There is bones * 0x20 + model parts * 0xc + unknown data from all model parts + 00 [][] * 2.
+            + 10 [][][][] pointer to start of all packets. There is bones * 0x20 + model parts * 0xc + unknown data from all model parts + 00 [][] * 2.
             + 14 [][][][] model parts mask. If some part bit is seted then it won't be rendered.
+            + 18 [][][][] pointer to struct where we store clut and texpage info (size 0x4).
+                +00 [][]     texpage info.
+                +02 [][]     clut info.
             + 1c [][][][] pointer to main data for attached model (the same struct for main model).
             + 20 [][][][] pointer to bone rotation matrixes and translation data.
             + 24 start of root model rotation matrix (0x14 size).
@@ -369,9 +372,9 @@
             + 3c [][][][] y position of model.
             + 40 [][][][] z position of model.
             + 44 [][][][] offset to array of model parts data (size 0xc).
-                +  0
+                +  0 [][]     store 0 here during packets initialization.
                 +  4 [][][][] pointer to part packets.
-                +  8
+                +  8 [][][][] store 0 here during packets initialization.
             + 48 [][]     static bone X offset.
             + 4a [][]     static bone Y offset.
             + 4c [][]     static bone Z offset.
@@ -390,6 +393,7 @@
         +  c [][][][] pointer
             + 14 [][][][] pointer
                 + 1c [][][][] ???
+                + 20 [][][][] ??? some pointer.
                 + 2c [][][][] ???
                 + 30 [][]     some depth for depth buffer (shifted by >>2)
                 + 42 []       if this != 0 then we don't update models that exceed data memory limit.

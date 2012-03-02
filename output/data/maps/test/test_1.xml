@@ -27,7 +27,7 @@
     <entity_model name="Background18" file_name="models/field/maps/lahan/lahan18.mesh" position="0 0 0" direction="0" />
 -->
     <entity_model name="Cloud" file_name="models/field/units/cloud.mesh" position="0 0 10" direction="0" />
-    <entity_model name="Player" file_name="models/field/units/soldier.mesh" position="-1 0 -10" direction="0" />
+    <entity_model name="Player" file_name="models/field/units/zidane.mesh" position="-1 0 -10" direction="0" />
     <entity_script name="Manager" />
 
 

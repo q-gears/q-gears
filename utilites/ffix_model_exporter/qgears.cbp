@@ -43,6 +43,8 @@
 		<Unit filename="..\common\Logger.h" />
 		<Unit filename="..\common\OgreGenUtilites.cpp" />
 		<Unit filename="..\common\OgreGenUtilites.h" />
+		<Unit filename="..\common\TimToVram.cpp" />
+		<Unit filename="..\common\TimToVram.h" />
 		<Unit filename="..\common\Vram.cpp" />
 		<Unit filename="..\common\Vram.h" />
 		<Unit filename="src\AnimationExtractor.cpp" />

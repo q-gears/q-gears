@@ -72,10 +72,17 @@ fill_names()
 */
 
     MeshData data;
-    data.name = "test";
+    data.name = "zidane";
+    data.tex_width = 512;
+    data.tex_height = 256;
     ModelInfo model;
     model.data = data;
-    model.animations.push_back( "15.animation" );
+    model.animations.push_back( "5/1b/1/3/1.animation" ); model.animations_name.push_back( "Walk" );
+    model.animations.push_back( "5/1b/1/3/2.animation" ); model.animations_name.push_back( "Run" );
+    model.animations.push_back( "5/1b/1/3/3.animation" ); model.animations_name.push_back( "TurnLeft" );
+    model.animations.push_back( "5/1b/1/3/4.animation" ); model.animations_name.push_back( "TurnRight" );
+    model.animations.push_back( "5/1b/1/3/5.animation" ); model.animations_name.push_back( "Idle" );
+    model.animations.push_back( "15.animation" ); model.animations_name.push_back( "Carry" );
     models.push_back( model );
 }
 
@@ -206,22 +213,21 @@ public:
     bool
     keyPressed( const OIS::KeyEvent& e )
     {
-/*
-        switch (e.key)
+        switch( e.key )
         {
             case OIS::KC_RIGHT:
             {
                 bool change = false;
-                for (int i = 0; i < entitys.size(); ++i)
+                for( int i = 0; i < entitys.size(); ++i )
                 {
-                    if (change == true)
+                    if( change == true )
                     {
-                        entitys[i]->setVisible(true);
+                        entitys[ i ]->setVisible( true );
                         break;
                     }
-                    if (entitys[i]->isVisible() == true && (i != entitys.size() - 1))
+                    if( entitys[ i ]->isVisible() == true && ( i != entitys.size() - 1 ) )
                     {
-                        entitys[i]->setVisible(false);
+                        entitys[ i ]->setVisible( false );
                         change = true;
                     }
                 }
@@ -250,26 +256,26 @@ public:
             case OIS::KC_UP:
             {
                 bool change = false;
-                for (int i = 0; i < entitys.size(); ++i)
+                for( int i = 0; i < entitys.size(); ++i )
                 {
-                    if (entitys[i]->isVisible() == true)
+                    if( entitys[ i ]->isVisible() == true )
                     {
-                        Ogre::AnimationStateIterator animations = entitys[i]->getAllAnimationStates()->getAnimationStateIterator();
+                        Ogre::AnimationStateIterator animations = entitys[ i ]->getAllAnimationStates()->getAnimationStateIterator();
 
                         Ogre::AnimationState* old_state;
                         Ogre::AnimationState* new_state = animations.getNext();
 
-                        while (animations.hasMoreElements() == true)
+                        while( animations.hasMoreElements() == true )
                         {
                             old_state = new_state;
                             new_state = animations.getNext();
 
-                            if (new_state->getEnabled() == true)
+                            if( new_state->getEnabled() == true )
                             {
-                                new_state->setEnabled(false);
-                                new_state->setLoop(false);
-                                old_state->setEnabled(true);
-                                old_state->setLoop(true);
+                                new_state->setEnabled( false );
+                                new_state->setLoop( false );
+                                old_state->setEnabled( true );
+                                old_state->setLoop( true );
                             }
                         }
 
@@ -282,9 +288,9 @@ public:
             case OIS::KC_DOWN:
             {
                 bool change = false;
-                for (int i = 0; i < entitys.size(); ++i)
+                for( int i = 0; i < entitys.size(); ++i )
                 {
-                    if (entitys[i]->isVisible() == true)
+                    if( entitys[i]->isVisible() == true )
                     {
                         Ogre::AnimationStateIterator animations = entitys[i]->getAllAnimationStates()->getAnimationStateIterator();
 
@@ -312,7 +318,7 @@ public:
             }
             break;
         }
-*/
+
         return true;
     }
 
@@ -393,13 +399,16 @@ main( int argc, char* argv[] )
     root->addFrameListener( frame_listener );
 
     scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
+    scene_manager->clearScene();
     scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
 
     camera = scene_manager->createCamera( "Camera" );
     camera->setNearClipDistance( 0.01f );
+    camera->setPosition( 10, 5, 10 );
+    camera->lookAt( 0, 0, 0 );
 
     viewport = window->addViewport( camera );
-    viewport->setBackgroundColour( Ogre::ColourValue( 0, 0, 0 ) );
+    viewport->setBackgroundColour( Ogre::ColourValue( 0, 1, 0 ) );
     camera->setAspectRatio( Ogre::Real( viewport->getActualWidth() ) / Ogre::Real( viewport->getActualHeight() ) );
 
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./", "FileSystem", "General" );
@@ -416,15 +425,6 @@ main( int argc, char* argv[] )
 
     fill_names();
 
-
-
-    scene_manager->clearScene();
-    scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
-
-    scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
-    camera = scene_manager->getCamera( "Camera" );
-    camera->setPosition( 10, 5, 10 );
-    camera->lookAt( 0, 0, 0 );
 
 
 /*
@@ -466,7 +466,7 @@ main( int argc, char* argv[] )
 
     // TEMP
 
-    ModelFile model( "./data/field/zidane.model" );
+    ModelFile model( "./data/field/5/1b/1/2/1.model" ); // zidane
     Ogre::Entity* exported_entity = model.GetModel( models[ 0 ] );
     if( exported_entity != NULL )
     {

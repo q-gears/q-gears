@@ -11,6 +11,7 @@ struct ModelInfo
     MeshData                  data;
     Ogre::String              file_name;
     std::vector<Ogre::String> animations;
+    std::vector<Ogre::String> animations_name;
 };
 
 

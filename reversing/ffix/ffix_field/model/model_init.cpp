@@ -10,13 +10,8 @@ V0 = w[8006794c];
 V0 = w[V0 + 1c];
 V0 = w[V0 + 8e4];
 V1 = w[V0 + c];
-V0 = A0 * 4;
 V1 = w[V1 + 14];
-
-800ABAF0	addu   v0, v0, a0
-800ABAF4	lw     v1, $0054(v1)
-800ABAF8	sll    v0, v0, $02
-800ABB00	addu   s0, v1, v0
+S0 = w[V1 + 54] + A0 * 14;
 
 func1e350;
 S3 = V0;
@@ -87,23 +82,18 @@ switch( S5 )
     800ABBC8	lw     s1, $0010(s0)
     800ABBCC	nop
     800ABBD0	bne    s1, zero, Labc84 [$800abc84]
-    800ABBD4	lui    v0, $8006
-    800ABBD8	lw     a0, $794c(v0)
-    800ABBDC	nop
-    800ABBE0	lw     v0, $001c(a0)
-    800ABBE4	nop
-    800ABBE8	lw     v0, $08e4(v0)
-    800ABBEC	nop
-    800ABBF0	lw     v0, $000c(v0)
-    800ABBF4	nop
-    800ABBF8	lw     v0, $0014(v0)
-    800ABBFC	nop
-    800ABC00	lw     v0, $0020(v0)
-    800ABC04	nop
-    800ABC08	addu   s1, v0, zero
+
+    A0 = w[8006794c];
+    V0 = w[A0 + 1c];
+    V0 = w[V0 + 8e4];
+    V0 = w[V0 + c];
+    V0 = w[V0 + 14];
+    V0 = w[V0 + 20];
+    S1 = V0;
+
     800ABC0C	sw     s1, $0010(s0)
     800ABC10	sw     zero, $0000(s1)
-    800ABC14	lw     v1, $0004(s3)
+    V1 = w[S3 + 4];
     800ABC18	addiu  v0, s1, $0014
     800ABC1C	sw     v0, $0008(s1)
     800ABC20	addiu  v0, s1, $00ac
@@ -118,7 +108,7 @@ switch( S5 )
     800ABC44	sh     v0, $0106(s1)
     800ABC48	sh     zero, $0108(s1)
     800ABC4C	sw     zero, $010c(s1)
-    800ABC50	sw     v1, $0004(s1)
+    [S1 + 4] = w(V1);
     800ABC54	lw     v0, $001c(a0)
     800ABC58	nop
     800ABC5C	lw     v0, $08e4(v0)
@@ -144,17 +134,18 @@ switch( S5 )
         800ABCA0	addiu  a0, v0, $0040
 
         loopabca4:	; 800ABCA4
-        800ABCA4	lw     t0, $0000(v0)
-        800ABCA8	lw     t1, $0004(v0)
-        800ABCAC	lw     t2, $0008(v0)
-        800ABCB0	lw     t3, $000c(v0)
-        800ABCB4	sw     t0, $0000(v1)
-        800ABCB8	sw     t1, $0004(v1)
-        800ABCBC	sw     t2, $0008(v1)
-        800ABCC0	sw     t3, $000c(v1)
-        800ABCC4	addiu  v0, v0, $0010
+            800ABCA4	lw     t0, $0000(v0)
+            800ABCA8	lw     t1, $0004(v0)
+            800ABCAC	lw     t2, $0008(v0)
+            800ABCB0	lw     t3, $000c(v0)
+            800ABCB4	sw     t0, $0000(v1)
+            800ABCB8	sw     t1, $0004(v1)
+            800ABCBC	sw     t2, $0008(v1)
+            800ABCC0	sw     t3, $000c(v1)
+            800ABCC4	addiu  v0, v0, $0010
+            800ABCCC	addiu  v1, v1, $0010
         800ABCC8	bne    v0, a0, loopabca4 [$800abca4]
-        800ABCCC	addiu  v1, v1, $0010
+
         800ABCD0	lw     t0, $0000(v0)
         800ABCD4	lw     t1, $0004(v0)
         800ABCD8	lw     t2, $0008(v0)
@@ -164,16 +155,18 @@ switch( S5 )
         800ABCE8	lw     v0, $0008(s3)
         800ABCEC	lw     v1, $0008(s4)
         800ABCF0	lw     v0, $0008(v0)
-        800ABCF4	addiu  a1, sp, $0010
         800ABCF8	sw     v0, $0008(v1)
         800ABCFC	lw     v0, $0008(s3)
         800ABD00	lw     v1, $0008(s4)
         800ABD04	lw     v0, $000c(v0)
-        800ABD08	addiu  a2, sp, $0014
         800ABD0C	sw     v0, $000c(v1)
-        800ABD10	lw     a0, $0004(s4)
-        800ABD14	jal    funcaafd4 [$800aafd4]
-        800ABD18	addiu  a3, sp, $0018
+
+        A0 = w[S4 + 4];
+        A1 = SP + 10;
+        A2 = SP + 14;
+        A3 = SP + 18;
+        funcaafd4;
+
         800ABD1C	lw     v0, $0008(s4)
         800ABD20	nop
         800ABD24	lw     v0, $0008(v0)
@@ -393,19 +386,13 @@ return 0;
 
 ////////////////////////////////
 // funcaab30
-800AAB30	addiu  sp, sp, $ffc0 (=-$40)
-800AAB34	sw     s3, $002c(sp)
-800AAB38	addu   s3, a0, zero
-800AAB3C	sw     s1, $0024(sp)
+// this is callback fucntion stored in w[w[8008b000 + 1c] + 838]
+S3 = A0;
 800AAB40	addu   s1, a1, zero
-800AAB44	sw     s5, $0034(sp)
 800AAB48	addiu  s5, zero, $ffff (=-$1)
 800AAB4C	addu   a0, s1, zero
-800AAB50	sw     ra, $0038(sp)
-800AAB54	sw     s4, $0030(sp)
-800AAB58	sw     s2, $0028(sp)
 800AAB5C	jal    func4ab64 [$8004ab64]
-800AAB60	sw     s0, $0020(sp)
+
 800AAB64	addu   a0, v0, zero
 800AAB68	sltiu  v0, a0, $0009
 800AAB6C	beq    v0, zero, Laab84 [$800aab84]
@@ -482,11 +469,12 @@ Laac40:	; 800AAC40
 800AAC5C	sw     v0, $0010(v1)
 
 Laac60:	; 800AAC60
-800AAC60	addu   a0, s3, zero
-800AAC64	addiu  a1, sp, $0010
-800AAC68	addiu  a2, sp, $0014
-800AAC6C	jal    funcaafd4 [$800aafd4]
-800AAC70	addiu  a3, sp, $0018
+A0 = S3;
+A1 = SP + 10;
+A2 = SP + 14;
+A3 = SP + 18;
+funcaafd4;
+
 800AAC74	lw     v0, $0008(s2)
 800AAC78	nop
 800AAC7C	lw     v0, $0008(v0)
@@ -649,17 +637,6 @@ Laae54:	; 800AAE54
 800AAE94	addu   v0, s4, zero
 800AAE98	ori    v1, v1, $0001
 800AAE9C	sw     v1, $0000(s2)
-800AAEA0	lw     ra, $0038(sp)
-800AAEA4	lw     s5, $0034(sp)
-800AAEA8	lw     s4, $0030(sp)
-800AAEAC	lw     s3, $002c(sp)
-800AAEB0	lw     s2, $0028(sp)
-800AAEB4	lw     s1, $0024(sp)
-800AAEB8	lw     s0, $0020(sp)
-
-Laaebc:	; 800AAEBC
-800AAEBC	jr     ra 
-800AAEC0	addiu  sp, sp, $0040
 ////////////////////////////////
 
 
@@ -693,4 +670,39 @@ loopb2150:	; 800B2150
 800B2188	beq    v0, zero, loopb2150 [$800b2150]
 
 return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcaafd4
+S0 = A0; // index
+output_clut_texpage = A1; // output for addres to clut and texpage settings
+output_tpx_tpy = A2; // output for addres with texpage x and texpage y
+S3 = A3;
+
+A0 = 8;
+A1 = S0;
+A2 = 120000;
+func1c7fc;
+
+A2 = V0;
+
+V0 = bu[A2 + 1];
+if( V0 - 1 >= 0 )
+{
+    A2 = A2 + 4;
+    loopab034:	; 800AB034
+        if( hu[A2] == ( S0 & ffff ) )
+        {
+            [output_clut_texpage] = w(A2 + w[A2 + 4] & 00ffffff);
+            [output_tpx_tpy] = w(w[output_clut_texpage] + bu[A2 + 7] * 4);
+            [S3] = w(w[output_tpx_tpy] + bu[A2 + 7] * 4);
+            return;
+        }
+
+        A2 = A2 + c;
+        V1 = V1 - 1;
+    800AB088	bgez   v1, loopab034 [$800ab034]
+}
 ////////////////////////////////

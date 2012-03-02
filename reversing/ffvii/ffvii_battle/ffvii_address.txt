@@ -1265,8 +1265,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f800010 attack index
 1f800014 init with -1. Store attacker id here if specified attack was magic, summon or enemy skill and player has it.
 1f800018 target mask
-1f80001c init with 1.
-1f800020 something from 800a0000. Animation script id to play.
+1f80001c init with 1. Active Allies???
+1f800020 animation script id to play.
 1F800024 copy D byte from attack data here. (Attack effect id)
 1f800028 action id.
 1f80002c attack id.

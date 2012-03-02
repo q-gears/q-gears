@@ -2,22 +2,23 @@
 
 #include <Ogre.h>
 
-#include "../../common/Logger.h"
 #include "AnimationExtractor.h"
 #include "DrawSkeleton.h"
 #include "MeshExtractor.h"
+#include "../../common/Logger.h"
+#include "../../common/TimToVram.h"
 
 
 
 ModelFile::ModelFile( const Ogre::String& file ):
-    File(file)
+    File( file )
 {
 }
 
 
 
 ModelFile::ModelFile( File* pFile ):
-    File(pFile)
+    File( pFile )
 {
 }
 
@@ -91,7 +92,7 @@ ModelFile::GetModel( const ModelInfo& info )
 
     // draw skeleton
     {
-        DrawSkeleton( m_Skeleton, mesh );
+        //DrawSkeleton( m_Skeleton, mesh );
     }
 
 
@@ -106,47 +107,52 @@ ModelFile::GetModel( const ModelInfo& info )
     // <OGRE> ///////////////////////////////
     skeleton->optimiseAllAnimations();
     Ogre::SkeletonSerializer skeleton_serializer;
-    skeleton_serializer.exportSkeleton( skeleton.getPointer(), "exported/" + info.data.name + ".skeleton" );
+    skeleton_serializer.exportSkeleton( skeleton.getPointer(), "exported/models/field/units/" + info.data.name + ".skeleton" );
 
     // Update bounds
     Ogre::AxisAlignedBox aabb( -999, -999, -999, 999, 999, 999 );
     mesh->_setBounds( aabb, false );
     mesh->_setBoundingSphereRadius( 999 );
 
-    mesh->setSkeletonName( "" + info.data.name + ".skeleton" );
+    mesh->setSkeletonName( "models/field/units/" + info.data.name + ".skeleton" );
 
     Ogre::MeshSerializer ser;
-    ser.exportMesh( mesh.getPointer(), "exported/" + info.data.name + ".mesh" );
+    ser.exportMesh( mesh.getPointer(), "exported/models/field/units/" + info.data.name + ".mesh" );
 
 
-/*
+
     // create and export textures for model
-    if (textures.size() > 0)
+    //if (textures.size() > 0)
     {
-        int number_of_files = GetU32LE(0x00);
-        int offset_to_texture = GetU32LE(number_of_files * 0x04);
         Vram* vram = new Vram();
 
-        LoadTimFileToVram(this, offset_to_texture, vram);
+        File* tex = new File( "./data/field/5/1b/2/4/1.tim" );
+        LoadTimFileToVram( tex, 0, vram );
+        delete tex;
+        tex = new File( "./data/field/5/1b/2/4/2.tim" );
+        LoadTimFileToVram( tex, 0, vram );
+        delete tex;
 
-        CreateTexture( vram, info.data, "exported/models/battle/units/" + info.data.name + ".png", textures );
+        vram->Save( "1.jpg" );
+
+        CreateTexture( vram, info.data, "exported/models/field/units/" + info.data.name + ".png", textures );
+
         delete vram;
     }
-*/
 
 
 
-    //CreateMaterial( "ffix/field_model/" + info.data.name, "exported/" + info.data.name + ".material", ( textures.size() > 0 ) ? info.data.name + ".png" : "", "", "" );
+    CreateMaterial( "ffix/field_model/" + info.data.name, "exported/models/field/units/" + info.data.name + ".material", ( textures.size() > 0 ) ? "models/field/units/" + info.data.name + ".png" : "", "", "" );
 
 
 
     Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
-    Ogre::Entity* thisEntity = scene_manager->createEntity( info.data.name, info.data.name + ".mesh" );
+    Ogre::Entity* thisEntity = scene_manager->createEntity( info.data.name, "models/field/units/" + info.data.name + ".mesh" );
     //thisEntity->setDisplaySkeleton(true);
     //thisEntity->setDebugDisplayEnabled(true);
     thisEntity->setVisible( false );
-    thisEntity->getAnimationState( info.animations[ 0 ] )->setEnabled(true);
-    thisEntity->getAnimationState( info.animations[ 0 ] )->setLoop(true);
+    thisEntity->getAnimationState( info.animations_name[ 0 ] )->setEnabled(true);
+    thisEntity->getAnimationState( info.animations_name[ 0 ] )->setLoop(true);
     Ogre::SceneNode* thisSceneNode = scene_manager->getRootSceneNode()->createChildSceneNode();
     thisSceneNode->setPosition( 0, 0, 0 );
     thisSceneNode->roll( Ogre::Radian( Ogre::Degree( 180.0f ) ) );

@@ -5,7 +5,7 @@
 
 
 void
-CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, const int start_y, const int clut_x, const int clut_y, const int texture_x, const int texture_y, const int bpp, const bool transparency )
+CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, const int start_y, const int clut_x, const int clut_y, const int texture_x, const int texture_y, const BPP bpp, const bool transparency )
 {
     for( u32 y = 0; y < 256; ++y )
     {
@@ -13,7 +13,7 @@ CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, 
 
         for( u32 x = 0; x < 256; ++x )
         {
-            if( bpp == 0 )
+            if( bpp == BPP_4 )
             {
                 u8 pixel = vram->GetU8( texture_x * 2 + x / 2, texture_y + y );
 
@@ -34,7 +34,7 @@ CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, 
                 ++x;
                 data[ start_x + x ] = ogre_pixel2;
             }
-            else if( bpp == 1 )
+            else if( bpp == BPP_8 )
             {
                 u8 pixel = vram->GetU8( texture_x * 2 + x, texture_y + y );
                 u16 clut = vram->GetU16( clut_x * 2 + pixel * 2, clut_y );
@@ -46,7 +46,7 @@ CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, 
 
                 data[ start_x + x ] = ogre_pixel;
             }
-            else if( bpp == -1 )
+            else if( bpp == BPP_BLACK )
             {
                 data[ start_x + x ] = 0xffffffff;
             }

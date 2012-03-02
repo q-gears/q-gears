@@ -7,18 +7,26 @@
 void
 AnimationExtractor( const Ogre::SkeletonPtr& skeleton, const ModelInfo& info, Skeleton& skeleton_data )
 {
+    if( info.animations.size() != info.animations_name.size() )
+    {
+        LOGGER->Log( "AnimationExtractor ERROR: number of animations dont match number of animation names.\n" );
+        return;
+    }
+
+    float fps = 25.0f;
+
     for( size_t i = 0; i < info.animations.size(); ++i )
     {
-        if( info.animations[ i ] == "" )
+        if( info.animations[ i ] == "" || info.animations_name[ i ] == "" )
         {
             continue;
         }
         File* file = new File( "./data/field/" + info.animations[ i ] );
 
-        LOGGER->Log( "AnimationExtractor: " + Ogre::StringConverter::toString( i ) + " " + info.animations[ i ] + "\n" );
+        LOGGER->Log( "AnimationExtractor: " + Ogre::StringConverter::toString( i ) + " " + info.animations[ i ] + " as animation with name " + info.animations_name[ i ] + "\n" );
 
         int number_of_frames = file->GetU16LE( 0x2 );
-        Ogre::Animation* anim = skeleton->createAnimation( info.animations[ i ], ( number_of_frames - 1 ) / 10.0f );
+        Ogre::Animation* anim = skeleton->createAnimation( info.animations_name[ i ], ( number_of_frames - 1 ) / fps );
 
         float time = 0;
         float tx, ty, tz;
@@ -224,7 +232,7 @@ AnimationExtractor( const Ogre::SkeletonPtr& skeleton, const ModelInfo& info, Sk
                 frame2->setRotation( rot );
             }
 
-            time += 1.0f / 10.0f;
+            time += 1.0f / fps;
         }
 
         delete file;

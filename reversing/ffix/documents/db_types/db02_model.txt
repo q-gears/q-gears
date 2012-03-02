@@ -27,6 +27,8 @@
 +14 [][][][] pointer to vertex groups.
 +18 [][][][] pointer to vertex data.
 +1c [][][][] pointer to mesh data.
++20 [][][][] pointer to vertex UV data for textured sprites.
++24 [][][][] pointer to vertex colours for shaded sprites.
 
 
 
@@ -43,7 +45,44 @@
 
 
 
-// textured monochrome quads data (0x18 size)
+// mesh data
+// monochrome textured quads data (0x18 size)
++00 [][]     vertex1 index.
++02 [][]     vertex2 index.
++04 [][]     vertex3 index.
++06 [][]     vertex4 index.
++08 [][]     index for texture coords for vertex 1.
++0a [][]     index for texture coords for vertex 2.
++0c [][]     index for texture coords for vertex 3.
++0e [][]     index for texture coords for vertex 4.
++10 []       R.
++11 []       G.
++12 []       B.
++13 []       index of CLUT and texture page info.
++15 []       flags:
+             0x01 - if flag set then we enable transparency.
+             0x02 - if flag not set then we cull backface.
+             0x60 - transparency mode (if 0x01 is set).
+             0x80 - 4bit/8bit CLUT (if 0x01 is set).
+
+// monochrome textured triangles data (0x14 size)
++00 [][]     vertex1 index.
++02 [][]     vertex2 index.
++04 [][]     vertex3 index.
++06 []       index of CLUT and texture page info.
++08 []       R.
++09 []       G.
++0a []       B.
++0c [][]     index for texture coords for vertex 1.
++0e [][]     index for texture coords for vertex 2.
++10 [][]     index for texture coords for vertex 3.
++12 []       flags:
+             0x01 - if flag set then we enable transparency.
+             0x02 - if flag not set then we cull backface.
+             0x60 - transparency mode (if 0x01 is set).
+             0x80 - 4bit/8bit CLUT (if 0x01 is set).
+
+// shaded textured quads data (0x20 size)
 +00 [][]     vertex1 index.
 +02 [][]     vertex2 index.
 +04 [][]     vertex3 index.
@@ -52,18 +91,78 @@
 +0a [][]     index for texture coords for vertex2.
 +0c [][]     index for texture coords for vertex3.
 +0e [][]     index for texture coords for vertex4.
-+10 []       R.
-+11 []       G.
-+12 []       B.
-+13 []       index of CLUT and texture page info.
-+14
-+15 []       flags
++10 [][]     index for colours for vertex 1.
++12 [][]     index for colours for vertex 2.
++14 [][]     index for colours for vertex 3.
++16 [][]     index for colours for vertex 4.
++1c []       flags:
              0x01 - if flag set then we enable transparency.
              0x02 - if flag not set then we cull backface.
              0x60 - transparency mode (if 0x01 is set).
              0x80 - 4bit/8bit CLUT (if 0x01 is set).
-+16
-+17
++1d []       index of CLUT and texture page info.
+
+// shaded textured triangles data (0x18 size)
++00 [][]     vertex1 index.
++02 [][]     vertex2 index.
++04 [][]     vertex3 index.
++06 [][]     index for texture coords for vertex1.
++08 [][]     index for texture coords for vertex2.
++0a [][]     index for texture coords for vertex3.
++0f []       flags:
+             0x01 - if flag set then we enable transparency.
+             0x02 - if flag not set then we cull backface.
+             0x60 - transparency mode (if 0x01 is set).
+             0x80 - 4bit/8bit CLUT (if 0x01 is set).
++10 [][]     index for colours for vertex 1.
++12 [][]     index for colours for vertex 2.
++14 [][]     index for colours for vertex 3.
++16 []       index of CLUT and texture page info.
+
+// gradated quads data (0x18 size)
++00 [][]     vertex1 index.
++02 [][]     vertex2 index.
++04 [][]     vertex3 index.
++06 [][]     vertex4 index.
++08 [][]     index for colours for vertex 1.
++0a [][]     index for colours for vertex 2.
++0c [][]     index for colours for vertex 3.
++0e [][]     index for colours for vertex 4.
+
+// gradated triangles data (0x14 size)
++00 [][]     vertex1 index.
++02 [][]     vertex2 index.
++04 [][]     vertex3 index.
++08 [][]     index for colours for vertex 1.
++0a [][]     index for colours for vertex 2.
++0c [][]     index for colours for vertex 3.
+
+// monochrome quads (0x10 size)
++00 [][]     vertex1 index.
++02 [][]     vertex2 index.
++04 [][]     vertex3 index.
++06 [][]     vertex4 index.
++08 []       R.
++09 []       G.
++0a []       B.
+
+// monochrome triangles (0x0c size)
++00 [][]     vertex1 index.
++02 [][]     vertex2 index.
++04 [][]     vertex3 index.
++08 []       R.
++09 []       G.
++0a []       B.
 
 
 
+// vertex UV data (0x2 size)
++0 []       u.
++1 []       v.
+
+
+
+// colour data (0x4 size)
++0 []       R.
++1 []       G.
++2 []       B.

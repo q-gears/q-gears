@@ -1,0 +1,7 @@
++00 []
++01 []       number of data.
+
+data records starts from +04 (0xc size)
++00 [][]     id of model
++04 [][][]   pointer from start of this data recort to clut and texpage settings.
++07 []       index of texture x and y data. Maybe this is for eye frames of animation.

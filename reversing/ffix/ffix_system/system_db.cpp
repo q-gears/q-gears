@@ -4,7 +4,7 @@
 
 S2 = A0;
 S4 = A1;
-S5 = A2;
+S5 = A2; // XXXXYYYY where XXXX - type of db file, YYYY - 
 
 V0 = h[80073c40 + 2];
 S0 = V0 - 1;

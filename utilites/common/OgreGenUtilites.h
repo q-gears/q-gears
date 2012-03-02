@@ -14,6 +14,13 @@ struct MeshData
     int             tex_height;
 };
 
+enum BPP
+{
+    BPP_4 = 0,
+    BPP_8 = 1,
+
+    BPP_BLACK = -1
+};
 
 
 struct TexForGen
@@ -22,7 +29,7 @@ struct TexForGen
     u16 texture_y;
     u16 palette_y;
     u16 palette_x;
-    int bpp;
+    BPP bpp;
 
     int start_x;
     int start_y;
@@ -43,7 +50,7 @@ typedef std::vector< TexForGen > VectorTexForGen;
 
 void CreateTexture( Vram* vram, const MeshData& mesh_data, const Ogre::String& texture_file_name, const VectorTexForGen& textures );
 void CreateMaterial( const Ogre::String& material_name, const Ogre::String& material_file_name, const Ogre::String& texture_name, const Ogre::String& vertex_program, const Ogre::String& fragment_program );
-void CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, const int start_y, const int clut_x, const int clut_y, const int texture_x, const int texture_y, const int bpp, const bool transparency );
+void CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, const int start_y, const int clut_x, const int clut_y, const int texture_x, const int texture_y, const BPP bpp, const bool transparency );
 void AddTexture( TexForGen& texture, const MeshData& data, VectorTexForGen& textures, Logger* logger );
 void AddTransparency( u32& colour, const bool transparency, const bool stp );
 
