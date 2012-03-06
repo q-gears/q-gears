@@ -51,8 +51,8 @@ public:
     void SetText( TiXmlNode* text );
     void SetFont( const Ogre::String& font );
     void UpdateGeometry();
-    const float GetTextLengthFromNode( TiXmlNode* node ) const;
-    const float GetTextLength( const Ogre::UTFString& text ) const;
+    float GetTextLengthFromNode( TiXmlNode* node ) const;
+    float GetTextLength( const Ogre::UTFString& text ) const;
     void SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const TextStyle& style );
     void SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, const TextStyle& style );
 
@@ -66,7 +66,7 @@ private:
     Ogre::SceneManager*                 m_SceneManager;
     Ogre::RenderSystem*                 m_RenderSystem;
 
-    int                                 m_MaxLetters;
+    unsigned int                        m_MaxLetters;
     Ogre::RenderOperation               m_RenderOp;
     Ogre::HardwareVertexBufferSharedPtr m_VertexBuffer;
 

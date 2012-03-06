@@ -148,12 +148,12 @@ void
 InputManager::ActivateBinds( int button )
 {
     std::vector< int > binds_indexes;
-    for( int i = 0; i < m_Binds.size(); ++i )
+    for( size_t i = 0; i < m_Binds.size(); ++i )
     {
         // if we found pressed button in this bind
         if( std::find( m_Binds[ i ].key_set.begin(), m_Binds[ i ].key_set.end(), button ) != m_Binds[ i ].key_set.end() )
         {
-            int j = 0;
+            size_t j = 0;
             for( ; j < m_Binds[ i ].key_set.size(); ++j )
             {
                 if( IsButtonPressed( m_Binds[ i ].key_set[ j ] ) == false )
@@ -170,8 +170,8 @@ InputManager::ActivateBinds( int button )
     }
 
     std::vector< int > binds_to_activate;
-    int max_size = 0;
-    for( int i = 0; i < binds_indexes.size(); ++i )
+    size_t max_size = 0;
+    for( size_t i = 0; i < binds_indexes.size(); ++i )
     {
         if( max_size < m_Binds[ binds_indexes[ i ] ].key_set.size() )
         {
@@ -186,7 +186,7 @@ InputManager::ActivateBinds( int button )
         }
     }
 
-    for( int i = 0; i < binds_to_activate.size(); ++i )
+    for( size_t i = 0; i < binds_to_activate.size(); ++i )
     {
         Ogre::StringVector params = StringTokenise( m_Binds[ binds_to_activate[ i ] ].cmd );
 

@@ -315,7 +315,7 @@ Q-Gears v0.10 | 2006-12-13
 ----------
 + [ffvii_content] Add for more choises to Yuffie dialog for mapjump to newly added maps for testing. (this will be remove before release) [Akari]
 * [ffvii_content] Add NMKIN_2, NMKIN_3 files for 0.10 release. [Akari]
-* [ffvii] Add perspective matrix loading from Camera in DAT file.. [Akari]
+* [ffvii] Add perspective matrix loading from Camera in DAT file. [Akari]
 
 2006-12-01
 ----------
@@ -621,3 +621,89 @@ Q-Gears v0.04 | 2006-09-27
 * [all] Add $Id: ChangeLog.txt 83 2006-10-08 06:55:30Z crazy_otaku $ subversion keyword to all files [Akari]
 * [all] Make all file names first word letter uppercase [Akari]
 * [all] Restructure files and directories [Akari]
+
+Revision 63
+----------
+Case switch done, UpperCase/lowercase clean up. Clean compile on linux. (halkun)
+
+Revision 59
+----------
+Added all opcodes (dummy) to script parser/fixed scriptdump bugs.  (halkun)
+
+Revision 49
+----------
+WorldMapModule.h, WorldMapModule.cpp - add placeholder for worldmap module
+displaytest.cpp - add M button to go to WorldMap Module.
+
+Revision 47
+----------
+Start documenting engine by doxygen.
+config.h, config.cpp - switched to RString. Removed old param. Now it contains field dumper flag and name of field to load (temporary).
+TypeDefine.h - moved u8 u16 u31 s8 s16 s32 definition to separate file from File class.
+main.cpp, guitest.h, guitest.cpp, displaytest.h, displaytest.cpp, ModuleManager.h, ModuleManager.cpp, menu.h, partymenu.h - renamed Screen to Module.
+displaytest.cpp - add N button to go to Field Module.
+math.h, math.cpp - math for pathfinding in field (needs to be merged with other math later)
+NoCopy.h, File.h, File.cpp, ModuleManager.h, ModuleManager.cpp, TimFile.h, TimFile.cpp, BinGZipFile.h, BinGZipFile.cpp, LzsFile.h, LzsFile.cpp - rewritten for doxygen and according to standart.
+3dtypes.h - add matrix header.
+display.h, display.cpp - add method to load camera matrix.
+vector.h - add equal, not equal methods.
+guibarexp.h, guibarexp.cpp - add fury, sadness states.
+savemap.h, gamestate.cpp - fix savemap.
+model.h, model.cpp - add placeholder for model.
+fieldscreen.h, fieldscreen.cpp, datfile.h, datfile.cpp - add Field Modile (load walkmesh, set camera).
+
+Revision 43
+----------
+Create Timer.
+Create a lot of window elements.
+Create 'Party Menu'
+Add a lot of things to GuiTest.
+Add loader for data in database.
+Fix small errors.
+
+Revision 40
+----------
+Added FFVII GUI support with 2 types of font, counter and pointer and gui testing screen.
+Moved all testing screen to separate dir.
+Add kernel.
+Moved config and logger to utilites.
+Added some finor fixes and functions to help with all changes.
+
+Revision 32
+----------
+Small fixes with struct aligment in SaveBMP and with picture width in TimFile.
+
+Revision 31
+----------
+Add Tim handling class and example in displaytest.cpp
+Some small fixes.
+
+Revision 30
+----------
+New RString class implemented. Based on StdString template.
+Logger switched to RString.
+itoa removed from Utilites.
+
+Revision 28
+----------
+Move all class copy restrictions to NoCopy template.
+Create "Dat" file loader for fields.
+Create Field screen class.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

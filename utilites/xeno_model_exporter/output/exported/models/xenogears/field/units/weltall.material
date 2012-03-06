@@ -1,0 +1,13 @@
+
+material xenogears/model/weltall
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+		}
+
+	}
+
+}

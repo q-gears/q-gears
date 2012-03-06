@@ -37,7 +37,7 @@ ConfigVarManager::Find( const Ogre::String& name ) const
 
 
 
-const int
+int
 ConfigVarManager::GetConfigVarNumber() const
 {
     return m_ConfigVars.size();

@@ -164,11 +164,11 @@ UiTextArea::UpdateGeometry()
     {
         if( m_TextNode != NULL )
         {
-            length =GetTextLengthFromNode( m_TextNode );
+            length = GetTextLengthFromNode( m_TextNode );
         }
         else
         {
-            length =GetTextLength( m_Text );
+            length = GetTextLength( m_Text );
         }
 
         if( m_TextAlign == CENTER )
@@ -199,7 +199,7 @@ UiTextArea::UpdateGeometry()
 
 
 
-const float
+float
 UiTextArea::GetTextLengthFromNode( TiXmlNode* node ) const
 {
     float length = 0;
@@ -233,11 +233,11 @@ UiTextArea::GetTextLengthFromNode( TiXmlNode* node ) const
 
 
 
-const float
+float
 UiTextArea::GetTextLength( const Ogre::UTFString& text ) const
 {
     float length = 0;
-    for( int i = 0; i < text.size(); ++i )
+    for( size_t i = 0; i < text.size(); ++i )
     {
         UiCharData char_data = m_Font->GetCharData( text[ i ] );
         length += ( char_data.pre + char_data.width + char_data.post ) * m_FinalScale.x * m_ScreenHeight / 720.0f;
@@ -301,7 +301,7 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
     float x = m_FinalTranslate.x;
     float y = m_FinalTranslate.y;
 
-    for( int i = 0; i < text.size(); ++i )
+    for( size_t i = 0; i < text.size(); ++i )
     {
         UiCharData char_data = m_Font->GetCharData( text[ i ] );
 

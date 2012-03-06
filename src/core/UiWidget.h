@@ -24,7 +24,7 @@ public:
     virtual void Render();
 
     void SetVisible( const bool visible );
-    const bool IsVisible() const;
+    bool IsVisible() const;
 
     const Ogre::String& GetName() const;
 
@@ -41,7 +41,7 @@ public:
     void ScriptPlayAnimation( const char* name, const float start, const float end );
     void ScriptPlayAnimationStop( const char* name, const float start, const float end );
     void ScriptSetDefaultAnimation( const char* animation );
-    const int ScriptAnimationSync();
+    int ScriptAnimationSync();
 
     virtual void UpdateTransformation();
 

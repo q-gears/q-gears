@@ -20,13 +20,13 @@ CmdBind( const Ogre::StringVector& params )
     Ogre::StringVector keys = Ogre::StringUtil::split( params[ 1 ], "+" );
     ButtonList key_codes;
 
-    for( int i = 0; i < keys.size(); ++i )
+    for( size_t i = 0; i < keys.size(); ++i )
     {
         key_codes.push_back( StringToKey( keys[ i ] ) );
     }
 
     bool fail = false;
-    for( int i = 0; i < key_codes.size(); ++i )
+    for( size_t i = 0; i < key_codes.size(); ++i )
     {
         if( key_codes[ i ] == OIS::KC_UNASSIGNED )
         {

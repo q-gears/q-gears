@@ -14,7 +14,7 @@ public:
     ConfigVarManager();
 
     ConfigVar* Find( const Ogre::String& name ) const;
-    const int GetConfigVarNumber() const;
+    int        GetConfigVarNumber() const;
     ConfigVar* GetConfigVar( const int i ) const;
 
 private:

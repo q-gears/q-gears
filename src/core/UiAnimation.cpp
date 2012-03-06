@@ -241,7 +241,7 @@ UiAnimation::SetTime( const float time )
 
 
 
-const float
+float
 UiAnimation::GetTime() const
 {
     return m_Time;
@@ -257,7 +257,7 @@ UiAnimation::SetLength( const float time )
 
 
 
-const float
+float
 UiAnimation::GetLength() const
 {
     return m_Length;

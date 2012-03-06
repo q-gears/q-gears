@@ -1371,7 +1371,7 @@ read_memory_block_two_bytes;
 // animation id
 V1 = hu[800831FC + current_entity * 2];
 V0 = w[8009C6DC];
-V1 = bu[V0 + V1 + C];
+V1 = bu[V0 + V1 + c];
 [model_data_offset + 5E] = b(V1);
 
 
@@ -1379,9 +1379,7 @@ V1 = bu[V0 + V1 + C];
 // speed of movement
 A1 = hu[800831FC + current_entity * 2];
 V0 = w[8009C6DC];
-V1 = bu[V0 + V1 + E];
-V1 = h[8009D828 + model_id * 2];
-V1 = V1 / V0;
+V1 = h[8009d828 + model_id * 2] / bu[V0 + A1 + e];
 [model_data_offset + 60] = h(V1);
 
 

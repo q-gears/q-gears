@@ -3,7 +3,6 @@
 #include <Ogre.h>
 
 #include "AnimationExtractor.h"
-#include "DrawSkeleton.h"
 #include "MeshExtractor.h"
 #include "../../common/Logger.h"
 #include "../../common/TimToVram.h"
@@ -55,6 +54,7 @@ ModelFile::GetModel( const ModelInfo& info )
     int number_of_parts = GetU8( 0x03 );
     int offset_to_bones = GetU32LE( 0x0c );
     int offset_to_parts = GetU32LE( 0x10 );
+
 
 
     Ogre::Bone* root1 = skeleton->createBone( "0", 0 );

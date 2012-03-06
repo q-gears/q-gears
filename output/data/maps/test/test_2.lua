@@ -17,48 +17,58 @@ EntityContainer[ "Player" ] = {
         player:set_solid_radius( 0.3 )
         player:set_solid( true )
 
---[[
         while true do
-            local triangle_id = player:get_triangle();
+            local triangle_id = player:get_move_triangle_id();
+
             if triangle_id == 0 then
-                field:pc_lock(true);
+--                field:pc_lock(true);
+                player:set_solid( false )
+
                 -- move to ladder
-                player:move_to_position(-100, 0, true);
+                player:move_to_position( -1, 0 );
+
                 -- move to up platform 1
-                player:set_direction(0);
-                player:set_animation_default("6", 1);
-                player:climb_to_position(-200, 350, 300, 23, Entity.DOWN_TO_UP);
-                player:set_animation_default("0", 1);
+                player:set_direction( 180 );
+                player:linear_to_position( -2, 3.5, 3, Entity.DOWN_TO_UP, "Climb" )
+                player:linear_sync()
+
                 -- tell something
-                message:show_text(1, "I runned away!", 100, 100, 130, 25);
-                script:wait(2);
-                message:hide(1);
+--                message:show_text(1, "I runned away!", 100, 100, 130, 25);
+--                script:wait(2);
+--                message:hide(1);
+
                 -- move to jump position
-                player:move_to_position(-200, 600, true);
+                player:move_to_position( -2, 6 );
+
                 -- jump to platform 2
-                player:set_direction(90);
-                player:set_animation_default("5", 1);
-                script:wait(0.5);
-                player:jump_to_position(200, 600, 24, 0.567);
-                script:wait(0.667);
-                player:set_animation_default("0", 1);
+                player:set_direction( 90 );
+--                player:set_animation_default("5", 1);
+--                script:wait(0.5);
+--                player:jump_to_position(200, 600, 24, 0.567);
+--                script:wait(0.667);
+--                player:set_animation_default("0", 1);
+
                 -- move to ladder
-                player:move_to_position(200, 350, true);
+--                player:move_to_position(200, 350, true);
+
                 -- tell something
-                message:show_text(1, "I returned!", 100, 100, 130, 25);
-                script:wait(2);
-                message:hide(1);
+--                message:show_text(1, "I returned!", 100, 100, 130, 25);
+--                script:wait(2);
+--                message:hide(1);
+
                 -- ladder down
-                player:set_direction(0);
-                player:set_animation_default("6", 1);
-                player:climb_to_position(100, 0, 0, 4, Entity.DOWN_TO_UP);
+                player:set_direction( 0 );
+                player:linear_to_position( 1, 0, 0, Entity.DOWN_TO_UP, "Climb" )
+                player:linear_sync()
+
                 -- return player control
-                field:pc_lock(false);
+                player:set_solid( true )
+--                field:pc_lock(false);
             end;
 
             script:wait(0.5);
         end;
-]]
+
         return 0
     end,
 
@@ -103,9 +113,10 @@ EntityContainer[ "Chasers_Speed1" ] = {
         local chaser1 = entity_manager:get_entity( "Chasers_Speed1" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser1:set_move_speed( 5 );
+        chaser1:set_move_speed( 3 );
         chaser1:set_solid_radius( 0.15 );
         chaser1:set_solid( true );
+        chaser1:move_auto_animation( false )
 
         script:wait( 1 )
 
@@ -130,9 +141,10 @@ EntityContainer[ "Chasers_Speed2" ] = {
         local chaser2 = entity_manager:get_entity( "Chasers_Speed2" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser2:set_move_speed( 5 );
+        chaser2:set_move_speed( 3 );
         chaser2:set_solid_radius( 0.15 );
         chaser2:set_solid( true );
+        chaser2:move_auto_animation( false )
 
         script:wait( 1 )
 
@@ -157,9 +169,10 @@ EntityContainer[ "Chasers_Speed3" ] = {
         local chaser3 = entity_manager:get_entity( "Chasers_Speed3" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser3:set_move_speed( 5 );
+        chaser3:set_move_speed( 3 );
         chaser3:set_solid_radius( 0.15 );
         chaser3:set_solid( true );
+        chaser3:move_auto_animation( false )
 
         script:wait( 1 )
 

@@ -3,6 +3,7 @@
 
 #include "../../common/File.h"
 #include "../../common/OgreGenUtilites.h"
+#include "../../common/DrawSkeleton.h"
 
 
 
@@ -13,20 +14,6 @@ struct ModelInfo
     std::vector<Ogre::String> animations;
     std::vector<Ogre::String> animations_name;
 };
-
-
-
-struct Bone
-{
-    Bone():
-        length( 0 ),
-        parent_id( -1 )
-    {
-    }
-    float length;
-    int parent_id;
-};
-typedef std::vector< Bone > Skeleton;
 
 
 

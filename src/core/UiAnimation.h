@@ -44,9 +44,9 @@ public:
     const Ogre::String& GetName() const;
 
     void SetTime( const float time );
-    const float GetTime() const;
+    float GetTime() const;
     void SetLength( const float time );
-    const float GetLength() const;
+    float GetLength() const;
     void AddScaleKeyFrame( const UiKeyFrameVector2& key_frame );
     void AddXKeyFrame( const UiKeyFrameVector2& key_frame );
     void AddYKeyFrame( const UiKeyFrameVector2& key_frame );

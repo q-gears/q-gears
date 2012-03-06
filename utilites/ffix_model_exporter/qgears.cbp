@@ -35,12 +35,15 @@
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
+		<Unit filename="..\common\DrawSkeleton.cpp" />
+		<Unit filename="..\common\DrawSkeleton.h" />
 		<Unit filename="..\common\File.cpp" />
 		<Unit filename="..\common\File.h" />
 		<Unit filename="..\common\FileSystem.cpp" />
 		<Unit filename="..\common\FileSystem.h" />
 		<Unit filename="..\common\Logger.cpp" />
 		<Unit filename="..\common\Logger.h" />
+		<Unit filename="..\common\OgreBase.h" />
 		<Unit filename="..\common\OgreGenUtilites.cpp" />
 		<Unit filename="..\common\OgreGenUtilites.h" />
 		<Unit filename="..\common\TimToVram.cpp" />
@@ -49,8 +52,6 @@
 		<Unit filename="..\common\Vram.h" />
 		<Unit filename="src\AnimationExtractor.cpp" />
 		<Unit filename="src\AnimationExtractor.h" />
-		<Unit filename="src\DrawSkeleton.cpp" />
-		<Unit filename="src\DrawSkeleton.h" />
 		<Unit filename="src\Main.cpp" />
 		<Unit filename="src\MeshExtractor.cpp" />
 		<Unit filename="src\MeshExtractor.h" />

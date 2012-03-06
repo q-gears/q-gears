@@ -33,15 +33,15 @@ public:
 
 private:
     // movement
-    const bool SetEntityOnWalkmesh( Entity* entity );
-    const bool PerformWalkmeshMove( Entity* entity );
-    const bool WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, const Ogre::Vector2& move_vector );
-    const bool CheckSolidCollisions( Entity* entity, Ogre::Vector3& position );
+    bool SetEntityOnWalkmesh( Entity* entity );
+    bool PerformWalkmeshMove( Entity* entity );
+    bool WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, const Ogre::Vector2& move_vector );
+    bool CheckSolidCollisions( Entity* entity, Ogre::Vector3& position );
     void SetEntityDirectionByVector( Entity* entity, const Ogre::Vector2& vector );
 
     void SetNextOffsetStep( Entity* entity );
     void SetNextTurnStep( Entity* entity );
-    void SetNextClimbStep( Entity* entity );
+    void SetNextLinearStep( Entity* entity );
 
 private:
     Walkmesh                    m_Walkmesh;

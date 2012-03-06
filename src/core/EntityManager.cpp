@@ -21,7 +21,7 @@ ConfigVar cv_debug_axis( "debug_axis", "Draw debug axis", "false" );
 
 
 
-const float
+float
 PointElevation( const Ogre::Vector2& point, const Ogre::Vector3& A, const Ogre::Vector3& B, const Ogre::Vector3& C )
 {
     float _A = A.z * ( B.y - C.y ) + B.z * ( C.y - A.y ) + C.z * ( A.y - B.y );
@@ -34,7 +34,7 @@ PointElevation( const Ogre::Vector2& point, const Ogre::Vector3& A, const Ogre::
 
 
 
-const float
+float
 SideOfVector( const Ogre::Vector2& point, const Ogre::Vector2& p1, const Ogre::Vector2& p2 )
 {
     Ogre::Vector2 AB = p2    - p1;
@@ -120,10 +120,13 @@ EntityManager::Update()
     // set move point for player entity
     if( m_PlayerEntity != NULL && m_PlayerMove != Ogre::Vector3::ZERO )
     {
-        m_PlayerMove *= m_PlayerEntity->GetMoveSpeed() * Timer::getSingleton().GetGameTimeDelta();
-        m_PlayerEntity->SetMovePosition( m_PlayerEntity->GetPosition() + m_PlayerMove );
-        m_PlayerEntity->SetMoveState( MS_WALKMESH );
-        m_PlayerMove = Ogre::Vector3::ZERO;
+        EntityState state = m_PlayerEntity->GetState();
+        if( state == ES_WALKMESH || state == ES_NONE )
+        {
+            m_PlayerMove *= m_PlayerEntity->GetMoveSpeed() * Timer::getSingleton().GetGameTimeDelta();
+            m_PlayerEntity->SetMovePosition( m_PlayerEntity->GetPosition() + m_PlayerMove );
+            m_PlayerEntity->SetState( ES_WALKMESH );
+        }
     }
 
 
@@ -149,70 +152,83 @@ EntityManager::Update()
         }
 
 
-        // update linear movement
-        if( m_EntityModels[ i ]->GetTurnType() != AT_NONE )
-        {
-            SetNextClimbStep( m_EntityModels[ i ] );
-        }
-
-
 
         // update movement
-        bool is_move = false;
-        bool is_run = InputManager::getSingleton().IsButtonPressed( OIS::KC_X );
-        if( m_EntityModels[ i ]->GetMoveState() == MS_WALKMESH )
+        switch( m_EntityModels[ i ]->GetState() )
         {
-            // try set entity on walkmesh it it's still don't has triangle
-            if( m_EntityModels[ i ]->GetMoveTriangleId() == -1 )
+            case ES_WALKMESH:
             {
-                if( SetEntityOnWalkmesh( m_EntityModels[ i ] ) == false )
+                bool is_move = false;
+
+
+                // try set entity on walkmesh it it's still don't has triangle
+                if( m_EntityModels[ i ]->GetMoveTriangleId() == -1 )
                 {
-                    m_EntityModels[ i ]->UnsetMove();
-                }
-            }
-
-            // perform move
-            if( m_EntityModels[ i ]->GetMoveState() == MS_WALKMESH )
-            {
-                float store_speed = m_EntityModels[ i ]->GetMoveSpeed();
-
-                if( m_PlayerEntity == m_EntityModels[ i ] && is_run == true )
-                {
-                    m_EntityModels[ i ]->SetMoveSpeed( store_speed * 4 );
-                }
-
-                is_move = PerformWalkmeshMove( m_EntityModels[ i ] );
-
-                if( m_EntityModels[ i ]->GetMoveAutoAnimation() == true )
-                {
-                    if( is_move == true )
+                    if( SetEntityOnWalkmesh( m_EntityModels[ i ] ) == false )
                     {
-                        if( m_EntityModels[ i ]->GetMoveSpeed() >= m_EntityModels[ i ]->GetMoveSpeedRun() )
-                        {
-                            m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationRunName() );
-                        }
-                        else
-                        {
-                            m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationWalkName() );
-                        }
+                        m_EntityModels[ i ]->UnsetMove();
                     }
                 }
 
-                m_EntityModels[ i ]->SetMoveSpeed( store_speed );
+                // perform move
+                if( m_EntityModels[ i ]->GetState() == ES_WALKMESH )
+                {
+                    float store_speed = m_EntityModels[ i ]->GetMoveSpeed();
+
+                    // run check
+                    if( m_PlayerEntity == m_EntityModels[ i ] && InputManager::getSingleton().IsButtonPressed( OIS::KC_X ) == true )
+                    {
+                        m_EntityModels[ i ]->SetMoveSpeed( store_speed * 4 );
+                    }
+
+                    is_move = PerformWalkmeshMove( m_EntityModels[ i ] );
+
+                    if( m_EntityModels[ i ]->GetMoveAutoAnimation() == true )
+                    {
+                        if( is_move == true )
+                        {
+                            if( m_EntityModels[ i ]->GetMoveSpeed() >= m_EntityModels[ i ]->GetMoveSpeedRun() )
+                            {
+                                m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationRunName() );
+                            }
+                            else
+                            {
+                                m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationWalkName() );
+                            }
+                        }
+                        else
+                        {
+                            m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationIdleName() );
+                        }
+                    }
+
+                    m_EntityModels[ i ]->SetMoveSpeed( store_speed );
+                }
             }
-        }
+            break;
 
 
 
-        // we perform move so play acording animation if needed
-        if( m_EntityModels[ i ]->GetMoveAutoAnimation() == true )
-        {
-            if( is_move == false )
+            case ES_LINEAR:
             {
-                m_EntityModels[ i ]->PlayAnimationLooped( m_EntityModels[ i ]->GetMoveAnimationIdleName() );
+                SetNextLinearStep( m_EntityModels[ i ] );
             }
+            break;
+
+
+
+            case ES_NONE:
+            {
+                m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationIdleName() );
+            }
+            break;
         }
     }
+
+
+
+    // reset player move. It already must be handled in update
+    m_PlayerMove = Ogre::Vector3::ZERO;
 
 
 
@@ -322,7 +338,7 @@ EntityManager::ScriptSetPlayerEntity( const char* name )
 
 
 
-const bool
+bool
 EntityManager::SetEntityOnWalkmesh( Entity* entity )
 {
     Ogre::Vector3 position3 = entity->GetPosition();
@@ -408,7 +424,7 @@ EntityManager::SetEntityOnWalkmesh( Entity* entity )
 
 
 
-const bool
+bool
 EntityManager::PerformWalkmeshMove( Entity* entity )
 {
     Ogre::Vector3 start_point = entity->GetPosition();
@@ -440,9 +456,9 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         return false;
     }
 
-    LOG_TRIVIAL( "Start position calculation." );
-    LOG_TRIVIAL( "Start point: " + Ogre::StringConverter::toString( start_point ) + "." );
-    LOG_TRIVIAL( "Move vector: " + Ogre::StringConverter::toString( direction ) + "." );
+    //LOG_TRIVIAL( "Start position calculation." );
+    //LOG_TRIVIAL( "Start point: " + Ogre::StringConverter::toString( start_point ) + "." );
+    //LOG_TRIVIAL( "Move vector: " + Ogre::StringConverter::toString( direction ) + "." );
 
     Ogre::Vector3 rotation( 0.0f, 0.0f, 0.0f );
     Ogre::Quaternion q1( 0.0f, 0.0f, 0.0f, 1.0f );
@@ -471,7 +487,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     direction.x = temp.x;
     direction.y = temp.y;
 
-    LOG_TRIVIAL( "Shortened Direction:(" + Ogre::StringConverter::toString( direction ) + ")." );
+    //LOG_TRIVIAL( "Shortened Direction:(" + Ogre::StringConverter::toString( direction ) + ")." );
 
 
 
@@ -494,9 +510,9 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
 
     // get ending point
     end_point.z = start_point.z;
-    LOG_TRIVIAL( "End point: (" + Ogre::StringConverter::toString( end_point ) + ")." );
+    //LOG_TRIVIAL( "End point: (" + Ogre::StringConverter::toString( end_point ) + ")." );
 
-    LOG_TRIVIAL( "Start cycle." );
+    //LOG_TRIVIAL( "Start cycle." );
     //for( int i = 0; ( m_PlayerEntity == entity && /*m_PlayerModelSlip == true &&*/ i < 16 ) ||
                     //(m_PlayerModelId == model_id && m_PlayerModelSlip == false && i < 3) ||
                     //( m_PlayerEntity != entity && i <= 16 ); ++i )
@@ -513,18 +529,18 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         rotation.z = 0;
         rotation.normalise();
         rotation = q1 * rotation;
-        LOG_TRIVIAL( "Move vector length: " + Ogre::StringConverter::toString( rotation.length() ) + "." );
+        //LOG_TRIVIAL( "Move vector length: " + Ogre::StringConverter::toString( rotation.length() ) + "." );
         // multiply move_vector by solid range
         rotation = rotation * solid;
         end_point2.x = end_point.x + rotation.x;
         end_point2.y = end_point.y + rotation.y;
-        LOG_TRIVIAL( "Left sector part end point:(" + Ogre::StringConverter::toString( end_point2 ) + ")." );
+        //LOG_TRIVIAL( "Left sector part end point:(" + Ogre::StringConverter::toString( end_point2 ) + ")." );
         // check_triangle
         first_triangle_check = WalkmeshBorderCross( entity, end_point2, direction );
         entity->SetMoveTriangleId( current_triangle );
         // model_check
         first_entity_check = CheckSolidCollisions( entity, end_point2 );
-        LOG_TRIVIAL( "Check1: " + Ogre::StringConverter::toString( first_triangle_check ) + " " + Ogre::StringConverter::toString( first_entity_check ) + "." );
+        //LOG_TRIVIAL( "Check1: " + Ogre::StringConverter::toString( first_triangle_check ) + " " + Ogre::StringConverter::toString( first_entity_check ) + "." );
 
         // 2nd check
         // rotate move_vector +45
@@ -543,7 +559,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         entity->SetMoveTriangleId( current_triangle );
         // model_check
         second_entity_check = CheckSolidCollisions( entity, end_point2 );
-        LOG_TRIVIAL( "Check2: " + Ogre::StringConverter::toString( second_triangle_check ) + " " + Ogre::StringConverter::toString( second_entity_check ) + "." );
+        //LOG_TRIVIAL( "Check2: " + Ogre::StringConverter::toString( second_triangle_check ) + " " + Ogre::StringConverter::toString( second_entity_check ) + "." );
 
         // 3rd check
         rotation.x = direction.x;
@@ -558,7 +574,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         entity->SetMoveTriangleId( current_triangle );
         // model_check
         third_entity_check = CheckSolidCollisions( entity, end_point2 );
-        LOG_TRIVIAL( "Check3: " + Ogre::StringConverter::toString( third_triangle_check ) + " " + Ogre::StringConverter::toString( third_entity_check ) + "." );
+        //LOG_TRIVIAL( "Check3: " + Ogre::StringConverter::toString( third_triangle_check ) + " " + Ogre::StringConverter::toString( third_entity_check ) + "." );
 
         // check condition and modify move_vector
         if( first_triangle_check  != false || second_triangle_check != false || third_triangle_check  != false ||
@@ -580,7 +596,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
                 // or if we only collide into others entity directly
                 else if( first_entity_check  == false && second_entity_check == false && third_entity_check  != false )
                 {
-                    LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" try to rotate." );
+                    //LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" try to rotate." );
                     q1.FromAngleAxis( Ogre::Radian( Ogre::Degree( -11.25f ) ), Ogre::Vector3::UNIT_Z );
                     rotation.x = direction.x;
                     rotation.y = direction.y;
@@ -638,7 +654,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
                             rotation = q1 * rotation;
                             direction.x = rotation.x;
                             direction.y = rotation.y;
-                            LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" new move vector: " + Ogre::StringConverter::toString( direction.x ) + " " + Ogre::StringConverter::toString( direction.y ) + "." );
+                            //LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" new move vector: " + Ogre::StringConverter::toString( direction.x ) + " " + Ogre::StringConverter::toString( direction.y ) + "." );
                         }
 
                         if( first_triangle_check == false && first_entity_check == false && ( second_triangle_check != false || second_entity_check != false ) )
@@ -672,7 +688,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     if( first_triangle_check  != false || second_triangle_check != false || third_triangle_check  != false || last_triangle_check   != false ||
         first_entity_check    != false || second_entity_check   != false || third_entity_check    != false )
     {
-        LOG_WARNING( "Entity \"" + entity->GetName() + "\" can't move to specified position." );
+        LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" can't move to specified position." );
         entity->UnsetMove();
         return false;
     }
@@ -710,7 +726,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
 
 
 
-const bool
+bool
 EntityManager::WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, const Ogre::Vector2& move_vector)
 {
     int current_triangle = entity->GetMoveTriangleId();
@@ -794,7 +810,7 @@ EntityManager::WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, con
 
 
 
-const bool
+bool
 EntityManager::CheckSolidCollisions( Entity* entity, Ogre::Vector3& position )
 {
     if( entity->IsSolid() == false )
@@ -909,95 +925,93 @@ EntityManager::SetNextTurnStep( Entity* entity )
 
 
 void
-EntityManager::SetNextClimbStep( Entity* entity )
+EntityManager::SetNextLinearStep( Entity* entity )
 {
     bool to_end = true;
     bool is_move = false;
 
-    float steps = entity->GetStepSeconds();
-    float current_step = entity->GetCurrentStepSeconds();
+    Ogre::Vector3 start = entity->GetLinearStart();
+    Ogre::Vector3 end = entity->GetLinearEnd();
+    Ogre::Vector3 current = entity->GetPosition();
+
+    float delta = Timer::getSingleton().GetGameTimeDelta();
 
     if( entity == m_PlayerEntity )
     {
-        ClimbMovement move = entity->GetClimbMovement();
+        LinearMovement move = entity->GetLinearMovement();
 
-        if( move == DOWN_TO_UP || move == UP_TO_DOWN )
+        if( move == LM_DOWN_TO_UP || move == LM_UP_TO_DOWN )
         {
-            if( m_MoveButtons.up == true )
+            if( m_PlayerMove.y > 0 ) // move up
             {
-                to_end = ( move == DOWN_TO_UP ) ? true : false;
+                to_end = ( move == LM_DOWN_TO_UP ) ? true : false;
                 is_move = true;
             }
-            else if( m_MoveButtons.down == true )
+            else if( m_PlayerMove.y < 0 ) // move down
             {
-                to_end = ( move == DOWN_TO_UP ) ? false : true;
+                to_end = ( move == LM_DOWN_TO_UP ) ? false : true;
                 is_move = true;
             }
         }
-        else if( move == LEFT_TO_RIGHT || move == RIGHT_TO_LEFT )
+        else if( move == LM_LEFT_TO_RIGHT || move == LM_RIGHT_TO_LEFT )
         {
-            if( m_MoveButtons.right == true )
+            if( m_PlayerMove.x > 0 ) // move right
             {
-                to_end = ( move == LEFT_TO_RIGHT ) ? true : false;
+                to_end = ( move == LM_LEFT_TO_RIGHT ) ? true : false;
                 is_move = true;
             }
-            else if( m_MoveButtons.left == true )
+            else if( m_PlayerMove.x < 0 ) // move left
             {
-                to_end = ( move == LEFT_TO_RIGHT ) ? false : true;
+                to_end = ( move == LM_LEFT_TO_RIGHT ) ? false : true;
                 is_move = true;
-            }
-        }
-
-        if( is_move == true )
-        {
-            if( to_end == true )
-            {
-                if( current_step == steps )
-                {
-                    entity->UnsetClimb( true );
-                    is_move = false;
-                }
-                else
-                {
-                    entity->SetCurrentStepSeconds( current_step + delta_time );
-                }
-            }
-            else
-            {
-                if( current_step == 0 )
-                {
-                    entity->UnsetClimb( false );
-                    is_move = false;
-                }
-                else
-                {
-                    entity->SetCurrentStepSeconds( current_step - delta_time );
-                }
             }
         }
     }
     else
     {
-        if( current_step == steps )
-        {
-            entity->UnsetClimb( true );
-        }
-        else
-        {
-            entity->SetCurrentStepSeconds( current_step + delta_time );
-            is_move = true;
-        }
+        is_move = true;
     }
+
+
 
     if( is_move == true )
     {
-        Ogre::Vector3 start_position = entity->GetClimbStart();
-        Ogre::Vector3 end_position   = entity->GetClimbEnd();
         Ogre::Vector3 position;
-        position.x = start_position.x + ( ( end_position.x - start_position.x ) / steps ) * current_step;
-        position.y = start_position.y + ( ( end_position.y - start_position.y ) / steps ) * current_step;
-        position.z = start_position.z + ( ( end_position.z - start_position.z ) / steps ) * current_step;
+
+        if( to_end == true )
+        {
+            Ogre::Vector3 end_start = end - start;
+            float time = end_start.length() / 1.2f; // move whole line by this number of seconds
+            position.x = current.x + ( end_start.x / time ) * delta;
+            position.y = current.y + ( end_start.y / time ) * delta;
+            position.z = current.z + ( end_start.z / time ) * delta;
+            position.x = ( end_start.x < 0 ) ? std::max( position.x, end.x ) : std::min( position.x, end.x );
+            position.y = ( end_start.y < 0 ) ? std::max( position.y, end.y ) : std::min( position.y, end.y );
+            position.z = ( end_start.z < 0 ) ? std::max( position.z, end.z ) : std::min( position.z, end.z );
+
+            if( position == end )
+            {
+                entity->UnsetLinear();
+            }
+        }
+        else
+        {
+            Ogre::Vector3 end_start = start - end;
+            float time = end_start.length() / 1.2f; // move whole line by this number of seconds
+            position.x = current.x + ( end_start.x / time ) * delta;
+            position.y = current.y + ( end_start.y / time ) * delta;
+            position.z = current.z + ( end_start.z / time ) * delta;
+            position.x = ( end_start.x < 0 ) ? std::max( position.x, start.x ) : std::min( position.x, start.x );
+            position.y = ( end_start.y < 0 ) ? std::max( position.y, start.y ) : std::min( position.y, start.y );
+            position.z = ( end_start.z < 0 ) ? std::max( position.z, start.z ) : std::min( position.z, start.z );
+
+            if( position == start )
+            {
+                entity->UnsetLinear();
+            }
+        }
+
         entity->SetPosition( position );
-        entity->AnimationUpdate( ( to_end == true ) ? delta_time : -delta_time );
+        entity->UpdateAnimation( ( to_end == true ) ? delta : -delta );
     }
 }

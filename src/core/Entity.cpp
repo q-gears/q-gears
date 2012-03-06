@@ -24,7 +24,8 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_TalkRadius( 0.25f ),
     m_Talkable( false ),
 
-    m_MoveState( MS_NONE ),
+    m_State( ES_NONE ),
+
     m_MoveSpeed( 0.9f ),
     m_MoveSpeedRun( 3.6f ),
     m_MovePosition( Ogre::Vector3( 0, 0, 0 ) ),
@@ -56,7 +57,8 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_LinearEnd( 0.0f, 0.0f, 0.0f ),
 
     m_AnimationDefault( "Idle" ),
-    m_AnimationCurrentName( "" )
+    m_AnimationCurrentName( "" ),
+    m_AnimationAutoPlay( true )
 {
     m_ModelNode = m_SceneNode->createChildSceneNode();
 
@@ -117,14 +119,26 @@ Entity::Update()
         DEBUG_DRAW.Text( entity_pos, 0, 0, m_Name );
         DEBUG_DRAW.Text( entity_pos, 0, 12, m_AnimationCurrentName );
 
-        static Ogre::String move_state_string[] = { "NONE", "MOVE_WALKMESH", "MOVE_LINEAR", "JUMP" };
+        static Ogre::String move_state_string[] = { "NONE", "MOVE_WALKMESH", "MOVE_LINEAR", "MOVE_JUMP" };
 
-        DEBUG_DRAW.Text( entity_pos, 0, 24, "Move state: " + move_state_string[ m_MoveState ] );
+        DEBUG_DRAW.Text( entity_pos, 0, 24, "Move state: " + move_state_string[ m_State ] );
         DEBUG_DRAW.Text( entity_pos, 0, 36, Ogre::StringConverter::toString( entity_pos ) );
-        if( m_MoveState == MS_WALKMESH )
+        switch( m_State )
         {
-            DEBUG_DRAW.Text( entity_pos, 0, 48, "Triangle: " + Ogre::StringConverter::toString( m_MoveTriangleId ) );
-            DEBUG_DRAW.Text( entity_pos, 0, 60, "Target position: " + Ogre::StringConverter::toString( m_MovePosition ) );
+            case ES_WALKMESH:
+            {
+                DEBUG_DRAW.Text( entity_pos, 0, 48, "Triangle: " + Ogre::StringConverter::toString( m_MoveTriangleId ) );
+                DEBUG_DRAW.Text( entity_pos, 0, 60, "Target position: " + Ogre::StringConverter::toString( m_MovePosition ) );
+            }
+            break;
+
+            case ES_LINEAR:
+            {
+                DEBUG_DRAW.Text( m_LinearStart, 0, 0, "Start: " + Ogre::StringConverter::toString( m_LinearStart ) );
+                DEBUG_DRAW.Text( m_LinearEnd, 0, 0, "End: " + Ogre::StringConverter::toString( m_LinearEnd ) );
+                DEBUG_DRAW.Line3d( m_LinearStart, m_LinearEnd );
+            }
+            break;
         }
     }
 
@@ -225,7 +239,7 @@ Entity::ScriptSetDirection( const float direction )
 
 
 
-const Ogre::Degree
+Ogre::Degree
 Entity::GetDirection() const
 {
     Ogre::Quaternion q = m_ModelNode->getOrientation();
@@ -238,7 +252,7 @@ Entity::GetDirection() const
 
 
 
-const float
+float
 Entity::GetHeight() const
 {
     return m_Height;
@@ -255,7 +269,7 @@ Entity::SetSolidRadius( const float radius )
 
 
 
-const float
+float
 Entity::GetSolidRadius() const
 {
     return m_SolidRadius;
@@ -271,7 +285,7 @@ Entity::SetSolid( const bool solid )
 
 
 
-const bool
+bool
 Entity::IsSolid() const
 {
     return m_Solid;
@@ -288,7 +302,7 @@ Entity::SetTalkRadius( const float radius )
 
 
 
-const float
+float
 Entity::GetTalkRadius() const
 {
     return m_TalkRadius;
@@ -304,7 +318,7 @@ Entity::SetTalkable( const bool talkable )
 
 
 
-const bool
+bool
 Entity::IsTalkable() const
 {
     return m_Talkable;
@@ -313,17 +327,17 @@ Entity::IsTalkable() const
 
 
 void
-Entity::SetMoveState( const MoveState state )
+Entity::SetState( const EntityState state )
 {
-    m_MoveState = state;
+    m_State = state;
 }
 
 
 
-const MoveState
-Entity::GetMoveState() const
+EntityState
+Entity::GetState() const
 {
-    return m_MoveState;
+    return m_State;
 }
 
 
@@ -336,7 +350,7 @@ Entity::SetMoveSpeed( const float speed )
 
 
 
-const float
+float
 Entity::GetMoveSpeed() const
 {
     return m_MoveSpeed;
@@ -352,7 +366,7 @@ Entity::SetMoveSpeedRun( const float speed )
 
 
 
-const float
+float
 Entity::GetMoveSpeedRun() const
 {
     return m_MoveSpeedRun;
@@ -368,7 +382,7 @@ Entity::SetMovePosition( const Ogre::Vector3& target )
 
 
 
-const Ogre::Vector3
+const Ogre::Vector3&
 Entity::GetMovePosition() const
 {
     return m_MovePosition;
@@ -384,7 +398,7 @@ Entity::SetMoveTriangleId( const int triangle )
 
 
 
-const int
+int
 Entity::GetMoveTriangleId() const
 {
     return m_MoveTriangleId;
@@ -400,7 +414,7 @@ Entity::SetMoveAutoRotation( const bool rotate )
 
 
 
-const bool
+bool
 Entity::GetMoveAutoRotation() const
 {
     return m_MoveAutoRotation;
@@ -416,7 +430,7 @@ Entity::SetMoveAutoAnimation( const bool animate )
 
 
 
-const bool
+bool
 Entity::GetMoveAutoAnimation() const
 {
     return m_MoveAutoAnimation;
@@ -451,7 +465,7 @@ Entity::GetMoveAnimationRunName() const
 void
 Entity::ScriptMoveToPosition( const float x, const float y )
 {
-    m_MoveState = MS_WALKMESH;
+    m_State = ES_WALKMESH;
 
     m_MovePosition = Ogre::Vector3( x, y, 0 );
     m_MoveEntity = NULL;
@@ -464,7 +478,7 @@ Entity::ScriptMoveToPosition( const float x, const float y )
 void
 Entity::ScriptMoveToEntity( Entity* entity )
 {
-    m_MoveState = MS_WALKMESH;
+    m_State = ES_WALKMESH;
 
     m_MovePosition = entity->GetPosition();
     m_MoveEntity = entity;
@@ -474,14 +488,14 @@ Entity::ScriptMoveToEntity( Entity* entity )
 
 
 
-const int
+int
 Entity::ScriptMoveSync()
 {
     ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
 
     LOG_TRIVIAL( "[SCRIPT] Wait entity \"" + m_Name + "\" move for function \"" + script.function + "\" in script entity \"" + script.entity + "\"." );
 
-    m_MoveSync.push_back( script );
+    m_Sync.push_back( script );
     return -1;
 }
 
@@ -490,16 +504,100 @@ Entity::ScriptMoveSync()
 void
 Entity::UnsetMove()
 {
-    m_MoveState = MS_NONE;
+    m_State = ES_NONE;
 
     m_MoveEntity = NULL;
     m_MoveStopDistance = 0;
 
-    for( size_t i = 0; i < m_MoveSync.size(); ++i)
+    for( size_t i = 0; i < m_Sync.size(); ++i)
     {
-        ScriptManager::getSingleton().ContinueScriptExecution( m_MoveSync[ i ] );
+        ScriptManager::getSingleton().ContinueScriptExecution( m_Sync[ i ] );
     }
-    m_MoveSync.clear();
+    m_Sync.clear();
+}
+
+
+
+void
+Entity::ScriptLinearToPosition( const float x, const float y, const float z, const LinearMovement movement, const char* animation )
+{
+    Ogre::Vector3 pos = Ogre::Vector3( x, y, z );
+    SetLinear( pos, movement, Ogre::String( animation ) );
+
+    LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set linear move to position \"" + Ogre::StringConverter::toString( pos ) + "\" with animation \"" + animation + "\"." );
+}
+
+
+
+int
+Entity::ScriptLinearSync()
+{
+    ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
+
+    LOG_TRIVIAL( "[SCRIPT] Wait entity \"" + m_Name + "\" linear move for function \"" + script.function + "\" in script entity \"" + script.entity + "\"." );
+
+    m_Sync.push_back( script );
+    return -1;
+}
+
+
+
+void
+Entity::SetLinear( const Ogre::Vector3& end, const LinearMovement movement, const Ogre::String& animation )
+{
+    m_State = ES_LINEAR;
+    m_LinearMovement = movement;
+    m_LinearStart = GetPosition();
+    m_LinearEnd = end;
+
+    // linear animation
+    m_AnimationAutoPlay = false;
+    PlayAnimation( animation, EA_LOOPED, 0, -1 );
+
+    // after move we need reattach entity to walkmesh
+    m_MoveTriangleId = -1;
+}
+
+
+
+void
+Entity::UnsetLinear()
+{
+    m_State = ES_NONE;
+
+    // linear animation
+    m_AnimationAutoPlay = true;
+    PlayAnimation( m_AnimationDefault, EA_LOOPED, 0, -1 );
+
+    for( size_t i = 0; i < m_Sync.size(); ++i)
+    {
+        ScriptManager::getSingleton().ContinueScriptExecution( m_Sync[ i ] );
+    }
+    m_Sync.clear();
+}
+
+
+
+LinearMovement
+Entity::GetLinearMovement() const
+{
+    return m_LinearMovement;
+}
+
+
+
+const Ogre::Vector3&
+Entity::GetLinearStart() const
+{
+    return m_LinearStart;
+}
+
+
+
+const Ogre::Vector3&
+Entity::GetLinearEnd() const
+{
+    return m_LinearEnd;
 }
 
 
@@ -526,7 +624,7 @@ Entity::ScriptOffsetToPosition( const float x, const float y, const float z, con
 
 
 
-const int
+int
 Entity::ScriptOffsetSync()
 {
     ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
@@ -553,7 +651,7 @@ Entity::UnsetOffset()
 
 
 
-const Ogre::Vector3
+const Ogre::Vector3&
 Entity::GetOffsetPositionStart() const
 {
     return m_OffsetPositionStart;
@@ -561,7 +659,7 @@ Entity::GetOffsetPositionStart() const
 
 
 
-const Ogre::Vector3
+const Ogre::Vector3&
 Entity::GetOffsetPositionEnd() const
 {
     return m_OffsetPositionEnd;
@@ -569,7 +667,7 @@ Entity::GetOffsetPositionEnd() const
 
 
 
-const ActionType
+ActionType
 Entity::GetOffsetType() const
 {
     return m_OffsetType;
@@ -577,7 +675,7 @@ Entity::GetOffsetType() const
 
 
 
-const float
+float
 Entity::GetOffsetStepSeconds() const
 {
     return m_OffsetStepSeconds;
@@ -594,7 +692,7 @@ Entity::SetOffsetCurrentStepSeconds( const float seconds )
 
 
 
-const float
+float
 Entity::GetOffsetCurrentStepSeconds() const
 {
     return m_OffsetCurrentStepSeconds;
@@ -627,7 +725,7 @@ Entity::ScriptTurnToEntity( Entity* entity, const TurnDirection turn_direction, 
 
 
 
-const int
+int
 Entity::ScriptTurnSync()
 {
     ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
@@ -678,7 +776,7 @@ Entity::UnsetTurn()
 
 
 
-const Ogre::Degree
+Ogre::Degree
 Entity::CalculateTurnAngle( const Ogre::Degree& start, const Ogre::Degree& end ) const
 {
     Ogre::Degree ret = end;
@@ -729,7 +827,7 @@ Entity::CalculateTurnAngle( const Ogre::Degree& start, const Ogre::Degree& end )
 
 
 
-const Ogre::Degree
+Ogre::Degree
 Entity::GetTurnDirectionStart() const
 {
     return m_TurnDirectionStart;
@@ -737,7 +835,7 @@ Entity::GetTurnDirectionStart() const
 
 
 
-const Ogre::Degree
+Ogre::Degree
 Entity::GetTurnDirectionEnd() const
 {
     return m_TurnDirectionEnd;
@@ -745,7 +843,7 @@ Entity::GetTurnDirectionEnd() const
 
 
 
-const ActionType
+ActionType
 Entity::GetTurnType() const
 {
     return m_TurnType;
@@ -753,7 +851,7 @@ Entity::GetTurnType() const
 
 
 
-const float
+float
 Entity::GetTurnStepSeconds() const
 {
     return m_TurnStepSeconds;
@@ -770,7 +868,7 @@ Entity::SetTurnCurrentStepSeconds( const float seconds )
 
 
 
-const float
+float
 Entity::GetTurnCurrentStepSeconds() const
 {
     return m_TurnCurrentStepSeconds;
@@ -782,87 +880,6 @@ const Ogre::String&
 Entity::GetCurrentAnimationName() const
 {
     return m_AnimationCurrentName;
-}
-
-
-
-void
-Entity::LinearToPosition(const float x, const float y, const float z, const int triangle_id, const ClimbMovement movement)
-{
-    if (m_ScriptInfo.entity_id != -1)
-    {
-        Ogre::LogManager::getSingletonPtr()->logMessage("[SCRIPT ERROR] Climb to position: Entity already doing some action (MOVING, JUMPING or CLIMBING) and waiting till it ends.");
-        return 1;
-    }
-    m_ScriptInfo = m_FieldScriptManager->GetCurrentScriptInfo();
-
-    this->SetClimb(Ogre::Vector3(x, y, z), triangle_id, movement);
-
-    Ogre::LogManager::getSingletonPtr()->logMessage("[SCRIPT] Climb to position '" + Ogre::StringConverter::toString(Ogre::Vector3(x, y, z)) + "'.");
-
-    return -1;
-}
-
-
-
-const int
-Entity::ScriptLinearSync()
-{
-}
-
-
-
-void
-Entity::SetLinear( const Ogre::Vector3& end, const LinearMovement movement )
-{
-    Ogre::Vector3 start = this->GetPosition();
-    Ogre::Vector3 end_start = end - start;
-    float steps = end_start.length() / 120;
-
-    m_State = CLIMB;
-    m_ClimbMovement = movement;
-    m_ClimbStart = m_SceneNode->getPosition();
-    m_ClimbEnd = end;
-    m_StepSeconds = steps;
-    m_CurrentStepSeconds = 0;
-}
-
-
-
-void
-Entity::UnsetLinear( const bool end )
-{
-    m_State = STAND;
-
-    if (m_ScriptInfo.entity_id != -1)
-    {
-        m_FieldScriptManager->ContinueEntityScriptExecution(m_ScriptInfo);
-        m_ScriptInfo.entity_id = -1;
-    }
-}
-
-
-
-const LinearMovement
-Entity::GetLinearMovement() const
-{
-    return m_LinearMovement;
-}
-
-
-
-const Ogre::Vector3&
-Entity::GetLinearStart() const
-{
-    return m_LinearStart;
-}
-
-
-
-const Ogre::Vector3&
-Entity::GetLinearEnd() const
-{
-    return m_LinearEnd;
 }
 
 
@@ -907,7 +924,7 @@ Entity::ScriptSetDefaultAnimation( const char* animation )
 
 
 
-const int
+int
 Entity::ScriptAnimationSync()
 {
     ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
@@ -920,7 +937,7 @@ Entity::ScriptAnimationSync()
 
 
 
-const Ogre::Degree
+Ogre::Degree
 Entity::GetDirectionToEntity( Entity* entity ) const
 {
     Ogre::Vector3 current_point = GetPosition();

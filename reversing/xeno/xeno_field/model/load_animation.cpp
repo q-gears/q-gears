@@ -16,8 +16,7 @@ if (A3 == 0)
     return;
 }
 
-V0 = w[S4 + 10]; // animation start pos file
-if (V0 == 0)
+if( w[S4 + 10] == 0 ) // animation start pos file
 {
     return;
 }
@@ -224,6 +223,109 @@ FC511E80 49
             801E44DC	j      L1e5974 [$801e5974]
         }
 
+        case 8: // 083E1E80
+        {
+            A0 = w[SP + c8];
+            A1 = w[S4 + 4];
+            func1dfe8c;
+
+            [S4 + 98] = h(-1);
+
+            801E44DC	j      L1e5974 [$801e5974]
+        }
+        break;
+
+        case a: // 203E1E80
+        {
+            A0 = w[SP + c8];
+            A1 = w[S4 + 4];
+            A2 = S5 & ff;
+            A3 = 7;
+            func1df52c;
+
+            801E3E34	j      L1e5974 [$801e5974]
+        }
+        break;
+
+        case c: // A03E1E80
+        {
+            [S4 + 70] = h(0);
+            [S4 + 72] = h(0);
+            [S4 + 74] = h(0);
+            [S4 + 76] = h(0);
+            [S4 + 78] = h(0);
+            [S4 + 7a] = h(0);
+            [S4 + 7c] = h(0);
+            [S4 + 7e] = h(0);
+            [S4 + 80] = h(0);
+            [S4 + 82] = h(0);
+            [S4 + 84] = h(0);
+            [S4 + 86] = h(0);
+
+            801E3ECC	j      L1e5974 [$801e5974]
+        }
+        break;
+
+        case 10: // 0C3F1E80
+        {
+            A0 = S4;
+            A1 = S5 & ff;
+            A2 = SP + 68;
+            func1e6910; // get pointer to animation file 2202_0_0_0 - 2202_0_0_X
+
+            A0 = w[S4 + 4];
+            A1 = V0;
+            func1def10;
+
+            801E3F28	j      L1e5974 [$801e5974]
+        }
+        break;
+
+        case 13: // D43F1E80
+        {
+            V0 = hu[S3 + 0];
+            S3 = S3 + 2;
+            S2 = V0 >> 8;
+            S0 = V0 & ff;
+
+            V0 = hu[S3 + 0];
+            S3 = S3 + 2;
+            S6 = V0 >> 8;
+            [SP + 6c] = h(V0);
+            FP = bu[SP + 6c];
+
+            A0 = S4;
+            A1 = S0;
+            A2 = SP + 68;
+            func1e6910; // get pointer to animation file 2202_0_0_0 - 2202_0_0_X
+            S1 = V0;
+
+            if (w[801e85cc] != 0)
+            {
+                A0 = w[S4 + 4];
+                A1 = S1;
+                func1def10;
+            }
+            else
+            {
+                A0 = w[SP + c8];
+                A1 = w[S4 + 4];
+                A2 = S1; // init animation
+                A3 = S6 & ff;
+                A4 = S5 & ff;
+                A5 = FP;
+                A6 = S2 & ff; // animation file id
+                func1df0b4;
+            }
+
+            [SP + d0] = w(-1);
+            [S4 + 98] = h(-1);
+            801E44DC	j      L1e5974 [$801e5974]
+        }
+        break;
+
+
+
         801E3D8C	lw     t2, $00d0(sp)
         801E3D90	addiu  t3, zero, $ffff (=-$1)
         801E3D94	beq    t2, t3, L1e3de8 [$801e3de8]
@@ -264,30 +366,6 @@ FC511E80 49
         801E3E00	j      L1e5974 [$801e5974]
         801E3E04	sw     t2, $00f0(sp)
 
-        case 8: // 083E1E80
-        {
-            A0 = w[SP + c8];
-            A1 = w[S4 + 4];
-            func1dfe8c;
-
-            [S4 + 98] = h(-1);
-
-            801E44DC	j      L1e5974 [$801e5974]
-        }
-        break;
-
-        case a: // 203E1E80
-        {
-            A0 = w[SP + c8];
-            A1 = w[S4 + 4];
-            A2 = S5 & ff;
-            A3 = 7;
-            func1df52c;
-
-            801E3E34	j      L1e5974 [$801e5974]
-        }
-        break;
-
         801E3E3C	lw     s0, $0004(s4)
         801E3E40	lw     a0, $00c8(sp)
         801E3E44	jal    func1dfe8c [$801dfe8c]
@@ -316,25 +394,6 @@ FC511E80 49
         801E3E98	j      L1e5974 [$801e5974]
         801E3E9C	nop
 
-        case c: // A03E1E80
-        {
-            [S4 + 70] = h(0);
-            [S4 + 72] = h(0);
-            [S4 + 74] = h(0);
-            [S4 + 76] = h(0);
-            [S4 + 78] = h(0);
-            [S4 + 7a] = h(0);
-            [S4 + 7c] = h(0);
-            [S4 + 7e] = h(0);
-            [S4 + 80] = h(0);
-            [S4 + 82] = h(0);
-            [S4 + 84] = h(0);
-            [S4 + 86] = h(0);
-
-            801E3ECC	j      L1e5974 [$801e5974]
-        }
-        break;
-
         801E3ED4	andi   a2, s5, $00ff
         801E3ED8	lw     a0, $00c8(sp)
         801E3EDC	lw     a1, $0004(s4)
@@ -351,21 +410,6 @@ FC511E80 49
         801E3F00	ori    a3, zero, $0002
         801E3F04	j      L1e5974 [$801e5974]
         801E3F08	nop
-
-        case 10: // 0C3F1E80
-        {
-            A0 = S4;
-            A1 = S5 & ff;
-            A2 = SP + 68;
-            func1e6910; // get pointer to animation file 2202_0_0_0 - 2202_0_0_X
-
-            A0 = w[S4 + 4];
-            A1 = V0;
-            func1def10;
-
-            801E3F28	j      L1e5974 [$801e5974]
-        }
-        break;
 
         801E3F30	addu   a0, s4, zero
         801E3F34	andi   a1, s5, $00ff
@@ -412,49 +456,6 @@ FC511E80 49
         801E3FC8	sh     v0, $008e(s4)
         801E3FCC	j      L1e5974 [$801e5974]
         801E3FD0	nop
-
-        case 13: // D43F1E80
-        {
-            V0 = hu[S3 + 0];
-            S3 = S3 + 2;
-            S2 = V0 >> 8;
-            S0 = V0 & ff;
-
-            V0 = hu[S3 + 0];
-            S3 = S3 + 2;
-            S6 = V0 >> 8;
-            [SP + 6c] = h(V0);
-            FP = bu[SP + 6c];
-
-            A0 = S4;
-            A1 = S0;
-            A2 = SP + 68;
-            func1e6910; // get pointer to animation file 2202_0_0_0 - 2202_0_0_X
-            S1 = V0;
-
-            if (w[801e85cc] != 0)
-            {
-                A0 = w[S4 + 4];
-                A1 = S1;
-                func1def10;
-            }
-            else
-            {
-                A0 = w[SP + c8];
-                A1 = w[S4 + 4];
-                A2 = S1; // init animation
-                A3 = S6 & ff;
-                A4 = S5 & ff;
-                A5 = FP;
-                A6 = S2 & ff; // animation file id
-                func1df0b4;
-            }
-
-        [SP + d0] = w(-1);
-        [S4 + 98] = h(-1);
-
-        801E44DC	j      L1e5974 [$801e5974]
-
 
         801E4068	lhu    v0, $0000(s3)
         801E406C	addiu  s3, s3, $0002
@@ -2371,7 +2372,7 @@ FC511E80 49
         801E5970	sw     zero, $00e8(sp)
 
         L1e5974:	; 801E5974
-        801E5974	lw     t2, $00e8(sp)
+        T2 = w[SP + e8];
     801E597C	bne    t2, zero, L1e3d44 [$801e3d44]
 }
 

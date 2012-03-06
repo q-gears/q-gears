@@ -24,18 +24,18 @@ public:
     UiFont( const Ogre::String& name );
     virtual ~UiFont();
 
-    const Ogre::String GetName() const;
+    const Ogre::String& GetName() const;
 
     void SetImage( const Ogre::String& image, const int width, const int height );
-    const Ogre::String GetImageName() const;
-    const int GetImageWidth() const;
-    const int GetImageHeight() const;
+    const Ogre::String& GetImageName() const;
+    int GetImageWidth() const;
+    int GetImageHeight() const;
 
     void SetHeight( const int height );
-    const int GetHeight() const;
+    int GetHeight() const;
 
     void AddCharData( const UiCharData& data );
-    const UiCharData GetCharData( const int char_code ) const;
+    UiCharData GetCharData( const int char_code ) const;
 
 private:
     Ogre::String              m_Name;

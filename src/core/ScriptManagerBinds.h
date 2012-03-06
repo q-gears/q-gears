@@ -59,11 +59,14 @@ ScriptManager::InitBinds()
             .def( "is_visible", ( bool( Entity::* )() ) &Entity::IsVisible )
             .def( "set_move_speed", ( void( Entity::* )( const float ) ) &Entity::SetMoveSpeed )
             .def( "get_move_speed", ( float( Entity::* )() ) &Entity::GetMoveSpeed )
+            .def( "get_move_triangle_id", ( int( Entity::* )() ) &Entity::GetMoveTriangleId )
             .def( "move_auto_rotation", ( void( Entity::* )( const bool ) ) &Entity::SetMoveAutoRotation )
             .def( "move_auto_animation", ( void( Entity::* )( const bool ) ) &Entity::SetMoveAutoAnimation )
             .def( "move_to_position", ( void( Entity::* )( const float, const float ) ) &Entity::ScriptMoveToPosition )
             .def( "move_to_entity", ( void( Entity::* )( Entity* ) ) &Entity::ScriptMoveToEntity )
             .def( "move_sync", ( int( Entity::* )() ) &Entity::ScriptMoveSync, luabind::yield )
+            .def( "linear_to_position", ( void( Entity::* )( const float, const float, const float, const LinearMovement, const char* ) ) &Entity::ScriptLinearToPosition )
+            .def( "linear_sync", ( int( Entity::* )() ) &Entity::ScriptLinearSync, luabind::yield )
             .def( "offset_to_position", ( void( Entity::* )( const float, const float, const float, const ActionType, const float ) ) &Entity::ScriptOffsetToPosition )
             .def( "offset_sync", ( int( Entity::* )() ) &Entity::ScriptOffsetSync, luabind::yield )
             .def( "turn_to_entity", ( void( Entity::* )( Entity*, const TurnDirection, const float ) )&Entity::ScriptTurnToEntity )
@@ -84,7 +87,12 @@ ScriptManager::InitBinds()
 
                 luabind::value( "CLOCKWISE", TD_CLOCKWISE ),
                 luabind::value( "ANTICLOCKWISE", TD_ANTICLOCKWISE ),
-                luabind::value( "CLOSEST", TD_CLOSEST )
+                luabind::value( "CLOSEST", TD_CLOSEST ),
+
+                luabind::value( "UP_TO_DOWN", LM_UP_TO_DOWN ),
+                luabind::value( "DOWN_TO_UP", LM_DOWN_TO_UP ),
+                luabind::value( "LEFT_TO_RIGHT", LM_LEFT_TO_RIGHT ),
+                luabind::value( "RIGHT_TO_LEFT", LM_RIGHT_TO_LEFT )
             ]
     ];
 

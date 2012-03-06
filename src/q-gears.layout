@@ -34,6 +34,12 @@
 	<File name="core\ConfigVar.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="62" topLine="0" />
 	</File>
+	<File name="core\ConfigVarManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="787" topLine="24" />
+	</File>
+	<File name="core\ConfigVarManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="312" topLine="0" />
+	</File>
 	<File name="core\Console.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="12547" topLine="432" />
 	</File>
@@ -47,16 +53,16 @@
 		<Cursor1 position="46" topLine="0" />
 	</File>
 	<File name="core\Entity.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8563" topLine="438" />
+		<Cursor1 position="9390" topLine="455" />
 	</File>
-	<File name="core\Entity.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2238" topLine="83" />
+	<File name="core\Entity.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2018" topLine="81" />
 	</File>
-	<File name="core\EntityManager.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1038" topLine="15" />
+	<File name="core\EntityManager.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="32291" topLine="910" />
 	</File>
-	<File name="core\EntityManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="150" topLine="0" />
+	<File name="core\EntityManager.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="863" topLine="21" />
 	</File>
 	<File name="core\EntityModel.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1220" topLine="39" />
@@ -71,10 +77,13 @@
 		<Cursor1 position="1331" topLine="29" />
 	</File>
 	<File name="core\InputManager.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="4315" topLine="178" />
+		<Cursor1 position="4097" topLine="174" />
 	</File>
 	<File name="core\InputManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="103" topLine="0" />
+	</File>
+	<File name="core\InputManagerCommands.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="557" topLine="0" />
 	</File>
 	<File name="core\Logger.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="572" topLine="0" />
@@ -98,19 +107,19 @@
 		<Cursor1 position="143" topLine="0" />
 	</File>
 	<File name="core\UiAnimation.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="307" topLine="108" />
+		<Cursor1 position="5510" topLine="249" />
 	</File>
 	<File name="core\UiAnimation.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="309" topLine="12" />
+		<Cursor1 position="622" topLine="34" />
 	</File>
 	<File name="core\UiFont.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="46" topLine="0" />
+		<Cursor1 position="996" topLine="76" />
 	</File>
 	<File name="core\UiFont.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="658" topLine="17" />
+		<Cursor1 position="668" topLine="15" />
 	</File>
 	<File name="core\UiManager.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="3045" topLine="156" />
+		<Cursor1 position="1271" topLine="49" />
 	</File>
 	<File name="core\UiManager.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1437" topLine="25" />
@@ -122,16 +131,16 @@
 		<Cursor1 position="42" topLine="0" />
 	</File>
 	<File name="core\UiTextArea.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="3615" topLine="155" />
+		<Cursor1 position="7299" topLine="289" />
 	</File>
 	<File name="core\UiTextArea.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1024" topLine="44" />
+		<Cursor1 position="1414" topLine="53" />
 	</File>
 	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="290" topLine="0" />
+		<Cursor1 position="7523" topLine="266" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2984" topLine="79" />
+		<Cursor1 position="549" topLine="11" />
 	</File>
 	<File name="core\Utilites.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="2599" topLine="104" />
@@ -143,10 +152,10 @@
 		<Cursor1 position="91" topLine="0" />
 	</File>
 	<File name="core\XmlFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2013" topLine="77" />
+		<Cursor1 position="414" topLine="14" />
 	</File>
 	<File name="core\XmlFile.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="555" topLine="0" />
+		<Cursor1 position="582" topLine="3" />
 	</File>
 	<File name="core\XmlFontFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="876" topLine="21" />
@@ -158,7 +167,7 @@
 		<Cursor1 position="225" topLine="0" />
 	</File>
 	<File name="core\XmlScreenFile.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="4679" topLine="130" />
+		<Cursor1 position="14637" topLine="381" />
 	</File>
 	<File name="core\XmlScreenFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="427" topLine="0" />
@@ -194,7 +203,7 @@
 		<Cursor1 position="4664" topLine="134" />
 	</File>
 	<File name="core\library\luabind\detail\policy.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8690" topLine="357" />
+		<Cursor1 position="17956" topLine="766" />
 	</File>
 	<File name="core\library\luabind\handle.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="2503" topLine="64" />

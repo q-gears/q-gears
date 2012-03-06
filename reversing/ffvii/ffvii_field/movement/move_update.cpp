@@ -522,25 +522,21 @@ if (number_of_models > 0)
                     [80074EA4 + S2 * 84 + 20] = w(Z_cur);
 
                     X_fin = w[80074EA4 + S2 * 84 + 78];
-                    A1 = X_fin - X_cur;
-                    A1 = A1 >> C;
+                    A1 = (X_fin - X_cur) >> c;
                     [SP + 10] = w(A1);
 
                     Y_fin = w[80074EA4 + S2 * 84 + 7C];
-                    V1 = Y_fin - Y_cur;
-                    A0 = V1 >> C;
+                    A0 = (Y_fin - Y_cur) >> c;
                     [SP + 14] = w(A0);
 
                     Z_fin = w[80074EA4 + S2 * 84 + 80];
-                    V0 = Z_fin - Z_cur;
-                    V0 = V0 >> C;
+                    V0 = (Z_fin - Z_cur) >> c;
                     [SP + 18] = w(V0);
 
                     A0 = A1 * A1 + A0 * A0 + V0 * V0;
                     system_square_root;
-                    V0 = V0 * 4;
 
-                    [80074EA4 + S2 * 84 + 30] = h(V0);
+                    [80074EA4 + S2 * 84 + 30] = h(V0 * 4);
                     [80074EA4 + S2 * 84 + 32] = h(0);
                     [80074EA4 + S2 * 84 + 6A] = h(1);
 

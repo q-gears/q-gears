@@ -277,7 +277,7 @@ UiWidget::SetVisible( const bool visible )
 
 
 
-const bool
+bool
 UiWidget::IsVisible() const
 {
     return m_Visible;
@@ -415,7 +415,7 @@ UiWidget::ScriptSetDefaultAnimation( const char* animation )
 
 
 
-const int
+int
 UiWidget::ScriptAnimationSync()
 {
     ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
@@ -541,7 +541,7 @@ UiWidget::UpdateTransformation()
 
 
 
-    for( int i = 0; i < m_Children.size(); ++i )
+    for( size_t i = 0; i < m_Children.size(); ++i )
     {
         m_Children[ i ]->UpdateTransformation();
     }

@@ -27,6 +27,16 @@ To Do
 * [Content] Add few Xenogears field models with animation (robots) at least one.
 * [Entity] Implement all movement features that was in v0.17.
 
+
+
+2011-03-07
+----------
+* [Entity] Made state for looped animation. Climb and all other looped animation now works correctly. [Akari]
+
+2011-03-05
+----------
+* [Entity] Return all climb (now linear move) fucntionality from v0.17 except animation. [Akari]
+
 2011-03-03
 ----------
 * [Export FFIX] Finish first version of FFIX field model exporter and add Zidane to demo. [Akari]

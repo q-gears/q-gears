@@ -18,9 +18,9 @@ public:
     XmlFile( const Ogre::String& file );
     virtual ~XmlFile();
 
-    const bool                GetBool( TiXmlNode* node, const Ogre::String& tag, bool def = false ) const;
-    const int                 GetInt( TiXmlNode* node, const Ogre::String& tag, int def = 0 ) const;
-    const float               GetFloat( TiXmlNode* node, const Ogre::String& tag, float def = 0.0f ) const;
+    bool                      GetBool( TiXmlNode* node, const Ogre::String& tag, bool def = false ) const;
+    int                       GetInt( TiXmlNode* node, const Ogre::String& tag, int def = 0 ) const;
+    float                     GetFloat( TiXmlNode* node, const Ogre::String& tag, float def = 0.0f ) const;
     const Ogre::String        GetString( TiXmlNode* node, const Ogre::String& tag, const Ogre::String& def = "" ) const;
     const Ogre::UTFString     GetUTFString( TiXmlNode* node, const Ogre::String& tag, const Ogre::UTFString& def = "" ) const;
     const Ogre::Vector2       GetVector2( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector2& def = Ogre::Vector2::ZERO ) const;

@@ -34,37 +34,10 @@ EntityModel::~EntityModel()
 void
 EntityModel::Update()
 {
-    if( m_AnimationCurrent != NULL )
+    if( m_AnimationAutoPlay == true )
     {
-        float delta_time = Timer::getSingleton().GetGameTimeDelta();
-
-        bool stop_check = ( m_AnimationCurrent->hasEnded() == true ) || ( m_AnimationCurrent->getTimePosition() + delta_time >= m_AnimationEndTime );
-
-        if( stop_check == true )
-        {
-            //LOG_TRIVIAL( "Animation finished for entity \"" + m_Name + "\"." );
-            for( size_t i = 0; i < m_AnimationSync.size(); ++i)
-            {
-                ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationSync[ i ] );
-            }
-            m_AnimationSync.clear();
-
-            if( m_AnimationState == EA_DEFAULT )
-            {
-                float time = ( m_AnimationCurrent->hasEnded() != true ) ? m_AnimationCurrent->getTimePosition() : 0;
-
-                PlayAnimation( m_AnimationDefault, EA_DEFAULT, time, -1 );
-
-                m_AnimationCurrent->addTime( delta_time );
-            }
-        }
-        else
-        {
-            m_AnimationCurrent->addTime( delta_time );
-        }
+        UpdateAnimation( Timer::getSingleton().GetGameTimeDelta() );
     }
-
-
 
     Entity::Update();
 }
@@ -79,7 +52,7 @@ EntityModel::SetVisible( const bool visible )
 
 
 
-const bool
+bool
 EntityModel::IsVisible() const
 {
     return m_Model->isVisible();
@@ -99,7 +72,7 @@ EntityModel::PlayAnimation( const Ogre::String& animation, EntityAnimation state
     {
         m_AnimationCurrentName = animation;
         m_AnimationCurrent = m_Model->getAnimationState( animation );
-        m_AnimationCurrent->setLoop( false );
+        m_AnimationCurrent->setLoop( ( state == EA_LOOPED ) ? true : false );
         m_AnimationCurrent->setEnabled( true );
         m_AnimationCurrent->setTimePosition( ( start == -1 ) ? m_AnimationCurrent->getLength() : start );
 
@@ -115,17 +88,51 @@ EntityModel::PlayAnimation( const Ogre::String& animation, EntityAnimation state
 
 
 void
-EntityModel::PlayAnimationLooped( const Ogre::String& animation )
+EntityModel::PlayAnimationContinue( const Ogre::String& animation )
 {
-    float time = 0;
-    if( m_AnimationCurrent != NULL &&                                               // if some animation is played
-        m_Model->getAllAnimationStates()->hasAnimationState( animation ) == true && // and we want to play animation that exist (use this to avoid exception)
-        m_AnimationCurrent == m_Model->getAnimationState( animation ) )             // and animation we want is the animation that currently playing
+    if( m_AnimationCurrent == NULL ||                                                 // if animation isn't played
+        ( m_Model->getAllAnimationStates()->hasAnimationState( animation ) == true && // and we want to play animation that exist (use this to avoid exception)
+          ( m_AnimationCurrent != m_Model->getAnimationState( animation ) ||          // and animation we want is not animation that currently playing
+            m_AnimationState != EA_LOOPED ) ) )                                       // or now playing animation we want but it doesn't looped
     {
-        time = ( m_AnimationCurrent->hasEnded() != true ) ?
-            m_AnimationCurrent->getTimePosition() :
-            m_AnimationCurrent->getTimePosition() - m_AnimationCurrent->getLength();
+        PlayAnimation( animation, EA_LOOPED, 0, -1 );
     }
+}
 
-    PlayAnimation( animation, EA_DEFAULT, time, -1 );
+
+
+void
+EntityModel::UpdateAnimation( const float delta )
+{
+    if( m_AnimationCurrent != NULL )
+    {
+        bool stop_check = ( m_AnimationCurrent->hasEnded() == true ) || ( m_AnimationCurrent->getTimePosition() + delta >= m_AnimationEndTime );
+
+        if( stop_check == true )
+        {
+            //LOG_TRIVIAL( "Animation finished for entity \"" + m_Name + "\"." );
+            for( size_t i = 0; i < m_AnimationSync.size(); ++i)
+            {
+                ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationSync[ i ] );
+            }
+            m_AnimationSync.clear();
+
+            if( m_AnimationState == EA_DEFAULT )
+            {
+                float time = ( m_AnimationCurrent->hasEnded() != true ) ? m_AnimationCurrent->getTimePosition() : 0;
+                PlayAnimation( m_AnimationDefault, EA_LOOPED, time, -1 );
+                m_AnimationCurrent->addTime( delta );
+            }
+            else if( m_AnimationState == EA_LOOPED )
+            {
+                float time = ( m_AnimationCurrent->hasEnded() != true ) ? m_AnimationCurrent->getTimePosition() : m_AnimationCurrent->getTimePosition() - m_AnimationCurrent->getLength();
+                PlayAnimation( m_AnimationCurrentName, EA_LOOPED, time, -1 );
+                m_AnimationCurrent->addTime( delta );
+            }
+        }
+        else
+        {
+            m_AnimationCurrent->addTime( delta );
+        }
+    }
 }

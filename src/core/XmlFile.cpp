@@ -26,7 +26,7 @@ XmlFile::~XmlFile()
 
 
 
-const bool
+bool
 XmlFile::GetBool( TiXmlNode* node, const Ogre::String& tag, bool def ) const
 {
     bool ret = def;
@@ -45,7 +45,7 @@ XmlFile::GetBool( TiXmlNode* node, const Ogre::String& tag, bool def ) const
 
 
 
-const int
+int
 XmlFile::GetInt( TiXmlNode* node, const Ogre::String& tag, int def ) const
 {
     int ret = def;
@@ -64,7 +64,7 @@ XmlFile::GetInt( TiXmlNode* node, const Ogre::String& tag, int def ) const
 
 
 
-const float
+float
 XmlFile::GetFloat( TiXmlNode* node, const Ogre::String& tag, float def ) const
 {
     float ret = def;

@@ -1,5 +1,6 @@
 ////////////////////////////////
 // func1def10
+// read initial bone rotation
 // A0 - pointer to bone struct 0x74
 // A1 - pointer to animation file animation_0_0_0 - animation_0_0_X
 

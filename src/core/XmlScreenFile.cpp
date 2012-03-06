@@ -150,7 +150,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     {
                         Ogre::StringVector colour_string = Ogre::StringUtil::split( colours, "," );
                         Ogre::Vector3 colour[ 4 ];
-                        for( int i = 0; i < 4; ++i )
+                        for( size_t i = 0; i < 4; ++i )
                         {
                             Ogre::StringUtil::trim( colour_string[ i ] );
                             colour[ i ] = ( i < colour_string.size() ) ? Ogre::StringConverter::parseVector3( colour_string[ i ] ) : Ogre::Vector3( 1, 1, 1 );
@@ -309,7 +309,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( scale != "" )
                 {
                     Ogre::StringVector key_frame = Ogre::StringUtil::split( scale, "," );
-                    for( int i = 0; i < key_frame.size(); ++i )
+                    for( size_t i = 0; i < key_frame.size(); ++i )
                     {
                         Ogre::StringUtil::trim( key_frame[ i ] );
 
@@ -330,7 +330,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( x != "" )
                 {
                     Ogre::StringVector key_frame = Ogre::StringUtil::split( x, "," );
-                    for( int i = 0; i < key_frame.size(); ++i )
+                    for( size_t i = 0; i < key_frame.size(); ++i )
                     {
                         Ogre::StringUtil::trim( key_frame[ i ] );
 
@@ -351,7 +351,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( y != "" )
                 {
                     Ogre::StringVector key_frame = Ogre::StringUtil::split( y, "," );
-                    for( int i = 0; i < key_frame.size(); ++i )
+                    for( size_t i = 0; i < key_frame.size(); ++i )
                     {
                         Ogre::StringUtil::trim( key_frame[ i ] );
 
@@ -372,7 +372,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( rotation != "" )
                 {
                     Ogre::StringVector key_frame = Ogre::StringUtil::split( rotation, "," );
-                    for( int i = 0; i < key_frame.size(); ++i )
+                    for( size_t i = 0; i < key_frame.size(); ++i )
                     {
                         Ogre::StringUtil::trim( key_frame[ i ] );
 
@@ -393,7 +393,7 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                 if( alpha != "" )
                 {
                     Ogre::StringVector key_frame = Ogre::StringUtil::split( alpha, "," );
-                    for( int i = 0; i < key_frame.size(); ++i )
+                    for( size_t i = 0; i < key_frame.size(); ++i )
                     {
                         Ogre::StringUtil::trim( key_frame[ i ] );
 

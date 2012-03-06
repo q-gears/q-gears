@@ -30,12 +30,12 @@ UiManager::~UiManager()
 
     UnloadTexts();
 
-    for( int i = 0; i < m_Fonts.size(); ++i )
+    for( size_t i = 0; i < m_Fonts.size(); ++i )
     {
         delete m_Fonts[ i ];
     }
 
-    for( int i = 0; i < m_Widgets.size(); ++i )
+    for( size_t i = 0; i < m_Widgets.size(); ++i )
     {
         delete m_Widgets[ i ];
     }
@@ -61,7 +61,7 @@ UiManager::Initialise()
 void
 UiManager::Update()
 {
-    for( int i = 0; i < m_Widgets.size(); ++i )
+    for( size_t i = 0; i < m_Widgets.size(); ++i )
     {
         m_Widgets[ i ]->Update();
     }
@@ -72,7 +72,7 @@ UiManager::Update()
 void
 UiManager::OnResize()
 {
-    for( int i = 0; i < m_Widgets.size(); ++i )
+    for( size_t i = 0; i < m_Widgets.size(); ++i )
     {
         m_Widgets[ i ]->OnResize();
     }

@@ -15,11 +15,12 @@ public:
 
     // model related
     virtual void        SetVisible( const bool visible );
-    virtual const bool  IsVisible() const;
+    virtual bool        IsVisible() const;
 
     // animation related
     virtual void        PlayAnimation( const Ogre::String& animation, EntityAnimation state, const float start, const float end );
-    virtual void        PlayAnimationLooped( const Ogre::String& animation );
+    virtual void        PlayAnimationContinue( const Ogre::String& animation );
+    virtual void        UpdateAnimation( const float delta );
 
 private:
     EntityModel();

@@ -1,0 +1,11 @@
+material Skeleton
+{
+    technique
+    {
+        pass
+        {
+            ambient vertexcolour
+            polygon_mode wireframe
+        }
+    }
+}

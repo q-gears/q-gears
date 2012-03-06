@@ -21,7 +21,7 @@ UiFont::~UiFont()
 
 
 
-const Ogre::String
+const Ogre::String&
 UiFont::GetName() const
 {
     return m_Name;
@@ -39,7 +39,7 @@ UiFont::SetImage( const Ogre::String& image, const int width, const int height )
 
 
 
-const Ogre::String
+const Ogre::String&
 UiFont::GetImageName() const
 {
     return m_ImageName;
@@ -47,7 +47,7 @@ UiFont::GetImageName() const
 
 
 
-const int
+int
 UiFont::GetImageWidth() const
 {
     return m_ImageWidth;
@@ -55,7 +55,7 @@ UiFont::GetImageWidth() const
 
 
 
-const int
+int
 UiFont::GetImageHeight() const
 {
     return m_ImageHeight;
@@ -71,7 +71,7 @@ UiFont::SetHeight( const int height )
 
 
 
-const int
+int
 UiFont::GetHeight() const
 {
     return m_Height;
@@ -87,10 +87,10 @@ UiFont::AddCharData( const UiCharData& data )
 
 
 
-const UiCharData
+UiCharData
 UiFont::GetCharData( const int char_code ) const
 {
-    for( int i = 0; i < m_CharData.size(); ++i )
+    for( size_t i = 0; i < m_CharData.size(); ++i )
     {
         if( m_CharData[ i ].char_code == char_code )
         {
