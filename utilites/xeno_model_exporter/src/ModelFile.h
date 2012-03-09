@@ -17,6 +17,7 @@ public:
     virtual ~ModelFile();
 
     void GetModel( Ogre::MeshPtr mesh, const MeshData& info, VectorTexForGen& textures, Logger* export_text );
+    void GetModelPart( const int part_id, Ogre::MeshPtr mesh, const MeshData& info, VectorTexForGen& textures, Logger* export_text, const int bone_id );
 
 private:
     int LoadPoly010305_18( float*& pPos, float*& tPos, Ogre::RGBA*& cPos, const MeshData& info, VectorTexForGen& textures );

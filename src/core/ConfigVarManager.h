@@ -13,9 +13,9 @@ class ConfigVarManager : public Ogre::Singleton< ConfigVarManager >
 public:
     ConfigVarManager();
 
-    ConfigVar* Find( const Ogre::String& name ) const;
-    int        GetConfigVarNumber() const;
-    ConfigVar* GetConfigVar( const int i ) const;
+    ConfigVar*   Find( const Ogre::String& name ) const;
+    unsigned int GetConfigVarNumber() const;
+    ConfigVar*   GetConfigVar( const unsigned int i ) const;
 
 private:
     std::vector< ConfigVar* > m_ConfigVars;

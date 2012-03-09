@@ -1,34 +1,85 @@
-0x08            - do something for all bones except root (like 0x0a).
+0x08            - reset dynamic functions for all bones. Reset model_struct [+98] to -1.
 
-0x0a [bone_id]  - do something for root bone (like 0x08).
+0x0a [bone_id]  - reset dynamic functions for given bone.
 
-0x0c            - reset all bytes from [+70] to [+8c] in model struct with size 0x134 to zero.
+0x0c            - reset all bytes from model_struct [+70] to [+8c] to zero.
 
 0x10 [file_id]  - set initial bones rotation and translation from given file (animation_0_0_0 - animation_0_0_X).
 
-0x13 [???][][file_id][arg3][arg4] - 
+0x13 [arg0][file_id][arg2][arg3][frames] - blend from previous position to position in given file (animation_0_0_0 - animation_0_0_X) by given number of frames
+
+0x21 [arg0] - ???
+
+0x23 [arg0][bone_id] - set arg0 & 1 to given bone struct + 7. If arg0 & 0x80 is set then set it for all children too.
 
 0x48 [argument] - store given argument to struct with size 0x134 +36[].
 
 
+
 ani0
-0A 00
-0C00 - reset
-0800
-10 00 - set initial bone rotation from given file
-4800
+0A 00               - reset dynamic for root bone
+0C00                - reset model struct
+0800                - reset dynamic for all bones
+10 00               - set initial bone rotation from given file
+48 00               - model_struct + 36 to 0.
 0000
 
 ani1
-0A 00
-0C00 - reset
-48 00
-13 00 01 00 00 14
+0A 00               - reset dynamic for root bone
+0C00                - reset model struct
+48 00               - model_struct + 36 to 0.
+13 00 01 00 00 14   - blend to animation 01 for 0x14 frames
 2100
+0000
 
 ani2
-0A00
-0C 00 - reset
-48 00
-13 00 02 00 00 14
+0A 00               - reset dynamic for root bone
+0C00                - reset model struct
+48 00               - model_struct + 36 to 0.
+13 00 02 00 00 14   - blend to animation 02 for 0x14 frames
 2100
+0000
+
+
+// WELTALL
+ani0
+0A 00
+0C00                - reset model struct
+0800
+10 00 - set initial bone rotation from given file
+48 00
+0000
+
+ani01
+0A 00
+0C00                - reset model struct
+4800
+23 01 1700
+23 00 1800
+23 00 1D00
+23 01 1E00
+13 00 01 00 00 14
+2100
+0000
+
+ani02
+0A 00
+0C00                - reset model struct
+23 01 1700
+23 00 1800
+23 01 1D00
+23 00 1E00
+13 00 02 00 00 0F
+2100
+110200014B000000000038FF00007777
+
+ani03
+0A 00
+0C00                - reset model struct
+23 01 1700
+23 00 1800
+23 00 1D00
+23 01 1E00
+10 01
+110100010000
+

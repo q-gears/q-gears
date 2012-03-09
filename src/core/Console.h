@@ -22,6 +22,7 @@ public:
     void Input( const Event& event );
     void Update();
     void UpdateDraw();
+    void UpdateNotification();
     void OnResize();
 
     void SetToVisible();
@@ -41,7 +42,7 @@ public:
 private:
     int                           m_ConsoleWidth;
     int                           m_ConsoleHeight;
-    int                           m_LineWidth;
+    unsigned int                  m_LineWidth;
     int                           m_LetterWidth;
 
     bool                          m_ToVisible;
@@ -52,20 +53,21 @@ private:
     {
         Ogre::String text;
         Ogre::ColourValue colour;
+        float time;
     };
     std::list< OutputLine >       m_OutputLine;
-    int                           m_MaxOutputLine; // max number of lines in output list
-    int                           m_DisplayLine;   // bottom of console displays this line
+    unsigned int                  m_MaxOutputLine; // max number of lines in output list
+    unsigned int                  m_DisplayLine;   // bottom of console displays this line
     Ogre::String                  m_InputLine;
-    int                           m_CursorPosition;
+    unsigned int                  m_CursorPosition;
     float                         m_CursorBlinkTime;
 
     std::list< Ogre::String >     m_History;
     int                           m_HistoryLine;
-    int                           m_HistorySize;
+    unsigned int                  m_HistorySize;
 
     Ogre::StringVector            m_AutoCompletition;
-    int                           m_AutoCompletitionLine;
+    unsigned int                  m_AutoCompletitionLine;
 };
 
 

@@ -24,10 +24,15 @@ To Do
 ----------
 * [Content] Add FFVII fields maps startmap mdstin md1_1 and md1_2 maps and transitions between them.
 * [Background] Implement all background features that used in FFVII 1st mission until reactor blow. [Akari]
-* [Content] Add few Xenogears field models with animation (robots) at least one.
 * [Entity] Implement all movement features that was in v0.17.
 
 
+
+2011-03-09
+----------
+* [Console] Add console notification to show lines from console in normal view. Cvar "console_notification = true". [Akari]
+* [Content] Add Weltall and some robo from Xenogears to demo. [Akari]
+* [Export Xeno] First version of Xeno animated model exporting. [Akari]
 
 2011-03-07
 ----------
@@ -39,7 +44,8 @@ To Do
 
 2011-03-03
 ----------
-* [Export FFIX] Finish first version of FFIX field model exporter and add Zidane to demo. [Akari]
+* [Content] Add Zidane to demo. [Akari]
+* [Export FFIX] Finish first version of FFIX field model exporter. [Akari]
 
 2012-02-19
 ----------

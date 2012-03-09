@@ -51,175 +51,183 @@ ModelFile::GetModel( Ogre::MeshPtr mesh, const MeshData& data, VectorTexForGen& 
 
     for( int part_id = 0; part_id < number_of_parts; ++part_id )
     {
-        int pointer_to_part_header = 0x10 + part_id * 0x38;
-        int number_of_poly_blocks = GetU16LE( pointer_to_part_header + 0x6 );
-        m_PointerToVertexData = GetU32LE( pointer_to_part_header + 0x08 );
-        m_PointerToMeshData = GetU32LE( pointer_to_part_header + 0x10 );
-        m_PointerToTextureData = GetU32LE( pointer_to_part_header + 0x14 );
+        GetModelPart( part_id, mesh, data, textures, export_text, 0 );
+    }
+}
+
+
+
+void
+ModelFile::GetModelPart( const int part_id, Ogre::MeshPtr mesh, const MeshData& data, VectorTexForGen& textures, Logger* export_text, const int bone_id )
+{
+    int pointer_to_part_header = 0x10 + part_id * 0x38;
+    int number_of_poly_blocks = GetU16LE( pointer_to_part_header + 0x6 );
+    m_PointerToVertexData = GetU32LE( pointer_to_part_header + 0x08 );
+    m_PointerToMeshData = GetU32LE( pointer_to_part_header + 0x10 );
+    m_PointerToTextureData = GetU32LE( pointer_to_part_header + 0x14 );
+
+    m_ExportLog->Log(
+        "Part: " + Ogre::StringConverter::toString( part_id ) + "\n" +
+        "    number of poly blocks: " + Ogre::StringConverter::toString( number_of_poly_blocks ) + "\n"
+        "    pointer to polygon data: " + Ogre::StringConverter::toString( m_PointerToMeshData ) + "\n"
+        "    pointer to texture data: " + Ogre::StringConverter::toString( m_PointerToTextureData ) + "\n"
+    );
+
+    for( int poly_block_id = 0; poly_block_id < number_of_poly_blocks; ++poly_block_id )
+    {
+        u8 polygon_type = GetU8(m_PointerToMeshData + 0);
+        int number_of_polygons = GetU16LE(m_PointerToMeshData + 2);
+        int number_of_triangles = number_of_polygons;
+        if (polygon_type == 0x09 || polygon_type == 0x0c || polygon_type == 0x0d) // if quads
+        {
+            number_of_triangles *= 2;
+        }
+
+        m_PointerToMeshData += 4;
 
         m_ExportLog->Log(
-            "Part: " + Ogre::StringConverter::toString( part_id ) + "\n" +
-            "    number of poly blocks: " + Ogre::StringConverter::toString( number_of_poly_blocks ) + "\n"
-            "    pointer to polygon data: " + Ogre::StringConverter::toString( m_PointerToMeshData ) + "\n"
-            "    pointer to texture data: " + Ogre::StringConverter::toString( m_PointerToTextureData ) + "\n"
+            "        polygon type: " +
+            Ogre::StringConverter::toString(polygon_type) +
+            ", number of polygons: " +
+            Ogre::StringConverter::toString(number_of_polygons) +
+            "\n"
         );
 
-        for( int poly_block_id = 0; poly_block_id < number_of_poly_blocks; ++poly_block_id )
+
+
+        Ogre::SubMesh* sub_mesh = mesh->createSubMesh( Ogre::StringConverter::toString( part_id ) + "_" + Ogre::StringConverter::toString( poly_block_id ) );
+        sub_mesh->setMaterialName( "xenogears/model/" + data.name );
+        sub_mesh->useSharedVertices = false;
+        sub_mesh->operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
+
+        // Allocate and prepare vertex data
+        sub_mesh->vertexData = new Ogre::VertexData();
+        sub_mesh->vertexData->vertexStart = 0;
+        sub_mesh->vertexData->vertexCount = static_cast< size_t >( number_of_triangles * 3 );
+
+        // Index buffer
+        sub_mesh->indexData = new Ogre::IndexData();
+        sub_mesh->indexData->indexStart = 0;
+        sub_mesh->indexData->indexCount = sub_mesh->vertexData->vertexCount;
+        sub_mesh->indexData->indexBuffer = Ogre::HardwareBufferManager::getSingleton().createIndexBuffer(Ogre::HardwareIndexBuffer::IT_16BIT, sub_mesh->indexData->indexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+        u16* idata = static_cast<u16*>(sub_mesh->indexData->indexBuffer->lock(Ogre::HardwareBuffer::HBL_DISCARD));
+        for( int i = 0; i < sub_mesh->vertexData->vertexCount; ++i )
         {
-            u8 polygon_type = GetU8(m_PointerToMeshData + 0);
-            int number_of_polygons = GetU16LE(m_PointerToMeshData + 2);
-            int number_of_triangles = number_of_polygons;
-            if (polygon_type == 0x09 || polygon_type == 0x0c || polygon_type == 0x0d) // if quads
+            idata[ i ] = i;
+        }
+        sub_mesh->indexData->indexBuffer->unlock();
+
+        Ogre::VertexDeclaration* decl = sub_mesh->vertexData->vertexDeclaration;
+        Ogre::VertexBufferBinding* bind = sub_mesh->vertexData->vertexBufferBinding;
+
+        // 1st buffer (positions)
+        decl->addElement(0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
+        Ogre::HardwareVertexBufferSharedPtr vbuf0 = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(decl->getVertexSize(0), sub_mesh->vertexData->vertexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+        bind->setBinding(0, vbuf0);
+        float* pPos = static_cast<float*>(vbuf0->lock(Ogre::HardwareBuffer::HBL_DISCARD));
+
+        // 2nd buffer (colours)
+        decl->addElement(1, 0, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE);
+        Ogre::HardwareVertexBufferSharedPtr vbuf1 = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(decl->getVertexSize(1), sub_mesh->vertexData->vertexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+        bind->setBinding(1, vbuf1);
+        Ogre::RGBA* cPos = static_cast<Ogre::RGBA*>(vbuf1->lock(Ogre::HardwareBuffer::HBL_DISCARD));
+
+        // 3rd buffer (texture coords)
+        decl->addElement(2, 0, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES, 0);
+        Ogre::HardwareVertexBufferSharedPtr vbuf2 = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(decl->getVertexSize(2), sub_mesh->vertexData->vertexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+        bind->setBinding(2, vbuf2);
+        float* tPos = static_cast<float*>(vbuf2->lock(Ogre::HardwareBuffer::HBL_DISCARD));
+
+
+
+        m_LightType = 0;
+
+
+
+        for (int poly_id = 0; poly_id < number_of_polygons; ++poly_id)
+        {
+            // textured triangle
+            if (polygon_type == 0x01 || polygon_type == 0x03 || polygon_type == 0x05)
             {
-                number_of_triangles *= 2;
-            }
-
-            m_PointerToMeshData += 4;
-
-            m_ExportLog->Log(
-                "        polygon type: " +
-                Ogre::StringConverter::toString(polygon_type) +
-                ", number of polygons: " +
-                Ogre::StringConverter::toString(number_of_polygons) +
-                "\n"
-            );
-
-
-
-            Ogre::SubMesh* sub_mesh = mesh->createSubMesh( Ogre::StringConverter::toString( part_id ) + "_" + Ogre::StringConverter::toString( poly_block_id ) );
-            sub_mesh->setMaterialName( "xenogears/model/" + data.name );
-            sub_mesh->useSharedVertices = false;
-            sub_mesh->operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
-
-            // Allocate and prepare vertex data
-            sub_mesh->vertexData = new Ogre::VertexData();
-            sub_mesh->vertexData->vertexStart = 0;
-            sub_mesh->vertexData->vertexCount = static_cast< size_t >( number_of_triangles * 3 );
-
-            // Index buffer
-            sub_mesh->indexData = new Ogre::IndexData();
-            sub_mesh->indexData->indexStart = 0;
-            sub_mesh->indexData->indexCount = sub_mesh->vertexData->vertexCount;
-            sub_mesh->indexData->indexBuffer = Ogre::HardwareBufferManager::getSingleton().createIndexBuffer(Ogre::HardwareIndexBuffer::IT_16BIT, sub_mesh->indexData->indexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
-            u16* idata = static_cast<u16*>(sub_mesh->indexData->indexBuffer->lock(Ogre::HardwareBuffer::HBL_DISCARD));
-            for( int i = 0; i < sub_mesh->vertexData->vertexCount; ++i )
-            {
-                idata[ i ] = i;
-            }
-            sub_mesh->indexData->indexBuffer->unlock();
-
-            Ogre::VertexDeclaration* decl = sub_mesh->vertexData->vertexDeclaration;
-            Ogre::VertexBufferBinding* bind = sub_mesh->vertexData->vertexBufferBinding;
-
-            // 1st buffer (positions)
-            decl->addElement(0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
-            Ogre::HardwareVertexBufferSharedPtr vbuf0 = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(decl->getVertexSize(0), sub_mesh->vertexData->vertexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
-            bind->setBinding(0, vbuf0);
-            float* pPos = static_cast<float*>(vbuf0->lock(Ogre::HardwareBuffer::HBL_DISCARD));
-
-            // 2nd buffer (colours)
-            decl->addElement(1, 0, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE);
-            Ogre::HardwareVertexBufferSharedPtr vbuf1 = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(decl->getVertexSize(1), sub_mesh->vertexData->vertexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
-            bind->setBinding(1, vbuf1);
-            Ogre::RGBA* cPos = static_cast<Ogre::RGBA*>(vbuf1->lock(Ogre::HardwareBuffer::HBL_DISCARD));
-
-            // 3rd buffer (texture coords)
-            decl->addElement(2, 0, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES, 0);
-            Ogre::HardwareVertexBufferSharedPtr vbuf2 = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(decl->getVertexSize(2), sub_mesh->vertexData->vertexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
-            bind->setBinding(2, vbuf2);
-            float* tPos = static_cast<float*>(vbuf2->lock(Ogre::HardwareBuffer::HBL_DISCARD));
-
-
-
-            m_LightType = 0;
-
-
-
-            for (int poly_id = 0; poly_id < number_of_polygons; ++poly_id)
-            {
-                // textured triangle
-                if (polygon_type == 0x01 || polygon_type == 0x03 || polygon_type == 0x05)
+                if (LoadPoly010305_18(pPos, tPos, cPos, data, textures) != 0)
                 {
-                    if (LoadPoly010305_18(pPos, tPos, cPos, data, textures) != 0)
-                    {
-                        m_PointerToMeshData += 8;
-                        m_PointerToTextureData += 8;
-                    }
-                    else
-                    {
-                        --poly_id;
-                        m_PointerToTextureData += 4;
-                    }
-                }
-                // monochrome triangle
-                else if (polygon_type == 0x04)
-                {
-                    if (LoadPoly04_18(pPos, tPos, cPos, data, textures) != 0)
-                    {
-                        m_PointerToMeshData += 8;
-                        m_PointerToTextureData += 4;
-                    }
-                    else
-                    {
-                        --poly_id;
-                        m_PointerToTextureData += 4;
-                    }
-                }
-                // textured quad
-                else if( polygon_type == 0x09 || polygon_type == 0x0d )
-                {
-                    if( LoadPoly090d_18( pPos, tPos, cPos, data, textures ) != 0 )
-                    {
-                        m_PointerToMeshData += 8;
-                        m_PointerToTextureData += 12;
-                    }
-                    else
-                    {
-                        --poly_id;
-                        m_PointerToTextureData += 4;
-                    }
-                }
-                // monochrome quad
-                else if( polygon_type == 0x0c )
-                {
-                    if( LoadPoly0c_18( pPos, tPos, cPos, data, textures ) != 0 )
-                    {
-                        m_PointerToMeshData += 8;
-                        m_PointerToTextureData += 4;
-                    }
-                    else
-                    {
-                        --poly_id;
-                        m_PointerToTextureData += 4;
-                    }
+                    m_PointerToMeshData += 8;
+                    m_PointerToTextureData += 8;
                 }
                 else
                 {
-                    m_ExportLog->Log( "ERROR: polygon type \"" + Ogre::StringConverter::toString(polygon_type) + "\" not implemented.\n" );
-                    break;
+                    --poly_id;
+                    m_PointerToTextureData += 4;
                 }
             }
-
-            vbuf0->unlock();
-            vbuf1->unlock();
-            vbuf2->unlock();
-
-            // Optimize index data
-            sub_mesh->indexData->optimiseVertexCacheTriList();
-
-
-
-            LOGGER->Log( "Assign bones to vertexes\n" );
-
-            int vertex_number = sub_mesh->vertexData->vertexCount;
-            for( int i = 0; i < vertex_number; ++i )
+            // monochrome triangle
+            else if (polygon_type == 0x04)
             {
-                Ogre::VertexBoneAssignment vba;
-                vba.vertexIndex = i;
-                vba.boneIndex = 0;
-                vba.weight = 1.0f;
-                sub_mesh->addBoneAssignment( vba );
+                if (LoadPoly04_18(pPos, tPos, cPos, data, textures) != 0)
+                {
+                    m_PointerToMeshData += 8;
+                    m_PointerToTextureData += 4;
+                }
+                else
+                {
+                    --poly_id;
+                    m_PointerToTextureData += 4;
+                }
             }
+            // textured quad
+            else if( polygon_type == 0x09 || polygon_type == 0x0d )
+            {
+                if( LoadPoly090d_18( pPos, tPos, cPos, data, textures ) != 0 )
+                {
+                    m_PointerToMeshData += 8;
+                    m_PointerToTextureData += 12;
+                }
+                else
+                {
+                    --poly_id;
+                    m_PointerToTextureData += 4;
+                }
+            }
+            // monochrome quad
+            else if( polygon_type == 0x0c )
+            {
+                if( LoadPoly0c_18( pPos, tPos, cPos, data, textures ) != 0 )
+                {
+                    m_PointerToMeshData += 8;
+                    m_PointerToTextureData += 4;
+                }
+                else
+                {
+                    --poly_id;
+                    m_PointerToTextureData += 4;
+                }
+            }
+            else
+            {
+                m_ExportLog->Log( "ERROR: polygon type \"" + Ogre::StringConverter::toString(polygon_type) + "\" not implemented.\n" );
+                break;
+            }
+        }
+
+        vbuf0->unlock();
+        vbuf1->unlock();
+        vbuf2->unlock();
+
+        // Optimize index data
+        sub_mesh->indexData->optimiseVertexCacheTriList();
+
+
+
+        LOGGER->Log( "Assign bones to vertexes\n" );
+
+        int vertex_number = sub_mesh->vertexData->vertexCount;
+        for( int i = 0; i < vertex_number; ++i )
+        {
+            Ogre::VertexBoneAssignment vba;
+            vba.vertexIndex = i;
+            vba.boneIndex = bone_id;
+            vba.weight = 1.0f;
+            sub_mesh->addBoneAssignment( vba );
         }
     }
 }

@@ -8,10 +8,11 @@
 void
 AnimationExtractor( const Ogre::SkeletonPtr& skeleton, const ModelInfo& info, Skeleton& skeleton_data )
 {
-    float fps = 25.0f;
+    float fps = 1;
+
     File* file = new File( "./data/field/" + info.animation_file );
 
-    for( size_t i = 0; i < 1/*info.animations.size()*/; ++i )
+    for( size_t i = 0; i < info.animations.size(); ++i )
     {
         if( info.animations[ i ] == "" )
         {
@@ -20,7 +21,8 @@ AnimationExtractor( const Ogre::SkeletonPtr& skeleton, const ModelInfo& info, Sk
 
         //LOGGER->Log( "AnimationExtractor: " + Ogre::StringConverter::toString( i ) + " " + info.animations[ i ] + " as animation with name " + info.animations_name[ i ] + "\n" );
 
-        int number_of_frames = 1/*file->GetU16LE( 0x2 )*/;
+        int number_of_frames = 2/*file->GetU16LE( 0x2 )*/;
+
         Ogre::Animation* anim = skeleton->createAnimation( info.animations[ i ], ( number_of_frames - 1 ) / fps );
 
         float time = 0;
@@ -66,27 +68,73 @@ AnimationExtractor( const Ogre::SkeletonPtr& skeleton, const ModelInfo& info, Sk
 
 
 
+            u32 start;
             u32 first  = file->GetU32LE( 0x04 );
             u32 second = first  + file->GetU32LE( first + 0x04 );
-            u32 start  = second + file->GetU32LE( second + 0x04 );
+            if( frame == 0 )
+            {
+                start  = second + file->GetU32LE( second + 0x04 + 0 * 0x4 );
+            }
+            else
+            {
+                start  = second + file->GetU32LE( second + 0x04 + i * 0x4 );
+            }
+
+            u16 max_rot_num = file->GetU16LE( start + 0xc );
+            u16 max_trans_num = file->GetU16LE( start + 0xe );
+
+            u16 rot_flag   = file->GetU16LE( start + 0x4 ) & 1;
+            u16 trans_flag = file->GetU16LE( start + 0x4 ) & 2;
+
+            if( file->GetU16LE( start + 0x6 ) == 0 )
+            {
+                start = start + ( max_rot_num + 1 ) * 6;
+            }
+
             start += 0x18;
 
+            u16 rot_num = 0;
+            u16 trans_num = 0;
 
             for( int bone = 0; bone < skeleton_data.size(); ++bone )
             {
                 tx = 0; ty = 0; tz = 0;
                 rx = 0; ry = 0; rz = 0;
 
-                rx = ( s16 )file->GetU16LE( start + bone * 0x0c + 0x00 );
-                ry = ( s16 )file->GetU16LE( start + bone * 0x0c + 0x02 );
-                rz = ( s16 )file->GetU16LE( start + bone * 0x0c + 0x04 );
-                rx = ( rx / 4096.0f ) * 360.0f;
-                ry = ( ry / 4096.0f ) * 360.0f;
-                rz = ( rz / 4096.0f ) * 360.0f;
+                bool bone_rotated = true;
+                bool bone_translated = true;
 
-                tx = ( s16 )file->GetU16LE( start + bone * 0x0c + 0x06 ) / 512.0f;
-                ty = ( s16 )file->GetU16LE( start + bone * 0x0c + 0x08 ) / 512.0f;
-                tz = ( s16 )file->GetU16LE( start + bone * 0x0c + 0x0a ) / 512.0f;
+                if( ( rot_flag == 0 ) && ( rot_num < max_rot_num ) )
+                {
+                    rx = ( s16 )file->GetU16LE( start + 0x00 );
+                    ry = ( s16 )file->GetU16LE( start + 0x02 );
+                    rz = ( s16 )file->GetU16LE( start + 0x04 );
+                    rx = ( rx / 4096.0f ) * 360.0f;
+                    ry = ( ry / 4096.0f ) * 360.0f;
+                    rz = ( rz / 4096.0f ) * 360.0f;
+                    //LOGGER->Log( "Rotation: frame = " + Ogre::StringConverter::toString( frame ) + ", bone = " + Ogre::StringConverter::toString( bone ) + ", rx = " + ToHexString( file->GetU16LE( start + 0x00 ), 4, '0' ) + ", ry = " + ToHexString( file->GetU16LE( start + 0x02 ), 4, '0' ) + ", rz = " + ToHexString( file->GetU16LE( start + 0x04 ), 4, '0' ) + ".\n" );
+                    //LOGGER->Log( "Rotation: frame = " + Ogre::StringConverter::toString( frame ) + ", bone = " + Ogre::StringConverter::toString( bone ) + ", rx = " + Ogre::StringConverter::toString( rx ) + ", ry = " + Ogre::StringConverter::toString( ry ) + ", rz = " + Ogre::StringConverter::toString( rz ) + ".\n" );
+                    start += 0x6;
+                    rot_num += 1;
+                }
+                else
+                {
+                    bone_rotated = false;
+                }
+
+                if( ( trans_flag == 0 ) && ( trans_num < max_trans_num ) )
+                {
+                    tx = ( s16 )file->GetU16LE( start + 0x00 );
+                    ty = ( s16 )file->GetU16LE( start + 0x02 );
+                    tz = ( s16 )file->GetU16LE( start + 0x04 );
+
+                    start += 0x6;
+                    trans_num += 1;
+                }
+                else
+                {
+                    bone_translated = false;
+                }
 
 
 
@@ -108,18 +156,19 @@ AnimationExtractor( const Ogre::SkeletonPtr& skeleton, const ModelInfo& info, Sk
                 }
                 frame1 = track1->createNodeKeyFrame( time );
                 frame2 = track2->createNodeKeyFrame( time );
-                Ogre::Vector3 translate = Ogre::Vector3( tx, ty, tz + skeleton_data[ bone ].length ) / 512.0f;
-                //LOGGER->Log( "AnimationExtractor: frame = " + Ogre::StringConverter::toString( frame ) + ", bone = " + Ogre::StringConverter::toString( bone ) + ", translation = " + Ogre::StringConverter::toString( translate ) + ".\n" );
-                frame1->setTranslate( translate );
-                //mat.FromEulerAnglesXYZ( Ogre::Radian( Ogre::Degree( rx ) ), Ogre::Radian( Ogre::Degree( ry ) ), Ogre::Radian( Ogre::Degree( rz ) ) );
+
+                Ogre::Vector3 translate = Ogre::Vector3( tx, ty, tz ) / 512.0f;
+                //LOGGER->Log( "AnimationExtractor: frame = " + Ogre::StringConverter::toString( frame ) + ", bone = " + Ogre::StringConverter::toString( bone ) + ", bone_translated = \"" + Ogre::StringConverter::toString( bone_translated ) + "\",  translation = " + Ogre::StringConverter::toString(  ( bone_translated == true ) ? translate : track1->getNodeKeyFrame( frame - 1 )->getTranslate() ) + ".\n" );
+                frame1->setTranslate( ( bone_translated == true || frame == 0 ) ? translate : track1->getNodeKeyFrame( frame - 1 )->getTranslate() );
+                mat.FromEulerAnglesXYZ( Ogre::Radian( Ogre::Degree( rx ) ), Ogre::Radian( Ogre::Degree( ry ) ), Ogre::Radian( Ogre::Degree( rz ) ) );
                 //mat.FromEulerAnglesXZY( Ogre::Radian( Ogre::Degree( rx ) ), Ogre::Radian( Ogre::Degree( rz ) ), Ogre::Radian( Ogre::Degree( ry ) ) );
-                //mat.FromEulerAnglesYZX( Ogre::Radian( Ogre::Degree( ry ) ), Ogre::Radian( Ogre::Degree( rz ) ), Ogre::Radian( Ogre::Degree( rx ) ) );
                 //mat.FromEulerAnglesYXZ( Ogre::Radian( Ogre::Degree( ry ) ), Ogre::Radian( Ogre::Degree( rx ) ), Ogre::Radian( Ogre::Degree( rz ) ) );
-                mat.FromEulerAnglesZYX( Ogre::Radian( Ogre::Degree( rz ) ), Ogre::Radian( Ogre::Degree( ry ) ), Ogre::Radian( Ogre::Degree( rx ) ) );
-                //mat.FromEulerAnglesZXY( Ogre::Radian( Ogre::Degree( rz ) ), Ogre::Radian( Ogre::Degree( rx ) ), Ogre::Radian( Ogre::Degree( ry ) ) );
-                //LOGGER->Log( "AnimationExtractor: frame = " + Ogre::StringConverter::toString( frame ) + ", bone = " + Ogre::StringConverter::toString( bone ) + ", rotation = " + Ogre::StringConverter::toString( rx ) + " " + Ogre::StringConverter::toString( ry ) + " " + Ogre::StringConverter::toString( rz ) + ".\n" );
+                ////mat.FromEulerAnglesYZX( Ogre::Radian( Ogre::Degree( ry ) ), Ogre::Radian( Ogre::Degree( rz ) ), Ogre::Radian( Ogre::Degree( rx ) ) );
+                ////mat.FromEulerAnglesZYX( Ogre::Radian( Ogre::Degree( rz ) ), Ogre::Radian( Ogre::Degree( ry ) ), Ogre::Radian( Ogre::Degree( rx ) ) );
+                ////mat.FromEulerAnglesZXY( Ogre::Radian( Ogre::Degree( rz ) ), Ogre::Radian( Ogre::Degree( rx ) ), Ogre::Radian( Ogre::Degree( ry ) ) );
                 rot.FromRotationMatrix( mat );
-                frame2->setRotation( rot );
+                //LOGGER->Log( "AnimationExtractor: frame = " + Ogre::StringConverter::toString( frame ) + ", bone = " + Ogre::StringConverter::toString( bone ) + ", bone_rotated = \"" + Ogre::StringConverter::toString( bone_rotated ) + "\" rotation = " + Ogre::StringConverter::toString(  ( bone_translated == true ) ? rot : track2->getNodeKeyFrame( frame - 1 )->getRotation() ) + ".\n" );
+                frame2->setRotation( ( bone_rotated == true || frame == 0 ) ? rot : track2->getNodeKeyFrame( frame - 1 )->getRotation() );
             }
 
             time += 1.0f / fps;

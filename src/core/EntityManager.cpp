@@ -219,7 +219,10 @@ EntityManager::Update()
 
             case ES_NONE:
             {
-                m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationIdleName() );
+                if( m_EntityModels[ i ]->GetMoveAutoAnimation() == true )
+                {
+                    m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationIdleName() );
+                }
             }
             break;
         }

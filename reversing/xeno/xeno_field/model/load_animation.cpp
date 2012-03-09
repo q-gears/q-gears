@@ -4,19 +4,18 @@
 //    A2 = -1;
 //    A3 = 1;
 //    [SP + 10] = w(0);
-801E39F0	addiu  sp, sp, $fe98 (=-$168)
 
 [SP + c8] = w(A1);
 [SP + d0] = w(A2);
 arg_3 = A3;
 
-S4 = A0;
+model_struct = S4 = A0;
 if (A3 == 0)
 {
     return;
 }
 
-if( w[S4 + 10] == 0 ) // animation start pos file
+if( w[model_struct + 10] == 0 ) // animation start pos file
 {
     return;
 }
@@ -29,38 +28,38 @@ func322bc;
 
 
 [SP + f0] = w(0);
-[SP + e0] = w(S4);
+[SP + e0] = w(model_struct);
 
 index = 0;
 if (arg_3 > 0)
 {
     L1e3a5c:	; 801E3A5C
-        [S4 + 70] = h(hu[S4 + 70] + hu[S4 + 76]);
-        [S4 + 72] = h(hu[S4 + 72] + hu[S4 + 78]);
-        [S4 + 74] = h(hu[S4 + 74] + hu[S4 + 7a]);
+        [model_struct + 70] = h(hu[model_struct + 70] + hu[model_struct + 76]);
+        [model_struct + 72] = h(hu[model_struct + 72] + hu[model_struct + 78]);
+        [model_struct + 74] = h(hu[model_struct + 74] + hu[model_struct + 7a]);
 
-        [S4 + 7c] = h(hu[S4 + 7c] + hu[S4 + 82]);
-        [S4 + 7e] = h(hu[S4 + 7e] + hu[S4 + 84]);
-        [S4 + 80] = h(hu[S4 + 80] + hu[S4 + 86]);
+        [model_struct + 7c] = h(hu[model_struct + 7c] + hu[model_struct + 82]);
+        [model_struct + 7e] = h(hu[model_struct + 7e] + hu[model_struct + 84]);
+        [model_struct + 80] = h(hu[model_struct + 80] + hu[model_struct + 86]);
 
-        A0 = w[S4 + 4];
-        [A0 + 54] = h(hu[A0 + 54] + h[S4 + 70] >> 3);
-        [A0 + 56] = h(hu[A0 + 56] + h[S4 + 72] >> 3);
-        [A0 + 58] = h(hu[A0 + 58] + h[S4 + 74] >> 3);
+        A0 = w[model_struct + 4];
+        [A0 + 54] = h(hu[A0 + 54] + h[model_struct + 70] >> 3);
+        [A0 + 56] = h(hu[A0 + 56] + h[model_struct + 72] >> 3);
+        [A0 + 58] = h(hu[A0 + 58] + h[model_struct + 74] >> 3);
 
-        [SP + 48] = h((h[S4 + 7c] * h[A0 + 4c]) >> c);
-        [SP + 4a] = h((h[S4 + 7e] * h[A0 + 4e]) >> c);
-        [SP + 4c] = h((h[S4 + 80] * h[A0 + 50]) >> c);
+        [SP + 48] = h((h[model_struct + 7c] * h[A0 + 4c]) >> c);
+        [SP + 4a] = h((h[model_struct + 7e] * h[A0 + 4e]) >> c);
+        [SP + 4c] = h((h[model_struct + 80] * h[A0 + 50]) >> c);
 
-        A0 = w[S4 + 4] + 2c; // matrix
+        A0 = w[model_struct + 4] + 2c; // matrix
         A1 = SP + 48; // vector
         A2 = SP + 38; // result
         system_matrix_vector_multiply_GTE;
 
-        A0 = w[S4 + 4];
-        [A0 + 5c] = w(w[A0 + 5c] + ((h[S4 + 1c] * w[SP + 38]) >> c));
-        [A0 + 60] = w(w[A0 + 60] + ((h[S4 + 1c] * w[SP + 3c]) >> c));
-        [A0 + 64] = w(w[A0 + 64] + ((h[S4 + 1c] * w[SP + 40]) >> c));
+        A0 = w[model_struct + 4];
+        [A0 + 5c] = w(w[A0 + 5c] + ((h[model_struct + 1c] * w[SP + 38]) >> c));
+        [A0 + 60] = w(w[A0 + 60] + ((h[model_struct + 1c] * w[SP + 3c]) >> c));
+        [A0 + 64] = w(w[A0 + 64] + ((h[model_struct + 1c] * w[SP + 40]) >> c));
 
         index = index + 1;
         V1 = index < arg_3;
@@ -71,72 +70,49 @@ if (arg_3 > 0)
 
 
 [SP + e8] = w(1);
-S3 = w[S4 + 10];
+S3 = w[model_struct + 10];
 
 
 
-V0 = w[S4 + 4c];
-if (V0 != 0)
+if( w[model_struct + 4c] != 0 )
 {
-    A0 = S4;
+    A0 = model_struct;
     801E3C44	jal    func1e6338 [$801e6338]
 
-    801E3C4C	lh     v1, $0048(s4)
-    801E3C50	nop
-    801E3C54	slt    v1, v1, v0
-    if (V1 == 0)
+    if( h[model_struct + 48] >= V0 )
     {
-        801E3C60	lw     s3, $004c(s4)
+        S3 = w[model_struct + 4c];
+        [model_struct + 4c] = w(0);
         801E3C64	j      L1e3d1c [$801e3d1c]
-        801E3C68	sw     zero, $004c(s4)
     }
 }
 
-V0 = w[S4 + 54];
-if (V0 != 0)
+if( w[model_struct + 54] != 0 )
 {
-    801E3C7C	lw     v0, $0004(s4)
-    801E3C80	nop
-    801E3C84	lhu    v0, $005c(v0)
-    801E3C88	sh     zero, $0062(sp)
-    801E3C8C	sh     v0, $0060(sp)
-    801E3C90	lw     v0, $0004(s4)
-    801E3C94	nop
-    801E3C98	lhu    v0, $0064(v0)
-    801E3C9C	nop
-    801E3CA0	sh     v0, $0064(sp)
-    801E3CA4	lhu    v1, $0060(s4)
-    801E3CA8	nop
-    801E3CAC	sh     v1, $0062(sp)
-    801E3CB0	lw     a0, $0004(s4)
-    801E3CB4	sll    v1, v1, $10
-    801E3CB8	lw     v0, $0060(a0)
-    801E3CBC	sra    v1, v1, $10
-    801E3CC0	slt    v0, v1, v0
-    if (V0 != 0)
+    V0 = w[model_struct + 4];
+    [SP + 62] = h(0);
+    [SP + 60] = h(hu[V0 + 5c]);
+    [SP + 62] = h(h[model_struct + 60]);
+    [SP + 64] = h(hu[V0 + 64]);
+
+    if( h[model_struct + 60] < w[V0 + 60] )
     {
-        801E3CCC	sw     v1, $0060(a0)
-        801E3CD0	lw     s3, $0054(s4)
+        [V0 + 60] = w(h[model_struct + 60]);
+
+        S3 = w[model_struct + 54];
+        [model_struct + 54] = w(0);
         801E3CD4	j      L1e3d1c [$801e3d1c]
-        801E3CD8	sw     zero, $0054(s4)
     }
 }
 
-V0 = w[S4 + 50];
-if (V0 != 0)
+if( w[model_struct + 50] != 0 )
 {
-    801E3CEC	lhu    v0, $0044(s4)
-    801E3CF4	lhu    v1, $0046(s4)
-    V0 = V0 + arg_3;
-    801E3CF8	addu   v0, v0, t2
-    801E3CFC	sh     v0, $0044(s4)
-    801E3D00	lhu    v0, $0044(s4)
-    801E3D04	nop
-    801E3D08	sltu   v0, v0, v1
-    if (V0 == 0)
+    [model_struct + 44] = h(hu[model_struct + 44] + arg_3 + T3);
+
+    if( hu[model_struct + 44] >= hu[model_struct + 46] )
     {
-        801E3D14	lw     s3, $0050(s4)
-        801E3D18	sw     zero, $0050(s4)
+        S3 = w[model_struct + 50];
+        [model_struct + 50] = w(0);
     }
 }
 
@@ -145,17 +121,16 @@ if (V0 != 0)
 
 
 L1e3d1c:	; 801E3D1C
-V0 = h[S4 + 58];
-if (V0 != 0)
+if( h[model_struct + 58] != 0 )
 {
+    A0 = model_struct;
     801E3D2C	jal    func1e63a8 [$801e63a8]
-    801E3D30	addu   a0, s4, zero
 }
 
 T3 = w[SP + e8];
 S0 = S3;
 
-if (T3 != 0)
+if( T3 != 0 )
 {
     L1e3d44:	; 801E3D44
         S6 = bu[S3 + 0]; // opcode
@@ -171,17 +146,11 @@ if (T3 != 0)
 8C3D1E80 1
 F03D1E80 2
 FC3D1E80 3
-74591E80 4
-74591E80 5
-74591E80 6
-74591E80 7
-74591E80 9
+74591E80 4 5 6 7 9 f 12 1b 1c 2c 2d 2f
 3C3E1E80 b
 D43E1E80 d
 F03E1E80 e
-74591E80 f
 303F1E80 11
-74591E80 12
 68401E80 14
 80411E80 15
 24441E80 16
@@ -189,25 +158,31 @@ F03E1E80 e
 A8441E80 18
 D4441E80 19
 E4441E80 1a
-74591E80 1b
-74591E80 1c
 A8451E80 1d
 68461E80 1e
 70461E80 1f
 AC461E80 20
 04471E80 22
-D0471E8000481E8010481E801C4B1E80944B1E80D44B1E80D44B1E80D44C1E80F84C1E8074591E8074591E801C4D1E8074591E80
-30 584D1E80644D1E80B84D1E80F04E1E80F04E1E80C44D1E80EC4D1E802C4E1E805C4E1E809C4E1E8074591E80F04E1E80004F1E80384F1E8074591E8074591E80
+00481E80 24
+10481E80 25
+1C4B1E80 26
+944B1E80 27
+D44B1E80 28 29
+D44C1E80 2a
+F84C1E80 2b
+1C4D1E80 2e
+584D1E80 30
+644D1E80B84D1E80F04E1E80F04E1E80C44D1E80EC4D1E802C4E1E805C4E1E809C4E1E8074591E80F04E1E80004F1E80384F1E8074591E8074591E80
 9C4F1E80 40
 E44F1E80 41
-58501E80 42
-58501E80 43
+58501E80 42 43
 24511E80 44
 4C511E80 45
 8C511E80 46
 B4511E80 47
 FC511E80 49
-30521E8098531E80C0531E8000541E8028541E8068541E80
+30521E80 4a
+98531E80C0531E8000541E8028541E8068541E80
 50 A8551E8074591E8074591E8074591E80D4551E800C561E8044561E805C561E8074591E8074591E8074591E808C561E8034571E8084571E80B8571E80CC571E80
 60 74591E8074591E80E0571E8030581E8068581E8074591E8074591E8074591E8074591E8074591E8074591E8078581E80A8581E80C0581E80CC581E801C591E80
 70 40591E80
@@ -226,19 +201,20 @@ FC511E80 49
         case 8: // 083E1E80
         {
             A0 = w[SP + c8];
-            A1 = w[S4 + 4];
+            A1 = w[model_struct + 4];
             func1dfe8c;
 
-            [S4 + 98] = h(-1);
+            [model_struct + 98] = h(-1);
 
             801E44DC	j      L1e5974 [$801e5974]
         }
         break;
 
+        // reset all dynamic bones
         case a: // 203E1E80
         {
             A0 = w[SP + c8];
-            A1 = w[S4 + 4];
+            A1 = w[model_struct + 4];
             A2 = S5 & ff;
             A3 = 7;
             func1df52c;
@@ -249,18 +225,18 @@ FC511E80 49
 
         case c: // A03E1E80
         {
-            [S4 + 70] = h(0);
-            [S4 + 72] = h(0);
-            [S4 + 74] = h(0);
-            [S4 + 76] = h(0);
-            [S4 + 78] = h(0);
-            [S4 + 7a] = h(0);
-            [S4 + 7c] = h(0);
-            [S4 + 7e] = h(0);
-            [S4 + 80] = h(0);
-            [S4 + 82] = h(0);
-            [S4 + 84] = h(0);
-            [S4 + 86] = h(0);
+            [model_struct + 70] = h(0);
+            [model_struct + 72] = h(0);
+            [model_struct + 74] = h(0);
+            [model_struct + 76] = h(0);
+            [model_struct + 78] = h(0);
+            [model_struct + 7a] = h(0);
+            [model_struct + 7c] = h(0);
+            [model_struct + 7e] = h(0);
+            [model_struct + 80] = h(0);
+            [model_struct + 82] = h(0);
+            [model_struct + 84] = h(0);
+            [model_struct + 86] = h(0);
 
             801E3ECC	j      L1e5974 [$801e5974]
         }
@@ -268,12 +244,12 @@ FC511E80 49
 
         case 10: // 0C3F1E80
         {
-            A0 = S4;
+            A0 = model_struct;
             A1 = S5 & ff;
             A2 = SP + 68;
             func1e6910; // get pointer to animation file 2202_0_0_0 - 2202_0_0_X
 
-            A0 = w[S4 + 4];
+            A0 = w[model_struct + 4];
             A1 = V0;
             func1def10;
 
@@ -283,10 +259,9 @@ FC511E80 49
 
         case 13: // D43F1E80
         {
-            V0 = hu[S3 + 0];
+            S0 = bu[S3 + 0];
+            S2 = bu[S3 + 1];
             S3 = S3 + 2;
-            S2 = V0 >> 8;
-            S0 = V0 & ff;
 
             V0 = hu[S3 + 0];
             S3 = S3 + 2;
@@ -294,7 +269,7 @@ FC511E80 49
             [SP + 6c] = h(V0);
             FP = bu[SP + 6c];
 
-            A0 = S4;
+            A0 = model_struct;
             A1 = S0;
             A2 = SP + 68;
             func1e6910; // get pointer to animation file 2202_0_0_0 - 2202_0_0_X
@@ -302,25 +277,58 @@ FC511E80 49
 
             if (w[801e85cc] != 0)
             {
-                A0 = w[S4 + 4];
+                A0 = w[model_struct + 4];
                 A1 = S1;
                 func1def10;
             }
             else
             {
                 A0 = w[SP + c8];
-                A1 = w[S4 + 4];
-                A2 = S1; // init animation
+                A1 = w[model_struct + 4]; // skeleton
+                A2 = S1; // rot/translation animation file
                 A3 = S6 & ff;
                 A4 = S5 & ff;
                 A5 = FP;
-                A6 = S2 & ff; // animation file id
+                A6 = S2;
                 func1df0b4;
             }
 
             [SP + d0] = w(-1);
-            [S4 + 98] = h(-1);
+            [model_struct + 98] = h(-1);
             801E44DC	j      L1e5974 [$801e5974]
+        }
+        break;
+
+        case 21: // D4461E80
+        {
+            [model_struct + 3c] = h(S5 & ff);
+
+            if( ( w[SP + d0] & 1 ) != 0 )
+            {
+                S3 = S0;
+                [SP + e8] = w(0);
+            }
+            801E44DC	j      L1e5974 [$801e5974]
+        }
+        break;
+
+        case 23: // D0471E80
+        {
+            A0 = model_struct;
+            A1 = w[model_struct + 4] + h[S3 + 0] * 7c;
+            S3 = S3 + 2;
+            A2 = S5 & ff;
+            801E47F0	jal    func1e6d94 [$801e6d94]
+
+            801E47F8	j      L1e5974 [$801e5974]
+        }
+        break;
+
+        case 48:
+        {
+            [model_struct + 36] = b(S5);
+
+            801E51F4	j      L1e5974 [$801e5974]
         }
         break;
 
@@ -963,20 +971,6 @@ FC511E80 49
         801E46CC	j      L1e5970 [$801e5970]
         801E46D0	addu   s3, s0, zero
 
-        case 21: // D4461E80
-        {
-            [S4 + 3c] = h(S5 & ff);
-
-            if( ( w[SP + d0] & 1 ) != 0 )
-            {
-                S3 = S0;
-                [SP + e8] = w(0);
-            }
-            801E44DC	j      L1e5974 [$801e5974]
-        }
-        break;
-
-
         801E4704	lw     t3, $00d0(sp)
         801E4708	addiu  t2, zero, $ffff (=-$1)
         801E470C	beq    t3, t2, L1e47c8 [$801e47c8]
@@ -1053,35 +1047,8 @@ FC511E80 49
 
         L1e47c8:	; 801E47C8
         801E47C8	j      L1e5970 [$801e5970]
-
-        L1e47cc:	; 801E47CC
         801E47CC	addu   s3, s0, zero
 
-        L1e47d0:	; 801E47D0
-        801E47D0	lh     v0, $0000(s3)
-
-        L1e47d4:	; 801E47D4
-        801E47D4	addiu  s3, s3, $0002
-
-        L1e47d8:	; 801E47D8
-        801E47D8	addu   a0, s4, zero
-        801E47DC	andi   a2, s5, $00ff
-        801E47E0	sll    a1, v0, $05
-        801E47E4	subu   a1, a1, v0
-        801E47E8	lw     v0, $0004(s4)
-
-        L1e47ec:	; 801E47EC
-        801E47EC	sll    a1, a1, $02
-
-        L1e47f0:	; 801E47F0
-        801E47F0	jal    func1e6d94 [$801e6d94]
-
-        L1e47f4:	; 801E47F4
-        801E47F4	addu   a1, a1, v0
-
-        L1e47f8:	; 801E47F8
-        801E47F8	j      L1e5974 [$801e5974]
-        801E47FC	nop
         801E4800	beq    s4, zero, L1e5974 [$801e5974]
         801E4804	andi   v0, s5, $0001
         801E4808	j      L1e5974 [$801e5974]
@@ -1828,14 +1795,6 @@ FC511E80 49
         801E51EC	j      L1e5974 [$801e5974]
         801E51F0	sh     v0, $007a(s4)
 
-        case 48:
-        {
-            [S4 + 36] = b(S5);
-
-            801E51F4	j      L1e5974 [$801e5974]
-        }
-        break;
-
         801E51FC	lw     v1, $0004(s4)
         801E5200	lh     v0, $0000(s3)
         801E5204	addiu  s3, s3, $0002
@@ -2376,8 +2335,12 @@ FC511E80 49
     801E597C	bne    t2, zero, L1e3d44 [$801e3d44]
 }
 
+
+
 S0 = S3;
-[S4 + 10] = w(S3);
+[model_struct + 10] = w(S3);
+
+
 
 if (w[SP + f0] != 0)
 {
@@ -2385,4 +2348,26 @@ if (w[SP + f0] != 0)
 }
 
 L1e59a0:	; 801E59A0
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1e8330
+model_id = A0;
+animation_id = A2;
+
+[801e86b0] = h(model_id);
+[801e863c] = h(A1);
+
+V1 = w[801e8670 + model_id * 4];
+[V1 + 35] = b(0);
+
+if( w[801e8670 + model_id * 4] != 0 )
+{
+    A3 = animation_id; // animation id
+    A2 = 801e86a8;
+    A1 = w[801e8670 + model_id * 4];
+    func1e35d0;
+}
 ////////////////////////////////

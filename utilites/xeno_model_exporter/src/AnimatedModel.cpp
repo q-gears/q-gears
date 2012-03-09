@@ -18,7 +18,7 @@ AnimatedModel::~AnimatedModel()
 
 
 
-void
+Ogre::Entity*
 AnimatedModel::Export( const ModelInfo& info )
 {
     VectorTexForGen textures;
@@ -72,11 +72,14 @@ AnimatedModel::Export( const ModelInfo& info )
             skeleton->getBone( bone.parent_id * 2 + 3 )->addChild( bone1 );
         }
         bone1->addChild( bone2 );
+
+        // create mesh assigned to that bone
+        int part_id = ( s16 )hrc->GetU16LE( i * 4 + 0x00 );
+        if( part_id != -1 )
+        {
+            mesh_file->GetModelPart( part_id, mesh, info.data, textures, export_text, i * 2 + 3 );
+        }
     }
-
-
-
-    //mesh_file->GetModel( mesh, info.data, textures, export_text );
 
 
 
@@ -85,9 +88,7 @@ AnimatedModel::Export( const ModelInfo& info )
 
 
     // draw skeleton
-    {
-        DrawSkeleton( m_Skeleton, mesh );
-    }
+    //DrawSkeleton( m_Skeleton, mesh );
 
 
 
@@ -99,7 +100,7 @@ AnimatedModel::Export( const ModelInfo& info )
     Ogre::AxisAlignedBox aabb( -999, -999, -999, 999, 999, 999 );
     mesh->_setBounds( aabb, false );
     mesh->_setBoundingSphereRadius( 999 );
-    mesh->setSkeletonName( "exported/models/xenogears/field/units/" + info.data.name + ".skeleton" );
+    mesh->setSkeletonName( "models/xenogears/field/units/" + info.data.name + ".skeleton" );
 
     Ogre::MeshSerializer ser;
     ser.exportMesh( mesh.getPointer(), "exported/models/xenogears/field/units/" + info.data.name + ".mesh" );
@@ -158,7 +159,7 @@ AnimatedModel::Export( const ModelInfo& info )
             }
         }
 
-        vram->Save( "1.png" );
+        //vram->Save( "1.png" );
 
         CreateTexture( vram, info.data, "exported/models/xenogears/field/units/" + info.data.name + ".png", textures );
         delete vram;
@@ -187,4 +188,6 @@ AnimatedModel::Export( const ModelInfo& info )
     delete mesh_file;
     delete texture;
     delete export_file;
+
+    return thisEntity;
 }

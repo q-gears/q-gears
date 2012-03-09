@@ -16,6 +16,10 @@ template<>Console *Ogre::Singleton< Console >::ms_Singleton = NULL;
 
 
 
+ConfigVar cv_console_notification( "console_notification", "Draw console strings even when console is hided", "false" );
+
+
+
 Console::Console():
     m_ToVisible( false ),
     m_Visible( false ),
@@ -66,10 +70,10 @@ Console::~Console()
 void
 Console::Input( const Event& event )
 {
-    if (m_Visible != true)
+    if( m_Visible != true )
     {
         // add console
-        if (event.type == ET_KEY_PRESS && event.param1 == OIS::KC_GRAVE)
+        if( event.type == ET_KEY_PRESS && event.param1 == OIS::KC_GRAVE )
         {
             SetToVisible();
         }
@@ -256,7 +260,7 @@ Console::Input( const Event& event )
     {
         char legalchars[] = "ABCDEFGHIJKLMNOPQRSTUVWXUZabcdefghijklmnopqrstuvwxyz1234567890~!@#$%^&*()-_=+?{[]}|\\;:'\"<>,./? ";
         char txt = event.param2;
-        for( int c = 0; c < sizeof( legalchars ) - 1; ++c )
+        for( unsigned int c = 0; c < sizeof( legalchars ) - 1; ++c )
         {
             if( legalchars[ c ] == txt )
             {
@@ -297,7 +301,14 @@ Console::Update()
         }
     }
 
-    UpdateDraw();
+    if( m_Visible == true )
+    {
+        UpdateDraw();
+    }
+    else if( cv_console_notification.GetB() == true )
+    {
+        UpdateNotification();
+    }
 }
 
 
@@ -316,7 +327,7 @@ Console::UpdateDraw()
     DEBUG_DRAW.SetZ( -0.6f );
     DEBUG_DRAW.Line( 0, m_Height, m_ConsoleWidth, m_Height );
 
-    int row = 1;
+    unsigned int row = 1;
     int rows = ( m_ConsoleHeight - 30 ) / 16;
     int y = -m_ConsoleHeight + m_Height;
     int empty = rows - m_DisplayLine;
@@ -338,7 +349,7 @@ Console::UpdateDraw()
     if( m_DisplayLine != m_OutputLine.size() )
     {
         Ogre::String temp = "";
-        for( int i = 0; i < m_LineWidth; ++i )
+        for( unsigned int i = 0; i < m_LineWidth; ++i )
         {
             temp += "^";
         }
@@ -370,6 +381,35 @@ Console::UpdateDraw()
     }
 
     DEBUG_DRAW.SetZ( 0 );
+}
+
+
+
+void
+Console::UpdateNotification()
+{
+    DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
+    DEBUG_DRAW.SetScreenSpace( true );
+    DEBUG_DRAW.SetZ( -0.6f );
+
+    std::list< OutputLine >::reverse_iterator i;
+    int y = ( m_OutputLine.size() > 10 ) ? 160 : m_OutputLine.size() * 16;
+    int line = 0;
+    float max_time = 5.0f;
+
+    for( i = m_OutputLine.rbegin(); i != m_OutputLine.rend() && line < 10; ++i )
+    {
+        float time = Timer::getSingleton().GetSystemTimeTotal() - ( *i ).time;
+        if( time < max_time )
+        {
+            Ogre::ColourValue colour = ( *i ).colour;
+            colour.a = ( max_time - time ) / max_time;
+            DEBUG_DRAW.SetColour( colour );
+            DEBUG_DRAW.Text( 5, y, ( *i ).text );
+            y -= 16;
+            ++line;
+        }
+    }
 }
 
 
@@ -421,9 +461,9 @@ Console::AddTextToOutput( const Ogre::String& text, const Ogre::ColourValue& col
     // go through line and add it to output correctly
     const char* str = text.c_str();
     Ogre::String output_line;
-    int string_size = 0;
+    unsigned int string_size = 0;
     bool indent = false;
-    int c = 0;
+    unsigned int c = 0;
     for( ; c < text.size(); ++c )
     {
         // add space at start of string if we want indent
@@ -457,7 +497,9 @@ Console::AddTextToOutput( const Ogre::String& text, const Ogre::ColourValue& col
             OutputLine line;
             line.text = output_line;
             line.colour = colour;
+            line.time = Timer::getSingleton().GetSystemTimeTotal();
             m_OutputLine.push_back( line );
+
             output_line.clear();
             string_size = 0;
         }
@@ -479,6 +521,7 @@ Console::AddTextToOutput( const Ogre::String& text, const Ogre::ColourValue& col
         OutputLine line;
         line.text = "";
         line.colour = colour;
+        line.time = Timer::getSingleton().GetSystemTimeTotal();
         m_OutputLine.push_back( line );
     }
 }
@@ -553,7 +596,7 @@ Console::CompleteInput()
             m_InputLine.erase( 0, 1 );
         }
 
-        int input_size = m_InputLine.size();
+        size_t input_size = m_InputLine.size();
 
         Ogre::StringVector params = StringTokenise( m_InputLine );
 
@@ -582,7 +625,7 @@ Console::CompleteInput()
             for( int i = 0; i < num_vars; ++i )
             {
                 Ogre::String name = ConfigVarManager::getSingleton().GetConfigVar( i )->GetName();
-                int pos = name.find( m_InputLine );
+                unsigned int pos = name.find( m_InputLine );
                 if( pos == 0 && input_size != name.size() )
                 {
                     Ogre::String part = name.substr( input_size, name.size() - input_size );
@@ -612,7 +655,7 @@ Console::CompleteInput()
         else if( params.size() > 1 )
         {
             Ogre::String all_params = params[ 1 ];
-            for( int i = 2; i < params.size(); ++i )
+            for( size_t i = 2; i < params.size(); ++i )
             {
                 all_params += " " + params[ i ];
             }
@@ -629,7 +672,7 @@ Console::CompleteInput()
                     {
                         std::sort( full_complete.begin(), full_complete.end() );
 
-                        for( int i = 0 ; i < full_complete.size(); ++i )
+                        for( size_t i = 0 ; i < full_complete.size(); ++i )
                         {
                             int pos = full_complete[ i ].find( all_params );
                             if( pos == 0 && all_params != full_complete[ i ] )
@@ -652,7 +695,7 @@ Console::CompleteInput()
         std::sort( m_AutoCompletition.begin(), m_AutoCompletition.end() );
         m_AutoCompletitionLine = 0;
 
-        for( int i = 0; i < m_AutoCompletition.size(); ++i )
+        for( size_t i = 0; i < m_AutoCompletition.size(); ++i )
         {
             AddTextToOutput( " " + m_InputLine + m_AutoCompletition[ i ] );
         }

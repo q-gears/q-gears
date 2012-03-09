@@ -1,175 +1,119 @@
 
-800a8c34 : LW      00000000 (v0), 002a (80191036 (s0)) [80191060]
-800a9ae0 : LH      0000009d (v0), 0050 (80191034 (s2)) [80191084]
-800a9aec : LH      00001000 (v0), 0050 (80191034 (s2)) [80191084]
-800a9af8 : LH      00001000 (v0), 0050 (80191034 (s2)) [80191084]
-800a9b1c : LHU     ffff9f87 (a3), 002a (80191034 (s2)) [8019105e]
-800a9b28 : LHU     1f800360 (v0), 002a (80191034 (s2)) [8019105e]
-800a8c8c : LH      00000028 (v0), 0004 (80191036 (s0)) [8019103a]
-800a8c34 : LW      00000001 (v0), 002a (80191036 (s0)) [80191060]
-800a9ae0 : LH      000000a5 (v0), 0050 (80191034 (s2)) [80191084]
-800a9aec : LH      00001000 (v0), 0050 (80191034 (s2)) [80191084]
-800a9af8 : LH      00001000 (v0), 0050 (80191034 (s2)) [80191084]
-800a9b1c : LHU     ffffa8e7 (a3), 002a (80191034 (s2)) [8019105e]
-800a9b28 : LHU     1f800360 (v0), 002a (80191034 (s2)) [8019105e]
-800a8c8c : LH      0000002c (v0), 0004 (80191036 (s0)) [8019103a]
-800a8c34 : LW      00000001 (v0), 002a (80191036 (s0)) [80191060]
-800a9ae0 : LH      000000ad (v0), 0050 (80191034 (s2)) [80191084]
-800a9aec : LH      00001000 (v0), 0050 (80191034 (s2)) [80191084]
-800a9af8 : LH      00001000 (v0), 0050 (80191034 (s2)) [80191084]
-800a9b1c : LHU     ffffb22b (a3), 002a (80191034 (s2)) [8019105e]
-800a9b28 : LHU     1f800360 (v0), 002a (80191034 (s2)) [8019105e]
-800a8c8c : LH      00000030 (v0), 0004 (80191036 (s0)) [8019103a]
-800a8c34 : LW      00000001 (v0), 002a (80191036 (s0)) [80191060]
+
 
 
 
 ////////////////////////////////
 // funca8b60
-800A8B60	lui    v0, $800b
-800A8B64	lw     v0, $d00c(v0)
-800A8B68	addiu  sp, sp, $ffa0 (=-$60)
-800A8B6C	sw     ra, $0058(sp)
-800A8B70	sw     s5, $0054(sp)
-800A8B74	sw     s4, $0050(sp)
-800A8B78	sw     s3, $004c(sp)
-800A8B7C	sw     s2, $0048(sp)
-800A8B80	sw     s1, $0044(sp)
-800A8B84	bne    v0, zero, La8d2c [$800a8d2c]
-800A8B88	sw     s0, $0040(sp)
-800A8B8C	lui    a1, $800b
-800A8B90	addiu  a1, a1, $ef38 (=-$10c8)
-800A8B94	lw     v0, $0000(a1)
-800A8B98	lw     v1, $0004(a1)
-800A8B9C	lw     a0, $0008(a1)
-800A8BA0	sw     v0, $0010(sp)
-800A8BA4	sw     v1, $0014(sp)
-800A8BA8	sw     a0, $0018(sp)
-800A8BAC	lw     v0, $000c(a1)
-800A8BB0	lw     v1, $0010(a1)
-800A8BB4	lw     a0, $0014(a1)
-800A8BB8	sw     v0, $001c(sp)
-800A8BBC	sw     v1, $0020(sp)
-800A8BC0	sw     a0, $0024(sp)
-800A8BC4	lw     v0, $0018(a1)
-800A8BC8	lw     v1, $001c(a1)
-800A8BCC	sw     v0, $0028(sp)
-800A8BD0	sw     v1, $002c(sp)
-800A8BD4	addu   s5, zero, zero
+V0 = w[800ad00c];
+if( V0 == 0 )
+{
+    A1 = 800aef38;
+    [SP + 10] = w(w[A1 + 0])
+    [SP + 14] = w(w[A1 + 4])
+    [SP + 18] = w(w[A1 + 8])
 
-loopa8bd8:	; 800A8BD8
-    800A8BD8	lui    at, $800b
-    800A8BDC	addu   at, at, s5
-    800A8BE0	lbu    v1, $0984(at)
-    800A8BE4	ori    v0, zero, $0001
-    800A8BE8	bne    v1, v0, La8cf8 [$800a8cf8]
-    800A8BEC	addu   a2, zero, zero
-    
-    S3 = w[800c2dec + S5 * 4];
+    [SP + 1c] = w(w[A1 + c])
+    [SP + 20] = w(w[A1 + 10])
+    [SP + 24] = w(w[A1 + 14])
 
-    800A8C00	addu   s4, zero, zero
-    S0 = S3 + 2;
+    [SP + 28] = w(w[A1 + 18])
+    [SP + 2c] = w(w[A1 + 1c])
 
-    loopa8c08:	; 800A8C08
-        V1 = h[S0 + 4];
+    S5 = 0;
 
-        800A8C10	beq    v1, zero, La8cd4 [$800a8cd4]
-        800A8C14	sw     zero, $0030(sp)
-        800A8C18	lhu    v0, $0000(s0)
-        800A8C1C	nop
-        800A8C20	bne    v0, zero, La8cc8 [$800a8cc8]
-        800A8C24	nop
-        800A8C28	blez   v1, La8ca0 [$800a8ca0]
-        800A8C2C	addu   s2, zero, zero
+    loopa8bd8:	; 800A8BD8
+        A2 = 0;
+        if( bu[800b0984 + S5] == 1 )
+        {
+            S3 = w[800c2dec + S5 * 4];
+            S4 = 0;
+            S0 = S3 + 2;
 
-
-        S1 = 0;
-        loopa8c34:	; 800A8C34
-            A1 = S1 + w[S0 + 2a];
-            if (h[A1] == 0)
-            {
-                if (hu[S0 + 2] == 0)
+            loopa8c08:	; 800A8C08
+                V1 = h[S0 + 4];
+                [SP + 30] = w(0);
+                if( V1 != 0 )
                 {
-                    continue;
+                    V0 = hu[S0];
+                    if( V0 == 0 )
+                    {
+                        if( V1 > 0 )
+                        {
+                            S1 = 0;
+                            S2 = 0;
+                            loopa8c34:	; 800A8C34
+                                A1 = S1 + w[S0 + 2a]; // data from animation
+                                if (h[A1] == 0)
+                                {
+                                    if (hu[S0 + 2] == 0)
+                                    {
+                                        continue;
+                                    }
+
+                                    A0 = S3;
+                                    A1 = S1 + w[S0 + 2a];
+                                    A2 = SP + 30;
+                                    800A8C60	jal    funca9b8c [$800a9b8c]
+                                }
+
+                                A0 = S3;
+                                A1 = S1 + w[S0 + 2a];
+                                A2 = SP + 10;
+                                800A8C80	jal    funca93f0 [$800a93f0]
+
+                                A2 = 1;
+                                S1 = S1 + c0;
+                                S2 = S2 + 1;
+                                V0 = S2 < h[S0 + 4];
+                            800A8C98	bne    v0, zero, loopa8c34 [$800a8c34]
+                        }
+
+                        A0 = hu[S0 + 2];
+                        V1 = A0 & ffff;
+                        800A8CAC	beq    v1, zero, La8cd4 [$800a8cd4]
+                        800A8CB0	ori    v0, zero, $7fff
+                        if( V1 != V0 )
+                        {
+                            [S0 + 2] = h(A0 - 1);
+                        }
+
+                        A2 = 1;
+                        800A8CC0	j      La8cd4 [$800a8cd4]
+                    }
+
+                    A2 = 1;
+                    [S0 + 0] = h(V0 - 1);
                 }
 
-                A0 = S3;
-                A1 = S1 + w[S0 + 2a];
-                A2 = SP + 30;
-                800A8C60	jal    funca9b8c [$800a9b8c]
+                La8cd4:	; 800A8CD4
+                S0 = S0 + 78;
+                S3 = S3 + 78;
+
+                S4 = S4 + 1;
+                V0 = S4 < 8;
+            800A8CE0	bne    v0, zero, loopa8c08 [$800a8c08]
+
+            if (A2 == 0)
+            {
+                A0 = S5;
+                800A8CF0	jal    funca8784 [$800a8784]
             }
+        }
 
-            A0 = S3;
-            A1 = S1 + w[S0 + 2a];
-            A2 = SP + 10;
-            800A8C80	jal    funca93f0 [$800a93f0]
-
-            A2 = 1;
-            S1 = S1 + c0;
-            S2 = S2 + 1;
-            V0 = S2 < h[S0 + 4];
-        800A8C98	bne    v0, zero, loopa8c34 [$800a8c34]
+        S5 = S5 + 1;
+        V0 = S5 < 40;
+    800A8D00	bne    v0, zero, loopa8bd8 [$800a8bd8]
 
 
-        La8ca0:	; 800A8CA0
-        800A8CA0	lhu    a0, $0002(s0)
-        800A8CA4	nop
-        800A8CA8	andi   v1, a0, $ffff
-        800A8CAC	beq    v1, zero, La8cd4 [$800a8cd4]
-        800A8CB0	ori    v0, zero, $7fff
-        800A8CB4	beq    v1, v0, La8cc0 [$800a8cc0]
-        800A8CB8	addiu  v0, a0, $ffff (=-$1)
-        800A8CBC	sh     v0, $0002(s0)
 
-        La8cc0:	; 800A8CC0
-        800A8CC0	j      La8cd4 [$800a8cd4]
-        800A8CC4	ori    a2, zero, $0001
-
-        La8cc8:	; 800A8CC8
-        800A8CC8	ori    a2, zero, $0001
-        800A8CCC	addiu  v0, v0, $ffff (=-$1)
-        800A8CD0	sh     v0, $0000(s0)
-
-        La8cd4:	; 800A8CD4
-        800A8CD4	addiu  s0, s0, $0078
-        800A8CE4	addiu  s3, s3, $0078
-        800A8CD8	addiu  s4, s4, $0001
-
-        V0 = S4 < 8;
-    800A8CE0	bne    v0, zero, loopa8c08 [$800a8c08]
-
-    if (A2 == 0)
+    if( w[800c1b60] == 0 )
     {
-        A0 = S5;
-        800A8CF0	jal    funca8784 [$800a8784]
+        A0 = 8006f458;
+        funca8c88;
     }
-
-    S5 = S5 + 1;
-    V0 = S5 < 40;
-800A8D00	bne    v0, zero, loopa8bd8 [$800a8bd8]
-
-
-800A8D08	lui    v0, $800c
-800A8D0C	lw     v0, $1b60(v0)
-800A8D10	nop
-800A8D14	bne    v0, zero, La8d2c [$800a8d2c]
-800A8D18	nop
-800A8D1C	lui    a0, $8007
-800A8D20	addiu  a0, a0, $f458 (=-$ba8)
-800A8D24	0C0A06C6	Æ...
-800A8D28	nop
-
+}
 La8d2c:	; 800A8D2C
-800A8D2C	lw     ra, $0058(sp)
-800A8D30	lw     s5, $0054(sp)
-800A8D34	lw     s4, $0050(sp)
-800A8D38	lw     s3, $004c(sp)
-800A8D3C	lw     s2, $0048(sp)
-800A8D40	lw     s1, $0044(sp)
-800A8D44	lw     s0, $0040(sp)
-800A8D48	addiu  sp, sp, $0060
-800A8D4C	jr     ra 
-800A8D50	nop
 ////////////////////////////////
 
 

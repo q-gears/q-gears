@@ -346,7 +346,7 @@ here 7 more requersed script data 8 bytes each.
 
 
 
-struct where pointer point to size 0x134
+model struct (size 0x134)
 +  0 [][][][] pointer to 801e85f4 item of this model.
 +  4 [][][][] pointer to allocated place for skeleton (0x7c size).
 +  8 [][][][] pointer to animation sub file addreses animation_0_1, animation_0_2 and so on.
@@ -416,11 +416,11 @@ struct where pointer point to size 0x134
 
 
 allocated place for skeleton ((number_of_bones + 1) * 0x7c)
-+  0 [][]     store 0 here or pointer to parent bone data.
++  0 [][][][] store 0 here or pointer to parent bone data.
 +  4 []       store 1 here during init.
 +  5 []       store 1 here during init.
 +  6 []       store 0 here during init. In case of root store 1.
-+  7 []       store 1 here during init. In case of root store 0.
++  7 []       store 1 here during init. In case of root store 0. Some flags.
 +  8 [][]     store part id here during init (ffff if there is no part).
 +  a []       index of bone? start with 1. Increment with each bone. In case of root store number of bones here.
 + 2c          matrix in standart GTE format.

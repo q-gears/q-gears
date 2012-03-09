@@ -23,7 +23,7 @@ public:
     AnimatedModel();
     virtual ~AnimatedModel();
 
-    void Export( const ModelInfo& info );
+    Ogre::Entity* Export( const ModelInfo& info );
 
 private:
     Skeleton m_Skeleton;

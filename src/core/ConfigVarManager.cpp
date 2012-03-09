@@ -24,7 +24,7 @@ ConfigVarManager::ConfigVarManager()
 ConfigVar*
 ConfigVarManager::Find( const Ogre::String& name ) const
 {
-    for( int i = 0; i < m_ConfigVars.size(); ++i )
+    for( size_t i = 0; i < m_ConfigVars.size(); ++i )
     {
         if( m_ConfigVars[ i ]->GetName() == name )
         {
@@ -37,7 +37,7 @@ ConfigVarManager::Find( const Ogre::String& name ) const
 
 
 
-int
+unsigned int
 ConfigVarManager::GetConfigVarNumber() const
 {
     return m_ConfigVars.size();
@@ -46,7 +46,7 @@ ConfigVarManager::GetConfigVarNumber() const
 
 
 ConfigVar*
-ConfigVarManager::GetConfigVar( const int i ) const
+ConfigVarManager::GetConfigVar( const unsigned int i ) const
 {
     if( i < m_ConfigVars.size() )
     {

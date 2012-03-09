@@ -105,7 +105,7 @@ UiManager::AddText( const Ogre::String& name, TiXmlNode* text )
 void
 UiManager::UnloadTexts()
 {
-    for( int i = 0; i < m_Texts.size(); ++i )
+    for( size_t i = 0; i < m_Texts.size(); ++i )
     {
         delete m_Texts[ i ].node;
     }
@@ -117,7 +117,7 @@ UiManager::UnloadTexts()
 TiXmlNode*
 UiManager::GetText( const Ogre::String& name ) const
 {
-    for( int i = 0; i < m_Texts.size(); ++i )
+    for( size_t i = 0; i < m_Texts.size(); ++i )
     {
         if( m_Texts[ i ].name == name )
         {
@@ -141,7 +141,7 @@ UiManager::AddFont( UiFont* font )
 UiFont*
 UiManager::GetFont( const Ogre::String& name )
 {
-    for( int i = 0; i < m_Fonts.size(); ++i )
+    for( size_t i = 0; i < m_Fonts.size(); ++i )
     {
         if( m_Fonts[ i ]->GetName() == name )
         {
@@ -168,7 +168,7 @@ UiManager::AddPrototype( const Ogre::String& name, TiXmlNode* prototype )
 TiXmlNode*
 UiManager::GetPrototype( const Ogre::String& name ) const
 {
-    for( int i = 0; i < m_Prototypes.size(); ++i )
+    for( size_t i = 0; i < m_Prototypes.size(); ++i )
     {
         if( m_Prototypes[ i ].name == name )
         {
@@ -198,13 +198,13 @@ UiManager::GetWidget( const Ogre::String& name )
 
     if( table_path.size() > 0 )
     {
-        for( int i = 0; i < m_Widgets.size(); ++i )
+        for( size_t i = 0; i < m_Widgets.size(); ++i )
         {
             if( m_Widgets[ i ]->GetName() == table_path[ 0 ] )
             {
                 widget = m_Widgets[ i ];
 
-                for( int j = 1; ( j < table_path.size() ) && ( widget != NULL ); ++j )
+                for( size_t j = 1; ( j < table_path.size() ) && ( widget != NULL ); ++j )
                 {
                     widget = widget->GetChild( table_path[ j ] );
                 }
@@ -232,7 +232,7 @@ UiManager::renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& inv
     {
         Ogre::Root::getSingletonPtr()->getRenderSystem()->clearFrameBuffer( Ogre::FBT_DEPTH );
 
-        for( int i = 0; i < m_Widgets.size(); ++i)
+        for( size_t i = 0; i < m_Widgets.size(); ++i)
         {
             m_Widgets[ i ]->Render();
         }

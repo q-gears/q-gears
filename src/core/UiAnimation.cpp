@@ -41,7 +41,7 @@ UiAnimation::AddTime( const float time )
         float min = 0;
         float max = m_Length;
 
-        for( int i = 0; i < m_Scale.size(); ++i )
+        for( size_t i = 0; i < m_Scale.size(); ++i )
         {
             if( m_Scale[ i ].time < m_Time && m_Scale[ i ].time > min )
             {
@@ -79,7 +79,7 @@ UiAnimation::AddTime( const float time )
         float min = 0;
         float max = m_Length;
 
-        for( int i = 0; i < m_X.size(); ++i )
+        for( size_t i = 0; i < m_X.size(); ++i )
         {
             if( m_X[ i ].time < m_Time && m_X[ i ].time > min )
             {
@@ -117,7 +117,7 @@ UiAnimation::AddTime( const float time )
         float min = 0;
         float max = m_Length;
 
-        for( int i = 0; i < m_Y.size(); ++i )
+        for( size_t i = 0; i < m_Y.size(); ++i )
         {
             if( m_Y[ i ].time < m_Time && m_Y[ i ].time > min )
             {
@@ -155,7 +155,7 @@ UiAnimation::AddTime( const float time )
         float min = 0;
         float max = m_Length;
 
-        for( int i = 0; i < m_Rotation.size(); ++i )
+        for( size_t i = 0; i < m_Rotation.size(); ++i )
         {
             if( m_Rotation[ i ].time < m_Time && m_Rotation[ i ].time > min )
             {
@@ -193,7 +193,7 @@ UiAnimation::AddTime( const float time )
         float min = 0;
         float max = m_Length;
 
-        for( int i = 0; i < m_Alpha.size(); ++i )
+        for( size_t i = 0; i < m_Alpha.size(); ++i )
         {
             if( m_Alpha[ i ].time < m_Time && m_Alpha[ i ].time > min )
             {

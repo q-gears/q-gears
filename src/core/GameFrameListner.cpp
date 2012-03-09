@@ -110,10 +110,7 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
         }
     }
 
-    if( console_active == true )
-    {
-        Console::getSingleton().Update();
-    }
+    Console::getSingleton().Update();
 
     ScriptManager::getSingleton().Update();
     UiManager::getSingleton().Update();

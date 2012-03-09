@@ -18,7 +18,7 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
 
     m_Height( 1 ),
 
-    m_SolidRadius( 1 ),
+    m_SolidRadius( 0.2 ),
     m_Solid( false ),
 
     m_TalkRadius( 0.25f ),

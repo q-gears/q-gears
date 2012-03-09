@@ -41,7 +41,7 @@ UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiW
 
 UiWidget::~UiWidget()
 {
-    for( int i = 0; i < m_Animations.size(); ++i )
+    for( size_t i = 0; i < m_Animations.size(); ++i )
     {
         delete m_Animations[ i ];
     }
@@ -129,7 +129,7 @@ UiWidget::Update()
                 m_AnimationCurrent->AddTime( m_AnimationEndTime - time );
             }
 
-            for( int i = 0; i < m_AnimationSync.size(); ++i)
+            for( unsigned int i = 0; i < m_AnimationSync.size(); ++i)
             {
                 ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationSync[ i ] );
             }
@@ -154,7 +154,7 @@ UiWidget::Update()
 
 
 
-    for( int i = 0; i < m_Children.size(); ++i )
+    for( size_t i = 0; i < m_Children.size(); ++i )
     {
         m_Children[ i ]->Update();
     }
@@ -245,7 +245,7 @@ UiWidget::OnResize()
     m_ScreenWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     m_ScreenHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
-    for( int i = 0; i < m_Children.size(); ++i )
+    for( size_t i = 0; i < m_Children.size(); ++i )
     {
         m_Children[ i ]->OnResize();
     }
@@ -260,7 +260,7 @@ UiWidget::Render()
 {
     if( m_Visible == true )
     {
-        for( int i = 0; i < m_Children.size(); ++i )
+        for( size_t i = 0; i < m_Children.size(); ++i )
         {
             m_Children[ i ]->Render();
         }
@@ -304,7 +304,7 @@ UiWidget::AddChild( UiWidget *widget )
 UiWidget*
 UiWidget::GetChild( const Ogre::String& name )
 {
-    for( int i = 0; i < m_Children.size(); ++i )
+    for( size_t i = 0; i < m_Children.size(); ++i )
     {
         if( m_Children[ i ]->GetName() == name )
         {
@@ -320,7 +320,7 @@ UiWidget::GetChild( const Ogre::String& name )
 void
 UiWidget::RemoveAllChildren()
 {
-    for( int i = 0; i < m_Children.size(); ++i )
+    for( size_t i = 0; i < m_Children.size(); ++i )
     {
         delete m_Children[ i ];
     }
@@ -353,7 +353,7 @@ UiWidget::GetCurrentAnimationName() const
 void
 UiWidget::PlayAnimation( const Ogre::String& animation, UiAnimation::State state, const float start, const float end )
 {
-    for( int i = 0; i < m_Animations.size(); ++i)
+    for( size_t i = 0; i < m_Animations.size(); ++i)
     {
         if( m_Animations[ i ]->GetName() == animation )
         {

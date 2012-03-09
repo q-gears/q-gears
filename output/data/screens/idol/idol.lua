@@ -73,7 +73,7 @@ UiContainer.Idol = {
                         end
                     end
 
-                    ui_manager:get_widget( "Idol.Picture" .. self.picture_current ):anymation_sync()
+                    ui_manager:get_widget( "Idol.Picture" .. self.picture_current ):animation_sync()
                 end
             elseif button == "Right" then
                 if self.picture_current > 1 then
@@ -106,7 +106,7 @@ UiContainer.Idol = {
                         end
                     end
 
-                    ui_manager:get_widget( "Idol.Picture" .. self.picture_current ):anymation_sync()
+                    ui_manager:get_widget( "Idol.Picture" .. self.picture_current ):animation_sync()
                 end
             end
         end
