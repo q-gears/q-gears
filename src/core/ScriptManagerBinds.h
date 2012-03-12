@@ -67,6 +67,8 @@ ScriptManager::InitBinds()
             .def( "move_sync", ( int( Entity::* )() ) &Entity::ScriptMoveSync, luabind::yield )
             .def( "linear_to_position", ( void( Entity::* )( const float, const float, const float, const LinearMovement, const char* ) ) &Entity::ScriptLinearToPosition )
             .def( "linear_sync", ( int( Entity::* )() ) &Entity::ScriptLinearSync, luabind::yield )
+            .def( "jump_to_position", ( void( Entity::* )( const float, const float, const float, const float ) )&Entity::ScriptJumpToPosition)
+            .def( "jump_sync", ( int( Entity::* )() ) &Entity::ScriptJumpSync, luabind::yield )
             .def( "offset_to_position", ( void( Entity::* )( const float, const float, const float, const ActionType, const float ) ) &Entity::ScriptOffsetToPosition )
             .def( "offset_sync", ( int( Entity::* )() ) &Entity::ScriptOffsetSync, luabind::yield )
             .def( "turn_to_entity", ( void( Entity::* )( Entity*, const TurnDirection, const float ) )&Entity::ScriptTurnToEntity )
@@ -102,6 +104,7 @@ ScriptManager::InitBinds()
         luabind::class_< EntityManager >( "EntityManager" )
             .def( "get_entity", ( Entity*( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntity )
             .def( "set_player_entity", ( void( EntityManager::* )( const char* ) ) &EntityManager::ScriptSetPlayerEntity )
+            .def( "unset_player_entity", ( void( EntityManager::* )() ) &EntityManager::ScriptUnsetPlayerEntity )
     ];
 
     // ui widget access

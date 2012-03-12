@@ -26174,7 +26174,7 @@
 	<OgreRoot.h>
 	<OgreSingleton.h>
 
-1330877262 k:\q-gears\src\core\entitymanager.h
+1331576610 k:\q-gears\src\core\entitymanager.h
 	<OgreSingleton.h>
 	"Background2D.h"
 	"Entity.h"
@@ -26187,7 +26187,7 @@
 	<OgreRoot.h>
 	<OgreSingleton.h>
 
-1330972500 k:\q-gears\src\core\entity.h
+1331581328 k:\q-gears\src\core\entity.h
 	<OgreString.h>
 	"EntityCollision.h"
 	"EntityDirection.h"
@@ -26882,7 +26882,7 @@
 1331284096 source:k:\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1331288954 source:k:\q-gears\src\core\console.cpp
+1331289952 source:k:\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
 	"ConfigCmdManager.h"
@@ -26909,14 +26909,14 @@
 	"EntityDirection.h"
 	<OgreHardwareBufferManager.h>
 
-1331057236 source:k:\q-gears\src\core\entitymodel.cpp
+1331581066 source:k:\q-gears\src\core\entitymodel.cpp
 	"EntityModel.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
 	"../core/Logger.h"
 	"../core/Timer.h"
 
-1330972424 k:\q-gears\src\core\entitymodel.h
+1331581068 k:\q-gears\src\core\entitymodel.h
 	"Entity.h"
 
 1331288848 source:k:\q-gears\src\core\gameframelistner.cpp
@@ -26965,7 +26965,7 @@
 	"library/luabind/luabind.hpp"
 	"library/luabind/yield_policy.hpp"
 
-1330969672 k:\q-gears\src\core\scriptmanagerbinds.h
+1331581206 k:\q-gears\src\core\scriptmanagerbinds.h
 	"Console.h"
 	"Logger.h"
 	"Entity.h"
@@ -27820,14 +27820,14 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1331278584 source:k:\q-gears\src\core\entity.cpp
+1331581166 source:k:\q-gears\src\core\entity.cpp
 	"Entity.h"
 	<OgreSceneNode.h>
 	"ConfigVar.h"
 	"DebugDraw.h"
 	"Logger.h"
 
-1331279288 source:k:\q-gears\src\core\entitymanager.cpp
+1331582144 source:k:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>

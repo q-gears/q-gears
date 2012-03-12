@@ -1,6 +1,6 @@
 header
-+04 [][]     nubmer of animations.
-+06 [][]     nubmer of tileset blocks.
++04 [][]     number of animations.
++06 [][]     number of tileset blocks.
 +0c [][][][] offset to animation data.
 +10 [][][][] offset to tileset blocks data.
 +18 [][][][] offset to camera settings.

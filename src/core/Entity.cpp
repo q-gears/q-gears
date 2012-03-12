@@ -38,23 +38,28 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_MoveAnimationWalk( "Walk" ),
     m_MoveAnimationRun( "Run" ),
 
+    m_LinearMovement( LM_UP_TO_DOWN ),
+    m_LinearStart( 0.0f, 0.0f, 0.0f ),
+    m_LinearEnd( 0.0f, 0.0f, 0.0f ),
+
+    m_JumpStart( 0.0f, 0.0f, 0.0f ),
+    m_JumpEnd( 0.0f, 0.0f, 0.0f ),
+    m_JumpSeconds( 0 ),
+    m_JumpCurrentSeconds( 0 ),
+
     m_OffsetPositionStart( 0.0f, 0.0f, 0.0f ),
     m_OffsetPositionEnd( 0.0f, 0.0f, 0.0f ),
     m_OffsetType( AT_NONE ),
-    m_OffsetStepSeconds( 0 ),
-    m_OffsetCurrentStepSeconds( 0 ),
+    m_OffsetSeconds( 0 ),
+    m_OffsetCurrentSeconds( 0 ),
 
     m_TurnDirection( TD_CLOSEST ),
     m_TurnDirectionStart( 0 ),
     m_TurnDirectionEnd( 0 ),
     m_TurnEntity( NULL ),
     m_TurnType( AT_NONE ),
-    m_TurnStepSeconds( 0 ),
-    m_TurnCurrentStepSeconds( 0 ),
-
-    m_LinearMovement( LM_UP_TO_DOWN ),
-    m_LinearStart( 0.0f, 0.0f, 0.0f ),
-    m_LinearEnd( 0.0f, 0.0f, 0.0f ),
+    m_TurnSeconds( 0 ),
+    m_TurnCurrentSeconds( 0 ),
 
     m_AnimationDefault( "Idle" ),
     m_AnimationCurrentName( "" ),
@@ -137,6 +142,31 @@ Entity::Update()
                 DEBUG_DRAW.Text( m_LinearStart, 0, 0, "Start: " + Ogre::StringConverter::toString( m_LinearStart ) );
                 DEBUG_DRAW.Text( m_LinearEnd, 0, 0, "End: " + Ogre::StringConverter::toString( m_LinearEnd ) );
                 DEBUG_DRAW.Line3d( m_LinearStart, m_LinearEnd );
+            }
+            break;
+
+            case ES_JUMP:
+            {
+                DEBUG_DRAW.Text( m_JumpStart, 0, 0, "Start: " + Ogre::StringConverter::toString( m_JumpStart ) );
+                DEBUG_DRAW.Text( m_JumpEnd, 0, 0, "End: " + Ogre::StringConverter::toString( m_JumpEnd ) );
+                Ogre::Vector3 distance = m_JumpEnd - m_JumpStart;
+                Ogre::Vector3 pos1, pos2, pos3;
+                pos1.x = m_JumpStart.x + distance.x * 0.25f;
+                pos1.y = m_JumpStart.y + distance.y * 0.25f;
+                float current1 = m_JumpSeconds / 4;
+                pos1.z = current1 * current1 * -13.08f + current1 * ( ( distance.z ) / m_JumpSeconds + m_JumpSeconds * 13.08f ) + m_JumpStart.z;
+                pos2.x = m_JumpStart.x + distance.x * 0.5f;
+                pos2.y = m_JumpStart.y + distance.y * 0.5f;
+                float current2 = current1 * 2;
+                pos2.z = current2 * current2 * -13.08f + current2 * ( ( distance.z ) / m_JumpSeconds + m_JumpSeconds * 13.08f ) + m_JumpStart.z;
+                pos3.x = m_JumpStart.x + distance.x * 0.75f;
+                pos3.y = m_JumpStart.y + distance.y * 0.75f;
+                float current3 = current1 * 3;
+                pos3.z = current3 * current3 * -13.08f + current3 * ( ( distance.z ) / m_JumpSeconds + m_JumpSeconds * 13.08f ) + m_JumpStart.z;
+                DEBUG_DRAW.Line3d( m_JumpStart, pos1 );
+                DEBUG_DRAW.Line3d( pos1, pos2 );
+                DEBUG_DRAW.Line3d( pos2, pos3 );
+                DEBUG_DRAW.Line3d( pos3, m_JumpEnd );
             }
             break;
         }
@@ -522,7 +552,7 @@ void
 Entity::ScriptLinearToPosition( const float x, const float y, const float z, const LinearMovement movement, const char* animation )
 {
     Ogre::Vector3 pos = Ogre::Vector3( x, y, z );
-    SetLinear( pos, movement, Ogre::String( animation ) );
+    SetLinear( pos, movement, animation );
 
     LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set linear move to position \"" + Ogre::StringConverter::toString( pos ) + "\" with animation \"" + animation + "\"." );
 }
@@ -565,7 +595,6 @@ Entity::UnsetLinear()
 {
     m_State = ES_NONE;
 
-    // linear animation
     m_AnimationAutoPlay = true;
     PlayAnimation( m_AnimationDefault, EA_LOOPED, 0, -1 );
 
@@ -603,6 +632,98 @@ Entity::GetLinearEnd() const
 
 
 void
+Entity::ScriptJumpToPosition( const float x, const float y, const float z, const float seconds )
+{
+    Ogre::Vector3 jump_to( x, y, z );
+    SetJump( jump_to, seconds );
+
+    LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set jump to position \"" + Ogre::StringConverter::toString( jump_to ) + "\" in " + Ogre::StringConverter::toString( seconds ) + " seconds." );
+}
+
+
+int
+Entity::ScriptJumpSync()
+{
+    ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
+
+    LOG_TRIVIAL( "[SCRIPT] Wait entity \"" + m_Name + "\" jump for function \"" + script.function + "\" in script entity \"" + script.entity + "\"." );
+
+    m_Sync.push_back( script );
+    return -1;
+}
+
+
+
+void
+Entity::SetJump( const Ogre::Vector3& jump_to, const float seconds )
+{
+    m_State = ES_JUMP;
+    m_JumpStart = GetPosition();
+    m_JumpEnd = jump_to;
+    m_JumpSeconds = seconds;
+    m_JumpCurrentSeconds = 0;
+
+    // after move we need reattach entity to walkmesh
+    m_MoveTriangleId = -1;
+}
+
+
+
+void
+Entity::UnsetJump()
+{
+    m_State = ES_NONE;
+
+    for( size_t i = 0; i < m_Sync.size(); ++i)
+    {
+        ScriptManager::getSingleton().ContinueScriptExecution( m_Sync[ i ] );
+    }
+    m_Sync.clear();
+}
+
+
+
+const Ogre::Vector3&
+Entity::GetJumpStart() const
+{
+    return m_JumpStart;
+}
+
+
+
+const Ogre::Vector3&
+Entity::GetJumpEnd() const
+{
+    return m_JumpEnd;
+}
+
+
+
+float
+Entity::GetJumpSeconds() const
+{
+    return m_JumpSeconds;
+}
+
+
+
+void
+Entity::SetJumpCurrentSeconds( const float seconds )
+{
+    m_JumpCurrentSeconds = seconds;
+}
+
+
+
+float
+Entity::GetJumpCurrentSeconds() const
+{
+    return m_JumpCurrentSeconds;
+}
+
+
+
+void
 Entity::ScriptOffsetToPosition( const float x, const float y, const float z, const ActionType type, const float seconds )
 {
     LOG_TRIVIAL( "[SCRIPT] Entity \"" + m_Name + "\" set offset to position \"" + Ogre::StringConverter::toString( Ogre::Vector3( x, y, z ) ) + "'." );
@@ -618,8 +739,8 @@ Entity::ScriptOffsetToPosition( const float x, const float y, const float z, con
     m_OffsetPositionStart = GetOffset();
     m_OffsetPositionEnd = position;
     m_OffsetType = type;
-    m_OffsetStepSeconds = seconds;
-    m_OffsetCurrentStepSeconds = 0;
+    m_OffsetSeconds = seconds;
+    m_OffsetCurrentSeconds = 0;
 }
 
 
@@ -676,26 +797,25 @@ Entity::GetOffsetType() const
 
 
 float
-Entity::GetOffsetStepSeconds() const
+Entity::GetOffsetSeconds() const
 {
-    return m_OffsetStepSeconds;
+    return m_OffsetSeconds;
 }
 
 
 
 void
-Entity::SetOffsetCurrentStepSeconds( const float seconds )
+Entity::SetOffsetCurrentSeconds( const float seconds )
 {
-    m_OffsetCurrentStepSeconds = ( seconds > m_OffsetStepSeconds ) ? m_OffsetStepSeconds : seconds;
-    m_OffsetCurrentStepSeconds = ( m_OffsetCurrentStepSeconds < 0 ) ? 0 : m_OffsetCurrentStepSeconds;
+    m_OffsetCurrentSeconds = seconds;
 }
 
 
 
 float
-Entity::GetOffsetCurrentStepSeconds() const
+Entity::GetOffsetCurrentSeconds() const
 {
-    return m_OffsetCurrentStepSeconds;
+    return m_OffsetCurrentSeconds;
 }
 
 
@@ -756,8 +876,8 @@ Entity::SetTurn( const Ogre::Degree& direction_to, Entity* entity, const TurnDir
     m_TurnDirectionStart = angle_start;
     m_TurnDirectionEnd = angle_end;
     m_TurnType = turn_type;
-    m_TurnStepSeconds = seconds;
-    m_TurnCurrentStepSeconds = 0;
+    m_TurnSeconds = seconds;
+    m_TurnCurrentSeconds = 0;
 }
 
 
@@ -852,26 +972,25 @@ Entity::GetTurnType() const
 
 
 float
-Entity::GetTurnStepSeconds() const
+Entity::GetTurnSeconds() const
 {
-    return m_TurnStepSeconds;
+    return m_TurnSeconds;
 }
 
 
 
 void
-Entity::SetTurnCurrentStepSeconds( const float seconds )
+Entity::SetTurnCurrentSeconds( const float seconds )
 {
-    m_TurnCurrentStepSeconds = ( seconds > m_TurnStepSeconds ) ? m_TurnStepSeconds : seconds;
-    m_TurnCurrentStepSeconds = ( m_TurnCurrentStepSeconds < 0 ) ? 0 : m_TurnCurrentStepSeconds;
+    m_TurnCurrentSeconds = seconds;
 }
 
 
 
 float
-Entity::GetTurnCurrentStepSeconds() const
+Entity::GetTurnCurrentSeconds() const
 {
-    return m_TurnCurrentStepSeconds;
+    return m_TurnCurrentSeconds;
 }
 
 

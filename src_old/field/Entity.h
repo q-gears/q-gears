@@ -194,7 +194,6 @@ protected:
     ScriptInfo            m_TurnScriptInfo;
 
     // jump related
-    float                 m_JumpB;
     Ogre::Vector3         m_JumpStart;
     Ogre::Vector3         m_JumpEnd;
     int                   m_JumpTriangleEnd;

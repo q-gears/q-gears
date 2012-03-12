@@ -135,6 +135,12 @@ EntityManager::Update()
     {
         m_EntityModels[ i ]->Update();
 
+        // it's not needed to update movements it delta time == 0 (for example if we stop time)
+        if( Timer::getSingleton().GetGameTimeDelta() == 0 )
+        {
+            continue;
+        }
+
 
 
         // update offseting
@@ -212,6 +218,14 @@ EntityManager::Update()
             case ES_LINEAR:
             {
                 SetNextLinearStep( m_EntityModels[ i ] );
+            }
+            break;
+
+
+
+            case ES_JUMP:
+            {
+                SetNextJumpStep( m_EntityModels[ i ] );
             }
             break;
 
@@ -337,6 +351,14 @@ EntityManager::ScriptSetPlayerEntity( const char* name )
             m_PlayerEntity = m_EntityModels[ i ];
         }
     }
+}
+
+
+
+void
+EntityManager::ScriptUnsetPlayerEntity()
+{
+    m_PlayerEntity = NULL;
 }
 
 
@@ -875,25 +897,28 @@ void
 EntityManager::SetNextOffsetStep( Entity* entity )
 {
     ActionType type = entity->GetOffsetType();
-    float steps = entity->GetOffsetStepSeconds();
-    float step = entity->GetOffsetCurrentStepSeconds();
+    float total = entity->GetOffsetSeconds();
+    float current = entity->GetOffsetCurrentSeconds();
+
+    current += Timer::getSingleton().GetGameTimeDelta();
+    current = ( current > total ) ? total : current;
 
     Ogre::Vector3 start = entity->GetOffsetPositionStart();
     Ogre::Vector3 end = entity->GetOffsetPositionEnd();
 
-    float x = step / steps;
+    float x = current / total;
     float smooth_modifier = ( type == AT_SMOOTH ) ? -2 * x * x * x + 3 * x * x : x;
-    Ogre::Vector3 current = start + ( end - start ) * smooth_modifier;
+    Ogre::Vector3 offset = start + ( end - start ) * smooth_modifier;
 
-    entity->SetOffset( current );
+    entity->SetOffset( offset );
 
-    if (step == steps)
+    if( current == total )
     {
         entity->UnsetOffset();
     }
     else
     {
-        entity->SetOffsetCurrentStepSeconds( step + Timer::getSingleton().GetGameTimeDelta() );
+        entity->SetOffsetCurrentSeconds( current );
     }
 }
 
@@ -903,25 +928,28 @@ void
 EntityManager::SetNextTurnStep( Entity* entity )
 {
     ActionType type = entity->GetTurnType();
-    float steps = entity->GetTurnStepSeconds();
-    float step = entity->GetTurnCurrentStepSeconds();
+    float total = entity->GetTurnSeconds();
+    float current = entity->GetTurnCurrentSeconds();
+
+    current += Timer::getSingleton().GetGameTimeDelta();
+    current = ( current > total ) ? total : current;
 
     Ogre::Degree start = entity->GetTurnDirectionStart();
     Ogre::Degree end = entity->GetTurnDirectionEnd();
 
-    float x = step / steps;
+    float x = current / total;
     float smooth_modifier = ( type == AT_SMOOTH ) ? -2 * x * x * x + 3 * x * x : x;
     Ogre::Degree direction = start + ( end - start ) * smooth_modifier;
 
     entity->SetDirection( direction );
 
-    if( step == steps )
+    if( current == total )
     {
         entity->UnsetTurn();
     }
     else
     {
-        entity->SetTurnCurrentStepSeconds( step + Timer::getSingleton().GetGameTimeDelta() );
+        entity->SetTurnCurrentSeconds( current );
     }
 }
 
@@ -1016,5 +1044,34 @@ EntityManager::SetNextLinearStep( Entity* entity )
 
         entity->SetPosition( position );
         entity->UpdateAnimation( ( to_end == true ) ? delta : -delta );
+    }
+}
+
+
+
+void
+EntityManager::SetNextJumpStep( Entity* entity )
+{
+    float total = entity->GetJumpSeconds();
+    float current = entity->GetJumpCurrentSeconds();
+
+    current += Timer::getSingleton().GetGameTimeDelta();
+    current = ( current > total ) ? total : current;
+
+    Ogre::Vector3 start_position = entity->GetJumpStart();
+    Ogre::Vector3 end_position   = entity->GetJumpEnd();
+    Ogre::Vector3 position;
+    position.x = start_position.x + ( ( end_position.x - start_position.x) / total ) * current;
+    position.y = start_position.y + ( ( end_position.y - start_position.y ) / total ) * current;
+    position.z = current * current * -13.08f + current * ( ( end_position.z - start_position.z ) / total + total * 13.08f ) + start_position.z;
+    entity->SetPosition( position );
+
+    if( total == current )
+    {
+        entity->UnsetJump();
+    }
+    else
+    {
+        entity->SetJumpCurrentSeconds( current );
     }
 }

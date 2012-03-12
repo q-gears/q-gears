@@ -7,7 +7,7 @@ stage     = h[801620ac + data_id * 20 + 2];
 unit_id   = h[801620ac + data_id * 20 + 8];
 target_id = h[801620ac + data_id * 20 + a];
 
-if (stage == 0)
+if( stage == 0 )
 {
     [801620ac + data_id * 20 + 2] = h(1);
 
@@ -24,7 +24,7 @@ if (stage == 0)
     }
 }
 
-if (bu[801620ac + data_id * 20 + 18] == 0)
+if( bu[801620ac + data_id * 20 + 18] == 0 )
 {
     [80166f58] = b(0); // set frames to wait to 0
 
@@ -43,5 +43,35 @@ if (bu[801620ac + data_id * 20 + 18] == 0)
 else
 {
     [801620ac + data_id * 20 + 18] = b(bu[801620ac + data_id * 20 + 18] - 1);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funccfcb0
+data_id   = h[801590d0];
+unit_id   = h[801620ac + data_id * 20 + 8];
+target_id = h[801620ac + data_id * 20 + a]
+
+V0 = h[801620ac + data_id * 20 + 4];
+if( V0 == 0 )
+{
+    [801620ac + data_id * 20 + 0] = h(-1);
+}
+else
+{
+    A1 = w[801620ac + data_id * 20 + 10];
+    [80151a4c + unit_id * b9c] = h(hu[80151a4c + unit_id * b9c] + hu[801620ac + data_id * 20 + c]);
+
+    [1f80000c] = w(unit_id);
+    [1f800008] = w(target_id);
+    [1f800010] = w(A1);
+
+    [80151a50 + unit_id * b9c] = h(hu[80151a50 + unit_id * b9c] + hu[801620ac + data_id * 20 + e]);
+    V1 = bu[801620ac + data_id * 20 + 18];
+    [801620ac + data_id * 20 + 18] = b(V1 + 1);
+    [80151a4e + unit_id * b9c] = h(hu[80151a4e + unit_id * b9c] + hu[800eeb28 + A1 * 10 + V1 * 2]);
+    [801620ac + data_id * 20 + 4] = h(hu[801620ac + data_id * 20 + 4] - 1);
 }
 ////////////////////////////////

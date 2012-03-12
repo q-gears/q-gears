@@ -1,13 +1,24 @@
 800c9d44 [][]     some flags.
                     0x0040 - checked in funcab3cc. Look like is screen offset inited or not.
 
-800c9db4 [][][][] some pointer.
+800c9da4 start address of tileset related info.
++10 [][][][] pointer to tileset file 0xa.
++24 []       init with 0. Number of specific tileset blocks.
++28 [][][][] init with data from +2c. Pointer to struct with specific tileset blocks data.
+    +00 []       init with 0x10.
+    +01 []       init with block id.
+    +04 [][][][] init with 0.
+    +08 [][][][] init with 0.
++2c [][][][] some data. We init +28 with it.
++34 [][][][] increment by 0xc ebery added special block.
+
 
 800c9ddc [][]     number of collisions with triangles sides.
 800c9dde [][]     number of something1. Not used?
 800c9de0 [][]     number of something2. Not used?
 800c9de4 default data for triangle move scale? (00000000 00000100 00000000 017F0B00)
 800c9df0 []
+800c9df1 []       set in 0x27 script opcode with 0x7f or 0xff.
 800c9df1 []       some flags.
 800c9df4 [][][][] pointer to some entity struct with size 0x28 (stored address 800caad8).
 800c9df8 [][][][] pointer to walkmesh file after 4 bytes header.
@@ -15,8 +26,6 @@
 800c9e00 [][][][] pointer to walkmesh triangles data.
 800c9e04 [][][][] pointer to walkmesh normals data.
 800c9e0c [][][][] pointer to walkmesh groups data.
-
-800c9df1 []       set in 0x27 script opcode with 0x7f or 0xff.
 
 800ca068 + c  [][]     x screen offset.
 800ca068 + e  [][]     y screen offset.

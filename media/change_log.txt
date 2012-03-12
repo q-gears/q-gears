@@ -13,7 +13,7 @@ Q-Gears v0.22 (4th blow for a win) | 2012-06-??
 To Do
 ----------
 * [Content] All FFVII fields maps from 1st mission until reactor blow must be fully playable.
-* [Sound] Implement all sounds that used in FFVII 1st mission until reactor blow. [Akari]
+* [Sound] Implement all sounds that used in FFVII 1st mission until reactor blow.
 * [Content] Add FFVII fields maps from 1st mission until reactor blow.
 
 ================================================================================
@@ -23,10 +23,18 @@ Q-Gears v0.21 (3rd run wild) | 2012-03-??
 To Do
 ----------
 * [Content] Add FFVII fields maps startmap mdstin md1_1 and md1_2 maps and transitions between them.
-* [Background] Implement all background features that used in FFVII 1st mission until reactor blow. [Akari]
+* [Background] Implement all background features that used in FFVII 1st mission until reactor blow.
 * [Entity] Implement all movement features that was in v0.17.
+* [Console] tab must not work if command don't match any existed command.
 
 
+
+2011-03-13
+----------
+* [Entity] Add debug draw to jump movement. [Akari]
+* [Entity] Fix reseting animation to Idle during time stop. [Akari]
+* [Entity] Add ability to unset entity from player with "unset_player_entity". [Akari]
+* [Entity] Return all jump fucntionality from v0.17. [Akari]
 
 2011-03-09
 ----------

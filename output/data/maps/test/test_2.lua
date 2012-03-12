@@ -18,17 +18,19 @@ EntityContainer[ "Player" ] = {
         player:set_solid( true )
 
         while true do
-            local triangle_id = player:get_move_triangle_id();
+            local triangle_id = player:get_move_triangle_id()
 
             if triangle_id == 0 then
---                field:pc_lock(true);
+                -- remove player control
+                entity_manager:unset_player_entity()
                 player:set_solid( false )
 
                 -- move to ladder
-                player:move_to_position( -1, 0 );
+                player:move_to_position( -1, 0 )
+                player:move_sync()
 
                 -- move to up platform 1
-                player:set_direction( 180 );
+                player:set_direction( 180 )
                 player:linear_to_position( -2, 3.5, 3, Entity.DOWN_TO_UP, "Climb" )
                 player:linear_sync()
 
@@ -38,18 +40,22 @@ EntityContainer[ "Player" ] = {
 --                message:hide(1);
 
                 -- move to jump position
-                player:move_to_position( -2, 6 );
+                player:move_to_position( -2, 6 )
+                player:move_sync()
 
                 -- jump to platform 2
-                player:set_direction( 90 );
---                player:set_animation_default("5", 1);
---                script:wait(0.5);
---                player:jump_to_position(200, 600, 24, 0.567);
---                script:wait(0.667);
---                player:set_animation_default("0", 1);
+                player:set_direction( 90 )
+                player:move_auto_animation( false )
+                player:play_animation_stop( "Jump" )
+                script:wait( 0.5 ) -- wait to start of jump in animation
+                player:jump_to_position( 2, 6, 3, 0.567 ) -- triangle 24
+                player:jump_sync()
+                script:wait( 0.667 ) -- wait to end of animation
+                player:move_auto_animation( true )
 
                 -- move to ladder
---                player:move_to_position(200, 350, true);
+                player:move_to_position( 2, 3.5 )
+                player:move_sync()
 
                 -- tell something
 --                message:show_text(1, "I returned!", 100, 100, 130, 25);
@@ -57,17 +63,17 @@ EntityContainer[ "Player" ] = {
 --                message:hide(1);
 
                 -- ladder down
-                player:set_direction( 0 );
+                player:set_direction( 180 )
                 player:linear_to_position( 1, 0, 0, Entity.DOWN_TO_UP, "Climb" )
                 player:linear_sync()
 
                 -- return player control
                 player:set_solid( true )
---                field:pc_lock(false);
-            end;
+                entity_manager:set_player_entity( "Player" )
+            end
 
-            script:wait(0.5);
-        end;
+            script:wait( 0.5 )
+        end
 
         return 0
     end,

@@ -30,6 +30,7 @@ public:
     Entity* ScriptGetEntity( const char* name ) const;
 
     void ScriptSetPlayerEntity( const char* name );
+    void ScriptUnsetPlayerEntity();
 
 private:
     // movement
@@ -42,7 +43,7 @@ private:
     void SetNextOffsetStep( Entity* entity );
     void SetNextTurnStep( Entity* entity );
     void SetNextLinearStep( Entity* entity );
-
+    void SetNextJumpStep( Entity* entity );
 private:
     Walkmesh                    m_Walkmesh;
     Background2D                m_Background2D;

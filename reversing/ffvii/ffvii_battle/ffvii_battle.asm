@@ -21440,118 +21440,14 @@ Lcfca8:	; 800CFCA8
 800CFCA8	jr     ra 
 800CFCAC	nop
 
-800CFCB0	lui    v0, $8016
-800CFCB4	lh     v0, $90d0(v0)
-800CFCB8	nop
-800CFCBC	sll    t0, v0, $05
-800CFCC0	lui    at, $8016
-800CFCC4	addiu  at, at, $20b0
-800CFCC8	addu   at, at, t0
-800CFCCC	lh     v0, $0000(at)
-800CFCD0	nop
-800CFCD4	bne    v0, zero, Lcfcf4 [$800cfcf4]
-800CFCD8	addiu  v0, zero, $ffff (=-$1)
-800CFCDC	lui    at, $8016
-800CFCE0	addiu  at, at, $20ac
-800CFCE4	addu   at, at, t0
-800CFCE8	sh     v0, $0000(at)
-800CFCEC	j      Lcfe58 [$800cfe58]
-800CFCF0	nop
 
-Lcfcf4:	; 800CFCF4
-800CFCF4	lui    at, $8016
-800CFCF8	addiu  at, at, $20b4
-800CFCFC	addu   at, at, t0
-800CFD00	lh     a2, $0000(at)
-800CFD04	lui    at, $8016
-800CFD08	addiu  at, at, $20b6
-800CFD0C	addu   at, at, t0
-800CFD10	lh     a3, $0000(at)
-800CFD14	lui    at, $8016
-800CFD18	addiu  at, at, $20b8
-800CFD1C	addu   at, at, t0
-800CFD20	lhu    v1, $0000(at)
-800CFD24	sll    v0, a2, $01
-800CFD28	addu   v0, v0, a2
-800CFD2C	sll    a0, v0, $05
-800CFD30	subu   a0, a0, v0
-800CFD34	sll    a0, a0, $03
-800CFD38	subu   a0, a0, a2
-800CFD3C	sll    a0, a0, $02
-800CFD40	lui    at, $8015
-800CFD44	addiu  at, at, $1a4c
-800CFD48	addu   at, at, a0
-800CFD4C	lhu    v0, $0000(at)
-800CFD50	lui    at, $8016
-800CFD54	addiu  at, at, $20bc
-800CFD58	addu   at, at, t0
-800CFD5C	lw     a1, $0000(at)
-800CFD60	addu   v0, v0, v1
-800CFD64	lui    at, $8015
-800CFD68	addiu  at, at, $1a4c
-800CFD6C	addu   at, at, a0
-800CFD70	sh     v0, $0000(at)
-800CFD74	lui    at, $8015
-800CFD78	addiu  at, at, $1a50
-800CFD7C	addu   at, at, a0
-800CFD80	lhu    v0, $0000(at)
-800CFD84	lui    at, $8016
-800CFD88	addiu  at, at, $20ba
-800CFD8C	addu   at, at, t0
-800CFD90	lhu    v1, $0000(at)
-800CFD94	lui    at, $1f80
-800CFD98	sw     a2, $000c(at)
-800CFD9C	lui    at, $1f80
-800CFDA0	sw     a3, $0008(at)
-800CFDA4	lui    at, $1f80
-800CFDA8	sw     a1, $0010(at)
-800CFDAC	addu   v0, v0, v1
-800CFDB0	lui    at, $8015
-800CFDB4	addiu  at, at, $1a50
-800CFDB8	addu   at, at, a0
-800CFDBC	sh     v0, $0000(at)
-800CFDC0	lui    at, $8016
-800CFDC4	addiu  at, at, $20c4
-800CFDC8	addu   at, at, t0
-800CFDCC	lbu    v1, $0000(at)
-800CFDD0	sll    a1, a1, $04
-800CFDD4	addiu  v0, v1, $0001
-800CFDD8	lui    at, $8016
-800CFDDC	addiu  at, at, $20c4
-800CFDE0	addu   at, at, t0
-800CFDE4	sb     v0, $0000(at)
-800CFDE8	lui    v0, $800f
-800CFDEC	addiu  v0, v0, $eb28 (=-$14d8)
-800CFDF0	addu   a1, a1, v0
-800CFDF4	sll    v1, v1, $01
-800CFDF8	addu   v1, v1, a1
-800CFDFC	lui    at, $8015
-800CFE00	addiu  at, at, $1a4e
-800CFE04	addu   at, at, a0
-800CFE08	lhu    v0, $0000(at)
-800CFE0C	lhu    a1, $0000(v1)
-800CFE10	lui    v1, $8016
-800CFE14	lh     v1, $90d0(v1)
-800CFE18	addu   v0, v0, a1
-800CFE1C	sll    v1, v1, $05
-800CFE20	lui    at, $8015
-800CFE24	addiu  at, at, $1a4e
-800CFE28	addu   at, at, a0
-800CFE2C	sh     v0, $0000(at)
-800CFE30	lui    at, $8016
-800CFE34	addiu  at, at, $20b0
-800CFE38	addu   at, at, v1
-800CFE3C	lhu    v0, $0000(at)
-800CFE40	nop
-800CFE44	addiu  v0, v0, $ffff (=-$1)
-800CFE48	lui    at, $8016
-800CFE4C	addiu  at, at, $20b0
-800CFE50	addu   at, at, v1
-800CFE54	sh     v0, $0000(at)
 
-Lcfe58:	; 800CFE58
-800CFE58	jr     ra 
-800CFE5C	nop
+////////////////////////////////
+// funccfcb0
+800CFCB0-800CFE5C
+////////////////////////////////
+
+
 
 800CFE60	lui    v0, $8016
 800CFE64	lh     v0, $90d0(v0)

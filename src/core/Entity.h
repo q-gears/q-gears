@@ -130,6 +130,17 @@ public:
     const Ogre::Vector3& GetLinearStart() const;
     const Ogre::Vector3& GetLinearEnd() const;
 
+    // jump related
+    void                 ScriptJumpToPosition( const float x, const float y, const float z,const float seconds );
+    int                  ScriptJumpSync();
+    void                 SetJump( const Ogre::Vector3& jump_to, const float seconds );
+    void                 UnsetJump();
+    const Ogre::Vector3& GetJumpStart() const;
+    const Ogre::Vector3& GetJumpEnd() const;
+    float                GetJumpSeconds() const;
+    void                 SetJumpCurrentSeconds( const float seconds );
+    float                GetJumpCurrentSeconds() const;
+
     // offset related
     void                 ScriptOffsetToPosition( const float x, const float y, const float z, const ActionType type, const float seconds );
     int                  ScriptOffsetSync();
@@ -137,9 +148,9 @@ public:
     const Ogre::Vector3& GetOffsetPositionStart() const;
     const Ogre::Vector3& GetOffsetPositionEnd() const;
     ActionType           GetOffsetType() const;
-    float                GetOffsetStepSeconds() const;
-    void                 SetOffsetCurrentStepSeconds( const float seconds );
-    float                GetOffsetCurrentStepSeconds() const;
+    float                GetOffsetSeconds() const;
+    void                 SetOffsetCurrentSeconds( const float seconds );
+    float                GetOffsetCurrentSeconds() const;
 
     // turn related
     void                 ScriptTurnToDirection( const float direction, const TurnDirection turn_direction, const ActionType turn_type, const float seconds );
@@ -151,9 +162,9 @@ public:
     Ogre::Degree         GetTurnDirectionStart() const;
     Ogre::Degree         GetTurnDirectionEnd() const;
     ActionType           GetTurnType() const;
-    float                GetTurnStepSeconds() const;
-    void                 SetTurnCurrentStepSeconds( const float seconds );
-    float                GetTurnCurrentStepSeconds() const;
+    float                GetTurnSeconds() const;
+    void                 SetTurnCurrentSeconds( const float seconds );
+    float                GetTurnCurrentSeconds() const;
 
     // animation related
     const Ogre::String&  GetCurrentAnimationName() const;
@@ -217,12 +228,18 @@ protected:
     Ogre::Vector3           m_LinearStart;
     Ogre::Vector3           m_LinearEnd;
 
+    // jump related
+    Ogre::Vector3           m_JumpStart;
+    Ogre::Vector3           m_JumpEnd;
+    float                   m_JumpSeconds;
+    float                   m_JumpCurrentSeconds;
+
     // offset related
     Ogre::Vector3           m_OffsetPositionStart;
     Ogre::Vector3           m_OffsetPositionEnd;
     ActionType              m_OffsetType;
-    float                   m_OffsetStepSeconds;
-    float                   m_OffsetCurrentStepSeconds;
+    float                   m_OffsetSeconds;
+    float                   m_OffsetCurrentSeconds;
     std::vector< ScriptId > m_OffsetSync;
 
     // turn related
@@ -231,8 +248,8 @@ protected:
     Ogre::Degree            m_TurnDirectionEnd;
     Entity*                 m_TurnEntity;
     ActionType              m_TurnType;
-    float                   m_TurnStepSeconds;
-    float                   m_TurnCurrentStepSeconds;
+    float                   m_TurnSeconds;
+    float                   m_TurnCurrentSeconds;
     std::vector< ScriptId > m_TurnSync;
 
     // animation

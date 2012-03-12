@@ -30,30 +30,30 @@ block_numbers = hu[tileset + 6];
 [800c9da4 + 28] = w(w[800c9da4 + 2c]);
 T0 = tileset + w[tileset + c]; // animations
 T2 = tileset + w[tileset + 10]; // blocks
-if (block_numbers != 0)
+if( block_numbers != 0 )
 {
-    A2 = 0;
+    block_id = 0;
     loopbd3dc:	; 800BD3DC
-        if (bu[T2 + A2 * 38 + 0] & 40)
+        if( bu[T2 + block_id * 38 + 0] & 40 )
         {
             V0 = w[800c9da4 + 28] + bu[800c9da4 + 24] * c;
             [V0 + 0] = b(10);
-            [V0 + 1] = b(A2);
+            [V0 + 1] = b(block_id);
             [V0 + 4] = w(0);
             [V0 + 8] = w(0);
 
-            [800c9da4 + 34] = w(w[800c9da4 + 34] + c);
             [800c9da4 + 24] = b(bu[800c9da4 + 24] + 1);
+            [800c9da4 + 34] = w(w[800c9da4 + 34] + c);
 
-            if (bu[T2 + A2 * 38 + 0] & 20)
+            if( bu[T2 + block_id * 38 + 0] & 20 )
             {
-                A2 = A2 + w[T0 + 0] >> 8;
+                block_id = block_id + w[T0 + 0] >> 8;
                 T0 = T0 + 10;
             }
         }
 
-        A2 = A2 + 1;
-        V0 = A2 < block_numbers;
+        block_id = block_id + 1;
+        V0 = block_id < block_numbers;
     800BD4C4	bne    v0, zero, loopbd3dc [$800bd3dc]
 }
 
@@ -384,8 +384,10 @@ S0 = 800c9da4;
 800BFD48	sb     zero, $0075(v0)
 800BFD4C	sh     zero, $009c(v0)
 800BFD50	sb     zero, $00a0(v0)
-800BFD54	lw     a0, $0014(s0)
-800BFD58	lw     a1, $0004(s0)
+
+A0 = w[800c9da4 + 14];
+A1 = w[800c9da4 + 4];
+
 800BFD5C	addiu  v1, zero, $00ff
 800BFD60	sb     v1, $00a1(v0)
 800BFD64	sb     v1, $00a2(v0)
@@ -393,12 +395,12 @@ S0 = 800c9da4;
 800BFD6C	sw     zero, $00a4(v0)
 800BFD70	sw     a0, $001c(v0)
 800BFD74	sw     a1, $0020(v0)
-800BFD78	lw     a0, $0018(s0)
-800BFD80	addiu  a1, sp, $0018
 
+A0 = w[800c9da4 + 18];
+A1 = SP + 18;
 funcbded4;
 
-if (V0 != 1)
+if( V0 != 1 )
 {
     return 0;
 }
@@ -406,11 +408,12 @@ if (V0 != 1)
 
 
 // init 1st frame in animation sequence.
-tileset_data = w[S0 + 10]; // pointer to tileset
+tileset_data = w[800c9da4 + 10]; // pointer to tileset
 A0 = tileset_data + w[tileset_data + c]; // offset to tileset animations
 T0 = tileset_data + w[tileset_data + 10]; // offset to tileset blocks
 
-if (hu[tileset_data + 4] != 0)
+number_of_animations = hu[tileset_data + 4];
+if( number_of_animations != 0 )
 {
     A1 = 0;
     loopbfdc4:	; 800BFDC4
@@ -424,7 +427,7 @@ if (hu[tileset_data + 4] != 0)
         [T0 + V1 * 38 + 0] = b(bu[T0 + V1 * 38 + 0] | 2);
 
         A1 = A1 + 1;
-        V0 = A1 < hu[tileset_data + 4];
+        V0 = A1 < number_of_animations;
     800BFE0C	bne    v0, zero, loopbfdc4 [$800bfdc4]
 }
 
