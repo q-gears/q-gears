@@ -214,12 +214,12 @@ if (number_of_blocks != 0)
         800BE0B0	addu   v0, s2, v0
         800BE0B4	sb     s4, $0002(v0)
         800BE0B8	lw     v0, $0020(s3)
-        A0 = S1;
+        A0 = S1; // tile_block_data
         800BE0C0	addu   v0, v0, s0
         800BE0C4	sb     zero, $0000(v0)
         A1 = w[FP];
         A2 = FP;
-        funcbd130; // we create background packets here
+        field_init_background_packets;
 
         if (V0 != 1)
         {
@@ -243,118 +243,6 @@ V1 = 800ca068;
 800BE114	sb     zero, $0072(v1)
 
 [800ca068] = w(w[800ca068] & fffff3ff);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbd130
-tile_block_data = S5 = A0;
-S6 = A1;
-[SP + 48] = w(A2);
-
-A0 = w[800c9db4];
-S7 = bu[800ca108] + df;
-[S5 + 30] = w(S6);
-
-[SP + 10] = w(A0 + w[S5 + 28]);
-[SP + 14] = w(A0 + w[S5 + 2c]);
-[S5 + 18] = h(hu[S5 + c] + hu[A0 + 30]);
-[S5 + 24] = w(w[S5 + 24] & fffffeff & ffff01ff);
-[S5 + 1a] = h(hu[S5 + e] + hu[A0 + 32]);
-
-S4 = hu[S5 + 26];
-
-FP = 0;
-// init both frame buffer
-loopbd1dc:	; 800BD1DC
-    if (S4 != 0)
-    {
-        S3 = 0;
-        S0 = S6;
-        S1 = w[SP + 14];
-        S2 = w[SP + 10];
-
-        loopbd1f0:	; 800BD1F0
-            [S0 + b] = b(3);
-            [S0 + f] = b(7c);
-            [S0 + c] = b(80);
-            [S0 + d] = b(80);
-            [S0 + e] = b(80);
-
-            [S0 + 10] = h(hu[S5 + 18] + (w[S2] >> 16));
-            [S0 + 12] = h(hu[S5 + 1a] + ((w[S2] >> c) & 3ff));
-            [S0 + 14] = b(bu[S1 + 4]);
-            [S0 + 15] = b(bu[S1 + 3]);
-
-            if ((w[S1 + 4] >> 1c) & 1)
-            {
-                V0 = bu[S0 + f] | 2;
-            }
-            else
-            {
-                V0 = bu[S0 + f] & fd;
-            }
-            [S0 + f] = b(V0);
-
-            A1 = w[S1];
-            A0 = A1 >> 5;
-            A0 = A0 & 3f0;
-            A1 = A1 & 1ff;
-            [S0 + 16] = h((A1 << 6) | ((A0 >> 4) & 3f));
-
-            A3 = w[S1];
-            V0 = A3 >> 14;
-
-            if ((V0 & 3) == 0)
-            {
-                A0 = 0;
-            }
-            else
-            {
-                A1 = 1;
-            }
-
-            A1 = (A3 >> 16) & 3;
-            A2 = (A3 >> a) & 3c0;
-            A3 = (A3 >> 7) & 100;
-            800BD2D4	jal    func50cf8 [$80050cf8]
-
-            A2 = V0;
-            A0 = S0;
-            A1 = S0 + 8;
-            [S0 + 3] = b(1);
-            [S0 + 4] = w((A2 & 9ff) | e1000600);
-            800BD300	jal    func62b4c [$80062b4c]
-
-            V1 = w[S1] & 1ff;
-
-            if (S7 < V1)
-            {
-                S7 = V1;
-            }
-
-            S1 = S1 + 8;
-            S2 = S2 + 4;
-            S0 = S0 + 18;
-
-            S3 = S3 + 1;
-            V0 = S3 < S4;
-        800BD334	bne    v0, zero, loopbd1f0 [$800bd1f0]
-
-    }
-
-    S6 = S6 + S4 * 18;
-
-    FP = FP + 1;
-    V0 = FP < 2;
-800BD354	bne    v0, zero, loopbd1dc [$800bd1dc]
-
-T0 = w[SP + 48];
-[T0] = w(S6);
-[800ca108] = b(S7 + 21);
 
 return 1;
 ////////////////////////////////
@@ -409,25 +297,25 @@ if( V0 != 1 )
 
 // init 1st frame in animation sequence.
 tileset_data = w[800c9da4 + 10]; // pointer to tileset
-A0 = tileset_data + w[tileset_data + c]; // offset to tileset animations
-T0 = tileset_data + w[tileset_data + 10]; // offset to tileset blocks
+anim = tileset_data + w[tileset_data + c]; // offset to tileset animations
+block = tileset_data + w[tileset_data + 10]; // offset to tileset blocks
 
 number_of_animations = hu[tileset_data + 4];
 if( number_of_animations != 0 )
 {
-    A1 = 0;
+    anim_id = 0;
     loopbfdc4:	; 800BFDC4
-        [A0 + A1 * 10 + 0] = b(1);
-        [A0 + A1 * 10 + 4] = w(bu[A0 + A1 * 10 + 4]);
-        [A0 + A1 * 10 + 8] = h(100);
-        [A0 + A1 * 10 + a] = h(0);
+        [anim + anim_id * 10 + 0] = b(1);
+        [anim + anim_id * 10 + 4] = w(bu[anim + anim_id * 10 + 4]);
+        [anim + anim_id * 10 + 8] = h(100);
+        [anim + anim_id * 10 + a] = h(0);
 
-        V0 = w[A0 + A1 * 10 + c]; // pointer to sequences
+        V0 = w[anim + anim_id * 10 + c]; // pointer to sequences
         V1 = bu[tileset_data + V0];
-        [T0 + V1 * 38 + 0] = b(bu[T0 + V1 * 38 + 0] | 2);
+        [block + V1 * 38 + 0] = b(bu[block + V1 * 38 + 0] | 02);
 
-        A1 = A1 + 1;
-        V0 = A1 < number_of_animations;
+        anim_id = anim_id + 1;
+        V0 = anim_id < number_of_animations;
     800BFE0C	bne    v0, zero, loopbfdc4 [$800bfdc4]
 }
 

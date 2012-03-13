@@ -1,12 +1,14 @@
 header
++00 [][]     file size???
 +04 [][]     number of animations.
 +06 [][]     number of tileset blocks.
++0a [][]     number of cameras.
 +0c [][][][] offset to animation data.
 +10 [][][][] offset to tileset blocks data.
 +18 [][][][] offset to camera settings.
 +1e [][]     ???
-+30 [][]     ???
-+32 [][]     ???
++30 [][]     global tileset X screen position.
++32 [][]     global tileset Y screen position.
 
 animation data (0x10 size)
 +00 [][][][] ???
@@ -20,8 +22,12 @@ tileset blocks data (0x38 size)
              0x02 - maybe active tile. Set if this tile in first frame of animation sequence.
              0x20 - ???
              0x40 - ??? we init something if this is set.
++0c [][]     local block X position on screen.
++0e [][]     local block Y position on screen.
++18 [][]     global block X position on screen (calculated in cpp as tileset position +30 plus local block position +c).
++1a [][]     global block Y position on screen (calculated in cpp as tileset position +32 plus local block position +e).
 +26 [][]     number of tiles.
-+30 [][][][] pointer to created PSX packets.
++30 [][][][] pointer to created PSX packets for both buffers.
 
 
 camera data (0x34 size)

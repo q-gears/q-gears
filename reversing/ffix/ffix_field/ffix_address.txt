@@ -2,6 +2,7 @@
                     0x0040 - checked in funcab3cc. Look like is screen offset inited or not.
 
 800c9da4 start address of tileset related info.
++00 [][][][] ???
 +10 [][][][] pointer to tileset file 0xa.
 +24 []       init with 0. Number of specific tileset blocks.
 +28 [][][][] init with data from +2c. Pointer to struct with specific tileset blocks data.

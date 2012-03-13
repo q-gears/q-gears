@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <map>
-<!--
     <background2d file_name="maps/test/md1stin_bg.xml" />
--->
+
     <script file_name="maps/test/test_1.lua" />
     <walkmesh file_name="maps/test/startmap_wm.xml" />
 <!--

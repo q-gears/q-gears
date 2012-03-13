@@ -456,13 +456,6 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     Ogre::Vector3 move_vector = entity->GetMovePosition() - start_point;
     Ogre::Vector2 direction( move_vector.x, move_vector.y );
 
-    // if we already in point to where we want to move - finish movement
-    //if( direction.length() <= 0.01 )
-    {
-        //entity->UnsetMove();
-        //return;
-    }
-
     direction.normalise();
     direction *= Timer::getSingleton().GetGameTimeDelta();
     direction *= entity->GetMoveSpeed();
@@ -476,8 +469,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     int current_triangle = entity->GetMoveTriangleId();
     if( current_triangle == -1 )
     {
-        entity->UnsetMove();
-        LOG_ERROR( "Entity not placed on walkmesh and can't move.");
+        LOG_ERROR( "Entity \"" + entity->GetName() + "\" not placed on walkmesh and can't move.");
         return false;
     }
 
@@ -538,12 +530,11 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
     //LOG_TRIVIAL( "End point: (" + Ogre::StringConverter::toString( end_point ) + ")." );
 
     //LOG_TRIVIAL( "Start cycle." );
-    //for( int i = 0; ( m_PlayerEntity == entity && /*m_PlayerModelSlip == true &&*/ i < 16 ) ||
-                    //(m_PlayerModelId == model_id && m_PlayerModelSlip == false && i < 3) ||
-                    //( m_PlayerEntity != entity && i <= 16 ); ++i )
-    for( int i = 0; i <= 16; ++i )
+    for( int i = 0; ( entity == m_PlayerEntity && /*m_PlayerModelSlip == true &&*/ i < 16 ) ||
+                    ( entity == m_PlayerEntity && /*m_PlayerModelSlip == false &&*/ i < 3 ) ||
+                    ( entity != m_PlayerEntity && i <= 16 ); ++i )
     {
-        LOG_TRIVIAL( "Cycle " + Ogre::StringConverter::toString( i ) + "." );
+        //LOG_TRIVIAL( "Cycle " + Ogre::StringConverter::toString( i ) + "." );
         end_point = Ogre::Vector3( start_point.x + direction.x, start_point.y + direction.y, start_point.z );
 
         // 1st check
@@ -565,7 +556,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         entity->SetMoveTriangleId( current_triangle );
         // model_check
         first_entity_check = CheckSolidCollisions( entity, end_point2 );
-        //LOG_TRIVIAL( "Check1: " + Ogre::StringConverter::toString( first_triangle_check ) + " " + Ogre::StringConverter::toString( first_entity_check ) + "." );
+        //LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" check1: " + Ogre::StringConverter::toString( first_triangle_check ) + " " + Ogre::StringConverter::toString( first_entity_check ) + "." );
 
         // 2nd check
         // rotate move_vector +45
@@ -584,7 +575,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         entity->SetMoveTriangleId( current_triangle );
         // model_check
         second_entity_check = CheckSolidCollisions( entity, end_point2 );
-        //LOG_TRIVIAL( "Check2: " + Ogre::StringConverter::toString( second_triangle_check ) + " " + Ogre::StringConverter::toString( second_entity_check ) + "." );
+        //LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" check2: " + Ogre::StringConverter::toString( second_triangle_check ) + " " + Ogre::StringConverter::toString( second_entity_check ) + "." );
 
         // 3rd check
         rotation.x = direction.x;
@@ -599,7 +590,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         entity->SetMoveTriangleId( current_triangle );
         // model_check
         third_entity_check = CheckSolidCollisions( entity, end_point2 );
-        //LOG_TRIVIAL( "Check3: " + Ogre::StringConverter::toString( third_triangle_check ) + " " + Ogre::StringConverter::toString( third_entity_check ) + "." );
+        //LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" check3: " + Ogre::StringConverter::toString( third_triangle_check ) + " " + Ogre::StringConverter::toString( third_entity_check ) + "." );
 
         // check condition and modify move_vector
         if( first_triangle_check  != false || second_triangle_check != false || third_triangle_check  != false ||
@@ -690,8 +681,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
                             rotation = q1 * rotation;
                             direction.x = rotation.x;
                             direction.y = rotation.y;
-                            LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" new move vector: " + Ogre::StringConverter::toString( direction.x ) + " " + Ogre::StringConverter::toString( direction.y ) + "." );
-                            /*log->logMessage();*/
+                            //LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" new move vector: " + Ogre::StringConverter::toString( direction.x ) + " " + Ogre::StringConverter::toString( direction.y ) + "." );
                         }
 
                         continue;
@@ -714,25 +704,9 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
         first_entity_check    != false || second_entity_check   != false || third_entity_check    != false )
     {
         LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" can't move to specified position." );
-        entity->UnsetMove();
         return false;
     }
 
-
-/*
-    // check all triggers and encounters if we PC
-    if (m_PlayerModelId == model_id && m_PlayerModelLock != true)
-    {
-        CheckLineTriggers(model_id, end_point);
-
-        // increment danger counter
-        float length = (direction * m_Models[model_id]->GetSpeed()).length();
-        if (CheckEncounterAvailable() == true)
-        {
-            m_EncounterPercent += length / m_Encounters[m_EncounterTable].rate;
-        }
-    }
-*/
 
 
     entity->SetPosition( end_point );
@@ -741,7 +715,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
 
     // if we come to destination point - finish movement
     Ogre::Vector3 final = entity->GetMovePosition() - end_point;
-    if( Ogre::Vector2( final.x, final.y ).length() <= 0.01 )
+    if( Ogre::Vector2( final.x, final.y ).length() <= entity->GetMoveStopDistance() + entity->GetMoveSpeed() / 10 )
     {
         entity->UnsetMove();
     }
@@ -784,26 +758,19 @@ EntityManager::WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, con
         float sign2 = SideOfVector( pos, C, B );
         float sign3 = SideOfVector( pos, A, C );
 
-        /*log->logMessage("(" + Ogre::StringConverter::toString(sign1) +
-                        " " + Ogre::StringConverter::toString(sign2) +
-                        " " + Ogre::StringConverter::toString(sign3) + ").");*/
-
         int next_triangle = -1;
 
         if( sign1 < 0 )
         {
             next_triangle = m_Walkmesh.GetAccessSide( current_triangle, 0 );
-            //log->logMessage("BA leave to " + Ogre::StringConverter::toString(next_triangle) + ".");
         }
         else if( sign2 < 0 )
         {
             next_triangle = m_Walkmesh.GetAccessSide( current_triangle, 1 );
-            //log->logMessage("CB leave to " + Ogre::StringConverter::toString(next_triangle) + ".");
         }
         else if( sign3 < 0 )
         {
             next_triangle = m_Walkmesh.GetAccessSide( current_triangle, 2 );
-            //log->logMessage("AC leave to " + Ogre::StringConverter::toString(next_triangle) + ".");
         }
         else
         {
@@ -821,13 +788,11 @@ EntityManager::WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, con
             if( lock == false )
             {
                 current_triangle = next_triangle;
-                //log->logMessage("New current triangle " + Ogre::StringConverter::toString(current_triangle) + ".");
                 continue;
             }
         }
 
         position.z = PointElevation( pos, A3, B3, C3 );
-        //log->logMessage("Stop CheckTriangles with 1 and triangle " + Ogre::StringConverter::toString(current_triangle) + ".");
         entity->SetMoveTriangleId( current_triangle );
         return true;
     }
@@ -843,7 +808,6 @@ EntityManager::CheckSolidCollisions( Entity* entity, Ogre::Vector3& position )
         return false;
     }
 
-    //Ogre::LogManager* log = Ogre::LogManager::getSingletonPtr();
     for( size_t i = 0; i < m_EntityModels.size(); ++i )
     {
         if( m_EntityModels[ i ]->IsSolid() == false )
@@ -857,8 +821,8 @@ EntityManager::CheckSolidCollisions( Entity* entity, Ogre::Vector3& position )
         }
 
         Ogre::Vector3 pos1 = m_EntityModels[ i ]->GetPosition();
-        float solid_range1 = m_EntityModels[ i ]->GetSolidRadius();
-        float solid_range2 = entity->GetSolidRadius();
+        float solid_range = m_EntityModels[ i ]->GetSolidRadius();
+        solid_range *= solid_range;
 
         float height = ( pos1.z < position.z ) ? m_EntityModels[ i ]->GetHeight() : entity->GetHeight();
 
@@ -866,7 +830,6 @@ EntityManager::CheckSolidCollisions( Entity* entity, Ogre::Vector3& position )
 
         if( ( ( pos1.z - position.z + height ) < ( height * 2 ) ) && ( ( pos1.z - position.z + height ) >= 0 ) )
         {
-            float solid_range = ( solid_range1 + solid_range2 ) * ( solid_range1 + solid_range2 );
             float distance = ( pos1.x - position.x ) * ( pos1.x - position.x ) + ( pos1.y - position.y ) * ( pos1.y - position.y );
 
             //log->logMessage("Dist collision(" + Ogre::StringConverter::toString(solid_range) + " " + Ogre::StringConverter::toString(distance) + ").");

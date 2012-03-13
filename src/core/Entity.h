@@ -107,6 +107,7 @@ public:
     float                GetMoveSpeedRun() const;
     void                 SetMovePosition( const Ogre::Vector3& target );
     const Ogre::Vector3& GetMovePosition() const;
+    float                GetMoveStopDistance() const;
     void                 SetMoveTriangleId( const int triangle );
     int                  GetMoveTriangleId() const;
     void                 SetMoveAutoRotation( const bool rotate );

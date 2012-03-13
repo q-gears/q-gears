@@ -1,9 +1,9 @@
 ////////////////////////////////
 // funcbe158
 T2 = A0;
-V0 = w[800c9da4];
+V0 = w[800c9da4 + 0];
 T4 = w[T2 + 30];
-T0 = w[800c9da4 + 10];
+tileset = T0 = w[800c9da4 + 10];
 A0 = bu[V0];
 T9 = hu[T2 + 26];
 V0 = A0 << 2;
@@ -19,15 +19,15 @@ if( A0 != 0 )
 
 V1 = hu[T2 + c];
 A0 = hu[T2 + e];
-T6 = V1 + hu[T0 + 30];
-T5 = A0 + hu[T0 + 32];
-V1 = hu[T0 + 1e];
+T6 = V1 + hu[tileset + 30];
+T5 = A0 + hu[tileset + 32];
+V1 = hu[tileset + 1e];
 V0 = w[T2 + 0] >> 8;
 V0 = V0 & 0fff;
 S4 = V1 + V0;
 V0 = w[T2 + 28];
 V1 = bu[T2 + 0];
-T3 = T0 + V0;
+T3 = tileset + V0;
 V0 = V1 & 4;
 800BE1F8	beq    v0, zero, Lbe7ac [$800be7ac]
 
@@ -75,7 +75,7 @@ if( A1 < 0 )
     800BE2A4	sll    v0, v0, $08
     800BE2A8	or     v0, v0, a0
     800BE2AC	addu   v0, v0, v1
-    800BE2B0	lhu    v1, $0030(t0)
+    V1 = hu[tileset + 30];
     800BE2B4	sra    v0, v0, $08
     800BE2B8	addu   t6, v1, v0
 }
@@ -83,16 +83,15 @@ if( A1 < 0 )
 800BE2BC	lh     t1, $001e(t2)
 800BE2C0	nop
 800BE2C4	bgez   t1, Lbe2f8 [$800be2f8]
-800BE2C8	addiu  v1, zero, $0100
-800BE2CC	subu   v1, v1, a1
-800BE2D0	sll    v1, v1, $10
-800BE2D4	sra    v1, v1, $10
-800BE2D8	lh     v0, $000e(t2)
-800BE2DC	lh     a0, $0022(t2)
+
+V1 = 100 - A1;
+V0 = h[T2 + e];
+A0 = h[T2 + 22];
+
 800BE2E0	sll    v0, v0, $08
 800BE2E4	or     v0, v0, a0
 800BE2E8	addu   v0, v0, v1
-800BE2EC	lhu    v1, $0032(t0)
+V1 = hu[T0 + 32];
 800BE2F0	sra    v0, v0, $08
 800BE2F4	addu   t5, v1, v0
 
@@ -672,15 +671,11 @@ Lbeb94:	; 800BEB94
 800BEBA0	bne    v0, zero, Lbec9c [$800bec9c]
 800BEBA4	addiu  v0, t0, $0001
 800BEBA8	slt    v0, a0, s2
-
-Lbebac:	; 800BEBAC
 800BEBAC	beq    v0, zero, Lbec9c [$800bec9c]
 800BEBB0	addiu  v0, t0, $0001
 800BEBB4	sll    v0, t0, $10
 800BEBB8	sra    a1, v0, $10
 800BEBBC	sll    v0, a1, $02
-
-Lbebc0:	; 800BEBC0
 800BEBC0	addu   v0, v0, t3
 800BEBC4	lw     v0, $0000(v0)
 800BEBC8	nop
@@ -757,71 +752,70 @@ Lbecbc:	; 800BECBC
 800BECC4	lui    t1, $00ff
 800BECC8	ori    t1, t1, $ffff
 800BECCC	lui    t7, $ff00
-800BECD0	sll    v0, t0, $10
 
 loopbecd4:	; 800BECD4
-800BECD4	sra    a2, v0, $10
-800BECD8	sll    v0, a2, $02
-800BECDC	addu   a0, v0, t3
-800BECE0	lw     v1, $0000(a0)
-800BECE4	nop
-800BECE8	srl    v0, v1, $16
+    800BEDB0	sll    v0, t0, $10
+    800BECD4	sra    a2, v0, $10
+    800BECD8	sll    v0, a2, $02
+    800BECDC	addu   a0, v0, t3
+    800BECE0	lw     v1, $0000(a0)
+    800BECE4	nop
+    800BECE8	srl    v0, v1, $16
 
-Lbecec:	; 800BECEC
-800BECEC	addu   a3, t6, v0
-800BECF0	addiu  v0, a3, $000f
-800BECF4	andi   v0, v0, $ffff
+    Lbecec:	; 800BECEC
+    800BECEC	addu   a3, t6, v0
+    800BECF0	addiu  v0, a3, $000f
+    800BECF4	andi   v0, v0, $ffff
 
-Lbecf8:	; 800BECF8
-800BECF8	sltiu  v0, v0, $014f
-800BECFC	beq    v0, zero, Lbed9c [$800bed9c]
-800BED00	addiu  v0, t0, $0001
-800BED04	srl    v0, v1, $0c
-800BED08	andi   v0, v0, $03ff
-800BED0C	addu   v1, t5, v0
-800BED10	addiu  v0, v1, $000f
-800BED14	andi   v0, v0, $ffff
-800BED18	sltiu  v0, v0, $00ef
-800BED1C	beq    v0, zero, Lbed9c [$800bed9c]
-800BED20	addiu  v0, t0, $0001
-800BED24	lhu    v0, $0000(a0)
-800BED28	nop
-800BED2C	andi   v0, v0, $0fff
-800BED30	addu   a1, s4, v0
-800BED34	addiu  v0, a1, $fff8 (=-$8)
-800BED38	andi   v0, v0, $ffff
-800BED3C	sltiu  v0, v0, $0ff1
-800BED40	beq    v0, zero, Lbed9c [$800bed9c]
-800BED44	addiu  v0, t0, $0001
-800BED48	sll    a0, a2, $01
-800BED4C	addu   a0, a0, a2
-800BED50	sll    a0, a0, $03
-800BED54	addu   a0, a0, t4
-800BED58	sll    a1, a1, $10
-800BED5C	sra    a1, a1, $0e
-800BED60	sh     v1, $0012(a0)
-800BED64	lw     v1, $0000(a0)
-800BED68	addu   a1, a1, s5
-800BED6C	sh     a3, $0010(a0)
-800BED70	lw     v0, $0000(a1)
-800BED74	and    v1, v1, t7
-800BED78	and    v0, v0, t1
-800BED7C	or     v1, v1, v0
-800BED80	sw     v1, $0000(a0)
-800BED84	lw     v0, $0000(a1)
-800BED88	and    a0, a0, t1
-800BED8C	and    v0, v0, t7
-800BED90	or     v0, v0, a0
-800BED94	sw     v0, $0000(a1)
-800BED98	addiu  v0, t0, $0001
+    Lbecf8:	; 800BECF8
+    800BECF8	sltiu  v0, v0, $014f
+    800BECFC	beq    v0, zero, Lbed9c [$800bed9c]
+    800BED00	addiu  v0, t0, $0001
+    800BED04	srl    v0, v1, $0c
+    800BED08	andi   v0, v0, $03ff
+    800BED0C	addu   v1, t5, v0
+    800BED10	addiu  v0, v1, $000f
+    800BED14	andi   v0, v0, $ffff
+    800BED18	sltiu  v0, v0, $00ef
+    800BED1C	beq    v0, zero, Lbed9c [$800bed9c]
+    800BED20	addiu  v0, t0, $0001
+    800BED24	lhu    v0, $0000(a0)
+    800BED28	nop
+    800BED2C	andi   v0, v0, $0fff
+    800BED30	addu   a1, s4, v0
+    800BED34	addiu  v0, a1, $fff8 (=-$8)
+    800BED38	andi   v0, v0, $ffff
+    800BED3C	sltiu  v0, v0, $0ff1
+    800BED40	beq    v0, zero, Lbed9c [$800bed9c]
+    800BED44	addiu  v0, t0, $0001
+    800BED48	sll    a0, a2, $01
+    800BED4C	addu   a0, a0, a2
+    800BED50	sll    a0, a0, $03
+    800BED54	addu   a0, a0, t4
+    800BED58	sll    a1, a1, $10
+    800BED5C	sra    a1, a1, $0e
+    800BED60	sh     v1, $0012(a0)
+    800BED64	lw     v1, $0000(a0)
+    800BED68	addu   a1, a1, s5
+    800BED6C	sh     a3, $0010(a0)
+    800BED70	lw     v0, $0000(a1)
+    800BED74	and    v1, v1, t7
+    800BED78	and    v0, v0, t1
+    800BED7C	or     v1, v1, v0
+    800BED80	sw     v1, $0000(a0)
+    800BED84	lw     v0, $0000(a1)
+    800BED88	and    a0, a0, t1
+    800BED8C	and    v0, v0, t7
+    800BED90	or     v0, v0, a0
+    800BED94	sw     v0, $0000(a1)
+    800BED98	addiu  v0, t0, $0001
 
-Lbed9c:	; 800BED9C
-800BED9C	addu   t0, v0, zero
-800BEDA0	sll    v0, v0, $10
-800BEDA4	sra    v0, v0, $10
-800BEDA8	sltu   v0, v0, t9
+    Lbed9c:	; 800BED9C
+    800BED9C	addu   t0, v0, zero
+    800BEDA0	sll    v0, v0, $10
+    800BEDA4	sra    v0, v0, $10
+    800BEDA8	sltu   v0, v0, t9
 800BEDAC	bne    v0, zero, loopbecd4 [$800becd4]
-800BEDB0	sll    v0, t0, $10
 
 Lbedb4:	; 800BEDB4
 800BEDB4	sh     t6, $0018(t2)

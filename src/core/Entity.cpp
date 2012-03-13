@@ -8,7 +8,7 @@
 
 
 
-ConfigVar cv_debug_entity( "debug_entity", "Draw entity debug info", "false" );
+ConfigVar cv_debug_entity( "debug_entity", "Draw entity debug info", "0" );
 
 
 
@@ -107,12 +107,14 @@ Entity::~Entity()
 void
 Entity::Update()
 {
-    m_DirectionNode->setVisible( cv_debug_entity.GetB() );
-    m_SolidCollisionNode->setVisible( cv_debug_entity.GetB() & m_Solid );
-    m_TalkCollisionNode->setVisible( cv_debug_entity.GetB() & m_Talkable );
+    int debug = cv_debug_entity.GetI();
+
+    m_DirectionNode->setVisible( debug > 0 );
+    m_SolidCollisionNode->setVisible( debug > 0 && m_Solid );
+    m_TalkCollisionNode->setVisible( debug > 0 && m_Talkable );
 
     // debug output
-    if( cv_debug_entity.GetB() == true )
+    if( debug > 0 )
     {
         DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
         DEBUG_DRAW.SetScreenSpace( true );
@@ -124,51 +126,54 @@ Entity::Update()
         DEBUG_DRAW.Text( entity_pos, 0, 0, m_Name );
         DEBUG_DRAW.Text( entity_pos, 0, 12, m_AnimationCurrentName );
 
-        static Ogre::String move_state_string[] = { "NONE", "MOVE_WALKMESH", "MOVE_LINEAR", "MOVE_JUMP" };
-
-        DEBUG_DRAW.Text( entity_pos, 0, 24, "Move state: " + move_state_string[ m_State ] );
-        DEBUG_DRAW.Text( entity_pos, 0, 36, Ogre::StringConverter::toString( entity_pos ) );
-        switch( m_State )
+        if( debug > 1 )
         {
-            case ES_WALKMESH:
-            {
-                DEBUG_DRAW.Text( entity_pos, 0, 48, "Triangle: " + Ogre::StringConverter::toString( m_MoveTriangleId ) );
-                DEBUG_DRAW.Text( entity_pos, 0, 60, "Target position: " + Ogre::StringConverter::toString( m_MovePosition ) );
-            }
-            break;
+            static Ogre::String move_state_string[] = { "NONE", "MOVE_WALKMESH", "MOVE_LINEAR", "MOVE_JUMP" };
 
-            case ES_LINEAR:
+            DEBUG_DRAW.Text( entity_pos, 0, 24, Ogre::StringConverter::toString( entity_pos ) );
+            DEBUG_DRAW.Text( entity_pos, 0, 36, "Triangle: " + Ogre::StringConverter::toString( m_MoveTriangleId ) );
+            DEBUG_DRAW.Text( entity_pos, 0, 48, "Move state: " + move_state_string[ m_State ] );
+            switch( m_State )
             {
-                DEBUG_DRAW.Text( m_LinearStart, 0, 0, "Start: " + Ogre::StringConverter::toString( m_LinearStart ) );
-                DEBUG_DRAW.Text( m_LinearEnd, 0, 0, "End: " + Ogre::StringConverter::toString( m_LinearEnd ) );
-                DEBUG_DRAW.Line3d( m_LinearStart, m_LinearEnd );
-            }
-            break;
+                case ES_WALKMESH:
+                {
+                    DEBUG_DRAW.Line3d( entity_pos, m_MovePosition );
+                }
+                break;
 
-            case ES_JUMP:
-            {
-                DEBUG_DRAW.Text( m_JumpStart, 0, 0, "Start: " + Ogre::StringConverter::toString( m_JumpStart ) );
-                DEBUG_DRAW.Text( m_JumpEnd, 0, 0, "End: " + Ogre::StringConverter::toString( m_JumpEnd ) );
-                Ogre::Vector3 distance = m_JumpEnd - m_JumpStart;
-                Ogre::Vector3 pos1, pos2, pos3;
-                pos1.x = m_JumpStart.x + distance.x * 0.25f;
-                pos1.y = m_JumpStart.y + distance.y * 0.25f;
-                float current1 = m_JumpSeconds / 4;
-                pos1.z = current1 * current1 * -13.08f + current1 * ( ( distance.z ) / m_JumpSeconds + m_JumpSeconds * 13.08f ) + m_JumpStart.z;
-                pos2.x = m_JumpStart.x + distance.x * 0.5f;
-                pos2.y = m_JumpStart.y + distance.y * 0.5f;
-                float current2 = current1 * 2;
-                pos2.z = current2 * current2 * -13.08f + current2 * ( ( distance.z ) / m_JumpSeconds + m_JumpSeconds * 13.08f ) + m_JumpStart.z;
-                pos3.x = m_JumpStart.x + distance.x * 0.75f;
-                pos3.y = m_JumpStart.y + distance.y * 0.75f;
-                float current3 = current1 * 3;
-                pos3.z = current3 * current3 * -13.08f + current3 * ( ( distance.z ) / m_JumpSeconds + m_JumpSeconds * 13.08f ) + m_JumpStart.z;
-                DEBUG_DRAW.Line3d( m_JumpStart, pos1 );
-                DEBUG_DRAW.Line3d( pos1, pos2 );
-                DEBUG_DRAW.Line3d( pos2, pos3 );
-                DEBUG_DRAW.Line3d( pos3, m_JumpEnd );
+                case ES_LINEAR:
+                {
+                    DEBUG_DRAW.Text( m_LinearStart, 0, 0, "Start: " + Ogre::StringConverter::toString( m_LinearStart ) );
+                    DEBUG_DRAW.Text( m_LinearEnd, 0, 0, "End: " + Ogre::StringConverter::toString( m_LinearEnd ) );
+                    DEBUG_DRAW.Line3d( m_LinearStart, m_LinearEnd );
+                }
+                break;
+
+                case ES_JUMP:
+                {
+                    DEBUG_DRAW.Text( m_JumpStart, 0, 0, "Start: " + Ogre::StringConverter::toString( m_JumpStart ) );
+                    DEBUG_DRAW.Text( m_JumpEnd, 0, 0, "End: " + Ogre::StringConverter::toString( m_JumpEnd ) );
+                    Ogre::Vector3 distance = m_JumpEnd - m_JumpStart;
+                    Ogre::Vector3 pos1, pos2, pos3;
+                    pos1.x = m_JumpStart.x + distance.x * 0.25f;
+                    pos1.y = m_JumpStart.y + distance.y * 0.25f;
+                    float current1 = m_JumpSeconds / 4;
+                    pos1.z = current1 * current1 * -13.08f + current1 * ( ( distance.z ) / m_JumpSeconds + m_JumpSeconds * 13.08f ) + m_JumpStart.z;
+                    pos2.x = m_JumpStart.x + distance.x * 0.5f;
+                    pos2.y = m_JumpStart.y + distance.y * 0.5f;
+                    float current2 = current1 * 2;
+                    pos2.z = current2 * current2 * -13.08f + current2 * ( ( distance.z ) / m_JumpSeconds + m_JumpSeconds * 13.08f ) + m_JumpStart.z;
+                    pos3.x = m_JumpStart.x + distance.x * 0.75f;
+                    pos3.y = m_JumpStart.y + distance.y * 0.75f;
+                    float current3 = current1 * 3;
+                    pos3.z = current3 * current3 * -13.08f + current3 * ( ( distance.z ) / m_JumpSeconds + m_JumpSeconds * 13.08f ) + m_JumpStart.z;
+                    DEBUG_DRAW.Line3d( m_JumpStart, pos1 );
+                    DEBUG_DRAW.Line3d( pos1, pos2 );
+                    DEBUG_DRAW.Line3d( pos2, pos3 );
+                    DEBUG_DRAW.Line3d( pos3, m_JumpEnd );
+                }
+                break;
             }
-            break;
         }
     }
 
@@ -214,6 +219,8 @@ void
 Entity::ScriptSetPosition( const float x, const float y, const float z )
 {
     SetPosition( Ogre::Vector3( x, y, z ) );
+    // if we set it from script - reset walkmesh triangle to reattach entity to walkmesh again if needed
+    m_MoveTriangleId = -1;
 }
 
 
@@ -416,6 +423,14 @@ const Ogre::Vector3&
 Entity::GetMovePosition() const
 {
     return m_MovePosition;
+}
+
+
+
+float
+Entity::GetMoveStopDistance() const
+{
+    return m_MoveStopDistance;
 }
 
 

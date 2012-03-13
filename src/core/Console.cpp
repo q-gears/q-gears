@@ -151,6 +151,7 @@ Console::Input( const Event& event )
         {
             m_DisplayLine += 1;
         }
+
     }
     // scroll display to previous row
     else if( ( event.type == ET_KEY_PRESS || event.type == ET_KEY_REPEAT ) && event.param1 == OIS::KC_PGUP )
@@ -327,7 +328,7 @@ Console::UpdateDraw()
     DEBUG_DRAW.SetZ( -0.6f );
     DEBUG_DRAW.Line( 0, m_Height, m_ConsoleWidth, m_Height );
 
-    unsigned int row = 1;
+    int row = 1;
     int rows = ( m_ConsoleHeight - 30 ) / 16;
     int y = -m_ConsoleHeight + m_Height;
     int empty = rows - m_DisplayLine;
@@ -339,8 +340,9 @@ Console::UpdateDraw()
     std::list< OutputLine >::iterator i;
     for( i = m_OutputLine.begin(); i != m_OutputLine.end(); ++i, ++row )
     {
-        if( row > m_DisplayLine - rows && row <= m_DisplayLine )
+        if( row > ( int )m_DisplayLine - rows && row <= ( int )m_DisplayLine )
         {
+
             DEBUG_DRAW.SetColour( ( *i ).colour );
             DEBUG_DRAW.Text( 5, y, ( *i ).text );
             y += 16;
@@ -588,6 +590,8 @@ Console::ExecuteScript()
 void
 Console::CompleteInput()
 {
+    bool add_slash = false;
+
     if( m_AutoCompletition.size() == 0 )
     {
         // remove backslash
@@ -615,6 +619,8 @@ Console::CompleteInput()
             {
                 m_AutoCompletition.push_back( ConfigCmdManager::getSingleton().GetConfigCmd( i )->GetName() );
             }
+
+            add_slash = true;
         }
         else if( params.size() == 1 )
         {
@@ -626,10 +632,15 @@ Console::CompleteInput()
             {
                 Ogre::String name = ConfigVarManager::getSingleton().GetConfigVar( i )->GetName();
                 unsigned int pos = name.find( m_InputLine );
-                if( pos == 0 && input_size != name.size() )
+                if( pos == 0 )
                 {
-                    Ogre::String part = name.substr( input_size, name.size() - input_size );
-                    m_AutoCompletition.push_back( part );
+                    add_slash = true;
+
+                    if( input_size != name.size() )
+                    {
+                        Ogre::String part = name.substr( input_size, name.size() - input_size );
+                        m_AutoCompletition.push_back( part );
+                    }
                 }
             }
 
@@ -640,21 +651,27 @@ Console::CompleteInput()
                 Ogre::String name = ConfigCmdManager::getSingleton().GetConfigCmd( i )->GetName();
 
                 int pos = name.find( m_InputLine );
-                if( pos == 0 && name != params[ 0 ] )
+                if( pos == 0 )
                 {
-                    Ogre::String part = name.substr( input_size, name.size() - input_size );
-                    m_AutoCompletition.push_back( part );
-                }
-                else if( name == params[ 0 ] && ConfigCmdManager::getSingleton().GetConfigCmd( i )->GetCompletion() != NULL )
-                {
-                    m_InputLine += " ";
-                    ConfigCmdManager::getSingleton().GetConfigCmd( i )->GetCompletion()( m_AutoCompletition );
+                    add_slash = true;
+
+                    if( name != params[ 0 ] )
+                    {
+                        Ogre::String part = name.substr( input_size, name.size() - input_size );
+                        m_AutoCompletition.push_back( part );
+                    }
+                    else if( ConfigCmdManager::getSingleton().GetConfigCmd( i )->GetCompletion() != NULL )
+                    {
+                        m_InputLine += " ";
+                        ConfigCmdManager::getSingleton().GetConfigCmd( i )->GetCompletion()( m_AutoCompletition );
+                    }
                 }
             }
         }
         else if( params.size() > 1 )
         {
             Ogre::String all_params = params[ 1 ];
+
             for( size_t i = 2; i < params.size(); ++i )
             {
                 all_params += " " + params[ i ];
@@ -664,6 +681,8 @@ Console::CompleteInput()
             ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find( params[ 0 ] );
             if( cmd != NULL )
             {
+                add_slash = true;
+
                 if( cmd->GetCompletion() != NULL )
                 {
                     Ogre::StringVector full_complete;
@@ -688,7 +707,11 @@ Console::CompleteInput()
             m_InputLine = params[ 0 ] + " " + all_params;
         }
 
-        m_InputLine = "/" + m_InputLine;
+        // if we found at least one match
+        if( add_slash == true )
+        {
+            m_InputLine = "/" + m_InputLine;
+        }
         m_CursorPosition = m_InputLine.size();
 
         // sort list

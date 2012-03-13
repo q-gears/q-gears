@@ -1,10 +1,3 @@
---[[
--- message conf
-message:set_clickable(1, false);
-]]
-
-
-
 EntityContainer = {}
 
 
@@ -58,9 +51,9 @@ EntityContainer[ "Player" ] = {
                 player:move_sync()
 
                 -- tell something
---                message:show_text(1, "I returned!", 100, 100, 130, 25);
---                script:wait(2);
---                message:hide(1);
+--                message:show_text(1, "I returned!", 100, 100, 130, 25)
+--                script:wait(2)
+--                message:hide(1)
 
                 -- ladder down
                 player:set_direction( 180 )
@@ -119,15 +112,15 @@ EntityContainer[ "Chasers_Speed1" ] = {
         local chaser1 = entity_manager:get_entity( "Chasers_Speed1" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser1:set_move_speed( 3 );
-        chaser1:set_solid_radius( 0.15 );
-        chaser1:set_solid( true );
+        chaser1:set_move_speed( 3 )
+        chaser1:set_solid_radius( 0.15 )
+        chaser1:set_solid( true )
         chaser1:move_auto_animation( false )
 
         script:wait( 1 )
 
         while true do
-            --chaser1:set_position_triangle( 100, 100, 0, 1 )
+            chaser1:set_position( 0, 0.5, 0 )
             chaser1:move_to_entity( player )
             chaser1:move_sync()
         end
@@ -147,15 +140,15 @@ EntityContainer[ "Chasers_Speed2" ] = {
         local chaser2 = entity_manager:get_entity( "Chasers_Speed2" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser2:set_move_speed( 3 );
-        chaser2:set_solid_radius( 0.15 );
-        chaser2:set_solid( true );
+        chaser2:set_move_speed( 3 )
+        chaser2:set_solid_radius( 0.15 )
+        chaser2:set_solid( true )
         chaser2:move_auto_animation( false )
 
         script:wait( 1 )
 
         while true do
-            --chaser2:set_position_triangle( 100, 100, 0, 1 )
+            chaser2:set_position( -1, 1, 0 )
             chaser2:move_to_entity( player )
             chaser2:move_sync()
         end
@@ -175,15 +168,15 @@ EntityContainer[ "Chasers_Speed3" ] = {
         local chaser3 = entity_manager:get_entity( "Chasers_Speed3" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser3:set_move_speed( 3 );
-        chaser3:set_solid_radius( 0.15 );
-        chaser3:set_solid( true );
+        chaser3:set_move_speed( 3 )
+        chaser3:set_solid_radius( 0.15 )
+        chaser3:set_solid( true )
         chaser3:move_auto_animation( false )
 
         script:wait( 1 )
 
         while true do
-            --chaser3:set_position_triangle( 100, 100, 0, 1 )
+            chaser3:set_position( 1, 1, 0 )
             chaser3:move_to_entity( player )
             chaser3:move_sync()
         end
@@ -242,7 +235,7 @@ EntityContainer[ "Lifter" ] = {
     on_start = function( self )
         local lifter = entity_manager:get_entity( "Lifter" )
         lifter:set_solid( false )
-        lifter:offset_to_position( 0, 0, 3, Entity.NONE, 0 );
+        lifter:offset_to_position( 0, 0, 3, Entity.NONE, 0 )
 
         while true do
             script:wait( 1 )
