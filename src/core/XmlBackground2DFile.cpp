@@ -1,6 +1,7 @@
 #include "XmlBackground2DFile.h"
 
 #include "Background2D.h"
+#include "CameraManager.h"
 #include "EntityManager.h"
 #include "Logger.h"
 
@@ -37,6 +38,12 @@ XmlBackground2DFile::Load()
     if( image != "" )
     {
         background->SetImage( image );
+
+        Ogre::Matrix4 view_matrix = GetMatrix4( node, "view_matrix", Ogre::Matrix4::IDENTITY );
+        Ogre::Matrix4 projection_matrix = GetMatrix4( node, "projection_matrix", Ogre::Matrix4::IDENTITY );
+
+        CameraManager::getSingleton().GetCurrentCamera()->setCustomProjectionMatrix( true, projection_matrix );
+        CameraManager::getSingleton().GetCurrentCamera()->setCustomViewMatrix( true, view_matrix );
 
         node = node->FirstChild();
         while( node != NULL )

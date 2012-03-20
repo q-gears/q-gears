@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <map>
     <script file_name="maps/test/test_2.lua" />
-    <walkmesh file_name="maps/test/test_1_wm.xml" />
-
+    <walkmesh file_name="maps/test/test_2_wm.xml" />
 
     <entity_model name="Player" file_name="models/field/units/cloud.mesh" position="0 -1 0" direction="0" />
     <entity_model name="Chaser_Slow" file_name="models/field/units/treasure_chest.mesh" position="0 -0.5 0" direction="0" />

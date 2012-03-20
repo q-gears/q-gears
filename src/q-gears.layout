@@ -8,7 +8,10 @@
 		<Cursor1 position="62" topLine="0" />
 	</File>
 	<File name="core\Background2D.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2803" topLine="63" />
+		<Cursor1 position="3805" topLine="111" />
+	</File>
+	<File name="core\Background2D.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="986" topLine="13" />
 	</File>
 	<File name="core\CameraManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1361" topLine="0" />
@@ -59,7 +62,7 @@
 		<Cursor1 position="1050" topLine="42" />
 	</File>
 	<File name="core\EntityManager.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8147" topLine="279" />
+		<Cursor1 position="28568" topLine="805" />
 	</File>
 	<File name="core\EntityManager.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="863" topLine="21" />
@@ -148,14 +151,17 @@
 	<File name="core\Utilites.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="98" topLine="2" />
 	</File>
+	<File name="core\Walkmesh.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="25" topLine="0" />
+	</File>
 	<File name="core\XmlBackground2DFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="91" topLine="0" />
+		<Cursor1 position="1246" topLine="30" />
 	</File>
 	<File name="core\XmlFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="414" topLine="14" />
+		<Cursor1 position="3381" topLine="146" />
 	</File>
 	<File name="core\XmlFile.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="582" topLine="3" />
+		<Cursor1 position="1305" topLine="3" />
 	</File>
 	<File name="core\XmlFontFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="876" topLine="21" />

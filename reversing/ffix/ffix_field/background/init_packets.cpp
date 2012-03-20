@@ -2,13 +2,13 @@
 // field_init_background_packets
 tile_block_data = A0;
 packets = A1;
-[SP + 48] = w(A2);
+end_of_packets = A2;
 
 tileset_file = w[800c9da4 + 10];
 S7 = bu[800ca108] + df;
 [tile_block_data + 30] = w(packets);
 
-[SP + 10] = w(tileset_file + w[tile_block_data + 28]);
+xy_data = w(tileset_file + w[tile_block_data + 28]);
 [SP + 14] = w(tileset_file + w[tile_block_data + 2c]);
 
 // set global tile block position
@@ -21,7 +21,6 @@ S7 = bu[800ca108] + df;
 
 
 S1 = w[SP + 14];
-S2 = w[SP + 10];
 frame_buffer = 0;
 number_of_tiles = hu[tile_block_data + 26];
 
@@ -36,8 +35,8 @@ loopbd1dc:	; 800BD1DC
             [packets + e] = b(80); // B
             [packets + f] = b(7c); // 16x16 sprite
 
-            [packets + 10] = h(hu[tile_block_data + 18] + (w[S2 + tile_id * 4] >> 16)); // X
-            [packets + 12] = h(hu[tile_block_data + 1a] + ((w[S2 + tile_id * 4] >> c) & 3ff)); // Y
+            [packets + 10] = h(hu[tile_block_data + 18] + (w[xy_data + tile_id * 4] >> 16)); // X
+            [packets + 12] = h(hu[tile_block_data + 1a] + ((w[xy_data + tile_id * 4] >> c) & 3ff)); // Y
             [packets + 14] = b(bu[S1 + tile_id * 8 + 4]); // V
             [packets + 15] = b(bu[S1 + tile_id * 8 + 3]); // U
 
@@ -58,21 +57,20 @@ loopbd1dc:	; 800BD1DC
             [packets + 16] = h((A1 << 6) | ((A0 >> 4) & 3f)); // clut
 
             A3 = w[S1 + tile_id * 8 + 0];
-            V0 = A3 >> 14;
 
-            if( ( V0 & 3 ) == 0 )
+            if( ( (A3 >> 14) & 3 ) == 0 )
             {
                 A0 = 0;
             }
             else
             {
-                A1 = 1;
+                A0 = 1;
             }
 
-            A1 = (A3 >> 16) & 3;
-            A2 = (A3 >> a) & 3c0;
-            A3 = (A3 >> 7) & 100;
-            800BD2D4	jal    func50cf8 [$80050cf8]
+            A1 = (A3 >> 16) & 0003;
+            A2 = (A3 >> a) & 03c0;
+            A3 = (A3 >> 7) & 0100;
+            V0 = ((A0 & 0003) << 7) | ((A1 & 0003) << 5) | ((A3 & 0100) >> 4) | ((A2 & 03ff) >> 6) | ((A3 & 0200) << 2)
 
             A2 = V0;
             A0 = packets;
@@ -81,7 +79,7 @@ loopbd1dc:	; 800BD1DC
             [packets + 4] = w((A2 & 9ff) | e1000600);
             800BD300	jal    func62b4c [$80062b4c]
 
-            V1 = w[S1 + tile_id * 8 + 0] & 1ff;
+            V1 = w[S1 + tile_id * 8 + 0] & 000001ff;
 
             if( S7 < V1 )
             {
@@ -102,9 +100,12 @@ loopbd1dc:	; 800BD1DC
     V0 = frame_buffer < 2;
 800BD354	bne    v0, zero, loopbd1dc [$800bd1dc]
 
-T0 = w[SP + 48];
-[T0] = w(packets);
+
+
+[end_of_packets] = w(packets);
 [800ca108] = b(S7 + 21);
+
+
 
 return 1;
 ////////////////////////////////

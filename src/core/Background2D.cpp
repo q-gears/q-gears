@@ -3,8 +3,13 @@
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
-#include "CameraManager.h"
+#include "ConfigVar.h"
 #include "Logger.h"
+
+
+
+ConfigVar cv_debug_background2d( "debug_background2d", "Draw background debug info", "false" );
+ConfigVar cv_background2d_show( "background2d_show", "Draw background or not", "true" );
 
 
 
@@ -42,6 +47,65 @@ Background2D::~Background2D()
     m_SceneManager->removeRenderQueueListener( this );
 
     DestroyVertexBuffer();
+}
+
+
+
+void
+Background2D::Update()
+{
+    if( cv_debug_background2d.GetB() == true )
+    {
+/*
+        DEBUG_DRAW.SetScreenSpace( true );
+        DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.CENTER );
+
+        for( int i = 0; i < m_Triangles.size(); ++i )
+        {
+            if( m_Triangles[ i ].access_side[ 0 ] == -1 )
+            {
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
+            }
+            else
+            {
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
+            }
+            DEBUG_DRAW.Line3d( m_Triangles[ i ].a, m_Triangles[ i ].b );
+            if( m_Triangles[ i ].access_side[ 1 ] == -1 )
+            {
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
+            }
+            else
+            {
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
+            }
+            DEBUG_DRAW.Line3d( m_Triangles[ i ].b, m_Triangles[ i ].c );
+            if( m_Triangles[ i ].access_side[ 2 ] == -1 )
+            {
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
+            }
+            else
+            {
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
+            }
+            DEBUG_DRAW.Line3d( m_Triangles[ i ].c, m_Triangles[ i ].a );
+
+            DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
+            DEBUG_DRAW.SetFadeDistance( 20, 25 );
+            Ogre::Vector3 triangle_pos = ( m_Triangles[ i ].a + m_Triangles[ i ].b + m_Triangles[ i ].c) / 3;
+            DEBUG_DRAW.Text( triangle_pos, 0, 0, Ogre::StringConverter::toString( i ) );
+        }
+*/
+    }
+}
+
+
+
+void
+Background2D::Clear()
+{
+    DestroyVertexBuffer();
+    CreateVertexBuffer();
 }
 
 
@@ -159,20 +223,23 @@ Background2D::AddTile( const float x, const float y, const float width, const fl
 void
 Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation )
 {
+    if( cv_background2d_show.GetB() == false )
+    {
+        return;
+    }
+
+
+
     if( queueGroupId == Ogre::RENDER_QUEUE_MAIN )
     {
         m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
         m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
         m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
 
-        //m_RenderSystem->_setProjectionMatrix( CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrix() );
-        //m_RenderSystem->_setViewMatrix( CameraManager::getSingleton().GetCurrentCamera()->getViewMatrix() );
-
         if( m_RenderOp.vertexData->vertexCount != 0 )
         {
             m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
             m_RenderSystem->_render( m_RenderOp );
-            //m_RenderOp.vertexData->vertexCount = 0;
         }
     }
 }

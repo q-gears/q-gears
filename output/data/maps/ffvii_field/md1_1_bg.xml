@@ -1,4 +1,4 @@
-<background2d image="maps/field/md1_1.png">
+<background2d image="maps/ffvii_field/md1_1.png">
     <tile destination="-768 -768" width="48" height="48" uv1="0 0" uv2="0.015625 0.03125" depth="0.975586" />
     <tile destination="-720 -768" width="48" height="48" uv1="0.015625 0" uv2="0.03125 0.03125" depth="0.975586" />
     <tile destination="-672 -768" width="48" height="48" uv1="0 0.03125" uv2="0.015625 0.0625" depth="0.975586" />

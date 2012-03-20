@@ -2820,6 +2820,87 @@ DatFile::OffsetString(int val)
 
 
 void
+DatFile::GetCameraMatrix( Ogre::Matrix4& view_matrix, Ogre::Matrix4& projection_matrix )
+{
+/*
+    // get sector 4 offset (camera)
+    u32 offset_to_camera = 0x1C + GetU32LE(0x0C) - GetU32LE(0x00);
+    if (CONFIG->mDumpSpecificGameData == true)
+    {
+        LOGGER->Log(LOGGER_INFO, "Offset to Camera section: 0x%08x", offset_to_camera);
+    }
+
+    // get camera matrix (3 vectors)
+    float vxx = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x00))) * 0.000244140625f; // divide by 4096
+    float vxy = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x02))) * 0.000244140625f; // divide by 4096
+    float vxz = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x04))) * 0.000244140625f; // divide by 4096
+
+    float vyx = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x06))) * 0.000244140625f; // divide by 4096
+    float vyy = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x08))) * 0.000244140625f; // divide by 4096
+    float vyz = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x0A))) * 0.000244140625f; // divide by 4096
+
+    float vzx = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x0C))) * 0.000244140625f; // divide by 4096
+    float vzy = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x0E))) * 0.000244140625f; // divide by 4096
+    float vzz = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x12))) * 0.000244140625f; // divide by 4096
+
+    // get camera position in camera space
+    s32 ox  = -(s32)(GetU32LE(offset_to_camera + 0x14));
+    s32 oy  = -(s32)(GetU32LE(offset_to_camera + 0x18));
+    s32 oz  = -(s32)(GetU32LE(offset_to_camera + 0x1C));
+
+    float distance = GetU16LE(offset_to_camera + 0x24);
+
+    // camera matrix
+    Matrix mat(-vxx, vyx, vzx, 0,
+               -vxy, vyy, vzy, 0,
+               -vxz, vyz, vzz, 0,
+                0,   0,   0,   1);
+    camera.SetFieldCamera(mat);
+    camera.SetFieldOrigin(Vector3(ox, oy, oz));
+
+
+
+    // projection matrix
+    float aspect = (float)CONFIG->GAME_WIDTH / (float)CONFIG->GAME_HEIGHT;
+    float angley = atanf((CONFIG->GAME_HEIGHT * 0.5f) / distance) * 2.0f;
+    float znear  = 1;
+    float zfar   = 100000;
+
+    float ymax   =  znear * tanf(angley / 2);
+    float ymin   = -ymax;
+    float xmin   =  ymin * aspect;
+    float xmax   =  ymax * aspect;
+
+    camera.SetFieldProjection(xmax, xmin, ymax, ymin);
+
+    xmlTextWriterPtr writer;
+    writer = xmlNewTextWriterFilename("camera.xml", 0);
+    xmlTextWriterSetIndent(writer, 1);
+    xmlTextWriterSetIndentString(writer, BAD_CAST "    ");
+    xmlTextWriterStartDocument(writer, NULL, "ISO-8859-1", NULL);
+    xmlTextWriterStartElement(writer, BAD_CAST "camera");
+    xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "position", "%f %f %f", -ox / 4096.0f, -oy / 4096.0f, -oz / 4096.0f);
+    xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "distance", "%f", distance);
+    xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "matrix", "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f", -vxx, -vyx, -vzx, 0, -vxy, -vyy, -vzy, 0, -vxz, -vyz, -vzz, 0, 0, 0, 0, 1);
+    xmlTextWriterEndElement(writer);
+    xmlTextWriterEndDocument(writer);
+    xmlFreeTextWriter(writer);
+
+    if (CONFIG->mDumpSpecificGameData == true)
+    {
+        LOGGER->Log(LOGGER_INFO, "Field camera vectors:              vxx = %f, vxy = %f, vxz = %f", vxx, vxy, vxz);
+        LOGGER->Log(LOGGER_INFO, "                                   vyx = %f, vyy = %f, vyz = %f", vyx, vyy, vyz);
+        LOGGER->Log(LOGGER_INFO, "                                   vzx = %f, vzy = %f, vzz = %f", vzx, vzy, vzz);
+        LOGGER->Log(LOGGER_INFO, "Camera position (in camera space): ox = %d, oy = %d, oz = %d", ox, oy, oz);
+        LOGGER->Log(LOGGER_INFO, "Camera distance:                   distance = %f", distance);
+        LOGGER->Log(LOGGER_INFO, "Unknown (depth que?):              DQB = %08x, DQA = %04x", GetU32LE(offset_to_camera + 0x20), GetU16LE(offset_to_camera + 0x26));
+    }
+*/
+}
+
+
+
+void
 DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim )
 {
     Logger* export_text = new Logger( export_path + "maps/field/" + field.name + "_bg.xml" );
@@ -2827,7 +2908,10 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     int width = field.tex_width;
     int height = field.tex_height;
 
-    export_text->Log( "<background2d image=\"maps/field/" + field.name + ".png\">\n" );
+    Ogre::Matrix4 view_matrix, projection_matrix;
+    GetCameraMatrix( view_matrix, projection_matrix );
+
+    export_text->Log( "<background2d image=\"maps/field/" + field.name + ".png\" view_matrix=\"" + Ogre::StringConverter::toString( view_matrix ) + "\"  projection_matrix=\"" + Ogre::StringConverter::toString( projection_matrix ) + "\">\n" );
 
     full_image = CreateSurface( width, height );
     x_32 = 0; y_32 = 0;

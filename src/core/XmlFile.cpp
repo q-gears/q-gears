@@ -160,9 +160,9 @@ XmlFile::GetVector3( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vecto
 
 
 const Ogre::Matrix4
-XmlFile::GetMatrix4( TiXmlNode* node, const Ogre::String& tag ) const
+XmlFile::GetMatrix4( TiXmlNode* node, const Ogre::String& tag, const Ogre::Matrix4& def ) const
 {
-    Ogre::Matrix4 ret = Ogre::Matrix4::IDENTITY;
+    Ogre::Matrix4 ret = def;
 
     if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
     {

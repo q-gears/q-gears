@@ -4,6 +4,8 @@
 800c9da4 start address of tileset related info.
 +00 [][][][] ???
 +10 [][][][] pointer to tileset file 0xa.
++1c [][][][] ???
++20 [][][][] ???
 +24 []       init with 0. Number of specific tileset blocks.
 +28 [][][][] init with data from +2c. Pointer to struct with specific tileset blocks data.
     +00 []       init with 0x10.
@@ -28,9 +30,25 @@
 800c9e04 [][][][] pointer to walkmesh normals data.
 800c9e0c [][][][] pointer to walkmesh groups data.
 
-800ca068 + c  [][]     x screen offset.
-800ca068 + e  [][]     y screen offset.
-800ca068 + 75 []       id of camera to use in field. Used when selecting background camera.
+800ca068 start address of camera related info.
++0c [][]     x screen offset.
++0e [][]     y screen offset.
++1c [][][][] pointer to where we copy camera data.
+    +00 [][]     R11.
+    +02 [][]     R12.
+    +04 [][]     R13.
+    +06 [][]     R21.
+    +08 [][]     R22.
+    +0a [][]     R23.
+    +0c [][]     R31.
+    +0e [][]     R32.
+    +10 [][]     R33.
+    +14 [][][][] TX.
+    +18 [][][][] TY.
+    +1c [][][][] TZ.
++20 [][][][] pointer to something.
+    +00 [][]     H (projection plane distance).
++75 []       id of camera to use in field. Used when selecting background camera.
 
 800ca14c some array of 0xdc size elements.
 

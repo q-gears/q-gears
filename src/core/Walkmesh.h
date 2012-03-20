@@ -36,18 +36,17 @@ public:
     virtual ~Walkmesh();
 
     void Update();
-
     void Clear();
 
-    void                 AddTriangle( const WalkmeshTriangle& triangle );
+    void AddTriangle( const WalkmeshTriangle& triangle );
 
-    int                  GetAccessSide( unsigned int triangle_id, unsigned char side ) const;
+    int GetAccessSide( unsigned int triangle_id, unsigned char side ) const;
     const Ogre::Vector3& GetA( unsigned int triangle_id ) const;
     const Ogre::Vector3& GetB( unsigned int triangle_id ) const;
     const Ogre::Vector3& GetC( unsigned int triangle_id ) const;
-    int                  GetNumberOfTriangles() const;
-    void                 LockWalkmesh( unsigned int triangle_id, bool lock );
-    bool                 IsLocked( unsigned int triangle_id ) const;
+    int GetNumberOfTriangles() const;
+    void LockWalkmesh( unsigned int triangle_id, bool lock );
+    bool IsLocked( unsigned int triangle_id ) const;
 
 private:
     std::vector< WalkmeshTriangle > m_Triangles;

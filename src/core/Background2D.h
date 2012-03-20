@@ -14,6 +14,9 @@ public:
     Background2D();
     virtual ~Background2D();
 
+    void Update();
+    void Clear();
+
     void SetImage( const Ogre::String& image );
     void AddTile( const float x, const float y, const float width, const float height, const float depth, const float u1, const float v1, const float u2, const float v2 );
 
@@ -29,7 +32,7 @@ private:
 
     Ogre::RenderOperation               m_RenderOp;
     Ogre::HardwareVertexBufferSharedPtr m_VertexBuffer;
-    int                                 m_MaxVertexCount;
+    unsigned int                        m_MaxVertexCount;
     Ogre::MaterialPtr                   m_Material;
 };
 

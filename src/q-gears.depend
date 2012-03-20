@@ -26181,7 +26181,7 @@
 	"Event.h"
 	"Walkmesh.h"
 
-1321529254 k:\q-gears\src\core\background2d.h
+1332183342 k:\q-gears\src\core\background2d.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
@@ -26665,7 +26665,7 @@
 1306971022 k:\q-gears\src\core\library\luabind\detail\link_compatibility.hpp
 	<luabind/config.hpp>
 
-1306971022 k:\q-gears\src\core\walkmesh.h
+1332181468 k:\q-gears\src\core\walkmesh.h
 	<OgreVector3.h>
 	<vector>
 
@@ -26807,11 +26807,11 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1322039502 source:k:\q-gears\src\core\background2d.cpp
+1332183288 source:k:\q-gears\src\core\background2d.cpp
 	"Background2D.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
-	"CameraManager.h"
+	"ConfigVar.h"
 	"Logger.h"
 
 1322057526 source:k:\q-gears\src\core\cameramanager.cpp
@@ -26847,7 +26847,7 @@
 1314721442 k:\q-gears\src\core\xmlmapfile.h
 	"XmlFile.h"
 
-1330877754 k:\q-gears\src\core\xmlfile.h
+1332182810 k:\q-gears\src\core\xmlfile.h
 	<OgreColourValue.h>
 	<OgreMatrix4.h>
 	<OgreString.h>
@@ -26882,7 +26882,7 @@
 1331284096 source:k:\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1331672082 source:k:\q-gears\src\core\console.cpp
+1331672510 source:k:\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
 	"ConfigCmdManager.h"
@@ -27068,16 +27068,17 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1321529292 source:k:\q-gears\src\core\xmlbackground2dfile.cpp
+1332183062 source:k:\q-gears\src\core\xmlbackground2dfile.cpp
 	"XmlBackground2DFile.h"
 	"Background2D.h"
+	"CameraManager.h"
 	"EntityManager.h"
 	"Logger.h"
 
 1320053958 k:\q-gears\src\core\xmlbackground2dfile.h
 	"XmlFile.h"
 
-1330877772 source:k:\q-gears\src\core\xmlfile.cpp
+1332182836 source:k:\q-gears\src\core\xmlfile.cpp
 	"XmlFile.h"
 	<OgreStringConverter.h>
 	"Logger.h"
@@ -27827,7 +27828,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1331668866 source:k:\q-gears\src\core\entitymanager.cpp
+1332181374 source:k:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>

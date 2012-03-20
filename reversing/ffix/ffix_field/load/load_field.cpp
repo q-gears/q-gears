@@ -104,70 +104,100 @@ return 1;
 
 
 ////////////////////////////////
+// funcc0bcc
+camera_id = A0;
+tileset_file = w[800c9da4 + 10];
+camera_offset = w[tileset_file + 18];
+A2 = w[800ca068 + 20];
+[A2 + 0] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0]);
+
+H = hu[tileset_file + camera_offset + camera_id * 34 + 0]; // Projection plane distance
+
+A2 = w[800ca068 + 1c];
+[A2 + 0] = h(hu[tileset_file + camera_offset + camera_id * 34 + 2]); // R11
+[A2 + 2] = h(hu[tileset_file + camera_offset + camera_id * 34 + 4]); // R12
+[A2 + 4] = h(hu[tileset_file + camera_offset + camera_id * 34 + 6]); // R13
+[A2 + 6] = h(hu[tileset_file + camera_offset + camera_id * 34 + 8]); // R21
+[A2 + 8] = h(hu[tileset_file + camera_offset + camera_id * 34 + a]); // R22
+[A2 + a] = h(hu[tileset_file + camera_offset + camera_id * 34 + c]); // R23
+[A2 + c] = h(hu[tileset_file + camera_offset + camera_id * 34 + e]); // R31
+[A2 + e] = h(hu[tileset_file + camera_offset + camera_id * 34 + 10]); // R32
+[A2 + 10] = h(hu[tileset_file + camera_offset + camera_id * 34 + 12]); // R33
+[A2 + 14] = w(w[tileset_file + camera_offset + camera_id * 34 + 14]); // TX
+[A2 + 18] = w(w[tileset_file + camera_offset + camera_id * 34 + 18]); // TY
+[A2 + 1c] = w(w[tileset_file + camera_offset + camera_id * 34 + 1c]); // TZ
+[tileset_file + 2a] = h(hu[tileset_file + camera_offset + camera_id * 34 + 2a]);
+[tileset_file + 2e] = h(hu[tileset_file + camera_offset + camera_id * 34 + 2e]);
+[800ca068 + 75] = b(camera_id);
+
+[800ca068 + 0] = w(w[800ca068 + 0] | 00000080);
+
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+V0 = w[V0 + 8e4];
+V0 = w[V0 + c];
+V0 = w[V0 + 14];
+[V0 + 30] = h(hu[tileset_file + camera_offset + camera_id * 34 + 30]);
+
+return 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // funcbded4
-// camera settings?
-800BDEDC	addu   s3, a0, zero
-S0 = 800ca068;
-S2 = 800c9da4;
-A0 = bu[S0 + 75];
-S1 = w[S2 + 10];
+S3 = A0;
+S1 = w[800c9da4 + 10];
 FP = A1;
-800BDF1C	jal    funcc0bcc [$800c0bcc]
 
+A0 = bu[800ca068 + 75]; // camera id
+funcc0bcc;
 
-A0 = w[S1 + 18];
-A0 = S1 + A0;
+[800c9da4 + 1c] = w(S3);
 
-A2 = A0 + bu[S0 + 75] * 34;
-[S0 + a4] = h((h[A2 + 28] + h[A2 + 2a]) / 2);
-[S0 +  4] = h((h[A2 + 28] + h[A2 + 2a]) / 2);
+A2 = S1 + w[S1 + 18] + bu[800ca068 + 75] * 34;
+[800ca068 + a4] = h((h[A2 + 28] + h[A2 + 2a]) / 2);
+[800ca068 +  4] = h((h[A2 + 28] + h[A2 + 2a]) / 2);
 
-[S0 + a6] = h((h[A2 + 2c] + h[A2 + 2e]) / 2);
-[S0 +  6] = h((h[A2 + 2c] + h[A2 + 2e]) / 2);
+[800ca068 + a6] = h((h[A2 + 2c] + h[A2 + 2e]) / 2);
+[800ca068 +  6] = h((h[A2 + 2c] + h[A2 + 2e]) / 2);
 
 [S1 + 30] = h(hu[S1 + 24] - ((h[A2 + 28] + h[A2 + 2a]) / 2) + a0);
 
 number_of_blocks = hu[S1 + 6];
-800BDFA4	sll    v0, number_of_blocks, $01
-800BDFA8	addu   a1, v0, number_of_blocks
 
-800BDFB0	lhu    v1, $0006(s0)
-V0 = hu[S1 + 26];
 
-800BDFB8	addiu  v1, v1, $ff90 (=-$70)
-800BDFBC	subu   v0, v0, v1
-[S1 + 32] = h(V0);
+V1 = hu[800ca068 + 6] - 70;
+[S1 + 32] = h(hu[S1 + 26] - V1);
 
-800BDFC4	srl    v0, a1, $02
-800BDFC8	sll    v0, v0, $02
-[S2 + 1c] = w(S3);
-if (V0 != A1)
+
+A1 = number_of_blocks * 3;
+
+V0 = A1 >> 2;
+V0 = V0 << 2;
+
+// if not четное
+if( V0 != A1 )
 {
-    800BDFD4	addiu  a1, a1, $0001
-
     loopbdfd8:	; 800BDFD8
-        800BDFD8	srl    v0, a1, $02
-        800BDFDC	sll    v0, v0, $02
-        800BDFE4	addiu  a1, a1, $0001
+        A1 = A1 + 1;
+        V0 = A1 >> 2;
+        V0 = V0 << 2;
     800BDFE0	bne    v0, a1, loopbdfd8 [$800bdfd8]
-
-    800BDFE8	addiu  a1, a1, $ffff (=-$1)
 }
 
-800BDFEC	lui    v1, $800d
-800BDFF0	addu   v0, s3, a1
-800BDFF4	sw     v0, $9dc4(v1)
-800BDFF8	addu   a1, a1, number_of_blocks
+[800c9da4 + 20] = w(S3 + A1);
+
+A1 = A1 + number_of_blocks;
 
 loopbdffc:	; 800BDFFC
-    800BDFFC	srl    v0, a1, $02
-    800BE000	sll    v0, v0, $02
-    800BE008	addiu  a1, a1, $0001
+    V0 = A1 << 2;
+    V0 = V0 >> 2;
+    A1 = A1 + 1;
 800BE004	bne    v0, a1, loopbdffc [$800bdffc]
 
-800BE00C	addiu  a1, a1, $ffff (=-$1)
-800BE010	addu   v0, s3, a1
-[FP] = w(V0);
+A1 = A1 - 1;
+[FP] = w(S3 + A1); // start of background packets
 
 
 S0 = 0;
@@ -189,47 +219,34 @@ loopbe02c:	; 800BE02C
 800BE05C	bne    v0, zero, loopbe02c [$800be02c]
 
 
-if (number_of_blocks != 0)
+if( number_of_blocks != 0 )
 {
-    800BE068	addu   s0, zero, zero
-    800BE06C	lui    v0, $800d
-    800BE070	addiu  s3, v0, $9da4 (=-$625c)
-    800BE074	addiu  s4, zero, $0080
-    800BE078	addiu  s6, zero, $8000 (=-$8000)
-    800BE07C	addiu  s5, zero, $7fff
+    S0 = 0;
     S1 = S1 + w[S1 + 10];
-    800BE084	addu   s2, s0, zero
+    S2 = S0;
 
     loopbe088:	; 800BE088
-        800BE088	lw     v0, $001c(s3)
-        800BE08C	nop
-        800BE090	addu   v0, s2, v0
-        800BE094	sb     s4, $0000(v0)
-        800BE098	lw     v0, $001c(s3)
-        800BE09C	nop
-        800BE0A0	addu   v0, s2, v0
-        800BE0A4	sb     s4, $0001(v0)
-        800BE0A8	lw     v0, $001c(s3)
-        800BE0AC	nop
-        800BE0B0	addu   v0, s2, v0
-        800BE0B4	sb     s4, $0002(v0)
-        800BE0B8	lw     v0, $0020(s3)
+        V0 = w[800c9da4 + 1c];
+        [V0 + S2 + 0] = b(80);
+        [V0 + S2 + 1] = b(80);
+        [V0 + S2 + 2] = b(80);
+
         A0 = S1; // tile_block_data
-        800BE0C0	addu   v0, v0, s0
-        800BE0C4	sb     zero, $0000(v0)
-        A1 = w[FP];
-        A2 = FP;
+        V0 = w[800c9da4 + 20] + S0;
+        [V0] = b(0);
+        A1 = w[FP]; // packets
+        A2 = FP; // end_of_packets
         field_init_background_packets;
 
-        if (V0 != 1)
+        if( V0 != 1 )
         {
             return 0;
         }
 
-        [S1 + 10] = h(S6);
-        [S1 + 12] = h(S5);
-        [S1 + 14] = h(S6);
-        [S1 + 16] = h(S5);
+        [S1 + 10] = h(-8000);
+        [S1 + 12] = h(7fff);
+        [S1 + 14] = h(-8000);
+        [S1 + 16] = h(7fff);
 
         S1 = S1 + 38;
         S2 = S2 + 3;
@@ -238,11 +255,9 @@ if (number_of_blocks != 0)
     800BE0FC	bne    v0, zero, loopbe088 [$800be088]
 }
 
-V1 = 800ca068;
-800BE110	sb     zero, $0073(v1)
-800BE114	sb     zero, $0072(v1)
-
-[800ca068] = w(w[800ca068] & fffff3ff);
+[800ca068 + 72] = b(0);
+[800ca068 + 73] = b(0);
+[800ca068 + 0] = w(w[800ca068 + 0] & fffff3ff);
 
 return 1;
 ////////////////////////////////

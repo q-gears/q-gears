@@ -30,6 +30,10 @@ To Do
 
 
 
+2011-03-20
+----------
+* [Background] Add clearing of background on map reload. [Akari]
+
 2011-03-14
 ----------
 * [Console] Tab only work if command match any existed command. [Akari]

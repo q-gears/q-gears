@@ -42,6 +42,7 @@ public:
     void DumpTextData( const Ogre::String& export_path, const Field& field, bool english );
     void DumpScriptData( const Ogre::String& export_path, const Field& field );
     void DumpWalkmeshData( const Ogre::String& export_path, const Field& field );
+    void GetCameraMatrix( Ogre::Matrix4& view_matrix, Ogre::Matrix4& projection_matrix );
     void DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim );
     static void DumpSoundOpcodesData( const Ogre::String& export_file );
 

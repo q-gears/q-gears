@@ -258,6 +258,7 @@ void
 EntityManager::Clear()
 {
     m_Walkmesh.Clear();
+    m_Background2D.Clear();
 
     for( size_t i = 0; i < m_EntityModels.size(); ++i )
     {
