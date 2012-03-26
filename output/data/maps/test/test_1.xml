@@ -23,7 +23,7 @@
     <entity_model name="Background17" file_name="models/field/maps/lahan/lahan17.mesh" position="0 0 0" direction="0" />
     <entity_model name="Background18" file_name="models/field/maps/lahan/lahan18.mesh" position="0 0 0" direction="0" />
 -->
-    <entity_model name="Cloud" file_name="models/field/units/cloud.mesh" position="0 0 10" direction="0" />
+    <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="0 0 10" direction="0" />
     <entity_model name="Player" file_name="models/field/units/zidane.mesh" position="-1 0 -10" direction="0" />
     <entity_model name="Robo" file_name="models/xenogears/field/units/robo1.mesh" position="7 7 0" direction="-85" />
     <entity_model name="Weltall" file_name="models/xenogears/field/units/weltall.mesh" position="-7 -7 0" direction="125" />

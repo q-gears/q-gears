@@ -43,6 +43,7 @@
 		<Unit filename="..\common\Logger.h" />
 		<Unit filename="..\common\LzsFile.cpp" />
 		<Unit filename="..\common\LzsFile.h" />
+		<Unit filename="..\common\OgreBase.h" />
 		<Unit filename="..\common\OgreGenUtilites.cpp" />
 		<Unit filename="..\common\OgreGenUtilites.h" />
 		<Unit filename="..\common\Vram.cpp" />

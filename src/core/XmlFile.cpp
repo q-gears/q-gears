@@ -178,6 +178,25 @@ XmlFile::GetMatrix4( TiXmlNode* node, const Ogre::String& tag, const Ogre::Matri
 
 
 
+const Ogre::Quaternion
+XmlFile::GetQuaternion( TiXmlNode* node, const Ogre::String& tag, const Ogre::Quaternion& def ) const
+{
+    Ogre::Quaternion ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseQuaternion( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
 const Ogre::ColourValue
 XmlFile::GetColourValue( TiXmlNode* node, const Ogre::String& tag, const Ogre::ColourValue& def ) const
 {

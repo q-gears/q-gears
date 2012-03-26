@@ -19,23 +19,14 @@ struct Unit
 struct Field
 {
     Ogre::String name;
-    std::vector<Unit> units;
+    std::vector< Unit > units;
 };
 
-struct TexForGenBsx
+struct TexForGenBsx: TexForGen
 {
-    u16 texture_x;
-    u16 texture_y;
-    u16 palette_y;
-    u16 palette_x;
-    int bpp;
-
-    int start_x;
-    int start_y;
-
     int type;
 
-    bool operator==(const TexForGenBsx& i) const
+    bool operator==( const TexForGenBsx& i ) const
     {
         return i.texture_x == texture_x &&
                i.texture_y == texture_y &&
@@ -46,7 +37,7 @@ struct TexForGenBsx
     }
 };
 
-typedef std::vector<TexForGenBsx> VectorTexForGenBsx;
+typedef std::vector< TexForGenBsx > VectorTexForGenBsx;
 
 
 

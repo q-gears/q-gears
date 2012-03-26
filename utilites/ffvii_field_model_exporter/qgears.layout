@@ -5,7 +5,7 @@
 		<Cursor1 position="1283" topLine="28" />
 	</File>
 	<File name="..\common\OgreGenUtilites.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1259" topLine="16" />
+		<Cursor1 position="334" topLine="22" />
 	</File>
 	<File name="..\common\Vram.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1170" topLine="27" />
@@ -23,10 +23,10 @@
 		<Cursor1 position="66" topLine="0" />
 	</File>
 	<File name="src\BsxFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8473" topLine="252" />
+		<Cursor1 position="8462" topLine="254" />
 	</File>
 	<File name="src\BsxFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1536" topLine="37" />
+		<Cursor1 position="876" topLine="35" />
 	</File>
 	<File name="src\DatFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="138" topLine="0" />
@@ -38,7 +38,7 @@
 		<Cursor1 position="159" topLine="0" />
 	</File>
 	<File name="src\MeshFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="32657" topLine="627" />
+		<Cursor1 position="33563" topLine="640" />
 	</File>
 	<File name="src\MeshFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="442" topLine="0" />

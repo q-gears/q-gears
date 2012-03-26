@@ -1,0 +1,27 @@
+
+material ffvii/model/field/wedge
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+			cull_hardware none
+		}
+
+		pass
+		{
+			alpha_rejection greater 0
+			cull_hardware none
+
+			texture_unit
+			{
+				texture models/ffvii/field/units/wedge.png 0
+				filtering point point none
+				scroll 0.0625 0
+			}
+		}
+
+	}
+
+}

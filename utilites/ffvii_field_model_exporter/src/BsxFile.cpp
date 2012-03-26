@@ -50,13 +50,13 @@ BsxFile::~BsxFile()
 
 
 Ogre::Entity*
-BsxFile::GetModel(Ogre::Entity* entity, const s8 character_id, const Unit& unit, const DatModelData dat)
+BsxFile::GetModel( Ogre::Entity* entity, const s8 character_id, const Unit& unit, const DatModelData dat )
 {
-    int start_animation = (dat.global_model_id > 0) ? 3 : 0;
+    int start_animation = ( dat.global_model_id > 0 ) ? 3 : 0;
     u32 offset_to_models_description = GetU32LE(0x04);
-    u32 number_of_models_description = GetU32LE(offset_to_models_description + 0x04);
+    u32 number_of_models_description = GetU32LE( offset_to_models_description + 0x04 );
 
-    if (character_id >= number_of_models_description)
+    if( character_id >= number_of_models_description )
     {
         return NULL;
     }
@@ -79,8 +79,8 @@ BsxFile::GetModel(Ogre::Entity* entity, const s8 character_id, const Unit& unit,
 
     if (entity == NULL)
     {
-        mesh     = Ogre::MeshManager::getSingleton().create("export" + unit.name, "General");
-        skeleton = Ogre::SkeletonManager::getSingleton().create("export" + unit.name, "General");
+        mesh     = Ogre::MeshManager::getSingleton().create( "export" + unit.name, "General" );
+        skeleton = Ogre::SkeletonManager::getSingleton().create( "export" + unit.name, "General" );
 
         switch (dat.global_model_id)
         {
@@ -130,44 +130,44 @@ BsxFile::GetModel(Ogre::Entity* entity, const s8 character_id, const Unit& unit,
     {
         skeleton = Ogre::SkeletonManager::getSingleton().getByName(entity->getSkeleton()->getName());
 
-        switch (dat.global_model_id)
+        switch( dat.global_model_id )
         {
             case 1:
             {
                 BcxFile file( "data/field/cloud.bcx" );
-                file.GetSkeleton(skeleton_length);
+                file.GetSkeleton( skeleton_length );
             }
             break;
 
             case 3:
             {
                 BcxFile file( "data/field/ballet.bcx" );
-                file.GetSkeleton(skeleton_length);
+                file.GetSkeleton( skeleton_length );
             }
             break;
 
             case 4:
             {
                 BcxFile file( "data/field/tifa.bcx" );
-                file.GetSkeleton(skeleton_length);
+                file.GetSkeleton( skeleton_length );
             }
             break;
 
             case 7:
             {
                 BcxFile file( "data/field/yufi.bcx" );
-                file.GetSkeleton(skeleton_length);
+                file.GetSkeleton( skeleton_length );
             }
             break;
 
             default:
             {
                 // skeleton
-                u32 offset_to_bones = offset_to_field_model_description + GetU16LE(offset_to_field_model_description + 0x4);
-                SkeletonFile file_s(this);
+                u32 offset_to_bones = offset_to_field_model_description + GetU16LE( offset_to_field_model_description + 0x4 );
+                SkeletonFile file_s( this );
                 Ogre::SkeletonPtr null_skeleton;
                 null_skeleton.setNull();
-                file_s.GetData(skeleton_length, offset_to_bones, number_of_bones, null_skeleton);
+                file_s.GetData( skeleton_length, offset_to_bones, number_of_bones, null_skeleton );
             }
         }
     }
@@ -176,58 +176,57 @@ BsxFile::GetModel(Ogre::Entity* entity, const s8 character_id, const Unit& unit,
 
     // animations
     u32 offset_to_animations = offset_to_field_model_description + GetU16LE(offset_to_field_model_description + 0x4) + number_of_bones * 4 + number_of_parts * 0x20;
-    //LOGGER->Log(LOGGER_INFO, "offset_to_animations %08x", offset_to_animations);
-    AnimationFile file(this);
-    file.GetData(skeleton_length, unit, offset_to_animations, number_of_animations, start_animation, skeleton);
+    AnimationFile file( this );
+    file.GetData( skeleton_length, unit, offset_to_animations, number_of_animations, start_animation, skeleton );
 
 
 
     Ogre::SkeletonSerializer skeleton_serializer;
-    skeleton_serializer.exportSkeleton(skeleton.getPointer(), "exported/models/field/units/" + unit.name + ".skeleton");
+    skeleton_serializer.exportSkeleton( skeleton.getPointer(), "exported/models/ffvii/field/units/" + unit.name + ".skeleton" );
 
     if (entity == NULL)
     {
         // Update bounds
-        Ogre::AxisAlignedBox aabb(-999, -999, -999, 999, 999, 999);
-        mesh->_setBounds(aabb, false);
-        mesh->_setBoundingSphereRadius(999);
+        Ogre::AxisAlignedBox aabb( -999, -999, -999, 999, 999, 999 );
+        mesh->_setBounds( aabb, false );
+        mesh->_setBoundingSphereRadius( 999 );
 
-        mesh->setSkeletonName( "models/field/units/" + unit.name + ".skeleton");
+        mesh->setSkeletonName( "models/ffvii/field/units/" + unit.name + ".skeleton" );
 
         Ogre::MeshSerializer ser;
-        ser.exportMesh(mesh.getPointer(), "exported/models/field/units/" + unit.name + ".mesh");
+        ser.exportMesh( mesh.getPointer(), "exported/models/ffvii/field/units/" + unit.name + ".mesh" );
 
 
 
         // create and export textures for model
-        CreateTexture(unit.name, dat.face_id, textures);
+        CreateTexture( unit.name, dat.face_id, textures );
 
 
 
-        Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("model/field/" + unit.name, "General");
-        Ogre::Technique* tech = material->getTechnique(0);
-        Ogre::Pass* pass1 = tech->getPass(0);
-        pass1->setVertexColourTracking(Ogre::TVC_AMBIENT);
-        pass1->setCullingMode(Ogre::CULL_NONE);
+        Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create( "ffvii/model/field/" + unit.name, "General" );
+        Ogre::Technique* tech = material->getTechnique( 0 );
+        Ogre::Pass* pass1 = tech->getPass( 0 );
+        pass1->setVertexColourTracking( Ogre::TVC_AMBIENT );
+        pass1->setCullingMode( Ogre::CULL_NONE );
         Ogre::Pass* pass2 = tech->createPass();
-        pass2->setCullingMode(Ogre::CULL_NONE);
-        pass2->setAlphaRejectFunction(Ogre::CMPF_GREATER);
-        pass2->setAlphaRejectValue(0);
+        pass2->setCullingMode( Ogre::CULL_NONE );
+        pass2->setAlphaRejectFunction( Ogre::CMPF_GREATER );
+        pass2->setAlphaRejectValue( 0 );
         Ogre::TextureUnitState* tex = pass2->createTextureUnitState();
-        if (dat.face_id != 0x21)
+        if( dat.face_id != 0x21 )
         {
-            tex->setTextureScroll (0.0625, 0);
+            tex->setTextureScroll( 0.0625, 0 );
         }
-        tex->setTextureName( "models/field/units/" + unit.name + ".png");
-        tex->setNumMipmaps(0);
-        tex->setTextureFiltering(Ogre::TFO_NONE);
+        tex->setTextureName( "models/ffvii/field/units/" + unit.name + ".png" );
+        tex->setNumMipmaps( 0 );
+        tex->setTextureFiltering( Ogre::TFO_NONE );
         Ogre::MaterialSerializer mat;
-        mat.exportMaterial(material, "exported/models/field/units/" + unit.name + ".material");
+        mat.exportMaterial( material, "exported/models/ffvii/field/units/" + unit.name + ".material" );
 
 
 
         Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
-        Ogre::Entity* thisEntity = scene_manager->createEntity( unit.name, "models/field/units/" + unit.name + ".mesh" );
+        Ogre::Entity* thisEntity = scene_manager->createEntity( unit.name, "models/ffvii/field/units/" + unit.name + ".mesh" );
         //thisEntity->setDisplaySkeleton(true);
         //thisEntity->setDebugDisplayEnabled(true);
         thisEntity->setVisible( false );
@@ -284,7 +283,7 @@ BsxFile::CreateTexture( const Ogre::String& name, const int face_id, const Vecto
 
     Ogre::Image image;
     image.loadDynamicImage((Ogre::uchar*)pb.data, tex_width, tex_height, Ogre::PF_R8G8B8A8);
-    image.save("exported/models/field/units/" + name + ".png");
+    image.save( "exported/models/ffvii/field/units/" + name + ".png" );
     buffer->unlock();
 
     return;

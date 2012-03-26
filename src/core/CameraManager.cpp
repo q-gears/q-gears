@@ -31,11 +31,6 @@ CameraManager::CameraManager():
     m_Viewport = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->addViewport( m_Camera, 0 );
     m_Viewport->setBackgroundColour( Ogre::ColourValue( 0, 0, 0 ) );
     m_Camera->setAspectRatio( Ogre::Real( m_Viewport->getActualWidth() ) / Ogre::Real( m_Viewport->getActualHeight() ) );
-
-    m_Camera->setCustomViewMatrix( true, Ogre::StringConverter::parseMatrix4( "0.999756 0.005127 -0.000244 -0.905183 -0.005127 1.000000 0.014160 19.683437 0.000244 -0.013916 1.000000 -1322.251221 0.000000 0.000000 0.000000 1.000000" ) );
-    m_Camera->setCustomProjectionMatrix( true, Ogre::StringConverter::parseMatrix4( "2.731250 0.000000 0.000000 0.000000 0.000000 3.901786 0.062500 0.000000 0.000000 0.000000 -1.000020 -2.000020 0.000000 0.000000 -1.000000 0.000000" ) );
-    m_Camera->setCustomViewMatrix( false );
-    m_Camera->setCustomProjectionMatrix( false );
 }
 
 

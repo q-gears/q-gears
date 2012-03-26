@@ -30,6 +30,12 @@ To Do
 
 
 
+2011-03-27
+----------
+* [Background] Add camera settings export. [Akari]
+* [Content] Move FFVII models to separate folder. [Akari]
+* [System] Add read quaternion from xml. [Akari]
+
 2011-03-20
 ----------
 * [Background] Add clearing of background on map reload. [Akari]

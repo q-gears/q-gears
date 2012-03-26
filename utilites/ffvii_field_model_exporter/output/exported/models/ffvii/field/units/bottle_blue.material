@@ -1,0 +1,26 @@
+
+material ffvii/model/field/bottle_blue
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+			cull_hardware none
+		}
+
+		pass
+		{
+			alpha_rejection greater 0
+			cull_hardware none
+
+			texture_unit
+			{
+				texture models/ffvii/field/units/bottle_blue.png 0
+				filtering point point none
+			}
+		}
+
+	}
+
+}

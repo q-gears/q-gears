@@ -39,11 +39,13 @@ XmlBackground2DFile::Load()
     {
         background->SetImage( image );
 
-        Ogre::Matrix4 view_matrix = GetMatrix4( node, "view_matrix", Ogre::Matrix4::IDENTITY );
-        Ogre::Matrix4 projection_matrix = GetMatrix4( node, "projection_matrix", Ogre::Matrix4::IDENTITY );
+        Ogre::Vector3 position = GetVector3( node, "position", Ogre::Vector3::ZERO );
+        Ogre::Quaternion orientation = GetQuaternion( node, "orientation", Ogre::Quaternion::IDENTITY );
+        float fov = GetFloat( node, "fov", 90 );
 
-        CameraManager::getSingleton().GetCurrentCamera()->setCustomProjectionMatrix( true, projection_matrix );
-        CameraManager::getSingleton().GetCurrentCamera()->setCustomViewMatrix( true, view_matrix );
+        CameraManager::getSingleton().GetCurrentCamera()->setPosition( position );
+        CameraManager::getSingleton().GetCurrentCamera()->setOrientation( orientation );
+        CameraManager::getSingleton().GetCurrentCamera()->setFOVy( Ogre::Radian( Ogre::Degree( fov ) ) );
 
         node = node->FirstChild();
         while( node != NULL )
@@ -58,7 +60,7 @@ XmlBackground2DFile::Load()
                     Ogre::Vector2 destination = GetVector2( node, "destination", Ogre::Vector2::ZERO );
                     Ogre::Vector2 uv1 = GetVector2( node, "uv1", Ogre::Vector2::ZERO );
                     Ogre::Vector2 uv2 = GetVector2( node, "uv2", Ogre::Vector2::ZERO );
-                    float depth = GetFloat( node, "depth", 0 );
+                    float depth = 1/*GetFloat( node, "depth", 0 )*/;
 
                     background->AddTile( destination.x, destination.y, width, height, depth, uv1.x, uv1.y, uv2.x, uv2.y );
                 }

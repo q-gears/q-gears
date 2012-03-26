@@ -238,7 +238,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
     std::sort( m_Dialogs.begin(), m_Dialogs.end() );
     m_Dialogs.erase( std::unique( m_Dialogs.begin(), m_Dialogs.end()), m_Dialogs.end() );
 
-    Logger* export_text = new Logger( export_path + "maps/field/" + field.name + "_text.txt" );
+    Logger* export_text = new Logger( export_path + "maps/ffvii_field/" + field.name + "_text.txt" );
 
     // get sector 1 offset (scripts and dialog)
     u32 offset_to_sector  = 0x1C;
@@ -553,7 +553,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
 void
 DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 {
-    Logger* export_script = new Logger( export_path + "maps/field/" + field.name + "_script.txt" );
+    Logger* export_script = new Logger( export_path + "maps/ffvii_field/" + field.name + "_script.txt" );
 
     // get sector 1 offset (scripts and dialog)
     u32 start_address = GetU32LE( 0 );
@@ -2521,62 +2521,6 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 
 
 void
-DatFile::DumpWalkmeshData( const Ogre::String& export_path, const Field& field )
-{
-    Logger* export_script = new Logger( export_path + "/maps/field/" + field.name + "_wm.xml" );
-    export_script->Log( "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<walkmesh>\n" );
-
-    // get sector 2 offset (walkmesh)
-    u32 offset_to_walkmesh = 0x1C + GetU32LE( 0x04 ) - GetU32LE( 0x00 );
-    u32 number_of_poly = GetU32LE( offset_to_walkmesh );
-
-    int start_walkmesh = offset_to_walkmesh + 0x04;
-    int start_access   = offset_to_walkmesh + 0x04 + number_of_poly * 0x18;
-
-    Ogre::Vector3 A, B, C;
-
-    for( u32 i = 0; i < number_of_poly; ++i )
-    {
-        A.x = static_cast< s16 >( GetU16LE( start_walkmesh + 0x00 ) ) / 128.0f;
-        A.y = static_cast< s16 >( GetU16LE( start_walkmesh + 0x02 ) ) / 128.0f;
-        A.z = static_cast< s16 >( GetU16LE( start_walkmesh + 0x04 ) ) / 128.0f;
-
-        B.x = static_cast< s16 >( GetU16LE( start_walkmesh + 0x08 ) ) / 128.0f;
-        B.y = static_cast< s16 >( GetU16LE( start_walkmesh + 0x0A ) ) / 128.0f;
-        B.z = static_cast< s16 >( GetU16LE( start_walkmesh + 0x0C ) ) / 128.0f;
-
-        C.x = static_cast< s16 >( GetU16LE( start_walkmesh + 0x10 ) ) / 128.0f;
-        C.y = static_cast< s16 >( GetU16LE( start_walkmesh + 0x12 ) ) / 128.0f;
-        C.z = static_cast< s16 >( GetU16LE( start_walkmesh + 0x14 ) ) / 128.0f;
-
-        export_script->Log(
-            "    <triangle a=\"" +
-            Ogre::StringConverter::toString( A ) +
-            "\" b=\"" +
-            Ogre::StringConverter::toString( B ) +
-            "\" c=\"" +
-            Ogre::StringConverter::toString( C ) +
-            "\" a_b=\"" +
-            ToIntString( ( s16 )GetU16LE( start_access + 0x00 ) ) +
-            "\" b_c=\"" +
-            ToIntString( ( s16 )GetU16LE( start_access + 0x02 ) ) +
-            "\" c_a=\"" +
-            ToIntString( ( s16 )GetU16LE( start_access + 0x04 ) ) +
-            "\"/>\n"
-        );
-
-        // go to the next triangle
-        start_walkmesh += 0x18;
-        start_access   += 0x06;
-    }
-
-    export_script->Log( "</walkmesh>" );
-    delete export_script;
-}
-
-
-
-void
 DatFile::DumpSoundOpcodesData( const Ogre::String& export_file )
 {
     std::sort( m_SoundOpcodes.begin(), m_SoundOpcodes.end() );
@@ -2820,82 +2764,48 @@ DatFile::OffsetString(int val)
 
 
 void
-DatFile::GetCameraMatrix( Ogre::Matrix4& view_matrix, Ogre::Matrix4& projection_matrix )
+DatFile::GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre::Degree& fov )
 {
-/*
-    // get sector 4 offset (camera)
-    u32 offset_to_camera = 0x1C + GetU32LE(0x0C) - GetU32LE(0x00);
-    if (CONFIG->mDumpSpecificGameData == true)
-    {
-        LOGGER->Log(LOGGER_INFO, "Offset to Camera section: 0x%08x", offset_to_camera);
-    }
+    // sector 4
+    u32 offset_to_camera = 0x1c + GetU32LE( 0x0c ) - GetU32LE( 0x00 );
+    LOGGER->Log( "offset_to_camera = " + ToHexString( offset_to_camera, 8, '0' ) + "\n" );
 
     // get camera matrix (3 vectors)
-    float vxx = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x00))) * 0.000244140625f; // divide by 4096
-    float vxy = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x02))) * 0.000244140625f; // divide by 4096
-    float vxz = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x04))) * 0.000244140625f; // divide by 4096
-
-    float vyx = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x06))) * 0.000244140625f; // divide by 4096
-    float vyy = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x08))) * 0.000244140625f; // divide by 4096
-    float vyz = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x0A))) * 0.000244140625f; // divide by 4096
-
-    float vzx = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x0C))) * 0.000244140625f; // divide by 4096
-    float vzy = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x0E))) * 0.000244140625f; // divide by 4096
-    float vzz = static_cast<float>(-static_cast<s16>(GetU16LE(offset_to_camera + 0x12))) * 0.000244140625f; // divide by 4096
-
+    Ogre::Matrix3 matrix;
+    matrix[ 0 ][ 0 ] = ( s16 )GetU16LE( offset_to_camera + 0x00 ) / 4096.0f;
+    matrix[ 1 ][ 0 ] = ( s16 )GetU16LE( offset_to_camera + 0x02 ) / 4096.0f;
+    matrix[ 2 ][ 0 ] = ( s16 )GetU16LE( offset_to_camera + 0x04 ) / 4096.0f;
+    matrix[ 0 ][ 1 ] = ( s16 )GetU16LE( offset_to_camera + 0x06 ) / 4096.0f;
+    matrix[ 1 ][ 1 ] = ( s16 )GetU16LE( offset_to_camera + 0x08 ) / 4096.0f;
+    matrix[ 2 ][ 1 ] = ( s16 )GetU16LE( offset_to_camera + 0x0a ) / 4096.0f;
+    matrix[ 0 ][ 2 ] = ( s16 )GetU16LE( offset_to_camera + 0x0c ) / 4096.0f;
+    matrix[ 1 ][ 2 ] = ( s16 )GetU16LE( offset_to_camera + 0x0e ) / 4096.0f;
+    matrix[ 2 ][ 2 ] = ( s16 )GetU16LE( offset_to_camera + 0x12 ) / 4096.0f;
     // get camera position in camera space
-    s32 ox  = -(s32)(GetU32LE(offset_to_camera + 0x14));
-    s32 oy  = -(s32)(GetU32LE(offset_to_camera + 0x18));
-    s32 oz  = -(s32)(GetU32LE(offset_to_camera + 0x1C));
+    position.x  = -( s32 )GetU32LE( offset_to_camera + 0x14 ) / 128.0f;
+    position.y  = -( s32 )GetU32LE( offset_to_camera + 0x18 ) / 128.0f;
+    position.z  = -( s32 )GetU32LE( offset_to_camera + 0x1c ) / 128.0f;
 
-    float distance = GetU16LE(offset_to_camera + 0x24);
+    orientation.FromRotationMatrix( matrix );
+    position = orientation * position;
+    matrix[ 0 ][ 0 ] = matrix[ 0 ][ 0 ];
+    matrix[ 1 ][ 0 ] = matrix[ 1 ][ 0 ];
+    matrix[ 2 ][ 0 ] = matrix[ 2 ][ 0 ];
+    matrix[ 0 ][ 1 ] = -matrix[ 0 ][ 1 ];
+    matrix[ 1 ][ 1 ] = -matrix[ 1 ][ 1 ];
+    matrix[ 2 ][ 1 ] = -matrix[ 2 ][ 1 ];
+    matrix[ 0 ][ 2 ] = -matrix[ 0 ][ 2 ];
+    matrix[ 1 ][ 2 ] = -matrix[ 1 ][ 2 ];
+    matrix[ 2 ][ 2 ] = -matrix[ 2 ][ 2 ];
+    orientation.FromRotationMatrix( matrix );
 
-    // camera matrix
-    Matrix mat(-vxx, vyx, vzx, 0,
-               -vxy, vyy, vzy, 0,
-               -vxz, vyz, vzz, 0,
-                0,   0,   0,   1);
-    camera.SetFieldCamera(mat);
-    camera.SetFieldOrigin(Vector3(ox, oy, oz));
+    float distance = GetU16LE( offset_to_camera + 0x24 );
+    fov = Ogre::Degree( Ogre::Radian( 2 * atanf( 240.0f / ( 2.0f * distance ) ) ) );
 
-
-
-    // projection matrix
-    float aspect = (float)CONFIG->GAME_WIDTH / (float)CONFIG->GAME_HEIGHT;
-    float angley = atanf((CONFIG->GAME_HEIGHT * 0.5f) / distance) * 2.0f;
-    float znear  = 1;
-    float zfar   = 100000;
-
-    float ymax   =  znear * tanf(angley / 2);
-    float ymin   = -ymax;
-    float xmin   =  ymin * aspect;
-    float xmax   =  ymax * aspect;
-
-    camera.SetFieldProjection(xmax, xmin, ymax, ymin);
-
-    xmlTextWriterPtr writer;
-    writer = xmlNewTextWriterFilename("camera.xml", 0);
-    xmlTextWriterSetIndent(writer, 1);
-    xmlTextWriterSetIndentString(writer, BAD_CAST "    ");
-    xmlTextWriterStartDocument(writer, NULL, "ISO-8859-1", NULL);
-    xmlTextWriterStartElement(writer, BAD_CAST "camera");
-    xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "position", "%f %f %f", -ox / 4096.0f, -oy / 4096.0f, -oz / 4096.0f);
-    xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "distance", "%f", distance);
-    xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "matrix", "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f", -vxx, -vyx, -vzx, 0, -vxy, -vyy, -vzy, 0, -vxz, -vyz, -vzz, 0, 0, 0, 0, 1);
-    xmlTextWriterEndElement(writer);
-    xmlTextWriterEndDocument(writer);
-    xmlFreeTextWriter(writer);
-
-    if (CONFIG->mDumpSpecificGameData == true)
-    {
-        LOGGER->Log(LOGGER_INFO, "Field camera vectors:              vxx = %f, vxy = %f, vxz = %f", vxx, vxy, vxz);
-        LOGGER->Log(LOGGER_INFO, "                                   vyx = %f, vyy = %f, vyz = %f", vyx, vyy, vyz);
-        LOGGER->Log(LOGGER_INFO, "                                   vzx = %f, vzy = %f, vzz = %f", vzx, vzy, vzz);
-        LOGGER->Log(LOGGER_INFO, "Camera position (in camera space): ox = %d, oy = %d, oz = %d", ox, oy, oz);
-        LOGGER->Log(LOGGER_INFO, "Camera distance:                   distance = %f", distance);
-        LOGGER->Log(LOGGER_INFO, "Unknown (depth que?):              DQB = %08x, DQA = %04x", GetU32LE(offset_to_camera + 0x20), GetU16LE(offset_to_camera + 0x26));
-    }
-*/
+    LOGGER->Log( "Field camera matrix : " + Ogre::StringConverter::toString( matrix ) + "\n" );
+    LOGGER->Log( "Camera position     : " + Ogre::StringConverter::toString( position ) + "\n" );
+    LOGGER->Log( "Camera distance:      distance = " + ToFloatString( distance ) + "\n");
+    LOGGER->Log( "Unknown (depth que?): DQB = " + ToHexString( GetU32LE( offset_to_camera + 0x20 ), 8, '0' ) + ", DQA = " + ToHexString( GetU16LE( offset_to_camera + 0x26 ), 4, '0' ) + "\n" );
 }
 
 
@@ -2903,15 +2813,17 @@ DatFile::GetCameraMatrix( Ogre::Matrix4& view_matrix, Ogre::Matrix4& projection_
 void
 DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim )
 {
-    Logger* export_text = new Logger( export_path + "maps/field/" + field.name + "_bg.xml" );
+    Logger* export_text = new Logger( export_path + "maps/ffvii_field/" + field.name + "_bg.xml" );
 
     int width = field.tex_width;
     int height = field.tex_height;
 
-    Ogre::Matrix4 view_matrix, projection_matrix;
-    GetCameraMatrix( view_matrix, projection_matrix );
+    Ogre::Vector3 position = Ogre::Vector3::ZERO;
+    Ogre::Quaternion orientation = Ogre::Quaternion::IDENTITY;
+    Ogre::Degree fov = Ogre::Degree( 90 );
+    GetCamera( position, orientation, fov );
 
-    export_text->Log( "<background2d image=\"maps/field/" + field.name + ".png\" view_matrix=\"" + Ogre::StringConverter::toString( view_matrix ) + "\"  projection_matrix=\"" + Ogre::StringConverter::toString( projection_matrix ) + "\">\n" );
+    export_text->Log( "<background2d image=\"maps/ffvii_field/" + field.name + ".png\" position=\"" + Ogre::StringConverter::toString( position ) + "\" orientation=\"" + Ogre::StringConverter::toString( orientation ) + "\" fov=\"" + Ogre::StringConverter::toString( fov ) + "\" >\n" );
 
     full_image = CreateSurface( width, height );
     x_32 = 0; y_32 = 0;
@@ -2920,7 +2832,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
     // sector 3
     u32 offset_to_background = 0x1c + GetU32LE( 0x08 ) - GetU32LE( 0x00 );
-    LOGGER->Log( "offset_to_background = " + ToHexString( offset_to_background, 8, '0' ) + "\n" );
+    //LOGGER->Log( "offset_to_background = " + ToHexString( offset_to_background, 8, '0' ) + "\n" );
 
     u32 offset_to_1 = offset_to_background + 0x10;
     u32 offset_to_2 = offset_to_background + GetU32LE( offset_to_background + 0x00 );
@@ -2942,7 +2854,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     u8  g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
     u8  g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
     s3 += 0x02;
-    LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
+    //LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
 
 
 
@@ -2955,7 +2867,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
             g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
             s3 += 0x02;
-            LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
+            //LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
             s1 += 0x06;
         }
         if( GetU16LE( s1 ) == 0x7fff )
@@ -2975,7 +2887,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             u16 clut_y = ( GetU16LE( s2 + 0x06 ) & 0xffc0 ) >> 6;
             u16 clut_x = ( GetU16LE( s2 + 0x06 ) & 0x003f ) << 4;
 
-            LOGGER->Log( "Add layer 1 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + ")\n" );
+            //LOGGER->Log( "Add layer 1 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + ")\n" );
             AddTile( 0, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 999, 0, 0, 0, mim, export_text );
             s2 += 0x08;
         }
@@ -3009,7 +2921,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             u8  animation =   GetU8( s4 + 0x0c ) & 0x0f;
             u8  index     =   GetU8( s4 + 0x0d );
 
-            LOGGER->Log( "Add layer 2 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Depth " + ToIntString( distance ) + ". Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s4 + 0x0c), 4, '0' ) + "\n" );
+            //LOGGER->Log( "Add layer 2 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Depth " + ToIntString( distance ) + ". Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s4 + 0x0c), 4, '0' ) + "\n" );
             AddTile( 1, dest_x, dest_y, src_x, src_y, clut_x, clut_y, bpp, page_x, page_y, distance, blending, animation, index, mim, export_text );
             s4 += 0x0e;
         }
@@ -3026,7 +2938,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
             g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
             s3 += 0x02;
-            LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
+            //LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
             s1 += 0x06;
         }
         if( GetU16LE( s1 ) == 0x7fff )
@@ -3047,7 +2959,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             u16 clut_x    = ( GetU16LE( s5 + 0x06 ) & 0x003f ) << 4;
             u8  animation =   GetU8( s5 + 0x08 ) & 0x0f;
             u8  index     =   GetU8( s5 + 0x09 );
-            LOGGER->Log( "Add layer 3 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
+            //LOGGER->Log( "Add layer 3 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
             AddTile( 2, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim, export_text );
             s5 += 0x0a;
         }
@@ -3065,7 +2977,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
             g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
             s3 += 0x02;
-            LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
+            //LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
             s1 += 0x06;
         }
         if( GetU16LE( s1 ) == 0x7fff )
@@ -3086,7 +2998,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             u8  animation =   GetU8( s5 + 0x08 ) & 0x0f;
             u8  index     =   GetU8( s5 + 0x09 );
 
-            LOGGER->Log( "Add layer 4 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
+            //LOGGER->Log( "Add layer 4 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
             AddTile( 3, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim, export_text );
             s5 += 0x0a;
         }
@@ -3114,7 +3026,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
     Ogre::Image image;
     image.loadDynamicImage( ( Ogre::uchar* )pb.data, width, height, Ogre::PF_R8G8B8A8 );
-    image.save( export_path + "maps/field/" + field.name + ".png" );
+    image.save( export_path + "maps/ffvii_field/" + field.name + ".png" );
     buffer->unlock();
     Ogre::TextureManager::getSingleton().remove( "DynaTex" );
 
@@ -3225,4 +3137,60 @@ DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const
     );
 
     delete sub_image;
+}
+
+
+
+void
+DatFile::DumpWalkmeshData( const Ogre::String& export_path, const Field& field )
+{
+    Logger* export_script = new Logger( export_path + "/maps/ffvii_field/" + field.name + "_wm.xml" );
+    export_script->Log( "<walkmesh>\n" );
+
+    // get sector 2 offset (walkmesh)
+    u32 offset_to_walkmesh = 0x1C + GetU32LE( 0x04 ) - GetU32LE( 0x00 );
+    u32 number_of_poly = GetU32LE( offset_to_walkmesh );
+
+    int start_walkmesh = offset_to_walkmesh + 0x04;
+    int start_access   = offset_to_walkmesh + 0x04 + number_of_poly * 0x18;
+
+    Ogre::Vector3 A, B, C;
+
+    for( u32 i = 0; i < number_of_poly; ++i )
+    {
+        A.x = ( s16 )GetU16LE( start_walkmesh + 0x00 ) / 128.0f;
+        A.y = ( s16 )GetU16LE( start_walkmesh + 0x02 ) / 128.0f;
+        A.z = ( s16 )GetU16LE( start_walkmesh + 0x04 ) / 128.0f;
+
+        B.x = ( s16 )GetU16LE( start_walkmesh + 0x08 ) / 128.0f;
+        B.y = ( s16 )GetU16LE( start_walkmesh + 0x0A ) / 128.0f;
+        B.z = ( s16 )GetU16LE( start_walkmesh + 0x0C ) / 128.0f;
+
+        C.x = ( s16 )GetU16LE( start_walkmesh + 0x10 ) / 128.0f;
+        C.y = ( s16 )GetU16LE( start_walkmesh + 0x12 ) / 128.0f;
+        C.z = ( s16 )GetU16LE( start_walkmesh + 0x14 ) / 128.0f;
+
+        export_script->Log(
+            "    <triangle a=\"" +
+            Ogre::StringConverter::toString( A ) +
+            "\" b=\"" +
+            Ogre::StringConverter::toString( B ) +
+            "\" c=\"" +
+            Ogre::StringConverter::toString( C ) +
+            "\" a_b=\"" +
+            ToIntString( ( s16 )GetU16LE( start_access + 0x00 ) ) +
+            "\" b_c=\"" +
+            ToIntString( ( s16 )GetU16LE( start_access + 0x02 ) ) +
+            "\" c_a=\"" +
+            ToIntString( ( s16 )GetU16LE( start_access + 0x04 ) ) +
+            "\"/>\n"
+        );
+
+        // go to the next triangle
+        start_walkmesh += 0x18;
+        start_access   += 0x06;
+    }
+
+    export_script->Log( "</walkmesh>" );
+    delete export_script;
 }

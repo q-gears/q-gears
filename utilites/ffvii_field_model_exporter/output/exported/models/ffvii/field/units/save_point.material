@@ -1,0 +1,26 @@
+
+material ffvii/model/field/save_point
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+			cull_hardware none
+		}
+
+		pass
+		{
+			alpha_rejection greater 0
+			cull_hardware none
+
+			texture_unit
+			{
+				texture models/ffvii/field/units/save_point.png 0
+				filtering point point none
+			}
+		}
+
+	}
+
+}

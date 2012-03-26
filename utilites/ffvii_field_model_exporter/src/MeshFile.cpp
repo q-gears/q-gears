@@ -65,10 +65,10 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
             u16 offset_to_vertex = offset_to_vertexes + j * 0x08;
 
             Ogre::Vector3 point;
-            point.x = -static_cast<float>(static_cast<s16>(GetU16LE(offset_to_vertex + 4 + 0x00)));
-            point.z = -static_cast<float>(static_cast<s16>(GetU16LE(offset_to_vertex + 4 + 0x02)));
-            point.y = -static_cast<float>(static_cast<s16>(GetU16LE(offset_to_vertex + 4 + 0x04)));
-            vertexes.push_back(point / 1024);
+            point.x = -( s16 )GetU16LE( offset_to_vertex + 4 + 0x00 );
+            point.z = -( s16 )GetU16LE( offset_to_vertex + 4 + 0x02 );
+            point.y = -( s16 )GetU16LE( offset_to_vertex + 4 + 0x04 );
+            vertexes.push_back( point / 1024.0f );
         }
 
         u8  number_of_quad_t      = GetU8(offset_to_part + 0x04);
@@ -83,7 +83,7 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
 
 
         Ogre::SubMesh* sub_mesh = mesh->createSubMesh(Ogre::StringConverter::toString(i));
-        sub_mesh->setMaterialName("model/field/" + name);
+        sub_mesh->setMaterialName( "ffvii/model/field/" + name );
         sub_mesh->useSharedVertices = false;
         sub_mesh->operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
 
@@ -664,15 +664,15 @@ MeshFile::AddTexture(TexForGenBsx& texture, VectorTexForGenBsx& textures)
     texture.texture_y = vram_y;
     texture.palette_x = clut_x;
     texture.palette_y = clut_y;
-    texture.bpp = bpp;
+    texture.bpp = ( BPP )bpp;
     texture.type = type;
 
-    for (int i = 0; i < textures.size(); i++)
+    for( int i = 0; i < textures.size(); i++ )
     {
-        if (texture == textures[i])
+        if( texture == textures[ i ] )
         {
-            texture.start_x = textures[i].start_x;
-            texture.start_y = textures[i].start_y;
+            texture.start_x = textures[ i ].start_x;
+            texture.start_y = textures[ i ].start_y;
             return;
         }
     }
