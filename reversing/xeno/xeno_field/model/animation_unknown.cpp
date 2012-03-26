@@ -26,301 +26,192 @@ if( T4 != 0 )
 
                 801DDC84	jr     v0 
 
-8CDC1D80 0
 
-                801DDC8C	lw     a0, $0008(s0)
-                801DDC90	andi   v0, fp, $0010
-                801DDC94	bne    v0, zero, L1ddcbc [$801ddcbc]
-                801DDC98	andi   v0, fp, $0020
-                801DDC9C	lhu    v0, $0000(a0)
-                801DDCA0	nop
-                801DDCA4	sh     v0, $0050(s1)
-                801DDCA8	lw     v0, $0008(s0)
-                801DDCAC	addiu  a0, a0, $0002
-                801DDCB0	addiu  v0, v0, $0002
-                801DDCB4	sw     v0, $0008(s0)
-                801DDCB8	andi   v0, fp, $0020
 
-                L1ddcbc:	; 801DDCBC
-                801DDCBC	bne    v0, zero, L1ddce4 [$801ddce4]
+                case 0: // 8CDC1D80
+                {
+                    if( ( FP & 10 ) == 0 )
+                    {
+                        A0 = w[S0 + 8];
+                        [S1 + 50] = h(hu[A0 + 0]); // X
+                        [S0 + 8] = w(A0 + 2);
+                    }
+                    if( ( FP & 20 ) == 0 )
+                    {
+                        A0 = w[S0 + 8];
+                        [S1 + 52] = h(hu[A0 + 0]); // Y
+                        [S0 + 8] = w(A0 + 2);
+                    }
+                    if( ( FP & 40 ) == 0 )
+                    {
+                        A0 = w[S0 + 8];
+                        [S1 + 54] = h(hu[A0 + 0]); // Z
+                        [S0 + 8] = w(A0 + 2);
+                    }
+                    801DDEB0	j      L1de308 [$801de308]
+                }
+                break;
 
-                L1ddcc0:	; 801DDCC0
-                801DDCC0	andi   v0, fp, $0040
-                801DDCC4	lhu    v0, $0000(a0)
 
-                L1ddcc8:	; 801DDCC8
-                801DDCC8	nop
 
-                L1ddccc:	; 801DDCCC
-                801DDCCC	sh     v0, $0052(s1)
+                case 1: // F8DC1D80
+                {
+                    if( ( FP & 10 ) == 0 )
+                    {
+                        V1 = w[S0 + 8];
 
-                L1ddcd0:	; 801DDCD0
-                801DDCD0	lw     v0, $0008(s0)
+                        A0 = b[V1 + 0];
+                        if( A0 != -80 )
+                        {
+                            [S1 + 50] = h(hu[S1 + 50] + A0);
+                            [S0 + 8] = w(V1 + 1);
+                        }
+                        else
+                        {
+                            [S1 + 50] = h(bu[V1 + 1] | (b[V1 + 2] << 8));
+                            [S0 + 8] = w(V1 + 3);
+                        }
+                    }
 
-                L1ddcd4:	; 801DDCD4
-                801DDCD4	addiu  a0, a0, $0002
-                801DDCD8	addiu  v0, v0, $0002
+                    if( ( FP & 20 ) == 0 )
+                    {
+                        V1 = w[S0 + 8];
 
-                L1ddcdc:	; 801DDCDC
-                801DDCDC	sw     v0, $0008(s0)
+                        A0 = b[V1 + 0];
+                        if( A0 != -80 )
+                        {
+                            [S1 + 52] = h(hu[S1 + 52] + A0);
+                            [S0 + 8] = w(V1 + 1);
+                        }
+                        else
+                        {
+                            [S1 + 52] = h(bu[V1 + 1] | (b[V1 + 2] << 8));
+                            [S0 + 8] = w(V1 + 3);
+                        }
+                    }
 
-                L1ddce0:	; 801DDCE0
-                801DDCE0	andi   v0, fp, $0040
+                    if( ( FP & 40 ) == 0 )
+                    {
+                        V1 = w[S0 + 8];
 
-                L1ddce4:	; 801DDCE4
-                801DDCE4	bne    v0, zero, L1de308 [$801de308]
-                801DDCE8	nop
-                801DDCEC	lhu    v0, $0000(a0)
-                801DDCF0	j      L1ddea4 [$801ddea4]
-                801DDCF4	sh     v0, $0054(s1)
+                        A0 = b[V1 + 0];
+                        if( A0 != -80 )
+                        {
+                            [S1 + 54] = h(hu[S1 + 52] + A0);
+                            [S0 + 8] = w(V1 + 1);
+                        }
+                        else
+                        {
+                            [S1 + 54] = h(bu[V1 + 1] | (b[V1 + 2] << 8));
+                            [S0 + 8] = w(V1 + 3);
+                        }
+                    }
 
-F8DC1D80 1
+                    801DDE18	j      L1de308 [$801de308]
+                }
+                break;
 
-                801DDCF8	andi   v0, fp, $0010
-                801DDCFC	bne    v0, zero, L1ddd5c [$801ddd5c]
-                801DDD00	andi   v0, fp, $0020
-                801DDD04	lw     v1, $0008(s0)
-                801DDD08	nop
 
-                L1ddd0c:	; 801DDD0C
-                801DDD0C	addiu  v0, v1, $0001
 
-                L1ddd10:	; 801DDD10
-                801DDD10	sw     v0, $0008(s0)
-                801DDD14	lb     a0, $0000(v1)
-                801DDD18	addiu  v0, zero, $ff80 (=-$80)
-                801DDD1C	beq    a0, v0, L1ddd30 [$801ddd30]
-                801DDD20	nop
-                801DDD24	lhu    v0, $0050(s1)
-                801DDD28	j      L1ddd54 [$801ddd54]
-                801DDD2C	addu   v0, v0, a0
+                case 2: // 20DE1D80
+                {
+                    if( ( FP & 10 ) == 0 )
+                    {
+                        A0 = w[S0 + 8];
+                        [S1 + 50] = h(hu[S1 + 50] + hu[A0 + 0]);
+                        [S0 + 8] = w(A0 + 2);
+                    }
+                    if( ( FP & 20 ) == 0 )
+                    {
+                        A0 = w[S0 + 8];
+                        [S1 + 52] = h(hu[S1 + 52] + hu[A0 + 0]);
+                        [S0 + 8] = w(A0 + 2);
+                    }
+                    if( ( FP & 40 ) == 0 )
+                    {
+                        A0 = w[S0 + 8];
+                        [S1 + 54] = h(hu[S1 + 54] + hu[A0 + 0]);
+                        [S0 + 8] = w(A0 + 2);
+                    }
+                    801DDEB0	j      L1de308 [$801de308]
+                }
+                break;
 
-                L1ddd30:	; 801DDD30
-                801DDD30	addiu  v0, v1, $0002
-                801DDD34	sw     v0, $0008(s0)
-                801DDD38	lbu    a0, $0001(v1)
-                801DDD3C	addiu  v0, v1, $0003
-                801DDD40	sw     v0, $0008(s0)
-                801DDD44	lb     v0, $0002(v1)
-                801DDD48	nop
 
-                L1ddd4c:	; 801DDD4C
-                801DDD4C	sll    v0, v0, $08
-
-                L1ddd50:	; 801DDD50
-                801DDD50	or     v0, a0, v0
-
-                L1ddd54:	; 801DDD54
-                801DDD54	sh     v0, $0050(s1)
-
-                L1ddd58:	; 801DDD58
-                801DDD58	andi   v0, fp, $0020
-
-                L1ddd5c:	; 801DDD5C
-                801DDD5C	bne    v0, zero, L1dddbc [$801dddbc]
-                801DDD60	andi   v0, fp, $0040
-                801DDD64	lw     v1, $0008(s0)
-                801DDD68	nop
-                801DDD6C	addiu  v0, v1, $0001
-                801DDD70	sw     v0, $0008(s0)
-                801DDD74	lb     a0, $0000(v1)
-                801DDD78	addiu  v0, zero, $ff80 (=-$80)
-                801DDD7C	beq    a0, v0, L1ddd90 [$801ddd90]
-
-                L1ddd80:	; 801DDD80
-                801DDD80	nop
-                801DDD84	lhu    v0, $0052(s1)
-                801DDD88	j      L1dddb4 [$801dddb4]
-                801DDD8C	addu   v0, v0, a0
-
-                L1ddd90:	; 801DDD90
-                801DDD90	addiu  v0, v1, $0002
-
-                L1ddd94:	; 801DDD94
-                801DDD94	sw     v0, $0008(s0)
-                801DDD98	lbu    a0, $0001(v1)
-                801DDD9C	addiu  v0, v1, $0003
-                801DDDA0	sw     v0, $0008(s0)
-                801DDDA4	lb     v0, $0002(v1)
-                801DDDA8	nop
-                801DDDAC	sll    v0, v0, $08
-                801DDDB0	or     v0, a0, v0
-
-                L1dddb4:	; 801DDDB4
-                801DDDB4	sh     v0, $0052(s1)
-                801DDDB8	andi   v0, fp, $0040
-
-                L1dddbc:	; 801DDDBC
-                801DDDBC	bne    v0, zero, L1de308 [$801de308]
-                801DDDC0	nop
-                801DDDC4	lw     v1, $0008(s0)
-                801DDDC8	nop
-
-                loop1dddcc:	; 801DDDCC
-                801DDDCC	addiu  v0, v1, $0001
-
-                L1dddd0:	; 801DDDD0
-                801DDDD0	sw     v0, $0008(s0)
-
-                L1dddd4:	; 801DDDD4
-                801DDDD4	lb     a0, $0000(v1)
-
-                L1dddd8:	; 801DDDD8
-                801DDDD8	addiu  v0, zero, $ff80 (=-$80)
-                801DDDDC	beq    a0, v0, L1dddf8 [$801dddf8]
-                801DDDE0	addiu  v0, v1, $0002
-                801DDDE4	lhu    v0, $0054(s1)
-
-                loop1ddde8:	; 801DDDE8
-                801DDDE8	nop
-                801DDDEC	addu   v0, v0, a0
-                801DDDF0	j      L1de308 [$801de308]
-                801DDDF4	sh     v0, $0054(s1)
-
-                L1dddf8:	; 801DDDF8
-                801DDDF8	sw     v0, $0008(s0)
-                801DDDFC	lbu    a0, $0001(v1)
-                801DDE00	addiu  v0, v1, $0003
-                801DDE04	sw     v0, $0008(s0)
-                801DDE08	lb     v0, $0002(v1)
-                801DDE0C	nop
-
-                L1dde10:	; 801DDE10
-                801DDE10	sll    v0, v0, $08
-                801DDE14	or     v0, a0, v0
-                801DDE18	j      L1de308 [$801de308]
-                801DDE1C	sh     v0, $0054(s1)
-
-20DE1D80 2
-
-                801DDE20	lw     a0, $0008(s0)
-                801DDE24	andi   v0, fp, $0010
-                801DDE28	bne    v0, zero, L1dde58 [$801dde58]
-                801DDE2C	andi   v0, fp, $0020
-                801DDE30	lhu    v0, $0050(s1)
-                801DDE34	lhu    v1, $0000(a0)
-                801DDE38	nop
-                801DDE3C	addu   v0, v0, v1
-                801DDE40	sh     v0, $0050(s1)
-                801DDE44	lw     v0, $0008(s0)
-                801DDE48	addiu  a0, a0, $0002
-                801DDE4C	addiu  v0, v0, $0002
-
-                loop1dde50:	; 801DDE50
-                801DDE50	sw     v0, $0008(s0)
-
-                L1dde54:	; 801DDE54
-                801DDE54	andi   v0, fp, $0020
-
-                L1dde58:	; 801DDE58
-                801DDE58	bne    v0, zero, L1dde88 [$801dde88]
-                801DDE5C	andi   v0, fp, $0040
-                801DDE60	lhu    v0, $0052(s1)
-                801DDE64	lhu    v1, $0000(a0)
-                801DDE68	nop
-                801DDE6C	addu   v0, v0, v1
-                801DDE70	sh     v0, $0052(s1)
-                801DDE74	lw     v0, $0008(s0)
-                801DDE78	addiu  a0, a0, $0002
-                801DDE7C	addiu  v0, v0, $0002
-                801DDE80	sw     v0, $0008(s0)
-
-                L1dde84:	; 801DDE84
-                801DDE84	andi   v0, fp, $0040
-
-                L1dde88:	; 801DDE88
-                801DDE88	bne    v0, zero, L1de308 [$801de308]
-                801DDE8C	nop
-
-                L1dde90:	; 801DDE90
-                801DDE90	lhu    v0, $0054(s1)
-                801DDE94	lhu    v1, $0000(a0)
-                801DDE98	nop
-                801DDE9C	addu   v0, v0, v1
-                801DDEA0	sh     v0, $0054(s1)
-
-                L1ddea4:	; 801DDEA4
-                801DDEA4	lw     v0, $0008(s0)
-                801DDEA8	nop
-                801DDEAC	addiu  v0, v0, $0002
-                801DDEB0	j      L1de308 [$801de308]
-                801DDEB4	sw     v0, $0008(s0)
 
                 case 3: // B8DE1D80
                 {
                     S6 = S0;
                     A0 = h[S0 + 10] + 1;
-                    [S1 + 50] = h(hu[S0 + 4] + ((h[S0 + a] * A0) / h[S0 + 12]));
-                    [S1 + 52] = h(hu[S0 + 6] + ((h[S0 + c] * A0) / h[S0 + 12]));
-                    [S1 + 54] = h(hu[S0 + 8] + ((h[S0 + e] * A0) / h[S0 + 12]));
+                    [S1 + 50] = h(hu[S0 + 4] + ((h[S0 + a] * A0) / h[S0 + 12])); // X
+                    [S1 + 52] = h(hu[S0 + 6] + ((h[S0 + c] * A0) / h[S0 + 12])); // Y
+                    [S1 + 54] = h(hu[S0 + 8] + ((h[S0 + e] * A0) / h[S0 + 12])); // Z
                     801DE154	j      L1de308 [$801de308]
                 }
                 break;
 
-BCDF1D80 4
 
-                801DDFBC	lh     a0, $000a(s0)
-                801DDFC0	lh     v0, $0050(s1)
-                801DDFC4	lh     a1, $0012(s0)
-                801DDFC8	subu   a0, a0, v0
-                801DDFCC	div    a0, a1
-                801DDFF4	mflo   a0
-                801DDFF8	lh     v1, $0052(s1)
-                801DDFFC	lh     v0, $000c(s0)
-                801DE000	nop
-                801DE004	subu   v0, v0, v1
-                801DE008	div    v0, a1
-                801DE030	mflo   a2
-                801DE034	lh     v0, $000e(s0)
-                801DE038	lh     v1, $0054(s1)
 
-                L1de03c:	; 801DE03C
-                801DE03C	nop
-                801DE040	subu   v0, v0, v1
-                801DE044	div    v0, a1
-                801DE06C	mflo   v1
+                case 4: // BCDF1D80
+                {
+                    801DDFBC	lh     a0, $000a(s0)
+                    801DDFC0	lh     v0, $0050(s1)
+                    801DDFC4	lh     a1, $0012(s0)
+                    801DDFC8	subu   a0, a0, v0
+                    801DDFCC	div    a0, a1
+                    801DDFF4	mflo   a0
+                    801DDFF8	lh     v1, $0052(s1)
+                    801DDFFC	lh     v0, $000c(s0)
+                    801DE000	nop
+                    801DE004	subu   v0, v0, v1
+                    801DE008	div    v0, a1
+                    801DE030	mflo   a2
+                    801DE034	lh     v0, $000e(s0)
+                    801DE038	lh     v1, $0054(s1)
+                    801DE03C	nop
+                    801DE040	subu   v0, v0, v1
+                    801DE044	div    v0, a1
+                    801DE06C	mflo   v1
+                    801DE070	addu   s6, s0, zero
+                    801DE074	addu   a3, a0, zero
+                    801DE078	sll    a0, a0, $10
+                    801DE07C	addu   t0, a2, zero
+                    801DE080	bne    a0, zero, L1de0c0 [$801de0c0]
+                    801DE084	addu   t1, v1, zero
+                    801DE088	sll    v0, a2, $10
+                    801DE08C	bne    v0, zero, L1de0c0 [$801de0c0]
+                    801DE090	sll    v0, v1, $10
+                    801DE094	bne    v0, zero, L1de0c0 [$801de0c0]
+                    801DE098	nop
+                    801DE09C	lhu    v0, $000a(s0)
+                    801DE0A0	sh     a1, $0010(s0)
+                    801DE0A4	sh     v0, $0050(s1)
+                    801DE0A8	lhu    v0, $000c(s0)
+                    801DE0AC	nop
+                    801DE0B0	sh     v0, $0052(s1)
+                    801DE0B4	lhu    v0, $000e(s0)
+                    801DE0B8	j      L1de308 [$801de308]
+                    801DE0BC	sh     v0, $0054(s1)
 
-                L1de070:	; 801DE070
-                801DE070	addu   s6, s0, zero
-                801DE074	addu   a3, a0, zero
-                801DE078	sll    a0, a0, $10
-                801DE07C	addu   t0, a2, zero
-                801DE080	bne    a0, zero, L1de0c0 [$801de0c0]
-                801DE084	addu   t1, v1, zero
-                801DE088	sll    v0, a2, $10
-                801DE08C	bne    v0, zero, L1de0c0 [$801de0c0]
-                801DE090	sll    v0, v1, $10
-                801DE094	bne    v0, zero, L1de0c0 [$801de0c0]
-                801DE098	nop
-                801DE09C	lhu    v0, $000a(s0)
+                    L1de0c0:	; 801DE0C0
+                    801DE0C0	lhu    v0, $0050(s1)
+                    801DE0C4	lhu    v1, $0054(s1)
+                    801DE0C8	addu   v0, a3, v0
+                    801DE0CC	sh     v0, $0050(s1)
+                    801DE0D0	lhu    v0, $0052(s1)
+                    801DE0D4	addu   v1, t1, v1
+                    801DE0D8	sh     v1, $0054(s1)
+                    801DE0DC	addu   v0, t0, v0
+                    801DE0E0	sh     v0, $0052(s1)
+                    801DE0E8	sh     zero, $0010(s0)
+                    801DE0E4	j      L1de308 [$801de308]
+                }
+                break;
 
-                L1de0a0:	; 801DE0A0
-                801DE0A0	sh     a1, $0010(s0)
-                801DE0A4	sh     v0, $0050(s1)
-                801DE0A8	lhu    v0, $000c(s0)
 
-                L1de0ac:	; 801DE0AC
-                801DE0AC	nop
-                801DE0B0	sh     v0, $0052(s1)
-                801DE0B4	lhu    v0, $000e(s0)
-                801DE0B8	j      L1de308 [$801de308]
-                801DE0BC	sh     v0, $0054(s1)
 
-                L1de0c0:	; 801DE0C0
-                801DE0C0	lhu    v0, $0050(s1)
-                801DE0C4	lhu    v1, $0054(s1)
-                801DE0C8	addu   v0, a3, v0
-                801DE0CC	sh     v0, $0050(s1)
-                801DE0D0	lhu    v0, $0052(s1)
-                801DE0D4	addu   v1, t1, v1
-                801DE0D8	sh     v1, $0054(s1)
-                801DE0DC	addu   v0, t0, v0
-                801DE0E0	sh     v0, $0052(s1)
-                801DE0E4	j      L1de308 [$801de308]
-                801DE0E8	sh     zero, $0010(s0)
-
-ECE01D80 5
-
+                case 5: // ECE01D80
+                {
                 801DE0EC	lhu    v1, $0004(s0)
                 801DE0F0	lhu    v0, $000a(s0)
                 801DE0F4	nop
@@ -333,8 +224,6 @@ ECE01D80 5
                 801DE110	lhu    v1, $0006(s0)
                 801DE114	lhu    v0, $000c(s0)
                 801DE118	nop
-
-                L1de11c:	; 801DE11C
                 801DE11C	addu   v1, v1, v0
 
                 loop1de120:	; 801DE120
