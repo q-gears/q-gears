@@ -28,17 +28,17 @@ ParticleSystem::~ParticleSystem()
 
 
 void
-ParticleSystem::CopyAttributesTo(ParticleSystem* ps)
+ParticleSystem::CopyAttributesTo( ParticleSystem* ps )
 {
     // Destroy all existing techniques.
     ps->DestroyAllTechniques();
 
     // Copy techniques
     ParticleTechnique* cloned_technique = NULL;
-    for(int i = 0; i < m_Techniques.size(); ++i)
+    for( unsigned int i = 0; i < m_Techniques.size(); ++i )
     {
-        cloned_technique = ParticleSystemManager::getSingletonPtr()->CloneTechnique(m_Techniques[i]);
-        ps->AddTechnique(cloned_technique);
+        cloned_technique = ParticleSystemManager::getSingletonPtr()->CloneTechnique( m_Techniques[ i ] );
+        ps->AddTechnique( cloned_technique );
     }
 }
 
@@ -47,7 +47,8 @@ ParticleSystem::CopyAttributesTo(ParticleSystem* ps)
 const Ogre::String&
 ParticleSystem::getMovableType() const
 {
-    return "ParticleSystem";
+    static Ogre::String type = "ParticleSystem";
+    return type;
 }
 
 
@@ -69,10 +70,10 @@ ParticleSystem::getBoundingRadius() const
 
 
 void
-ParticleSystem::_updateRenderQueue(Ogre::RenderQueue* queue)
+ParticleSystem::_updateRenderQueue( Ogre::RenderQueue* queue )
 {
-    Ogre::LogManager::getSingletonPtr()->logMessage("ParticleSystem::_updateRenderQueue");
-    for (int i = 0; i < m_Techniques.size(); ++i)
+    Ogre::LogManager::getSingletonPtr()->logMessage( "ParticleSystem::_updateRenderQueue" );
+    for( unsigned int i = 0; i < m_Techniques.size(); ++i )
     {
         m_Techniques[i]->UpdateRenderQueue(queue);
     }
@@ -81,12 +82,12 @@ ParticleSystem::_updateRenderQueue(Ogre::RenderQueue* queue)
 
 
 void
-ParticleSystem::Update(Ogre::Real time_elapsed)
+ParticleSystem::Update( Ogre::Real time_elapsed )
 {
-    Ogre::LogManager::getSingletonPtr()->logMessage("ParticleSystem::Update STARTED. Technique number: " + Ogre::StringConverter::toString(m_Techniques.size()));
-    for (int i = 0; i < m_Techniques.size(); ++i)
+    Ogre::LogManager::getSingletonPtr()->logMessage( "ParticleSystem::Update STARTED. Technique number: " + Ogre::StringConverter::toString( m_Techniques.size() ) );
+    for( unsigned int i = 0; i < m_Techniques.size(); ++i )
     {
-         m_Techniques[i]->Update(time_elapsed);
+         m_Techniques[i]->Update( time_elapsed );
     }
 }
 
@@ -114,9 +115,9 @@ ParticleSystem::AddTechnique(ParticleTechnique* technique)
 void
 ParticleSystem::DestroyAllTechniques()
 {
-    for (int i = 0; i < m_Techniques.size(); ++i)
+    for( unsigned int i = 0; i < m_Techniques.size(); ++i )
     {
-        ParticleSystemManager::getSingletonPtr()->DestroyTechnique(m_Techniques[i]);
+        ParticleSystemManager::getSingletonPtr()->DestroyTechnique( m_Techniques[ i ] );
     }
     m_Techniques.clear();
 }

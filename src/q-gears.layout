@@ -8,10 +8,13 @@
 		<Cursor1 position="62" topLine="0" />
 	</File>
 	<File name="core\Background2D.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="3805" topLine="111" />
+		<Cursor1 position="7048" topLine="224" />
 	</File>
 	<File name="core\Background2D.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="986" topLine="13" />
+		<Cursor1 position="430" topLine="3" />
+	</File>
+	<File name="core\Background2DAnimation.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="109" topLine="0" />
 	</File>
 	<File name="core\CameraManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1361" topLine="0" />
@@ -49,11 +52,11 @@
 	<File name="core\Console.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="2045" topLine="40" />
 	</File>
-	<File name="core\DebugDraw.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="179" topLine="0" />
+	<File name="core\DebugDraw.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="10756" topLine="303" />
 	</File>
-	<File name="core\DebugDraw.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="46" topLine="0" />
+	<File name="core\DebugDraw.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2456" topLine="48" />
 	</File>
 	<File name="core\Entity.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="12304" topLine="586" />
@@ -110,7 +113,7 @@
 		<Cursor1 position="143" topLine="0" />
 	</File>
 	<File name="core\UiAnimation.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="5510" topLine="249" />
+		<Cursor1 position="758" topLine="11" />
 	</File>
 	<File name="core\UiAnimation.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="622" topLine="34" />
@@ -143,7 +146,7 @@
 		<Cursor1 position="704" topLine="20" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="549" topLine="11" />
+		<Cursor1 position="880" topLine="11" />
 	</File>
 	<File name="core\Utilites.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="2599" topLine="104" />
@@ -155,13 +158,13 @@
 		<Cursor1 position="25" topLine="0" />
 	</File>
 	<File name="core\XmlBackground2DFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1332" topLine="30" />
+		<Cursor1 position="2743" topLine="65" />
 	</File>
 	<File name="core\XmlFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="3381" topLine="146" />
 	</File>
 	<File name="core\XmlFile.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1305" topLine="3" />
+		<Cursor1 position="1347" topLine="3" />
 	</File>
 	<File name="core\XmlFontFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="876" topLine="21" />
@@ -173,7 +176,7 @@
 		<Cursor1 position="225" topLine="0" />
 	</File>
 	<File name="core\XmlScreenFile.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="14637" topLine="381" />
+		<Cursor1 position="15017" topLine="382" />
 	</File>
 	<File name="core\XmlScreenFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="427" topLine="0" />
@@ -251,10 +254,10 @@
 		<Cursor1 position="2313" topLine="28" />
 	</File>
 	<File name="core\particles\ParticleSystem.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1017" topLine="25" />
+		<Cursor1 position="2522" topLine="85" />
 	</File>
 	<File name="core\particles\ParticleSystem.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="568" topLine="0" />
+		<Cursor1 position="386" topLine="0" />
 	</File>
 	<File name="core\particles\ParticleSystemFactory.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1310" topLine="24" />

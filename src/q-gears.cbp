@@ -70,6 +70,8 @@
 		<Unit filename="core\Assert.h" />
 		<Unit filename="core\Background2D.cpp" />
 		<Unit filename="core\Background2D.h" />
+		<Unit filename="core\Background2DAnimation.cpp" />
+		<Unit filename="core\Background2DAnimation.h" />
 		<Unit filename="core\CameraManager.cpp" />
 		<Unit filename="core\CameraManager.h" />
 		<Unit filename="core\ConfigCmd.cpp" />

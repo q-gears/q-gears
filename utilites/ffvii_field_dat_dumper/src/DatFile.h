@@ -30,6 +30,47 @@ struct SurfaceTexData
 
 
 
+struct KeyFrame
+{
+    float time;
+    u8 background;
+    u8 src_x;
+    u8 src_y;
+    u16 clut_x;
+    u16 clut_y;
+    u8 bpp;
+    u8 page_x;
+    u8 page_y;
+    u8 blending;
+};
+
+struct Animation
+{
+    Ogre::String name;
+    std::vector< KeyFrame > keyframes;
+};
+
+struct Tile
+{
+    u8 background;
+    s16 dest_x;
+    s16 dest_y;
+    u8 src_x;
+    u8 src_y;
+    u16 clut_x;
+    u16 clut_y;
+    u8 bpp;
+    u8 page_x;
+    u8 page_y;
+    u16 depth;
+    u8 blending;
+    u8 animation;
+    u8 animation_index;
+    Animation animation_key;
+};
+
+
+
 class DatFile : public LzsFile
 {
 public:
@@ -59,7 +100,8 @@ public:
     Ogre::String ArgumentString( int script, int number );
     Ogre::String OffsetString( int val );
 
-    void AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index, MimFile& mim, Logger* export_text );
+    void AddTile( const Tile& tile, MimFile& mim, Logger* export_text );
+    Surface* AddTileTex( int& x, int& y, const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u8 blending, MimFile& mim );
 
 private:
     std::vector< int > m_Dialogs;

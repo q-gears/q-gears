@@ -250,6 +250,7 @@ EntityManager::Update()
 
 
     m_Walkmesh.Update();
+    m_Background2D.Update();
 }
 
 

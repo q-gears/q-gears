@@ -28,12 +28,12 @@ public:
 
     const Ogre::String& GetName() const;
 
-    void AddChild( UiWidget *widget );
+    void AddChild( UiWidget* widget );
     UiWidget* GetChild( const Ogre::String& name );
     void RemoveAllChildren();
 
     // animation related
-    void AddAnimation( UiAnimation *animation );
+    void AddAnimation( UiAnimation* animation );
     const Ogre::String& GetCurrentAnimationName() const;
     void PlayAnimation( const Ogre::String& animation, UiAnimation::State state, const float start, const float end );
     void ScriptPlayAnimation( const char* name );

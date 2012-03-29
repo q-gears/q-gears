@@ -53,22 +53,22 @@ private:
     // line
     Ogre::RenderOperation               m_LineRenderOp;
     Ogre::HardwareVertexBufferSharedPtr m_LineVertexBuffer;
-    int                                 m_LineMaxVertexCount;
+    unsigned int                        m_LineMaxVertexCount;
 
     // line3d
     Ogre::RenderOperation               m_Line3dRenderOp;
     Ogre::HardwareVertexBufferSharedPtr m_Line3dVertexBuffer;
-    int                                 m_Line3dMaxVertexCount;
+    unsigned int                        m_Line3dMaxVertexCount;
 
     // quad
     Ogre::RenderOperation               m_QuadRenderOp;
     Ogre::HardwareVertexBufferSharedPtr m_QuadVertexBuffer;
-    int                                 m_QuadMaxVertexCount;
+    unsigned int                        m_QuadMaxVertexCount;
 
     // text
     Ogre::RenderOperation               m_TextRenderOp;
     Ogre::HardwareVertexBufferSharedPtr m_TextVertexBuffer;
-    int                                 m_TextMaxVertexCount;
+    unsigned int                        m_TextMaxVertexCount;
     Ogre::FontPtr                       m_Font;
     int                                 m_FontHeight;
     TextAlignment                       m_TextAlignment;

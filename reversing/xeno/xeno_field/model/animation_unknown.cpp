@@ -212,48 +212,42 @@ if( T4 != 0 )
 
                 case 5: // ECE01D80
                 {
-                801DE0EC	lhu    v1, $0004(s0)
-                801DE0F0	lhu    v0, $000a(s0)
-                801DE0F4	nop
-                801DE0F8	addu   v1, v1, v0
-                801DE0FC	sh     v1, $0004(s0)
-                801DE100	lhu    v0, $0050(s1)
-                801DE104	nop
-                801DE108	addu   v0, v0, v1
-                801DE10C	sh     v0, $0050(s1)
-                801DE110	lhu    v1, $0006(s0)
-                801DE114	lhu    v0, $000c(s0)
-                801DE118	nop
-                801DE11C	addu   v1, v1, v0
+                    801DE0EC	lhu    v1, $0004(s0)
+                    801DE0F0	lhu    v0, $000a(s0)
+                    801DE0F4	nop
+                    801DE0F8	addu   v1, v1, v0
+                    801DE0FC	sh     v1, $0004(s0)
+                    801DE100	lhu    v0, $0050(s1)
+                    801DE104	nop
+                    801DE108	addu   v0, v0, v1
+                    801DE10C	sh     v0, $0050(s1)
+                    801DE110	lhu    v1, $0006(s0)
+                    801DE114	lhu    v0, $000c(s0)
+                    801DE118	nop
+                    801DE11C	addu   v1, v1, v0
+                    801DE120	sh     v1, $0006(s0)
+                    801DE124	lhu    v0, $0052(s1)
+                    801DE128	nop
+                    801DE12C	addu   v0, v0, v1
+                    801DE130	sh     v0, $0052(s1)
+                    801DE134	lhu    v1, $0008(s0)
+                    801DE138	lhu    v0, $000e(s0)
+                    801DE13C	nop
+                    801DE140	addu   v1, v1, v0
+                    801DE144	sh     v1, $0008(s0)
+                    801DE148	lhu    v0, $0054(s1)
+                    801DE14C	addu   s6, s0, zero
+                    801DE150	addu   v0, v0, v1
+                    801DE158	sh     v0, $0054(s1)
+                    801DE154	j      L1de308 [$801de308]
+                }
+                break;
 
-                loop1de120:	; 801DE120
-                801DE120	sh     v1, $0006(s0)
 
-                L1de124:	; 801DE124
-                801DE124	lhu    v0, $0052(s1)
 
-                L1de128:	; 801DE128
-                801DE128	nop
-
-                L1de12c:	; 801DE12C
-                801DE12C	addu   v0, v0, v1
-                801DE130	sh     v0, $0052(s1)
-                801DE134	lhu    v1, $0008(s0)
-                801DE138	lhu    v0, $000e(s0)
-                801DE13C	nop
-
-                L1de140:	; 801DE140
-                801DE140	addu   v1, v1, v0
-                801DE144	sh     v1, $0008(s0)
-                801DE148	lhu    v0, $0054(s1)
-                801DE14C	addu   s6, s0, zero
-                801DE150	addu   v0, v0, v1
-                801DE154	j      L1de308 [$801de308]
-                801DE158	sh     v0, $0054(s1)
-
-5CE11D80 7
-5CE11D80 8
-
+                case 7: // 5CE11D80
+                case 8: // 5CE11D80
+                {
                 801DE15C	lh     v1, $000a(s0)
                 801DE160	lw     v0, $0058(s1)
                 801DE164	nop
@@ -267,20 +261,15 @@ if( T4 != 0 )
                 801DE184	mult   s7, s7
                 801DE188	lh     v1, $000e(s0)
                 801DE18C	lw     v0, $0060(s1)
-
-                loop1de190:	; 801DE190
                 801DE190	mflo   a0
                 801DE194	subu   s2, v1, v0
                 801DE198	nop
                 801DE19C	mult   s2, s2
                 801DE1A0	addu   a1, a1, a0
-
-                L1de1a4:	; 801DE1A4
                 801DE1A4	mflo   a0
-
-                L1de1a8:	; 801DE1A8
-                801DE1A8	jal    system_square_root [$80048af4]
                 801DE1AC	addu   a0, a1, a0
+                system_square_root;
+
                 801DE1B0	subu   a0, zero, s3
                 801DE1B4	subu   a1, zero, s2
                 801DE1B8	jal    func4b1d4 [$8004b1d4]
@@ -290,21 +279,21 @@ if( T4 != 0 )
                 801DE1C8	subu   v0, v0, v1
                 801DE1CC	andi   a0, v0, $0fff
                 801DE1D0	slti   v0, a0, $0800
-                801DE1D4	bne    v0, zero, L1de1e0 [$801de1e0]
                 801DE1D8	addu   a1, v1, zero
-                801DE1DC	addiu  a0, a0, $f000 (=-$1000)
+                if( V0 == 0 )
+                {
+                    A0 = A0 - 1000;
+                }
 
-                L1de1e0:	; 801DE1E0
                 S0 = h[S0 + 6] + (((S4 + h[S0 + 10]) / h[S0 + 8]) / h[S0 + 4]);
-                801DE234	bgez   a0, L1de240 [$801de240]
                 801DE238	addu   v0, a0, zero
-                801DE23C	subu   v0, zero, v0
+                if( A0 < 0 )
+                {
+                    V0 = 0 - V0;
+                }
 
-                L1de240:	; 801DE240
                 801DE240	slt    v0, v0, s0
                 801DE244	bne    v0, zero, L1de258 [$801de258]
-
-                L1de248:	; 801DE248
                 801DE248	addu   v0, a1, a0
                 801DE24C	bgez   a0, L1de258 [$801de258]
                 801DE250	addu   v0, a1, s0
@@ -319,8 +308,6 @@ if( T4 != 0 )
                 801DE26C	mflo   v0
                 801DE270	nop
                 801DE274	nop
-
-                loop1de278:	; 801DE278
                 801DE278	mult   s2, s2
                 801DE27C	mflo   a0
                 801DE280	jal    system_square_root [$80048af4]
@@ -363,58 +350,52 @@ if( T4 != 0 )
                 801DE2F4	lhu    v0, $0012(s6)
                 801DE2F8	nop
                 801DE2FC	addu   v0, v1, v0
-                801DE300	j      L1de3e0 [$801de3e0]
+                801DE300	j      L1de3e4 [$801de3e0]
                 801DE304	sh     v0, $0010(s6)
             }
 
             L1de308:	; 801DE308
-            801DE308	lhu    v0, $0010(s0)
-            801DE30C	lh     v1, $0012(s0)
-            801DE310	addiu  v0, v0, $0001
-            801DE314	sh     v0, $0010(s0)
-            801DE318	sll    v0, v0, $10
-            801DE31C	sra    v0, v0, $10
+            V0 = h[S0 + 10] + 1;
+            V1 = h[S0 + 12];
+            [S0 + 10] = h(V0);
+            V0 = V0 < V1;
 
-            L1de320:	; 801DE320
-            801DE320	slt    v0, v0, v1
             801DE324	bne    v0, zero, L1de3c4 [$801de3c4]
-
-            L1de328:	; 801DE328
             801DE328	nop
             801DE32C	lbu    v0, $0001(s0)
             801DE330	nop
-            801DE334	bne    v0, zero, L1de36c [$801de36c]
-            801DE338	nop
-            801DE33C	lbu    v0, $0003(s0)
-            801DE340	lw     t3, $0038(sp)
-            801DE344	nop
-            801DE348	bne    v0, t3, L1de354 [$801de354]
-            801DE34C	nop
-            801DE350	ori    s5, s5, $0002
+            if( V0 == 0 )
+            {
+                V0 = bu[S0 + 3];
+                T3 = w[SP + 38];
+                if( V0 == T3 )
+                {
+                    S5 = S5 | 2;
+                }
 
-            L1de354:	; 801DE354
-            801DE354	ori    s5, s5, $0200
-            801DE358	lw     a0, $0028(sp)
-            801DE35C	jal    func1df7a8 [$801df7a8]
-            801DE360	addu   a1, s0, zero
-            801DE364	j      L1de3e0 [$801de3e0]
-            801DE368	sw     zero, $006c(s1)
+                801DE354	ori    s5, s5, $0200
+                801DE358	lw     a0, $0028(sp)
+                801DE35C	jal    func1df7a8 [$801df7a8]
+                801DE360	addu   a1, s0, zero
+                801DE364	j      L1de3e4 [$801de3e0]
+                801DE368	sw     zero, $006c(s1)
+            }
 
-            L1de36c:	; 801DE36C
             801DE36C	lbu    v0, $0003(s0)
             801DE370	lw     t4, $0038(sp)
             801DE374	nop
-            801DE378	bne    v0, t4, L1de384 [$801de384]
             801DE37C	andi   v1, fp, $000f
-            801DE380	ori    s5, s5, $0004
+            if( V0 == T4 )
+            {
+                S5 = S5 | 4;
+            }
 
-            L1de384:	; 801DE384
             801DE384	sltiu  v0, v1, $0003
             801DE388	beq    v0, zero, L1de3a0 [$801de3a0]
             801DE38C	ori    s5, s5, $0400
             801DE390	lw     v0, $0004(s0)
             801DE394	sh     zero, $0010(s0)
-            801DE398	j      L1de3e0 [$801de3e0]
+            801DE398	j      L1de3e4 [$801de3e0]
             801DE39C	sw     v0, $0008(s0)
 
             L1de3a0:	; 801DE3A0
@@ -429,21 +410,17 @@ if( T4 != 0 )
             801DE3C0	sh     zero, $000e(s6)
 
             L1de3c4:	; 801DE3C4
-            801DE3C4	lbu    v0, $0003(s0)
-            801DE3C8	lw     t3, $0038(sp)
-            801DE3CC	nop
+            V0 = bu[S0 + 3];
+            T3 = w[SP + 38];
             if( V0 == T3 )
             {
                 S5 = S5 | 1;
             }
-            801DE3DC	ori    s5, s5, $0100
-
-            L1de3e0:	; 801DE3E0
-            801DE3E0	ori    v0, zero, $0001
+            S5 = S5 | 10;
 
             L1de3e4:	; 801DE3E4
-            [S1 + 1] = b(V0);
-            [S1 + 0] = b(V0);
+            [S1 + 1] = b(1);
+            [S1 + 0] = b(1);
         }
 
 

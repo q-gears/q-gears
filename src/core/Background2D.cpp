@@ -5,6 +5,7 @@
 
 #include "ConfigVar.h"
 #include "Logger.h"
+#include "Timer.h"
 
 
 
@@ -45,6 +46,11 @@ Background2D::Background2D():
 Background2D::~Background2D()
 {
     m_SceneManager->removeRenderQueueListener( this );
+
+    for( unsigned int i = 0; i < m_Animations.size(); ++i )
+    {
+        delete m_Animations[ i ];
+    }
 
     DestroyVertexBuffer();
 }
@@ -96,6 +102,13 @@ Background2D::Update()
             DEBUG_DRAW.Text( triangle_pos, 0, 0, Ogre::StringConverter::toString( i ) );
         }
 */
+    }
+
+
+
+    for( unsigned int i = 0; i < m_Animations.size(); ++i )
+    {
+        m_Animations[ i ]->AddTime( Timer::getSingleton().GetGameTimeDelta() );
     }
 }
 
@@ -150,7 +163,7 @@ Background2D::AddTile( const float x, const float y, const float width, const fl
     new_x4 += 1;
     new_y4 -= 1;
 
-    float* writeIterator = ( float* ) m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
+    float* writeIterator = ( float* )m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
     writeIterator += m_RenderOp.vertexData->vertexCount * 9;
 
     *writeIterator++ = new_x1;
@@ -216,6 +229,51 @@ Background2D::AddTile( const float x, const float y, const float width, const fl
     m_RenderOp.vertexData->vertexCount += 6;
 
     m_VertexBuffer->unlock();
+}
+
+
+
+void
+Background2D::UpdateTileUV( const unsigned int tile_id, const float u1, const float v1, const float u2, const float v2 )
+{
+    if( tile_id * 6 > m_RenderOp.vertexData->vertexCount )
+    {
+        LOG_ERROR( "Tile with id " + Ogre::StringConverter::toString( tile_id ) + " doesn't exist." );
+        return;
+    }
+
+    float* writeIterator = ( float* )m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
+
+    writeIterator += tile_id * 6 * 9;
+
+    writeIterator += 7;
+    *writeIterator++ = u1;
+    *writeIterator++ = v1;
+    writeIterator += 7;
+    *writeIterator++ = u2;
+    *writeIterator++ = v1;
+    writeIterator += 7;
+    *writeIterator++ = u2;
+    *writeIterator++ = v2;
+    writeIterator += 7;
+    *writeIterator++ = u1;
+    *writeIterator++ = v1;
+    writeIterator += 7;
+    *writeIterator++ = u2;
+    *writeIterator++ = v2;
+    writeIterator += 7;
+    *writeIterator++ = u1;
+    *writeIterator++ = v2;
+
+    m_VertexBuffer->unlock();
+}
+
+
+
+void
+Background2D::AddAnimation( Background2DAnimation* animation )
+{
+    m_Animations.push_back( animation );
 }
 
 

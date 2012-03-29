@@ -24440,7 +24440,7 @@
 	<vector>
 	"Event.h"
 
-1320139062 m:\q-gears\src\core\debugdraw.h
+1332916178 m:\q-gears\src\core\debugdraw.h
 	<OgreFont.h>
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
@@ -24982,7 +24982,7 @@
 	"ScriptManager.h"
 	"UiAnimation.h"
 
-1330879378 m:\q-gears\src\core\uianimation.h
+1332910952 m:\q-gears\src\core\uianimation.h
 	<OgreString.h>
 	<OgreVector2.h>
 	<vector>
@@ -25041,7 +25041,7 @@
 1306971022 m:\q-gears\src\core\particles\particlepool.h
 	<list>
 
-1306971022 m:\q-gears\src\core\particles\particlesystem.h
+1332931414 m:\q-gears\src\core\particles\particlesystem.h
 	<OgreMovableObject.h>
 	"ParticleTechnique.h"
 
@@ -25087,7 +25087,7 @@
 	"ConfigVar.h"
 	"Logger.h"
 
-1332590366 source:m:\q-gears\src\core\cameramanager.cpp
+1332699282 source:m:\q-gears\src\core\cameramanager.cpp
 	"CameraManager.h"
 	<OgreRenderWindow.h>
 	<OgreRoot.h>
@@ -25120,7 +25120,7 @@
 1314721442 m:\q-gears\src\core\xmlmapfile.h
 	"XmlFile.h"
 
-1332588752 m:\q-gears\src\core\xmlfile.h
+1332910952 m:\q-gears\src\core\xmlfile.h
 	<OgreColourValue.h>
 	<OgreMatrix4.h>
 	<OgreString.h>
@@ -25166,7 +25166,7 @@
 	"Timer.h"
 	"Utilites.h"
 
-1322054424 source:m:\q-gears\src\core\debugdraw.cpp
+1332916452 source:m:\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -25277,7 +25277,7 @@
 	"Timer.h"
 	"ConfigVar.h"
 
-1331283900 source:m:\q-gears\src\core\uianimation.cpp
+1332910952 source:m:\q-gears\src\core\uianimation.cpp
 	"UiAnimation.h"
 	<OgreVector2.h>
 	"UiWidget.h"
@@ -25339,7 +25339,7 @@
 	"UiWidget.h"
 	"library/tinyxml/tinyxml.h"
 
-1331285836 source:m:\q-gears\src\core\uiwidget.cpp
+1332866788 source:m:\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
@@ -25359,9 +25359,10 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1332588948 source:m:\q-gears\src\core\xmlbackground2dfile.cpp
+1332928576 source:m:\q-gears\src\core\xmlbackground2dfile.cpp
 	"XmlBackground2DFile.h"
 	"Background2D.h"
+	"Background2DAnimation.h"
 	"CameraManager.h"
 	"EntityManager.h"
 	"Logger.h"
@@ -25369,7 +25370,7 @@
 1320053958 m:\q-gears\src\core\xmlbackground2dfile.h
 	"XmlFile.h"
 
-1332588796 source:m:\q-gears\src\core\xmlfile.cpp
+1332910952 source:m:\q-gears\src\core\xmlfile.cpp
 	"XmlFile.h"
 	<OgreStringConverter.h>
 	"Logger.h"
@@ -25409,7 +25410,7 @@
 	"Logger.h"
 	"UiManager.h"
 
-1330879688 source:m:\q-gears\src\core\xmlscreenfile.cpp
+1332910952 source:m:\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -26171,7 +26172,7 @@
 	<vector>
 	"Event.h"
 
-1320139062 k:\q-gears\src\core\debugdraw.h
+1332916178 k:\q-gears\src\core\debugdraw.h
 	<OgreFont.h>
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
@@ -26185,11 +26186,12 @@
 	"Event.h"
 	"Walkmesh.h"
 
-1332183342 k:\q-gears\src\core\background2d.h
+1332964474 k:\q-gears\src\core\background2d.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
 	<OgreSingleton.h>
+	"Background2DAnimation.h"
 
 1331663096 k:\q-gears\src\core\entity.h
 	<OgreString.h>
@@ -26705,7 +26707,7 @@
 1330879164 k:\q-gears\src\core\uifont.h
 	<OgreString.h>
 
-1330879946 k:\q-gears\src\core\uiwidget.h
+1332961394 k:\q-gears\src\core\uiwidget.h
 	<OgreColourValue.h>
 	<OgreString.h>
 	<OgreVector2.h>
@@ -26713,7 +26715,7 @@
 	"ScriptManager.h"
 	"UiAnimation.h"
 
-1330879378 k:\q-gears\src\core\uianimation.h
+1332910952 k:\q-gears\src\core\uianimation.h
 	<OgreString.h>
 	<OgreVector2.h>
 	<vector>
@@ -26772,7 +26774,7 @@
 1306971022 k:\q-gears\src\core\particles\particlepool.h
 	<list>
 
-1306971022 k:\q-gears\src\core\particles\particlesystem.h
+1332931414 k:\q-gears\src\core\particles\particlesystem.h
 	<OgreMovableObject.h>
 	"ParticleTechnique.h"
 
@@ -26811,12 +26813,13 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1332183288 source:k:\q-gears\src\core\background2d.cpp
+1332993528 source:k:\q-gears\src\core\background2d.cpp
 	"Background2D.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
 	"ConfigVar.h"
 	"Logger.h"
+	"Timer.h"
 
 1332699282 source:k:\q-gears\src\core\cameramanager.cpp
 	"CameraManager.h"
@@ -26851,12 +26854,13 @@
 1314721442 k:\q-gears\src\core\xmlmapfile.h
 	"XmlFile.h"
 
-1332588752 k:\q-gears\src\core\xmlfile.h
+1332962696 k:\q-gears\src\core\xmlfile.h
 	<OgreColourValue.h>
 	<OgreMatrix4.h>
 	<OgreString.h>
 	<OgreVector2.h>
 	<OgreVector3.h>
+	<OgreVector4.h>
 	<OgreUTFString.h>
 	"library/tinyxml/tinyxml.h"
 
@@ -26897,7 +26901,7 @@
 	"Timer.h"
 	"Utilites.h"
 
-1322054424 source:k:\q-gears\src\core\debugdraw.cpp
+1332916452 source:k:\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -26990,7 +26994,7 @@
 	"Timer.h"
 	"ConfigVar.h"
 
-1331283900 source:k:\q-gears\src\core\uianimation.cpp
+1332910952 source:k:\q-gears\src\core\uianimation.cpp
 	"UiAnimation.h"
 	<OgreVector2.h>
 	"UiWidget.h"
@@ -27052,7 +27056,7 @@
 	"UiWidget.h"
 	"library/tinyxml/tinyxml.h"
 
-1331285836 source:k:\q-gears\src\core\uiwidget.cpp
+1332964232 source:k:\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
@@ -27072,9 +27076,10 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1332700306 source:k:\q-gears\src\core\xmlbackground2dfile.cpp
+1332965864 source:k:\q-gears\src\core\xmlbackground2dfile.cpp
 	"XmlBackground2DFile.h"
 	"Background2D.h"
+	"Background2DAnimation.h"
 	"CameraManager.h"
 	"EntityManager.h"
 	"Logger.h"
@@ -27082,7 +27087,7 @@
 1320053958 k:\q-gears\src\core\xmlbackground2dfile.h
 	"XmlFile.h"
 
-1332588796 source:k:\q-gears\src\core\xmlfile.cpp
+1332961012 source:k:\q-gears\src\core\xmlfile.cpp
 	"XmlFile.h"
 	<OgreStringConverter.h>
 	"Logger.h"
@@ -27122,7 +27127,7 @@
 	"Logger.h"
 	"UiManager.h"
 
-1330879688 source:k:\q-gears\src\core\xmlscreenfile.cpp
+1332910952 source:k:\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -27739,7 +27744,7 @@
 	<OgreLogManager.h>
 	"ParticleSystemManager.h"
 
-1306971022 source:k:\q-gears\src\core\particles\particlesystem.cpp
+1332931896 source:k:\q-gears\src\core\particles\particlesystem.cpp
 	"ParticleSystem.h"
 	<OgreLogManager.h>
 	<OgreSceneNode.h>
@@ -27832,7 +27837,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1332181374 source:k:\q-gears\src\core\entitymanager.cpp
+1332964962 source:k:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -27842,4 +27847,34 @@
 	"Logger.h"
 	"ScriptManager.h"
 	"Timer.h"
+
+1332869958 k:\q-gears\src\core\animation2d.h
+	<OgreString.h>
+	<OgreVector2.h>
+	<vector>
+
+1332869980 source:k:\q-gears\src\core\animation2d.cpp
+	"Animation2D.h"
+	<OgreVector2.h>
+
+1332918032 source:m:\q-gears\src\core\background2danimation.cpp
+	"Background2DAnimation.h"
+	<OgreVector2.h>
+	"Background2D.h"
+
+1332917812 m:\q-gears\src\core\background2danimation.h
+	<OgreString.h>
+	<OgreVector2.h>
+	<vector>
+
+1332959024 k:\q-gears\src\core\background2danimation.h
+	<OgreString.h>
+	<OgreVector2.h>
+	<vector>
+
+1332993924 source:k:\q-gears\src\core\background2danimation.cpp
+	"Background2DAnimation.h"
+	<OgreVector2.h>
+	"Background2D.h"
+	"Logger.h"
 

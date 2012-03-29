@@ -2858,6 +2858,8 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
 
 
+    std::vector< Tile > tiles;
+
     for( ; s1 < offset_to_2; s1 += 0x06 )
     {
         if( GetU16LE(s1) == 0x7ffe )
@@ -2880,15 +2882,23 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
         for( u16 i = 0; i < sprite_num; ++i )
         {
-            s16 dest_x =   GetU16LE( s2 + 0x00 );
-            s16 dest_y =   GetU16LE( s2 + 0x02 );
-            u8  src_x  =   GetU16LE( s2 + 0x04 );
-            u8  src_y  =   GetU16LE( s2 + 0x05 );
-            u16 clut_y = ( GetU16LE( s2 + 0x06 ) & 0xffc0 ) >> 6;
-            u16 clut_x = ( GetU16LE( s2 + 0x06 ) & 0x003f ) << 4;
+            Tile tile;
+            tile.background = 0;
+            tile.dest_x     = GetU16LE( s2 + 0x00 );
+            tile.dest_y     = GetU16LE( s2 + 0x02 );
+            tile.src_x      = GetU8( s2 + 0x04 );
+            tile.src_y      = GetU8( s2 + 0x05 );
+            tile.clut_y     = ( GetU16LE( s2 + 0x06 ) & 0xffc0 ) >> 6;
+            tile.clut_x     = ( GetU16LE( s2 + 0x06 ) & 0x003f ) << 4;
+            tile.bpp        = g_bpp;
+            tile.page_x     = g_page_x;
+            tile.page_y     = g_page_y;
+            tile.depth      = 999;
+            tile.blending   = 0;
+            tile.animation  = 0;
+            tile.animation_index = 0;
+            tiles.push_back( tile );
 
-            //LOGGER->Log( "Add layer 1 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + ")\n" );
-            AddTile( 0, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 999, 0, 0, 0, mim, export_text );
             s2 += 0x08;
         }
     }
@@ -2907,22 +2917,23 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
         for( u32 i = 0; i < sprite_num; ++i )
         {
-            s16 dest_x    =   GetU16LE( s4 + 0x00 );
-            s16 dest_y    =   GetU16LE( s4 + 0x02 );
-            u8  src_x     =   GetU16LE( s4 + 0x04 );
-            u8  src_y     =   GetU16LE( s4 + 0x05 );
-            u16 clut_y    = ( GetU16LE( s4 + 0x06 ) & 0xffc0 ) >> 6;
-            u16 clut_x    = ( GetU16LE( s4 + 0x06 ) & 0x003f ) << 4;
-            u16 page_x    =   GetU16LE( s4 + 0x08 ) & 0x000f;
-            u16 page_y    = ( GetU16LE( s4 + 0x08 ) & 0x0010 ) >> 0x04;
-            u8  bpp       = ( GetU16LE( s4 + 0x08 ) & 0x0180 ) >> 0x07;
-            u8  blending  = ( GetU16LE( s4 + 0x08 ) & 0x60 ) >> 0x05;
-            u16 distance  =   GetU16LE( s4 + 0x0a );
-            u8  animation =   GetU8( s4 + 0x0c ) & 0x0f;
-            u8  index     =   GetU8( s4 + 0x0d );
+            Tile tile;
+            tile.background = 1;
+            tile.dest_x     = GetU16LE( s4 + 0x00 );
+            tile.dest_y     = GetU16LE( s4 + 0x02 );
+            tile.src_x      = GetU8( s4 + 0x04 );
+            tile.src_y      = GetU8( s4 + 0x05 );
+            tile.clut_y     = ( GetU16LE( s4 + 0x06 ) & 0xffc0 ) >> 6;
+            tile.clut_x     = ( GetU16LE( s4 + 0x06 ) & 0x003f ) << 4;
+            tile.bpp        = ( GetU16LE( s4 + 0x08 ) & 0x0180 ) >> 0x07;
+            tile.page_x     = GetU16LE( s4 + 0x08 ) & 0x000f;
+            tile.page_y     = ( GetU16LE( s4 + 0x08 ) & 0x0010 ) >> 0x04;
+            tile.depth      = GetU16LE( s4 + 0x0a );
+            tile.blending   = ( GetU16LE( s4 + 0x08 ) & 0x60 ) >> 0x05;
+            tile.animation  = GetU8( s4 + 0x0c ) & 0x0f;
+            tile.animation_index = GetU8( s4 + 0x0d );
+            tiles.push_back( tile );
 
-            //LOGGER->Log( "Add layer 2 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Depth " + ToIntString( distance ) + ". Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s4 + 0x0c), 4, '0' ) + "\n" );
-            AddTile( 1, dest_x, dest_y, src_x, src_y, clut_x, clut_y, bpp, page_x, page_y, distance, blending, animation, index, mim, export_text );
             s4 += 0x0e;
         }
     }
@@ -2951,16 +2962,23 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
         for( u32 i = 0; i < sprite_num; ++i )
         {
-            s16 dest_x    =   GetU16LE( s5 + 0x00 );
-            s16 dest_y    =   GetU16LE( s5 + 0x02 );
-            u8  src_x     =   GetU16LE( s5 + 0x04 );
-            u8  src_y     =   GetU16LE( s5 + 0x05 );
-            u16 clut_y    = ( GetU16LE( s5 + 0x06 ) & 0xffc0 ) >> 6;
-            u16 clut_x    = ( GetU16LE( s5 + 0x06 ) & 0x003f ) << 4;
-            u8  animation =   GetU8( s5 + 0x08 ) & 0x0f;
-            u8  index     =   GetU8( s5 + 0x09 );
-            //LOGGER->Log( "Add layer 3 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
-            AddTile( 2, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim, export_text );
+            Tile tile;
+            tile.background = 2;
+            tile.dest_x     = GetU16LE( s5 + 0x00 );
+            tile.dest_y     = GetU16LE( s5 + 0x02 );
+            tile.src_x      = GetU8( s5 + 0x04 );
+            tile.src_y      = GetU8( s5 + 0x05 );
+            tile.clut_y     = ( GetU16LE( s5 + 0x06 ) & 0xffc0 ) >> 6;
+            tile.clut_x     = ( GetU16LE( s5 + 0x06 ) & 0x003f ) << 4;
+            tile.bpp        = g_bpp;
+            tile.page_x     = g_page_x;
+            tile.page_y     = g_page_y;
+            tile.depth      = 0;
+            tile.blending   = g_blending;
+            tile.animation  = GetU8( s5 + 0x08 ) & 0x0f;
+            tile.animation_index = GetU8( s5 + 0x09 );
+            tiles.push_back( tile );
+
             s5 += 0x0a;
         }
     }
@@ -2989,19 +3007,90 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
         for( u32 i = 0; i < sprite_num; ++i )
         {
-            s16 dest_x    =   GetU16LE( s5 + 0x00 );
-            s16 dest_y    =   GetU16LE( s5 + 0x02 );
-            u8  src_x     =   GetU16LE( s5 + 0x04 );
-            u8  src_y     =   GetU16LE( s5 + 0x05 );
-            u16 clut_y    = ( GetU16LE( s5 + 0x06 ) & 0xffc0 ) >> 6;
-            u16 clut_x    = ( GetU16LE( s5 + 0x06 ) & 0x003f ) << 4;
-            u8  animation =   GetU8( s5 + 0x08 ) & 0x0f;
-            u8  index     =   GetU8( s5 + 0x09 );
+            Tile tile;
+            tile.background = 3;
+            tile.dest_x     = GetU16LE( s5 + 0x00 );
+            tile.dest_y     = GetU16LE( s5 + 0x02 );
+            tile.src_x      = GetU8( s5 + 0x04 );
+            tile.src_y      = GetU8( s5 + 0x05 );
+            tile.clut_y     = ( GetU16LE( s5 + 0x06 ) & 0xffc0 ) >> 6;
+            tile.clut_x     = ( GetU16LE( s5 + 0x06 ) & 0x003f ) << 4;
+            tile.bpp        = g_bpp;
+            tile.page_x     = g_page_x;
+            tile.page_y     = g_page_y;
+            tile.depth      = 0;
+            tile.blending   = g_blending;
+            tile.animation  = GetU8( s5 + 0x08 ) & 0x0f;
+            tile.animation_index = GetU8( s5 + 0x09 );
+            tiles.push_back( tile );
 
-            //LOGGER->Log( "Add layer 4 sprite to (" + ToIntString( dest_x ) + " " + ToIntString( dest_y ) + ") from (" + ToIntString( src_x ) + " " + ToIntString( src_y ) + " texpage_x " + ToIntString( g_page_x ) + ", texpage_y " + ToIntString( g_page_y ) + ", clut_x " + ToIntString( clut_x ) + ", clut_y " + ToIntString( clut_y ) + "). Anim group " + ToIntString( animation ) + ", index " + ToIntString( index ) + ". Anim " + ToHexString( GetU16LE(s5 + 0x08), 4, '0' ) + "\n" );
-            AddTile( 3, dest_x, dest_y, src_x, src_y, clut_x, clut_y, g_bpp, g_page_x, g_page_y, 0, g_blending, animation, index, mim, export_text );
             s5 += 0x0a;
         }
+    }
+
+
+
+    // unify animations
+    std::vector< Tile > temp_tiles;
+    for( unsigned int i = 0; i < tiles.size(); ++i )
+    {
+        if( tiles[ i ].animation == 0 )
+        {
+            temp_tiles.push_back( tiles[ i ] );
+        }
+        else
+        {
+            unsigned int j = 0;
+            for( ; j < temp_tiles.size(); ++j )
+            {
+                if( temp_tiles[ j ].animation == tiles[ i ].animation &&
+                    temp_tiles[ j ].dest_x    == tiles[ i ].dest_x &&
+                    temp_tiles[ j ].dest_y    == tiles[ i ].dest_y )
+                {
+                    KeyFrame key;
+                    key.time = tiles[ i ].animation_index;
+                    key.background = tiles[ i ].background;
+                    key.src_x = tiles[ i ].src_x;
+                    key.src_y = tiles[ i ].src_y;
+                    key.clut_x = tiles[ i ].clut_x;
+                    key.clut_y = tiles[ i ].clut_y;
+                    key.bpp = tiles[ i ].bpp;
+                    key.page_x = tiles[ i ].page_x;
+                    key.page_y = tiles[ i ].page_y;
+                    key.blending = tiles[ i ].blending;
+                    temp_tiles[ j ].animation_key.keyframes.push_back( key );
+
+                    break;
+                }
+            }
+
+            if( j == temp_tiles.size() )
+            {
+                KeyFrame key;
+                key.time = tiles[ i ].animation_index;
+                key.background = tiles[ i ].background;
+                key.src_x = tiles[ i ].src_x;
+                key.src_y = tiles[ i ].src_y;
+                key.clut_x = tiles[ i ].clut_x;
+                key.clut_y = tiles[ i ].clut_y;
+                key.bpp = tiles[ i ].bpp;
+                key.page_x = tiles[ i ].page_x;
+                key.page_y = tiles[ i ].page_y;
+                key.blending = tiles[ i ].blending;
+                tiles[ i ].animation_key.keyframes.push_back( key );
+                tiles[ i ].animation_key.name = Ogre::StringConverter::toString( tiles[ i ].animation );
+
+                temp_tiles.push_back( tiles[ i ] );
+            }
+        }
+    }
+    tiles = temp_tiles;
+
+
+
+    for( unsigned int i = 0; i < tiles.size(); ++i )
+    {
+        AddTile( tiles[ i ], mim, export_text );
     }
 
 
@@ -3037,7 +3126,89 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
 
 void
-DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u16 depth, const u8 blending, const u8 animation, const u8 animation_index, MimFile& mim, Logger* export_text )
+DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
+{
+    int x = 0;
+    int y = 0;
+    Surface* sub_image = AddTileTex( x, y, tile.background, tile.src_x, tile.src_y, tile.clut_x, tile.clut_y, tile.bpp, tile.page_x, tile.page_y, tile.blending, mim );
+
+    export_text->Log(
+                        "    <tile destination=\"" +
+                        Ogre::StringConverter::toString( tile.dest_x * 3 ) +
+                        " " +
+                        Ogre::StringConverter::toString( tile.dest_y * 3 ) +
+                        "\" width=\"" +
+                        Ogre::StringConverter::toString( sub_image->width * 3 ) +
+                        "\" height=\"" +
+                        Ogre::StringConverter::toString( sub_image->height * 3 ) +
+                        "\" uv=\"" +
+                        Ogre::StringConverter::toString( x / ( float ) full_image->width ) +
+                        " " +
+                        Ogre::StringConverter::toString( y / ( float ) full_image->height ) +
+                        " " +
+                        Ogre::StringConverter::toString( ( x + sub_image->width ) / ( float ) full_image->width ) +
+                        " " +
+                        Ogre::StringConverter::toString( ( y + sub_image->height ) / ( float ) full_image->height ) +
+                        "\" depth=\"" +
+                        Ogre::StringConverter::toString( tile.depth / 1024.0f ) +
+                        "\""
+    );
+
+    if( tile.animation == 0 )
+    {
+        export_text->Log( " />\n" );
+    }
+    else
+    {
+        export_text->Log( ">\n" );
+        export_text->Log( "        <animation name=\"" + tile.animation_key.name + "\" length=\"" + Ogre::StringConverter::toString( tile.animation_key.keyframes.size() ) + "\" uv=\"" );
+
+        for( unsigned int i = 0; i < tile.animation_key.keyframes.size(); ++i )
+        {
+            if( i == 0 )
+            {
+                export_text->Log( Ogre::StringConverter::toString( tile.animation_key.keyframes[ i ].time ) +
+                                  ":" +
+                                  Ogre::StringConverter::toString( x / ( float ) full_image->width ) +
+                                  " " +
+                                  Ogre::StringConverter::toString( y / ( float ) full_image->height ) +
+                                  " " +
+                                  Ogre::StringConverter::toString( ( x + sub_image->width ) / ( float ) full_image->width ) +
+                                  " " +
+                                  Ogre::StringConverter::toString( ( y + sub_image->height ) / ( float ) full_image->height )
+                );
+            }
+            else
+            {
+                export_text->Log( "," );
+                x = 0;
+                y = 0;
+                Surface* ani_image = AddTileTex( x, y, tile.animation_key.keyframes[ i ].background, tile.animation_key.keyframes[ i ].src_x, tile.animation_key.keyframes[ i ].src_y, tile.animation_key.keyframes[ i ].clut_x, tile.animation_key.keyframes[ i ].clut_y, tile.animation_key.keyframes[ i ].bpp, tile.animation_key.keyframes[ i ].page_x, tile.animation_key.keyframes[ i ].page_y, tile.animation_key.keyframes[ i ].blending, mim );
+                export_text->Log( Ogre::StringConverter::toString( tile.animation_key.keyframes[ i ].time ) +
+                                  ":" +
+                                  Ogre::StringConverter::toString( x / ( float ) full_image->width ) +
+                                  " " +
+                                  Ogre::StringConverter::toString( y / ( float ) full_image->height ) +
+                                  " " +
+                                  Ogre::StringConverter::toString( ( x + ani_image->width ) / ( float ) full_image->width ) +
+                                  " " +
+                                  Ogre::StringConverter::toString( ( y + ani_image->height ) / ( float ) full_image->height )
+                );
+                delete ani_image;
+            }
+        }
+ 
+        export_text->Log( "\" />\n" );
+        export_text->Log( "    </tile>\n" );
+    }
+
+    delete sub_image;
+}
+
+
+
+Surface*
+DatFile::AddTileTex( int& x, int& y,  const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u8 blending, MimFile& mim )
 {
     SurfaceTexData surface;
     surface.page_x = page_x;
@@ -3063,8 +3234,6 @@ DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const
 
     Surface* sub_image = CreateSubSurface( src_x, src_y, size, size, surface.surface );
 
-    int x = 0;
-    int y = 0;
     if( sub_image->width == 32 )
     {
         x = x_32;
@@ -3114,29 +3283,7 @@ DatFile::AddTile( const u8 background, const s16 dest_x, const s16 dest_y, const
 
     CopyToSurface( full_image, x, y, sub_image );
 
-    export_text->Log(
-                        "    <tile destination=\"" +
-                        Ogre::StringConverter::toString( dest_x * 3 ) +
-                        " " +
-                        Ogre::StringConverter::toString( dest_y * 3 ) +
-                        "\" width=\"" +
-                        Ogre::StringConverter::toString( sub_image->width * 3 ) +
-                        "\" height=\"" +
-                        Ogre::StringConverter::toString( sub_image->height * 3 ) +
-                        "\" uv1=\"" +
-                        Ogre::StringConverter::toString( x / ( float ) full_image->width ) +
-                        " " +
-                        Ogre::StringConverter::toString( y / ( float ) full_image->height ) +
-                        "\" uv2=\"" +
-                        Ogre::StringConverter::toString( ( x + sub_image->width ) / ( float ) full_image->width ) +
-                        " " +
-                        Ogre::StringConverter::toString( ( y + sub_image->height ) / ( float ) full_image->height ) +
-                        "\" depth=\"" +
-                        Ogre::StringConverter::toString( depth / 1024.0f ) +
-                        "\" />\n"
-    );
-
-    delete sub_image;
+    return sub_image;
 }
 
 

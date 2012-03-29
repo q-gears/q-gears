@@ -1,6 +1,7 @@
 #include "XmlBackground2DFile.h"
 
 #include "Background2D.h"
+#include "Background2DAnimation.h"
 #include "CameraManager.h"
 #include "EntityManager.h"
 #include "Logger.h"
@@ -47,6 +48,8 @@ XmlBackground2DFile::Load()
         CameraManager::getSingleton().GetCurrentCamera()->setOrientation( orientation );
         CameraManager::getSingleton().GetCurrentCamera()->setFOVy( Ogre::Radian( Ogre::Degree( fov ) ) );
 
+        int tile_id = 0;
+
         node = node->FirstChild();
         while( node != NULL )
         {
@@ -55,15 +58,50 @@ XmlBackground2DFile::Load()
                 int width = GetInt( node, "width", 0 );
                 int height = GetInt( node, "height", 0 );
 
-                if( width != 0 && height != 0 )
-                {
-                    Ogre::Vector2 destination = GetVector2( node, "destination", Ogre::Vector2::ZERO );
-                    Ogre::Vector2 uv1 = GetVector2( node, "uv1", Ogre::Vector2::ZERO );
-                    Ogre::Vector2 uv2 = GetVector2( node, "uv2", Ogre::Vector2::ZERO );
-                    float depth = 1/*GetFloat( node, "depth", 0 )*/;
+                Ogre::Vector2 destination = GetVector2( node, "destination", Ogre::Vector2::ZERO );
+                Ogre::Vector4 uv = GetVector4( node, "uv", Ogre::Vector4::ZERO );
+                float depth = GetFloat( node, "depth", 0 );
 
-                    background->AddTile( destination.x, destination.y, width, height, depth, uv1.x, uv1.y, uv2.x, uv2.y );
+                background->AddTile( destination.x, destination.y, width, height, depth, uv.x, uv.y, uv.z, uv.w );
+
+                TiXmlNode* node2 = node->FirstChild();
+                while( node2 != NULL )
+                {
+                    if( node2->Type() == TiXmlNode::TINYXML_ELEMENT && node2->ValueStr() == "animation" )
+                    {
+                        Ogre::String name = GetString( node2, "name", "" );
+                        if( name != "" )
+                        {
+                            Background2DAnimation* animation = new Background2DAnimation( name, background, tile_id );
+
+                            animation->SetLength( GetFloat( node2, "length", 0 ) );
+
+                            Ogre::String uv = GetString( node2, "uv", "" );
+                            if( uv != "" )
+                            {
+                                Ogre::StringVector key_frame = Ogre::StringUtil::split( uv, "," );
+                                for( unsigned int i = 0; i < key_frame.size(); ++i )
+                                {
+                                    Ogre::StringUtil::trim( key_frame[ i ] );
+
+                                    Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                                    if( data.size() > 1 )
+                                    {
+                                        float time = Ogre::StringConverter::parseReal( data[ 0 ] );
+                                        Ogre::Vector4 value = Ogre::StringConverter::parseVector4( data[ 1 ] );
+                                        animation->AddUVKeyFrame( time, value.x, value.y, value.z, value.w );
+                                    }
+                                }
+                            }
+
+                            background->AddAnimation( animation );
+                        }
+                    }
+
+                    node2 = node2->NextSibling();
                 }
+
+                ++tile_id;
             }
 
             node = node->NextSibling();

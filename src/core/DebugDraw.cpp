@@ -304,7 +304,7 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
     float length = 0;
     if( m_TextAlignment != LEFT )
     {
-        for( int i = 0; i < text.size(); ++i )
+        for( unsigned int i = 0; i < text.size(); ++i )
         {
             length += ( ( m_Font->getGlyphAspectRatio( text[ i ] ) * m_FontHeight ) / width ) * 2;
         }
@@ -320,7 +320,7 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
     float current_y =  ( m_ScreenSpace == true ) ? -( ( ( int ) y / height ) * 2 - 1 ) : y;
     float char_height = -( m_FontHeight / height ) * 2;
 
-    for( int i = 0; i < text.size(); ++i )
+    for( unsigned int i = 0; i < text.size(); ++i )
     {
         float char_width = ( ( m_Font->getGlyphAspectRatio( text[ i ] ) * m_FontHeight ) / width ) * 2;
 

@@ -41,7 +41,7 @@ UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiW
 
 UiWidget::~UiWidget()
 {
-    for( size_t i = 0; i < m_Animations.size(); ++i )
+    for( unsigned int i = 0; i < m_Animations.size(); ++i )
     {
         delete m_Animations[ i ];
     }
@@ -330,7 +330,7 @@ UiWidget::RemoveAllChildren()
 
 
 void
-UiWidget::AddAnimation( UiAnimation *animation )
+UiWidget::AddAnimation( UiAnimation* animation )
 {
     m_Animations.push_back( animation );
 }

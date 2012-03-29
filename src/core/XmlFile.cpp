@@ -159,6 +159,25 @@ XmlFile::GetVector3( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vecto
 
 
 
+const Ogre::Vector4
+XmlFile::GetVector4( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector4& def ) const
+{
+    Ogre::Vector4 ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseVector4( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
 const Ogre::Matrix4
 XmlFile::GetMatrix4( TiXmlNode* node, const Ogre::String& tag, const Ogre::Matrix4& def ) const
 {

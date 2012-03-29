@@ -20,12 +20,15 @@ To Do
 * [Entity] Implement mixed walkmesh movement from Xeno and FFIX.
 
 ================================================================================
-Q-Gears v0.21 (3rd run wild) | 2012-03-??
+Q-Gears v0.21 (3rd run wild) | 2012-04-??
 --------------------------------------------------------------------------------
 
 To Do
 ----------
 * [Content] Add FFVII fields maps startmap mdstin md1_1 and md1_2 maps and transitions between them.
+* [Entity] Implement triggers.
+* [Background] Implement background auto scroll to pc.
+* [Background] Implement background script scroll.
 * [Background] Implement all background features that used in FFVII 1st mission until reactor blow.
 
 
