@@ -3,7 +3,7 @@ EntityContainer = {}
 
 
 EntityContainer[ "Player" ] = {
-    on_start = function(self)
+    on_start = function( self )
         local player = entity_manager:get_entity( "Player" )
         entity_manager:set_player_entity( "Player" )
 

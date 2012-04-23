@@ -29,6 +29,57 @@ private:
 
 
 
+class added_tile_find
+{
+public:
+    added_tile_find( const AddedTile& a ):
+        m_Tile( a )
+    {
+    }
+
+    bool
+    operator()( const AddedTile& a ) const
+    {
+        return ( a.background == m_Tile.background ) &&
+               ( a.src_x      == m_Tile.src_x ) &&
+               ( a.src_y      == m_Tile.src_y ) &&
+               ( a.clut_x     == m_Tile.clut_x ) &&
+               ( a.clut_y     == m_Tile.clut_y ) &&
+               ( a.bpp        == m_Tile.bpp ) &&
+               ( a.page_x     == m_Tile.page_x ) &&
+               ( a.page_y     == m_Tile.page_y );
+    }
+
+private:
+    AddedTile m_Tile;
+};
+
+
+
+class anim_time_sort
+{
+public:
+    bool
+    operator()( const KeyFrame& x, const KeyFrame& y ) const
+    {
+        return x.time < y.time;
+    }
+};
+
+
+
+class anim_name_sort
+{
+public:
+    bool
+    operator()( const Animation& x, const Animation& y ) const
+    {
+        return x.name < y.name;
+    }
+};
+
+
+
 std::vector< Ogre::String > DatFile::m_SoundOpcodes;
 
 
@@ -233,7 +284,7 @@ DatFile::~DatFile()
 
 
 void
-DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool english )
+DatFile::DumpText( const Ogre::String& export_path, const Field& field, bool english )
 {
     std::sort( m_Dialogs.begin(), m_Dialogs.end() );
     m_Dialogs.erase( std::unique( m_Dialogs.begin(), m_Dialogs.end()), m_Dialogs.end() );
@@ -255,7 +306,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
 
         export_text->Log(dialog);
         dialog.clear();
-        export_text->LogW( "<dialog id=\"" + ToIntString(m_Dialogs[i]) + "\">" );
+        export_text->LogW( "<dialog id=\"" + IntToString(m_Dialogs[i]) + "\">" );
 
         for (unsigned char temp = 0x00; ; ++offset)
         {
@@ -407,7 +458,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFA " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFA " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
                 else if (temp == 0xFB)
@@ -420,7 +471,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFB " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFB " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
                 else if (temp == 0xFC)
@@ -433,7 +484,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFC " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFC " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
                 else if (temp == 0xFD)
@@ -446,7 +497,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFD " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFD " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
             }
@@ -505,7 +556,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
                     ++offset;
                     export_text->Log(dialog);
                     dialog.clear();
-                    export_text->LogW("<pause wait=\"" + ToIntString(wait) + "\" />");
+                    export_text->LogW("<pause wait=\"" + IntToString(wait) + "\" />");
                 }
                 else
                 {
@@ -517,7 +568,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFE " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFE " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
             }
@@ -535,7 +586,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
                 {
                     export_text->Log(dialog);
                     dialog.clear();
-                    export_text->LogW("[MISSING CHAR " + ToHexString(temp, 2, '0') + "]");
+                    export_text->LogW("[MISSING CHAR " + HexToString(temp, 2, '0') + "]");
                 }
             }
         }
@@ -551,7 +602,7 @@ DatFile::DumpTextData( const Ogre::String& export_path, const Field& field, bool
 
 
 void
-DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
+DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
 {
     Logger* export_script = new Logger( export_path + "maps/ffvii_field/" + field.name + "_script.txt" );
 
@@ -571,7 +622,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
         Ogre::String name = Ogre::String( reinterpret_cast< char* >( m_Buffer ) + offset_to_sector + 0x20 + i * 0x08 );
         if( name == "" )
         {
-            name = "unnamed_" + ToIntString( i );
+            name = "unnamed_" + IntToString( i );
         }
         entity_list.push_back( name );
     }
@@ -599,7 +650,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
             }
             prev_script = script;
 
-            export_script->Log("script_" + ToIntString(j) + ":\n");
+            export_script->Log("script_" + IntToString(j) + ":\n");
 
             for (; script <= end;)
             {
@@ -631,9 +682,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                         "script:request( \"" +
                         entity_list[entity_id] +
                         "\", \"script_" +
-                        ToIntString(script_id) +
+                        IntToString(script_id) +
                         "\", " +
-                        ToIntString(priority) +
+                        IntToString(priority) +
                         " );\n"
                     );
 
@@ -649,9 +700,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                         "script:request_start_wait( \"" +
                         entity_list[entity_id] +
                         "\", \"script_" +
-                        ToIntString(script_id) +
+                        IntToString(script_id) +
                         "\", " +
-                        ToIntString(priority) +
+                        IntToString(priority) +
                         " );\n"
                     );
 
@@ -667,9 +718,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                         "script:request_end_wait( \"" +
                         entity_list[entity_id] +
                         "\", \"script_" +
-                        ToIntString(script_id) +
+                        IntToString(script_id) +
                         "\", " +
-                        ToIntString(priority) +
+                        IntToString(priority) +
                         " );\n"
                     );
 
@@ -682,9 +733,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 
                     export_script->Log(
                         "return_to( \"script_" +
-                        ToIntString(script_id) +
+                        IntToString(script_id) +
                         "\", " +
-                        ToIntString(priority) +
+                        IntToString(priority) +
                         " );\n"
                     );
 
@@ -740,7 +791,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     {
                         export_script->Log(
                             "game:pointer_enable( " +
-                            ToBoolString(!(bool)(GetU8(script + 2))) +
+                            BoolToString(!(bool)(GetU8(script + 2))) +
                             " )\n"
                         );
                         AdvanceScript(3, script, end);
@@ -754,7 +805,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     {
                         export_script->Log(
                             "game:battle_enable( " +
-                            ToBoolString(!(bool)(GetU8(script + 2))) +
+                            BoolToString(!(bool)(GetU8(script + 2))) +
                             " )\n"
                         );
                         AdvanceScript(3, script, end);
@@ -763,7 +814,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     {
                         export_script->Log(
                             "game:movie_enable( " +
-                            ToBoolString(!(bool)(GetU8(script + 2))) +
+                            BoolToString(!(bool)(GetU8(script + 2))) +
                             " )\n"
                         );
                         AdvanceScript(3, script, end);
@@ -784,7 +835,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     }
                     else
                     {
-                        export_script->Log("[SPECIAL OPCODE " + ToHexString(special_opcode, 2, '0') + "]\n");
+                        export_script->Log("[SPECIAL OPCODE " + HexToString(special_opcode, 2, '0') + "]\n");
                         script += 2;
                     }
                 }
@@ -913,7 +964,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "script:wait( " +
-                        ToFloatString(GetU16LE(script + 1) / 30.0f) +
+                        FloatToString(GetU16LE(script + 1) / 30.0f) +
                         " );\n"
                     );
 
@@ -951,7 +1002,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":enable_eye_blink(" +
-                        ToBoolString(!(bool)(GetU8(script + 1))) +
+                        BoolToString(!(bool)(GetU8(script + 1))) +
                         ");\n"
                     );
 
@@ -985,15 +1036,15 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 
                     export_script->Log(
                         "-- resize window (id = " +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ", x = " +
-                        ToIntString(GetU16LE(script + 2)) +
+                        IntToString(GetU16LE(script + 2)) +
                         ", y = " +
-                        ToIntString(GetU16LE(script + 4)) +
+                        IntToString(GetU16LE(script + 4)) +
                         ", width = " +
-                        ToIntString(GetU16LE(script + 6)) +
+                        IntToString(GetU16LE(script + 6)) +
                         ", height = " +
-                        ToIntString(GetU16LE(script + 8)) +
+                        IntToString(GetU16LE(script + 8)) +
                         ");\n"
                     );
 
@@ -1005,7 +1056,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 
                     export_script->Log(
                         "if (pressed buttons \"" +
-                        ToHexString(GetU16LE(script + 1), 4, '0') +
+                        HexToString(GetU16LE(script + 1), 4, '0') +
                         "\") then continue else jumpto(" + OffsetString(temp_end) + ");\n"
                     );
 
@@ -1018,7 +1069,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 
                     export_script->Log(
                         "if (first pressed buttons \"" +
-                        ToHexString(GetU16LE(script + 1), 4, '0') +
+                        HexToString(GetU16LE(script + 1), 4, '0') +
                         "\") then continue else jumpto(" + OffsetString(temp_end) + ");\n"
                     );
 
@@ -1029,7 +1080,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "field:pc_lock(" +
-                        ToBoolString((bool)(GetU8(script + 1))) +
+                        BoolToString((bool)(GetU8(script + 1))) +
                         ");\n"
                     );
 
@@ -1107,9 +1158,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     m_Dialogs.push_back(GetU8(script + 2));
                     export_script->Log(
                         "message:show_text_wait(" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ", " +
-                        ToIntString(GetU8(script + 2)) +
+                        IntToString(GetU8(script + 2)) +
                         ", x, y);\n"
                     );
 
@@ -1120,7 +1171,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     m_Dialogs.push_back(GetU8(script + 1));
                     export_script->Log(
                         "field:map_name(" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ");\n"
                     );
 
@@ -1131,15 +1182,15 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     m_Dialogs.push_back(GetU8(script + 3));
                     export_script->Log(
                         "message:show_text_wait(" +
-                        ToIntString(GetU8(script + 2)) +
+                        IntToString(GetU8(script + 2)) +
                         ", " +
-                        ToIntString(GetU8(script + 3)) +
+                        IntToString(GetU8(script + 3)) +
                         ", x, y); -- ASK cursor at \"" +
                         ParseGetVariable(GetU8(script + 1), GetU8(script + 6)) +
                         "\", start " +
-                        ToIntString(GetU8(script + 4)) +
+                        IntToString(GetU8(script + 4)) +
                         ", end " +
-                        ToIntString(GetU8(script + 5)) +
+                        IntToString(GetU8(script + 5)) +
                         "\n"
                     );
 
@@ -1159,7 +1210,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "field:menu_lock(" +
-                        ToBoolString((bool)(GetU8(script + 1))) +
+                        BoolToString((bool)(GetU8(script + 1))) +
                         ");\n"
                     );
 
@@ -1169,7 +1220,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "field:set_battle_table(" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ");\n"
                     );
 
@@ -1179,15 +1230,15 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "-- set window parameters (id = " +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ", x = " +
-                        ToIntString(GetU16LE(script + 2)) +
+                        IntToString(GetU16LE(script + 2)) +
                         ", y = " +
-                        ToIntString(GetU16LE(script + 4)) +
+                        IntToString(GetU16LE(script + 4)) +
                         ", width = " +
-                        ToIntString(GetU16LE(script + 6)) +
+                        IntToString(GetU16LE(script + 6)) +
                         ", height = " +
-                        ToIntString(GetU16LE(script + 8)) +
+                        IntToString(GetU16LE(script + 8)) +
                         ");\n"
                     );
 
@@ -1199,11 +1250,11 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 
                     export_script->Log(
                         "-- set window mode (id = " +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ", MessageStyle." +
                         ((type == 0) ? "SOLID" : ((type == 1) ? "NONE" : "TRANSPARENT")) +
                         ", disable input from player: " +
-                        ToBoolString((bool)(GetU8(script + 3))) +
+                        BoolToString((bool)(GetU8(script + 3))) +
                         ");\n"
                     );
 
@@ -1213,7 +1264,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "-- reset window to default (id = " +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ");\n"
                     );
 
@@ -1244,7 +1295,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 else if (opcode == 0x5A) // CKITM
                 {
                     export_script->Log(
-                        SetVariable(GetU8(script + 1), GetU8(script + 4), "game:get_number_of_item(" + ToIntString(GetU16LE(script + 2)) + ")")
+                        SetVariable(GetU8(script + 1), GetU8(script + 4), "game:get_number_of_item(" + IntToString(GetU16LE(script + 2)) + ")")
                     );
                     AdvanceScript(5, script, end);
                 }
@@ -1278,15 +1329,15 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "field:jump_to_map(" +
-                        ToIntString(GetU16LE(script + 1)) +
+                        IntToString(GetU16LE(script + 1)) +
                         ", " +
-                        ToIntString(GetU16LE(script + 3)) +
+                        IntToString(GetU16LE(script + 3)) +
                         ", " +
-                        ToIntString(GetU16LE(script + 5)) +
+                        IntToString(GetU16LE(script + 5)) +
                         ", " +
-                        ToIntString(GetU16LE(script + 7)) +
+                        IntToString(GetU16LE(script + 7)) +
                         ", " +
-                        ToFloatString((GetU8(script + 9) / 256.0f) * 360.0f) +
+                        FloatToString((GetU8(script + 9) / 256.0f) * 360.0f) +
                         ");\n"
                     );
 
@@ -1298,7 +1349,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 
                     export_script->Log(
                         "field:screen_set_scroll_to_pc(" +
-                        ((type == 4) ? "Field.NONE" : ((type == 5) ? "Field.LINEAR" : ((type == 6) ? "Field.SMOOTH" : "Unknown_type_" + ToIntString(type)))) +
+                        ((type == 4) ? "Field.NONE" : ((type == 5) ? "Field.LINEAR" : ((type == 6) ? "Field.SMOOTH" : "Unknown_type_" + IntToString(type)))) +
                         ", " +
                         ParseGetVariable(GetU8(script + 1) & 0x0F, GetU16LE(script + 2), false, 30.0f) +
                         ");\n"
@@ -1314,7 +1365,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                         "field:screen_set_scroll_to_entity(" +
                         entity_list[GetU8(script + 4)] +
                         ", " +
-                        ((type == 1) ? "Field.NONE" : ((type == 2) ? "Field.LINEAR" : ((type == 3) ? "Field.SMOOTH" : "Unknown_type_" + ToIntString(type)))) +
+                        ((type == 1) ? "Field.NONE" : ((type == 2) ? "Field.LINEAR" : ((type == 3) ? "Field.SMOOTH" : "Unknown_type_" + IntToString(type)))) +
                         ", " +
                         ParseGetVariable(GetU8(script + 1), GetU16LE(script + 2), false, 30.0f) +
                         ");\n"
@@ -1408,9 +1459,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                             ", " +
                             ((type == 1 || type == 2 || type == 7 || type == 8) ? "Fade.SUBTRACT" : "Fade.ADD") +
                             ", " +
-                            ToIntString(speed) +
+                            IntToString(speed) +
                             ", " +
-                            ToIntString(start) +
+                            IntToString(start) +
                             " );\n"
                         );
                     }
@@ -1426,9 +1477,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "field:lock_walkmesh( " +
-                        ToIntString(GetU16LE(script + 1)) +
+                        IntToString(GetU16LE(script + 1)) +
                         ", " +
-                        ToBoolString((bool)(GetU8(script + 3))) +
+                        BoolToString((bool)(GetU8(script + 3))) +
                         " );\n"
                     );
 
@@ -1455,7 +1506,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "field:random_encounter_on( " +
-                        ToBoolString(!(bool)(GetU8(script + 1))) +
+                        BoolToString(!(bool)(GetU8(script + 1))) +
                         " );\n"
                     );
 
@@ -1511,7 +1562,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":set_talkable( " +
-                        ToBoolString(!(bool)(GetU8(script + 1))) +
+                        BoolToString(!(bool)(GetU8(script + 1))) +
                         " );\n"
                     );
 
@@ -1520,9 +1571,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 else if (opcode == 0x80) // SETBYTE
                 {
                     export_script->Log(
-                        SetVariable(GetU8(script + 1) >> 4, GetU8(script + 2), ParseGetVariable(GetU8(script + 1) & 0x0F, GetU8(script + 3)))
+                        SetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 2 ), ParseGetVariable( GetU8( script + 1 ) & 0x0F, GetU8( script + 3 ) ) )
                     );
-                    AdvanceScript(4, script, end);
+                    AdvanceScript( 4, script, end );
                 }
                 else if (opcode == 0x81) // SETWORD
                 {
@@ -1626,7 +1677,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                         "field:set_entity_to_character(\"" +
                         entity_list[i] +
                         "\", " +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ");\n"
                     );
 
@@ -1645,9 +1696,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":set_animation_default(\"" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         "\", " +
-                        ToFloatString(1.0f / GetU8(script + 2)) +
+                        FloatToString(1.0f / GetU8(script + 2)) +
                         ");\n"
                     );
 
@@ -1658,9 +1709,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":play_animation_wait(\"" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         "\", 0, -1, " +
-                        ToFloatString(1.0f / GetU8(script + 2)) +
+                        FloatToString(1.0f / GetU8(script + 2)) +
                         ", false);\n"
                     );
 
@@ -1671,7 +1722,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":set_visible(" +
-                        ToBoolString((bool)(GetU8(script + 1))) +
+                        BoolToString((bool)(GetU8(script + 1))) +
                         ");\n"
                     );
 
@@ -1761,7 +1812,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                         ", " +
                         ((type == 0) ? "Entity.CLOCKWISE" : ((type == 1) ? "Entity.ANTICLOCKWISE" : "Entity.CLOSEST")) +
                         ", " +
-                        ToFloatString(GetU8(script + 3) / 30.0f) +
+                        FloatToString(GetU8(script + 3) / 30.0f) +
                         ");\n"
                     );
 
@@ -1794,9 +1845,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":play_animation( \"" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         "\", 0, -1, " +
-                        ToFloatString(1.0f / GetU8(script + 2)) +
+                        FloatToString(1.0f / GetU8(script + 2)) +
                         ", false );\n"
                     );
 
@@ -1807,9 +1858,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":play_animation( \"" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         "\", 0, -1, " +
-                        ToFloatString(1.0f / GetU8(script + 2)) +
+                        FloatToString(1.0f / GetU8(script + 2)) +
                         ", true );\n"
                     );
 
@@ -1820,13 +1871,13 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":play_animation( \"" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         "\", " +
-                        ToFloatString(GetU8(script + 2) / 30.0f) +
+                        FloatToString(GetU8(script + 2) / 30.0f) +
                         ", " +
-                        ToFloatString(GetU8(script + 3) / 30.0f) +
+                        FloatToString(GetU8(script + 3) / 30.0f) +
                         ", " +
-                        ToFloatString(1.0f / GetU8(script + 4)) +
+                        FloatToString(1.0f / GetU8(script + 4)) +
                         ", true );\n"
                     );
 
@@ -1868,7 +1919,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                         ", " +
                         ((calc == 1) ? "Field.LINEAR" : "Field.SMOOTH") +
                         ", " +
-                        ToFloatString(GetU8(script + 4) / 30.0f) +
+                        FloatToString(GetU8(script + 4) / 30.0f) +
                         " );\n"
                     );
 
@@ -1885,7 +1936,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                         ", Entity.CLOCKWISE, " +
                         ((calc == 1) ? "Field.LINEAR" : "Field.SMOOTH") +
                         ", " +
-                        ToFloatString(GetU8(script + 4) / 30.0f) +
+                        FloatToString(GetU8(script + 4) / 30.0f) +
                         " );\n"
                     );
 
@@ -1929,9 +1980,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":play_animation_wait( \"" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         "\", 0, -1, " +
-                        ToFloatString(1.0f / GetU8(script + 2)) +
+                        FloatToString(1.0f / GetU8(script + 2)) +
                         ", true );\n"
                     );
 
@@ -1942,13 +1993,13 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":play_animation_wait( \"" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         "\", " +
-                        ToFloatString(GetU8(script + 2) / 30.0f) +
+                        FloatToString(GetU8(script + 2) / 30.0f) +
                         ", " +
-                        ToFloatString(GetU8(script + 3) / 30.0f) +
+                        FloatToString(GetU8(script + 3) / 30.0f) +
                         ", " +
-                        ToFloatString(1.0f / GetU8(script + 4)) +
+                        FloatToString(1.0f / GetU8(script + 4)) +
                         ", false );\n"
                     );
 
@@ -1959,13 +2010,13 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":play_animation_wait( \"" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         "\", " +
-                        ToFloatString(GetU8(script + 2) / 30.0f) +
+                        FloatToString(GetU8(script + 2) / 30.0f) +
                         ", " +
-                        ToFloatString(GetU8(script + 3) / 30.0f) +
+                        FloatToString(GetU8(script + 3) / 30.0f) +
                         ", " +
-                        ToFloatString(1.0f / GetU8(script + 4)) +
+                        FloatToString(1.0f / GetU8(script + 4)) +
                         ", true );\n"
                     );
 
@@ -2035,11 +2086,11 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                         ", " +
                         ((type == 0) ? "Entity.UP_TO_DOWN" : ((type == 1) ? "Entity.DOWN_TO_UP" : ((type == 2) ? "Entity.LEFT_TO_RIGHT" : ((type == 1) ? "Entity.RIGHT_TO_LEFT" : "")))) +
                         " ); -- direction needs to be seted to \"" +
-                        ToFloatString((GetU8(script + 13) / 256.0f) * 360.0f) +
+                        FloatToString((GetU8(script + 13) / 256.0f) * 360.0f) +
                         "\" and animation during climbing is \"" +
-                        ToIntString(GetU8(script + 12)) +
+                        IntToString(GetU8(script + 12)) +
                         "\" with speed \"" +
-                        ToFloatString(1.0f / GetU8(script + 14)) +
+                        FloatToString(1.0f / GetU8(script + 14)) +
                         "\"\n"
                     );
 
@@ -2102,7 +2153,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":set_solid( " +
-                        ToBoolString(!(bool)(GetU8(script + 1))) +
+                        BoolToString(!(bool)(GetU8(script + 1))) +
                         " );\n"
                     );
 
@@ -2112,7 +2163,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "game:party_add( " +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         " );\n"
                     );
 
@@ -2122,7 +2173,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "game:party_remove( " +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         " );\n"
                     );
 
@@ -2132,11 +2183,11 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "game:party_set( " +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ", " +
-                        ToIntString(GetU8(script + 2)) +
+                        IntToString(GetU8(script + 2)) +
                         ", " +
-                        ToIntString(GetU8(script + 3)) +
+                        IntToString(GetU8(script + 3)) +
                         " );\n"
                     );
 
@@ -2146,9 +2197,9 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "game:character_enable( " +
-                        ToIntString(GetU8(script + 2)) +
+                        IntToString(GetU8(script + 2)) +
                         ", " +
-                        ToBoolString((bool)(GetU8(script + 1))) +
+                        BoolToString((bool)(GetU8(script + 1))) +
                         " );\n"
                     );
 
@@ -2168,17 +2219,17 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "-- define line point1( " +
-                        ToIntString(GetU16LE(script + 1)) +
+                        IntToString(GetU16LE(script + 1)) +
                         ", " +
-                        ToIntString(GetU16LE(script + 3)) +
+                        IntToString(GetU16LE(script + 3)) +
                         ", " +
-                        ToIntString(GetU16LE(script + 5)) +
+                        IntToString(GetU16LE(script + 5)) +
                         "), point2(" +
-                        ToIntString(GetU16LE(script + 7)) +
+                        IntToString(GetU16LE(script + 7)) +
                         ", " +
-                        ToIntString(GetU16LE(script + 9)) +
+                        IntToString(GetU16LE(script + 9)) +
                         ", " +
-                        ToIntString(GetU16LE(script + 11)) +
+                        IntToString(GetU16LE(script + 11)) +
                         " )\n"
                     );
 
@@ -2241,7 +2292,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     u8 sub_opcode = GetU8(script + 4);
 
                     Ogre::String sound = "music:execute_akao( " +
-                        ToHexString(sub_opcode, 2, '0') +
+                        HexToString(sub_opcode, 2, '0') +
                         ", " +
                         ParseGetVariable(GetU8(script + 1) >> 4, GetU16LE(script + 5), true) +
                         ", " +
@@ -2279,116 +2330,88 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
 
                     AdvanceScript(1, script, end);
                 }
-                else if (opcode == 0xE0) // BGON
+                else if( opcode == 0xE0 ) // BGON
                 {
                     export_script->Log(
                         "field:background_on( \"" +
-                        ParseGetVariable(GetU8(script + 1) >> 4, GetU8(script + 2)) +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 1) & 0x0F, GetU8(script + 3)) +
+                        ParseGetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 2 ) ) +
+                        "\", " +
+                        ParseGetVariable( GetU8( script + 1 ) & 0x0F, GetU8( script + 3 ) ) +
                         " ); -- turns on layer of background animation with given id\n"
                     );
-
-                    AdvanceScript(4, script, end);
+                    AdvanceScript( 4, script, end );
                 }
-                else if (opcode == 0xE1) // BGOFF
+                else if( opcode == 0xE1 ) // BGOFF
                 {
                     export_script->Log(
                         "field:background_off( \"" +
-                        ParseGetVariable(GetU8(script + 1) >> 4, GetU8(script + 2)) +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 1) & 0x0F, GetU8(script + 3)) +
+                        ParseGetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 2 ) ) +
+                        "\", " +
+                        ParseGetVariable( GetU8( script + 1 ) & 0x0F, GetU8( script + 3 ) ) +
                         " ); -- turns off layer of background animation with given id\n"
                     );
-
-                    AdvanceScript(4, script, end);
+                    AdvanceScript( 4, script, end );
                 }
-                else if (opcode == 0xE4) // BGCLR
+                else if( opcode == 0xE4 ) // BGCLR
                 {
                     export_script->Log(
-                        "field:background_clear( " +
-                        ParseGetVariable(GetU8(script + 1), GetU8(script + 2)) +
-                        " ); -- turns off all layer of background animation with given id\n"
+                        "field:background_clear( \"" +
+                        ParseGetVariable( GetU8( script + 1 ), GetU8( script + 2 ) ) +
+                        "\" ); -- turns off all layer of background animation with given id\n"
                     );
-
-                    AdvanceScript(3, script, end);
+                    AdvanceScript( 3, script, end );
                 }
-                else if (opcode == 0xE5) // STPAL
+                else if( opcode == 0xE5 ) // STPAL
                 {
-                    export_script->Log(
-                        "[UNREVERSED] STPAL(" +
-                        ArgumentString(script + 1, 4) +
-                        ");\n"
-                    );
-
-                    AdvanceScript(5, script, end);
+                    export_script->Log( "[UNREVERSED] STPAL( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    AdvanceScript( 5, script, end );
                 }
-                else if (opcode == 0xE6) // LDPAL
+                else if( opcode == 0xE6 ) // LDPAL
                 {
-                    export_script->Log(
-                        "[UNREVERSED] LDPAL(" +
-                        ArgumentString(script + 1, 4) +
-                        ");\n"
-                    );
-
-                    AdvanceScript(5, script, end);
+                    export_script->Log( "[UNREVERSED] LDPAL( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    AdvanceScript( 5, script, end );
                 }
-                else if (opcode == 0xE7) // CPPAL
+                else if( opcode == 0xE7 ) // CPPAL
                 {
-                    export_script->Log(
-                        "[UNREVERSED] CPPAL(" +
-                        ArgumentString(script + 1, 4) +
-                        ");\n"
-                    );
-
-                    AdvanceScript(5, script, end);
+                    export_script->Log( "[UNREVERSED] CPPAL( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    AdvanceScript( 5, script, end );
                 }
-                else if (opcode == 0xE9) // ADPAL
+                else if( opcode == 0xE9 ) // ADPAL
                 {
-                    export_script->Log(
-                        "[UNREVERSED] ADPAL(" +
-                        ArgumentString(script + 1, 9) +
-                        ");\n"
-                    );
-
-                    AdvanceScript(10, script, end);
+                    export_script->Log( "[UNREVERSED] ADPAL( " + ArgumentString( script + 1, 9 ) + " );\n" );
+                    AdvanceScript( 10, script, end );
                 }
-                else if (opcode == 0xEA) // MPPAL2
+                else if( opcode == 0xEA ) // MPPAL2
                 {
-                    export_script->Log(
-                        "[UNREVERSED] MPPAL2(" +
-                        ArgumentString(script + 1, 9) +
-                        ");\n"
-                    );
-
-                    AdvanceScript(10, script, end);
+                    export_script->Log( "[UNREVERSED] MPPAL2( " + ArgumentString( script + 1, 9 ) + " );\n" );
+                    AdvanceScript( 10, script, end );
                 }
-                else if (opcode == 0xEE) // RTPAL2
+                else if( opcode == 0xEB ) // STPLS
                 {
-                    export_script->Log(
-                        "[UNREVERSED] RTPAL2(" +
-                        ArgumentString(script + 1, 7) +
-                        ");\n"
-                    );
-
-                    AdvanceScript(8, script, end);
+                    export_script->Log( "[UNREVERSED] STPLS( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    AdvanceScript( 5, script, end );
                 }
-                else if (opcode == 0xEF) // ADPAL2
+                else if( opcode == 0xEC ) // LDPLS
                 {
-                    export_script->Log(
-                        "[UNREVERSED] ADPAL2(" +
-                        ArgumentString(script + 1, 10) +
-                        ");\n"
-                    );
-
-                    AdvanceScript(11, script, end);
+                    export_script->Log( "[UNREVERSED] LDPLS( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    AdvanceScript( 5, script, end );
+                }
+                else if( opcode == 0xEE ) // RTPAL2
+                {
+                    export_script->Log( "[UNREVERSED] RTPAL2( " + ArgumentString( script + 1, 7 ) + " );\n" );
+                    AdvanceScript( 8, script, end );
+                }
+                else if( opcode == 0xEF ) // ADPAL2
+                {
+                    export_script->Log( "[UNREVERSED] ADPAL2( " + ArgumentString( script + 1, 10 ) + ");\n" );
+                    AdvanceScript( 11, script, end );
                 }
                 else if (opcode == 0xF0) // MUSIC
                 {
                     Ogre::String sound = "music:execute_akao( " +
-                        ToHexString(0x10, 2, '0') +
+                        HexToString(0x10, 2, '0') +
                         ", pointer_to_field_AKAO_" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         " ); -- play field music\n";
 
                     m_SoundOpcodes.push_back(sound);
@@ -2399,7 +2422,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 else if (opcode == 0xF1) // SOUND
                 {
                     Ogre::String sound = "music:execute_akao( " +
-                        ToHexString(0x20, 2, '0') +
+                        HexToString(0x20, 2, '0') +
                         ", " +
                         ParseGetVariable(GetU8(script + 1) & 0x0F, GetU8(script + 4), true) +
                         ", " +
@@ -2416,7 +2439,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                     u8 sub_opcode = GetU8(script + 4);
 
                     Ogre::String sound = "music:execute_akao( " +
-                        ToHexString(sub_opcode, 2, '0') +
+                        HexToString(sub_opcode, 2, '0') +
                         ", " +
                         ParseGetVariable(GetU8(script + 1) >> 4, GetU8(script + 5), true) +
                         ", " +
@@ -2440,7 +2463,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "music:lock( " +
-                        ToBoolString((bool)(GetU8(script + 1))) +
+                        BoolToString((bool)(GetU8(script + 1))) +
                         " );\n"
                     );
 
@@ -2450,7 +2473,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "[UNREVERSED] BMUSC(" +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         ");\n"
                     );
 
@@ -2460,7 +2483,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "field:movie_set( " +
-                        ToIntString(GetU8(script + 1)) +
+                        IntToString(GetU8(script + 1)) +
                         " );\n"
                     );
 
@@ -2482,7 +2505,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 {
                     export_script->Log(
                         "field:movie_camera_enable( " +
-                        ToBoolString(!(bool)(GetU8(script + 1))) +
+                        BoolToString(!(bool)(GetU8(script + 1))) +
                         " );\n"
                     );
 
@@ -2507,7 +2530,7 @@ DatFile::DumpScriptData( const Ogre::String& export_path, const Field& field )
                 }
                 else
                 {
-                    export_script->Log("[OPCODE " + ToHexString(opcode, 2, '0') + "]\n");
+                    export_script->Log("[OPCODE " + HexToString(opcode, 2, '0') + "]\n");
                     script += 1;
                 }
             }
@@ -2627,7 +2650,7 @@ DatFile::ParseVariableName(int slot, int value)
         }
     }
 
-    LOGGER->Log("\n[WARNING] ParseVariableName " + ToIntString(value) + " for slot " + ToIntString(slot) + " not implemented.\n");
+    LOGGER->Log("\n[WARNING] ParseVariableName " + IntToString(value) + " for slot " + IntToString(slot) + " not implemented.\n");
 
     return "";
 }
@@ -2635,33 +2658,33 @@ DatFile::ParseVariableName(int slot, int value)
 
 
 Ogre::String
-DatFile::ParseGetVariable(int get_slot, int get_value, bool hex, float fixed)
+DatFile::ParseGetVariable( int get_slot, int get_value, bool hex, float fixed )
 {
-    if (get_slot == 0)
+    if( get_slot == 0 )
     {
-        if (hex == true)
+        if( hex == true )
         {
-            return ToHexString(get_value, 8, '0');
+            return HexToString( get_value, 8, '0' );
         }
         else
         {
-            return ToFloatString(get_value / fixed);
+            return FloatToString( get_value / fixed );
         }
     }
-    else if (get_slot == 1 || get_slot == 2 || get_slot == 3 || get_slot == 13 || get_slot == 15)
+    else if( get_slot == 1 || get_slot == 2 || get_slot == 3 || get_slot == 13 || get_slot == 15 )
     {
-        return "game:variable_get(\"" + ParseVariableName(get_slot, get_value) + "\")";
+        return "game:variable_get( \"" + ParseVariableName( get_slot, get_value ) + "\" )";
     }
-    else if (get_slot == 5)
+    else if( get_slot == 5 )
     {
-        return "temp5_" + ToIntString(get_value);
+        return "temp5_" + HexToString( get_value, 2, '0' );
     }
-    else if (get_slot == 6)
+    else if( get_slot == 6 )
     {
-        return "temp6_" + ToIntString(get_value);
+        return "temp6_" + HexToString( get_value, 2, '0' );
     }
 
-    LOGGER->Log("\n[WARNING] ParseGetVariable " + ToIntString(get_value) + " for slot " + ToIntString(get_slot) + " not implemented.\n");
+    LOGGER->Log( "\n[WARNING] ParseGetVariable " + IntToString( get_value ) + " for slot " + IntToString( get_slot ) + " not implemented.\n" );
 
     return "";
 }
@@ -2669,7 +2692,7 @@ DatFile::ParseGetVariable(int get_slot, int get_value, bool hex, float fixed)
 
 
 Ogre::String
-DatFile::SetVariable(int set_slot, int set_value, Ogre::String get_string)
+DatFile::SetVariable( int set_slot, int set_value, Ogre::String get_string )
 {
     if (set_slot == 1 || set_slot == 2 || set_slot == 3 || set_slot == 13 || set_slot == 15)
     {
@@ -2677,14 +2700,14 @@ DatFile::SetVariable(int set_slot, int set_value, Ogre::String get_string)
     }
     else if (set_slot == 5)
     {
-        return "temp5_" + ToIntString(set_value) + " = " + get_string + ";\n";
+        return "temp5_" + HexToString( set_value, 2, '0' ) + " = " + get_string + ";\n";
     }
     else if (set_slot == 6)
     {
-        return "temp6_" + ToIntString(set_value) + " = " + get_string + ";\n";
+        return "temp6_" + HexToString( set_value, 2, '0' ) + " = " + get_string + ";\n";
     }
 
-    LOGGER->Log("\n[WARNING] SetVariable " + ToIntString(set_value) + " for slot " + ToIntString(set_slot) + " not implemented.\n");
+    LOGGER->Log("\n[WARNING] SetVariable " + IntToString(set_value) + " for slot " + IntToString(set_slot) + " not implemented.\n");
 
     return "";
 }
@@ -2706,7 +2729,7 @@ DatFile::SetBitChange(int set_slot, int set_value, int get_slot, int get_value, 
         }
     }
 
-    LOGGER->Log("\n[WARNING] SetBitChange " + ToIntString(set_value) + " for slot " + ToIntString(set_slot) + " not implemented.\n");
+    LOGGER->Log("\n[WARNING] SetBitChange " + IntToString(set_value) + " for slot " + IntToString(set_slot) + " not implemented.\n");
 
     return "";
 }
@@ -2743,7 +2766,7 @@ DatFile::ArgumentString(int script, int number)
 
     for (int i = 0; i < number; ++i)
     {
-        ret += ToHexString(GetU8(script + i), 2, '0');
+        ret += HexToString(GetU8(script + i), 2, '0');
         if (i + 1 < number)
         {
             ret += ", ";
@@ -2758,7 +2781,7 @@ DatFile::ArgumentString(int script, int number)
 Ogre::String
 DatFile::OffsetString(int val)
 {
-    return ToHexString(val, 4, '0');
+    return HexToString(val, 4, '0');
 }
 
 
@@ -2768,7 +2791,7 @@ DatFile::GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre
 {
     // sector 4
     u32 offset_to_camera = 0x1c + GetU32LE( 0x0c ) - GetU32LE( 0x00 );
-    LOGGER->Log( "offset_to_camera = " + ToHexString( offset_to_camera, 8, '0' ) + "\n" );
+    LOGGER->Log( "offset_to_camera = " + HexToString( offset_to_camera, 8, '0' ) + "\n" );
 
     // get camera matrix (3 vectors)
     Ogre::Matrix3 matrix;
@@ -2804,8 +2827,8 @@ DatFile::GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre
 
     LOGGER->Log( "Field camera matrix : " + Ogre::StringConverter::toString( matrix ) + "\n" );
     LOGGER->Log( "Camera position     : " + Ogre::StringConverter::toString( position ) + "\n" );
-    LOGGER->Log( "Camera distance:      distance = " + ToFloatString( distance ) + "\n");
-    LOGGER->Log( "Unknown (depth que?): DQB = " + ToHexString( GetU32LE( offset_to_camera + 0x20 ), 8, '0' ) + ", DQA = " + ToHexString( GetU16LE( offset_to_camera + 0x26 ), 4, '0' ) + "\n" );
+    LOGGER->Log( "Camera distance:      distance = " + FloatToString( distance ) + "\n");
+    LOGGER->Log( "Unknown (depth que?): DQB = " + HexToString( GetU32LE( offset_to_camera + 0x20 ), 8, '0' ) + ", DQA = " + HexToString( GetU16LE( offset_to_camera + 0x26 ), 4, '0' ) + "\n" );
 }
 
 
@@ -2921,8 +2944,8 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             tile.background = 1;
             tile.dest_x     = GetU16LE( s4 + 0x00 );
             tile.dest_y     = GetU16LE( s4 + 0x02 );
-            tile.src_x      = GetU8( s4 + 0x04 );
-            tile.src_y      = GetU8( s4 + 0x05 );
+            tile.src_x      = GetU16LE( s4 + 0x04 );
+            tile.src_y      = GetU16LE( s4 + 0x05 );
             tile.clut_y     = ( GetU16LE( s4 + 0x06 ) & 0xffc0 ) >> 6;
             tile.clut_x     = ( GetU16LE( s4 + 0x06 ) & 0x003f ) << 4;
             tile.bpp        = ( GetU16LE( s4 + 0x08 ) & 0x0180 ) >> 0x07;
@@ -2933,13 +2956,14 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             tile.animation  = GetU8( s4 + 0x0c ) & 0x0f;
             tile.animation_index = GetU8( s4 + 0x0d );
             tiles.push_back( tile );
+            //LOGGER->Log( "Tile animation = " + HexToString( tile.animation, 2, '0' ) +", index = " + HexToString( tile.animation_index, 2, '0' ) +", blending = " + HexToString( tile.blending, 4, '0' ) +", src_x = " + HexToString( tile.src_x, 2, '0' ) +", src_y = " + HexToString( tile.src_y, 2, '0' ) + ", depth = " + HexToString( tile.depth, 4, '0' ) + ", dest_x = " + HexToString( tile.dest_x, 4, '0' ) + " dest_y = " + HexToString( tile.dest_y, 4, '0' ) + "\n" );
 
             s4 += 0x0e;
         }
     }
 
 
-
+/*
     for( ; s1 < offset_to_2; s1 += 0x06 )
     {
         if( GetU16LE( s1 ) == 0x7ffe )
@@ -2949,7 +2973,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
             g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
             s3 += 0x02;
-            //LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
+            //LOGGER->Log( "Set global tex page x = " + HexToString( g_page_x, 4, '0' ) +", tex page y = " + HexToString( g_page_y, 4, '0' ) + ", blending = " + HexToString( g_blending, 2, '0' ) + ", bpp = " + HexToString( g_bpp, 2, '0' ) + "\n" );
             s1 += 0x06;
         }
         if( GetU16LE( s1 ) == 0x7fff )
@@ -3027,6 +3051,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             s5 += 0x0a;
         }
     }
+*/
 
 
 
@@ -3034,64 +3059,206 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     std::vector< Tile > temp_tiles;
     for( unsigned int i = 0; i < tiles.size(); ++i )
     {
+        if( tiles[ i ].clut_y == 0x1ed )
+        {
+            LOGGER->Log( "Tile \"" + IntToString( i ) + "\" dest \"" + IntToString( tiles[ i ].dest_x ) + " " + IntToString( tiles[ i ].dest_y ) + "\" with animation \"" + IntToString( tiles[ i ].animation ) + "\" and animation_index \"" + IntToString( tiles[ i ].animation_index ) + "\"\n" );
+        }
+
         if( tiles[ i ].animation == 0 )
         {
             temp_tiles.push_back( tiles[ i ] );
         }
-        else
+    }
+    for( unsigned int i = 0; i < field.animations.size(); ++i )
+    {
+        if( field.animations[ i ].type != FAT_ANIMATION )
+        {
+            continue;
+        }
+
+        //LOGGER->Log( "Start add animation \"" + field.animations[ i ].name + "\" with animation \"" + IntToString( field.animations[ i ].animation ) + "\"\n" );
+
+        for( unsigned int k = 0; k < tiles.size(); ++k )
+        {
+            if( tiles[ k ].animation == field.animations[ i ].animation )
+            {
+                //LOGGER->Log( "Try add tile \"" + IntToString( k ) + "\" with animation \"" + IntToString( tiles[ k ].animation ) + "\" and animation_index \"" + IntToString( tiles[ k ].animation_index ) + "\"\n" );
+                //LOGGER->Log( "Search for existed temp_tile.\n" );
+
+                Tile tile;
+
+                unsigned int l = 0;
+                for( ; l < temp_tiles.size(); ++l )
+                {
+                    if( temp_tiles[ l ].animation == field.animations[ i ].animation && temp_tiles[ l ].dest_x == tiles[ k ].dest_x && temp_tiles[ l ].dest_y == tiles[ k ].dest_y )
+                    {
+                        tile = temp_tiles[ l ];
+                        break;
+                    }
+                }
+
+                if( l == temp_tiles.size() )
+                {
+                    //LOGGER->Log( "Temp_tile not found add new one.\n" );
+
+                    tile.background = tiles[ k ].background;
+                    tile.dest_x     = tiles[ k ].dest_x;
+                    tile.dest_y     = tiles[ k ].dest_y;
+                    tile.src_x      = tiles[ k ].src_x;
+                    tile.src_y      = tiles[ k ].src_y;
+                    tile.clut_x     = tiles[ k ].clut_x;
+                    tile.clut_y     = tiles[ k ].clut_y;
+                    tile.bpp        = tiles[ k ].bpp;
+                    tile.page_x     = tiles[ k ].page_x;
+                    tile.page_y     = tiles[ k ].page_y;
+                    tile.depth      = tiles[ k ].depth;
+                    tile.blending   = tiles[ k ].blending;
+                    tile.animation  = tiles[ k ].animation;
+                }
+
+                //LOGGER->Log( "Search for existed animation in temp_tile.\n" );
+                unsigned int m = 0;
+                for( ; m < tile.animations.size(); ++m )
+                {
+                    if( tile.animations[ m ].name == field.animations[ i ].name )
+                    {
+                        break;
+                    }
+                }
+
+                if( m == tile.animations.size() )
+                {
+                    //LOGGER->Log( "Animation not found add new one.\n" );
+                    Animation animation;
+                    animation.name = field.animations[ i ].name;
+                    animation.time = field.animations[ i ].time;
+                    tile.animations.push_back( animation );
+                }
+
+                unsigned int j = 0;
+                for( ; j < field.animations[ i ].keyframes.size(); ++j )
+                {
+                    //LOGGER->Log( "Keyframe with animation_index \"" + FloatToString( field.animations[ i ].keyframes[ j ].animation_index ) + "\"\n" );
+
+                    if( field.animations[ i ].keyframes[ j ].blank != true )
+                    {
+                        if( ( 1 << field.animations[ i ].keyframes[ j ].animation_index ) == tiles[ k ].animation_index )
+                        {
+                            KeyFrame frame;
+                            frame.time   = field.animations[ i ].keyframes[ j ].time;
+                            frame.src_x  = tiles[ k ].src_x;
+                            frame.src_y  = tiles[ k ].src_y;
+                            frame.clut_x = tiles[ k ].clut_x;
+                            frame.clut_y = tiles[ k ].clut_y;
+                            frame.bpp    = tiles[ k ].bpp;
+                            frame.page_x = tiles[ k ].page_x;
+                            frame.page_y = tiles[ k ].page_y;
+                            tile.animations[ m ].keyframes.push_back( frame );
+                            break;
+                        }
+                    }
+                }
+
+                if( l == temp_tiles.size() )
+                {
+                    // do not add empty animations
+                    if( j != field.animations[ i ].keyframes.size() )
+                    {
+                        temp_tiles.push_back( tile );
+                    }
+                }
+                else
+                {
+                    temp_tiles[ l ] = tile;
+                }
+            }
+        }
+    }
+    // there can be tiles at given animation coords with only one state. Yo handle this we add blank instead missing animation indexes.
+    // we also add normal blank here as well
+    //LOGGER->Log( "Start adding blank values.\n" );
+    for( unsigned int i = 0; i < temp_tiles.size(); ++i )
+    {
+        for( unsigned int k = 0; k < field.animations.size(); ++k )
         {
             unsigned int j = 0;
-            for( ; j < temp_tiles.size(); ++j )
+            for( ; j < temp_tiles[ i ].animations.size(); ++j )
             {
-                if( temp_tiles[ j ].animation == tiles[ i ].animation &&
-                    temp_tiles[ j ].dest_x    == tiles[ i ].dest_x &&
-                    temp_tiles[ j ].dest_y    == tiles[ i ].dest_y )
+                if( field.animations[ k ].name == temp_tiles[ i ].animations[ j ].name )
                 {
-                    KeyFrame key;
-                    key.time = tiles[ i ].animation_index;
-                    key.background = tiles[ i ].background;
-                    key.src_x = tiles[ i ].src_x;
-                    key.src_y = tiles[ i ].src_y;
-                    key.clut_x = tiles[ i ].clut_x;
-                    key.clut_y = tiles[ i ].clut_y;
-                    key.bpp = tiles[ i ].bpp;
-                    key.page_x = tiles[ i ].page_x;
-                    key.page_y = tiles[ i ].page_y;
-                    key.blending = tiles[ i ].blending;
-                    temp_tiles[ j ].animation_key.keyframes.push_back( key );
+                    for( unsigned int l = 0; l < field.animations[ k ].keyframes.size(); ++l )
+                    {
+                        unsigned int m = 0;
+                        for( ; m < temp_tiles[ i ].animations[ j ].keyframes.size(); ++m )
+                        {
+                            if( temp_tiles[ i ].animations[ j ].keyframes[ m ].time == field.animations[ k ].keyframes[ l ].time )
+                            {
+                                break;
+                            }
+                        }
+
+                        // if this frame is missing add it
+                        if( m == temp_tiles[ i ].animations[ j ].keyframes.size() )
+                        {
+                            KeyFrame frame;
+                            frame.time   = field.animations[ k ].keyframes[ l ].time;
+                            frame.src_x  = 0;
+                            frame.src_y  = 0;
+                            frame.clut_x = 0;
+                            frame.clut_y = 0;
+                            frame.bpp    = 0;
+                            frame.page_x = 0;
+                            frame.page_y = 0;
+                            temp_tiles[ i ].animations[ j ].keyframes.push_back( frame );
+                        }
+                    }
 
                     break;
                 }
             }
 
-            if( j == temp_tiles.size() )
+            if( j == temp_tiles[ i ].animations.size() )
             {
-                KeyFrame key;
-                key.time = tiles[ i ].animation_index;
-                key.background = tiles[ i ].background;
-                key.src_x = tiles[ i ].src_x;
-                key.src_y = tiles[ i ].src_y;
-                key.clut_x = tiles[ i ].clut_x;
-                key.clut_y = tiles[ i ].clut_y;
-                key.bpp = tiles[ i ].bpp;
-                key.page_x = tiles[ i ].page_x;
-                key.page_y = tiles[ i ].page_y;
-                key.blending = tiles[ i ].blending;
-                tiles[ i ].animation_key.keyframes.push_back( key );
-                tiles[ i ].animation_key.name = Ogre::StringConverter::toString( tiles[ i ].animation );
-
-                temp_tiles.push_back( tiles[ i ] );
+                Animation animation;
+                animation.name = field.animations[ k ].name;
+                animation.time = field.animations[ k ].time;
+                for( unsigned int l = 0; l < field.animations[ k ].keyframes.size(); ++l )
+                {
+                    KeyFrame frame;
+                    frame.time   = field.animations[ k ].keyframes[ l ].time;
+                    frame.src_x  = 0;
+                    frame.src_y  = 0;
+                    frame.clut_x = 0;
+                    frame.clut_y = 0;
+                    frame.bpp    = 0;
+                    frame.page_x = 0;
+                    frame.page_y = 0;
+                    animation.keyframes.push_back( frame );
+                }
+                temp_tiles[ i ].animations.push_back( animation );
             }
         }
     }
+    //LOGGER->Log( "Start sorting all tiles.\n" );
+    for( int i = 0; i < temp_tiles.size(); ++i )
+    {
+        for( int l = 0; l < temp_tiles[ i ].animations.size(); ++l )
+        {
+            std::sort( temp_tiles[ i ].animations[ l ].keyframes.begin(), temp_tiles[ i ].animations[ l ].keyframes.end(), anim_time_sort() );
+        }
+        std::sort( temp_tiles[ i ].animations.begin(), temp_tiles[ i ].animations.end(), anim_name_sort() );
+    }
+    //LOGGER->Log( "Finish sorting all tiles.\n" );
     tiles = temp_tiles;
 
 
 
+    //LOGGER->Log( "Start add tiles to file.\n" );
     for( unsigned int i = 0; i < tiles.size(); ++i )
     {
         AddTile( tiles[ i ], mim, export_text );
     }
+    //LOGGER->Log( "Finish add tiles to file.\n" );
 
 
 
@@ -3128,9 +3295,21 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 void
 DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
 {
-    int x = 0;
-    int y = 0;
-    Surface* sub_image = AddTileTex( x, y, tile.background, tile.src_x, tile.src_y, tile.clut_x, tile.clut_y, tile.bpp, tile.page_x, tile.page_y, tile.blending, mim );
+    AddedTile added_main_tile = AddTileTex( tile.background, tile.src_x, tile.src_y, tile.clut_x, tile.clut_y, tile.bpp, tile.page_x, tile.page_y, mim );
+
+    Ogre::String blending_str = "";
+    if( tile.blending == 0 )
+    {
+        blending_str = "alpha";
+    }
+    else if( tile.blending == 1 )
+    {
+        blending_str = "add";
+    }
+    else
+    {
+        LOGGER->Log( "Tile blending with type \"" + Ogre::StringConverter::toString( tile.blending ) + "\" not supported." );
+    }
 
     export_text->Log(
                         "    <tile destination=\"" +
@@ -3138,20 +3317,20 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
                         " " +
                         Ogre::StringConverter::toString( tile.dest_y * 3 ) +
                         "\" width=\"" +
-                        Ogre::StringConverter::toString( sub_image->width * 3 ) +
+                        Ogre::StringConverter::toString( added_main_tile.width * 3 ) +
                         "\" height=\"" +
-                        Ogre::StringConverter::toString( sub_image->height * 3 ) +
+                        Ogre::StringConverter::toString( added_main_tile.height * 3 ) +
                         "\" uv=\"" +
-                        Ogre::StringConverter::toString( x / ( float ) full_image->width ) +
+                        Ogre::StringConverter::toString( added_main_tile.x / ( float ) full_image->width ) +
                         " " +
-                        Ogre::StringConverter::toString( y / ( float ) full_image->height ) +
+                        Ogre::StringConverter::toString( added_main_tile.y / ( float ) full_image->height ) +
                         " " +
-                        Ogre::StringConverter::toString( ( x + sub_image->width ) / ( float ) full_image->width ) +
+                        Ogre::StringConverter::toString( ( added_main_tile.x + added_main_tile.width ) / ( float ) full_image->width ) +
                         " " +
-                        Ogre::StringConverter::toString( ( y + sub_image->height ) / ( float ) full_image->height ) +
+                        Ogre::StringConverter::toString( ( added_main_tile.y + added_main_tile.height ) / ( float ) full_image->height ) +
                         "\" depth=\"" +
-                        Ogre::StringConverter::toString( tile.depth / 1024.0f ) +
-                        "\""
+                        Ogre::StringConverter::toString( ( ( tile.background > 0 ) ? tile.depth / 65535.0f : 1) ) +
+                        "\" blending=\"" + blending_str + "\""
     );
 
     if( tile.animation == 0 )
@@ -3161,55 +3340,63 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
     else
     {
         export_text->Log( ">\n" );
-        export_text->Log( "        <animation name=\"" + tile.animation_key.name + "\" length=\"" + Ogre::StringConverter::toString( tile.animation_key.keyframes.size() ) + "\" uv=\"" );
 
-        for( unsigned int i = 0; i < tile.animation_key.keyframes.size(); ++i )
+        for( unsigned int l = 0; l < tile.animations.size(); ++l )
         {
-            if( i == 0 )
+            export_text->Log( "        <animation name=\"" + tile.animations[ l ].name + "\" length=\"" + Ogre::StringConverter::toString( tile.animations[ l ].time ) + "\" uv=\"" );
+
+            for( unsigned int i = 0; i < tile.animations[ l ].keyframes.size(); ++i )
             {
-                export_text->Log( Ogre::StringConverter::toString( tile.animation_key.keyframes[ i ].time ) +
+                if( i != 0 )
+                {
+                    export_text->Log( "," );
+                }
+
+                //LOGGER->Log( "Animation tile pixels src_x=\"" + IntToString( tile.animation_key.keyframes[ i ].src_x ) + "\" src_y=\"" + IntToString( tile.animation_key.keyframes[ i ].src_y ) + "\"\n" );
+                AddedTile added_tile = AddTileTex( tile.background, tile.animations[ l ].keyframes[ i ].src_x, tile.animations[ l ].keyframes[ i ].src_y, tile.animations[ l ].keyframes[ i ].clut_x, tile.animations[ l ].keyframes[ i ].clut_y, tile.animations[ l ].keyframes[ i ].bpp, tile.animations[ l ].keyframes[ i ].page_x, tile.animations[ l ].keyframes[ i ].page_y, mim );
+                //LOGGER->Log( "Animation tile pixels x=\"" + IntToString( x ) + "\" y=\"" + IntToString( y ) + "\"\n" );
+                export_text->Log( Ogre::StringConverter::toString( tile.animations[ l ].keyframes[ i ].time ) +
                                   ":" +
-                                  Ogre::StringConverter::toString( x / ( float ) full_image->width ) +
+                                  Ogre::StringConverter::toString( added_tile.x / ( float ) full_image->width ) +
                                   " " +
-                                  Ogre::StringConverter::toString( y / ( float ) full_image->height ) +
+                                  Ogre::StringConverter::toString( added_tile.y / ( float ) full_image->height ) +
                                   " " +
-                                  Ogre::StringConverter::toString( ( x + sub_image->width ) / ( float ) full_image->width ) +
+                                  Ogre::StringConverter::toString( ( added_tile.x + added_tile.width ) / ( float ) full_image->width ) +
                                   " " +
-                                  Ogre::StringConverter::toString( ( y + sub_image->height ) / ( float ) full_image->height )
+                                  Ogre::StringConverter::toString( ( added_tile.y + added_tile.height ) / ( float ) full_image->height )
                 );
             }
-            else
-            {
-                export_text->Log( "," );
-                x = 0;
-                y = 0;
-                Surface* ani_image = AddTileTex( x, y, tile.animation_key.keyframes[ i ].background, tile.animation_key.keyframes[ i ].src_x, tile.animation_key.keyframes[ i ].src_y, tile.animation_key.keyframes[ i ].clut_x, tile.animation_key.keyframes[ i ].clut_y, tile.animation_key.keyframes[ i ].bpp, tile.animation_key.keyframes[ i ].page_x, tile.animation_key.keyframes[ i ].page_y, tile.animation_key.keyframes[ i ].blending, mim );
-                export_text->Log( Ogre::StringConverter::toString( tile.animation_key.keyframes[ i ].time ) +
-                                  ":" +
-                                  Ogre::StringConverter::toString( x / ( float ) full_image->width ) +
-                                  " " +
-                                  Ogre::StringConverter::toString( y / ( float ) full_image->height ) +
-                                  " " +
-                                  Ogre::StringConverter::toString( ( x + ani_image->width ) / ( float ) full_image->width ) +
-                                  " " +
-                                  Ogre::StringConverter::toString( ( y + ani_image->height ) / ( float ) full_image->height )
-                );
-                delete ani_image;
-            }
+
+            export_text->Log( "\" />\n" );
         }
- 
-        export_text->Log( "\" />\n" );
+
         export_text->Log( "    </tile>\n" );
     }
-
-    delete sub_image;
 }
 
 
 
-Surface*
-DatFile::AddTileTex( int& x, int& y,  const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u8 blending, MimFile& mim )
+AddedTile
+DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, MimFile& mim )
 {
+    AddedTile tile;
+    tile.background = background;
+    tile.src_x      = src_x;
+    tile.src_y      = src_y;
+    tile.clut_x     = clut_x;
+    tile.clut_y     = clut_y;
+    tile.bpp        = bpp;
+    tile.page_x     = page_x;
+    tile.page_y     = page_x;
+    std::vector< AddedTile >::iterator tile_it = std::find_if( m_AddedTiles.begin(), m_AddedTiles.end(), added_tile_find( tile ) );
+
+    if( tile_it != m_AddedTiles.end() )
+    {
+        return *tile_it;
+    }
+
+
+
     SurfaceTexData surface;
     surface.page_x = page_x;
     surface.page_y = page_y;
@@ -3236,8 +3423,8 @@ DatFile::AddTileTex( int& x, int& y,  const u8 background, const u8 src_x, const
 
     if( sub_image->width == 32 )
     {
-        x = x_32;
-        y = y_32;
+        tile.x = x_32;
+        tile.y = y_32;
 
         x_32 += 32;
         if( x_32 == full_image->width )
@@ -3262,8 +3449,8 @@ DatFile::AddTileTex( int& x, int& y,  const u8 background, const u8 src_x, const
             }
         }
 
-        x = x_16;
-        y = y_16;
+        tile.x = x_16;
+        tile.y = y_16;
 
         ++n_16;
         if( n_16 == 1 || n_16 == 3 )
@@ -3281,15 +3468,20 @@ DatFile::AddTileTex( int& x, int& y,  const u8 background, const u8 src_x, const
         }
     }
 
-    CopyToSurface( full_image, x, y, sub_image );
+    CopyToSurface( full_image, tile.x, tile.y, sub_image );
 
-    return sub_image;
+
+
+    tile.width  = size;
+    tile.height = size;
+    m_AddedTiles.push_back( tile );
+    return tile;
 }
 
 
 
 void
-DatFile::DumpWalkmeshData( const Ogre::String& export_path, const Field& field )
+DatFile::DumpWalkmesh( const Ogre::String& export_path, const Field& field )
 {
     Logger* export_script = new Logger( export_path + "/maps/ffvii_field/" + field.name + "_wm.xml" );
     export_script->Log( "<walkmesh>\n" );
@@ -3325,11 +3517,11 @@ DatFile::DumpWalkmeshData( const Ogre::String& export_path, const Field& field )
             "\" c=\"" +
             Ogre::StringConverter::toString( C ) +
             "\" a_b=\"" +
-            ToIntString( ( s16 )GetU16LE( start_access + 0x00 ) ) +
+            IntToString( ( s16 )GetU16LE( start_access + 0x00 ) ) +
             "\" b_c=\"" +
-            ToIntString( ( s16 )GetU16LE( start_access + 0x02 ) ) +
+            IntToString( ( s16 )GetU16LE( start_access + 0x02 ) ) +
             "\" c_a=\"" +
-            ToIntString( ( s16 )GetU16LE( start_access + 0x04 ) ) +
+            IntToString( ( s16 )GetU16LE( start_access + 0x04 ) ) +
             "\"/>\n"
         );
 
@@ -3339,5 +3531,45 @@ DatFile::DumpWalkmeshData( const Ogre::String& export_path, const Field& field )
     }
 
     export_script->Log( "</walkmesh>" );
+    delete export_script;
+}
+
+
+
+void
+DatFile::DumpTriggers( const Ogre::String& export_path, const Field& field )
+{
+    Logger* export_script = new Logger( export_path + "/maps/ffvii_field/" + field.name + "_triggers.xml" );
+
+    // get sector 5 triggers
+    u32 offset_to_triggers = 0x1c + GetU32LE( 0x10 ) - GetU32LE( 0x00 );
+
+    u32 start_triggers = offset_to_triggers + 0x38;
+
+    for( u32 i = 0; i < 12; ++i )
+    {
+        s16 map_id = GetU16LE( start_triggers + 0x12 );
+
+        // if not inactive gateway
+        if( map_id != 32767 )
+        {
+            Ogre::Vector3 point1(   ( s16 )GetU16LE( start_triggers + 0x00 ) / 128.0f,
+                                    ( s16 )GetU16LE( start_triggers + 0x02 ) / 128.0f,
+                                    ( s16 )GetU16LE( start_triggers + 0x04 ) / 128.0f );
+            Ogre::Vector3 point2(   ( s16 )GetU16LE( start_triggers + 0x06 ) / 128.0f,
+                                    ( s16 )GetU16LE( start_triggers + 0x08 ) / 128.0f,
+                                    ( s16 )GetU16LE( start_triggers + 0x0a ) / 128.0f );
+            Ogre::Vector3 position( ( s16 )GetU16LE( start_triggers + 0x0c ) / 128.0f,
+                                    ( s16 )GetU16LE( start_triggers + 0xe ) / 128.0f,
+                                    ( s16 )GetU16LE( start_triggers + 0x10 ) / 128.0f );
+            float direction = 360.0f * GetU8( start_triggers + 0x14 ) / 255.0f;
+
+            export_script->Log( "    <entity_trigger name=\"Gateway" + IntToString( i ) + "\" point1=\"" + Ogre::StringConverter::toString( point1 ) + "\" point2=\"" + Ogre::StringConverter::toString( point2 ) + "\" enabled=\"true\" />\n" );
+            export_script->Log( "    <entity_model  position=\"" + Ogre::StringConverter::toString( position ) + "\" rotation=\"" + FloatToString( direction ) + "\" />\n" );
+        }
+
+        start_triggers += 0x18;
+    }
+
     delete export_script;
 }

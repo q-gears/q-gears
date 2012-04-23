@@ -6,6 +6,8 @@ To Do
 ----------
 * Add battles and all it's features from FFVII 1st mission until reactor blow.
 
+
+
 ================================================================================
 Q-Gears v0.22 (4th blow for a win) | 2012-06-??
 --------------------------------------------------------------------------------
@@ -19,6 +21,8 @@ To Do
 * [Content FFIX] Add all Alexandria maps without scripted events and entitys.
 * [Entity] Implement mixed walkmesh movement from Xeno and FFIX.
 
+
+
 ================================================================================
 Q-Gears v0.21 (3rd run wild) | 2012-04-??
 --------------------------------------------------------------------------------
@@ -26,12 +30,36 @@ Q-Gears v0.21 (3rd run wild) | 2012-04-??
 To Do
 ----------
 * [Content] Add FFVII fields maps startmap mdstin md1_1 and md1_2 maps and transitions between them.
-* [Entity] Implement triggers.
+* [Background] Implement all background features that used in FFVII 1st mission until reactor blow.
 * [Background] Implement background auto scroll to pc.
 * [Background] Implement background script scroll.
-* [Background] Implement all background features that used in FFVII 1st mission until reactor blow.
+* [Background] Implement palette animation.
 
 
+
+2011-04-23
+----------
+* [Script] Add functions to work with entity points. [Akari]
+* [Entity] Add entity points that declares position in 3d world. Need now for gateway mechanics. [Akari]
+
+2011-04-14
+----------
+* [Debug] Add 3d triangles to debug draw to improve visualization of walkmesh.
+
+2011-04-13
+----------
+* [Entity] Add base line trigger like triggers and gateways in FFVII. [Akari]
+
+2011-04-08
+----------
+* [Script] Add background animation management opcodes and background script object. [Akari]
+* [Background] Add background animation. [Akari]
+* [Export FFVII] Add exporting of tile animation. [Akari]
+
+2011-04-03
+----------
+* [Background] Add blending type support to correctly draw different types of tiles. [Akari]
+* [Export FFVII] Add exporting of blending types. [Akari]
 
 2011-03-27
 ----------
@@ -122,6 +150,8 @@ To Do
 ----------
 * [UI] Add alpha to animatable parameter. [Akari]
 * [Background] Add 2d background base draw. [Akari]
+
+
 
 ================================================================================
 Q-Gears v0.20 (2nd alpha ui) | 2011-08-10
@@ -267,6 +297,8 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-10
 2011-06-17
 ----------
 * [UI] Add placeholder for UI. [Akari]
+
+
 
 ================================================================================
 Q-Gears v0.19 (1st alpha renew) | 2011-06-06

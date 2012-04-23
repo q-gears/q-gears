@@ -53,13 +53,13 @@ ParticleTechnique::CopyAttributesTo(ParticleTechnique* technique)
         Ogre::LogManager::getSingletonPtr()->logMessage("ParticleTechnique::CopyAttributesTo 5");
     // Copy all emitters
     ParticleEmitter* cloned_emitter;
-    for (int i = 0; i < m_Emitters.size(); ++i)
+    for( unsigned int i = 0; i < m_Emitters.size(); ++i )
     {
-        cloned_emitter = ParticleSystemManager::getSingletonPtr()->CloneEmitter(m_Emitters[i]);
-        technique->AddEmitter(cloned_emitter);
+        cloned_emitter = ParticleSystemManager::getSingletonPtr()->CloneEmitter( m_Emitters[ i ] );
+        technique->AddEmitter( cloned_emitter );
     }
 
-        Ogre::LogManager::getSingletonPtr()->logMessage("ParticleTechnique::CopyAttributesTo end");
+    Ogre::LogManager::getSingletonPtr()->logMessage("ParticleTechnique::CopyAttributesTo end");
 }
 
 
@@ -126,9 +126,9 @@ ParticleTechnique::Initialize()
             int increment = m_EmittedEmitterQuota / numberOfEmittedEmitters;
 
             // Run through emitters of the technique
-            for (int i = 0; i < m_Emitters.size(); ++i)
+            for( unsigned int i = 0; i < m_Emitters.size(); ++i )
             {
-                if (m_Emitters[i]->IsEmittable())
+                if( m_Emitters[ i ]->IsEmittable() )
                 {
                     // Clone the emitter 'increment' times and add to the pool
                     for (int j = 0; j < increment; ++j)
@@ -160,10 +160,10 @@ ParticleTechnique::Update(Ogre::Real time_elapsed)
     Ogre::LogManager::getSingletonPtr()->logMessage("ParticleTechnique::Update initialize end");
 
     // Process the emitters
-    for (int i = 0; i < m_Emitters.size(); ++i)
+    for( unsigned int i = 0; i < m_Emitters.size(); ++i )
     {
         // emitted particles handled in pool update
-        if (m_Emitters[i]->IsEmittable() == false)
+        if( m_Emitters[ i ]->IsEmittable() == false )
         {
             Ogre::LogManager::getSingletonPtr()->logMessage("ParticleTechnique::Update emit static emitters");
             ExecuteEmitParticles(m_Emitters[i], m_Emitters[i]->CalculateRequestedParticles(time_elapsed), time_elapsed);
@@ -325,7 +325,7 @@ ParticleTechnique::AddEmitter(ParticleEmitter* emitter)
 void
 ParticleTechnique::DestroyAllEmitters()
 {
-    for (int i = 0; i < m_Emitters.size(); ++i)
+    for( unsigned int i = 0; i < m_Emitters.size(); ++i )
     {
         ParticleSystemManager::getSingletonPtr()->DestroyEmitter(m_Emitters[i]);
     }
@@ -338,7 +338,7 @@ int
 ParticleTechnique::GetNumEmittableEmitters() const
 {
     int count = 0;
-    for (int i = 0; i < m_Emitters.size(); ++i)
+    for( unsigned int i = 0; i < m_Emitters.size(); ++i )
     {
         if (m_Emitters[i]->IsEmittable())
         {
@@ -355,19 +355,19 @@ void
 ParticleTechnique::EmissionChange()
 {
     // Run through all emitters and set MarkedForEmission to false.
-    for (int i = 0; i < m_Emitters.size(); ++i)
+    for( unsigned int i = 0; i < m_Emitters.size(); ++i )
     {
         m_Emitters[i]->SetEmittable(false);
     }
 
     // Run through all emitters and determine which objects each one emits.
-    for (int i = 0; i < m_Emitters.size(); ++i)
+    for( unsigned int i = 0; i < m_Emitters.size(); ++i )
     {
         Ogre::String name = m_Emitters[i]->GetEmitsName();
         if (name != m_Emitters[i]->GetName())
         {
             // Search the emitter to be emitted
-            for (int j = 0; j < m_Emitters.size(); ++j)
+            for( unsigned int j = 0; j < m_Emitters.size(); ++j )
             {
                 if (m_Emitters[j]->GetName() == name)
                 {
@@ -420,7 +420,7 @@ ParticleTechnique::ExecuteEmitParticles(ParticleEmitter* emitter, int requested,
 void
 ParticleTechnique::ResetVisualParticles()
 {
-    for (int i = 0; i < m_VisualParticles.size(); ++i)
+    for( unsigned int i = 0; i < m_VisualParticles.size(); ++i )
     {
         m_VisualParticles[i]->additional_data = NULL;
     }

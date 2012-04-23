@@ -97,9 +97,9 @@ ParticleEntityRenderer::Clear()
     // Destroy the Entities. Do it like this, because it must be assured that the entity still exists
     // and has not already been destroyed.
     Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager("Scene");
-    for (int i = 0; i < m_Entities.size(); i++)
+    for( unsigned int i = 0; i < m_Entities.size(); i++ )
     {
-        scene_manager->destroyEntity(m_Entities[i]);
+        scene_manager->destroyEntity( m_Entities[ i ] );
     }
     m_Entities.clear();
 
@@ -150,13 +150,13 @@ ParticleEntityRenderer::Initialize()
         // Create number of Entities
         Ogre::Entity* entity = Ogre::Root::getSingleton().getSceneManager("Scene")->createEntity(entity_name, m_MeshName); // Base entity
 
-        for (int i = 0; i < m_AllAdditionalData.size(); ++i)
+        for( unsigned int i = 0; i < m_AllAdditionalData.size(); ++i )
         {
-            Ogre::Entity* cloned_entity = entity->clone(entity_name + Ogre::StringConverter::toString(i));
-            m_Entities.push_back(cloned_entity);
-            m_AllAdditionalData[i]->node->attachObject(cloned_entity);
+            Ogre::Entity* cloned_entity = entity->clone( entity_name + Ogre::StringConverter::toString( i ) );
+            m_Entities.push_back( cloned_entity );
+            m_AllAdditionalData[ i ]->node->attachObject( cloned_entity );
         }
-        Ogre::Root::getSingleton().getSceneManager("Scene")->destroyEntity(entity_name);
+        Ogre::Root::getSingleton().getSceneManager( "Scene" )->destroyEntity( entity_name );
     }
 
     SetVisible(false);

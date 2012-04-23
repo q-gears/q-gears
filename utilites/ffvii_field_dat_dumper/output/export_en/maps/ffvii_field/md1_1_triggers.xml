@@ -1,0 +1,4 @@
+    <entity_trigger name="Gateway0" point1="7.78125 2.22656 10.125" point2="7.25781 3.85156 10.125" enabled="true" />
+    <entity_model  position="29.0547 229.234 0.273438" rotation="67.7647" />
+    <entity_trigger name="Gateway1" point1="7.96094 13.5 10.1406" point2="10.1406 13.3203 10.1406" enabled="true" />
+    <entity_model  position="27.8125 238.898 0.453125" rotation="186.353" />

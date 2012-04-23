@@ -99,6 +99,8 @@ public:
     int ScriptRequestEndSync( const char* entity, const char* function, const int priority );
     bool ScriptRequest( ScriptEntity* script_entity, const Ogre::String& function, const int priority, const Ogre::String& argument1, const Ogre::String& argument2, bool start_sync, bool end_sync );
 
+    void AddValueToStack( const float value );
+
 private:
     lua_State* m_LuaState;
 

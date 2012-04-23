@@ -30,6 +30,7 @@ DebugDraw::DebugDraw():
 
     CreateLineVertexBuffer();
     CreateLine3dVertexBuffer();
+    CreateTriangle3dVertexBuffer();
     CreateQuadVertexBuffer();
     CreateTextVertexBuffer();
 
@@ -79,6 +80,7 @@ DebugDraw::~DebugDraw()
 
     DestroyLineVertexBuffer();
     DestroyLine3dVertexBuffer();
+    DestroyTriangle3dVertexBuffer();
     DestroyQuadVertexBuffer();
     DestroyTextVertexBuffer();
 }
@@ -174,12 +176,9 @@ DebugDraw::Line3d( const Ogre::Vector3& point1, const Ogre::Vector3& point2 )
 {
     if( m_Line3dRenderOp.vertexData->vertexCount + 2 > m_Line3dMaxVertexCount )
     {
-        LOG_ERROR( "Max number of lines reached. Can't create more than " + Ogre::StringConverter::toString( m_Line3dMaxVertexCount / 2 ) + " lines." );
+        LOG_ERROR( "Max number of 3d lines reached. Can't create more than " + Ogre::StringConverter::toString( m_Line3dMaxVertexCount / 2 ) + " 3d lines." );
         return;
     }
-
-    float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
     float* writeIterator = ( float* ) m_Line3dVertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
     writeIterator += m_Line3dRenderOp.vertexData->vertexCount * 7;
@@ -203,6 +202,49 @@ DebugDraw::Line3d( const Ogre::Vector3& point1, const Ogre::Vector3& point2 )
     m_Line3dRenderOp.vertexData->vertexCount += 2;
 
     m_Line3dVertexBuffer->unlock();
+}
+
+
+
+void
+DebugDraw::Triangle3d( const Ogre::Vector3& point1, const Ogre::Vector3& point2, const Ogre::Vector3& point3 )
+{
+    if( m_Triangle3dRenderOp.vertexData->vertexCount + 3 > m_Triangle3dMaxVertexCount )
+    {
+        LOG_ERROR( "Max number of 3d triangles reached. Can't create more than " + Ogre::StringConverter::toString( m_Triangle3dMaxVertexCount / 3 ) + " 3d triangles." );
+        return;
+    }
+
+    float* writeIterator = ( float* ) m_Triangle3dVertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
+    writeIterator += m_Triangle3dRenderOp.vertexData->vertexCount * 7;
+
+    *writeIterator++ = point1.x;
+    *writeIterator++ = point1.y;
+    *writeIterator++ = point1.z;
+    *writeIterator++ = m_Colour.r;
+    *writeIterator++ = m_Colour.g;
+    *writeIterator++ = m_Colour.b;
+    *writeIterator++ = m_Colour.a;
+
+    *writeIterator++ = point2.x;
+    *writeIterator++ = point2.y;
+    *writeIterator++ = point2.z;
+    *writeIterator++ = m_Colour.r;
+    *writeIterator++ = m_Colour.g;
+    *writeIterator++ = m_Colour.b;
+    *writeIterator++ = m_Colour.a;
+
+    *writeIterator++ = point3.x;
+    *writeIterator++ = point3.y;
+    *writeIterator++ = point3.z;
+    *writeIterator++ = m_Colour.r;
+    *writeIterator++ = m_Colour.g;
+    *writeIterator++ = m_Colour.b;
+    *writeIterator++ = m_Colour.a;
+
+    m_Triangle3dRenderOp.vertexData->vertexCount += 3;
+
+    m_Triangle3dVertexBuffer->unlock();
 }
 
 
@@ -473,6 +515,13 @@ DebugDraw::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invoc
             m_RenderSystem->_render( m_Line3dRenderOp );
             m_Line3dRenderOp.vertexData->vertexCount = 0;
         }
+
+        if( m_Triangle3dRenderOp.vertexData->vertexCount != 0 )
+        {
+            m_SceneManager->_setPass( m_Material3d->getTechnique( 0 )->getPass( 0 ), true, false );
+            m_RenderSystem->_render( m_Triangle3dRenderOp );
+            m_Triangle3dRenderOp.vertexData->vertexCount = 0;
+        }
     }
 }
 
@@ -541,6 +590,39 @@ DebugDraw::DestroyLine3dVertexBuffer()
     m_Line3dRenderOp.vertexData = 0;
     m_Line3dVertexBuffer.setNull();
     m_Line3dMaxVertexCount = 0;
+}
+
+
+
+void
+DebugDraw::CreateTriangle3dVertexBuffer()
+{
+    m_Triangle3dMaxVertexCount = 128 * 3;
+    m_Triangle3dRenderOp.vertexData = new Ogre::VertexData;
+    m_Triangle3dRenderOp.vertexData->vertexStart = 0;
+
+    Ogre::VertexDeclaration* vDecl = m_Triangle3dRenderOp.vertexData->vertexDeclaration;
+
+    size_t offset = 0;
+    vDecl->addElement( 0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
+    offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT3 );
+    vDecl->addElement( 0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE );
+
+    m_Triangle3dVertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), m_Triangle3dMaxVertexCount, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
+
+    m_Triangle3dRenderOp.vertexData->vertexBufferBinding->setBinding( 0, m_Triangle3dVertexBuffer );
+    m_Triangle3dRenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
+    m_Triangle3dRenderOp.useIndexes = false;
+}
+
+
+void
+DebugDraw::DestroyTriangle3dVertexBuffer()
+{
+    delete m_Triangle3dRenderOp.vertexData;
+    m_Triangle3dRenderOp.vertexData = 0;
+    m_Triangle3dVertexBuffer.setNull();
+    m_Triangle3dMaxVertexCount = 0;
 }
 
 

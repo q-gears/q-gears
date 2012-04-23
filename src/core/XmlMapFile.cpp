@@ -56,27 +56,55 @@ XmlMapFile::LoadMap()
         else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "entity_model" )
         {
             Ogre::String name = GetString( node, "name" );
-            if( name == "")
+            if( name == "" )
             {
                 LOG_ERROR( "There is no name specified for <entity_model> tag." );
                 continue;
             }
             Ogre::String file_name = GetString( node, "file_name" );
-            if( file_name == "")
+            if( file_name == "" )
             {
                 LOG_ERROR( "There is no file_name specified for <entity_model> tag." );
                 continue;
             }
 
-            Ogre::Vector3 position = GetVector3( node, "position" );
+            Ogre::Vector3 position = GetVector3( node, "position", Ogre::Vector3::ZERO );
             Ogre::Degree direction = Ogre::Degree( GetFloat( node, "direction" ) );
 
             EntityManager::getSingleton().AddEntityModel( name, file_name, position, direction );
         }
+        else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "entity_trigger" )
+        {
+            Ogre::String name = GetString( node, "name" );
+            if( name == "" )
+            {
+                LOG_ERROR( "There is no name specified for <entity_trigger> tag." );
+                continue;
+            }
+
+            Ogre::Vector3 point1 = GetVector3( node, "point1", Ogre::Vector3::ZERO );
+            Ogre::Vector3 point2 = GetVector3( node, "point2", Ogre::Vector3::ZERO );
+            bool enabled = GetBool( node, "enabled", false );
+
+            EntityManager::getSingleton().AddEntityTrigger( name, point1, point2, enabled );
+        }
+        else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "entity_point" )
+        {
+            Ogre::String name = GetString( node, "name" );
+            if( name == "" )
+            {
+                LOG_ERROR( "There is no name specified for <entity_point> tag." );
+                continue;
+            }
+
+            Ogre::Vector3 point = GetVector3( node, "point", Ogre::Vector3::ZERO );
+
+            EntityManager::getSingleton().AddEntityPoint( name, point );
+        }
         else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "entity_script" )
         {
             Ogre::String name = GetString( node, "name" );
-            if( name == "")
+            if( name == "" )
             {
                 LOG_ERROR( "There is no name specified for <entity_script> tag." );
                 continue;

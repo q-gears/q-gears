@@ -67,26 +67,28 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 u16 real_x = mImageVramPositionX + page_x * 128 + x;
                 u16 real_y = mImageVramPositionY + page_y * 256 + y;
 
-                u8 data = m_Vram.GetU8(real_x, real_y) & 0x0F;
-                u16 col = m_Vram.GetU16(data * 2 + clut_x * 2, clut_y);
+                u8 data = m_Vram.GetU8( real_x, real_y ) & 0x0F;
+                u16 col = m_Vram.GetU16( data * 2 + clut_x * 2, clut_y );
 
-                color.r = ((col      ) & 31) * 255 / 31;
-                color.g = ((col >>  5) & 31) * 255 / 31;
-                color.b = ((col >> 10) & 31) * 255 / 31;
+                color.r = ( ( col       ) & 31 ) * 255 / 31;
+                color.g = ( ( col >>  5 ) & 31 ) * 255 / 31;
+                color.b = ( ( col >> 10 ) & 31 ) * 255 / 31;
+
                 u8 stp = (col & 0x80) >> 15;
-                if (col == 0x0000)
+
+                if( col == 0x0000 )
                 {
                     color.a = 0;
                 }
-                else if (stp == 1 && color.r == 0 && color.g == 0 && color.b == 0)
+                else if( stp == 1 && color.r == 0 && color.g == 0 && color.b == 0 )
                 {
                     color.a = 255;
                 }
-                else if (stp == 1 && (color.r != 0 || color.g != 0 || color.b != 0))
+                else if( stp == 1 && ( color.r != 0 || color.g != 0 || color.b != 0 ) )
                 {
                     color.a = 127;
                 }
-                else if (stp == 0 && (color.r != 0 || color.g != 0 || color.b != 0))
+                else if( stp == 0 && ( color.r != 0 || color.g != 0 || color.b != 0 ) )
                 {
                     color.a = 255;
                 }
@@ -102,19 +104,20 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 color.g = ((col >>  5) & 31) * 255 / 31;
                 color.b = ((col >> 10) & 31) * 255 / 31;
                 stp = (col & 0x80) >> 15;
-                if (col == 0x0000)
+
+                if( col == 0x0000 )
                 {
                     color.a = 0;
                 }
-                else if (stp == 1 && color.r == 0 && color.g == 0 && color.b == 0)
+                else if( stp == 1 && color.r == 0 && color.g == 0 && color.b == 0 )
                 {
                     color.a = 255;
                 }
-                else if (stp == 1 && (color.r != 0 || color.g != 0 || color.b != 0))
+                else if( stp == 1 && ( color.r != 0 || color.g != 0 || color.b != 0 ) )
                 {
                     color.a = 127;
                 }
-                else if (stp == 0 && (color.r != 0 || color.g != 0 || color.b != 0))
+                else if( stp == 0 && ( color.r != 0 || color.g != 0 || color.b != 0 ) )
                 {
                     color.a = 255;
                 }
@@ -142,19 +145,20 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 color.g = ((col >>  5) & 31) * 255 / 31;
                 color.b = ((col >> 10) & 31) * 255 / 31;
                 u8 stp = (col & 0x8000) >> 15;
-                if (col == 0x0000)
+
+                if( col == 0x0000 )
                 {
                     color.a = 0;
                 }
-                else if (stp == 1 && color.r == 0 && color.g == 0 && color.b == 0)
+                else if( stp == 1 && color.r == 0 && color.g == 0 && color.b == 0 )
                 {
                     color.a = 255;
                 }
-                else if (stp == 1 && (color.r != 0 || color.g != 0 || color.b != 0))
+                else if( stp == 1 && ( color.r != 0 || color.g != 0 || color.b != 0 ) )
                 {
                     color.a = 127;
                 }
-                else if (stp == 0 && (color.r != 0 || color.g != 0 || color.b != 0))
+                else if( stp == 0 && ( color.r != 0 || color.g != 0 || color.b != 0 ) )
                 {
                     color.a = 255;
                 }

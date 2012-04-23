@@ -101,10 +101,30 @@ ScriptManager::InitBinds()
     // game access
     luabind::module( m_LuaState )
     [
+        luabind::class_< EntityPoint >( "EntityPoint" )
+            .def( "get_point", ( void( EntityPoint::* )() ) &EntityPoint::ScriptGetPoint ) // return 3 values internaly
+    ];
+
+    // game access
+    luabind::module( m_LuaState )
+    [
         luabind::class_< EntityManager >( "EntityManager" )
             .def( "get_entity", ( Entity*( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntity )
+            .def( "get_entity_point", ( EntityPoint*( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntityPoint )
             .def( "set_player_entity", ( void( EntityManager::* )( const char* ) ) &EntityManager::ScriptSetPlayerEntity )
             .def( "unset_player_entity", ( void( EntityManager::* )() ) &EntityManager::ScriptUnsetPlayerEntity )
+    ];
+
+    // 2d background access
+    luabind::module( m_LuaState )
+    [
+        luabind::class_< Background2D >( "Background2D" )
+            .def( "play_animation", ( void( Background2D::* )( const char* ) ) &Background2D::ScriptPlayAnimation )
+            .def( "play_animation_stop", ( void( Background2D::* )( const char* ) ) &Background2D::ScriptPlayAnimationStop )
+            .def( "play_animation", ( void( Background2D::* )( const char*, const float, const float ) ) &Background2D::ScriptPlayAnimation )
+            .def( "play_animation_stop", ( void( Background2D::* )( const char*, const float, const float ) ) &Background2D::ScriptPlayAnimationStop )
+            .def( "set_default_animation", ( void( Background2D::* )( const char* ) ) &Background2D::ScriptSetDefaultAnimation )
+            .def( "animation_sync", ( int( Background2D::* )() ) &Background2D::ScriptAnimationSync, luabind::yield )
     ];
 
     // ui widget access
@@ -142,6 +162,7 @@ ScriptManager::InitBinds()
     ];
 
     luabind::globals( m_LuaState )[ "entity_manager" ] = boost::ref( *( EntityManager::getSingletonPtr() ) );
+    luabind::globals( m_LuaState )[ "background2d" ] = boost::ref( *( EntityManager::getSingletonPtr()->GetBackground2D() ) );
     luabind::globals( m_LuaState )[ "ui_manager" ] = boost::ref( *( UiManager::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "script" ] = boost::ref( *this );
 }

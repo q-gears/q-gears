@@ -1,19 +1,19 @@
 dir
 script_0:
 03a4 (end 03a4): field:screen_set_scroll_to_coords_instant( 0, 40 );
-03aa (end 03aa): if ( game:variable_get("progress_game") == 0 ) then continue else jumpto(03d1);
+03aa (end 03aa): if ( game:variable_get( "progress_game" ) == 0 ) then continue else jumpto(03d1);
 03b2 (end 03d1): fade:black();
 03bb (end 03d1): field:screen_set_scroll_to_coords_instant( 0, 0 );
 03c1 (end 03d1): music:execute_akao( f0, 00000000, 00000000, 00000000, 00000000, 00007100, 00008101 );
 03cf (end 03d1): field:random_encounter_on( false );
-03d1 (end 03d1): temp6_9 = 12;
+03d1 (end 03d1): temp6_09 = 12;
 03d6 (end 03d6): [UNREVERSED] BTLMD(20, 00);
-03d9 (end 03d9): if ( game:variable_get("progress_game") > 0 ) then continue else jumpto(03e3);
+03d9 (end 03d9): if ( game:variable_get( "progress_game" ) > 0 ) then continue else jumpto(03e3);
 03e1 (end 03e3): music:execute_akao( 10, pointer_to_field_AKAO_0 ); -- play field music
 03e3 (end 03e3): [UNREVERSED] FMUSC(00);
 03e5 (end 03e5): field:map_name(0);
 03e7 (end 03e7): return;
-03e8 (end 03e8): if ( game:variable_get("progress_game") == 0 ) then continue else jumpto(04bd);
+03e8 (end 03e8): if ( game:variable_get( "progress_game" ) == 0 ) then continue else jumpto(04bd);
 03f0 (end 04bd): field:movie_set( 53 );
 03f2 (end 04bd): music:execute_akao( c8, 00007000, 00000000, 00000000, 00000000, 00000000, 00000301 );
 0401 (end 04bd): script:request( "view", "script_3", 6 );
@@ -64,9 +64,9 @@ script_0:
 04b9 (end 04bd): field:pc_lock(false);
 04bb (end 04bd): field:menu_lock(false);
 04bd (end 04bd): field:set_player_entity( cl );
-04bf (end 04bf): temp6_4 = cl:get_triangle();
-04c3 (end 04c3): if ( temp6_4 == temp6_9 ) then continue else jumpto(04ea);
-04cb (end 04ea): if ( game:variable_get("progress_game") == 1 ) then continue else jumpto(04ea);
+04bf (end 04bf): temp6_04 = cl:get_triangle();
+04c3 (end 04c3): if ( temp6_04 == temp6_09 ) then continue else jumpto(04ea);
+04cb (end 04ea): if ( game:variable_get( "progress_game" ) == 1 ) then continue else jumpto(04ea);
 04d3 (end 04ea): game:variable_set("progress_game", 6);
 04d8 (end 04ea): field:pc_lock(true);
 04da (end 04ea): field:menu_lock(true);
@@ -82,7 +82,7 @@ script_0:
 04ed (end 04ed): -- assosiate entity with model (CHAR) argument doesn't matter;
 04ef (end 04ef): field:set_entity_to_character("cl", 0);
 04f1 (end 04f1): return;
-04f2 (end 04f2): if ( game:variable_get("progress_game") == 0 ) then continue else jumpto(0512);
+04f2 (end 04f2): if ( game:variable_get( "progress_game" ) == 0 ) then continue else jumpto(0512);
 04fa (end 0512): field:pc_lock(true);
 04fc (end 0512): field:menu_lock(true);
 04fe (end 0512): cl:set_position_triangle(3655, 27432, 310, 25);
@@ -103,7 +103,7 @@ ba
 script_0:
 051f (end 051f): -- assosiate entity with model (CHAR) argument doesn't matter;
 0521 (end 0521): field:set_entity_to_character("ba", 1);
-0523 (end 0523): if ( game:variable_get("progress_game") <= 1 ) then continue else jumpto(0536);
+0523 (end 0523): if ( game:variable_get( "progress_game" ) <= 1 ) then continue else jumpto(0536);
 052b (end 0536): ba:set_position_triangle(3921, 27489, 323, 30);
 0536 (end 0536): return;
 0537 (end 0537): jumpto( 0537 );
@@ -131,13 +131,13 @@ script_0:
 0569 (end 0569): jumpto( 0569 );
 
 script_3:
-056c (end 056c): temp6_6 = field:get_movie_frame();
-056f (end 056f): if ( temp6_6 > 20 ) then continue else jumpto(0582);
+056c (end 056c): temp6_06 = field:get_movie_frame();
+056f (end 056f): if ( temp6_06 > 20 ) then continue else jumpto(0582);
 0577 (end 0582): fade:clear();
 0580 (end 0582): jumpto( 0584 );
 0582 (end 0584): jumpto( 056c );
-0584 (end 0584): temp6_6 = field:get_movie_frame();
-0587 (end 0587): if ( temp6_6 > 664 ) then continue else jumpto(05a4);
+0584 (end 0584): temp6_06 = field:get_movie_frame();
+0587 (end 0587): if ( temp6_06 > 664 ) then continue else jumpto(05a4);
 058f (end 05a4): music:execute_akao( 10, pointer_to_field_AKAO_1 ); -- play field music
 0591 (end 05a4): music:lock( true );
 0593 (end 05a4): music:execute_akao( c9, 0000003c, 00007fff, 00000000, 00000000, 00000000, 00000310 );
@@ -272,7 +272,7 @@ script_0:
 06e8 (end 06e8): -- assosiate entity with model (CHAR) argument doesn't matter;
 06ea (end 06ea): gu0:set_position_triangle(3596, 27777, 310, 20);
 06f5 (end 06f5): gu0:set_direction( 90 );
-06f8 (end 06f8): if ( game:variable_get("progress_game") >= 1 ) then continue else jumpto(0711);
+06f8 (end 06f8): if ( game:variable_get( "progress_game" ) >= 1 ) then continue else jumpto(0711);
 0700 (end 0711): gu0:set_position_triangle(3767, 27722, 310, 20);
 070b (end 0711): gu0:set_direction( 191.25 );
 070e (end 0711): gu0:set_animation_default("3", 1);
@@ -282,18 +282,18 @@ script_0:
 script_1:
 0714 (end 0714): field:pc_lock(true);
 0716 (end 0716): field:menu_lock(true);
-0718 (end 0718): if ( !(game:variable_get("sector1_item") & (1 << 0)) ) then continue else jumpto(073b);
+0718 (end 0718): if ( !(game:variable_get( "sector1_item" ) & (1 << 0)) ) then continue else jumpto(073b);
 071e (end 073b): music:execute_akao( 20, 00000040, 00000168 ); -- play sound
 0723 (end 073b): -- set window parameters (id = 0, x = 83, y = 10, width = 138, height = 25);
 072d (end 073b): message:show_text_wait(0, 6, x, y);
-0730 (end 073b): game:variable_set("sector1_item", (game:variable_get("sector1_item") | (1 << 0)));
+0730 (end 073b): game:variable_set("sector1_item", (game:variable_get( "sector1_item" ) | (1 << 0)));
 0734 (end 073b): game:item_add(0, 1);
 0739 (end 073b): jumpto( 075c );
-073b (end 075c): if ( !(game:variable_get("sector1_item") & (1 << 1)) ) then continue else jumpto(075c);
+073b (end 075c): if ( !(game:variable_get( "sector1_item" ) & (1 << 1)) ) then continue else jumpto(075c);
 0741 (end 075c): music:execute_akao( 20, 00000040, 00000168 ); -- play sound
 0746 (end 075c): -- set window parameters (id = 0, x = 83, y = 10, width = 138, height = 25);
 0750 (end 075c): message:show_text_wait(0, 6, x, y);
-0753 (end 075c): game:variable_set("sector1_item", (game:variable_get("sector1_item") | (1 << 1)));
+0753 (end 075c): game:variable_set("sector1_item", (game:variable_get( "sector1_item" ) | (1 << 1)));
 0757 (end 075c): game:item_add(0, 1);
 075c (end 075c): field:pc_lock(false);
 075e (end 075e): field:menu_lock(false);
@@ -320,7 +320,7 @@ script_0:
 078c (end 078c): -- assosiate entity with model (CHAR) argument doesn't matter;
 078e (end 078e): gu1:set_position_triangle(3696, 28733, 310, 9);
 0799 (end 0799): gu1:set_direction( 90 );
-079c (end 079c): if ( game:variable_get("progress_game") >= 1 ) then continue else jumpto(07b5);
+079c (end 079c): if ( game:variable_get( "progress_game" ) >= 1 ) then continue else jumpto(07b5);
 07a4 (end 07b5): gu1:set_direction( 56.25 );
 07a7 (end 07b5): gu1:set_position_triangle(3920, 29160, 311, 3);
 07b2 (end 07b5): gu1:set_animation_default("6", 1);
@@ -330,18 +330,18 @@ script_0:
 script_1:
 07b8 (end 07b8): field:pc_lock(true);
 07ba (end 07ba): field:menu_lock(true);
-07bc (end 07bc): if ( !(game:variable_get("sector1_item") & (1 << 0)) ) then continue else jumpto(07df);
+07bc (end 07bc): if ( !(game:variable_get( "sector1_item" ) & (1 << 0)) ) then continue else jumpto(07df);
 07c2 (end 07df): music:execute_akao( 20, 00000040, 00000168 ); -- play sound
 07c7 (end 07df): -- set window parameters (id = 0, x = 83, y = 10, width = 138, height = 25);
 07d1 (end 07df): message:show_text_wait(0, 6, x, y);
-07d4 (end 07df): game:variable_set("sector1_item", (game:variable_get("sector1_item") | (1 << 0)));
+07d4 (end 07df): game:variable_set("sector1_item", (game:variable_get( "sector1_item" ) | (1 << 0)));
 07d8 (end 07df): game:item_add(0, 1);
 07dd (end 07df): jumpto( 0800 );
-07df (end 0800): if ( !(game:variable_get("sector1_item") & (1 << 1)) ) then continue else jumpto(0800);
+07df (end 0800): if ( !(game:variable_get( "sector1_item" ) & (1 << 1)) ) then continue else jumpto(0800);
 07e5 (end 0800): music:execute_akao( 20, 00000040, 00000168 ); -- play sound
 07ea (end 0800): -- set window parameters (id = 0, x = 83, y = 10, width = 138, height = 25);
 07f4 (end 0800): message:show_text_wait(0, 6, x, y);
-07f7 (end 0800): game:variable_set("sector1_item", (game:variable_get("sector1_item") | (1 << 1)));
+07f7 (end 0800): game:variable_set("sector1_item", (game:variable_get( "sector1_item" ) | (1 << 1)));
 07fb (end 0800): game:item_add(0, 1);
 0800 (end 0800): field:pc_lock(false);
 0802 (end 0802): field:menu_lock(false);
@@ -384,18 +384,18 @@ script_0:
 script_1:
 0858 (end 0858): field:pc_lock(true);
 085a (end 085a): field:menu_lock(true);
-085c (end 085c): if ( !(game:variable_get("sector1_item") & (1 << 0)) ) then continue else jumpto(087f);
+085c (end 085c): if ( !(game:variable_get( "sector1_item" ) & (1 << 0)) ) then continue else jumpto(087f);
 0862 (end 087f): music:execute_akao( 20, 00000040, 00000168 ); -- play sound
 0867 (end 087f): -- set window parameters (id = 0, x = 83, y = 10, width = 138, height = 25);
 0871 (end 087f): message:show_text_wait(0, 6, x, y);
-0874 (end 087f): game:variable_set("sector1_item", (game:variable_get("sector1_item") | (1 << 0)));
+0874 (end 087f): game:variable_set("sector1_item", (game:variable_get( "sector1_item" ) | (1 << 0)));
 0878 (end 087f): game:item_add(0, 1);
 087d (end 087f): jumpto( 08a0 );
-087f (end 08a0): if ( !(game:variable_get("sector1_item") & (1 << 1)) ) then continue else jumpto(08a0);
+087f (end 08a0): if ( !(game:variable_get( "sector1_item" ) & (1 << 1)) ) then continue else jumpto(08a0);
 0885 (end 08a0): music:execute_akao( 20, 00000040, 00000168 ); -- play sound
 088a (end 08a0): -- set window parameters (id = 0, x = 83, y = 10, width = 138, height = 25);
 0894 (end 08a0): message:show_text_wait(0, 6, x, y);
-0897 (end 08a0): game:variable_set("sector1_item", (game:variable_get("sector1_item") | (1 << 1)));
+0897 (end 08a0): game:variable_set("sector1_item", (game:variable_get( "sector1_item" ) | (1 << 1)));
 089b (end 08a0): game:item_add(0, 1);
 08a0 (end 08a0): field:pc_lock(false);
 08a2 (end 08a2): field:menu_lock(false);

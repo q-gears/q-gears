@@ -41,21 +41,6 @@ material viewer/axis
 
 
 
-material walkmesh
-{
-    technique
-    {
-        pass
-        {
-            ambient vertexcolour
-            cull_hardware none
-            polygon_mode wireframe
-        }
-    }
-}
-
-
-
 material entity/solid_collision
 {
     technique

@@ -4,6 +4,7 @@
 #include <OgreRoot.h>
 
 #include "ConfigVar.h"
+#include "DebugDraw.h"
 #include "EntityModel.h"
 #include "InputManager.h"
 #include "Logger.h"
@@ -40,6 +41,38 @@ SideOfVector( const Ogre::Vector2& point, const Ogre::Vector2& p1, const Ogre::V
     Ogre::Vector2 AB = p2    - p1;
     Ogre::Vector2 AP = point - p1;
     return AB.x * AP.y - AB.y * AP.x;
+}
+
+
+
+float
+SquareDistanceToLine( const Ogre::Vector3& p, const Ogre::Vector3& p1, const Ogre::Vector3& p2, Ogre::Vector3& proj )
+{
+    float temp = -( ( p1.x - p.x ) * ( p2.x - p1.x ) + ( p1.y - p.y ) * ( p2.y - p1.y ) + ( p1.z - p.z ) * ( p2.z - p1.z ) ) / ( ( p2.x - p1.x ) * ( p2.x - p1.x ) + ( p2.y - p1.y ) * ( p2.y - p1.y ) + ( p2.z - p1.z ) * ( p2.z - p1.z ) );
+
+    proj.x = temp * ( p2.x - p1.x ) + p1.x;
+    proj.y = temp * ( p2.y - p1.y ) + p1.y;
+    proj.z = temp * ( p2.z - p1.z ) + p1.z;
+
+    if( ( ( p1.x >= proj.x && p2.x <= proj.x ) || ( p1.x < proj.x && p2.x >= proj.x ) ) &&
+        ( ( p1.y >= proj.y && p2.y <= proj.y ) || ( p1.y < proj.y && p2.y >= proj.y ) ) )
+    {
+        return ( proj.x - p.x ) * ( proj.x - p.x ) + ( proj.y - p.y ) * ( proj.y - p.y ) + ( proj.z - p.z ) * ( proj.z - p.z );
+    }
+
+    return -1;
+}
+
+
+
+Ogre::Degree
+GetDirectionToPoint( const Ogre::Vector3& current_point, const Ogre::Vector3& direction_point )
+{
+    Ogre::Vector2 up( 0.0f, -1.0f );
+    Ogre::Vector2 dir( direction_point.x - current_point.x, direction_point.y - current_point.y );
+    // angle between vectors
+    Ogre::Degree angle( Ogre::Radian( acosf( dir.dotProduct( up ) / ( dir.length() * up.length() ) ) ) );
+    return ( dir.x < 0 ) ? Ogre::Degree( 360 ) - angle : angle;
 }
 
 
@@ -131,7 +164,7 @@ EntityManager::Update()
 
 
 
-    for( size_t i = 0; i < m_EntityModels.size(); ++i )
+    for( unsigned int i = 0; i < m_EntityModels.size(); ++i )
     {
         m_EntityModels[ i ]->Update();
 
@@ -249,6 +282,20 @@ EntityManager::Update()
 
 
 
+    for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
+    {
+        m_EntityTriggers[ i ]->Update();
+    }
+
+
+
+    for( unsigned int i = 0; i < m_EntityPoints.size(); ++i )
+    {
+        m_EntityPoints[ i ]->Update();
+    }
+
+
+
     m_Walkmesh.Update();
     m_Background2D.Update();
 }
@@ -261,7 +308,7 @@ EntityManager::Clear()
     m_Walkmesh.Clear();
     m_Background2D.Clear();
 
-    for( size_t i = 0; i < m_EntityModels.size(); ++i )
+    for( unsigned int i = 0; i < m_EntityModels.size(); ++i )
     {
         ScriptManager::getSingleton().RemoveEntity( m_EntityTableName + "." + m_EntityModels[ i ]->GetName() );
         delete m_EntityModels[ i ];
@@ -269,7 +316,20 @@ EntityManager::Clear()
     m_EntityModels.clear();
     m_PlayerEntity = NULL;
 
-    for( size_t i = 0; i < m_EntityScripts.size(); ++i )
+    for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
+    {
+        ScriptManager::getSingleton().RemoveEntity( m_EntityTableName + "." + m_EntityTriggers[ i ]->GetName() );
+        delete m_EntityTriggers[ i ];
+    }
+    m_EntityTriggers.clear();
+
+    for( unsigned int i = 0; i < m_EntityPoints.size(); ++i )
+    {
+        delete m_EntityPoints[ i ];
+    }
+    m_EntityPoints.clear();
+
+    for( unsigned int i = 0; i < m_EntityScripts.size(); ++i )
     {
         ScriptManager::getSingleton().RemoveEntity( m_EntityTableName + "." + m_EntityScripts[ i ] );
     }
@@ -311,6 +371,29 @@ EntityManager::AddEntityModel( const Ogre::String& name, const Ogre::String& fil
 
 
 void
+EntityManager::AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& point1, const Ogre::Vector3& point2, const bool enabled )
+{
+    EntityTrigger* trigger = new EntityTrigger( name );
+    trigger->SetPoints( point1, point2 );
+    trigger->SetEnabled( enabled );
+    m_EntityTriggers.push_back( trigger );
+
+    ScriptManager::getSingleton().AddEntity( m_EntityTableName + "." + trigger->GetName() );
+}
+
+
+
+void
+EntityManager::AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& point )
+{
+    EntityPoint* entity_point = new EntityPoint( name );
+    entity_point->SetPoint( point );
+    m_EntityPoints.push_back( entity_point );
+}
+
+
+
+void
 EntityManager::AddEntityScript( const Ogre::String& name )
 {
     m_EntityScripts.push_back( name );
@@ -339,6 +422,22 @@ Entity*
 EntityManager::ScriptGetEntity( const char* name ) const
 {
     return GetEntity( Ogre::String( name ) );
+}
+
+
+
+EntityPoint*
+EntityManager::ScriptGetEntityPoint( const char* name ) const
+{
+    for( size_t i = 0; i < m_EntityPoints.size(); ++i )
+    {
+        if( m_EntityPoints[ i ]->GetName() == name )
+        {
+            return m_EntityPoints[ i ];
+        }
+    }
+
+    return NULL;
 }
 
 
@@ -711,6 +810,11 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
 
 
 
+    // check triggers before set entity position because we check move line
+    CheckTriggers( entity, end_point );
+
+
+
     entity->SetPosition( end_point );
 
 
@@ -854,6 +958,102 @@ EntityManager::CheckSolidCollisions( Entity* entity, Ogre::Vector3& position )
 
     //LOGGER->Log(LOGGER_INFO, "Not collide with entity");
     return false;
+}
+
+
+
+void
+EntityManager::CheckTriggers( Entity* entity, Ogre::Vector3& position )
+{
+    if( entity->IsSolid() == false )
+    {
+        return;
+    }
+
+    for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
+    {
+        ScriptEntity* scr_entity = ScriptManager::getSingleton().GetScriptEntityByName( m_EntityTableName + "." + m_EntityTriggers[ i ]->GetName() );
+
+        if( scr_entity != NULL && m_EntityTriggers[ i ]->IsEnabled() == true )
+        {
+            Ogre::Vector3 lp1 = m_EntityTriggers[ i ]->GetPoint1();
+            Ogre::Vector3 lp2 = m_EntityTriggers[ i ]->GetPoint2();
+            Ogre::Vector3 mp1 = entity->GetPosition();
+
+            Ogre::Vector3 proj;
+
+            // calculate distance
+            float square_dist = SquareDistanceToLine( mp1, lp1, lp2, proj );
+            float solid = entity->GetSolidRadius();
+
+            if( square_dist != -1 && square_dist < solid * solid )
+            {
+                if( m_EntityTriggers[ i ]->IsActivator( entity ) == false )
+                {
+                    bool added = ScriptManager::getSingleton().ScriptRequest( scr_entity, "on_enter_line", 1, entity->GetName(), "", false, false );
+                    if( added == false )
+                    {
+                        LOG_WARNING( "Script \"on_enter_line\" for entity \"" +  m_EntityTriggers[ i ]->GetName() + "\" doesn't exist." );
+                    }
+                    m_EntityTriggers[ i ]->AddActivator( entity );
+                }
+
+                // check that 1st and 2nd points are on different side of line
+                float cond1 = ( ( lp2.x - lp1.x ) * ( mp1.y - lp1.y ) ) - ( ( mp1.x - lp1.x ) * ( lp2.y - lp1.y ) );
+                float cond2 = ( ( lp2.x - lp1.x ) * ( position.y - lp1.y ) ) - ( ( position.x - lp1.x ) * ( lp2.y - lp1.y ) );
+
+                // if we cross the line
+                if( ( cond1 > 0 && cond2 <= 0 ) || ( cond2 > 0 && cond1 <= 0 ) || ( cond1 >= 0 && cond2 < 0 ) || ( cond2 >= 0 && cond1 < 0 ) )
+                {
+                    bool added = ScriptManager::getSingleton().ScriptRequest( scr_entity, "on_cross_line", 1, entity->GetName(), "", false, false );
+                    if( added == false )
+                    {
+                        LOG_WARNING( "Script \"on_cross_line\" for entity \"" +  m_EntityTriggers[ i ]->GetName() + "\" doesn't exist." );
+                    }
+                }
+
+                // if we not move in line
+                if( mp1 == position )
+                {
+                    bool added = ScriptManager::getSingleton().ScriptRequest( scr_entity, "on_move_to_line", 1, entity->GetName(), "", false, false );
+                    if( added == false )
+                    {
+                        LOG_WARNING( "Script \"on_move_to_line\" for entity \"" +  m_EntityTriggers[ i ]->GetName() + "\" doesn't exist." );
+                    }
+                }
+                else
+                {
+                    const Ogre::Degree direction_to_line = GetDirectionToPoint( mp1, proj );
+                    const Ogre::Degree movement_direction = GetDirectionToPoint( mp1, position );
+
+                    // if we move to line
+                    Ogre::Degree angle = direction_to_line - movement_direction + Ogre::Degree( 90 );
+                    angle = ( angle > Ogre::Degree( 360 ) ) ? angle - Ogre::Degree( 360 ) : angle;
+
+                    if( angle < Ogre::Degree( 180 ) && angle > Ogre::Degree( 0 ) )
+                    {
+                        bool added = ScriptManager::getSingleton().ScriptRequest( scr_entity, "on_move_to_line", 1, entity->GetName(), "", false, false );
+                        if( added == false )
+                        {
+                            LOG_WARNING( "Script \"on_move_to_line\" for entity \"" +  m_EntityTriggers[ i ]->GetName() + "\" doesn't exist." );
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if( m_EntityTriggers[ i ]->IsActivator( entity ) == true )
+                {
+                    bool added = ScriptManager::getSingleton().ScriptRequest( scr_entity, "on_leave_line", 1, entity->GetName(), "", false, false );
+                    if( added == false )
+                    {
+                        LOG_WARNING( "Script \"on_leave_line\" for entity \"" +  m_EntityTriggers[ i ]->GetName() + "\" doesn't exist." );
+                    }
+                    m_EntityTriggers[ i ]->RemoveActivator( entity );
+                }
+            }
+        }
+    }
 }
 
 

@@ -33,7 +33,6 @@ struct SurfaceTexData
 struct KeyFrame
 {
     float time;
-    u8 background;
     u8 src_x;
     u8 src_y;
     u16 clut_x;
@@ -41,11 +40,11 @@ struct KeyFrame
     u8 bpp;
     u8 page_x;
     u8 page_y;
-    u8 blending;
 };
 
 struct Animation
 {
+    float time;
     Ogre::String name;
     std::vector< KeyFrame > keyframes;
 };
@@ -66,9 +65,26 @@ struct Tile
     u8 blending;
     u8 animation;
     u8 animation_index;
-    Animation animation_key;
+    std::vector< Animation > animations;
 };
 
+
+struct AddedTile
+{
+    u8 background;
+    u8 src_x;
+    u8 src_y;
+    u16 clut_x;
+    u16 clut_y;
+    u8 bpp;
+    u8 page_x;
+    u8 page_y;
+
+    float x;
+    float y;
+    float width;
+    float height;
+};
 
 
 class DatFile : public LzsFile
@@ -80,11 +96,12 @@ public:
     DatFile( u8* buffer, const u32 offset, const u32 length );
     virtual ~DatFile();
 
-    void DumpTextData( const Ogre::String& export_path, const Field& field, bool english );
-    void DumpScriptData( const Ogre::String& export_path, const Field& field );
-    void DumpWalkmeshData( const Ogre::String& export_path, const Field& field );
+    void DumpText( const Ogre::String& export_path, const Field& field, bool english );
+    void DumpScript( const Ogre::String& export_path, const Field& field );
+    void DumpWalkmesh( const Ogre::String& export_path, const Field& field );
     void GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre::Degree& fov );
     void DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim );
+    void DumpTriggers( const Ogre::String& export_path, const Field& field );
     static void DumpSoundOpcodesData( const Ogre::String& export_file );
 
     void AdvanceScript( u32 value, u32& current, u32& end );
@@ -101,7 +118,7 @@ public:
     Ogre::String OffsetString( int val );
 
     void AddTile( const Tile& tile, MimFile& mim, Logger* export_text );
-    Surface* AddTileTex( int& x, int& y, const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, const u8 blending, MimFile& mim );
+    AddedTile AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, MimFile& mim );
 
 private:
     std::vector< int > m_Dialogs;
@@ -115,6 +132,8 @@ private:
     int x_16;
     int y_16;
     int n_16;
+
+    std::vector< AddedTile > m_AddedTiles;
 };
 
 

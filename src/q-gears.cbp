@@ -99,6 +99,10 @@
 		<Unit filename="core\EntityManager.h" />
 		<Unit filename="core\EntityModel.cpp" />
 		<Unit filename="core\EntityModel.h" />
+		<Unit filename="core\EntityPoint.cpp" />
+		<Unit filename="core\EntityPoint.h" />
+		<Unit filename="core\EntityTrigger.cpp" />
+		<Unit filename="core\EntityTrigger.h" />
 		<Unit filename="core\Event.h" />
 		<Unit filename="core\GameFrameListner.cpp" />
 		<Unit filename="core\GameFrameListner.h" />

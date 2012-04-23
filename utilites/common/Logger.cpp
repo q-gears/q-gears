@@ -10,12 +10,12 @@ Logger* LOGGER = NULL; // global and accessable from anywhere in our program
 
 
 Ogre::String
-ToHexString(int value, unsigned short width, char fill)
+HexToString( int value, unsigned short width, char fill )
 {
     std::stringstream stream;
-    stream.width(width);
-    stream.fill(fill);
-    stream.setf(std::ios::hex, std::ios::basefield);
+    stream.width( width );
+    stream.fill( fill );
+    stream.setf( std::ios::hex, std::ios::basefield );
     stream << value;
     return stream.str();
 }
@@ -23,45 +23,45 @@ ToHexString(int value, unsigned short width, char fill)
 
 
 Ogre::String
-ToBoolString(bool value)
+BoolToString( bool value )
 {
-    return Ogre::StringConverter::toString(value);
+    return Ogre::StringConverter::toString( value );
 }
 
 
 
 Ogre::String
-ToIntString(int value)
+IntToString( int value )
 {
-    return Ogre::StringConverter::toString(value);
+    return Ogre::StringConverter::toString( value );
 }
 
 
 
 Ogre::String
-ToFloatString(float value)
+FloatToString( float value )
 {
-    return Ogre::StringConverter::toString(value);
+    return Ogre::StringConverter::toString( value );
 }
 
 
 
-Logger::Logger(const Ogre::String& logFileName):
-    m_LogFile(logFileName)
+Logger::Logger( const Ogre::String& logFileName ):
+    m_LogFile( logFileName )
 {
-    FILESYSTEM->RemoveFile(m_LogFile);
+    FILESYSTEM->RemoveFile( m_LogFile );
 }
 
 
 
-Logger::~Logger(void)
+Logger::~Logger()
 {
 }
 
 
 
 void
-Logger::Log(const Ogre::String& text)
+Logger::Log( const Ogre::String& text )
 {
     FILESYSTEM->WriteFile(m_LogFile, text.c_str(), text.size());
 }
@@ -69,23 +69,23 @@ Logger::Log(const Ogre::String& text)
 
 
 void
-Logger::LogW(const Ogre::UTFString& text)
+Logger::LogW( const Ogre::UTFString& text )
 {
-    FILESYSTEM->WriteFile(m_LogFile, text.c_str(), text.size() * 2);
+    FILESYSTEM->WriteFile( m_LogFile, text.c_str(), text.size() * 2 );
 }
 
 
 
 void
-Logger::Log(std::vector<unsigned char>& text)
+Logger::Log( std::vector< unsigned char >& text )
 {
-    unsigned char* temp = new unsigned char[text.size()];
-    for (int i = 0; i < text.size(); ++i)
+    unsigned char* temp = new unsigned char[ text.size() ];
+    for( int i = 0; i < text.size(); ++i )
     {
-        temp[i] = text[i];
+        temp[ i ] = text[ i ];
     }
 
-    FILESYSTEM->WriteFile(m_LogFile, temp, text.size());
+    FILESYSTEM->WriteFile( m_LogFile, temp, text.size() );
 
     delete[] temp;
 }

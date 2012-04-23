@@ -17,6 +17,12 @@ public:
     Background2DAnimation( const Ogre::String& name, Background2D* background, const int tile_index );
     virtual ~Background2DAnimation();
 
+    enum State
+    {
+        DEFAULT,
+        ONCE
+    };
+
     void  AddTime( const float time );
 
     const Ogre::String& GetName() const;

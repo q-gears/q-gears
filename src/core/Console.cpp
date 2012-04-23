@@ -397,7 +397,7 @@ Console::UpdateNotification()
     std::list< OutputLine >::reverse_iterator i;
     int y = ( m_OutputLine.size() > 10 ) ? 160 : m_OutputLine.size() * 16;
     int line = 0;
-    float max_time = 5.0f;
+    float max_time = 3.0f;
 
     for( i = m_OutputLine.rbegin(); i != m_OutputLine.rend() && line < 10; ++i )
     {
@@ -767,6 +767,8 @@ Console::AddInputToHistory()
 void
 Console::SetInputLineFromHistory()
 {
+    ResetAutoCompletion();
+
     std::list< Ogre::String >::iterator i = m_History.begin();
     for( int count = 0; i != m_History.end(); ++i, ++count )
     {

@@ -61,8 +61,11 @@ XmlBackground2DFile::Load()
                 Ogre::Vector2 destination = GetVector2( node, "destination", Ogre::Vector2::ZERO );
                 Ogre::Vector4 uv = GetVector4( node, "uv", Ogre::Vector4::ZERO );
                 float depth = GetFloat( node, "depth", 0 );
+                Ogre::String blending_str = GetString( node, "blending", "alpha" );
 
-                background->AddTile( destination.x, destination.y, width, height, depth, uv.x, uv.y, uv.z, uv.w );
+                Background2D::Blending blending = ( blending_str == "add" ) ? Background2D::ADD : Background2D::ALPHA;
+
+                background->AddTile( destination.x, destination.y, width, height, depth, uv.x, uv.y, uv.z, uv.w, blending );
 
                 TiXmlNode* node2 = node->FirstChild();
                 while( node2 != NULL )

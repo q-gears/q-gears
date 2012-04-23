@@ -596,7 +596,6 @@ ScriptManager::ScriptRequestEndSync( const char* entity, const char* function, c
 bool
 ScriptManager::ScriptRequest( ScriptEntity* script_entity, const Ogre::String& function, const int priority, const Ogre::String& argument1, const Ogre::String& argument2, bool start_sync, bool end_sync )
 {
-    // check "on_pressed" script
     luabind::object table = GetTableByEntityName( script_entity->name, m_LuaState );
     if( table.is_valid() && luabind::type( table ) == LUA_TTABLE && luabind::type( table[ function ] ) == LUA_TFUNCTION )
     {
@@ -626,4 +625,16 @@ ScriptManager::ScriptRequest( ScriptEntity* script_entity, const Ogre::String& f
     }
 
     return false;
+}
+
+
+
+void
+ScriptManager::AddValueToStack( const float value )
+{
+    QueueScript* script = GetScriptByScriptId( m_CurrentScriptId );
+    if( script != NULL )
+    {
+        lua_pushnumber( script->state, value );
+    }
 }

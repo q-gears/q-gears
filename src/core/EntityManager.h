@@ -5,6 +5,8 @@
 
 #include "Background2D.h"
 #include "Entity.h"
+#include "EntityPoint.h"
+#include "EntityTrigger.h"
 #include "Event.h"
 #include "Walkmesh.h"
 
@@ -24,10 +26,13 @@ public:
     Walkmesh* GetWalkmesh();
     Background2D* GetBackground2D();
     void AddEntityModel( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& direction );
+    void AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& point1, const Ogre::Vector3& point2, const bool enabled );
+    void AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& point );
     void AddEntityScript( const Ogre::String& name );
 
     Entity* GetEntity( const Ogre::String& name ) const;
     Entity* ScriptGetEntity( const char* name ) const;
+    EntityPoint* ScriptGetEntityPoint( const char* name ) const;
 
     void ScriptSetPlayerEntity( const char* name );
     void ScriptUnsetPlayerEntity();
@@ -39,26 +44,29 @@ private:
     bool WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, const Ogre::Vector2& move_vector );
     bool CheckSolidCollisions( Entity* entity, Ogre::Vector3& position );
     void SetEntityDirectionByVector( Entity* entity, const Ogre::Vector2& vector );
+    void CheckTriggers( Entity* entity, Ogre::Vector3& position );
 
     void SetNextOffsetStep( Entity* entity );
     void SetNextTurnStep( Entity* entity );
     void SetNextLinearStep( Entity* entity );
     void SetNextJumpStep( Entity* entity );
 private:
-    Walkmesh                    m_Walkmesh;
-    Background2D                m_Background2D;
+    Walkmesh                      m_Walkmesh;
+    Background2D                  m_Background2D;
 
-    Ogre::String                m_EntityTableName;
-    std::vector< Entity* >      m_EntityModels;
-    Entity*                     m_PlayerEntity;
-    Ogre::Vector3               m_PlayerMove;
+    Ogre::String                  m_EntityTableName;
+    std::vector< Entity* >        m_EntityModels;
+    Entity*                       m_PlayerEntity;
+    Ogre::Vector3                 m_PlayerMove;
 
-    std::vector< Ogre::String > m_EntityScripts;
+    std::vector< EntityTrigger* > m_EntityTriggers;
+    std::vector< EntityPoint* >   m_EntityPoints;
+    std::vector< Ogre::String >   m_EntityScripts;
 
-    Ogre::SceneNode*            m_SceneNode;
+    Ogre::SceneNode*              m_SceneNode;
 
-    Ogre::Entity*               m_Grid;
-    Ogre::Entity*               m_Axis;
+    Ogre::Entity*                 m_Grid;
+    Ogre::Entity*                 m_Axis;
 };
 
 

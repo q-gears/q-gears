@@ -6,10 +6,10 @@
 
 
 
-Ogre::String ToHexString( int value, unsigned short width, char fill );
-Ogre::String ToBoolString( bool value );
-Ogre::String ToIntString( int value );
-Ogre::String ToFloatString( float value );
+Ogre::String HexToString( int value, unsigned short width, char fill );
+Ogre::String BoolToString( bool value );
+Ogre::String IntToString( int value );
+Ogre::String FloatToString( float value );
 
 
 

@@ -30,7 +30,7 @@ Background2DAnimation::AddTime( const float time )
     m_Time += time;
     if( m_Time > m_Length )
     {
-        m_Time = m_Time - m_Length;
+        m_Time = m_Length;
     }
 
     if( m_UV.size() > 0 )

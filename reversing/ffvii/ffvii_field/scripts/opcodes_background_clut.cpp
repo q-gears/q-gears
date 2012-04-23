@@ -90,10 +90,10 @@ A0 = 1;
 A1 = 2;
 read_memory_block_one_byte;
 
-[SP + 10] = h(0);
-[SP + 12] = h(V0 + 1e0);
-[SP + 14] = h(bu[script + 4] + 1);
-[SP + 16] = h(1);
+[SP + 10] = h(0);                  // x
+[SP + 12] = h(V0 + 1e0);           // y
+[SP + 14] = h(bu[script + 4] + 1); // width
+[SP + 16] = h(1);                  // height
 
 A0 = 2;
 A1 = 3;
@@ -158,14 +158,14 @@ A1 = 3;
 read_memory_block_one_byte;
 
 
-if (S0 != 0)
+if( length != 0 )
 {
     A1 = 0;
     loopcdcd0:	; 800CDCD0
         [80095de0 + V0 * 20 + A1 * 2] = h(hu[80095de0 + S1 * 20 + A1 * 2]);
 
         A1 = A1 + 1;
-        V1 = A1 < S0;
+        V1 = A1 < length;
     800CDCF8	bne    v1, zero, loopcdcd0 [$800cdcd0]
 }
 
@@ -408,35 +408,34 @@ A1 = 8;
 read_memory_block_one_byte
 mulR = V0;
 
-if (length != 0)
+if( length != 0 )
 {
-
     T0 = 0;
     loopce7e8:	; 800CE7E8
         A3 = hu[80095de0 + src_id * 20 + T0 * 2];
-        if (A3 != 0)
+        if( A3 != 0 )
         {
             A1 = (mulB * ((A3 >> 9) & 3f)) >> 7;
-            if (A1 >= 20)
+            if( A1 >= 20 )
             {
                 A1 = 1f;
             }
 
             V1 = (mulG * ((A3 >> 4) & 3f)) >> 7;
-            if (V1 >= 20)
+            if( V1 >= 20 )
             {
                 V1 = 1f;
             }
 
             A0 = (mulR * ((A3 << 1) & 3e)) >> 7;
-            if (A0 >= 20)
+            if( A0 >= 20 )
             {
                 A0 = 1f;
             }
 
             [80095de0 + dst_id * 20 + A2] = h((A3 & 8000) | (A1 << a) | (V1 << 5) | A0);
 
-            if (hu[80095de0 + dst_id * 20 + A2] == 0)
+            if( hu[80095de0 + dst_id * 20 + A2] == 0 )
             {
                 [80095de0 + dst_id * 20 + A2] = h(8000);
             }

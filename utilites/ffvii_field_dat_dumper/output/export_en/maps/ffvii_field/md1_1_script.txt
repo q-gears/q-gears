@@ -1,14 +1,14 @@
 dir
 script_0:
-03a0 (end 03a0): temp6_6 = 62;
+03a0 (end 03a0): temp6_06 = 62;
 03a5 (end 03a5): field:screen_set_scroll_to_pc_instant(); -- SCRCC
 03a6 (end 03a6): [UNREVERSED] BTLMD(20, 00);
 03a9 (end 03a9): music:execute_akao( 10, pointer_to_field_AKAO_0 ); -- play field music
 03ab (end 03ab): field:map_name(1);
 03ad (end 03ad): return;
-03ae (end 03ae): temp6_0 = cl:get_triangle();
-03b2 (end 03b2): if ( temp6_0 == temp6_6 ) then continue else jumpto(043e);
-03ba (end 043e): if ( game:variable_get("progress_game") < 7 ) then continue else jumpto(043e);
+03ae (end 03ae): temp6_00 = cl:get_triangle();
+03b2 (end 03b2): if ( temp6_00 == temp6_06 ) then continue else jumpto(043e);
+03ba (end 043e): if ( game:variable_get( "progress_game" ) < 7 ) then continue else jumpto(043e);
 03c2 (end 043e): field:pc_lock(true);
 03c4 (end 043e): field:menu_lock(true);
 03c6 (end 043e): field:screen_set_scroll_to_coords_smooth( 65440, 60, 1.06667 );
@@ -41,7 +41,7 @@ script_0:
 0423 (end 043e): script:request( "ba", "script_5", 6 );
 0426 (end 043e): script:wait( 1 );
 0429 (end 043e): field:movie_set( 20 );
-042b (end 043e): temp5_21 = 1;
+042b (end 043e): temp5_15 = 1;
 042f (end 043e): field:play_movie();
 0430 (end 043e): field:jump_to_map(118, 3549, 30574, 60, 180);
 043a (end 043e): field:pc_lock(false);
@@ -104,7 +104,7 @@ ba
 script_0:
 04bd (end 04bd): -- assosiate entity with model (CHAR) argument doesn't matter;
 04bf (end 04bf): field:set_entity_to_character("ba", 1);
-04c1 (end 04c1): if ( game:variable_get("progress_game") < 7 ) then continue else jumpto(04d4);
+04c1 (end 04c1): if ( game:variable_get( "progress_game" ) < 7 ) then continue else jumpto(04d4);
 04c9 (end 04d4): ba:set_position_triangle(2264, 1236, 1298, 71);
 04d4 (end 04d4): return;
 04d5 (end 04d5): jumpto( 04d5 );
@@ -151,7 +151,7 @@ script_0:
 0554 (end 0554): -- assosiate entity with model (CHAR) argument doesn't matter;
 0556 (end 0556): av_m:set_position_triangle(1002, 1556, 1298, 63);
 0561 (end 0561): av_m:set_direction( 174.375 );
-0564 (end 0564): if ( game:variable_get("progress_game") >= 7 ) then continue else jumpto(0572);
+0564 (end 0564): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(0572);
 056c (end 0572): av_m:set_talkable( false );
 056e (end 0572): av_m:set_solid( false );
 0570 (end 0572): av_m:set_visible(false);
@@ -203,7 +203,7 @@ script_0:
 05fd (end 05fd): av_l:set_position_triangle(1157, 1619, 1298, 62);
 0608 (end 0608): av_l:set_direction( 174.375 );
 060b (end 060b): av_l:set_animation_default("3", 1);
-060e (end 060e): if ( game:variable_get("progress_game") >= 7 ) then continue else jumpto(061c);
+060e (end 060e): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(061c);
 0616 (end 061c): av_l:set_talkable( false );
 0618 (end 061c): av_l:set_solid( false );
 061a (end 061c): av_l:set_visible(false);
@@ -235,7 +235,7 @@ script_0:
 065a (end 065a): av_s:set_position_triangle(1521, 1504, 1298, 70);
 0665 (end 0665): av_s:set_direction( 16.875 );
 0668 (end 0668): av_s:set_animation_default("3", 1);
-066b (end 066b): if ( game:variable_get("progress_game") >= 7 ) then continue else jumpto(0679);
+066b (end 066b): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(0679);
 0673 (end 0679): av_s:set_talkable( false );
 0675 (end 0679): av_s:set_solid( false );
 0677 (end 0679): av_s:set_visible(false);
@@ -256,7 +256,7 @@ script_0:
 0694 (end 0694): -- assosiate entity with model (CHAR) argument doesn't matter;
 0696 (end 0696): drL:set_position_triangle(1088, 1845, 1298, 61);
 06a1 (end 06a1): drL:set_direction( 354.375 );
-06a4 (end 06a4): if ( game:variable_get("progress_game") >= 7 ) then continue else jumpto(06b2);
+06a4 (end 06a4): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(06b2);
 06ac (end 06b2): drL:set_talkable( false );
 06ae (end 06b2): drL:set_solid( false );
 06b0 (end 06b2): drL:set_visible(false);
@@ -278,7 +278,7 @@ script_0:
 06cf (end 06cf): -- assosiate entity with model (CHAR) argument doesn't matter;
 06d1 (end 06d1): drR:set_position_triangle(1263, 1824, 1298, 60);
 06dc (end 06dc): drR:set_direction( 174.375 );
-06df (end 06df): if ( game:variable_get("progress_game") >= 7 ) then continue else jumpto(06ed);
+06df (end 06df): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(06ed);
 06e7 (end 06ed): drR:set_talkable( false );
 06e9 (end 06ed): drR:set_solid( false );
 06eb (end 06ed): drR:set_visible(false);
@@ -298,63 +298,63 @@ script_3:
 unnamed_8
 script_0:
 070a (end 070a): return;
-070b (end 070b): if ( temp5_21 == 1 ) then continue else jumpto(0729);
-0711 (end 0729): if ( temp5_11 == 0 ) then continue else jumpto(0729);
-0717 (end 0729): temp6_9 = field:get_movie_frame();
-071a (end 0729): if ( temp6_9 > 30 ) then continue else jumpto(0729);
-0722 (end 0729): temp5_11 = 1;
+070b (end 070b): if ( temp5_15 == 1 ) then continue else jumpto(0729);
+0711 (end 0729): if ( temp5_0b == 0 ) then continue else jumpto(0729);
+0717 (end 0729): temp6_09 = field:get_movie_frame();
+071a (end 0729): if ( temp6_09 > 30 ) then continue else jumpto(0729);
+0722 (end 0729): temp5_0b = 1;
 0726 (end 0729): script:request( "cl", "script_9", 6 );
 0729 (end 0729): jumpto( 070b );
 
 fan
 script_0:
-072c (end 072c): field:background_clear( 2 ); -- turns off all layer of background animation with given id
+072c (end 072c): field:background_clear( "2" ); -- turns off all layer of background animation with given id
 072f (end 072f): return;
 0730 (end 0730): script:wait( 0.1 );
-0733 (end 0733): field:background_on( "2, 0 ); -- turns on layer of background animation with given id
+0733 (end 0733): field:background_on( "2", 0 ); -- turns on layer of background animation with given id
 0737 (end 0737): script:wait( 0.133333 );
-073a (end 073a): field:background_off( "2, 0 ); -- turns off layer of background animation with given id
-073e (end 073e): field:background_on( "2, 1 ); -- turns on layer of background animation with given id
+073a (end 073a): field:background_off( "2", 0 ); -- turns off layer of background animation with given id
+073e (end 073e): field:background_on( "2", 1 ); -- turns on layer of background animation with given id
 0742 (end 0742): script:wait( 0.133333 );
-0745 (end 0745): field:background_off( "2, 1 ); -- turns off layer of background animation with given id
+0745 (end 0745): field:background_off( "2", 1 ); -- turns off layer of background animation with given id
 0749 (end 0749): jumpto( 0730 );
 
 light
 script_0:
-074b (end 074b): temp5_22 = 66;
+074b (end 074b): temp5_16 = 66;
 074f (end 074f): return;
-0750 (end 0750): [UNREVERSED] STPAL(00, 0d, 00, ff);
-0755 (end 0755): if ( temp5_22 < 62 ) then continue else jumpto(0775);
-075b (end 0775): temp5_22 = temp5_22 + 2;
-075f (end 0775): [UNREVERSED] MPPAL2(00, 55, 50, 00, 10, 16, 16, 16, ff);
-0769 (end 0775): [UNREVERSED] CPPAL(00, 00, 10, 00);
-076e (end 0775): [UNREVERSED] LDPAL(00, 10, 0d, ff);
+0750 (end 0750): [UNREVERSED] STPAL( 00, 0d, 00, ff );
+0755 (end 0755): if ( temp5_16 < 62 ) then continue else jumpto(0775);
+075b (end 0775): temp5_16 = temp5_16 + 2;
+075f (end 0775): [UNREVERSED] MPPAL2( 00, 55, 50, 00, 10, 16, 16, 16, ff );
+0769 (end 0775): [UNREVERSED] CPPAL( 00, 00, 10, 00 );
+076e (end 0775): [UNREVERSED] LDPAL( 00, 10, 0d, ff );
 0773 (end 0775): jumpto( 0755 );
-0775 (end 0775): if ( temp5_22 > 32 ) then continue else jumpto(0795);
-077b (end 0795): temp5_22 = temp5_22 - 2;
-077f (end 0795): [UNREVERSED] MPPAL2(00, 55, 50, 00, 10, 16, 16, 16, ff);
-0789 (end 0795): [UNREVERSED] CPPAL(00, 00, 10, 00);
-078e (end 0795): [UNREVERSED] LDPAL(00, 10, 0d, ff);
+0775 (end 0775): if ( temp5_16 > 32 ) then continue else jumpto(0795);
+077b (end 0795): temp5_16 = temp5_16 - 2;
+077f (end 0795): [UNREVERSED] MPPAL2( 00, 55, 50, 00, 10, 16, 16, 16, ff );
+0789 (end 0795): [UNREVERSED] CPPAL( 00, 00, 10, 00 );
+078e (end 0795): [UNREVERSED] LDPAL( 00, 10, 0d, ff );
 0793 (end 0795): jumpto( 0775 );
 0795 (end 0795): jumpto( 0755 );
 
 light2
 script_0:
-0797 (end 0797): temp5_23 = 66;
+0797 (end 0797): temp5_17 = 66;
 079b (end 079b): return;
 079c (end 079c): script:wait( 0.666667 );
-079f (end 079f): [UNREVERSED] STPAL(00, 0e, 20, ff);
-07a4 (end 07a4): if ( temp5_23 < 62 ) then continue else jumpto(07c4);
-07aa (end 07c4): temp5_23 = temp5_23 + 1;
-07ae (end 07c4): [UNREVERSED] MPPAL2(00, 55, 50, 20, 30, 17, 17, 17, ff);
-07b8 (end 07c4): [UNREVERSED] CPPAL(00, 20, 30, 00);
-07bd (end 07c4): [UNREVERSED] LDPAL(00, 30, 0e, ff);
+079f (end 079f): [UNREVERSED] STPAL( 00, 0e, 20, ff );
+07a4 (end 07a4): if ( temp5_17 < 62 ) then continue else jumpto(07c4);
+07aa (end 07c4): temp5_17 = temp5_17 + 1;
+07ae (end 07c4): [UNREVERSED] MPPAL2( 00, 55, 50, 20, 30, 17, 17, 17, ff );
+07b8 (end 07c4): [UNREVERSED] CPPAL( 00, 20, 30, 00 );
+07bd (end 07c4): [UNREVERSED] LDPAL( 00, 30, 0e, ff );
 07c2 (end 07c4): jumpto( 07a4 );
-07c4 (end 07c4): if ( temp5_23 > 16 ) then continue else jumpto(07e4);
-07ca (end 07e4): temp5_23 = temp5_23 - 1;
-07ce (end 07e4): [UNREVERSED] MPPAL2(00, 55, 50, 20, 30, 17, 17, 17, ff);
-07d8 (end 07e4): [UNREVERSED] CPPAL(00, 20, 30, 00);
-07dd (end 07e4): [UNREVERSED] LDPAL(00, 30, 0e, ff);
+07c4 (end 07c4): if ( temp5_17 > 16 ) then continue else jumpto(07e4);
+07ca (end 07e4): temp5_17 = temp5_17 - 1;
+07ce (end 07e4): [UNREVERSED] MPPAL2( 00, 55, 50, 20, 30, 17, 17, 17, ff );
+07d8 (end 07e4): [UNREVERSED] CPPAL( 00, 20, 30, 00 );
+07dd (end 07e4): [UNREVERSED] LDPAL( 00, 30, 0e, ff );
 07e2 (end 07e4): jumpto( 07c4 );
 07e4 (end 07e4): jumpto( 07a4 );
 

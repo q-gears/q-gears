@@ -37,33 +37,33 @@ script_0:
 
 script_1:
 01e2 (end 01e2): -- set window parameters (id = 1, x = 0, y = 0, width = 138, height = 169);
-01ec (end 01ec): message:show_text_wait(1, 0, x, y); -- ASK cursor at "temp5_0", start 0, end 9
+01ec (end 01ec): message:show_text_wait(1, 0, x, y); -- ASK cursor at "temp5_00", start 0, end 9
 01f3 (end 01f3): jumpto( 0209 );
 01f5 (end 0209): -- set window parameters (id = 1, x = 0, y = 0, width = 129, height = 89);
-01ff (end 0209): message:show_text_wait(1, 1, x, y); -- ASK cursor at "temp5_0", start 0, end 4
+01ff (end 0209): message:show_text_wait(1, 1, x, y); -- ASK cursor at "temp5_00", start 0, end 4
 0206 (end 0209): jumpto( 02a4 );
-0209 (end 02a4): if ( temp5_0 == 0 ) then continue else jumpto(0215);
+0209 (end 02a4): if ( temp5_00 == 0 ) then continue else jumpto(0215);
 0210 (end 02a4): jumpto( 01f5 );
 0212 (end 02a4): jumpto( 02a3 );
-0215 (end 02a4): if ( temp5_0 == 1 ) then continue else jumpto(0224);
+0215 (end 02a4): if ( temp5_00 == 1 ) then continue else jumpto(0224);
 021c (end 02a4): game:variable_set("menu_selectable", 0);
 0221 (end 02a4): jumpto( 02a3 );
-0224 (end 02a4): if ( temp5_0 == 2 ) then continue else jumpto(0231);
+0224 (end 02a4): if ( temp5_00 == 2 ) then continue else jumpto(0231);
 022b (end 02a4): game:battle_enable( false )
 022e (end 02a4): jumpto( 02a3 );
-0231 (end 02a4): if ( temp5_0 == 3 ) then continue else jumpto(023e);
+0231 (end 02a4): if ( temp5_00 == 3 ) then continue else jumpto(023e);
 0238 (end 02a4): game:battle_enable( true )
 023b (end 02a4): jumpto( 02a3 );
-023e (end 02a4): if ( temp5_0 == 4 ) then continue else jumpto(024b);
+023e (end 02a4): if ( temp5_00 == 4 ) then continue else jumpto(024b);
 0245 (end 02a4): game:movie_enable( false )
 0248 (end 02a4): jumpto( 02a3 );
-024b (end 02a4): if ( temp5_0 == 5 ) then continue else jumpto(0258);
+024b (end 02a4): if ( temp5_00 == 5 ) then continue else jumpto(0258);
 0252 (end 02a4): game:movie_enable( true )
 0255 (end 02a4): jumpto( 02a3 );
-0258 (end 02a4): if ( temp5_0 == 6 ) then continue else jumpto(0264);
+0258 (end 02a4): if ( temp5_00 == 6 ) then continue else jumpto(0264);
 025f (end 02a4): game:global_reset()
 0261 (end 02a4): jumpto( 02a3 );
-0264 (end 02a4): if ( temp5_0 == 7 ) then continue else jumpto(0292);
+0264 (end 02a4): if ( temp5_00 == 7 ) then continue else jumpto(0292);
 026b (end 02a4): [UNREVERSED] SPECIAL SPCNM(00, 02);
 026f (end 02a4): [UNREVERSED] SPECIAL SPCNM(01, 03);
 0273 (end 02a4): [UNREVERSED] SPECIAL SPCNM(02, 04);
@@ -74,13 +74,13 @@ script_1:
 0287 (end 02a4): [UNREVERSED] SPECIAL SPCNM(04, 0a);
 028b (end 02a4): [UNREVERSED] SPECIAL SPCNM(07, 09);
 028f (end 02a4): jumpto( 02a3 );
-0292 (end 02a4): if ( temp5_0 == 8 ) then continue else jumpto(02a3);
+0292 (end 02a4): if ( temp5_00 == 8 ) then continue else jumpto(02a3);
 0299 (end 02a4): field:jump_to_map(116, 0, 0, 0, 0);
 02a3 (end 02a4): return;
-02a4 (end 02a4): if ( temp5_0 == 0 ) then continue else jumpto(02b1);
+02a4 (end 02a4): if ( temp5_00 == 0 ) then continue else jumpto(02b1);
 02ab (end 02b1): jumpto( 01e2 );
 02ae (end 02b1): jumpto( 03b1 );
-02b1 (end 03b1): if ( temp5_0 == 1 ) then continue else jumpto(0395);
+02b1 (end 03b1): if ( temp5_00 == 1 ) then continue else jumpto(0395);
 02b8 (end 03b1): music:execute_akao( c0, 0000007f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
 02c6 (end 03b1): music:execute_akao( a0, 0000007f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
 02d4 (end 03b1): music:execute_akao( a1, 0000007f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
@@ -98,12 +98,12 @@ script_1:
 0376 (end 03b1): music:execute_akao( 2a, 0000003f, 00000000, 00000000, 00000000, 0000f200, 00000000 );
 0384 (end 03b1): music:execute_akao( 2b, 0000003f, 00000000, 00000000, 00000000, 00001100, 0000001e );
 0392 (end 03b1): jumpto( 03b1 );
-0395 (end 03b1): if ( temp5_0 == 2 ) then continue else jumpto(03a5);
+0395 (end 03b1): if ( temp5_00 == 2 ) then continue else jumpto(03a5);
 039c (end 03b1): game:fill_materia()
 039e (end 03b1): game:fill_materia()
 03a0 (end 03b1): game:fill_materia()
 03a2 (end 03b1): jumpto( 03b1 );
-03a5 (end 03b1): if ( temp5_0 == 3 ) then continue else jumpto(03b1);
+03a5 (end 03b1): if ( temp5_00 == 3 ) then continue else jumpto(03b1);
 03ac (end 03b1): field:battle_run( 999 );
 03b0 (end 03b1): game:restore_hp_mp_status_to_all();
 03b1 (end 03b1): return;

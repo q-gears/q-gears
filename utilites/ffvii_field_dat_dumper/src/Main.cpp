@@ -22,21 +22,26 @@ int state;
 void
 fill_names()
 {
-    Field field;
-
     Ogre::ConfigFile cf;
     cf.load( "export.cfg" );
     Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
 
     while( seci.hasMoreElements() )
     {
+        Field field;
+
         Ogre::String names = seci.peekNextKey();
-        seci.moveNext();
+        Ogre::ConfigFile::SettingsMultiMap* settings = seci.getNext();
+
+        if( names == "" )
+        {
+            continue;
+        }
 
         Ogre::StringVector name = Ogre::StringUtil::split( names, ":", 2 );
         if( name.size() < 2 )
         {
-            LOGGER->Log( "In '" + names + "' not enough names. Must be 2.\n" );
+            LOGGER->Log( "In \"" + names + "\" not enough data. Must be 2.\n" );
             continue;
         }
         field.name = name[ 0 ];
@@ -45,10 +50,87 @@ fill_names()
         field.tex_width = Ogre::StringConverter::parseInt( tex_size[ 0 ] );
         field.tex_height = Ogre::StringConverter::parseInt( tex_size[ 1 ] );
 
-        if( field.name != "" )
+        LOGGER->Log( "Export map \"" + field.name + "\" with tex_width=" + IntToString( field.tex_width ) + ", tex_height=" + IntToString( field.tex_height ) + ".\n" );
+
+        Ogre::ConfigFile::SettingsMultiMap::iterator i;
+        for( i = settings->begin(); i != settings->end(); ++i )
         {
-            fields.push_back( field );
+            FiledAnimation animation;
+            animation.name = i->first;
+
+            Ogre::StringVector anim = Ogre::StringUtil::split( i->second, ";", 2 );
+            if( anim.size() < 2 )
+            {
+                LOGGER->Log("In \"" + i->second + "\" not enough data separated by \";\". Must be 2.\n");
+                continue;
+            }
+
+            Ogre::StringVector anim_data = Ogre::StringUtil::split( anim[ 0 ], ":", 2 );
+            if( anim_data.size() < 2 )
+            {
+                LOGGER->Log("In \"" + anim[ 0 ] + "\" not enough data. Must be 2.\n");
+                continue;
+            }
+
+            animation.time = Ogre::StringConverter::parseReal( anim_data[ 0 ] );
+
+            Ogre::StringVector anim_type = Ogre::StringUtil::split( anim_data[ 1 ], "-", 2 );
+            if( anim_type.size() < 2 )
+            {
+                LOGGER->Log("In \"" + anim_data[ 1 ] + "\" not enough data. Must be 2.\n");
+                continue;
+            }
+
+            if( anim_type[ 0 ] == "anim" )
+            {
+                animation.type = FAT_ANIMATION;
+                animation.animation = Ogre::StringConverter::parseInt( anim_type[ 1 ] );
+            }
+            else if( anim_type[ 0 ] == "clut" )
+            {
+                animation.type = FAT_CLUT;
+                animation.clut = Ogre::StringConverter::parseInt( anim_type[ 1 ] );
+            }
+            else
+            {
+                LOGGER->Log( "Unknown animation type \"" + anim_type[ 0 ] + "\".\n");
+                continue;
+            }
+
+            LOGGER->Log("Animation \"" + animation.name + "\" add with total time \"" + FloatToString( animation.time ) + "\" and animation_id \"" + IntToString( animation.animation ) + "\", clut \"" + IntToString( animation.clut ) + "\".\n" );
+
+            Ogre::StringVector anim_keyframes = Ogre::StringUtil::split( anim[ 1 ], "," );
+            for( unsigned int j = 0; j < anim_keyframes.size(); ++j )
+            {
+                Ogre::StringVector anim_frame = Ogre::StringUtil::split( anim_keyframes[ j ], ":", 2 );
+                if( anim_frame.size() < 2 )
+                {
+                    LOGGER->Log("In \"" + anim_keyframes[ j ] + "\" not enough data. Must be 2.\n");
+                    continue;
+                }
+
+                FieldKeyFrame frame;
+                frame.time = Ogre::StringConverter::parseReal( anim_frame[ 0 ] );
+
+                if( anim_frame[ 1 ] == "blank" )
+                {
+                    frame.blank = true;
+                    frame.animation_index = 0;
+                }
+                else
+                {
+                    frame.blank = false;
+                    frame.animation_index = Ogre::StringConverter::parseInt( anim_frame[ 1 ] );
+                }
+
+                animation.keyframes.push_back( frame );
+                LOGGER->Log("Keyframe add at time \"" + FloatToString( frame.time ) + "\". Settings blank=\"" + BoolToString( frame.blank ) + "\", animation_index=\"" + IntToString( frame.animation_index ) + "\".\n");
+            }
+
+            field.animations.push_back( animation );
         }
+
+        fields.push_back( field );
     }
 }
 
@@ -102,9 +184,10 @@ main( int argc, char *argv[] )
     {
         DatFile dat( "data/en/" + fields[ f ].name + ".dat" );
         MimFile mim( "data/en/" + fields[ f ].name + ".mim" );
-        dat.DumpScriptData(  "export_en/", fields[ f ] );
-        dat.DumpTextData( "export_en/", fields[ f ], true );
-        dat.DumpWalkmeshData( "export_en/", fields[ f ] );
+        dat.DumpScript(  "export_en/", fields[ f ] );
+        dat.DumpText( "export_en/", fields[ f ], true );
+        dat.DumpTriggers( "export_en/", fields[ f ] );
+        dat.DumpWalkmesh( "export_en/", fields[ f ] );
         dat.DumpBackground( "export_en/", fields[ f ], mim );
     }
 
