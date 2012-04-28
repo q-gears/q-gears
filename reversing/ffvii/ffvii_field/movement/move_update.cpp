@@ -729,38 +729,37 @@ if (A0 != FF)
     new_structure_data = w[V1 + A0 * 24 + 1C];
     new_structure_animation = hu[V1 + A0 * 24 + 1A];
 
-    // don't automove
-    V1 = bu[8009ABF4 + 33];
-    if (V1 == 1)
+    // don't play automove
+    if( bu[8009abf4 + 33] == 1 )
     {
         return;
     }
 
-    current_animation_value = hu[80074EA4 + A2 * 84 + 62];
-    animation_speed = hu[80074EA4 + A2 * 84 + 60];
-    [80074EA4 + A2 * 84 + 62] = h(current_animation_value + animation_speed);
+    current_animation_value = hu[80074ea4 + A2 * 84 + 62];
+    animation_speed = hu[80074ea4 + A2 * 84 + 60];
+    [80074ea4 + A2 * 84 + 62] = h(current_animation_value + animation_speed);
 
     // if manual visible entity and UC == 0
-    if (A2 == h[800965E0] && bu[8009ABF4 + 32] == 0)
+    if (A2 == h[800965e0] && bu[8009abf4 + 32] == 0)
     {
-        animation_id = bu[80074EA4 + A2 * 84 + 5E];
+        animation_id = bu[80074ea4 + A2 * 84 + 5e];
         number_of_frame = hu[new_structure_data + new_structure_animation + animation_id * 10];
-        [80074EA4 + A2 * 84 + 64] = h(number_of_frame - 1);
+        [80074ea4 + A2 * 84 + 64] = h(number_of_frame - 1);
 
-        current_animation_value = h[80074EA4 + A2 * 84 + 62];
+        current_animation_value = h[80074ea4 + A2 * 84 + 62];
         if (current_animation_value > (number_of_frame - 1) * 10)
         {
-            [80074EA4 + A2 * 84 + 62] = h(0);
+            [80074ea4 + A2 * 84 + 62] = h(0);
         }
     }
     else
     {
-        number_of_frame = h[80074EA4 + A2 * 84 + 64];
-        current_animation_value = h[80074EA4 + A2 * 84 + 62];
+        number_of_frame = h[80074ea4 + A2 * 84 + 64];
+        current_animation_value = h[80074ea4 + A2 * 84 + 62];
 
         if (current_animation_value > number_of_frame * 10)
         {
-            [80074EA4 + A2 * 84 + 62] = h(number_of_frame * 10);
+            [80074ea4 + A2 * 84 + 62] = h(number_of_frame * 10);
         }
     }
 }

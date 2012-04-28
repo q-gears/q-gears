@@ -9,25 +9,6 @@
 
 
 
-enum EntityAnimation
-{
-    EA_DEFAULT,
-    EA_ONCE,
-    EA_LOOPED
-};
-
-
-
-enum EntityState
-{
-    ES_NONE,
-    ES_WALKMESH,
-    ES_LINEAR,
-    ES_JUMP
-};
-
-
-
 enum ActionType
 {
     AT_NONE,
@@ -59,6 +40,27 @@ enum LinearMovement
 class Entity
 {
 public:
+    enum AnimationState
+    {
+        REQUESTED_ANIMATION,
+        AUTO_ANIMATION
+    };
+
+    enum AnimationPlayType
+    {
+        PLAY_DEFAULT,
+        PLAY_ONCE,
+        PLAY_LOOPED
+    };
+
+    enum State
+    {
+        NONE,
+        WALKMESH,
+        LINEAR,
+        JUMP
+    };
+
                          Entity( const Ogre::String& name, Ogre::SceneNode* node );
     virtual              ~Entity();
 
@@ -97,8 +99,8 @@ public:
     virtual bool         IsVisible() const = 0;
 
     // different type of movement state related
-    void                 SetState( const EntityState state );
-    EntityState          GetState() const;
+    void                 SetState( const State state );
+    State                GetState() const;
 
     // movement related
     void                 SetMoveSpeed( const float speed );
@@ -114,7 +116,6 @@ public:
     bool                 GetMoveAutoRotation() const;
     void                 SetMoveAutoAnimation( const bool animate );
     bool                 GetMoveAutoAnimation() const;
-    const Ogre::String&  GetMoveAnimationIdleName() const;
     const Ogre::String&  GetMoveAnimationWalkName() const;
     const Ogre::String&  GetMoveAnimationRunName() const;
     void                 ScriptMoveToPosition( const float x, const float y );
@@ -168,8 +169,10 @@ public:
     float                GetTurnCurrentSeconds() const;
 
     // animation related
+    const Ogre::String&  GetDefaultAnimationName() const;
     const Ogre::String&  GetCurrentAnimationName() const;
-    virtual void         PlayAnimation( const Ogre::String& animation, EntityAnimation state, const float start, const float end ) = 0;
+    AnimationState       GetAnimationState() const;
+    virtual void         PlayAnimation( const Ogre::String& animation, AnimationState state, AnimationPlayType play_type, const float start, const float end ) = 0;
     virtual void         PlayAnimationContinue( const Ogre::String& animation ) = 0;
     virtual void         UpdateAnimation( const float delta ) = 0;
     void                 ScriptPlayAnimation( const char* name );
@@ -208,7 +211,7 @@ protected:
     bool                    m_Talkable;
 
     // move state related
-    EntityState             m_State;
+    State                   m_State;
     std::vector< ScriptId > m_Sync;
 
     // move related
@@ -220,7 +223,6 @@ protected:
     int                     m_MoveTriangleId;
     bool                    m_MoveAutoRotation;
     bool                    m_MoveAutoAnimation;
-    Ogre::String            m_MoveAnimationIdle;
     Ogre::String            m_MoveAnimationWalk;
     Ogre::String            m_MoveAnimationRun;
 
@@ -256,7 +258,8 @@ protected:
     // animation
     Ogre::String            m_AnimationCurrentName;
     std::vector< ScriptId > m_AnimationSync;
-    EntityAnimation         m_AnimationState;
+    AnimationState          m_AnimationState;
+    AnimationPlayType       m_AnimationPlayType;
     Ogre::String            m_AnimationDefault;
     float                   m_AnimationEndTime;
     bool                    m_AnimationAutoPlay;

@@ -62,19 +62,22 @@
 		<Cursor position="2456" topLine="48" />
 	</File>
 	<File name="core\Entity.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="12304" topLine="586" />
+		<Cursor position="9372" topLine="347" />
 	</File>
 	<File name="core\Entity.h" open="0" top="0" tabpos="2">
-		<Cursor position="1050" topLine="42" />
+		<Cursor position="6501" topLine="155" />
 	</File>
 	<File name="core\EntityManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="152" topLine="0" />
+		<Cursor position="6409" topLine="174" />
 	</File>
 	<File name="core\EntityManager.h" open="0" top="0" tabpos="4">
 		<Cursor position="153" topLine="0" />
 	</File>
 	<File name="core\EntityModel.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="1220" topLine="100" />
+	</File>
+	<File name="core\EntityModel.h" open="0" top="0" tabpos="0">
+		<Cursor position="476" topLine="0" />
 	</File>
 	<File name="core\EntityPoint.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="99" topLine="0" />

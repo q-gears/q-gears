@@ -25,7 +25,7 @@ Lbbbf0:	; 800BBBF0
     800BBC28	nop
 
     Lbbc2c:	; 800BBC2C
-    V1 = bu[800756E8 + A0];
+    V1 = bu[800756e8 + A0];
 
     model           = bu[8007EB98];
     offset_to_model = w[8009C544];

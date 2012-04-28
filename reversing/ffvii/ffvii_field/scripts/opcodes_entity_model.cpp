@@ -481,22 +481,19 @@ return 1;
 
 ////////////////////////////////////////////////////////
 0xA8 MOVE
-current_entity        = bu[800722C4];
-model_data_offset     = w[8009C544];
-current_model         = bu[8007EB98 + current_entity];
+current_entity        = bu[800722c4];
+model_data_offset     = w[8009c544];
+current_model         = bu[8007eb98 + current_entity];
 current_model_offset  = model_data_offset + current_model * 84;
-script_pointer_offset = 800831FC + current_entity * 2;
-game_data_offset      = w[8009C6E0];
+script_pointer_offset = 800831fc + current_entity * 2;
+game_data_offset      = w[8009c6e0];
 movement_speed        = hu[current_model_offset + 70]
 
 
 
-if (current_model == FF) // if not visible entity
+if( current_model == ff ) // if not visible entity
 {
-    V0 = hu[script_pointer_offset];
-    V0 = V0 + 6;
-    [script_pointer_offset] = h(V0);
-
+    [script_pointer_offset] = h(hu[script_pointer_offset] + 6);
     return 0;
 }
 
@@ -509,24 +506,22 @@ if (current_model == FF) // if not visible entity
 A0 = 1;
 A1 = 2;
 read_memory_block_two_bytes;
-V0 = V0 << 0C;
+V0 = V0 << 0c;
 [current_model_offset + 78] = w(V0);
 
 // set destination Y
 A0 = 2;
 A1 = 4;
 read_memory_block_two_bytes;
-V0 = V0 << 0C;
+V0 = V0 << 0c;
 [current_model_offset + 7C] = w(V0);
 
 
 
 A0 = hu[game_data_offset + 10];
-if (A0 * 3 < movement_speed)
+if( A0 * 3 < movement_speed )
 {
-    V1 = bu[current_model_offset + 5E];
-
-    if (V1 == 2)
+    if( bu[current_model_offset + 5e] == 2 ) // run animation
     {
         [800756E8 + current_model] = b(01);
 
@@ -565,13 +560,11 @@ if (A0 * 3 < movement_speed)
         return 1;
     }
 
-    [current_model_offset + 5E] = b(02);
+    [current_model_offset + 5e] = b(02);
 }
 else
 {
-    V1 = bu[current_model_offset + 5E];
-
-    if (V1 == 1)
+    if( bu[current_model_offset + 5E] == 1 ) // walk animation
     {
         [800756E8 + current_model] = b(01);
 
@@ -681,10 +674,7 @@ script_pointer_offset = 800831FC + current_entity * 2;
 
 if (current_model == FF) // if not visible entity
 {
-    V0 = hu[script_pointer_offset];
-    V0 = V0 + 6;
-    [script_pointer_offset] = h(V0);
-
+    [script_pointer_offset] = h(hu[script_pointer_offset] + 6);
     return 0;
 }
 
@@ -779,9 +769,7 @@ script_pointer_offset = 800831FC + current_entity * 2;
 
 if (current_model == FF) // if not visible entity
 {
-    V0 = hu[script_pointer_offset];
-    V0 = V0 + 6;
-    [script_pointer_offset] = h(V0);
+    [script_pointer_offset] = h(hu[script_pointer_offset] + 6);
 
     return 0;
 }
@@ -837,32 +825,24 @@ return 1;
 
 ////////////////////////////////////////////////////////
 // 0xB2 MSPED
-current_entity        = bu[800722C4];
-model_data_offset     = w[8009C544];
-current_model         = bu[8007EB98 + current_entity];
+current_entity        = bu[800722c4];
+model_data_offset     = w[8009c544];
+current_model         = bu[8007eb98 + current_entity];
 current_model_offset  = model_data_offset + current_model * 84;
-script_pointer_offset = 800831FC + current_entity * 2;
-game_data_offset      = w[8009C6E0];
+script_pointer_offset = 800831fc + current_entity * 2;
+game_data_offset      = w[8009c6e0];
 
-if (current_model != FF)
+if( current_model != ff )
 {
     A0 = 2;
     A1 = 2;
     read_memory_block_two_bytes;
 
-    V1 = h[game_data_offset + 10];
-    HI/LO = V0 * V1;
-    A0 = LO;
-    V0 = A0 >> 09;
-    [current_model_offset + 70] = h(V0);
+    [current_model_offset + 70] = h(( V0 * h[game_data_offset + 10] ) >> 09);
 }
 
 // move pointer by 4
-V0 = hu[script_pointer_offset];
-V0 = V0 + 4;
-[script_pointer_offset] = h(V0);
-
-return 0;
+[script_pointer_offset] = h(hu[script_pointer_offset] + 4);
 ////////////////////////////////////////////////////////
 
 

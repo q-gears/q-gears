@@ -171,7 +171,7 @@
 
 800831fc entity current script pointers table.
 
-8008325C [] array of model default animation.
+8008325c [] array of model default animation.
 
 8008326c []       windows parent entity (size 0x01).
 80083274  windows data (size 0x30).
@@ -234,7 +234,7 @@
 
 8009a1c4 [] array of current priority slot used by entity (size 0x01 0x08).
 
-8009abf4 start of game data (message/fade/nfade/walkmesh).
+8009abf4 start of game data (message/fade/nfade/walkmesh). 8009c6e0 points here.
 + 01 []       some state
                 0 - normal field.
                 1 - finalize field in this case.

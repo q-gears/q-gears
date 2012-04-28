@@ -4,9 +4,9 @@
     <background2d file_name="maps/ffvii_field/md1_2_bg.xml" />
     <walkmesh file_name="maps/ffvii_field/md1_2_wm.xml" />
 
+    <entity_model name="Player" file_name="models/field/units/zidane.mesh" position="0 0 0" direction="0" />
     <entity_trigger name="Gateway0" point1="27.2266 238.578 5.07031" point2="28.25 238.516 5.07031" enabled="true" />
-    <entity_trigger name="Gateway1" point1="23.7266 252.461 5.09375" point2="23.6797 253.219 5.09375" enabled="true" />
+    <entity_trigger name="Gateway1" point1="23.7266 252.461 5.09375" point2="23.6797 253.219 5.09375" enabled="false" />
+    <entity_point name="Spawn_md1_1" point="27.8125 238.898 0.453125" rotation="186.353" />
     <entity_script name="Background" />
-
-    <camera view_matrix="0.992676 -0.120850 0.000000 -357.660156 0.012939 0.104980 0.994629 -3281.374023 -0.119873 -0.987061 0.105713 27026.482422 0.000000 0.000000 0.000000 1.000000" projection_matrix="2.412500 0.000000 0.000000 0.000000 0.000000 3.446429 0.000000 0.000000 0.000000 0.000000 -1.000020 -2.000020 0.000000 0.000000 -1.000000 0.000000" />
 </map>

@@ -18,7 +18,7 @@ public:
     virtual bool        IsVisible() const;
 
     // animation related
-    virtual void        PlayAnimation( const Ogre::String& animation, EntityAnimation state, const float start, const float end );
+    virtual void        PlayAnimation( const Ogre::String& animation, AnimationState state, AnimationPlayType play_type, const float start, const float end );
     virtual void        PlayAnimationContinue( const Ogre::String& animation );
     virtual void        UpdateAnimation( const float delta );
 

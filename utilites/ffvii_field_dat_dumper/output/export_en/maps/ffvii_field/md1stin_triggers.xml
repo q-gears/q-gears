@@ -1,2 +1,3 @@
     <entity_trigger name="Gateway0" point1="28.6016 228.562 2.75781" point2="28.6641 229.438 2.75781" enabled="true" />
-    <entity_model  position="8.19531 3.125 0.703125" rotation="81.8824" />
+    <entity_point name="Spawn_md1stin" point="8.19531 3.125 0.703125" rotation="81.8824" />
+    <!-- map "ffvii_md1_1" -->

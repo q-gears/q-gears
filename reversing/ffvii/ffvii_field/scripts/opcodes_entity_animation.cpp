@@ -1,33 +1,26 @@
 ////////////////////////////////
 // 0xA2 DFANM
-current_entity = bu[800722C4];
-A0 = bu[8007EB98 + current_entity];
-if (A0 != FF)
+current_entity        = bu[800722c4];
+current_model         = bu[8007eb98 + current_entity];
+script_pointer_offset = 800831fc + current_entity * 2;
+
+if( current_model != ff )
 {
-    V1 = hu[800831FC + current_entity * 2];
-    V0 = w[8009C6DC];
-    V0 = V0 + V1;
+    V0 = w[8009c6dc] + hu[script_pointer_offset];
     animation_id = bu[V0 + 1];
-    [8008325C + A0] = b(animation_id);
+    [8008325C + current_model] = b(animation_id);
 
     relative_speed = bu[V0 + 2];
+    [80082248 + current_model] = h(h[8009D828 + current_model] / relative_speed);
 
-    A0 = bu[8007EB98 + current_entity * 2];
-    V1 = h[8009D828 + A0];
-    V1 = V1 / relative_speed;
-    [80082248 + A0] = h(V1);
-
-    A1 = bu[8007EB98 + current_entity];
-    V1 = bu[800756E8 + A1]; // get animation state
-    if (V1 == 3)
+    V1 = bu[800756E8 + current_model]; // get animation state
+    if( V1 == 3 )
     {
-        [800756E8 + A1] = b(0);
+        [800756E8 + current_model] = b(0);
     }
 }
 
-V0 = hu[800831FC + current_entity * 2];
-V0 = V0 + 3;
-[800831FC + current_entity * 2] = h(V0);
+[script_pointer_offset] = h(hu[script_pointer_offset] + 3);
 
 return 1;
 ////////////////////////////////
@@ -389,27 +382,21 @@ V1 = bu[A0 + 3];
 
 if (V1 == 0)
 {
-    V1 = w[8009C6E0];
-    V0 = bu[A0 + 1];
-    [V1 + 2C] = h(V0);
+    V1 = w[8009c6e0];
+    [V1 + 2c] = h(bu[A0 + 1]);
 }
 else if (V1 == 1)
 {
-    V1 = w[8009C6E0];
-    V0 = bu[A0 + 1];
-    [V1 + 2E] = h(V0);
+    V1 = w[8009c6e0];
+    [V1 + 2e] = h(bu[A0 + 1]);
 }
 else if (V1 == 2)
 {
-    V1 = w[8009C6E0];
-    V0 = bu[A0 + 1];
-    [V1 + 30] = h(V0);
+    V1 = w[8009c6e0];
+    [V1 + 30] = h(bu[A0 + 1]);
 }
 
-V1 = hu[800831FC + entity_id * 2];
-V1 = V1 + 4;
-[800831FC + A0 * 2] = hu[V1];
-return 0;
+[800831FC + A0 * 2] = hu[hu[800831FC + entity_id * 2] + 4];
 ////////////////////////////////
 
 

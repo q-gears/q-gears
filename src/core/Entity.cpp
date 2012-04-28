@@ -24,17 +24,16 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_TalkRadius( 0.25f ),
     m_Talkable( false ),
 
-    m_State( ES_NONE ),
+    m_State( Entity::NONE ),
 
-    m_MoveSpeed( 0.9f ),
-    m_MoveSpeedRun( 3.6f ),
+    m_MoveSpeed( 0.7f ),
+    m_MoveSpeedRun( 0.8f ),
     m_MovePosition( Ogre::Vector3( 0, 0, 0 ) ),
     m_MoveEntity( NULL ),
     m_MoveStopDistance( 0 ),
     m_MoveTriangleId( -1 ),
     m_MoveAutoRotation( true ),
     m_MoveAutoAnimation( true ),
-    m_MoveAnimationIdle( "Idle" ),
     m_MoveAnimationWalk( "Walk" ),
     m_MoveAnimationRun( "Run" ),
 
@@ -128,20 +127,20 @@ Entity::Update()
 
         if( debug > 1 )
         {
-            static Ogre::String move_state_string[] = { "NONE", "MOVE_WALKMESH", "MOVE_LINEAR", "MOVE_JUMP" };
+            static Ogre::String move_state_string[] = { "NONE", "WALKMESH", "LINEAR", "JUMP" };
 
             DEBUG_DRAW.Text( entity_pos, 0, 24, Ogre::StringConverter::toString( entity_pos ) );
             DEBUG_DRAW.Text( entity_pos, 0, 36, "Triangle: " + Ogre::StringConverter::toString( m_MoveTriangleId ) );
             DEBUG_DRAW.Text( entity_pos, 0, 48, "Move state: " + move_state_string[ m_State ] );
             switch( m_State )
             {
-                case ES_WALKMESH:
+                case Entity::WALKMESH:
                 {
                     DEBUG_DRAW.Line3d( entity_pos, m_MovePosition );
                 }
                 break;
 
-                case ES_LINEAR:
+                case Entity::LINEAR:
                 {
                     DEBUG_DRAW.Text( m_LinearStart, 0, 0, "Start: " + Ogre::StringConverter::toString( m_LinearStart ) );
                     DEBUG_DRAW.Text( m_LinearEnd, 0, 0, "End: " + Ogre::StringConverter::toString( m_LinearEnd ) );
@@ -149,7 +148,7 @@ Entity::Update()
                 }
                 break;
 
-                case ES_JUMP:
+                case Entity::JUMP:
                 {
                     DEBUG_DRAW.Text( m_JumpStart, 0, 0, "Start: " + Ogre::StringConverter::toString( m_JumpStart ) );
                     DEBUG_DRAW.Text( m_JumpEnd, 0, 0, "End: " + Ogre::StringConverter::toString( m_JumpEnd ) );
@@ -364,14 +363,14 @@ Entity::IsTalkable() const
 
 
 void
-Entity::SetState( const EntityState state )
+Entity::SetState( const Entity::State state )
 {
     m_State = state;
 }
 
 
 
-EntityState
+Entity::State
 Entity::GetState() const
 {
     return m_State;
@@ -484,14 +483,6 @@ Entity::GetMoveAutoAnimation() const
 
 
 const Ogre::String&
-Entity::GetMoveAnimationIdleName() const
-{
-    return m_MoveAnimationIdle;
-}
-
-
-
-const Ogre::String&
 Entity::GetMoveAnimationWalkName() const
 {
     return m_MoveAnimationWalk;
@@ -510,7 +501,7 @@ Entity::GetMoveAnimationRunName() const
 void
 Entity::ScriptMoveToPosition( const float x, const float y )
 {
-    m_State = ES_WALKMESH;
+    m_State = Entity::WALKMESH;
 
     m_MovePosition = Ogre::Vector3( x, y, 0 );
     m_MoveEntity = NULL;
@@ -523,7 +514,7 @@ Entity::ScriptMoveToPosition( const float x, const float y )
 void
 Entity::ScriptMoveToEntity( Entity* entity )
 {
-    m_State = ES_WALKMESH;
+    m_State = Entity::WALKMESH;
 
     m_MovePosition = entity->GetPosition();
     m_MoveEntity = entity;
@@ -549,7 +540,7 @@ Entity::ScriptMoveSync()
 void
 Entity::UnsetMove()
 {
-    m_State = ES_NONE;
+    m_State = Entity::NONE;
 
     m_MoveEntity = NULL;
     m_MoveStopDistance = 0;
@@ -590,14 +581,14 @@ Entity::ScriptLinearSync()
 void
 Entity::SetLinear( const Ogre::Vector3& end, const LinearMovement movement, const Ogre::String& animation )
 {
-    m_State = ES_LINEAR;
+    m_State = Entity::LINEAR;
     m_LinearMovement = movement;
     m_LinearStart = GetPosition();
     m_LinearEnd = end;
 
     // linear animation
     m_AnimationAutoPlay = false;
-    PlayAnimation( animation, EA_LOOPED, 0, -1 );
+    PlayAnimation( animation, Entity::AUTO_ANIMATION, Entity::PLAY_LOOPED, 0, -1 );
 
     // after move we need reattach entity to walkmesh
     m_MoveTriangleId = -1;
@@ -608,10 +599,10 @@ Entity::SetLinear( const Ogre::Vector3& end, const LinearMovement movement, cons
 void
 Entity::UnsetLinear()
 {
-    m_State = ES_NONE;
+    m_State = Entity::NONE;
 
     m_AnimationAutoPlay = true;
-    PlayAnimation( m_AnimationDefault, EA_LOOPED, 0, -1 );
+    PlayAnimation( m_AnimationDefault, Entity::AUTO_ANIMATION, Entity::PLAY_LOOPED, 0, -1 );
 
     for( size_t i = 0; i < m_Sync.size(); ++i)
     {
@@ -672,7 +663,7 @@ Entity::ScriptJumpSync()
 void
 Entity::SetJump( const Ogre::Vector3& jump_to, const float seconds )
 {
-    m_State = ES_JUMP;
+    m_State = Entity::JUMP;
     m_JumpStart = GetPosition();
     m_JumpEnd = jump_to;
     m_JumpSeconds = seconds;
@@ -687,7 +678,7 @@ Entity::SetJump( const Ogre::Vector3& jump_to, const float seconds )
 void
 Entity::UnsetJump()
 {
-    m_State = ES_NONE;
+    m_State = Entity::NONE;
 
     for( size_t i = 0; i < m_Sync.size(); ++i)
     {
@@ -1011,6 +1002,14 @@ Entity::GetTurnCurrentSeconds() const
 
 
 const Ogre::String&
+Entity::GetDefaultAnimationName() const
+{
+    return m_AnimationDefault;
+}
+
+
+
+const Ogre::String&
 Entity::GetCurrentAnimationName() const
 {
     return m_AnimationCurrentName;
@@ -1018,10 +1017,18 @@ Entity::GetCurrentAnimationName() const
 
 
 
+Entity::AnimationState
+Entity::GetAnimationState() const
+{
+    return m_AnimationState;
+}
+
+
+
 void
 Entity::ScriptPlayAnimation( const char* name )
 {
-    PlayAnimation( Ogre::String( name ), EA_DEFAULT, 0, -1 );
+    PlayAnimation( Ogre::String( name ), Entity::REQUESTED_ANIMATION, Entity::PLAY_DEFAULT, 0, -1 );
 }
 
 
@@ -1029,7 +1036,7 @@ Entity::ScriptPlayAnimation( const char* name )
 void
 Entity::ScriptPlayAnimationStop( const char* name )
 {
-    PlayAnimation( Ogre::String( name ), EA_ONCE, 0, -1 );
+    PlayAnimation( Ogre::String( name ), Entity::REQUESTED_ANIMATION, Entity::PLAY_ONCE, 0, -1 );
 }
 
 
@@ -1037,7 +1044,7 @@ Entity::ScriptPlayAnimationStop( const char* name )
 void
 Entity::ScriptPlayAnimation( const char* name, const float start, const float end )
 {
-    PlayAnimation( Ogre::String( name ), EA_DEFAULT, start, end );
+    PlayAnimation( Ogre::String( name ), Entity::REQUESTED_ANIMATION, Entity::PLAY_DEFAULT, start, end );
 }
 
 
@@ -1045,7 +1052,7 @@ Entity::ScriptPlayAnimation( const char* name, const float start, const float en
 void
 Entity::ScriptPlayAnimationStop( const char* name, const float start, const float end )
 {
-    PlayAnimation( Ogre::String( name ), EA_ONCE, start, end );
+    PlayAnimation( Ogre::String( name ), Entity::REQUESTED_ANIMATION, Entity::PLAY_ONCE, start, end );
 }
 
 

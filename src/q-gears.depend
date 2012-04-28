@@ -24463,7 +24463,7 @@
 	"Background2DAnimation.h"
 	"ScriptManager.h"
 
-1331663096 m:\q-gears\src\core\entity.h
+1335614880 m:\q-gears\src\core\entity.h
 	<OgreString.h>
 	"EntityCollision.h"
 	"EntityDirection.h"
@@ -25180,7 +25180,7 @@
 	"CameraManager.h"
 	"Logger.h"
 
-1334815946 source:m:\q-gears\src\core\entity.cpp
+1335614916 source:m:\q-gears\src\core\entity.cpp
 	"Entity.h"
 	<OgreSceneNode.h>
 	"ConfigVar.h"
@@ -25195,7 +25195,7 @@
 	"EntityDirection.h"
 	<OgreHardwareBufferManager.h>
 
-1335179414 source:m:\q-gears\src\core\entitymanager.cpp
+1335607398 source:m:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -25207,10 +25207,10 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1331581068 m:\q-gears\src\core\entitymodel.h
+1335606908 m:\q-gears\src\core\entitymodel.h
 	"Entity.h"
 
-1331581066 source:m:\q-gears\src\core\entitymodel.cpp
+1335607020 source:m:\q-gears\src\core\entitymodel.cpp
 	"EntityModel.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -25263,7 +25263,7 @@
 	"library/luabind/luabind.hpp"
 	"library/luabind/yield_policy.hpp"
 
-1335182278 m:\q-gears\src\core\scriptmanagerbinds.h
+1335182340 m:\q-gears\src\core\scriptmanagerbinds.h
 	"Console.h"
 	"Logger.h"
 	"Entity.h"

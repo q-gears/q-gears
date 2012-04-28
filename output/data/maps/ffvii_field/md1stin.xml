@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <map>
+    <script file_name="maps/ffvii_field/md1stin.lua" />
     <background2d file_name="maps/ffvii_field/md1stin_bg.xml" />
     <walkmesh file_name="maps/ffvii_field/md1stin_wm.xml" />
 
-    <entity_trigger name="Gateway0" point1="28.6016 228.562 2.75781" point2="28.6641 229.438 2.75781" enabled="true" />
+    <entity_script name="Dir" />
+    <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Barret" file_name="models/ffvii/field/units/barret.mesh" position="0 0 0" direction="0" />
+    <entity_script name="View" />
+    <entity_model name="Hei0" file_name="models/ffvii/field/units/soldier.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Hei1" file_name="models/ffvii/field/units/soldier.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Biggs" file_name="models/ffvii/field/units/biggs.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Jessie" file_name="models/ffvii/field/units/jessie.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Wedge" file_name="models/ffvii/field/units/wedge.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Gu0" file_name="models/ffvii/field/units/guard.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Gu1" file_name="models/ffvii/field/units/guard.mesh" position="0 0 0" direction="0" />
+    <entity_model name="GuAdd" file_name="models/ffvii/field/units/guard.mesh" position="0 0 0" direction="0" />
 
-    <camera view_matrix="0.992676 -0.120850 0.000000 -357.660156 0.012939 0.104980 0.994629 -3281.374023 -0.119873 -0.987061 0.105713 27026.482422 0.000000 0.000000 0.000000 1.000000" projection_matrix="2.412500 0.000000 0.000000 0.000000 0.000000 3.446429 0.000000 0.000000 0.000000 0.000000 -1.000020 -2.000020 0.000000 0.000000 -1.000000 0.000000" />
+    <entity_trigger name="Gateway0" point1="28.6016 228.562 2.75781" point2="28.6641 229.438 2.75781" enabled="true" />
+    <entity_point name="Spawn_md1_1" point="29.0547 229.234 0.273438" rotation="67.7647" />
 </map>

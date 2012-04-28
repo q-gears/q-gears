@@ -153,12 +153,12 @@ EntityManager::Update()
     // set move point for player entity
     if( m_PlayerEntity != NULL && m_PlayerMove != Ogre::Vector3::ZERO )
     {
-        EntityState state = m_PlayerEntity->GetState();
-        if( state == ES_WALKMESH || state == ES_NONE )
+        Entity::State state = m_PlayerEntity->GetState();
+        if( state == Entity::WALKMESH || state == Entity::NONE )
         {
             m_PlayerMove *= m_PlayerEntity->GetMoveSpeed() * Timer::getSingleton().GetGameTimeDelta();
             m_PlayerEntity->SetMovePosition( m_PlayerEntity->GetPosition() + m_PlayerMove );
-            m_PlayerEntity->SetState( ES_WALKMESH );
+            m_PlayerEntity->SetState( Entity::WALKMESH );
         }
     }
 
@@ -195,7 +195,7 @@ EntityManager::Update()
         // update movement
         switch( m_EntityModels[ i ]->GetState() )
         {
-            case ES_WALKMESH:
+            case Entity::WALKMESH:
             {
                 bool is_move = false;
 
@@ -210,7 +210,7 @@ EntityManager::Update()
                 }
 
                 // perform move
-                if( m_EntityModels[ i ]->GetState() == ES_WALKMESH )
+                if( m_EntityModels[ i ]->GetState() == Entity::WALKMESH )
                 {
                     float store_speed = m_EntityModels[ i ]->GetMoveSpeed();
 
@@ -235,9 +235,9 @@ EntityManager::Update()
                                 m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationWalkName() );
                             }
                         }
-                        else
+                        else if ( m_EntityModels[ i ]->GetAnimationState() != Entity::REQUESTED_ANIMATION )
                         {
-                            m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationIdleName() );
+                            m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetDefaultAnimationName() );
                         }
                     }
 
@@ -248,7 +248,7 @@ EntityManager::Update()
 
 
 
-            case ES_LINEAR:
+            case Entity::LINEAR:
             {
                 SetNextLinearStep( m_EntityModels[ i ] );
             }
@@ -256,7 +256,7 @@ EntityManager::Update()
 
 
 
-            case ES_JUMP:
+            case Entity::JUMP:
             {
                 SetNextJumpStep( m_EntityModels[ i ] );
             }
@@ -264,11 +264,11 @@ EntityManager::Update()
 
 
 
-            case ES_NONE:
+            case Entity::NONE:
             {
-                if( m_EntityModels[ i ]->GetMoveAutoAnimation() == true )
+                if( m_EntityModels[ i ]->GetAnimationState() != Entity::REQUESTED_ANIMATION )
                 {
-                    m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationIdleName() );
+                    m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetDefaultAnimationName() );
                 }
             }
             break;

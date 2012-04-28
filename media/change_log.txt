@@ -37,67 +37,77 @@ To Do
 
 
 
-2011-04-23
+2012-04-28
+----------
+* [Content] Modify "MapChanger" entity to load player in given spawn point after map loading. [Akari]
+* [Content] Add Savemap lua table to save all variables that was hold in real savemap. [Akari]
+* [Entity] Set default run speed to 0.8 instead of 3.6 and default speed to 0.7 instead of 0.9. This is more like speeds in FFVII. [Akari]
+* [Entity] Unite default and move idle animation. [Akari]
+* [Entity] Rework inner animation state and play types handling. [Akari]
+* [Content] Start of "ffvii_md1stin" scripting and markup gateways on maps "ffvii_md1stin", "ffvii_md1_1", "ffvii_md1_2". [Akari]
+* [Export FFVII] Add gateway map names and spawn position exporting. [Akari]
+
+2012-04-23
 ----------
 * [Script] Add functions to work with entity points. [Akari]
-* [Entity] Add entity points that declares position in 3d world. Need now for gateway mechanics. [Akari]
+* [Entity] Add entity points that declares position in 3d world. Need for gateway mechanics. [Akari]
 
-2011-04-14
+2012-04-14
 ----------
 * [Debug] Add 3d triangles to debug draw to improve visualization of walkmesh.
 
-2011-04-13
+2012-04-13
 ----------
 * [Entity] Add base line trigger like triggers and gateways in FFVII. [Akari]
 
-2011-04-08
+2012-04-08
 ----------
 * [Script] Add background animation management opcodes and background script object. [Akari]
 * [Background] Add background animation. [Akari]
 * [Export FFVII] Add exporting of tile animation. [Akari]
 
-2011-04-03
+2012-04-03
 ----------
 * [Background] Add blending type support to correctly draw different types of tiles. [Akari]
 * [Export FFVII] Add exporting of blending types. [Akari]
 
-2011-03-27
+2012-03-27
 ----------
 * [Background] Add camera settings export. [Akari]
 * [Content] Move FFVII models to separate folder. [Akari]
 * [System] Add read quaternion from xml. [Akari]
 
-2011-03-20
+2012-03-20
 ----------
 * [Background] Add clearing of background on map reload. [Akari]
 
-2011-03-14
+2012-03-14
 ----------
 * [Console] Tab only work if command match any existed command. [Akari]
 * [Entity] Finalize movement features and make them work lime in v0.17. [Akari]
 
-2011-03-13
+2012-03-13
 ----------
 * [Entity] Add debug draw to jump movement. [Akari]
 * [Entity] Fix reseting animation to Idle during time stop. [Akari]
 * [Entity] Add ability to unset entity from player with "unset_player_entity". [Akari]
 * [Entity] Return all jump fucntionality from v0.17. [Akari]
 
-2011-03-09
+2012-03-09
 ----------
 * [Console] Add console notification to show lines from console in normal view. Cvar "console_notification = true". [Akari]
 * [Content] Add Weltall and some robo from Xenogears to demo. [Akari]
 * [Export Xeno] First version of Xeno animated model exporting. [Akari]
 
-2011-03-07
+2012-03-07
 ----------
 * [Entity] Made state for looped animation. Climb and all other looped animation now works correctly. [Akari]
 
-2011-03-05
+2012-03-05
 ----------
 * [Entity] Return all climb (now linear move) fucntionality from v0.17 except animation. [Akari]
 
-2011-03-03
+2012-03-03
 ----------
 * [Content] Add Zidane to demo. [Akari]
 * [Export FFIX] Finish first version of FFIX field model exporter. [Akari]

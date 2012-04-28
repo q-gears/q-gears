@@ -121,40 +121,19 @@ else if (((visible_entity_id != h[800965E0]) ||
     {
         A0 = bu[current_model_offset + 36];
         get_direction_vector_x;
-        T3 = w[SP + 38];
-        HI/LO = V0 * T3;
-        V0 = LO;
-        V0 = V0 >> 0C;
-        [1F800070] = w(V0);
+        [1f800070] = w(( V0 * w[SP + 38] ) >> 0c);
 
 
 
         A0 = bu[current_model_offset + 36];
         get_direction_vector_y;
-        T3 = w[SP + 40];
-        HI/LO = V0 * T3;
-        V0 = LO;
-        V0 = 0 - V0;
-        V0 = V0 >> C;
-        [1F800074] = w(V0);
+        [1F800074] = w(( 0 - ( V0 * w[SP + 40] ) ) >> 0c);
 
 
 
-        // multiply move vector x by speed
-        V1 = hu[current_model_offset + 70];
-        V0 = w[1F800070];
-        HI/LO = V1 * V0;
-        V0 = LO;
-        V0 = V0 >> 8;
-        [1F800070] = w(V0);
-
-        // multiply move vector y by speed
-        V1 = hu[current_model_offset + 70];
-        V0 = w[1F800074];
-        HI/LO = V1 * V0;
-        V0 = LO;
-        V0 = V0 >> 8;
-        [1F800074] = w(V0);
+        // multiply move vector by speed
+        [1f800070] = w(( hu[current_model_offset + 70] * w[1f800070] ) >> 8);
+        [1f800074] = w(( hu[current_model_offset + 70] * w[1f800074] ) >> 8);
 
         // x with move vector
         V0 = w[current_model_offset + 0C];

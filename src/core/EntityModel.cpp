@@ -17,7 +17,7 @@ EntityModel::EntityModel( const Ogre::String& name, const Ogre::String file_name
     m_Model = scene_manager->createEntity( m_Name, file_name );
     m_Model->setVisible( true );
 
-    PlayAnimation( m_AnimationDefault, EA_DEFAULT, 0, -1 );
+    PlayAnimation( m_AnimationDefault, Entity::AUTO_ANIMATION, Entity::PLAY_LOOPED, 0, -1 );
 
     m_ModelNode->attachObject( m_Model );
 }
@@ -61,7 +61,7 @@ EntityModel::IsVisible() const
 
 
 void
-EntityModel::PlayAnimation( const Ogre::String& animation, EntityAnimation state, const float start, const float end )
+EntityModel::PlayAnimation( const Ogre::String& animation, Entity::AnimationState state, Entity::AnimationPlayType play_type, const float start, const float end )
 {
     if( m_AnimationCurrent != NULL )
     {
@@ -72,12 +72,13 @@ EntityModel::PlayAnimation( const Ogre::String& animation, EntityAnimation state
     {
         m_AnimationCurrentName = animation;
         m_AnimationCurrent = m_Model->getAnimationState( animation );
-        m_AnimationCurrent->setLoop( ( state == EA_LOOPED ) ? true : false );
+        m_AnimationCurrent->setLoop( ( play_type == Entity::PLAY_LOOPED ) ? true : false );
         m_AnimationCurrent->setEnabled( true );
         m_AnimationCurrent->setTimePosition( ( start == -1 ) ? m_AnimationCurrent->getLength() : start );
 
         m_AnimationEndTime = ( end == -1 ) ? m_AnimationCurrent->getLength() : end;
         m_AnimationState = state;
+        m_AnimationPlayType = play_type;
     }
     else
     {
@@ -93,9 +94,9 @@ EntityModel::PlayAnimationContinue( const Ogre::String& animation )
     if( m_AnimationCurrent == NULL ||                                                 // if animation isn't played
         ( m_Model->getAllAnimationStates()->hasAnimationState( animation ) == true && // and we want to play animation that exist (use this to avoid exception)
           ( m_AnimationCurrent != m_Model->getAnimationState( animation ) ||          // and animation we want is not animation that currently playing
-            m_AnimationState != EA_LOOPED ) ) )                                       // or now playing animation we want but it doesn't looped
+            m_AnimationPlayType != Entity::PLAY_LOOPED ) ) )                                       // or now playing animation we want but it doesn't looped
     {
-        PlayAnimation( animation, EA_LOOPED, 0, -1 );
+        PlayAnimation( animation, Entity::AUTO_ANIMATION, Entity::PLAY_LOOPED, 0, -1 );
     }
 }
 
@@ -117,16 +118,16 @@ EntityModel::UpdateAnimation( const float delta )
             }
             m_AnimationSync.clear();
 
-            if( m_AnimationState == EA_DEFAULT )
+            if( m_AnimationPlayType == Entity::PLAY_DEFAULT )
             {
                 float time = ( m_AnimationCurrent->hasEnded() != true ) ? m_AnimationCurrent->getTimePosition() : 0;
-                PlayAnimation( m_AnimationDefault, EA_LOOPED, time, -1 );
+                PlayAnimation( m_AnimationDefault, Entity::AUTO_ANIMATION, Entity::PLAY_LOOPED, time, -1 );
                 m_AnimationCurrent->addTime( delta );
             }
-            else if( m_AnimationState == EA_LOOPED )
+            else if( m_AnimationPlayType == Entity::PLAY_LOOPED )
             {
                 float time = ( m_AnimationCurrent->hasEnded() != true ) ? m_AnimationCurrent->getTimePosition() : m_AnimationCurrent->getTimePosition() - m_AnimationCurrent->getLength();
-                PlayAnimation( m_AnimationCurrentName, EA_LOOPED, time, -1 );
+                PlayAnimation( m_AnimationCurrentName, Entity::AUTO_ANIMATION, Entity::PLAY_LOOPED, time, -1 );
                 m_AnimationCurrent->addTime( delta );
             }
         }
