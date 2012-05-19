@@ -1,11 +1,5 @@
-#include "Main.h"
-
 #include <Ogre.h>
-
-#include <stdio.h>
-#include <iostream>
-
-#include "../../common/FileSystem.h"
+#include "../../common/OgreBase.h"
 #include "../../common/Logger.h"
 
 #include "DatFile.h"
@@ -38,13 +32,14 @@ fill_names()
             continue;
         }
 
-        Ogre::StringVector name = Ogre::StringUtil::split( names, ":", 2 );
-        if( name.size() < 2 )
+        Ogre::StringVector name = Ogre::StringUtil::split( names, ":", 3 );
+        if( name.size() < 3 )
         {
-            LOGGER->Log( "In \"" + names + "\" not enough data. Must be 2.\n" );
+            LOGGER->Log( "In \"" + names + "\" not enough data. Must be 3.\n" );
             continue;
         }
         field.name = name[ 0 ];
+        field.scale = Ogre::StringConverter::parseReal( name[ 2 ] );
 
         Ogre::StringVector tex_size = Ogre::StringUtil::split( name[ 1 ], "x", 2 );
         field.tex_width = Ogre::StringConverter::parseInt( tex_size[ 0 ] );
@@ -139,30 +134,9 @@ fill_names()
 int
 main( int argc, char *argv[] )
 {
-    Ogre::Root*         root;
-    Ogre::RenderWindow* window;
-
-    root = new Ogre::Root( "", "" );
-#ifndef _DEBUG
-    root->loadPlugin( "RenderSystem_GL.dll" );
-#else
-    root->loadPlugin( "RenderSystem_GL_d.dll" );
-#endif
-    root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
-    root->initialise( false );
-    Ogre::NameValuePairList misc;
-    misc[ "title" ] = "FFVII Exporter";
-    window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
-
-
-
-    FILESYSTEM = new FileSystem();
-    LOGGER = new Logger( "game.log" );
+    InitializeOgreBase( "FFVII Field Dat Exporter" );
 
     fill_names();
-
-    state = GAME;
-
 
 /*
     for (int f = 0; f < fields.size(); ++f)
@@ -199,12 +173,7 @@ main( int argc, char *argv[] )
 
 
 
-    delete FILESYSTEM;
-    delete LOGGER;
-
-
-
-    delete root;
+    DeinitializeOgreBase();
 
     return 0;
 }

@@ -303,6 +303,14 @@ EntityManager::Update()
 
 
 void
+EntityManager::OnResize()
+{
+    m_Background2D.OnResize();
+}
+
+
+
+void
 EntityManager::Clear()
 {
     m_Walkmesh.Clear();

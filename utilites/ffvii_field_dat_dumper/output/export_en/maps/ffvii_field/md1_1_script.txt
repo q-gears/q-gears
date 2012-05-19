@@ -51,72 +51,84 @@ script_0:
 cl
 script_0:
 0441 (end 0441): -- assosiate entity with model (CHAR) argument doesn't matter
-0443 (end 0443): field:set_entity_to_character("cl", 0);
+0443 (end 0443): set_entity_to_character( "cl", 0 );
 0445 (end 0445): return;
-0446 (end 0446): cl:set_speed( 3.75 )
+0446 (end 0446): cl:set_move_speed( 7.5 )
 044a (end 044a): jumpto( 044a );
 
 script_3:
-044d (end 044d): cl:move_to_position( 8.96875, 10.6094, true )
+044d (end 044d): cl:move_to_position( 17.9375, 21.2188 )
+                 cl:move_sync()
 0453 (end 0453): cl:set_direction( 174.375 )
 0456 (end 0456): return;
 
 script_4:
 0457 (end 0457): script:wait( 0.266667 )
-045a (end 045a): cl:play_animation_wait( "3", 0, 0.233333, 1, true );
+045a (end 045a): cl:play_animation_stop( "3", 0, 0.233333 ) -- speed=1
+                 cl:animation_sync()
 045f (end 045f): return;
 
 script_5:
-0460 (end 0460): cl:play_animation_wait( "3", 0, 0.233333, 1, true );
+0460 (end 0460): cl:play_animation_stop( "3", 0, 0.233333 ) -- speed=1
+                 cl:animation_sync()
 0465 (end 0465): -- set window parameters (id = 0, x = 100, y = 150, width = 165, height = 41);
 046f (end 046f): message:show_text_wait(0, 36, x, y);
-0472 (end 0472): cl:play_animation_wait( "3", 0.266667, 0.466667, 1, true );
+0472 (end 0472): cl:play_animation_stop( "3", 0.266667, 0.466667 ) -- speed=1
+                 cl:animation_sync()
 0477 (end 0477): return;
 
 script_6:
-0478 (end 0478): cl:play_animation( "4", speed=1 );
-               : cl:animation_sync()
+0478 (end 0478): cl:play_animation( "4" ) -- speed=1
+                 cl:animation_sync()
 047b (end 047b): script:request( "av_m", "script_5", 6 );
-047e (end 047e): cl:play_animation_wait( "3", 0, 0.233333, 1, true );
+047e (end 047e): cl:play_animation_stop( "3", 0, 0.233333 ) -- speed=1
+                 cl:animation_sync()
 0483 (end 0483): -- set window parameters (id = 0, x = 30, y = 150, width = 249, height = 57);
 048d (end 048d): message:show_text_wait(0, 38, x, y);
-0490 (end 0490): cl:play_animation_wait( "3", 0.233333, 0.466667, 1, true );
+0490 (end 0490): cl:play_animation_stop( "3", 0.233333, 0.466667 ) -- speed=1
+                 cl:animation_sync()
 0495 (end 0495): return;
 
 script_7:
 0496 (end 0496): script:wait( 0.333333 )
-0499 (end 0499): cl:play_animation_wait( "3", 0.466667, 0.733333, 1, true );
+0499 (end 0499): cl:play_animation_stop( "3", 0.466667, 0.733333 ) -- speed=1
+                 cl:animation_sync()
 049e (end 049e): return;
 
 script_8:
-049f (end 049f): cl:play_animation_wait( "3", 0.733333, 0.966667, 1, true );
+049f (end 049f): cl:play_animation_stop( "3", 0.733333, 0.966667 ) -- speed=1
+                 cl:animation_sync()
 04a4 (end 04a4): return;
 
 script_9:
 04a5 (end 04a5): -- set speed of entity animation to "32"
 04a9 (end 04a9): script:wait( 0.6 )
-04ac (end 04ac): cl:play_animation_wait( "5", 0, -1, 1, true );
-04af (end 04af): cl:set_speed( 2.34375 )
-04b3 (end 04b3): cl:set_default_animation( "0", 1 );
-04b6 (end 04b6): cl:move_to_position( 10.0469, 22.8281, true )
+04ac (end 04ac): cl:play_animation_stop( "5" ) -- speed=1
+                 cl:animation_sync()
+04af (end 04af): cl:set_move_speed( 4.6875 )
+04b3 (end 04b3): cl:set_default_animation( "0" ) -- speed=1
+                 cl:play_animation( "0" )
+04b6 (end 04b6): cl:move_to_position( 20.0938, 45.6562 )
+                 cl:move_sync()
 04bc (end 04bc): return;
 
 ba
 script_0:
 04bd (end 04bd): -- assosiate entity with model (CHAR) argument doesn't matter
-04bf (end 04bf): field:set_entity_to_character("ba", 1);
+04bf (end 04bf): set_entity_to_character( "ba", 1 );
 04c1 (end 04c1): if ( game:variable_get( "progress_game" ) < 7 ) then continue else jumpto(04d4);
-04c9 (end 04d4): ba:set_position_triangle( 17.6875, 9.65625, 10.1406, triangle_id=71);
+04c9 (end 04d4): ba:set_position( 35.375, 19.3125, 20.2812 ) -- triangle_id=71
 04d4 (end 04d4): return;
 04d5 (end 04d5): jumpto( 04d5 );
 
 script_3:
 04d8 (end 04d8): ba:set_talkable( true );
-04da (end 04da): ba:set_solid( true );
+04da (end 04da): ba:set_solid( true )
 04dc (end 04dc): ba:set_visible( true )
-04de (end 04de): ba:set_speed( 2.34375 )
+04de (end 04de): ba:set_move_speed( 4.6875 )
 04e2 (end 04e2): script:request( "cl", "script_7", 6 );
-04e5 (end 04e5): ba:move_to_position( 11.9219, 10.1719, true )
+04e5 (end 04e5): ba:move_to_position( 23.8438, 20.3438 )
+                 ba:move_sync()
 04eb (end 04eb): ba:set_direction( 241.875 )
 04ee (end 04ee): -- set window parameters (id = 3, x = 25, y = 140, width = 228, height = 57);
 04f8 (end 04f8): message:show_text_wait(3, 39, x, y);
@@ -125,9 +137,10 @@ script_3:
 0508 (end 0508): return;
 
 script_4:
-0509 (end 0509): ba:set_speed( 2.34375 )
+0509 (end 0509): ba:set_move_speed( 4.6875 )
 050d (end 050d): script:request( "cl", "script_8", 6 );
-0510 (end 0510): ba:move_to_position( 8.79688, 14.625, true )
+0510 (end 0510): ba:move_to_position( 17.5938, 29.25 )
+                 ba:move_sync()
 0516 (end 0516): script:wait( 1 )
 0519 (end 0519): ba:turn_to_direction( 16.875, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
 051f (end 051f): script:wait( 0.666667 )
@@ -141,20 +154,21 @@ script_4:
 0546 (end 0546): return;
 
 script_5:
-0547 (end 0547): ba:move_to_position( 10.5859, 26.375, true )
+0547 (end 0547): ba:move_to_position( 21.1719, 52.75 )
+                 ba:move_sync()
 054d (end 054d): ba:set_talkable( false );
-054f (end 054f): ba:set_solid( false );
+054f (end 054f): ba:set_solid( false )
 0551 (end 0551): ba:set_visible( false )
 0553 (end 0553): return;
 
 av_m
 script_0:
 0554 (end 0554): -- assosiate entity with model (CHAR) argument doesn't matter
-0556 (end 0556): av_m:set_position_triangle( 7.82812, 12.1562, 10.1406, triangle_id=63);
+0556 (end 0556): av_m:set_position( 15.6562, 24.3125, 20.2812 ) -- triangle_id=63
 0561 (end 0561): av_m:set_direction( 174.375 )
 0564 (end 0564): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(0572);
 056c (end 0572): av_m:set_talkable( false );
-056e (end 0572): av_m:set_solid( false );
+056e (end 0572): av_m:set_solid( false )
 0570 (end 0572): av_m:set_visible( false )
 0572 (end 0572): return;
 0573 (end 0573): jumpto( 0573 );
@@ -162,108 +176,124 @@ script_0:
 script_3:
 0576 (end 0576): av_m:turn_to_direction( 39.375, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
 057c (end 057c): script:wait( 0.0333333 )
-057f (end 057f): av_m:play_animation_wait( "3", 0, 0.3, 1, true );
+057f (end 057f): av_m:play_animation_stop( "3", 0, 0.3 ) -- speed=1
+                 av_m:animation_sync()
 0584 (end 0584): -- set window parameters (id = 1, x = 8, y = 8, width = 269, height = 73);
 058e (end 058e): message:show_text_wait(1, 31, x, y);
-0591 (end 0591): av_m:play_animation_wait( "3", 0.333333, 0.633333, 1, false );
+0591 (end 0591): av_m:play_animation( "3", 0.333333, 0.633333 ) -- speed=1
+                 av_m:animation_sync()
 0596 (end 0596): return;
 
 script_4:
 0597 (end 0597): -- set window parameters (id = 1, x = 30, y = 10, width = 242, height = 41);
 05a1 (end 05a1): message:show_text_wait(1, 34, x, y);
-05a4 (end 05a4): av_m:play_animation_wait( "3", 0, 0.466667, 1, true );
+05a4 (end 05a4): av_m:play_animation_stop( "3", 0, 0.466667 ) -- speed=1
+                 av_m:animation_sync()
 05a9 (end 05a9): -- set window parameters (id = 1, x = 50, y = 10, width = 174, height = 41);
 05b3 (end 05b3): message:show_text_wait(1, 35, x, y);
-05b6 (end 05b6): av_m:play_animation_wait( "3", 0.333333, 0.633333, 1, false );
+05b6 (end 05b6): av_m:play_animation( "3", 0.333333, 0.633333 ) -- speed=1
+                 av_m:animation_sync()
 05bb (end 05bb): script:wait( 0.1 )
 05be (end 05be): [UNREVERSED] MENU(00, 06, 00);
 05c2 (end 05c2): script:wait( 0.1 )
 05c5 (end 05c5): script:request_end_wait( "cl", "script_5", 6 );
 05c8 (end 05c8): script:wait( 0.2 )
-05cb (end 05cb): av_m:play_animation_wait( "3", 0, 0.466667, 1, true );
+05cb (end 05cb): av_m:play_animation_stop( "3", 0, 0.466667 ) -- speed=1
+                 av_m:animation_sync()
 05d0 (end 05d0): -- set window parameters (id = 1, x = 50, y = 20, width = 213, height = 41);
 05da (end 05da): message:show_text_wait(1, 37, x, y);
 05dd (end 05dd): return;
 
 script_5:
-05de (end 05de): av_m:play_animation_wait( "3", 0.333333, 0.633333, 1, false );
+05de (end 05de): av_m:play_animation( "3", 0.333333, 0.633333 ) -- speed=1
+                 av_m:animation_sync()
 05e3 (end 05e3): return;
 
 script_6:
-05e4 (end 05e4): av_m:set_speed( 2.34375 )
-05e8 (end 05e8): av_m:move_to_position( 9.14844, 13.6562, true )
-05ee (end 05ee): av_m:move_to_position( 10.5859, 26.375, true )
+05e4 (end 05e4): av_m:set_move_speed( 4.6875 )
+05e8 (end 05e8): av_m:move_to_position( 18.2969, 27.3125 )
+                 av_m:move_sync()
+05ee (end 05ee): av_m:move_to_position( 21.1719, 52.75 )
+                 av_m:move_sync()
 05f4 (end 05f4): av_m:set_talkable( false );
-05f6 (end 05f6): av_m:set_solid( false );
+05f6 (end 05f6): av_m:set_solid( false )
 05f8 (end 05f8): av_m:set_visible( false )
 05fa (end 05fa): return;
 
 av_l
 script_0:
 05fb (end 05fb): -- assosiate entity with model (CHAR) argument doesn't matter
-05fd (end 05fd): av_l:set_position_triangle( 9.03906, 12.6484, 10.1406, triangle_id=62);
+05fd (end 05fd): av_l:set_position( 18.0781, 25.2969, 20.2812 ) -- triangle_id=62
 0608 (end 0608): av_l:set_direction( 174.375 )
-060b (end 060b): av_l:set_default_animation( "3", 1 );
+060b (end 060b): av_l:set_default_animation( "3" ) -- speed=1
+                 av_l:play_animation( "3" )
 060e (end 060e): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(061c);
 0616 (end 061c): av_l:set_talkable( false );
-0618 (end 061c): av_l:set_solid( false );
+0618 (end 061c): av_l:set_solid( false )
 061a (end 061c): av_l:set_visible( false )
 061c (end 061c): return;
 061d (end 061d): jumpto( 061d );
 
 script_3:
-0620 (end 0620): av_l:play_animation_wait( "4", 0, -1, 1, true );
+0620 (end 0620): av_l:play_animation_stop( "4" ) -- speed=1
+                 av_l:animation_sync()
 0623 (end 0623): -- set window parameters (id = 2, x = 155, y = 8, width = 233, height = 41);
 062d (end 062d): message:show_text_wait(2, 32, x, y);
 0630 (end 0630): -- set window parameters (id = 2, x = 120, y = 8, width = 268, height = 41);
 063a (end 063a): message:show_text_wait(2, 33, x, y);
 063d (end 063d): script:wait( 0.266667 )
-0640 (end 0640): av_l:set_default_animation( "3", 1 );
+0640 (end 0640): av_l:set_default_animation( "3" ) -- speed=1
+                 av_l:play_animation( "3" )
 0643 (end 0643): return;
 
 script_4:
-0644 (end 0644): av_l:set_speed( 2.34375 )
-0648 (end 0648): av_l:play_animation( "5", speed=1 );
-               : av_l:animation_sync()
-064b (end 064b): av_l:move_to_position( 10.5859, 26.375, true )
+0644 (end 0644): av_l:set_move_speed( 4.6875 )
+0648 (end 0648): av_l:play_animation( "5" ) -- speed=1
+                 av_l:animation_sync()
+064b (end 064b): av_l:move_to_position( 21.1719, 52.75 )
+                 av_l:move_sync()
 0651 (end 0651): av_l:set_talkable( false );
-0653 (end 0653): av_l:set_solid( false );
+0653 (end 0653): av_l:set_solid( false )
 0655 (end 0655): av_l:set_visible( false )
 0657 (end 0657): return;
 
 av_s
 script_0:
 0658 (end 0658): -- assosiate entity with model (CHAR) argument doesn't matter
-065a (end 065a): av_s:set_position_triangle( 11.8828, 11.75, 10.1406, triangle_id=70);
+065a (end 065a): av_s:set_position( 23.7656, 23.5, 20.2812 ) -- triangle_id=70
 0665 (end 0665): av_s:set_direction( 16.875 )
-0668 (end 0668): av_s:set_default_animation( "3", 1 );
+0668 (end 0668): av_s:set_default_animation( "3" ) -- speed=1
+                 av_s:play_animation( "3" )
 066b (end 066b): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(0679);
 0673 (end 0679): av_s:set_talkable( false );
-0675 (end 0679): av_s:set_solid( false );
+0675 (end 0679): av_s:set_solid( false )
 0677 (end 0679): av_s:set_visible( false )
 0679 (end 0679): return;
 067a (end 067a): jumpto( 067a );
 
 script_3:
-067d (end 067d): av_s:set_speed( 2.34375 )
-0681 (end 0681): av_s:move_to_position( 9.14844, 13.6562, true )
-0687 (end 0687): av_s:move_to_position( 10.5859, 26.375, true )
+067d (end 067d): av_s:set_move_speed( 4.6875 )
+0681 (end 0681): av_s:move_to_position( 18.2969, 27.3125 )
+                 av_s:move_sync()
+0687 (end 0687): av_s:move_to_position( 21.1719, 52.75 )
+                 av_s:move_sync()
 068d (end 068d): av_s:set_talkable( false );
-068f (end 068f): av_s:set_solid( false );
+068f (end 068f): av_s:set_solid( false )
 0691 (end 0691): av_s:set_visible( false )
 0693 (end 0693): return;
 
 drL
 script_0:
 0694 (end 0694): -- assosiate entity with model (CHAR) argument doesn't matter
-0696 (end 0696): drL:set_position_triangle( 8.5, 14.4141, 10.1406, triangle_id=61);
+0696 (end 0696): drL:set_position( 17, 28.8281, 20.2812 ) -- triangle_id=61
 06a1 (end 06a1): drL:set_direction( 354.375 )
 06a4 (end 06a4): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(06b2);
 06ac (end 06b2): drL:set_talkable( false );
-06ae (end 06b2): drL:set_solid( false );
+06ae (end 06b2): drL:set_solid( false )
 06b0 (end 06b2): drL:set_visible( false )
-06b2 (end 06b2): drL:set_default_animation( "0", 1 );
-06b5 (end 06b5): drL:set_solid( false );
+06b2 (end 06b2): drL:set_default_animation( "0" ) -- speed=1
+                 drL:play_animation( "0" )
+06b5 (end 06b5): drL:set_solid( false )
 06b7 (end 06b7): return;
 06b8 (end 06b8): jumpto( 06b8 );
 
@@ -271,21 +301,22 @@ script_3:
 06bb (end 06bb): drL:offset_to_position( -202, 0, 0, Field.LINEAR, 1.66667 );
 06c7 (end 06c7): drL:set_offset_wait();
 06c8 (end 06c8): drL:set_talkable( false );
-06ca (end 06ca): drL:set_solid( false );
+06ca (end 06ca): drL:set_solid( false )
 06cc (end 06cc): drL:set_visible( false )
 06ce (end 06ce): return;
 
 drR
 script_0:
 06cf (end 06cf): -- assosiate entity with model (CHAR) argument doesn't matter
-06d1 (end 06d1): drR:set_position_triangle( 9.86719, 14.25, 10.1406, triangle_id=60);
+06d1 (end 06d1): drR:set_position( 19.7344, 28.5, 20.2812 ) -- triangle_id=60
 06dc (end 06dc): drR:set_direction( 174.375 )
 06df (end 06df): if ( game:variable_get( "progress_game" ) >= 7 ) then continue else jumpto(06ed);
 06e7 (end 06ed): drR:set_talkable( false );
-06e9 (end 06ed): drR:set_solid( false );
+06e9 (end 06ed): drR:set_solid( false )
 06eb (end 06ed): drR:set_visible( false )
-06ed (end 06ed): drR:set_default_animation( "0", 1 );
-06f0 (end 06f0): drR:set_solid( false );
+06ed (end 06ed): drR:set_default_animation( "0" ) -- speed=1
+                 drR:play_animation( "0" )
+06f0 (end 06f0): drR:set_solid( false )
 06f2 (end 06f2): return;
 06f3 (end 06f3): jumpto( 06f3 );
 
@@ -293,7 +324,7 @@ script_3:
 06f6 (end 06f6): drR:offset_to_position( 184, 0, 0, Field.LINEAR, 1.66667 );
 0702 (end 0702): drR:set_offset_wait();
 0703 (end 0703): drR:set_talkable( false );
-0705 (end 0705): drR:set_solid( false );
+0705 (end 0705): drR:set_solid( false )
 0707 (end 0707): drR:set_visible( false )
 0709 (end 0709): return;
 

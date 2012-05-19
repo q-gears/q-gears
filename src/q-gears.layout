@@ -8,7 +8,7 @@
 		<Cursor position="62" topLine="0" />
 	</File>
 	<File name="core\Background2D.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="3001" topLine="83" />
+		<Cursor position="5751" topLine="139" />
 	</File>
 	<File name="core\Background2D.h" open="0" top="0" tabpos="0">
 		<Cursor position="2644" topLine="46" />
@@ -61,8 +61,8 @@
 	<File name="core\DebugDraw.h" open="0" top="0" tabpos="2">
 		<Cursor position="2456" topLine="48" />
 	</File>
-	<File name="core\Entity.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="9372" topLine="347" />
+	<File name="core\Entity.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3220" topLine="98" />
 	</File>
 	<File name="core\Entity.h" open="0" top="0" tabpos="2">
 		<Cursor position="6501" topLine="155" />

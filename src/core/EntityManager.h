@@ -20,6 +20,7 @@ public:
 
     void Input( const Event& event );
     void Update();
+    void OnResize();
 
     void Clear();
 

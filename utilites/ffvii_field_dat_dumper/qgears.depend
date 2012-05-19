@@ -4912,16 +4912,15 @@
 	"TypeDefine.h"
 	"Surface.h"
 
-1335608638 source:m:\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.cpp
+1337341384 source:m:\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.cpp
 	"DatFile.h"
 	<OgreStringConverter.h>
 	<OgreVector3.h>
 
-1334408666 m:\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.h
+1337324048 m:\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.h
 	"../../common/Logger.h"
 	"../../common/LzsFile.h"
 	"../../common/Surface.h"
-	"Main.h"
 	"MimFile.h"
 
 1333994138 m:\q-gears\utilites\ffvii_field_dat_dumper\src\main.h
@@ -4931,12 +4930,9 @@
 	"../../common/LzsFile.h"
 	"../../common/Vram.h"
 
-1334408656 source:m:\q-gears\utilites\ffvii_field_dat_dumper\src\main.cpp
-	"Main.h"
+1337322272 source:m:\q-gears\utilites\ffvii_field_dat_dumper\src\main.cpp
 	<Ogre.h>
-	<stdio.h>
-	<iostream>
-	"../../common/FileSystem.h"
+	"../../common/OgreBase.h"
 	"../../common/Logger.h"
 	"DatFile.h"
 	"MimFile.h"
@@ -5000,12 +4996,9 @@
 	"TypeDefine.h"
 	"Surface.h"
 
-1334408656 source:k:\q-gears\utilites\ffvii_field_dat_dumper\src\main.cpp
-	"Main.h"
+1335866868 source:k:\q-gears\utilites\ffvii_field_dat_dumper\src\main.cpp
 	<Ogre.h>
-	<stdio.h>
-	<iostream>
-	"../../common/FileSystem.h"
+	"../../common/OgreBase.h"
 	"../../common/Logger.h"
 	"DatFile.h"
 	"MimFile.h"
@@ -5013,11 +5006,10 @@
 1333994138 k:\q-gears\utilites\ffvii_field_dat_dumper\src\main.h
 	<Ogre.h>
 
-1334408666 k:\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.h
+1335937534 k:\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.h
 	"../../common/Logger.h"
 	"../../common/LzsFile.h"
 	"../../common/Surface.h"
-	"Main.h"
 	"MimFile.h"
 
 1333393400 k:\q-gears\utilites\ffvii_field_dat_dumper\src\mimfile.h
@@ -5028,8 +5020,22 @@
 	"MimFile.h"
 	"../../common/Logger.h"
 
-1335204144 source:k:\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.cpp
+1335938754 source:k:\q-gears\utilites\ffvii_field_dat_dumper\src\datfile.cpp
 	"DatFile.h"
 	<OgreStringConverter.h>
 	<OgreVector3.h>
+
+1330777526 k:\q-gears\utilites\common\ogrebase.h
+	<Ogre.h>
+	<OgreTextAreaOverlayElement.h>
+	<OIS.h>
+	"FileSystem.h"
+	"Logger.h"
+
+1330777526 m:\q-gears\utilites\common\ogrebase.h
+	<Ogre.h>
+	<OgreTextAreaOverlayElement.h>
+	<OIS.h>
+	"FileSystem.h"
+	"Logger.h"
 

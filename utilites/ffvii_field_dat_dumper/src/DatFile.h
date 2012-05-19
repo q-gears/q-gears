@@ -4,10 +4,41 @@
 #include "../../common/Logger.h"
 #include "../../common/LzsFile.h"
 #include "../../common/Surface.h"
-#include "Main.h"
 #include "MimFile.h"
 
 
+
+struct FieldKeyFrame
+{
+    float time;
+    bool blank;
+    unsigned char animation_index;
+};
+
+enum FiledAnimationType
+{
+    FAT_ANIMATION,
+    FAT_CLUT
+};
+
+struct FiledAnimation
+{
+    Ogre::String name;
+    float time;
+    FiledAnimationType type;
+    unsigned char animation;
+    unsigned char clut;
+    std::vector< FieldKeyFrame > keyframes;
+};
+
+struct Field
+{
+    Ogre::String name;
+    float scale;
+    int tex_width;
+    int tex_height;
+    std::vector< FiledAnimation > animations;
+};
 
 struct DatModelData
 {
@@ -61,7 +92,7 @@ struct Tile
     u8 bpp;
     u8 page_x;
     u8 page_y;
-    u16 depth;
+    float depth;
     u8 blending;
     u8 animation;
     u8 animation_index;
@@ -99,7 +130,7 @@ public:
     void DumpText( const Ogre::String& export_path, const Field& field, bool english );
     void DumpScript( const Ogre::String& export_path, const Field& field );
     void DumpWalkmesh( const Ogre::String& export_path, const Field& field );
-    void GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre::Degree& fov );
+    void GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre::Degree& fov, const Field& field );
     void DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim );
     void DumpTriggers( const Ogre::String& export_path, const Field& field );
     static void DumpSoundOpcodesData( const Ogre::String& export_file );

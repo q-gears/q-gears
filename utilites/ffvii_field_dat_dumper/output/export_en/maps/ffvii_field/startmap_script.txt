@@ -7,29 +7,29 @@ script_0:
 cloud
 script_0:
 01ad (end 01ad): -- assosiate entity with model (CHAR) argument doesn't matter
-01af (end 01af): field:set_entity_to_character("cloud", 0);
+01af (end 01af): set_entity_to_character( "cloud", 0 );
 01b1 (end 01b1): return;
-01b2 (end 01b2): cloud:set_position_triangle( 0, 0, 0, triangle_id=1);
+01b2 (end 01b2): cloud:set_position( 0, 0, 0 ) -- triangle_id=1
 01bd (end 01bd): return;
 
 tifa
 script_0:
 01bf (end 01bf): -- assosiate entity with model (CHAR) argument doesn't matter
-01c1 (end 01c1): field:set_entity_to_character("tifa", 2);
+01c1 (end 01c1): set_entity_to_character( "tifa", 2 );
 01c3 (end 01c3): return;
 01c4 (end 01c4): return;
 
 cid
 script_0:
 01c6 (end 01c6): -- assosiate entity with model (CHAR) argument doesn't matter
-01c8 (end 01c8): field:set_entity_to_character("cid", 8);
+01c8 (end 01c8): set_entity_to_character( "cid", 8 );
 01ca (end 01ca): return;
 01cb (end 01cb): return;
 
 yufi
 script_0:
 01cd (end 01cd): -- assosiate entity with model (CHAR) argument doesn't matter
-01cf (end 01cf): yufi:set_position_triangle( -0.578125, -1.01562, 0, triangle_id=100);
+01cf (end 01cf): yufi:set_position( -0.578125, -1.01562, 0 ) -- triangle_id=100
 01da (end 01da): yufi:set_direction( 135 )
 01dd (end 01dd): yufi:set_solid_range( 1 );
 01e0 (end 01e0): return;

@@ -75,8 +75,8 @@ main( int argc, char *argv[] )
 
     for( int f = 0; f < fields.size(); ++f )
     {
-        BsxFile model( "data/field/" + fields[f].name + ".bsx" );
-        DatFile dat( "data/field/" + fields[f].name + ".dat" );
+        BsxFile model( "data/field/" + fields[ f ].name + ".bsx" );
+        DatFile dat( "data/field/" + fields[ f ].name + ".dat" );
 
         for( int i = 0; i < fields[ f ].units.size(); ++i )
         {

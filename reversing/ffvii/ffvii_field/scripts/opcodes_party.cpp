@@ -2,7 +2,6 @@
 0x0B GTPYE 800cf2bc
 0x39 GOLDu 800d3b88
 0x3A GOLDd 800d3c18
-0x3B CHGLD 800d3ca8
 0x3C HMPMAX1 800d368c
 0x3D HMPMAX2 800d368c
 0x3E MHMMX 800d3548
@@ -24,6 +23,27 @@
 0xCB IFPRTYQ 800cf718
 0xCC IFMEMBQ 800cf874
 
+
+
+////////////////////////////////
+// 0x3B CHGLD
+current_entity        = bu[800722c4];
+script_pointer_offset = 800831fc + current_entity * 2;
+
+system_get_party_gil;
+gil = V0;
+A0 = 1;
+A1 = 2;
+A2 = (gil << 10) >> 10;
+store_memory_block_two_bytes;
+
+A0 = 2;
+A1 = 3;
+A2 = gil >> 10;
+store_memory_block_two_bytes;
+
+[script_pointer_offset] = h(hu[script_pointer_offset] + 4);
+////////////////////////////////
 
 
 

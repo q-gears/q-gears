@@ -13,17 +13,14 @@
 	<File name="..\common\Surface.h" open="0" top="0" tabpos="0">
 		<Cursor position="294" topLine="0" />
 	</File>
-	<File name="src\DatFile.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="155156" topLine="3536" />
+	<File name="src\DatFile.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="121814" topLine="2640" />
 	</File>
-	<File name="src\DatFile.h" open="0" top="0" tabpos="2">
-		<Cursor position="3244" topLine="112" />
+	<File name="src\DatFile.h" open="1" top="1" tabpos="2">
+		<Cursor position="2414" topLine="112" />
 	</File>
 	<File name="src\Main.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="3501" topLine="87" />
-	</File>
-	<File name="src\Main.h" open="0" top="0" tabpos="3">
-		<Cursor position="205" topLine="0" />
 	</File>
 	<File name="src\MimFile.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="4842" topLine="159" />

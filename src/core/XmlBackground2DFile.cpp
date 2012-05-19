@@ -65,7 +65,10 @@ XmlBackground2DFile::Load()
 
                 Background2D::Blending blending = ( blending_str == "add" ) ? Background2D::ADD : Background2D::ALPHA;
 
-                background->AddTile( destination.x, destination.y, width, height, depth, uv.x, uv.y, uv.z, uv.w, blending );
+                Ogre::Vector4 distance = Ogre::Vector4( 0, 0, -depth, 1 );
+                Ogre::Vector4 res = CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrixWithRSDepth() * distance;
+                res = res / res.w;
+                background->AddTile( destination.x, destination.y, width, height, res.z, uv.x, uv.y, uv.z, uv.w, blending );
 
                 TiXmlNode* node2 = node->FirstChild();
                 while( node2 != NULL )

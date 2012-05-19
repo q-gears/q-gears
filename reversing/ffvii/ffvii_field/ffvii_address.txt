@@ -112,7 +112,7 @@
 
 
 
-800756E8 [] array of animation state? Store 0 here if we set UC to 0. Store 1 here if we MOVE. (size 0x1)
+800756e8 [] array of animation state? Store 0 here if we set UC to 0. Store 1 here if we MOVE. (size 0x1)
             0 - play default animation.
             1 - if current frame >= number of frames - set first frame. (we start load anim after this)
             2 - play animation.
@@ -126,6 +126,7 @@
 80075e18 [][]     end X position of scroll.
 80075e1c [][]     start Y position of scroll.
 80075e20 [][]     end Y position of scroll.
+80075e24 temp memory in script 5/6.
 
 80075dec [][]     screen index (ffvii uses two render buffers). Used to render to specific buffers.
 
@@ -236,13 +237,14 @@
 
 8009abf4 start of game data (message/fade/nfade/walkmesh). 8009c6e0 points here.
 + 01 []       some state
-                0 - normal field.
-                1 - finalize field in this case.
-                2 - encounter.
-                9 - tutorial.
-                a - set when field reset game by all shifts and start + select.
-                c - set after function in d state.
-                d -
+                00 - normal field.
+                01 - finalize field in this case.
+                02 - encounter.
+                09 - tutorial.
+                0a - set when field reset game by all shifts and start + select.
+                0c - set after function in d state.
+                0d -
+                1a - game over
 + 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu.
 + 04 [][]     destination x during map load.
 + 06 [][]     destination y during map load.

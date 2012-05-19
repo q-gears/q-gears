@@ -434,7 +434,7 @@ UiWidget::UpdateTransformation()
     Ogre::Vector2 area_size = ( m_Parent != NULL ) ? m_Parent->GetFinalSize() : Ogre::Vector2( m_ScreenWidth, m_ScreenHeight );
     float area_rotation = ( m_Parent != NULL ) ? m_Parent->GetFinalRotation() : 0;
 
-    float local_x = ( ( area_size.x * m_XPercent ) / 100.0f + ( m_X * m_ScreenHeight / 720.0f) * area_scale.x ) - area_origin.x;
+    float local_x = ( ( area_size.x * m_XPercent ) / 100.0f + ( m_X * m_ScreenHeight / 720.0f ) * area_scale.x ) - area_origin.x;
     float local_y = ( ( area_size.y * m_YPercent ) / 100.0f + ( m_Y * m_ScreenHeight / 720.0f ) * area_scale.y ) - area_origin.y;
 
     float x = local_x;

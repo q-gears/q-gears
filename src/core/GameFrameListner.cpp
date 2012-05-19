@@ -159,6 +159,7 @@ GameFrameListener::windowResized( Ogre::RenderWindow *rw )
     Console::getSingleton().OnResize();
     UiManager::getSingleton().OnResize();
     CameraManager::getSingleton().OnResize();
+    EntityManager::getSingleton().OnResize();
 }
 
 

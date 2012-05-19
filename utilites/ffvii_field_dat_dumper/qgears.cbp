@@ -43,6 +43,7 @@
 		<Unit filename="..\common\Logger.h" />
 		<Unit filename="..\common\LzsFile.cpp" />
 		<Unit filename="..\common\LzsFile.h" />
+		<Unit filename="..\common\OgreBase.h" />
 		<Unit filename="..\common\Surface.cpp" />
 		<Unit filename="..\common\Surface.h" />
 		<Unit filename="..\common\Vram.cpp" />
@@ -50,7 +51,6 @@
 		<Unit filename="src\DatFile.cpp" />
 		<Unit filename="src\DatFile.h" />
 		<Unit filename="src\Main.cpp" />
-		<Unit filename="src\Main.h" />
 		<Unit filename="src\MimFile.cpp" />
 		<Unit filename="src\MimFile.h" />
 		<Extensions>

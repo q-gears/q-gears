@@ -3,6 +3,7 @@
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
+#include "CameraManager.h"
 #include "ConfigVar.h"
 #include "DebugDraw.h"
 #include "Logger.h"
@@ -139,6 +140,78 @@ Background2D::Update()
 
 
 void
+Background2D::OnResize()
+{
+    float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+    float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+
+    float scaler = scr_height / 720.0f;
+
+    for( unsigned int i = 0; i < m_Tiles.size(); ++i )
+    {
+        float new_x1 = ( m_Tiles[ i ].x * scaler / scr_width ) * 2 - 1;
+        float new_y1 = -( ( m_Tiles[ i ].y / 720.0f ) * 2 - 1 );
+        float new_x2 = ( ( m_Tiles[ i ].x + m_Tiles[ i ].width ) * scaler / scr_width ) * 2 - 1;
+        float new_y2 = -( ( m_Tiles[ i ].y / 720.0f ) * 2 - 1 );
+        float new_x3 = ( ( m_Tiles[ i ].x + m_Tiles[ i ].width ) * scaler / scr_width ) * 2 - 1;
+        float new_y3 = -( ( ( m_Tiles[ i ].y + m_Tiles[ i ].height ) / 720.0f ) * 2 - 1 );
+        float new_x4 = ( m_Tiles[ i ].x * scaler / scr_width ) * 2 - 1;
+        float new_y4 = -( ( ( m_Tiles[ i ].y + m_Tiles[ i ].height ) / 720.0f ) * 2 - 1 );
+
+        new_x1 += 1;
+        new_y1 -= 1;
+        new_x2 += 1;
+        new_y2 -= 1;
+        new_x3 += 1;
+        new_y3 -= 1;
+        new_x4 += 1;
+        new_y4 -= 1;
+
+        Ogre::HardwareVertexBufferSharedPtr vertex_buffer;
+
+        if( m_Tiles[ i ].blending == Background2D::ALPHA )
+        {
+            vertex_buffer = m_AlphaVertexBuffer;
+        }
+        else if( m_Tiles[ i ].blending == Background2D::ADD )
+        {
+            vertex_buffer = m_AddVertexBuffer;
+        }
+
+        float* writeIterator = ( float* )vertex_buffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
+
+        writeIterator += m_Tiles[ i ].start_vertex_index * 9;
+
+        *writeIterator++ = new_x1;
+        *writeIterator++ = new_y1;
+        writeIterator += 7;
+
+        *writeIterator++ = new_x2;
+        *writeIterator++ = new_y2;
+        writeIterator += 7;
+
+        *writeIterator++ = new_x3;
+        *writeIterator++ = new_y3;
+        writeIterator += 7;
+
+        *writeIterator++ = new_x1;
+        *writeIterator++ = new_y1;
+        writeIterator += 7;
+
+        *writeIterator++ = new_x3;
+        *writeIterator++ = new_y3;
+        writeIterator += 7;
+
+        *writeIterator++ = new_x4;
+        *writeIterator++ = new_y4;
+
+        vertex_buffer->unlock();
+    }
+}
+
+
+
+void
 Background2D::Clear()
 {
     for( unsigned int i = 0; i < m_Animations.size(); ++i )
@@ -185,7 +258,7 @@ Background2D::SetImage( const Ogre::String& image )
 
 
 void
-Background2D::AddTile( const float x, const float y, const float width, const float height, const float depth, const float u1, const float v1, const float u2, const float v2, const Blending blending )
+Background2D::AddTile( const int x, const int y, const int width, const int height, const float depth, const float u1, const float v1, const float u2, const float v2, const Blending blending )
 {
     Ogre::RenderOperation render_op;
     Ogre::HardwareVertexBufferSharedPtr vertex_buffer;
@@ -216,6 +289,10 @@ Background2D::AddTile( const float x, const float y, const float width, const fl
     }
 
     Tile tile;
+    tile.x = x;
+    tile.y = y;
+    tile.width = width;
+    tile.height = height;
     tile.start_vertex_index = render_op.vertexData->vertexCount;
     tile.blending = blending;
     m_Tiles.push_back( tile );
@@ -223,14 +300,16 @@ Background2D::AddTile( const float x, const float y, const float width, const fl
     float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
     float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 
-    float new_x1 = ( ( int ) x / scr_width ) * 2 - 1;
-    float new_y1 = -( ( ( int ) y / scr_height ) * 2 - 1 );
-    float new_x2 = ( ( int ) ( x + width ) / scr_width ) * 2 - 1;
-    float new_y2 = -( ( y / scr_height ) * 2 - 1 );
-    float new_x3 = ( ( int ) ( x + width ) / scr_width ) * 2 - 1;
-    float new_y3 = -( ( ( int ) ( y + height ) / scr_height ) * 2 - 1 );
-    float new_x4 = ( ( int ) x / scr_width ) * 2 - 1;
-    float new_y4 = -( ( ( int ) ( y + height ) / scr_height ) * 2 - 1 );
+    float scaler = scr_height / 720.0f;
+
+    float new_x1 = ( x * scaler / scr_width ) * 2 - 1;
+    float new_y1 = -( ( y / 720.0f ) * 2 - 1 );
+    float new_x2 = ( ( x + width ) * scaler / scr_width ) * 2 - 1;
+    float new_y2 = -( ( y / 720.0f ) * 2 - 1 );
+    float new_x3 = ( ( x + width ) * scaler / scr_width ) * 2 - 1;
+    float new_y3 = -( ( ( y + height ) / 720.0f ) * 2 - 1 );
+    float new_x4 = ( x * scaler / scr_width ) * 2 - 1;
+    float new_y4 = -( ( ( y + height ) / 720.0f ) * 2 - 1 );
 
     new_x1 += 1;
     new_y1 -= 1;
@@ -320,21 +399,15 @@ Background2D::UpdateTileUV( const unsigned int tile_id, const float u1, const fl
         return;
     }
 
-    Ogre::RenderOperation render_op;
     Ogre::HardwareVertexBufferSharedPtr vertex_buffer;
-    unsigned int max_vertex_count;
 
     if( m_Tiles[ tile_id ].blending == Background2D::ALPHA )
     {
-        render_op = m_AlphaRenderOp;
         vertex_buffer = m_AlphaVertexBuffer;
-        max_vertex_count = m_AlphaMaxVertexCount;
     }
     else if( m_Tiles[ tile_id ].blending == Background2D::ADD )
     {
-        render_op = m_AddRenderOp;
         vertex_buffer = m_AddVertexBuffer;
-        max_vertex_count = m_AddMaxVertexCount;
     }
 
     float* writeIterator = ( float* )vertex_buffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
@@ -476,8 +549,8 @@ Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& in
     if( queueGroupId == Ogre::RENDER_QUEUE_MAIN )
     {
         m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
+        m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
         m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
-
         float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
         float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
 

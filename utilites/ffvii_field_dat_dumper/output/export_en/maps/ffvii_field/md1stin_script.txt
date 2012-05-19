@@ -80,50 +80,55 @@ script_0:
 cl
 script_0:
 04ed (end 04ed): -- assosiate entity with model (CHAR) argument doesn't matter
-04ef (end 04ef): field:set_entity_to_character("cl", 0);
+04ef (end 04ef): set_entity_to_character( "cl", 0 );
 04f1 (end 04f1): return;
 04f2 (end 04f2): if ( game:variable_get( "progress_game" ) == 0 ) then continue else jumpto(0512);
 04fa (end 0512): field:pc_lock(true);
 04fc (end 0512): field:menu_lock(true);
-04fe (end 0512): cl:set_position_triangle( 28.5547, 214.312, 2.42188, triangle_id=25);
+04fe (end 0512): cl:set_position( 28.5547, 214.312, 2.42188 ) -- triangle_id=25
 0509 (end 0512): cl:set_direction( 180 )
 050c (end 0512): cl:set_talkable( false );
-050e (end 0512): cl:set_solid( false );
+050e (end 0512): cl:set_solid( false )
 0510 (end 0512): cl:set_visible( false )
 0512 (end 0512): jumpto( 0512 );
 
 script_3:
 0515 (end 0515): cl:set_talkable( true );
-0517 (end 0517): cl:set_solid( true );
+0517 (end 0517): cl:set_solid( true )
 0519 (end 0519): cl:set_visible( true )
-051b (end 051b): cl:play_animation( "3", speed=1 );
-               : cl:animation_sync()
+051b (end 051b): cl:play_animation( "3" ) -- speed=1
+                 cl:animation_sync()
 051e (end 051e): return;
 
 ba
 script_0:
 051f (end 051f): -- assosiate entity with model (CHAR) argument doesn't matter
-0521 (end 0521): field:set_entity_to_character("ba", 1);
+0521 (end 0521): set_entity_to_character( "ba", 1 );
 0523 (end 0523): if ( game:variable_get( "progress_game" ) <= 1 ) then continue else jumpto(0536);
-052b (end 0536): ba:set_position_triangle( 30.6328, 214.758, 2.52344, triangle_id=30);
+052b (end 0536): ba:set_position( 30.6328, 214.758, 2.52344 ) -- triangle_id=30
 0536 (end 0536): return;
 0537 (end 0537): jumpto( 0537 );
 
 script_3:
 053a (end 053a): ba:set_talkable( true );
-053c (end 053c): ba:set_solid( true );
+053c (end 053c): ba:set_solid( true )
 053e (end 053e): ba:set_visible( true )
-0540 (end 0540): ba:set_speed( 2.8125 )
-0544 (end 0544): ba:move_to_position( 28.1797, 216.5, true )
+0540 (end 0540): ba:set_move_speed( 2.8125 )
+0544 (end 0544): ba:move_to_position( 28.1797, 216.5 )
+                 ba:move_sync()
 054a (end 054a): ba:set_direction( 164.531 )
-054d (end 054d): ba:play_animation_wait( "3", 0, 1.3, 1, true );
+054d (end 054d): ba:play_animation_stop( "3", 0, 1.3 ) -- speed=1
+                 ba:animation_sync()
 0552 (end 0552): script:wait( 1.33333 )
-0555 (end 0555): ba:play_animation_wait( "3", 1.3, 1.6, 1, true );
+0555 (end 0555): ba:play_animation_stop( "3", 1.3, 1.6 ) -- speed=1
+                 ba:animation_sync()
 055a (end 055a): return;
 
 script_4:
-055b (end 055b): ba:move_to_position( 29.9688, 228.867, true )
-0561 (end 0561): ba:move_to_position( 27.9531, 229.375, true )
+055b (end 055b): ba:move_to_position( 29.9688, 228.867 )
+                 ba:move_sync()
+0561 (end 0561): ba:move_to_position( 27.9531, 229.375 )
+                 ba:move_sync()
 0567 (end 0567): return;
 
 view
@@ -149,137 +154,152 @@ script_3:
 hei0
 script_0:
 05a7 (end 05a7): -- assosiate entity with model (CHAR) argument doesn't matter
-05a9 (end 05a9): hei0:set_position_triangle( 28.3906, 228.781, 2.86719, triangle_id=36);
+05a9 (end 05a9): hei0:set_position( 28.3906, 228.781, 2.86719 ) -- triangle_id=36
 05b4 (end 05b4): hei0:set_talkable( false );
-05b6 (end 05b6): hei0:set_solid( false );
+05b6 (end 05b6): hei0:set_solid( false )
 05b8 (end 05b8): hei0:set_visible( false )
 05ba (end 05ba): return;
 05bb (end 05bb): jumpto( 05bb );
 
 script_3:
 05be (end 05be): hei0:set_visible( true )
-05c0 (end 05c0): hei0:set_speed( 2.22656 )
-05c4 (end 05c4): hei0:move_to_position( 29.6406, 228.656, true )
-05ca (end 05ca): hei0:move_to_position( 29.1562, 224.625, true )
+05c0 (end 05c0): hei0:set_move_speed( 2.22656 )
+05c4 (end 05c4): hei0:move_to_position( 29.6406, 228.656 )
+                 hei0:move_sync()
+05ca (end 05ca): hei0:move_to_position( 29.1562, 224.625 )
+                 hei0:move_sync()
 05d0 (end 05d0): hei0:set_talkable( false );
-05d2 (end 05d2): hei0:set_solid( false );
+05d2 (end 05d2): hei0:set_solid( false )
 05d4 (end 05d4): hei0:set_visible( false )
 05d6 (end 05d6): return;
 
 hei1
 script_0:
 05d7 (end 05d7): -- assosiate entity with model (CHAR) argument doesn't matter
-05d9 (end 05d9): hei1:set_position_triangle( 28.3906, 228.781, 2.86719, triangle_id=36);
+05d9 (end 05d9): hei1:set_position( 28.3906, 228.781, 2.86719 ) -- triangle_id=36
 05e4 (end 05e4): hei1:set_talkable( false );
-05e6 (end 05e6): hei1:set_solid( false );
+05e6 (end 05e6): hei1:set_solid( false )
 05e8 (end 05e8): hei1:set_visible( false )
 05ea (end 05ea): return;
 05eb (end 05eb): jumpto( 05eb );
 
 script_3:
 05ee (end 05ee): hei1:set_visible( true )
-05f0 (end 05f0): hei1:set_speed( 2.34375 )
-05f4 (end 05f4): hei1:move_to_position( 30.4453, 228.57, true )
-05fa (end 05fa): hei1:move_to_position( 30.2578, 225.312, true )
+05f0 (end 05f0): hei1:set_move_speed( 2.34375 )
+05f4 (end 05f4): hei1:move_to_position( 30.4453, 228.57 )
+                 hei1:move_sync()
+05fa (end 05fa): hei1:move_to_position( 30.2578, 225.312 )
+                 hei1:move_sync()
 0600 (end 0600): hei1:set_talkable( false );
-0602 (end 0602): hei1:set_solid( false );
+0602 (end 0602): hei1:set_solid( false )
 0604 (end 0604): hei1:set_visible( false )
 0606 (end 0606): return;
 
 av_m
 script_0:
 0607 (end 0607): -- assosiate entity with model (CHAR) argument doesn't matter
-0609 (end 0609): av_m:set_position_triangle( 30, 228, 2.45312, triangle_id=3);
+0609 (end 0609): av_m:set_position( 30, 228, 2.45312 ) -- triangle_id=3
 0614 (end 0614): av_m:set_direction( 270 )
 0617 (end 0617): av_m:set_talkable( false );
-0619 (end 0619): av_m:set_solid( false );
+0619 (end 0619): av_m:set_solid( false )
 061b (end 061b): av_m:set_visible( false )
 061d (end 061d): return;
 061e (end 061e): jumpto( 061e );
 
 script_3:
 0621 (end 0621): av_m:set_visible( true )
-0623 (end 0623): av_m:play_animation( "3", speed=1 );
-               : av_m:animation_sync()
+0623 (end 0623): av_m:play_animation( "3" ) -- speed=1
+                 av_m:animation_sync()
 0626 (end 0626): script:wait( 0.266667 )
 0629 (end 0629): av_m:turn_to_direction( 326.25, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
 062f (end 062f): script:wait( 0.333333 )
-0632 (end 0632): av_m:play_animation( "4", speed=1 );
-               : av_m:animation_sync()
+0632 (end 0632): av_m:play_animation( "4" ) -- speed=1
+                 av_m:animation_sync()
 0635 (end 0635): av_m:set_direction( 146.25 )
 0638 (end 0638): script:wait( 3.33333 )
-063b (end 063b): av_m:set_speed( 2.34375 )
-063f (end 063f): av_m:move_to_position( 29.9688, 228.867, true )
-0645 (end 0645): av_m:move_to_position( 27.9531, 229.375, true )
+063b (end 063b): av_m:set_move_speed( 2.34375 )
+063f (end 063f): av_m:move_to_position( 29.9688, 228.867 )
+                 av_m:move_sync()
+0645 (end 0645): av_m:move_to_position( 27.9531, 229.375 )
+                 av_m:move_sync()
 064b (end 064b): av_m:set_talkable( false );
-064d (end 064d): av_m:set_solid( false );
+064d (end 064d): av_m:set_solid( false )
 064f (end 064f): av_m:set_visible( false )
 0651 (end 0651): return;
 
 av_l
 script_0:
 0652 (end 0652): -- assosiate entity with model (CHAR) argument doesn't matter
-0654 (end 0654): av_l:set_position_triangle( 31.1406, 220.422, 2.50781, triangle_id=34);
+0654 (end 0654): av_l:set_position( 31.1406, 220.422, 2.50781 ) -- triangle_id=34
 065f (end 065f): av_l:set_talkable( false );
-0661 (end 0661): av_l:set_solid( false );
+0661 (end 0661): av_l:set_solid( false )
 0663 (end 0663): av_l:set_visible( false )
 0665 (end 0665): return;
 0666 (end 0666): jumpto( 0666 );
 
 script_3:
 0669 (end 0669): av_l:set_visible( true )
-066b (end 066b): av_l:set_speed( 1.875 )
-066f (end 066f): av_l:move_to_position( 28.6875, 220.477, true )
+066b (end 066b): av_l:set_move_speed( 1.875 )
+066f (end 066f): av_l:move_to_position( 28.6875, 220.477 )
+                 av_l:move_sync()
 0675 (end 0675): av_l:set_direction( 16.875 )
-0678 (end 0678): av_l:play_animation_wait( "3", 0, 0.466667, 1, true );
+0678 (end 0678): av_l:play_animation_stop( "3", 0, 0.466667 ) -- speed=1
+                 av_l:animation_sync()
 067d (end 067d): script:wait( 0.233333 )
 0680 (end 0680): music:execute_akao( 20, 00000040, 0000001c ); -- play sound
 0685 (end 0685): script:wait( 0.766667 )
-0688 (end 0688): av_l:play_animation_wait( "3", 0.5, 0.8, 1, false );
-068d (end 068d): av_l:set_default_animation( "0", 1 );
+0688 (end 0688): av_l:play_animation( "3", 0.5, 0.8 ) -- speed=1
+                 av_l:animation_sync()
+068d (end 068d): av_l:set_default_animation( "0" ) -- speed=1
+                 av_l:play_animation( "0" )
 0690 (end 0690): script:wait( 1.33333 )
-0693 (end 0693): av_l:move_to_position( 29.9688, 228.867, true )
-0699 (end 0699): av_l:move_to_position( 27.9531, 229.375, true )
+0693 (end 0693): av_l:move_to_position( 29.9688, 228.867 )
+                 av_l:move_sync()
+0699 (end 0699): av_l:move_to_position( 27.9531, 229.375 )
+                 av_l:move_sync()
 069f (end 069f): av_l:set_talkable( false );
-06a1 (end 06a1): av_l:set_solid( false );
+06a1 (end 06a1): av_l:set_solid( false )
 06a3 (end 06a3): av_l:set_visible( false )
 06a5 (end 06a5): return;
 
 av_s
 script_0:
 06a6 (end 06a6): -- assosiate entity with model (CHAR) argument doesn't matter
-06a8 (end 06a8): av_s:set_position_triangle( 29.6406, 221.227, 2.42188, triangle_id=14);
+06a8 (end 06a8): av_s:set_position( 29.6406, 221.227, 2.42188 ) -- triangle_id=14
 06b3 (end 06b3): av_s:set_direction( 270 )
 06b6 (end 06b6): av_s:set_talkable( false );
-06b8 (end 06b8): av_s:set_solid( false );
+06b8 (end 06b8): av_s:set_solid( false )
 06ba (end 06ba): av_s:set_visible( false )
 06bc (end 06bc): return;
 06bd (end 06bd): jumpto( 06bd );
 
 script_3:
 06c0 (end 06c0): av_s:set_visible( true )
-06c2 (end 06c2): av_s:play_animation( "3", speed=1 );
-               : av_s:animation_sync()
+06c2 (end 06c2): av_s:play_animation( "3" ) -- speed=1
+                 av_s:animation_sync()
 06c5 (end 06c5): script:wait( 0.266667 )
 06c8 (end 06c8): av_s:turn_to_direction( 326.25, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
 06ce (end 06ce): script:wait( 2 )
-06d1 (end 06d1): av_s:set_speed( 2.34375 )
-06d5 (end 06d5): av_s:move_to_position( 29.9688, 228.867, true )
-06db (end 06db): av_s:move_to_position( 27.9531, 229.375, true )
+06d1 (end 06d1): av_s:set_move_speed( 2.34375 )
+06d5 (end 06d5): av_s:move_to_position( 29.9688, 228.867 )
+                 av_s:move_sync()
+06db (end 06db): av_s:move_to_position( 27.9531, 229.375 )
+                 av_s:move_sync()
 06e1 (end 06e1): av_s:set_talkable( false );
-06e3 (end 06e3): av_s:set_solid( false );
+06e3 (end 06e3): av_s:set_solid( false )
 06e5 (end 06e5): av_s:set_visible( false )
 06e7 (end 06e7): return;
 
 gu0
 script_0:
 06e8 (end 06e8): -- assosiate entity with model (CHAR) argument doesn't matter
-06ea (end 06ea): gu0:set_position_triangle( 28.0938, 217.008, 2.42188, triangle_id=20);
+06ea (end 06ea): gu0:set_position( 28.0938, 217.008, 2.42188 ) -- triangle_id=20
 06f5 (end 06f5): gu0:set_direction( 90 )
 06f8 (end 06f8): if ( game:variable_get( "progress_game" ) >= 1 ) then continue else jumpto(0711);
-0700 (end 0711): gu0:set_position_triangle( 29.4297, 216.578, 2.42188, triangle_id=20);
+0700 (end 0711): gu0:set_position( 29.4297, 216.578, 2.42188 ) -- triangle_id=20
 070b (end 0711): gu0:set_direction( 191.25 )
-070e (end 0711): gu0:set_default_animation( "3", 1 );
+070e (end 0711): gu0:set_default_animation( "3" ) -- speed=1
+                 gu0:play_animation( "3" )
 0711 (end 0711): return;
 0712 (end 0712): jumpto( 0712 );
 
@@ -304,31 +324,34 @@ script_1:
 0760 (end 0760): return;
 
 script_3:
-0761 (end 0761): gu0:set_solid( false );
+0761 (end 0761): gu0:set_solid( false )
 0763 (end 0763): gu0:turn_to_direction( 135, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
 0769 (end 0769): script:wait( 1.06667 )
-076c (end 076c): gu0:play_animation( "4", speed=1 );
-               : gu0:animation_sync()
-076f (end 076f): gu0:set_speed( 1.875 )
+076c (end 076c): gu0:play_animation( "4" ) -- speed=1
+                 gu0:animation_sync()
+076f (end 076f): gu0:set_move_speed( 1.875 )
 0773 (end 0773): script:wait( 0.266667 )
-0776 (end 0776): gu0:move_to_position( 28.9375, 219.094, true )
+0776 (end 0776): gu0:move_to_position( 28.9375, 219.094 )
+                 gu0:move_sync()
 077c (end 077c): gu0:set_direction( 191.25 )
-077f (end 077f): gu0:play_animation_wait( "5", 0, -1, 1, true );
+077f (end 077f): gu0:play_animation_stop( "5" ) -- speed=1
+                 gu0:animation_sync()
 0782 (end 0782): script:request_end_wait( "gu1", "script_4", 6 );
 0785 (end 0785): gu0:set_talkable( false );
-0787 (end 0787): gu0:set_solid( false );
+0787 (end 0787): gu0:set_solid( false )
 0789 (end 0789): gu0:set_visible( false )
 078b (end 078b): return;
 
 gu1
 script_0:
 078c (end 078c): -- assosiate entity with model (CHAR) argument doesn't matter
-078e (end 078e): gu1:set_position_triangle( 28.875, 224.477, 2.42188, triangle_id=9);
+078e (end 078e): gu1:set_position( 28.875, 224.477, 2.42188 ) -- triangle_id=9
 0799 (end 0799): gu1:set_direction( 90 )
 079c (end 079c): if ( game:variable_get( "progress_game" ) >= 1 ) then continue else jumpto(07b5);
 07a4 (end 07b5): gu1:set_direction( 56.25 )
-07a7 (end 07b5): gu1:set_position_triangle( 30.625, 227.812, 2.42969, triangle_id=3);
-07b2 (end 07b5): gu1:set_default_animation( "6", 1 );
+07a7 (end 07b5): gu1:set_position( 30.625, 227.812, 2.42969 ) -- triangle_id=3
+07b2 (end 07b5): gu1:set_default_animation( "6" ) -- speed=1
+                 gu1:play_animation( "6" )
 07b5 (end 07b5): return;
 07b6 (end 07b6): jumpto( 07b6 );
 
@@ -353,25 +376,28 @@ script_1:
 0804 (end 0804): return;
 
 script_3:
-0805 (end 0805): gu1:set_solid( false );
-0807 (end 0807): gu1:play_animation( "4", speed=1 );
-               : gu1:animation_sync()
-080a (end 080a): gu1:set_speed( 3.75 )
-080e (end 080e): gu1:move_to_position( 29.625, 228.375, true )
+0805 (end 0805): gu1:set_solid( false )
+0807 (end 0807): gu1:play_animation( "4" ) -- speed=1
+                 gu1:animation_sync()
+080a (end 080a): gu1:set_move_speed( 3.75 )
+080e (end 080e): gu1:move_to_position( 29.625, 228.375 )
+                 gu1:move_sync()
 0814 (end 0814): gu1:set_direction( 56.25 )
-0817 (end 0817): gu1:play_animation_wait( "7", 0, -1, 1, true );
+0817 (end 0817): gu1:play_animation_stop( "7" ) -- speed=1
+                 gu1:animation_sync()
 081a (end 081a): script:request( "guadd", "script_3", 6 );
 081d (end 081d): gu1:set_talkable( false );
-081f (end 081f): gu1:set_solid( false );
+081f (end 081f): gu1:set_solid( false )
 0821 (end 0821): gu1:set_visible( false )
 0823 (end 0823): return;
 
 script_4:
-0824 (end 0824): gu1:set_default_animation( "3", 1 );
-0827 (end 0827): gu1:set_position_triangle( 29.4297, 216.578, 2.42188, triangle_id=20);
+0824 (end 0824): gu1:set_default_animation( "3" ) -- speed=1
+                 gu1:play_animation( "3" )
+0827 (end 0827): gu1:set_position( 29.4297, 216.578, 2.42188 ) -- triangle_id=20
 0832 (end 0832): gu1:set_direction( 191.25 )
 0835 (end 0835): gu1:set_talkable( true );
-0837 (end 0837): gu1:set_solid( true );
+0837 (end 0837): gu1:set_solid( true )
 0839 (end 0839): gu1:set_visible( true )
 083b (end 083b): return;
 
@@ -379,10 +405,11 @@ guadd
 script_0:
 083c (end 083c): -- assosiate entity with model (CHAR) argument doesn't matter
 083e (end 083e): guadd:set_direction( 56.25 )
-0841 (end 0841): guadd:set_position_triangle( 30.625, 227.812, 2.42969, triangle_id=3);
-084c (end 084c): guadd:set_default_animation( "6", 1 );
+0841 (end 0841): guadd:set_position( 30.625, 227.812, 2.42969 ) -- triangle_id=3
+084c (end 084c): guadd:set_default_animation( "6" ) -- speed=1
+                 guadd:play_animation( "6" )
 084f (end 084f): guadd:set_talkable( false );
-0851 (end 0851): guadd:set_solid( false );
+0851 (end 0851): guadd:set_solid( false )
 0853 (end 0853): guadd:set_visible( false )
 0855 (end 0855): return;
 0856 (end 0856): jumpto( 0856 );
@@ -409,7 +436,7 @@ script_1:
 
 script_3:
 08a5 (end 08a5): guadd:set_talkable( true );
-08a7 (end 08a7): guadd:set_solid( true );
+08a7 (end 08a7): guadd:set_solid( true )
 08a9 (end 08a9): guadd:set_visible( true )
 08ab (end 08ab): return;
 

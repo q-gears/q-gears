@@ -4,7 +4,8 @@
     <background2d file_name="maps/ffvii_field/md1_1_bg.xml" />
     <walkmesh file_name="maps/ffvii_field/md1_1_wm.xml" />
 
-    <entity_model name="Player" file_name="models/field/units/zidane.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="0 0 0" direction="0" />
+
     <entity_trigger name="Gateway0" point1="7.78125 2.22656 10.125" point2="7.25781 3.85156 10.125" enabled="true" />
     <entity_trigger name="Gateway1" point1="7.96094 13.5 10.1406" point2="10.1406 13.3203 10.1406" enabled="true" />
     <entity_point name="Spawn_md1stin" point="8.19531 3.125 0.703125" rotation="81.8824" />

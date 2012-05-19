@@ -339,7 +339,7 @@
     +80 [][][][] exp to next level.
 +04f8 [][][][] party member in slot1-4 (used in battle).
 +04fc party item stock array
-+0b7c [][][][] party gil amount
++0b7c [][][][] party gil amount.
 +0b80 [][][][] total seconds played.
 +0b84 [][][][] savemap seconds for timer (set in STTIM).
 +0ba4 savemap memory bank 1/2 start

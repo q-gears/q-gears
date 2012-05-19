@@ -479,8 +479,8 @@ DebugDraw::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invoc
     {
         m_RenderSystem->clearFrameBuffer( Ogre::FBT_DEPTH );
         m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
-        m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
         m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
+        m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
 
         if( m_LineRenderOp.vertexData->vertexCount != 0 )
         {
@@ -506,8 +506,8 @@ DebugDraw::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invoc
     else if( queueGroupId == Ogre::RENDER_QUEUE_MAIN )
     {
         m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
-        m_RenderSystem->_setProjectionMatrix( CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrix() );
         m_RenderSystem->_setViewMatrix( CameraManager::getSingleton().GetCurrentCamera()->getViewMatrix() );
+        m_RenderSystem->_setProjectionMatrix( CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrix() );
 
         if( m_Line3dRenderOp.vertexData->vertexCount != 0 )
         {

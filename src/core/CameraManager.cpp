@@ -14,7 +14,7 @@ ConfigVar cv_cam_speed( "camera_speed", "Camera speed", "0.02" );
 
 
 
-template<>CameraManager *Ogre::Singleton< CameraManager >::ms_Singleton = NULL;
+template<>CameraManager* Ogre::Singleton< CameraManager >::ms_Singleton = NULL;
 
 
 
@@ -25,7 +25,8 @@ CameraManager::CameraManager():
     LOG_TRIVIAL( "CameraManager started." );
 
     m_Camera = Ogre::Root::getSingleton().getSceneManager( "Scene" )->createCamera( "Camera" );
-    m_Camera->setNearClipDistance( 0.1f );
+    m_Camera->setNearClipDistance( 0.001f );
+    m_Camera->setFarClipDistance( 1000.0f );
     m_Camera->setPosition( Ogre::Vector3( 0, -3, 3 ) );
     m_Camera->lookAt( Ogre::Vector3( 0, 0, 0 ) );
     m_Viewport = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->addViewport( m_Camera, 0 );

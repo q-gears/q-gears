@@ -1,4 +1,131 @@
 ////////////////////////////////
+// 0x9F SEARCHX
+field_file_offset     = w[8009c6dc];
+current_entity        = bu[800722c4];
+script_pointer_offset = 800831fc + current_entity * 2;
+script = field_file_offset + hu[script_pointer_offset];
+
+S0 = bu[script + 1] >> 4;
+
+A0 = 2;
+A1 = 5;
+read_memory_block_two_bytes;
+S2 = bu[script + 4] + V0; // diapason start
+
+A0 = 3;
+A1 = 7;
+read_memory_block_two_bytes;
+S1 = bu[script + 4] + V0; // diapason end
+
+A0 = 4;
+A1 = 9;
+read_memory_block_one_byte;
+search_x = V0;
+
+switch( S0 )
+{
+    case f: // D4140C80
+    {
+        S2 = S2 + 100;
+        S1 = S1 + 100;
+    }
+
+    case d: // DC140C80
+    {
+        S2 = S2 + 100;
+        S1 = S1 + 100;
+    }
+
+    case b: // E4140C80
+    {
+        S2 = S2 + 100;
+        S1 = S1 + 100;
+    }
+
+    case 3: // EC140C80
+    {
+        S2 = S2 + 100;
+        S1 = S1 + 100;
+    }
+
+    case 1: // F4140C80
+    {
+        if( S2 >= 500 )
+        {
+            S2 = 4ff;
+        }
+
+        if( S1 >= 500 )
+        {
+            S1 = 4ff;
+        }
+
+        if( S1 >= S2 )
+        {
+            loopc1540:	; 800C1540
+                if( bu[8009c6e4 + ba4 + S2] == search_x )
+                {
+                    A0 = 6;
+                    A1 = a;
+                    A2 = S2;
+                    store_memory_block_two_bytes;
+
+                    [script_pointer_offset] = h(hu[script_pointer_offset] + b);
+                    return;
+                }
+
+                S2 = S2 + 1;
+                V0 = S1 < S2;
+            800C1570	beq    v0, zero, loopc1540 [$800c1540]
+        }
+    }
+    break;
+
+    case 5: // 98150C80
+    {
+        if( S2 >= 100 )
+        {
+            S2 = ff;
+        }
+
+        if( S1 >= 100 )
+        {
+            S1 = ff;
+        }
+
+        if( S1 >= S2 )
+        {
+            loopc15e4:	; 800C15E4
+                if( bu[80075e24 + S2] == search_x )
+                {
+                    A0 = 6;
+                    A1 = a;
+                    A2 = S2;
+                    store_memory_block_two_bytes;
+
+                    [script_pointer_offset] = h(hu[script_pointer_offset] + b);
+                    return;
+                }
+
+                S2 = S2 + 1;
+                V0 = S1 < S2;
+            800C1614	beq    v0, zero, loopc15e4 [$800c15e4]
+        }
+    }
+    break
+}
+
+A0 = 6;
+A1 = a;
+A2 = -1;
+store_memory_block_two_bytes;
+
+[script_pointer_offset] = h(hu[script_pointer_offset] + b);
+////////////////////////////////
+
+
+
+////////////////////////////////
 // 0xD4 SIN
 A0 = 1;
 A1 = 3;

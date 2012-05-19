@@ -7,22 +7,16 @@ script_pointer_offset = 800831fc + current_entity * 2;
 if( current_model != ff )
 {
     V0 = w[8009c6dc] + hu[script_pointer_offset];
-    animation_id = bu[V0 + 1];
-    [8008325C + current_model] = b(animation_id);
+    [8008325c + current_model] = b(bu[V0 + 1]); // animation_id
+    [80082248 + current_model] = h(h[8009d828 + current_model] / bu[V0 + 2]); // relative_speed
 
-    relative_speed = bu[V0 + 2];
-    [80082248 + current_model] = h(h[8009D828 + current_model] / relative_speed);
-
-    V1 = bu[800756E8 + current_model]; // get animation state
-    if( V1 == 3 )
+    if( bu[800756e8 + current_model] == 3 ) // animation state
     {
-        [800756E8 + current_model] = b(0);
+        [800756e8 + current_model] = b(0);
     }
 }
 
 [script_pointer_offset] = h(hu[script_pointer_offset] + 3);
-
-return 1;
 ////////////////////////////////
 
 
@@ -30,26 +24,23 @@ return 1;
 ////////////////////////////////
 // 0xA3 ANIME1
 // 0xAE ANIME2
-current_entity        = bu[800722C4];
-current_model         = bu[8007EB98 + current_entity];
+current_entity        = bu[800722c4];
+current_model         = bu[8007eb98 + current_entity];
+script_pointer_offset = 800831fc + current_entity * 2;
 
-if (current_model != FF)
+if( current_model != ff )
 {
-    V1 = bu[800756E8 + current_model];
-    if (V1 != 3)
+    animation_state = bu[800756e8 + current_model];
+    if( animation_state != 3 )
     {
-        if (V1 == 4)
+        if( animation_state == 4 )
         {
             [800756E8 + current_model] = b(0);
-
-            // move pointer by 3
-            V0 = hu[script_pointer_offset];
-            V0 = V0 + 3;
-            [script_pointer_offset] = h(V0);
+            [script_pointer_offset] = h(hu[script_pointer_offset] + 3);
             return 0;
         }
 
-        if (V1 > 4 || V1 == 2)
+        if( animation_state > 4 || animation_state == 2 )
         {
             return 1;
         }
@@ -58,8 +49,7 @@ if (current_model != FF)
     funcc5b38;
 
     // if this is AE opcode
-    V1 = bu[8009A058];
-    if (V1 == AE)
+    if( bu[8009a058] == ae )
     {
         [800756E8 + current_model] = b(5);
     }
@@ -70,22 +60,18 @@ if (current_model != FF)
     }
 }
 
-// move pointer by 3
-V0 = hu[script_pointer_offset];
-V0 = V0 + 3;
-[script_pointer_offset] = h(V0);
-return 0;
+[script_pointer_offset] = h(hu[script_pointer_offset] + 3);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 //0xAC ANIMW
-current_entity        = bu[800722C4];
-model_data_offset     = w[8009C544];
-current_model         = bu[8007EB98 + current_entity];
+current_entity        = bu[800722c4];
+model_data_offset     = w[8009c544];
+current_model         = bu[8007eb98 + current_entity];
 current_model_offset  = model_data_offset + current_model * 84;
-script_pointer_offset = 800831FC + current_entity * 2;
+script_pointer_offset = 800831fc + current_entity * 2;
 
 if (current_model != FF)
 {
@@ -101,11 +87,7 @@ if (current_model != FF)
     }
 }
 
-V0 = hu[script_pointer_offset];
-V0 = V0 + 1;
-[script_pointer_offset] = h(V0);
-
-return 0;
+[script_pointer_offset] = h(hu[script_pointer_offset] + 1);
 ////////////////////////////////
 
 

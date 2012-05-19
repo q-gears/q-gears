@@ -22,12 +22,14 @@ public:
     virtual ~Background2D();
 
     void Update();
+    void OnResize();
+
     void Clear();
 
     void Set2DPosition( const Ogre::Vector2& position );
 
     void SetImage( const Ogre::String& image );
-    void AddTile( const float x, const float y, const float width, const float height, const float depth, const float u1, const float v1, const float u2, const float v2, const Blending blending );
+    void AddTile( const int x, const int y, const int width, const int height, const float depth, const float u1, const float v1, const float u2, const float v2, const Blending blending );
     void UpdateTileUV( const unsigned int tile_id, const float u1, const float v1, const float u2, const float v2 );
 
     void AddAnimation( Background2DAnimation* animation );
@@ -52,6 +54,10 @@ private:
 
     struct Tile
     {
+        int x;
+        int y;
+        int width;
+        int height;
         unsigned int start_vertex_index;
         Blending blending;
     };

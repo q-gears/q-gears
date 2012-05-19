@@ -24,7 +24,7 @@ To Do
 
 
 ================================================================================
-Q-Gears v0.21 (3rd run wild) | 2012-04-??
+Q-Gears v0.21 (3rd run wild) | 2012-05-??
 --------------------------------------------------------------------------------
 
 To Do
@@ -36,6 +36,14 @@ To Do
 * [Background] Implement palette animation.
 
 
+
+2012-05-17
+----------
+* [Background] Add background init and resizing corrently depending on resolution. [Akari]
+
+2012-05-16
+----------
+* [Export FFVII] Fix background depth export. [Akari]
 
 2012-04-28
 ----------
