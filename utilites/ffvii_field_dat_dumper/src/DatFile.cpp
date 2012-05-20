@@ -237,6 +237,7 @@ unsigned short japanese_chars_fe[256] = {
 
 
 
+
 Ogre::String
 MapIdToString( const int map_id )
 {
@@ -245,9 +246,24 @@ MapIdToString( const int map_id )
         case 0x74: return "ffvii_md1stin";
         case 0x75: return "ffvii_md1_1";
         case 0x76: return "ffvii_md1_2";
-        default: return "Unknown_0x" + HexToString( map_id, 4, '0' );
     }
+
+    return "Unknown_0x" + HexToString( map_id, 4, '0' );
 }
+
+
+
+float
+MapIdToScale( const int map_id )
+{
+    switch( map_id )
+    {
+        case 0x75: return 2.0f;
+    }
+
+    return 1;
+}
+
 
 
 DatFile::DatFile(const Ogre::String &file):
@@ -627,7 +643,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
     u16 string_offset           = GetU16LE( offset_to_sector + 0x04 );
     u16 number_of_extra_offsets = GetU16LE( offset_to_sector + 0x06 );
 
-    float downscaler = 128.0f / field.scale;
+    float downscaler = 128.0f * field.scale;
 
     std::vector< Ogre::String > entity_list;
 
@@ -673,13 +689,13 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
 
                 u8 opcode = GetU8(script);
 
-                if (opcode == 0x00) // RET
+                if( opcode == 0x00 ) // RET
                 {
-                    export_script->Log("return;\n");
+                    export_script->Log( "return\n" );
 
-                    if (j == 0 && one_ret_check == false) // in init we need to meet ret at least once
+                    if( j == 0 && one_ret_check == false ) // in init we need to meet ret at least once
                     {
-                        AdvanceScript(1, script, end);
+                        AdvanceScript( 1, script, end );
                         one_ret_check = true;
                     }
                     else
@@ -687,59 +703,29 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                         script += 1;
                     }
                 }
-                else if (opcode == 0x01) // REQ
+                else if( opcode == 0x01 ) // REQ
                 {
-                    u8 entity_id = GetU8(script + 1);
-                    u8 priority  = GetU8(script + 2) >> 5;
-                    u8 script_id = GetU8(script + 2) & 0x1F;
-
-                    export_script->Log(
-                        "script:request( \"" +
-                        entity_list[entity_id] +
-                        "\", \"script_" +
-                        IntToString(script_id) +
-                        "\", " +
-                        IntToString(priority) +
-                        " );\n"
-                    );
-
-                    AdvanceScript(3, script, end);
+                    u8 entity_id = GetU8( script + 1 );
+                    u8 priority  = GetU8( script + 2 ) >> 5;
+                    u8 script_id = GetU8( script + 2 ) & 0x1F;
+                    export_script->Log( "script:request( \"" + entity_list[ entity_id ] + "\", \"script_" + IntToString( script_id ) + "\", " + IntToString( priority ) + " )\n" );
+                    AdvanceScript( 3, script, end );
                 }
-                else if (opcode == 0x02) // REQSW
+                else if( opcode == 0x02 ) // REQSW
                 {
-                    u8 entity_id = GetU8(script + 1);
-                    u8 priority  = GetU8(script + 2) >> 5;
-                    u8 script_id = GetU8(script + 2) & 0x1F;
-
-                    export_script->Log(
-                        "script:request_start_wait( \"" +
-                        entity_list[entity_id] +
-                        "\", \"script_" +
-                        IntToString(script_id) +
-                        "\", " +
-                        IntToString(priority) +
-                        " );\n"
-                    );
-
-                    AdvanceScript(3, script, end);
+                    u8 entity_id = GetU8( script + 1 );
+                    u8 priority  = GetU8( script + 2 ) >> 5;
+                    u8 script_id = GetU8( script + 2 ) & 0x1F;
+                    export_script->Log( "script:request_start_sync( \"" + entity_list[ entity_id ] + "\", \"script_" + IntToString( script_id ) + "\", " + IntToString( priority ) + " )\n" );
+                    AdvanceScript( 3, script, end );
                 }
-                else if (opcode == 0x03) // REQEW
+                else if( opcode == 0x03 ) // REQEW
                 {
-                    u8 entity_id = GetU8(script + 1);
-                    u8 priority  = GetU8(script + 2) >> 5;
-                    u8 script_id = GetU8(script + 2) & 0x1F;
-
-                    export_script->Log(
-                        "script:request_end_wait( \"" +
-                        entity_list[entity_id] +
-                        "\", \"script_" +
-                        IntToString(script_id) +
-                        "\", " +
-                        IntToString(priority) +
-                        " );\n"
-                    );
-
-                    AdvanceScript(3, script, end);
+                    u8 entity_id = GetU8( script + 1 );
+                    u8 priority  = GetU8( script + 2 ) >> 5;
+                    u8 script_id = GetU8( script + 2 ) & 0x1F;
+                    export_script->Log( "script:request_end_sync( \"" + entity_list[ entity_id ] + "\", \"script_" + IntToString( script_id ) + "\", " + IntToString( priority ) + " )\n" );
+                    AdvanceScript( 3, script, end );
                 }
                 else if (opcode == 0x07) // RETTO
                 {
@@ -1877,7 +1863,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if( opcode == 0xB9 ) // GETAI
                 {
-                    export_script->Log( SetVariable( GetU8( script + 1 ), GetU8( script + 3 ), entity_list[ GetU8( script + 2 ) ] + ":get_triangle()" ) );
+                    export_script->Log( SetVariable( GetU8( script + 1 ), GetU8( script + 3 ), entity_list[ GetU8( script + 2 ) ] + ":get_move_triangle_id()" ) );
                     AdvanceScript( 4, script, end );
                 }
                 else if( opcode == 0xBA ) // ANIM!2
@@ -1941,7 +1927,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                         SetVariable(GetU8(script + 1) >> 4, GetU8(script + 4), entity_list[GetU8(script + 3)] + ":get_x()") +
                         SetVariable(GetU8(script + 1) & 0x0F, GetU8(script + 5), entity_list[GetU8(script + 3)] + ":get_y()") +
                         SetVariable(GetU8(script + 2) >> 4, GetU8(script + 6), entity_list[GetU8(script + 3)] + ":get_z()") +
-                        SetVariable(GetU8(script + 2) & 0x0F, GetU8(script + 7), entity_list[GetU8(script + 3)] + ":get_triangle()")
+                        SetVariable(GetU8(script + 2) & 0x0F, GetU8(script + 7), entity_list[GetU8(script + 3)] + ":get_move_triangle_id()")
                     );
                     AdvanceScript(8, script, end);
                 }
@@ -2659,7 +2645,7 @@ DatFile::OffsetString(int val)
 void
 DatFile::GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre::Degree& fov, const Field& field )
 {
-    float downscaler = 128.0f / field.scale;
+    float downscaler = 128.0f * field.scale;
 
     // sector 4
     u32 offset_to_camera = 0x1c + GetU32LE( 0x0c ) - GetU32LE( 0x00 );
@@ -2827,7 +2813,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
             //u32 offset_to_camera = 0x1c + GetU32LE( 0x0c ) - GetU32LE( 0x00 );
             //float distance  = GetU16LE( offset_to_camera + 0x24 ) / 128.0f;
-            float depth     = GetU16LE( s4 + 0x0a ) / 32.0f;
+            float depth     = GetU16LE( s4 + 0x0a ) / ( 32.0f * field.scale );
 
             //LOGGER->Log( "Depth = " + FloatToString( depth ) +", distance = " + FloatToString( distance ) +"\n" );
 
@@ -3374,7 +3360,7 @@ DatFile::DumpWalkmesh( const Ogre::String& export_path, const Field& field )
     int start_walkmesh = offset_to_walkmesh + 0x04;
     int start_access   = offset_to_walkmesh + 0x04 + number_of_poly * 0x18;
 
-    float downscaler = 128.0f / field.scale;
+    float downscaler = 128.0f * field.scale;
 
     Ogre::Vector3 A, B, C;
 
@@ -3429,7 +3415,7 @@ DatFile::DumpTriggers( const Ogre::String& export_path, const Field& field )
 
     u32 start_triggers = offset_to_triggers + 0x38;
 
-    float downscaler = 128.0f / field.scale;
+    float downscaler_this = 128.0f * field.scale;
 
     for( u32 i = 0; i < 12; ++i )
     {
@@ -3438,19 +3424,21 @@ DatFile::DumpTriggers( const Ogre::String& export_path, const Field& field )
         // if not inactive gateway
         if( map_id != 32767 )
         {
-            Ogre::Vector3 point1(   ( s16 )GetU16LE( start_triggers + 0x00 ) / downscaler,
-                                    ( s16 )GetU16LE( start_triggers + 0x02 ) / downscaler,
-                                    ( s16 )GetU16LE( start_triggers + 0x04 ) / downscaler );
-            Ogre::Vector3 point2(   ( s16 )GetU16LE( start_triggers + 0x06 ) / downscaler,
-                                    ( s16 )GetU16LE( start_triggers + 0x08 ) / downscaler,
-                                    ( s16 )GetU16LE( start_triggers + 0x0a ) / downscaler );
-            Ogre::Vector3 position( ( s16 )GetU16LE( start_triggers + 0x0c ) / downscaler,
-                                    ( s16 )GetU16LE( start_triggers + 0xe ) / downscaler,
-                                    ( s16 )GetU16LE( start_triggers + 0x10 ) / downscaler );
+            float downscaler_next = 128.0f * MapIdToScale( map_id );
+
+            Ogre::Vector3 point1(   ( s16 )GetU16LE( start_triggers + 0x00 ) / downscaler_this,
+                                    ( s16 )GetU16LE( start_triggers + 0x02 ) / downscaler_this,
+                                    ( s16 )GetU16LE( start_triggers + 0x04 ) / downscaler_this );
+            Ogre::Vector3 point2(   ( s16 )GetU16LE( start_triggers + 0x06 ) / downscaler_this,
+                                    ( s16 )GetU16LE( start_triggers + 0x08 ) / downscaler_this,
+                                    ( s16 )GetU16LE( start_triggers + 0x0a ) / downscaler_this );
+            Ogre::Vector3 position( ( s16 )GetU16LE( start_triggers + 0x0c ) / downscaler_next,
+                                    ( s16 )GetU16LE( start_triggers + 0x0e ) / downscaler_next,
+                                    ( s16 )GetU16LE( start_triggers + 0x10 ) / downscaler_next );
             float direction = 360.0f * GetU8( start_triggers + 0x14 ) / 255.0f;
 
             export_script->Log( "    <entity_trigger name=\"Gateway" + IntToString( i ) + "\" point1=\"" + Ogre::StringConverter::toString( point1 ) + "\" point2=\"" + Ogre::StringConverter::toString( point2 ) + "\" enabled=\"true\" />\n" );
-            export_script->Log( "    <entity_point name=\"Spawn_"+ field.name + "\" point=\"" + Ogre::StringConverter::toString( position ) + "\" rotation=\"" + FloatToString( direction ) + "\" />\n" );
+            export_script->Log( "    <entity_point name=\"Spawn_"+ field.name + "\" position=\"" + Ogre::StringConverter::toString( position ) + "\" rotation=\"" + FloatToString( direction ) + "\" />\n" );
             export_script->Log( "    <!-- map \"" + MapIdToString( map_id ) + "\" -->\n" );
         }
 

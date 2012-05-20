@@ -40,6 +40,9 @@ UiContainer.MainMenu = {
                 end
                 menu_cursor:set_default_animation( "Position" .. self.position )
             end
+        else
+            -- here must be check if game is loaded and then open main menu
+            --script:request_end_sync( "UiContainer.MainMenu", "show", 0 )
         end
 
         return 0

@@ -3,15 +3,15 @@ script_0:
 0358 (end 0358): [UNREVERSED] BTLMD(20, 00);
 035b (end 035b): music:execute_akao( 10, pointer_to_field_AKAO_0 ); -- play field music
 035d (end 035d): field:map_name(2);
-035f (end 035f): return;
-0360 (end 0360): temp6_00 = cl:get_triangle();
+035f (end 035f): return
+0360 (end 0360): temp6_00 = cl:get_move_triangle_id();
 0364 (end 0364): jumpto( 0360 );
 
 cl
 script_0:
 0367 (end 0367): -- assosiate entity with model (CHAR) argument doesn't matter
 0369 (end 0369): set_entity_to_character( "cl", 0 );
-036b (end 036b): return;
+036b (end 036b): return
 036c (end 036c): jumpto( 036c );
 
 av_b
@@ -23,7 +23,7 @@ script_0:
 0386 (end 038c): av_b:set_talkable( false );
 0388 (end 038c): av_b:set_solid( false )
 038a (end 038c): av_b:set_visible( false )
-038c (end 038c): return;
+038c (end 038c): return
 038d (end 038d): if ( game:variable_get( "progress_game" ) < 8 ) then continue else jumpto(03c5);
 0395 (end 03c5): av_b:set_move_speed( 3.75 )
 0399 (end 03c5): av_b:move_to_position( 28.4844, 243.898 )
@@ -57,7 +57,7 @@ script_0:
 03e9 (end 03ef): av_c:set_talkable( false );
 03eb (end 03ef): av_c:set_solid( false )
 03ed (end 03ef): av_c:set_visible( false )
-03ef (end 03ef): return;
+03ef (end 03ef): return
 03f0 (end 03f0): if ( game:variable_get( "progress_game" ) < 8 ) then continue else jumpto(040d);
 03f8 (end 040d): script:wait( 8.5 )
 03fb (end 040d): av_c:move_to_position( 26.4141, 252.445 )
@@ -82,7 +82,7 @@ script_0:
 0431 (end 0437): av_w:set_talkable( false );
 0433 (end 0437): av_w:set_solid( false )
 0435 (end 0437): av_w:set_visible( false )
-0437 (end 0437): return;
+0437 (end 0437): return
 0438 (end 0438): if ( game:variable_get( "progress_game" ) < 8 ) then continue else jumpto(045b);
 0440 (end 045b): script:wait( 4.26667 )
 0443 (end 045b): av_w:move_to_position( 33.6875, 250.664 )
@@ -100,7 +100,7 @@ light0
 script_0:
 045e (end 045e): temp5_1c = 0;
 0462 (end 0462): temp5_1f = 255;
-0466 (end 0466): return;
+0466 (end 0466): return
 0467 (end 0467): [UNREVERSED] STPLS( 0d, 20, 00, 0f );
 046c (end 046c): if ( temp5_1c == 0 ) then continue else jumpto(0484);
 0472 (end 0484): if ( temp5_1f > 250 ) then continue else jumpto(047d);
@@ -123,7 +123,7 @@ light1
 script_0:
 04b1 (end 04b1): temp5_1d = 0;
 04b5 (end 04b5): temp5_20 = 255;
-04b9 (end 04b9): return;
+04b9 (end 04b9): return
 04ba (end 04ba): [UNREVERSED] STPAL( 00, 0e, 22, 1f );
 04bf (end 04bf): script:wait( 0.133333 )
 04c2 (end 04c2): if ( temp5_1d == 0 ) then continue else jumpto(04da);
@@ -148,7 +148,7 @@ script_0:
 0507 (end 0507): field:background_clear( "2" ); -- turns off all layer of background animation with given id
 050a (end 050a): field:background_on( "2", 0 ); -- turns on layer of background animation with given id
 050e (end 050e): temp5_21 = 255;
-0512 (end 0512): return;
+0512 (end 0512): return
 0513 (end 0513): [UNREVERSED] STPLS( 0d, 24, 10, 1f );
 0518 (end 0518): temp5_21 = 255;
 051c (end 051c): if ( temp5_21 > 252 ) then continue else jumpto(0539);
@@ -176,20 +176,20 @@ script_0:
 0567 (end 0567): field:background_off( "1", 0 ); -- turns off layer of background animation with given id
 056b (end 056b): temp5_18 = 0;
 056f (end 056f): temp5_1b = 255;
-0573 (end 0573): return;
+0573 (end 0573): return
 0574 (end 0574): [UNREVERSED] STPAL( 00, 0b, 00, ff );
 0579 (end 0579): temp5_1b = temp5_1b + 1;
 057d (end 057d): if ( temp5_1b > 2 ) then continue else jumpto(0587);
 0583 (end 0587): temp5_1b = 0;
-0587 (end 0587): script:request_end_wait( "zizizi", "script_1", 2 );
+0587 (end 0587): script:request_end_sync( "zizizi", "script_1", 2 )
 058a (end 058a): field:background_on( "1", temp5_1b ); -- turns on layer of background animation with given id
-058e (end 058e): script:request_end_wait( "light", "script_1", 2 );
+058e (end 058e): script:request_end_sync( "light", "script_1", 2 )
 0591 (end 0591): [UNREVERSED] LDPAL( 00, 00, 0b, ff );
 0596 (end 0596): script:wait( 0.0333333 )
-0599 (end 0599): script:request_end_wait( "light", "script_1", 2 );
+0599 (end 0599): script:request_end_sync( "light", "script_1", 2 )
 059c (end 059c): [UNREVERSED] LDPAL( 00, 00, 0b, ff );
 05a1 (end 05a1): script:wait( 0.0333333 )
-05a4 (end 05a4): script:request_end_wait( "light", "script_1", 2 );
+05a4 (end 05a4): script:request_end_sync( "light", "script_1", 2 )
 05a7 (end 05a7): field:background_off( "1", temp5_1b ); -- turns off layer of background animation with given id
 05ab (end 05ab): [UNREVERSED] LDPAL( 00, 00, 0b, ff );
 05b0 (end 05b0): script:wait( 0.0333333 )
@@ -197,8 +197,8 @@ script_0:
 
 light
 script_0:
-05b5 (end 05b5): return;
-05b6 (end 05b6): return;
+05b5 (end 05b5): return
+05b6 (end 05b6): return
 
 script_1:
 05b7 (end 05b7): temp5_18 = 66;
@@ -216,12 +216,12 @@ script_1:
 05f7 (end 0601): [UNREVERSED] LDPAL( 00, 10, 0b, ff );
 05fc (end 0601): script:wait( 0.0666667 )
 05ff (end 0601): jumpto( 05de );
-0601 (end 0601): return;
+0601 (end 0601): return
 
 zizizi
 script_0:
-0602 (end 0602): return;
-0603 (end 0603): return;
+0602 (end 0602): return
+0603 (end 0603): return
 
 script_1:
 0604 (end 0604): temp5_19 = 0;
@@ -240,5 +240,5 @@ script_1:
 0638 (end 0640): script:wait( 0.0333333 )
 063b (end 0640): temp5_19 = temp5_19 + 1;
 063e (end 0640): jumpto( 0619 );
-0640 (end 0640): return;
+0640 (end 0640): return
 

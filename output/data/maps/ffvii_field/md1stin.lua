@@ -4,7 +4,7 @@ progress_game = 0;
 
 
 
-EntityContainer[ "Dir" ] = {
+EntityContainer[ "Director" ] = {
     on_start = function( self )
         --03a4 (end 03a4): field:screen_set_scroll_to_coords_instant( 0, 40 );
         if Savemap.progress_game == 0 then
@@ -73,6 +73,10 @@ EntityContainer[ "Dir" ] = {
         entity_manager:set_player_entity( "Cloud" )
 
         while true do
+            if Savemap.progress_game > 1 then
+                break
+            end
+
             if EntityContainer[ "Cloud" ].cloud ~= nil then
                 local triangle_id = EntityContainer[ "Cloud" ].cloud:get_move_triangle_id()
 
@@ -107,7 +111,7 @@ EntityContainer[ "Cloud" ] = {
             --04fa (end 0512): field:pc_lock(true);
             --04fc (end 0512): field:menu_lock(true);
             self.cloud:set_position( 28.5547, 214.312, 2.42188 )
-            self.cloud:set_direction( 180 );
+            self.cloud:set_direction( 180 )
             --050c (end 0512): cl:set_talkable( false );
             self.cloud:set_solid( false )
             self.cloud:set_visible( false )
@@ -139,6 +143,9 @@ EntityContainer[ "Barret" ] = {
             self.barret:set_position( 30.6328, 214.758, 2.52344 )
         end
 
+        self.barret:set_solid( false )
+        self.barret:set_visible( false )
+
         return 0
     end,
 
@@ -166,6 +173,8 @@ EntityContainer[ "Barret" ] = {
         self.barret:move_sync()
         self.barret:move_to_position( 27.9531, 229.375 )
         self.barret:move_sync()
+        self.barret:set_solid( false )
+        self.barret:set_visible( false )
 
         return 0
     end,
@@ -208,8 +217,8 @@ EntityContainer[ "Hei0" ] = {
         self.hei0 = entity_manager:get_entity( "Hei0" )
         self.hei0:set_position( 28.3906, 228.781, 2.86719 )
         --05b4 (end 05b4): hei0:set_talkable( false );
-        self.hei0:set_solid( false );
-        self.hei0:set_visible( false );
+        self.hei0:set_solid( false )
+        self.hei0:set_visible( false )
 
         return 0
     end,
@@ -240,8 +249,8 @@ EntityContainer[ "Hei1" ] = {
         self.hei1 = entity_manager:get_entity( "Hei1" )
         self.hei1:set_position( 28.3906, 228.781, 2.86719 )
         --05b4 (end 05b4): hei0:set_talkable( false );
-        self.hei1:set_solid( false );
-        self.hei1:set_visible( false );
+        self.hei1:set_solid( false )
+        self.hei1:set_visible( false )
 
         return 0
     end,
@@ -404,7 +413,7 @@ EntityContainer[ "Gu0" ] = {
         if Savemap.progress_game >= 1 then
             self.gu0:set_position( 29.4297, 216.578, 2.42188 )
             self.gu0:set_direction( 191.25 )
-            self.gu0:set_default_animation( "Dead1" );
+            self.gu0:set_default_animation( "Dead1" )
             self.gu0:play_animation( "Dead1" )
         end
         self.gu0:set_solid( true )
@@ -453,7 +462,7 @@ EntityContainer[ "Gu0" ] = {
         self.gu0:play_animation_stop( "Kicked" )
         self.gu0:animation_sync()
         script:request_end_sync( "EntityContainer.Gu1", "activate", 6 )
-        --0785 (end 0785): gu0:set_talkable( false );
+        --0785 (end 0785): gu0:set_talkable( false )
         self.gu0:set_solid( false )
         self.gu0:set_visible( false )
 
@@ -475,7 +484,7 @@ EntityContainer[ "Gu1" ] = {
         if Savemap.progress_game >= 1 then
             self.gu1:set_position( 30.625, 227.812, 2.42969 )
             self.gu1:set_direction( 56.25 )
-            self.gu1:set_default_animation( "Dead2" );
+            self.gu1:set_default_animation( "Dead2" )
             self.gu1:play_animation( "Dead2" )
         end
         self.gu1:set_solid( true )
@@ -521,7 +530,7 @@ EntityContainer[ "Gu1" ] = {
         self.gu1:play_animation_stop( "Throwed" )
         self.gu1:animation_sync()
         script:request( "EntityContainer.GuAdd", "activate", 6 )
-        --081d (end 081d): gu1:set_talkable( false );
+        --081d (end 081d): gu1:set_talkable( false )
         self.gu1:set_solid( false )
         self.gu1:set_visible( false )
 
@@ -534,7 +543,7 @@ EntityContainer[ "Gu1" ] = {
         self.gu1:play_animation( "Dead1" )
         self.gu1:set_position( 29.4297, 216.578, 2.42188 )
         self.gu1:set_direction( 191.25 )
-        --0835 (end 0835): gu1:set_talkable( true );
+        --0835 (end 0835): gu1:set_talkable( true )
         self.gu1:set_solid( true )
         self.gu1:set_visible( true )
 
@@ -555,7 +564,7 @@ EntityContainer[ "GuAdd" ] = {
         self.gu_add:set_direction( 56.25 )
         self.gu_add:set_default_animation( "Dead2" )
         self.gu_add:play_animation( "Dead2" )
-        --084f (end 084f): guadd:set_talkable( false );
+        --084f (end 084f): guadd:set_talkable( false )
         self.gu_add:set_solid( false )
         self.gu_add:set_visible( false )
 
@@ -588,7 +597,7 @@ EntityContainer[ "GuAdd" ] = {
     --[[ We activate this entity after deactivation of Gu1.
     Don't know why we need to do this, but FFVII handle it this way. ]]
     activate = function( self )
-        --08a5 (end 08a5): guadd:set_talkable( true );
+        --08a5 (end 08a5): guadd:set_talkable( true )
         self.gu_add:set_solid( true )
         self.gu_add:set_visible( true )
 

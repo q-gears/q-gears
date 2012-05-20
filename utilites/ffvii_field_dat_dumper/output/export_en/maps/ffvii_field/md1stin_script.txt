@@ -12,11 +12,11 @@ script_0:
 03e1 (end 03e3): music:execute_akao( 10, pointer_to_field_AKAO_0 ); -- play field music
 03e3 (end 03e3): [UNREVERSED] FMUSC(00);
 03e5 (end 03e5): field:map_name(0);
-03e7 (end 03e7): return;
+03e7 (end 03e7): return
 03e8 (end 03e8): if ( game:variable_get( "progress_game" ) == 0 ) then continue else jumpto(04bd);
 03f0 (end 04bd): field:movie_set( 53 );
 03f2 (end 04bd): music:execute_akao( c8, 00007000, 00000000, 00000000, 00000000, 00000000, 00000301 );
-0401 (end 04bd): script:request( "view", "script_3", 6 );
+0401 (end 04bd): script:request( "view", "script_3", 6 )
 0404 (end 04bd): field:play_movie();
 0405 (end 04bd): music:execute_akao( c8, 00007fff, 00000000, 00000000, 00000000, 00000000, 00002081 );
 0414 (end 04bd): game:variable_set("menu_appear", 763);
@@ -32,23 +32,23 @@ script_0:
 043b (end 04bd): game:variable_set("battle_love_barret", 100);
 043f (end 04bd): music:execute_akao( 20, 00000040, 00000035 ); -- play sound
 0444 (end 04bd): script:wait( 1 )
-0447 (end 04bd): script:request( "av_m", "script_3", 2 );
+0447 (end 04bd): script:request( "av_m", "script_3", 2 )
 044a (end 04bd): script:wait( 1.1 )
-044d (end 04bd): script:request( "gu1", "script_3", 2 );
+044d (end 04bd): script:request( "gu1", "script_3", 2 )
 0450 (end 04bd): script:wait( 1 )
-0453 (end 04bd): script:request( "gu0", "script_3", 2 );
+0453 (end 04bd): script:request( "gu0", "script_3", 2 )
 0456 (end 04bd): script:wait( 2 )
 0459 (end 04bd): music:execute_akao( 20, 00000040, 00000039 ); -- play sound
-045e (end 04bd): script:request( "av_l", "script_3", 2 );
+045e (end 04bd): script:request( "av_l", "script_3", 2 )
 0461 (end 04bd): script:wait( 0.333333 )
 0464 (end 04bd): script:wait( 2 )
-0467 (end 04bd): script:request( "av_s", "script_3", 2 );
+0467 (end 04bd): script:request( "av_s", "script_3", 2 )
 046a (end 04bd): script:wait( 2.33333 )
-046d (end 04bd): script:request( "ba", "script_3", 2 );
+046d (end 04bd): script:request( "ba", "script_3", 2 )
 0470 (end 04bd): script:wait( 2.66667 )
 0473 (end 04bd): field:screen_set_scroll_to_coords_smooth( 65516, 130, 0.4 );
 047c (end 04bd): script:wait( 0.466667 )
-047f (end 04bd): script:request( "cl", "script_3", 2 );
+047f (end 04bd): script:request( "cl", "script_3", 2 )
 0482 (end 04bd): script:wait( 0.0666667 )
 0485 (end 04bd): music:execute_akao( 20, 00000040, 00000037 ); -- play sound
 048a (end 04bd): script:wait( 0.733333 )
@@ -58,20 +58,20 @@ script_0:
 049e (end 04bd): script:wait( 1.93333 )
 04a1 (end 04bd): -- set window parameters (id = 3, x = 40, y = 20, width = 133, height = 41);
 04ab (end 04bd): message:show_text_wait(3, 30, x, y);
-04ae (end 04bd): script:request( "ba", "script_4", 2 );
+04ae (end 04bd): script:request( "ba", "script_4", 2 )
 04b1 (end 04bd): script:wait( 0.666667 )
 04b4 (end 04bd): game:variable_set("progress_game", 1);
 04b9 (end 04bd): field:pc_lock(false);
 04bb (end 04bd): field:menu_lock(false);
 04bd (end 04bd): field:set_player_entity( cl );
-04bf (end 04bf): temp6_04 = cl:get_triangle();
+04bf (end 04bf): temp6_04 = cl:get_move_triangle_id();
 04c3 (end 04c3): if ( temp6_04 == temp6_09 ) then continue else jumpto(04ea);
 04cb (end 04ea): if ( game:variable_get( "progress_game" ) == 1 ) then continue else jumpto(04ea);
 04d3 (end 04ea): game:variable_set("progress_game", 6);
 04d8 (end 04ea): field:pc_lock(true);
 04da (end 04ea): field:menu_lock(true);
-04dc (end 04ea): script:request( "hei0", "script_3", 2 );
-04df (end 04ea): script:request_end_wait( "hei1", "script_3", 2 );
+04dc (end 04ea): script:request( "hei0", "script_3", 2 )
+04df (end 04ea): script:request_end_sync( "hei1", "script_3", 2 )
 04e2 (end 04ea): field:battle_run( 300 );
 04e6 (end 04ea): field:pc_lock(false);
 04e8 (end 04ea): field:menu_lock(false);
@@ -81,7 +81,7 @@ cl
 script_0:
 04ed (end 04ed): -- assosiate entity with model (CHAR) argument doesn't matter
 04ef (end 04ef): set_entity_to_character( "cl", 0 );
-04f1 (end 04f1): return;
+04f1 (end 04f1): return
 04f2 (end 04f2): if ( game:variable_get( "progress_game" ) == 0 ) then continue else jumpto(0512);
 04fa (end 0512): field:pc_lock(true);
 04fc (end 0512): field:menu_lock(true);
@@ -98,7 +98,7 @@ script_3:
 0519 (end 0519): cl:set_visible( true )
 051b (end 051b): cl:play_animation( "3" ) -- speed=1
                  cl:animation_sync()
-051e (end 051e): return;
+051e (end 051e): return
 
 ba
 script_0:
@@ -106,7 +106,7 @@ script_0:
 0521 (end 0521): set_entity_to_character( "ba", 1 );
 0523 (end 0523): if ( game:variable_get( "progress_game" ) <= 1 ) then continue else jumpto(0536);
 052b (end 0536): ba:set_position( 30.6328, 214.758, 2.52344 ) -- triangle_id=30
-0536 (end 0536): return;
+0536 (end 0536): return
 0537 (end 0537): jumpto( 0537 );
 
 script_3:
@@ -122,18 +122,18 @@ script_3:
 0552 (end 0552): script:wait( 1.33333 )
 0555 (end 0555): ba:play_animation_stop( "3", 1.3, 1.6 ) -- speed=1
                  ba:animation_sync()
-055a (end 055a): return;
+055a (end 055a): return
 
 script_4:
 055b (end 055b): ba:move_to_position( 29.9688, 228.867 )
                  ba:move_sync()
 0561 (end 0561): ba:move_to_position( 27.9531, 229.375 )
                  ba:move_sync()
-0567 (end 0567): return;
+0567 (end 0567): return
 
 view
 script_0:
-0568 (end 0568): return;
+0568 (end 0568): return
 0569 (end 0569): jumpto( 0569 );
 
 script_3:
@@ -149,7 +149,7 @@ script_3:
 0593 (end 05a4): music:execute_akao( c9, 0000003c, 00007fff, 00000000, 00000000, 00000000, 00000310 );
 05a2 (end 05a4): jumpto( 05a6 );
 05a4 (end 05a6): jumpto( 0584 );
-05a6 (end 05a6): return;
+05a6 (end 05a6): return
 
 hei0
 script_0:
@@ -158,7 +158,7 @@ script_0:
 05b4 (end 05b4): hei0:set_talkable( false );
 05b6 (end 05b6): hei0:set_solid( false )
 05b8 (end 05b8): hei0:set_visible( false )
-05ba (end 05ba): return;
+05ba (end 05ba): return
 05bb (end 05bb): jumpto( 05bb );
 
 script_3:
@@ -171,7 +171,7 @@ script_3:
 05d0 (end 05d0): hei0:set_talkable( false );
 05d2 (end 05d2): hei0:set_solid( false )
 05d4 (end 05d4): hei0:set_visible( false )
-05d6 (end 05d6): return;
+05d6 (end 05d6): return
 
 hei1
 script_0:
@@ -180,7 +180,7 @@ script_0:
 05e4 (end 05e4): hei1:set_talkable( false );
 05e6 (end 05e6): hei1:set_solid( false )
 05e8 (end 05e8): hei1:set_visible( false )
-05ea (end 05ea): return;
+05ea (end 05ea): return
 05eb (end 05eb): jumpto( 05eb );
 
 script_3:
@@ -193,7 +193,7 @@ script_3:
 0600 (end 0600): hei1:set_talkable( false );
 0602 (end 0602): hei1:set_solid( false )
 0604 (end 0604): hei1:set_visible( false )
-0606 (end 0606): return;
+0606 (end 0606): return
 
 av_m
 script_0:
@@ -203,7 +203,7 @@ script_0:
 0617 (end 0617): av_m:set_talkable( false );
 0619 (end 0619): av_m:set_solid( false )
 061b (end 061b): av_m:set_visible( false )
-061d (end 061d): return;
+061d (end 061d): return
 061e (end 061e): jumpto( 061e );
 
 script_3:
@@ -225,7 +225,7 @@ script_3:
 064b (end 064b): av_m:set_talkable( false );
 064d (end 064d): av_m:set_solid( false )
 064f (end 064f): av_m:set_visible( false )
-0651 (end 0651): return;
+0651 (end 0651): return
 
 av_l
 script_0:
@@ -234,7 +234,7 @@ script_0:
 065f (end 065f): av_l:set_talkable( false );
 0661 (end 0661): av_l:set_solid( false )
 0663 (end 0663): av_l:set_visible( false )
-0665 (end 0665): return;
+0665 (end 0665): return
 0666 (end 0666): jumpto( 0666 );
 
 script_3:
@@ -260,7 +260,7 @@ script_3:
 069f (end 069f): av_l:set_talkable( false );
 06a1 (end 06a1): av_l:set_solid( false )
 06a3 (end 06a3): av_l:set_visible( false )
-06a5 (end 06a5): return;
+06a5 (end 06a5): return
 
 av_s
 script_0:
@@ -270,7 +270,7 @@ script_0:
 06b6 (end 06b6): av_s:set_talkable( false );
 06b8 (end 06b8): av_s:set_solid( false )
 06ba (end 06ba): av_s:set_visible( false )
-06bc (end 06bc): return;
+06bc (end 06bc): return
 06bd (end 06bd): jumpto( 06bd );
 
 script_3:
@@ -288,7 +288,7 @@ script_3:
 06e1 (end 06e1): av_s:set_talkable( false );
 06e3 (end 06e3): av_s:set_solid( false )
 06e5 (end 06e5): av_s:set_visible( false )
-06e7 (end 06e7): return;
+06e7 (end 06e7): return
 
 gu0
 script_0:
@@ -300,7 +300,7 @@ script_0:
 070b (end 0711): gu0:set_direction( 191.25 )
 070e (end 0711): gu0:set_default_animation( "3" ) -- speed=1
                  gu0:play_animation( "3" )
-0711 (end 0711): return;
+0711 (end 0711): return
 0712 (end 0712): jumpto( 0712 );
 
 script_1:
@@ -321,7 +321,7 @@ script_1:
 0757 (end 075c): game:item_add(0, 1);
 075c (end 075c): field:pc_lock(false);
 075e (end 075e): field:menu_lock(false);
-0760 (end 0760): return;
+0760 (end 0760): return
 
 script_3:
 0761 (end 0761): gu0:set_solid( false )
@@ -336,11 +336,11 @@ script_3:
 077c (end 077c): gu0:set_direction( 191.25 )
 077f (end 077f): gu0:play_animation_stop( "5" ) -- speed=1
                  gu0:animation_sync()
-0782 (end 0782): script:request_end_wait( "gu1", "script_4", 6 );
+0782 (end 0782): script:request_end_sync( "gu1", "script_4", 6 )
 0785 (end 0785): gu0:set_talkable( false );
 0787 (end 0787): gu0:set_solid( false )
 0789 (end 0789): gu0:set_visible( false )
-078b (end 078b): return;
+078b (end 078b): return
 
 gu1
 script_0:
@@ -352,7 +352,7 @@ script_0:
 07a7 (end 07b5): gu1:set_position( 30.625, 227.812, 2.42969 ) -- triangle_id=3
 07b2 (end 07b5): gu1:set_default_animation( "6" ) -- speed=1
                  gu1:play_animation( "6" )
-07b5 (end 07b5): return;
+07b5 (end 07b5): return
 07b6 (end 07b6): jumpto( 07b6 );
 
 script_1:
@@ -373,7 +373,7 @@ script_1:
 07fb (end 0800): game:item_add(0, 1);
 0800 (end 0800): field:pc_lock(false);
 0802 (end 0802): field:menu_lock(false);
-0804 (end 0804): return;
+0804 (end 0804): return
 
 script_3:
 0805 (end 0805): gu1:set_solid( false )
@@ -385,11 +385,11 @@ script_3:
 0814 (end 0814): gu1:set_direction( 56.25 )
 0817 (end 0817): gu1:play_animation_stop( "7" ) -- speed=1
                  gu1:animation_sync()
-081a (end 081a): script:request( "guadd", "script_3", 6 );
+081a (end 081a): script:request( "guadd", "script_3", 6 )
 081d (end 081d): gu1:set_talkable( false );
 081f (end 081f): gu1:set_solid( false )
 0821 (end 0821): gu1:set_visible( false )
-0823 (end 0823): return;
+0823 (end 0823): return
 
 script_4:
 0824 (end 0824): gu1:set_default_animation( "3" ) -- speed=1
@@ -399,7 +399,7 @@ script_4:
 0835 (end 0835): gu1:set_talkable( true );
 0837 (end 0837): gu1:set_solid( true )
 0839 (end 0839): gu1:set_visible( true )
-083b (end 083b): return;
+083b (end 083b): return
 
 guadd
 script_0:
@@ -411,7 +411,7 @@ script_0:
 084f (end 084f): guadd:set_talkable( false );
 0851 (end 0851): guadd:set_solid( false )
 0853 (end 0853): guadd:set_visible( false )
-0855 (end 0855): return;
+0855 (end 0855): return
 0856 (end 0856): jumpto( 0856 );
 
 script_1:
@@ -432,11 +432,11 @@ script_1:
 089b (end 08a0): game:item_add(0, 1);
 08a0 (end 08a0): field:pc_lock(false);
 08a2 (end 08a2): field:menu_lock(false);
-08a4 (end 08a4): return;
+08a4 (end 08a4): return
 
 script_3:
 08a5 (end 08a5): guadd:set_talkable( true );
 08a7 (end 08a7): guadd:set_solid( true )
 08a9 (end 08a9): guadd:set_visible( true )
-08ab (end 08ab): return;
+08ab (end 08ab): return
 

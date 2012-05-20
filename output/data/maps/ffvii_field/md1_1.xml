@@ -4,11 +4,18 @@
     <background2d file_name="maps/ffvii_field/md1_1_bg.xml" />
     <walkmesh file_name="maps/ffvii_field/md1_1_wm.xml" />
 
+    <entity_script name="Director" />
     <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Barret" file_name="models/ffvii/field/units/barret.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Biggs" file_name="models/ffvii/field/units/biggs.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Jessie" file_name="models/ffvii/field/units/jessie.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Wedge" file_name="models/ffvii/field/units/wedge.mesh" position="0 0 0" direction="0" />
+    <entity_model name="DoorLeft" file_name="models/ffvii/field/units/door1.mesh" position="0 0 0" direction="0" />
+    <entity_model name="DoorRight" file_name="models/ffvii/field/units/door1.mesh" position="0 0 0" direction="0" />
 
-    <entity_trigger name="Gateway0" point1="7.78125 2.22656 10.125" point2="7.25781 3.85156 10.125" enabled="true" />
-    <entity_trigger name="Gateway1" point1="7.96094 13.5 10.1406" point2="10.1406 13.3203 10.1406" enabled="true" />
-    <entity_point name="Spawn_md1stin" point="8.19531 3.125 0.703125" rotation="81.8824" />
-    <entity_point name="Spawn_md1_2" point="9.23438 12.4375 0.484375" rotation="0" />
+    <entity_trigger name="Gateway0" point1="3.89062 1.11328 5.0625" point2="3.62891 1.92578 5.0625" enabled="true" />
+    <entity_trigger name="Gateway1" point1="3.98047 6.75 5.07031" point2="5.07031 6.66016 5.07031" enabled="true" />
+    <entity_point name="Spawn_md1stin" position="4.09766 1.5625 5.0625" rotation="81.8824" />
+    <entity_point name="Spawn_md1_2" position="4.61719 6.21875 0.242188" rotation="0" />
     <entity_script name="Background" />
 </map>

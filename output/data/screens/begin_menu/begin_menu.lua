@@ -25,8 +25,8 @@ UiContainer.BeginMenu = {
 
             if button == "X" and event == "Press" then
                 if self.position == 1 then
+                    load_field_map_request( "ffvii_md1stin", "" )
                     script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
-                    script:request_end_sync( "UiContainer.MainMenu", "show", 0 )
                 else
                     script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
                     script:request_end_sync( "UiContainer.Idol", "show", 0 )

@@ -102,7 +102,8 @@ ScriptManager::InitBinds()
     luabind::module( m_LuaState )
     [
         luabind::class_< EntityPoint >( "EntityPoint" )
-            .def( "get_point", ( void( EntityPoint::* )() ) &EntityPoint::ScriptGetPoint ) // return 3 values internaly
+            .def( "get_position", ( void( EntityPoint::* )() ) &EntityPoint::ScriptGetPosition ) // return 3 values internaly
+            .def( "get_rotation", ( float( EntityPoint::* )() ) &EntityPoint::ScriptGetRotation )
     ];
 
     // game access
@@ -113,6 +114,7 @@ ScriptManager::InitBinds()
             .def( "get_entity_point", ( EntityPoint*( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntityPoint )
             .def( "set_player_entity", ( void( EntityManager::* )( const char* ) ) &EntityManager::ScriptSetPlayerEntity )
             .def( "unset_player_entity", ( void( EntityManager::* )() ) &EntityManager::ScriptUnsetPlayerEntity )
+            .def( "player_lock", ( void( EntityManager::* )( const bool ) ) &EntityManager::ScriptPlayerLock )
     ];
 
     // 2d background access

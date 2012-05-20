@@ -4,7 +4,7 @@
     <background2d file_name="maps/ffvii_field/md1stin_bg.xml" />
     <walkmesh file_name="maps/ffvii_field/md1stin_wm.xml" />
 
-    <entity_script name="Dir" />
+    <entity_script name="Director" />
     <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="0 0 0" direction="0" />
     <entity_model name="Barret" file_name="models/ffvii/field/units/barret.mesh" position="0 0 0" direction="0" />
     <entity_script name="View" />
@@ -18,5 +18,5 @@
     <entity_model name="GuAdd" file_name="models/ffvii/field/units/guard.mesh" position="0 0 0" direction="0" />
 
     <entity_trigger name="Gateway0" point1="28.6016 228.562 2.75781" point2="28.6641 229.438 2.75781" enabled="true" />
-    <entity_point name="Spawn_md1_1" point="29.0547 229.234 0.273438" rotation="67.7647" />
+    <entity_point name="Spawn_md1_1" position="29.0547 229.234 2.56082" rotation="67.7647" />
 </map>

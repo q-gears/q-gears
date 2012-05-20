@@ -15,13 +15,18 @@ public:
 
     const Ogre::String& GetName() const;
 
-    void SetPoint( const Ogre::Vector3& point );
-    const Ogre::Vector3& GetPoint() const;
-    void ScriptGetPoint() const;
+    void SetPosition( const Ogre::Vector3& point );
+    const Ogre::Vector3& GetPosition() const;
+    void ScriptGetPosition() const;
+
+    void SetRotation( const float rotation );
+    float GetRotation() const;
+    float ScriptGetRotation() const;
 
 protected:
     Ogre::String m_Name;
-    Ogre::Vector3 m_Point;
+    Ogre::Vector3 m_Position;
+    float m_Rotation;
 };
 
 

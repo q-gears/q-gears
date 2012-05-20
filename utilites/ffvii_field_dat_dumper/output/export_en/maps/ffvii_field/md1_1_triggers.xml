@@ -1,6 +1,6 @@
-    <entity_trigger name="Gateway0" point1="15.5625 4.45312 20.25" point2="14.5156 7.70312 20.25" enabled="true" />
-    <entity_point name="Spawn_md1_1" point="58.1094 458.469 0.546875" rotation="67.7647" />
+    <entity_trigger name="Gateway0" point1="3.89062 1.11328 5.0625" point2="3.62891 1.92578 5.0625" enabled="true" />
+    <entity_point name="Spawn_md1_1" position="29.0547 229.234 0.273438" rotation="67.7647" />
     <!-- map "ffvii_md1stin" -->
-    <entity_trigger name="Gateway1" point1="15.9219 27 20.2812" point2="20.2812 26.6406 20.2812" enabled="true" />
-    <entity_point name="Spawn_md1_1" point="55.625 477.797 0.90625" rotation="186.353" />
+    <entity_trigger name="Gateway1" point1="3.98047 6.75 5.07031" point2="5.07031 6.66016 5.07031" enabled="true" />
+    <entity_point name="Spawn_md1_1" position="27.8125 238.898 0.453125" rotation="186.353" />
     <!-- map "ffvii_md1_2" -->

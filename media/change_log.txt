@@ -34,8 +34,19 @@ To Do
 * [Background] Implement background auto scroll to pc.
 * [Background] Implement background script scroll.
 * [Background] Implement palette animation.
+* [Export FFVII] Fix eye export (Wedge has only 1 eye).
+* [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 
 
+
+2012-05-21
+----------
+* [Entity] Add player lock and same lua function "player_lock". [Akari]
+
+2012-05-19
+----------
+* [Export FFVII] Add exporting with correct scale (must be set in export.cfg for now). [Akari]
+* [Entity] Spawn point now set rotation as well. [Akari]
 
 2012-05-17
 ----------

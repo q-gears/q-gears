@@ -28,7 +28,7 @@ public:
     Background2D* GetBackground2D();
     void AddEntityModel( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& direction );
     void AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& point1, const Ogre::Vector3& point2, const bool enabled );
-    void AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& point );
+    void AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& position, const float rotation );
     void AddEntityScript( const Ogre::String& name );
 
     Entity* GetEntity( const Ogre::String& name ) const;
@@ -37,6 +37,7 @@ public:
 
     void ScriptSetPlayerEntity( const char* name );
     void ScriptUnsetPlayerEntity();
+    void ScriptPlayerLock( const bool lock );
 
 private:
     // movement
@@ -59,6 +60,7 @@ private:
     std::vector< Entity* >        m_EntityModels;
     Entity*                       m_PlayerEntity;
     Ogre::Vector3                 m_PlayerMove;
+    bool                          m_PlayerLock;
 
     std::vector< EntityTrigger* > m_EntityTriggers;
     std::vector< EntityPoint* >   m_EntityPoints;

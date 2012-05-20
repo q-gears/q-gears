@@ -97,9 +97,9 @@ XmlMapFile::LoadMap()
                 continue;
             }
 
-            Ogre::Vector3 point = GetVector3( node, "point", Ogre::Vector3::ZERO );
-
-            EntityManager::getSingleton().AddEntityPoint( name, point );
+            Ogre::Vector3 position = GetVector3( node, "position" );
+            float rotation = GetFloat( node, "rotation" );
+            EntityManager::getSingleton().AddEntityPoint( name, position, rotation );
         }
         else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "entity_script" )
         {

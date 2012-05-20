@@ -6,7 +6,7 @@
 
     <entity_model name="Player" file_name="models/field/units/zidane.mesh" position="0 0 0" direction="0" />
     <entity_trigger name="Gateway0" point1="27.2266 238.578 5.07031" point2="28.25 238.516 5.07031" enabled="true" />
-    <entity_trigger name="Gateway1" point1="23.7266 252.461 5.09375" point2="23.6797 253.219 5.09375" enabled="false" />
-    <entity_point name="Spawn_md1_1" point="27.8125 238.898 0.453125" rotation="186.353" />
+    <entity_trigger name="Gateway1" point1="23.7266 252.461 5.09375" point2="23.6797 253.219 5.09375" enabled="true" />
+    <entity_point name="Spawn_md1_1" position="27.8125 238.898 0.453125" rotation="186.353" />
     <entity_script name="Background" />
 </map>

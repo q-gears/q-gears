@@ -80,7 +80,8 @@ GetDirectionToPoint( const Ogre::Vector3& current_point, const Ogre::Vector3& di
 EntityManager::EntityManager():
     m_EntityTableName( "EntityContainer" ),
     m_PlayerEntity( NULL ),
-    m_PlayerMove( Ogre::Vector3::ZERO )
+    m_PlayerMove( Ogre::Vector3::ZERO ),
+    m_PlayerLock( false )
 {
     LOG_TRIVIAL( "EntityManager created." );
 
@@ -117,7 +118,7 @@ EntityManager::~EntityManager()
 void
 EntityManager::Input( const Event& event )
 {
-    if( m_PlayerEntity != NULL )
+    if( m_PlayerEntity != NULL && m_PlayerLock == false )
     {
         if( ( event.type == ET_KEY_IMPULSE ) && ( event.param1 == OIS::KC_LEFT ) )
         {
@@ -199,12 +200,12 @@ EntityManager::Update()
             {
                 bool is_move = false;
 
-
                 // try set entity on walkmesh it it's still don't has triangle
                 if( m_EntityModels[ i ]->GetMoveTriangleId() == -1 )
                 {
                     if( SetEntityOnWalkmesh( m_EntityModels[ i ] ) == false )
                     {
+                        LOG_TRIVIAL( "Can't set entity \"" + m_EntityModels[ i ]->GetName() + "\" on walkmesh. Finish move." );
                         m_EntityModels[ i ]->UnsetMove();
                     }
                 }
@@ -215,7 +216,7 @@ EntityManager::Update()
                     float store_speed = m_EntityModels[ i ]->GetMoveSpeed();
 
                     // run check
-                    if( m_PlayerEntity == m_EntityModels[ i ] && InputManager::getSingleton().IsButtonPressed( OIS::KC_X ) == true )
+                    if( m_PlayerLock == false && m_PlayerEntity == m_EntityModels[ i ] && InputManager::getSingleton().IsButtonPressed( OIS::KC_X ) == true )
                     {
                         m_EntityModels[ i ]->SetMoveSpeed( store_speed * 4 );
                     }
@@ -323,6 +324,8 @@ EntityManager::Clear()
     }
     m_EntityModels.clear();
     m_PlayerEntity = NULL;
+    m_PlayerMove = Ogre::Vector3::ZERO;
+    m_PlayerLock = false;
 
     for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
     {
@@ -392,10 +395,11 @@ EntityManager::AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& 
 
 
 void
-EntityManager::AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& point )
+EntityManager::AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& position, const float rotation )
 {
     EntityPoint* entity_point = new EntityPoint( name );
-    entity_point->SetPoint( point );
+    entity_point->SetPosition( position );
+    entity_point->SetRotation( rotation );
     m_EntityPoints.push_back( entity_point );
 }
 
@@ -468,6 +472,18 @@ void
 EntityManager::ScriptUnsetPlayerEntity()
 {
     m_PlayerEntity = NULL;
+}
+
+
+
+void
+EntityManager::ScriptPlayerLock( const bool lock )
+{
+    m_PlayerLock = lock;
+    if( lock == true )
+    {
+        m_PlayerMove = Ogre::Vector3::ZERO;
+    }
 }
 
 

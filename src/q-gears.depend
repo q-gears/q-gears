@@ -24381,7 +24381,7 @@
 	<ogg/ogg.h>
 	<stdio.h>
 
-1337170126 source:m:\q-gears\src\main.cpp
+1337256444 source:m:\q-gears\src\main.cpp
 	<OgreRoot.h>
 	<OIS.h>
 	"Main.h"
@@ -24447,7 +24447,7 @@
 	<OgreRoot.h>
 	<OgreSingleton.h>
 
-1337233756 m:\q-gears\src\core\entitymanager.h
+1337418186 m:\q-gears\src\core\entitymanager.h
 	<OgreSingleton.h>
 	"Background2D.h"
 	"Entity.h"
@@ -25264,7 +25264,7 @@
 	"library/luabind/luabind.hpp"
 	"library/luabind/yield_policy.hpp"
 
-1335182340 m:\q-gears\src\core\scriptmanagerbinds.h
+1337417960 m:\q-gears\src\core\scriptmanagerbinds.h
 	"Console.h"
 	"Logger.h"
 	"Entity.h"
@@ -26121,7 +26121,7 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1320146544 source:k:\q-gears\src\main.cpp
+1337256444 source:k:\q-gears\src\main.cpp
 	<OgreRoot.h>
 	<OIS.h>
 	"Main.h"
@@ -26187,7 +26187,7 @@
 	<OgreRoot.h>
 	<OgreSingleton.h>
 
-1335179116 k:\q-gears\src\core\entitymanager.h
+1337540700 k:\q-gears\src\core\entitymanager.h
 	<OgreSingleton.h>
 	"Background2D.h"
 	"Entity.h"
@@ -26196,7 +26196,7 @@
 	"Event.h"
 	"Walkmesh.h"
 
-1333996838 k:\q-gears\src\core\background2d.h
+1337256428 k:\q-gears\src\core\background2d.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
@@ -26823,7 +26823,7 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1335989242 source:k:\q-gears\src\core\background2d.cpp
+1337256104 source:k:\q-gears\src\core\background2d.cpp
 	"Background2D.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
@@ -26939,7 +26939,7 @@
 1335606908 k:\q-gears\src\core\entitymodel.h
 	"Entity.h"
 
-1331288848 source:k:\q-gears\src\core\gameframelistner.cpp
+1337233824 source:k:\q-gears\src\core\gameframelistner.cpp
 	"GameFrameListner.h"
 	<OgreStringConverter.h>
 	"CameraManager.h"
@@ -26985,7 +26985,7 @@
 	"library/luabind/luabind.hpp"
 	"library/luabind/yield_policy.hpp"
 
-1335182340 k:\q-gears\src\core\scriptmanagerbinds.h
+1337540838 k:\q-gears\src\core\scriptmanagerbinds.h
 	"Console.h"
 	"Logger.h"
 	"Entity.h"
@@ -27015,7 +27015,7 @@
 	"UiFont.h"
 	"Logger.h"
 
-1331285368 source:k:\q-gears\src\core\uimanager.cpp
+1337237000 source:k:\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	<OgreRoot.h>
 	<OgreStringVector.h>
@@ -27068,7 +27068,7 @@
 	"UiWidget.h"
 	"library/tinyxml/tinyxml.h"
 
-1332964232 source:k:\q-gears\src\core\uiwidget.cpp
+1337248260 source:k:\q-gears\src\core\uiwidget.cpp
 	"UiWidget.h"
 	<OgreMath.h>
 	<OgreRoot.h>
@@ -27088,7 +27088,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1335999748 source:k:\q-gears\src\core\xmlbackground2dfile.cpp
+1337403472 source:k:\q-gears\src\core\xmlbackground2dfile.cpp
 	"XmlBackground2DFile.h"
 	"Background2D.h"
 	"Background2DAnimation.h"
@@ -27119,7 +27119,7 @@
 	"Logger.h"
 	"XmlFontFile.h"
 
-1334810990 source:k:\q-gears\src\core\xmlmapfile.cpp
+1337418106 source:k:\q-gears\src\core\xmlmapfile.cpp
 	"XmlMapFile.h"
 	"EntityManager.h"
 	"Logger.h"
@@ -27842,14 +27842,14 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1335614916 source:k:\q-gears\src\core\entity.cpp
+1337544412 source:k:\q-gears\src\core\entity.cpp
 	"Entity.h"
 	<OgreSceneNode.h>
 	"ConfigVar.h"
 	"DebugDraw.h"
 	"Logger.h"
 
-1335615176 source:k:\q-gears\src\core\entitymanager.cpp
+1337546970 source:k:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -27910,7 +27910,7 @@
 	"Entity.h"
 	"ConfigVar.h"
 
-1335178348 m:\q-gears\src\core\entitypoint.h
+1337418018 m:\q-gears\src\core\entitypoint.h
 	<OgreRoot.h>
 
 1335004322 m:\q-gears\src\core\entitytrigger.h
@@ -27928,13 +27928,13 @@
 	"Entity.h"
 	"ConfigVar.h"
 
-1335178348 k:\q-gears\src\core\entitypoint.h
+1337545340 k:\q-gears\src\core\entitypoint.h
 	<OgreRoot.h>
 
 1335004322 k:\q-gears\src\core\entitytrigger.h
 	<OgreRoot.h>
 
-1335180438 source:k:\q-gears\src\core\entitypoint.cpp
+1337545362 source:k:\q-gears\src\core\entitypoint.cpp
 	"EntityPoint.h"
 	"ConfigVar.h"
 	"DebugDraw.h"

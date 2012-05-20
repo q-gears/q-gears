@@ -1,30 +1,30 @@
 dic
 script_0:
 01a8 (end 01a8): game:party_add( 0 );
-01aa (end 01aa): return;
-01ab (end 01ab): return;
+01aa (end 01aa): return
+01ab (end 01ab): return
 
 cloud
 script_0:
 01ad (end 01ad): -- assosiate entity with model (CHAR) argument doesn't matter
 01af (end 01af): set_entity_to_character( "cloud", 0 );
-01b1 (end 01b1): return;
+01b1 (end 01b1): return
 01b2 (end 01b2): cloud:set_position( 0, 0, 0 ) -- triangle_id=1
-01bd (end 01bd): return;
+01bd (end 01bd): return
 
 tifa
 script_0:
 01bf (end 01bf): -- assosiate entity with model (CHAR) argument doesn't matter
 01c1 (end 01c1): set_entity_to_character( "tifa", 2 );
-01c3 (end 01c3): return;
-01c4 (end 01c4): return;
+01c3 (end 01c3): return
+01c4 (end 01c4): return
 
 cid
 script_0:
 01c6 (end 01c6): -- assosiate entity with model (CHAR) argument doesn't matter
 01c8 (end 01c8): set_entity_to_character( "cid", 8 );
-01ca (end 01ca): return;
-01cb (end 01cb): return;
+01ca (end 01ca): return
+01cb (end 01cb): return
 
 yufi
 script_0:
@@ -32,8 +32,8 @@ script_0:
 01cf (end 01cf): yufi:set_position( -0.578125, -1.01562, 0 ) -- triangle_id=100
 01da (end 01da): yufi:set_direction( 135 )
 01dd (end 01dd): yufi:set_solid_range( 1 );
-01e0 (end 01e0): return;
-01e1 (end 01e1): return;
+01e0 (end 01e0): return
+01e1 (end 01e1): return
 
 script_1:
 01e2 (end 01e2): -- set window parameters (id = 1, x = 0, y = 0, width = 138, height = 169);
@@ -76,7 +76,7 @@ script_1:
 028f (end 02a4): jumpto( 02a3 );
 0292 (end 02a4): if ( temp5_00 == 8 ) then continue else jumpto(02a3);
 0299 (end 02a4): field:jump_to_map(116, 0, 0, 0, 0);
-02a3 (end 02a4): return;
+02a3 (end 02a4): return
 02a4 (end 02a4): if ( temp5_00 == 0 ) then continue else jumpto(02b1);
 02ab (end 02b1): jumpto( 01e2 );
 02ae (end 02b1): jumpto( 03b1 );
@@ -106,5 +106,5 @@ script_1:
 03a5 (end 03b1): if ( temp5_00 == 3 ) then continue else jumpto(03b1);
 03ac (end 03b1): field:battle_run( 999 );
 03b0 (end 03b1): game:restore_hp_mp_status_to_all();
-03b1 (end 03b1): return;
+03b1 (end 03b1): return
 

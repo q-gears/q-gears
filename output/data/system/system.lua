@@ -19,7 +19,7 @@ Savemap = {
 
 -- helper function that changes field maps through fadein and fadeout
 load_field_map_request = function( map_name, point_name )
-    if type( map_name ) == "string" and map_name ~= "" and point_name ~= "" then
+    if type( map_name ) == "string" and map_name ~= "" then
         System.MapChanger.map_name = map_name
         System.MapChanger.point_name = point_name
         script:request( "System.MapChanger", "change_map", 0 )
@@ -33,9 +33,13 @@ set_entity_to_character = function( entity_name, character_name )
         if System.MapChanger.point_name ~= "" then
             local point = entity_manager:get_entity_point( System.MapChanger.point_name )
             if point ~= nil then
-                local x, y, z = point:get_point()
+                local x, y, z = point:get_position()
+                local rotation = point:get_rotation()
                 local player = entity_manager:get_entity( entity_name )
                 player:set_position( x, y, z )
+                player:set_direction( rotation )
+                player:set_solid( true )
+                player:set_visible( true )
                 entity_manager:set_player_entity( entity_name )
             end
         end
