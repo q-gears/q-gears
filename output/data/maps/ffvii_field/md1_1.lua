@@ -18,8 +18,7 @@ EntityContainer[ "Director" ] = {
                 local triangle_id = EntityContainer[ "Cloud" ].cloud:get_move_triangle_id()
 
                 if ( Savemap.progress_game < 7 ) and ( triangle_id == 62 ) then
-                    entity_manager:player_lock( true )
-                    --03c4 (end 043e): field:menu_lock(true);
+                    player_lock( true )
                     --03c6 (end 043e): field:screen_set_scroll_to_coords_smooth( 65440, 60, 1.06667 );
 
                     script:request( "EntityContainer.Cloud", "scene_part_1", 6 )
@@ -36,33 +35,28 @@ EntityContainer[ "Director" ] = {
                     script:wait( 0.266667 )
                     script:request_end_sync( "EntityContainer.Barret", "scene_part_8", 6 )
                     script:wait( 0.4 )
-
                     --03f5 (end 043e): music:execute_akao( 20, 00000040, 00000034 ); -- play sound
                     script:wait( 0.266667 )
                     --03fd (end 043e): music:execute_akao( 20, 00000040, 00000020 ); -- play sound
+                    script:request( "EntityContainer.DoorLeft", "open", 6 )
+                    script:request( "EntityContainer.DoorRight", "open", 6 )
+                    script:wait( 0.333333 )
+                    script:request( "EntityContainer.Jessie", "scene_part_10", 6 )
+                    script:wait( 1 )
+                    script:request( "EntityContainer.Biggs", "scene_part_11", 6 )
+                    script:wait( 0.2 )
+                    script:request( "EntityContainer.Wedge", "scene_part_12", 6 )
+                    script:wait( 0.5 )
+                    script:request_end_sync( "EntityContainer.Barret", "scene_part_13", 6 )
+                    --0420 (end 043e): [UNREVERSED] PMJMP(76, 00);
+                    script:request( "EntityContainer.Barret", "scene_part_15", 6 )
+                    script:wait( 1 )
+                    --0429 (end 043e): field:movie_set( 20 );
+                    --042b (end 043e): temp5_15 = 1;
+                    --042f (end 043e): field:play_movie();
+                    --0430 (end 043e): field:jump_to_map(118, 3549, 30574, 60, 180);
 
---[[
-                    0402 (end 043e): script:request( "drL", "script_3", 6 );
-                    0405 (end 043e): script:request( "drR", "script_3", 6 );
-                    0408 (end 043e): script:wait( 0.333333 )
-                    040b (end 043e): script:request( "av_l", "script_4", 6 );
-                    040e (end 043e): script:wait( 1 )
-                    0411 (end 043e): script:request( "av_m", "script_6", 6 );
-                    0414 (end 043e): script:wait( 0.2 )
-                    0417 (end 043e): script:request( "av_s", "script_3", 6 );
-                    041a (end 043e): script:wait( 0.5 )
-                    041d (end 043e): script:request_end_wait( "ba", "script_4", 6 );
-                    0420 (end 043e): [UNREVERSED] PMJMP(76, 00);
-                    0423 (end 043e): script:request( "ba", "script_5", 6 );
-                    0426 (end 043e): script:wait( 1 )
-                    0429 (end 043e): field:movie_set( 20 );
-                    042b (end 043e): temp5_15 = 1;
-                    042f (end 043e): field:play_movie();
-                    0430 (end 043e): field:jump_to_map(118, 3549, 30574, 60, 180);
-]]
-
-                    entity_manager:player_lock( false )
-                    --043c (end 043e): field:menu_lock(false);
+                    player_lock( false )
                 end
             end
 
@@ -79,8 +73,8 @@ EntityContainer[ "Cloud" ] = {
     cloud = nil,
 
     on_start = function( self )
-        self.cloud = entity_manager:get_entity( "Cloud" )
         set_entity_to_character( "Cloud", "Cloud" )
+        self.cloud = entity_manager:get_entity( "Cloud" )
         self.cloud:set_move_speed( 1.875 )
 
         return 0
@@ -130,12 +124,10 @@ EntityContainer[ "Cloud" ] = {
         return 0
     end,
 
-    script_8 = function( self )
---[[
-049f (end 049f): cl:play_animation_stop( "3", 0.733333, 0.966667 ) -- speed=1
-                 cl:animation_sync()
-04a4 (end 04a4): return;
-]]
+    scene_part_14 = function( self )
+        self.cloud:play_animation_stop( "LookAtPeople", 0.733333, 0.966667 )
+        self.cloud:animation_sync()
+
         return 0
     end,
 
@@ -162,8 +154,8 @@ EntityContainer[ "Barret" ] = {
     barret = nil,
 
     on_start = function( self )
-        self.barret = entity_manager:get_entity( "Barret" )
         set_entity_to_character( "Barret", "Barret" )
+        self.barret = entity_manager:get_entity( "Barret" )
 
         if Savemap.progress_game < 7 then
             self.barret:set_position( 8.84375, 4.82812, 5.07031 )
@@ -176,7 +168,6 @@ EntityContainer[ "Barret" ] = {
     end,
 
     scene_part_8 = function( self )
-        --04d8 (end 04d8): ba:set_talkable( true );
         self.barret:set_solid( true )
         self.barret:set_visible( true )
         self.barret:set_move_speed( 1.17187 )
@@ -192,36 +183,32 @@ EntityContainer[ "Barret" ] = {
         return 0
     end,
 
-    script_4 = function( self )
---[[
-0509 (end 0509): ba:set_move_speed( 1.17187 )
-050d (end 050d): script:request( "cl", "script_8", 6 );
-0510 (end 0510): ba:move_to_position( 4.39844, 7.3125 )
-                 ba:move_sync()
-0516 (end 0516): script:wait( 1 )
-0519 (end 0519): ba:turn_to_direction( 16.875, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
-051f (end 051f): script:wait( 0.666667 )
-0522 (end 0522): -- set window parameters (id = 0, x = 30, y = 20, width = 135, height = 41);
-052c (end 052c): message:show_text_wait(0, 41, x, y);
-052f (end 052f): script:wait( 0.266667 )
-0532 (end 0532): [UNREVERSED] MENU(00, 06, 01);
-0536 (end 0536): script:wait( 0.666667 )
-0539 (end 0539): -- set window parameters (id = 0, x = 10, y = 137, width = 254, height = 73);
-0543 (end 0543): message:show_text_wait(0, 42, x, y);
-0546 (end 0546): return;
-]]
+    scene_part_13 = function( self )
+        self.barret:set_move_speed( 1.17187 )
+        script:request( "EntityContainer.Cloud", "scene_part_14", 6 )
+        self.barret:move_to_position( 4.39844, 7.3125 )
+        self.barret:move_sync()
+        script:wait( 1 )
+        self.barret:turn_to_direction( 16.875, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
+        self.barret:turn_sync()
+        script:wait( 0.666667 )
+        --0522 (end 0522): -- set window parameters (id = 0, x = 30, y = 20, width = 135, height = 41);
+        --052c (end 052c): message:show_text_wait(0, 41, x, y);
+        script:wait( 0.266667 )
+        --0532 (end 0532): [UNREVERSED] MENU(00, 06, 01);
+        script:wait( 0.666667 )
+        --0539 (end 0539): -- set window parameters (id = 0, x = 10, y = 137, width = 254, height = 73);
+        --0543 (end 0543): message:show_text_wait(0, 42, x, y);
+
         return 0
     end,
 
-    script_5 = function( self )
---[[
-0547 (end 0547): ba:move_to_position( 5.29297, 13.1875 )
-                 ba:move_sync()
-054d (end 054d): ba:set_talkable( false );
-054f (end 054f): ba:set_solid( false )
-0551 (end 0551): ba:set_visible( false )
-0553 (end 0553): return;
-]]
+    scene_part_15 = function( self )
+        self.barret:move_to_position( 5.29297, 13.1875 )
+        self.barret:move_sync()
+        self.barret:set_solid( false )
+        self.barret:set_visible( false )
+
         return 0
     end,
 }
@@ -238,7 +225,6 @@ EntityContainer[ "Biggs" ] = {
         self.biggs:set_direction( 174.375 )
 
         if Savemap.progress_game >= 7 then
-            --056c (end 0572): av_m:set_talkable( false );
             self.biggs:set_solid( false )
             self.biggs:set_visible( false )
         else
@@ -252,6 +238,7 @@ EntityContainer[ "Biggs" ] = {
     --[[ Turn to Cloud and start talk to him. ]]
     scene_part_2 = function( self )
         self.biggs:turn_to_direction( 39.375, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
+        self.biggs:turn_sync()
         script:wait( 0.0333333 )
         self.biggs:play_animation_stop( "TalkGesture", 0, 0.3 )
         self.biggs:animation_sync()
@@ -293,18 +280,15 @@ EntityContainer[ "Biggs" ] = {
         return 0
     end,
 
-    script_6 = function( self )
---[[
-05e4 (end 05e4): av_m:set_move_speed( 1.17187 )
-05e8 (end 05e8): av_m:move_to_position( 4.57422, 6.82812 )
-                 av_m:move_sync()
-05ee (end 05ee): av_m:move_to_position( 5.29297, 13.1875 )
-                 av_m:move_sync()
-05f4 (end 05f4): av_m:set_talkable( false );
-05f6 (end 05f6): av_m:set_solid( false )
-05f8 (end 05f8): av_m:set_visible( false )
-05fa (end 05fa): return;
-]]
+    scene_part_11 = function( self )
+        self.biggs:set_move_speed( 1.17187 )
+        self.biggs:move_to_position( 4.57422, 6.82812 )
+        self.biggs:move_sync()
+        self.biggs:move_to_position( 5.29297, 13.1875 )
+        self.biggs:move_sync()
+        self.biggs:set_solid( false )
+        self.biggs:set_visible( false )
+
         return 0
     end,
 }
@@ -324,7 +308,6 @@ EntityContainer[ "Jessie" ] = {
         self.jessie:play_animation( "BreakUp" )
 
         if Savemap.progress_game >= 7 then
-            --0616 (end 061c): av_l:set_talkable( false );
             self.jessie:set_solid( false )
             self.jessie:set_visible( false )
         else
@@ -350,18 +333,15 @@ EntityContainer[ "Jessie" ] = {
         return 0
     end,
 
-    script_4 = function( self )
---[[
-0644 (end 0644): av_l:set_move_speed( 1.17187 )
-0648 (end 0648): av_l:play_animation( "5" ) -- speed=1
-                 av_l:animation_sync()
-064b (end 064b): av_l:move_to_position( 5.29297, 13.1875 )
-                 av_l:move_sync()
-0651 (end 0651): av_l:set_talkable( false );
-0653 (end 0653): av_l:set_solid( false )
-0655 (end 0655): av_l:set_visible( false )
-0657 (end 0657): return;
-]]
+    scene_part_10 = function( self )
+        self.jessie:set_move_speed( 1.17187 )
+        self.jessie:play_animation( "BreakUpGetUp" )
+        self.jessie:animation_sync()
+        self.jessie:move_to_position( 5.29297, 13.1875 )
+        self.jessie:move_sync()
+        self.jessie:set_solid( false )
+        self.jessie:set_visible( false )
+
         return 0
     end,
 }
@@ -380,7 +360,6 @@ EntityContainer[ "Wedge" ] = {
         self.wedge:play_animation( "LookAround" )
 
         if Savemap.progress_game >= 7 then
-            --0673 (end 0679): av_s:set_talkable( false );
             self.wedge:set_solid( false )
             self.wedge:set_visible( false )
         else
@@ -391,18 +370,15 @@ EntityContainer[ "Wedge" ] = {
         return 0
     end,
 
-    script_3 = function( self )
---[[
-067d (end 067d): av_s:set_move_speed( 1.17187 )
-0681 (end 0681): av_s:move_to_position( 4.57422, 6.82812 )
-                 av_s:move_sync()
-0687 (end 0687): av_s:move_to_position( 5.29297, 13.1875 )
-                 av_s:move_sync()
-068d (end 068d): av_s:set_talkable( false );
-068f (end 068f): av_s:set_solid( false )
-0691 (end 0691): av_s:set_visible( false )
-0693 (end 0693): return;
-]]
+    scene_part_12 = function( self )
+        self.wedge:set_move_speed( 1.17187 )
+        self.wedge:move_to_position( 4.57422, 6.82812 )
+        self.wedge:move_sync()
+        self.wedge:move_to_position( 5.29297, 13.1875 )
+        self.wedge:move_sync()
+        self.wedge:set_solid( false )
+        self.wedge:set_visible( false )
+
         return 0
     end,
 }
@@ -423,21 +399,16 @@ EntityContainer[ "DoorLeft" ] = {
             self.door:set_visible( true )
         end
 
-        --06ac (end 06b2): drL:set_talkable( false );
         self.door:set_solid( false )
 
         return 0
     end,
 
-    script_3 = function( self )
---[[
-06bb (end 06bb): drL:offset_to_position( -202, 0, 0, Field.LINEAR, 1.66667 );
-06c7 (end 06c7): drL:set_offset_wait();
-06c8 (end 06c8): drL:set_talkable( false );
-06ca (end 06ca): drL:set_solid( false )
-06cc (end 06cc): drL:set_visible( false )
-06ce (end 06ce): return;
-]]
+    open = function( self )
+        self.door:offset_to_position( -0.789062, 0, 0, Entity.LINEAR, 1.66667 )
+        self.door:offset_sync()
+        self.door:set_visible( false )
+
         return 0
     end,
 }
@@ -458,22 +429,16 @@ EntityContainer[ "DoorRight" ] = {
             self.door:set_visible( true )
         end
 
-        --0703 (end 0703): drR:set_talkable( false );
         self.door:set_solid( false )
 
         return 0
     end,
 
-    script_3 = function( self )
---[[
+    open = function( self )
+        self.door:offset_to_position( 0.71875, 0, 0, Entity.LINEAR, 1.66667 )
+        self.door:offset_sync()
+        self.door:set_visible( false )
 
-06f6 (end 06f6): drR:offset_to_position( 184, 0, 0, Field.LINEAR, 1.66667 );
-0702 (end 0702): drR:set_offset_wait();
-0703 (end 0703): drR:set_talkable( false );
-0705 (end 0705): drR:set_solid( false )
-0707 (end 0707): drR:set_visible( false )
-0709 (end 0709): return;
-]]
         return 0
     end,
 }

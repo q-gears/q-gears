@@ -26,7 +26,6 @@ UiContainer.MainMenu = {
 
             if button == "Z" and event == "Press" then
                 script:request_end_sync( "UiContainer.MainMenu", "hide", 0 )
-                script:request_end_sync( "UiContainer.BeginMenu", "show", 0 )
             elseif button == "Down" then
                 self.position = self.position + 1
                 if self.position > self.position_total then
@@ -40,9 +39,10 @@ UiContainer.MainMenu = {
                 end
                 menu_cursor:set_default_animation( "Position" .. self.position )
             end
-        else
-            -- here must be check if game is loaded and then open main menu
-            --script:request_end_sync( "UiContainer.MainMenu", "show", 0 )
+        elseif MenuSettings.available == true then
+            if button == "S" and event == "Press" then
+                script:request_end_sync( "UiContainer.MainMenu", "show", 0 )
+            end
         end
 
         return 0
@@ -51,6 +51,8 @@ UiContainer.MainMenu = {
 
 
     show = function( self )
+        entity_manager:set_paused( true )
+
         ui_manager:get_widget( "MainMenu" ):set_visible( true )
 
         local characters  = ui_manager:get_widget( "MainMenu.Container.Characters" )
@@ -87,6 +89,8 @@ UiContainer.MainMenu = {
         location:animation_sync()
 
         ui_manager:get_widget( "MainMenu" ):set_visible( false )
+
+        entity_manager:set_paused( false )
 
         return 0;
     end,

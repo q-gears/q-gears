@@ -78,6 +78,7 @@ GetDirectionToPoint( const Ogre::Vector3& current_point, const Ogre::Vector3& di
 
 
 EntityManager::EntityManager():
+    m_Paused( false ),
     m_EntityTableName( "EntityContainer" ),
     m_PlayerEntity( NULL ),
     m_PlayerMove( Ogre::Vector3::ZERO ),
@@ -118,6 +119,11 @@ EntityManager::~EntityManager()
 void
 EntityManager::Input( const Event& event )
 {
+    if( m_Paused == true )
+    {
+        return;
+    }
+
     if( m_PlayerEntity != NULL && m_PlayerLock == false )
     {
         if( ( event.type == ET_KEY_IMPULSE ) && ( event.param1 == OIS::KC_LEFT ) )
@@ -146,8 +152,14 @@ EntityManager::Input( const Event& event )
 void
 EntityManager::Update()
 {
-    m_Grid->setVisible( cv_debug_grid.GetB() );
-    m_Axis->setVisible( cv_debug_axis.GetB() );
+    UpdateDebug();
+
+
+
+    if( m_Paused == true )
+    {
+        return;
+    }
 
 
 
@@ -283,22 +295,43 @@ EntityManager::Update()
 
 
 
+    m_Background2D.Update();
+}
+
+
+
+void
+EntityManager::UpdateDebug()
+{
+    m_Grid->setVisible( cv_debug_grid.GetB() );
+    m_Axis->setVisible( cv_debug_axis.GetB() );
+
+
+
+    for( unsigned int i = 0; i < m_EntityModels.size(); ++i )
+    {
+        m_EntityModels[ i ]->UpdateDebug();
+    }
+
+
+
+
     for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
     {
-        m_EntityTriggers[ i ]->Update();
+        m_EntityTriggers[ i ]->UpdateDebug();
     }
 
 
 
     for( unsigned int i = 0; i < m_EntityPoints.size(); ++i )
     {
-        m_EntityPoints[ i ]->Update();
+        m_EntityPoints[ i ]->UpdateDebug();
     }
 
 
 
-    m_Walkmesh.Update();
-    m_Background2D.Update();
+    m_Walkmesh.UpdateDebug();
+    m_Background2D.UpdateDebug();
 }
 
 
@@ -346,6 +379,14 @@ EntityManager::Clear()
     }
 
     m_SceneNode->removeAndDestroyAllChildren();
+}
+
+
+
+void
+EntityManager::ScriptSetPaused( const bool paused )
+{
+    m_Paused = paused;
 }
 
 

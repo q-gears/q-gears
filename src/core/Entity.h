@@ -65,6 +65,7 @@ public:
     virtual              ~Entity();
 
     virtual void         Update();
+    virtual void         UpdateDebug();
 
     const Ogre::String&  GetName() const;
 

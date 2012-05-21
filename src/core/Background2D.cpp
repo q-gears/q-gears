@@ -84,16 +84,6 @@ Background2D::~Background2D()
 void
 Background2D::Update()
 {
-    if( cv_debug_background2d.GetB() == true )
-    {
-        DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
-        DEBUG_DRAW.SetScreenSpace( true );
-        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.0, 0.8, 0.8, 1 ) );
-        DEBUG_DRAW.Text( 150, 34, "Background 2D animation: " + GetCurrentAnimationName() );
-    }
-
-
-
     if( m_AnimationCurrent != "" )
     {
         for( unsigned int i = 0; i < m_Animations.size(); ++i )
@@ -134,6 +124,20 @@ Background2D::Update()
     else if( m_AnimationCurrent == "" && m_AnimationState == Background2DAnimation::DEFAULT && m_AnimationDefault != "" )
     {
         PlayAnimation( m_AnimationDefault, Background2DAnimation::DEFAULT, 0, -1 );
+    }
+}
+
+
+
+void
+Background2D::UpdateDebug()
+{
+    if( cv_debug_background2d.GetB() == true )
+    {
+        DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
+        DEBUG_DRAW.SetScreenSpace( true );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.0, 0.8, 0.8, 1 ) );
+        DEBUG_DRAW.Text( 150, 34, "Background 2D animation: " + GetCurrentAnimationName() );
     }
 }
 

@@ -26,7 +26,7 @@ EntityPoint::~EntityPoint()
 
 
 void
-EntityPoint::Update()
+EntityPoint::UpdateDebug()
 {
     if( cv_debug_point.GetB() == true )
     {

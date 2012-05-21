@@ -1,5 +1,5 @@
 ================================================================================
-Q-Gears v0.23 (5th cool guys chose to fight) | 2012-09-??
+Q-Gears v0.23 (5th cool guys chose to fight) | 2012-12-??
 --------------------------------------------------------------------------------
 
 To Do
@@ -9,7 +9,7 @@ To Do
 
 
 ================================================================================
-Q-Gears v0.22 (4th blow for a win) | 2012-06-??
+Q-Gears v0.22 (4th blow for a win) | 2012-09-??
 --------------------------------------------------------------------------------
 
 To Do
@@ -24,7 +24,7 @@ To Do
 
 
 ================================================================================
-Q-Gears v0.21 (3rd run wild) | 2012-05-??
+Q-Gears v0.21 (3rd run wild) | 2012-06-??
 --------------------------------------------------------------------------------
 
 To Do
@@ -38,6 +38,20 @@ To Do
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 
 
+
+2012-05-22
+----------
+* [Content Field] Cleanup md1stin. [Akari]
+* [Content Field] Add all posible scripts for md1_1. [Akari]
+* [Content UI] Main menu now can be called from within game. it correctly pauses game if is onscreen [Akari]
+* [Content UI] Start menu now correctly starts md1stin. [Akari]
+* [Content Script] Add "player_lock" helper function that disables player input. [Akari]
+* [Content Script] Fix spawning entity in "load_field_map_request" system function. Now it correctly assigns player entity. [Akari]
+* [Camera] Remove camera states (at least for now) and add console variable "camera_free" that enables free camera mode. [Akari]
+* [Entity] Add pause functionality to EntityManager and "set_paused" bind to LUA. [Akari]
+* [Debug] Separate usual update and debug update. When game is on pause debug still must be drawn. [Akari]
+* [Export FFVII] Fix export for offset opcode 0xC3. Make it downscaled like all others position data. [Akari]
+* [Export FFVII] Fix export for turn opcode 0xB4 and 0xB5. Forgot that turns are always sybcronized in FFVII. [Akari]
 
 2012-05-21
 ----------

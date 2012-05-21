@@ -1822,6 +1822,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                     u8 type = GetU8( script + 3 );
                     u8 calc = GetU8( script + 5 );
                     export_script->Log( entity_list[ i ] + ":turn_to_direction( " + ParseGetVariable( GetU8( script + 1 ), GetU8( script + 2 ), false, 256.0f / 360.0f ) + ", " + ( ( type == 0 ) ? "Entity.CLOCKWISE" : ( ( type == 1 ) ? "Entity.ANTICLOCKWISE" : "Entity.CLOSEST" ) ) + ", " + ( ( calc == 1 ) ? "Entity.LINEAR" : "Entity.SMOOTH" ) + ", " + FloatToString( GetU8( script + 4 ) / 30.0f ) + " )\n" );
+                    export_script->Log( entity_list[ i ] + ":turn_sync()\n" );
                     AdvanceScript( 6, script, end );
                 }
                 else if (opcode == 0xB5) // TURN
@@ -1838,6 +1839,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                         FloatToString(GetU8(script + 4) / 30.0f) +
                         " );\n"
                     );
+                    export_script->Log( entity_list[ i ] + ":turn_sync()\n" );
 
                     AdvanceScript(6, script, end);
                 }
@@ -1958,35 +1960,16 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
 
                     AdvanceScript(15, script, end);
                 }
-                else if (opcode == 0xC3) // OFST
+                else if( opcode == 0xC3 ) // OFST
                 {
-                    u8 type = GetU8(script + 3);
-
-                    export_script->Log(
-                        entity_list[i] +
-                        ":offset_to_position( " +
-                        ParseGetVariable(GetU8(script + 1) >> 4, (s16)GetU16LE(script + 4)) +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 1) & 0x0F, (s16)GetU16LE(script + 6)) +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 2) >> 4, (s16)GetU16LE(script + 8)) +
-                        ", " +
-                        ((type == 2) ? "Field.SMOOTH" : "Field.LINEAR") +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 2) & 0x0F, GetU16LE(script + 10), false, 30.0f) +
-                        " );\n"
-                    );
-
-                    AdvanceScript(12, script, end);
+                    u8 type = GetU8( script + 3 );
+                    export_script->Log( entity_list[ i ] + ":offset_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 4 ), false, downscaler ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 6 ), false, downscaler ) + ", " + ParseGetVariable( GetU8( script + 2 ) >> 4, ( s16 )GetU16LE( script + 8 ), false, downscaler ) + ", " + ( ( type == 2 ) ? "Entity.SMOOTH" : "Entity.LINEAR" ) + ", " + ParseGetVariable( GetU8( script + 2 ) & 0x0F, GetU16LE( script + 10 ), false, 30.0f ) + " )\n" );
+                    AdvanceScript( 12, script, end );
                 }
-                else if (opcode == 0xC4) // OFSTW
+                else if( opcode == 0xC4 ) // OFSTW
                 {
-                    export_script->Log(
-                        entity_list[i] +
-                        ":set_offset_wait();\n"
-                    );
-
-                    AdvanceScript(1, script, end);
+                    export_script->Log( entity_list[ i ] + ":offset_sync()\n" );
+                    AdvanceScript( 1, script, end );
                 }
                 else if (opcode == 0xC5) // TALKR
                 {

@@ -11,6 +11,7 @@
 
 
 ConfigVar cv_cam_speed( "camera_speed", "Camera speed", "0.02" );
+ConfigVar cv_cam_free( "camera_free", "Enable or disable free camera", "false" );
 
 
 
@@ -19,7 +20,6 @@ template<>CameraManager* Ogre::Singleton< CameraManager >::ms_Singleton = NULL;
 
 
 CameraManager::CameraManager():
-    m_State( CAMERA_FREE ),
     m_CameraFreeRotate( false )
 {
     LOG_TRIVIAL( "CameraManager started." );
@@ -46,7 +46,7 @@ CameraManager::~CameraManager()
 void
 CameraManager::Input( const Event& event )
 {
-    if( m_State == CAMERA_FREE )
+    if( cv_cam_free.GetB() == true )
     {
         float speed = cv_cam_speed.GetF();
         if( InputManager::getSingleton().IsButtonPressed( OIS::KC_RSHIFT ) || InputManager::getSingleton().IsButtonPressed( OIS::KC_LSHIFT ) )

@@ -110,6 +110,7 @@ ScriptManager::InitBinds()
     luabind::module( m_LuaState )
     [
         luabind::class_< EntityManager >( "EntityManager" )
+            .def( "set_paused", ( void( EntityManager::* )( const bool ) ) &EntityManager::ScriptSetPaused )
             .def( "get_entity", ( Entity*( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntity )
             .def( "get_entity_point", ( EntityPoint*( EntityManager::* )( const char* ) ) &EntityManager::ScriptGetEntityPoint )
             .def( "set_player_entity", ( void( EntityManager::* )( const char* ) ) &EntityManager::ScriptSetPlayerEntity )

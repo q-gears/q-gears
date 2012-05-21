@@ -27,7 +27,7 @@ EntityTrigger::~EntityTrigger()
 
 
 void
-EntityTrigger::Update()
+EntityTrigger::UpdateDebug()
 {
     if( cv_debug_trigger.GetB() == true )
     {

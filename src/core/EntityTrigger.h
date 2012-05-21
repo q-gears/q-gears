@@ -13,7 +13,7 @@ public:
     EntityTrigger( const Ogre::String& name );
     virtual ~EntityTrigger();
 
-    void Update();
+    void UpdateDebug();
 
     const Ogre::String& GetName() const;
 

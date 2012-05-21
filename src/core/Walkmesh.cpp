@@ -24,7 +24,7 @@ Walkmesh::~Walkmesh()
 
 
 void
-Walkmesh::Update()
+Walkmesh::UpdateDebug()
 {
     if( cv_debug_walkmesh.GetB() == true )
     {

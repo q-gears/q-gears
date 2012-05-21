@@ -35,7 +35,7 @@ public:
     Walkmesh();
     virtual ~Walkmesh();
 
-    void Update();
+    void UpdateDebug();
     void Clear();
 
     void AddTriangle( const WalkmeshTriangle& triangle );

@@ -17,6 +17,12 @@ Savemap = {
 
 
 
+MenuSettings = {
+    available = false,
+}
+
+
+
 -- helper function that changes field maps through fadein and fadeout
 load_field_map_request = function( map_name, point_name )
     if type( map_name ) == "string" and map_name ~= "" then
@@ -40,10 +46,18 @@ set_entity_to_character = function( entity_name, character_name )
                 player:set_direction( rotation )
                 player:set_solid( true )
                 player:set_visible( true )
-                entity_manager:set_player_entity( entity_name )
             end
         end
+
+        entity_manager:set_player_entity( entity_name )
     end
+end
+
+
+
+player_lock = function( lock )
+    entity_manager:player_lock( lock )
+    MenuSettings.available = ( lock == false )
 end
 
 
@@ -54,10 +68,12 @@ System[ "MapChanger" ] = {
 
     change_map = function( self )
         if self.map_name ~= "" then
+            player_lock( true ) -- disable menu and pc movement while load map
             script:request_end_sync( "UiContainer.Fade", "fade_out", 0 )
             map( self.map_name )
-            script:request_start_sync( "UiContainer.Fade", "fade_in", 0 )
+            player_lock( false ) -- enable menu and pc movement after load map
             self.map_name = ""
+            script:request_end_sync( "UiContainer.Fade", "fade_in", 0 )
         end
 
         return 0

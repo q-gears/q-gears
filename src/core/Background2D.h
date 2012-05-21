@@ -22,6 +22,7 @@ public:
     virtual ~Background2D();
 
     void Update();
+    void UpdateDebug();
     void OnResize();
 
     void Clear();

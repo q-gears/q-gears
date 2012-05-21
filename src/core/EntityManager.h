@@ -20,9 +20,12 @@ public:
 
     void Input( const Event& event );
     void Update();
+    void UpdateDebug();
     void OnResize();
 
     void Clear();
+
+    void ScriptSetPaused( const bool paused );
 
     Walkmesh* GetWalkmesh();
     Background2D* GetBackground2D();
@@ -52,7 +55,10 @@ private:
     void SetNextTurnStep( Entity* entity );
     void SetNextLinearStep( Entity* entity );
     void SetNextJumpStep( Entity* entity );
+
 private:
+    bool                          m_Paused;
+
     Walkmesh                      m_Walkmesh;
     Background2D                  m_Background2D;
 

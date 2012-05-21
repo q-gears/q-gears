@@ -298,8 +298,8 @@ script_0:
 06b8 (end 06b8): jumpto( 06b8 );
 
 script_3:
-06bb (end 06bb): drL:offset_to_position( -202, 0, 0, Field.LINEAR, 1.66667 );
-06c7 (end 06c7): drL:set_offset_wait();
+06bb (end 06bb): drL:offset_to_position( -0.789062, 0, 0, Entity.LINEAR, 1.66667 )
+06c7 (end 06c7): drL:offset_sync()
 06c8 (end 06c8): drL:set_talkable( false );
 06ca (end 06ca): drL:set_solid( false )
 06cc (end 06cc): drL:set_visible( false )
@@ -321,8 +321,8 @@ script_0:
 06f3 (end 06f3): jumpto( 06f3 );
 
 script_3:
-06f6 (end 06f6): drR:offset_to_position( 184, 0, 0, Field.LINEAR, 1.66667 );
-0702 (end 0702): drR:set_offset_wait();
+06f6 (end 06f6): drR:offset_to_position( 0.71875, 0, 0, Entity.LINEAR, 1.66667 )
+0702 (end 0702): drR:offset_sync()
 0703 (end 0703): drR:set_talkable( false );
 0705 (end 0705): drR:set_solid( false )
 0707 (end 0707): drR:set_visible( false )

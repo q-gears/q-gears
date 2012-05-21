@@ -106,6 +106,29 @@ Entity::~Entity()
 void
 Entity::Update()
 {
+    if( m_MoveEntity != NULL )
+    {
+        m_MovePosition = m_MoveEntity->GetPosition();
+        m_MoveStopDistance = GetSolidRadius() + m_MoveEntity->GetSolidRadius();
+    }
+
+
+
+    if( m_TurnEntity != NULL )
+    {
+        Ogre::Degree angle = GetDirectionToEntity( m_TurnEntity );
+
+        angle = CalculateTurnAngle( m_TurnDirectionStart, angle );
+
+        m_TurnDirectionEnd = angle;
+    }
+}
+
+
+
+void
+Entity::UpdateDebug()
+{
     int debug = cv_debug_entity.GetI();
 
     m_DirectionNode->setVisible( debug > 0 );
@@ -174,25 +197,6 @@ Entity::Update()
                 break;
             }
         }
-    }
-
-
-
-    if( m_MoveEntity != NULL )
-    {
-        m_MovePosition = m_MoveEntity->GetPosition();
-        m_MoveStopDistance = GetSolidRadius() + m_MoveEntity->GetSolidRadius();
-    }
-
-
-
-    if( m_TurnEntity != NULL )
-    {
-        Ogre::Degree angle = GetDirectionToEntity( m_TurnEntity );
-
-        angle = CalculateTurnAngle( m_TurnDirectionStart, angle );
-
-        m_TurnDirectionEnd = angle;
     }
 }
 

@@ -11,7 +11,7 @@ public:
     EntityPoint( const Ogre::String& name );
     virtual ~EntityPoint();
 
-    void Update();
+    void UpdateDebug();
 
     const Ogre::String& GetName() const;
 

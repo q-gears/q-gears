@@ -1,13 +1,13 @@
 EntityContainer = {}
 
-progress_game = 0;
-
 
 
 EntityContainer[ "Director" ] = {
     on_start = function( self )
         --03a4 (end 03a4): field:screen_set_scroll_to_coords_instant( 0, 40 );
         if Savemap.progress_game == 0 then
+            player_lock( true )
+
             --03b2 (end 03d1): fade:black();
             --03bb (end 03d1): field:screen_set_scroll_to_coords_instant( 0, 0 );
             --03c1 (end 03d1): music:execute_akao( f0, 00000000, 00000000, 00000000, 00000000, 00007100, 00008101 );
@@ -66,11 +66,8 @@ EntityContainer[ "Director" ] = {
 
             Savemap.progress_game = 1
 
-            --04b9 (end 04bd): field:pc_lock(false);
-            --04bb (end 04bd): field:menu_lock(false);
+            player_lock( false )
         end
-
-        entity_manager:set_player_entity( "Cloud" )
 
         while true do
             if Savemap.progress_game > 1 then
@@ -82,13 +79,11 @@ EntityContainer[ "Director" ] = {
 
                 if ( Savemap.progress_game == 1 ) and ( triangle_id == 12 ) then
                     Savemap.progress_game = 6
-                    --04d8 (end 04ea): field:pc_lock(true);
-                    --04da (end 04ea): field:menu_lock(true);
+                    player_lock( true )
                     script:request( "EntityContainer.Hei0", "action1", 2 )
                     script:request_end_sync( "EntityContainer.Hei1", "action1", 2 )
                     --04e2 (end 04ea): field:battle_run( 300 );
-                    --04e6 (end 04ea): field:pc_lock(false);
-                    --04e8 (end 04ea): field:menu_lock(false);
+                    player_lock( false )
                 end
             end
 
@@ -112,7 +107,6 @@ EntityContainer[ "Cloud" ] = {
             --04fc (end 0512): field:menu_lock(true);
             self.cloud:set_position( 28.5547, 214.312, 2.42188 )
             self.cloud:set_direction( 180 )
-            --050c (end 0512): cl:set_talkable( false );
             self.cloud:set_solid( false )
             self.cloud:set_visible( false )
         end
@@ -121,7 +115,6 @@ EntityContainer[ "Cloud" ] = {
     end,
 
     action1 = function( self )
-        --0515 (end 0515): cl:set_talkable( true );
         self.cloud:set_solid( true )
         self.cloud:set_visible( true )
         self.cloud:play_animation( "JumpFromTrain" )
@@ -137,7 +130,7 @@ EntityContainer[ "Barret" ] = {
     barret = nil,
 
     on_start = function( self )
-        --0521 (end 0521): field:set_entity_to_character("ba", 1);
+        set_entity_to_character( "Barret", "Barret" );
         self.barret = entity_manager:get_entity( "Barret" )
         if Savemap.progress_game <= 1 then
             self.barret:set_position( 30.6328, 214.758, 2.52344 )
@@ -151,7 +144,6 @@ EntityContainer[ "Barret" ] = {
 
     --[[ Barret run from train and invite Cloud ]]
     action1 = function( self )
-        --053a (end 053a): ba:set_talkable( true );
         self.barret:set_solid( true )
         self.barret:set_visible( true )
         self.barret:set_move_speed( 2.8125 )
@@ -216,7 +208,6 @@ EntityContainer[ "Hei0" ] = {
     on_start = function( self )
         self.hei0 = entity_manager:get_entity( "Hei0" )
         self.hei0:set_position( 28.3906, 228.781, 2.86719 )
-        --05b4 (end 05b4): hei0:set_talkable( false );
         self.hei0:set_solid( false )
         self.hei0:set_visible( false )
 
@@ -231,7 +222,6 @@ EntityContainer[ "Hei0" ] = {
         self.hei0:move_sync()
         self.hei0:move_to_position( 29.1562, 224.625 )
         self.hei0:move_sync()
-        --05d0 (end 05d0): hei0:set_talkable( false );
         self.hei0:set_solid( false )
         self.hei0:set_visible( false )
 
@@ -248,7 +238,6 @@ EntityContainer[ "Hei1" ] = {
     on_start = function( self )
         self.hei1 = entity_manager:get_entity( "Hei1" )
         self.hei1:set_position( 28.3906, 228.781, 2.86719 )
-        --05b4 (end 05b4): hei0:set_talkable( false );
         self.hei1:set_solid( false )
         self.hei1:set_visible( false )
 
@@ -263,7 +252,6 @@ EntityContainer[ "Hei1" ] = {
         self.hei1:move_sync()
         self.hei1:move_to_position( 30.2578, 225.312 )
         self.hei1:move_sync()
-        --0600 (end 0600): hei1:set_talkable( false );
         self.hei1:set_solid( false )
         self.hei1:set_visible( false )
 
@@ -281,7 +269,6 @@ EntityContainer[ "Biggs" ] = {
         self.biggs = entity_manager:get_entity( "Biggs" )
         self.biggs:set_position( 30, 228, 2.45312 )
         self.biggs:set_direction( 270 )
-        --0617 (end 0617): av_m:set_talkable( false )
         self.biggs:set_solid( false )
         self.biggs:set_visible( false )
 
@@ -306,7 +293,6 @@ EntityContainer[ "Biggs" ] = {
         self.biggs:move_sync()
         self.biggs:move_to_position( 27.9531, 229.375 )
         self.biggs:move_sync()
-        --064b (end 064b): av_m:set_talkable( false );
         self.biggs:set_solid( false )
         self.biggs:set_visible( false )
 
@@ -323,7 +309,6 @@ EntityContainer[ "Jessie" ] = {
     on_start = function( self )
         self.jessie = entity_manager:get_entity( "Jessie" )
         self.jessie:set_position( 31.1406, 220.422, 2.50781 )
-        --065f (end 065f): av_l:set_talkable( false );
         self.jessie:set_solid( false )
         self.jessie:set_visible( false )
 
@@ -352,7 +337,6 @@ EntityContainer[ "Jessie" ] = {
         self.jessie:move_sync()
         self.jessie:move_to_position( 27.9531, 229.375 )
         self.jessie:move_sync()
-        --069f (end 069f): av_l:set_talkable( false );
         self.jessie:set_solid( false )
         self.jessie:set_visible( false )
 
@@ -370,7 +354,6 @@ EntityContainer[ "Wedge" ] = {
         self.wedge = entity_manager:get_entity( "Wedge" )
         self.wedge:set_position( 29.6406, 221.227, 2.42188 )
         self.wedge:set_direction( 270 )
-        --06b6 (end 06b6): av_s:set_talkable( false );
         self.wedge:set_solid( false )
         self.wedge:set_visible( false )
 
@@ -391,7 +374,6 @@ EntityContainer[ "Wedge" ] = {
         self.wedge:move_sync()
         self.wedge:move_to_position( 27.9531, 229.375 )
         self.wedge:move_sync()
-        --06e1 (end 06e1): av_s:set_talkable( false );
         self.wedge:set_solid( false )
         self.wedge:set_visible( false )
 
