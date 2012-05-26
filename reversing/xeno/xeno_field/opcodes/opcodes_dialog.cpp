@@ -60,7 +60,7 @@ else
 
 ////////////////////////////////
 // 0xD2_DialogShow
-A0 = w[800af1f0];
+A0 = w[800af1f0]; // current entity id
 A1 = 0;
 func9bb7c;
 ////////////////////////////////
@@ -131,13 +131,13 @@ type = A1;
 
 [800af150] = w(w[800af150] + 20); // increase number of opcodes in current script
 
-if (w[800ad004] != 0 || w[800af1f8] != 0 || w[800c373c] != 0 || w[800ad03c] != ff)
+if( w[800ad004] != 0 || w[800af1f8] != 0 || w[800c373c] != 0 || w[800ad03c] != ff )
 {
     [800af594] = w(1);
     return -1;
 }
 
-if (w[800ad048] == 0 && func89b2c != 0)
+if( w[800ad048] == 0 && func89b2c != 0 )
 {
     [800af594] = w(1);
     return -1;
@@ -179,7 +179,7 @@ dialog_id = V0;
 
 
 func7fd34; // search for not opened window slot
-if (V0 != 0) if not found
+if( V0 != 0 ) if not found
 {
     func7fd74; // search lowest opened window
 

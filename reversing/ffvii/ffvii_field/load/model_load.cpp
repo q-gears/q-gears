@@ -200,7 +200,7 @@ S6 = A3; // 1
 
 number_of_models = hu[block_7 + 2]; // number of models
 
-if (number_of_models != 0)
+if( number_of_models != 0 )
 {
     S0 = 0;
     loopadce4:	; 800ADCE4
@@ -217,7 +217,7 @@ if (number_of_models != 0)
 }
 
 // load globals texture
-if (S6 != 0)
+if( S6 != 0 )
 {
     A0 = w[S5 + 0];
     A1 = w[S5 + 4]
@@ -250,10 +250,10 @@ if (bu[block_7_array + S2 * 8 + 5] != 0) // read is model enabled
     // read additional model
     S1 = b[block_7_array + S2 * 8 + 7];
     A1 = S1 - 1;
-    if (A1 < 9)
+    if( A1 < 9 )
     {
         // read 6 byte
-        if (bu[block_7_array + S2 * 8 + 6] == 0) // if global model not yet loaded
+        if( bu[block_7_array + S2 * 8 + 6] == 0 ) // if global model not yet loaded
         {
             switch (A1)
             {
@@ -333,7 +333,7 @@ if (bu[block_7_array + S2 * 8 + 5] != 0) // read is model enabled
 
             // set flag that we load this model already
             number_of_model = hu[block_7 + 2];
-            if (number_of_model != 0)
+            if( number_of_model != 0 )
             {
                 A3 = 0;
 
@@ -566,7 +566,7 @@ S2 = 1f800000;
 S1 = A3; // bsx file
 
 // load global texture
-if (bu[A2] != 0)
+if( bu[A2] != 0 )
 {
     A0 = w[w[1f800000] + 00];
     A1 = w[w[1f800000] + 04];
@@ -575,10 +575,9 @@ if (bu[A2] != 0)
     load_lzs_file;
 
     Lac3bc:	; 800AC3BC
-    func34b44;
+        func34b44;
 
-    800AC3C4	beq    v0, zero, Lac484 [$800ac484]
-
+        800AC3C4	beq    v0, zero, Lac484 [$800ac484]
     800AC3CC	j      Lac3bc [$800ac3bc]
 }
 
@@ -604,8 +603,7 @@ Lac484:	; 800AC484
 bsx_header = S1 + w[S1 + 4]; // offset to start data in BSX
 S0 = bsx_header + w[bsx_header + 8]; // global offset to texture in BSX
 V0 = w[S0 + 4]; // number of textures
-V0 = V0 & ffffff00;
-if (V0 != 0)
+if( V0 & ffffff00 )
 {
     A0 = bu[S0 + 5];
     V0 = hu[S0 + 6];
@@ -630,9 +628,9 @@ func43dd8; // ????
 
 // add additional bones parts and animations from bsx as well as scale
 S4 = 0;
-S6 = w[bsx_header + 4];
+number_of_model = w[bsx_header + 4];
 A2 = S1 - 80000000;
-if (S6 != 0)
+if( number_of_model != 0 )
 {
     Lac4f8:	; 800AC4F8
         if (bu[block_7 + S4 * 8 + 5] != 0) // if model enabled
@@ -713,7 +711,7 @@ if (S6 != 0)
         }
 
         S4 = S4 + 1;
-        V0 = S4 < S6;
+        V0 = S4 < number_of_model;
     800AC73C	bne    v0, zero, Lac4f8 [$800ac4f8]
 }
 
@@ -723,7 +721,7 @@ if (S6 != 0)
 
 
 
-if (S6 != 0)
+if( number_of_model != 0 )
 {
     A0 = w[SP + 40];
     S4 = 0;
@@ -742,7 +740,7 @@ if (S6 != 0)
         [A0 + S4 * 30 + 2c] = w(w[bsx_header + 10 + S4 * 30 + 2c]);
 
         S4 = S4 + 1;
-        V0 = S4 < S6;
+        V0 = S4 < number_of_model;
     800AC7F8	bne    v0, zero, loopac764 [$800ac764]
 }
 
@@ -750,12 +748,12 @@ if (S6 != 0)
 
 FP = bsx_header;
 S4 = 0;
-if (S6 != 0)
+if( number_of_model != 0 )
 {
     S1 = w[SP + 40];
 
     Lac818:	; 800AC818
-        if (bu[block_7 + S4 * 8 + 5] != 0) // if model is enabled
+        if( bu[block_7 + S4 * 8 + 5] != 0 ) // if model is enabled
         {
             model_id = bu[block_7 + S4 * 8 + 4];
 
@@ -767,10 +765,9 @@ if (S6 != 0)
 
 
 
-
             model_data_struct = w[model_data + 4] + model_id * 24; // new model structure data
             face_id = bu[model_data_struct + 15];
-            if (face_id < 21)
+            if( face_id < 21 )
             {
                 [SP + 30] = h(140);
                 [SP + 32] = h(1e0 + model_id);
@@ -885,7 +882,7 @@ if (S6 != 0)
 
         S4 = S4 + 1;
         S1 = S1 + 30;
-        V0 = S4 < S6;
+        V0 = S4 < number_of_model;
     800ACB54	bne    v0, zero, Lac818 [$800ac818]
 }
 
@@ -1616,13 +1613,13 @@ return draft_offset + hu[parts_data + 16] * 2;
 ////////////////////////////////
 // funcad858
 S1 = A0;
-if (S1 == 0)
+if( S1 == 0 )
 {
     return;
 }
 
 S3 = w[S1];
-if (S3 <= 0)
+if( S3 <= 0 )
 {
     return;
 }
@@ -1632,14 +1629,14 @@ S0 = S1 + 8;
 
 Lad894:	; 800AD894
     V1 = w[S0];
-    if (V1 == 0)
+    if( V1 == 0 )
     {
         A0 = w[S0 + c];
         A1 = S1 + w[S0 + 4];
         A2 = w[S0 + 8];
         func42d98;
     }
-    else if (V1 == 1) // replace image block in global texture
+    else if( V1 == 1 ) // replace image block in global texture
     {
         A0 = w[800dfca0]; // offset ot global tex data
         V1 = w[S0 + c];
@@ -1659,7 +1656,7 @@ Lad894:	; 800AD894
             800AD9A0	bne    a2, t0, Lad97c [$800ad97c]
         }
     }
-    else if (V1 == 2) // replace palette block in global texture
+    else if( V1 == 2 ) // replace palette block in global texture
     {
         A1 = w[800dfca0]; // offset ot global tex data
         A0 = w[S0 + c];
@@ -1677,7 +1674,7 @@ Lad894:	; 800AD894
             [V1 + 1c] = w(w[V0 + 1c]);
         }
     }
-    else if (V1 == 3) // load texture to any place in VRAM
+    else if( V1 == 3 ) // load texture to any place in VRAM
     {
         A0 = S0 + c; // pointer with data 2 bytes vram_x, vram_y, width, height
         A1 = S1 + w[S0 + 4]; // pointer to image data to load

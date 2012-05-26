@@ -53,7 +53,7 @@ Ogre::Entity*
 BsxFile::GetModel( Ogre::Entity* entity, const s8 character_id, const Unit& unit, const DatModelData dat )
 {
     int start_animation = ( dat.global_model_id > 0 ) ? 3 : 0;
-    u32 offset_to_models_description = GetU32LE(0x04);
+    u32 offset_to_models_description = GetU32LE( 0x04 );
     u32 number_of_models_description = GetU32LE( offset_to_models_description + 0x04 );
 
     if( character_id >= number_of_models_description )
@@ -184,7 +184,7 @@ BsxFile::GetModel( Ogre::Entity* entity, const s8 character_id, const Unit& unit
     Ogre::SkeletonSerializer skeleton_serializer;
     skeleton_serializer.exportSkeleton( skeleton.getPointer(), "exported/models/ffvii/field/units/" + unit.name + ".skeleton" );
 
-    if (entity == NULL)
+    if( entity == NULL )
     {
         // Update bounds
         Ogre::AxisAlignedBox aabb( -999, -999, -999, 999, 999, 999 );
@@ -213,10 +213,12 @@ BsxFile::GetModel( Ogre::Entity* entity, const s8 character_id, const Unit& unit
         pass2->setAlphaRejectFunction( Ogre::CMPF_GREATER );
         pass2->setAlphaRejectValue( 0 );
         Ogre::TextureUnitState* tex = pass2->createTextureUnitState();
+        /*
         if( dat.face_id != 0x21 )
         {
-            tex->setTextureScroll( 0.0625, 0 );
+            tex->setTextureScroll( 0.0625 * 2, 0 );
         }
+        */
         tex->setTextureName( "models/ffvii/field/units/" + unit.name + ".png" );
         tex->setNumMipmaps( 0 );
         tex->setTextureFiltering( Ogre::TFO_NONE );
@@ -268,6 +270,7 @@ BsxFile::CreateTexture( const Ogre::String& name, const int face_id, const Vecto
 
     for( int i = 0; i < textures.size(); ++i )
     {
+        // type 0x0 - eye, type 0x1 - mouth, type 0x2 - normal texture.
         if( textures[ i ].type == 0 || textures[ i ].type == 1 )
         {
             TdbFile face_texture( "data/field/field.tdb" );

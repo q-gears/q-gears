@@ -25,7 +25,7 @@ public:
     DatFile(u8* buffer, const u32 offset, const u32 length);
     virtual ~DatFile();
 
-    void GetModelData(const int model_id, DatModelData& data);
+    void GetModelData( const int model_id, DatModelData& data );
 };
 
 

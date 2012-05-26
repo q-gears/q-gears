@@ -17,9 +17,10 @@ To Do
 * [Content FFVII] All FFVII fields maps from 1st mission until reactor blow must be fully playable.
 * [Sound] Implement all sounds that used in FFVII 1st mission until reactor blow.
 * [Content FFVII] Add FFVII fields maps from 1st mission until reactor blow.
-* [Content Xeno] Add all Lahan maps without scripted events and entitys.
-* [Content FFIX] Add all Alexandria maps without scripted events and entitys.
+* [Content Xeno] Add all Lahan maps without scripted events and entitys and transitions between them.
+* [Content FFIX] Add all Alexandria maps and transitions between them without scripted events and entitys.
 * [Entity] Implement mixed walkmesh movement from Xeno and FFIX.
+* [UI Dialog] Implement all dialogs feature from FFVII Xeno and FFIX.
 
 
 
@@ -34,10 +35,14 @@ To Do
 * [Background] Implement background auto scroll to pc.
 * [Background] Implement background script scroll.
 * [Background] Implement palette animation.
-* [Export FFVII] Fix eye export (Wedge has only 1 eye).
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
+* [Entity] Separate auto and pc move speed.
+* [Content UI] Main menu don't play appear animations for first time.
 
 
+2012-05-26
+----------
+* [Export FFVII] Fix eye export (Wedge and Guard has only 1 eye). [Akari]
 
 2012-05-22
 ----------

@@ -71,14 +71,14 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
             vertexes.push_back( point / 1024.0f );
         }
 
-        u8  number_of_quad_t      = GetU8(offset_to_part + 0x04);
-        u8  number_of_triangle_t  = GetU8(offset_to_part + 0x05);
-        u8  number_of_quad_t2     = GetU8(offset_to_part + 0x06);
-        u8  number_of_triangle_t2 = GetU8(offset_to_part + 0x07);
-        u8  number_of_triangle_m  = GetU8(offset_to_part + 0x08);
-        u8  number_of_quad_m      = GetU8(offset_to_part + 0x09);
-        u8  number_of_triangle    = GetU8(offset_to_part + 0x0A);
-        u8  number_of_quads       = GetU8(offset_to_part + 0x0B);
+        u8 number_of_quad_t      = GetU8(offset_to_part + 0x04);
+        u8 number_of_triangle_t  = GetU8(offset_to_part + 0x05);
+        u8 number_of_quad_t2     = GetU8(offset_to_part + 0x06);
+        u8 number_of_triangle_t2 = GetU8(offset_to_part + 0x07);
+        u8 number_of_triangle_m  = GetU8(offset_to_part + 0x08);
+        u8 number_of_quad_m      = GetU8(offset_to_part + 0x09);
+        u8 number_of_triangle    = GetU8(offset_to_part + 0x0A);
+        u8 number_of_quads       = GetU8(offset_to_part + 0x0B);
 
 
 
@@ -90,14 +90,14 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
         // Allocate and prepare vertex data
         sub_mesh->vertexData = new Ogre::VertexData();
         sub_mesh->vertexData->vertexStart = 0;
-        sub_mesh->vertexData->vertexCount = static_cast<size_t>(number_of_quad_t * 6 +
-                                                                number_of_triangle_t * 3 +
-                                                                number_of_quad_t2 * 6 +
-                                                                number_of_triangle_t2 * 3 +
-                                                                number_of_triangle_m * 3 +
-                                                                number_of_quad_m * 6 +
-                                                                number_of_triangle * 3 +
-                                                                number_of_quads * 6);
+        sub_mesh->vertexData->vertexCount = static_cast< size_t >( number_of_quad_t * 6 +
+                                                                   number_of_triangle_t * 3 +
+                                                                   number_of_quad_t2 * 6 +
+                                                                   number_of_triangle_t2 * 3 +
+                                                                   number_of_triangle_m * 3 +
+                                                                   number_of_quad_m * 6 +
+                                                                   number_of_triangle * 3 +
+                                                                   number_of_quads * 6);
         sub_mesh->indexData = new Ogre::IndexData();
         sub_mesh->indexData->indexStart = 0;
         sub_mesh->indexData->indexCount = sub_mesh->vertexData->vertexCount;
@@ -143,20 +143,19 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
 
 
 
-        u32 offset_to_poly           = offset_to_vertexes + GetU16LE(offset_to_part + 0x0E);
-        u32 offset_to_texture_coords = offset_to_vertexes + GetU16LE(offset_to_part + 0x10);
-        offset_to_4              = offset_to_vertexes + GetU16LE(offset_to_part + 0x12);
-        offset_to_5              = offset_to_vertexes + GetU16LE(offset_to_part + 0x14);
-
+        u32 offset_to_poly           = offset_to_vertexes + GetU16LE( offset_to_part + 0x0E );
+        u32 offset_to_texture_coords = offset_to_vertexes + GetU16LE( offset_to_part + 0x10 );
+        offset_to_4                  = offset_to_vertexes + GetU16LE( offset_to_part + 0x12 );
+        offset_to_5                  = offset_to_vertexes + GetU16LE( offset_to_part + 0x14 );
 
         // add textured quad
-        for (u32 j = 0; j < number_of_quad_t; ++j)
+        for( u32 j = 0; j < number_of_quad_t; ++j )
         {
             // set vertexes
-            Ogre::Vector3 a1 = vertexes[GetU8(offset_to_poly + 0x00)];
-            Ogre::Vector3 b1 = vertexes[GetU8(offset_to_poly + 0x01)];
-            Ogre::Vector3 d1 = vertexes[GetU8(offset_to_poly + 0x02)];
-            Ogre::Vector3 c1 = vertexes[GetU8(offset_to_poly + 0x03)];
+            Ogre::Vector3 a1 = vertexes[ GetU8( offset_to_poly + 0x00 ) ];
+            Ogre::Vector3 b1 = vertexes[ GetU8( offset_to_poly + 0x01 ) ];
+            Ogre::Vector3 d1 = vertexes[ GetU8( offset_to_poly + 0x02 ) ];
+            Ogre::Vector3 c1 = vertexes[ GetU8( offset_to_poly + 0x03 ) ];
             *pPos++ = a1.x; *pPos++ = a1.y; *pPos++ = a1.z;
             *pPos++ = b1.x; *pPos++ = b1.y; *pPos++ = b1.z;
             *pPos++ = c1.x; *pPos++ = c1.y; *pPos++ = c1.z;
@@ -165,44 +164,55 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
             *pPos++ = d1.x; *pPos++ = d1.y; *pPos++ = d1.z;
 
             TexForGenBsx texture;
-            AddTexture(texture, textures);
+            AddTexture( texture, textures );
+//LOGGER->Log( "quad_t --------------------\n" );
+//LOGGER->Log( "quad_t offset_to_poly = 0x" + HexToString( offset_to_poly, 8, '0' ) + "\n" );
+//LOGGER->Log( "quad_t offset_to_texture_coords = 0x" + HexToString( offset_to_texture_coords, 8, '0' ) + "\n" );
+//LOGGER->Log( "quad_t texture.start_x=" + Ogre::StringConverter::toString( texture.start_x ) + ", texture.start_y=" + Ogre::StringConverter::toString( texture.start_y ) + "\n" );
 
             Ogre::Vector2 at;
             Ogre::Vector2 bt;
             Ogre::Vector2 ct;
             Ogre::Vector2 dt;
 
-            u8 texture_coords_id = GetU8(offset_to_poly + 0x14);
-            int x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
-            at.x = x / (float)tex_width;
-            int y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
-            at.y = y / (float)tex_height;
+            u8 texture_coords_id = GetU8( offset_to_poly + 0x14 );
+//LOGGER->Log( "quad_t A texture_coords_id=" + Ogre::StringConverter::toString( texture_coords_id ) + "\n" );
+            int x = GetU8( offset_to_texture_coords + texture_coords_id * 0x02 + 0x00 ) + texture.start_x;
+//LOGGER->Log( "quad_t x=" + Ogre::StringConverter::toString( x ) + "\n" );
+            at.x = x / ( float )tex_width;
+            int y = GetU8( offset_to_texture_coords + texture_coords_id * 0x02 + 0x01 ) + texture.start_y;
+//LOGGER->Log( "quad_t y=" + Ogre::StringConverter::toString( y ) + "\n" );
+            at.y = y / ( float )tex_height;
 
-            texture_coords_id = GetU8(offset_to_poly + 0x15);
-            x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
-            bt.x = x / (float)tex_width;
-            y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
-            bt.y = y / (float)tex_height;
+            texture_coords_id = GetU8( offset_to_poly + 0x15 );
+//LOGGER->Log( "quad_t B texture_coords_id=" + Ogre::StringConverter::toString( texture_coords_id ) + "\n" );
+            x = GetU8( offset_to_texture_coords + texture_coords_id * 0x02 + 0x00 ) + texture.start_x;
+//LOGGER->Log( "quad_t x=" + Ogre::StringConverter::toString( x ) + "\n" );
+            bt.x = x / ( float )tex_width;
+            y = GetU8( offset_to_texture_coords + texture_coords_id * 0x02 + 0x01 ) + texture.start_y;
+//LOGGER->Log( "quad_t y=" + Ogre::StringConverter::toString( y ) + "\n" );
+            bt.y = y / ( float )tex_height;
 
             texture_coords_id = GetU8(offset_to_poly + 0x16);
+//LOGGER->Log( "quad_t D texture_coords_id=" + Ogre::StringConverter::toString( texture_coords_id ) + "\n" );
             x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
+//LOGGER->Log( "quad_t x=" + Ogre::StringConverter::toString( x ) + "\n" );
             dt.x = x / (float)tex_width;
             y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
+//LOGGER->Log( "quad_t y=" + Ogre::StringConverter::toString( y ) + "\n" );
             dt.y = y / (float)tex_height;
 
             texture_coords_id = GetU8(offset_to_poly + 0x17);
+//LOGGER->Log( "quad_t C texture_coords_id=" + Ogre::StringConverter::toString( texture_coords_id ) + "\n" );
             x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
+//LOGGER->Log( "quad_t x=" + Ogre::StringConverter::toString( x ) + "\n" );
             ct.x = x / (float)tex_width;
             y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
+//LOGGER->Log( "quad_t y=" + Ogre::StringConverter::toString( y ) + "\n" );
             ct.y = y / (float)tex_height;
+
+//LOGGER->Log( "quad_t at=" + Ogre::StringConverter::toString( at ) + ", bt=" + Ogre::StringConverter::toString( bt ) + ", ct=" + Ogre::StringConverter::toString( ct ) + ",dt=" + Ogre::StringConverter::toString( dt ) + "\n" );
+//LOGGER->Log( "quad_t --------------------\n" );
 
             *tPos++ = at.x; *tPos++ = at.y;
             *tPos++ = bt.x; *tPos++ = bt.y;
@@ -248,7 +258,7 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
             *pPos++ = c1.x; *pPos++ = c1.y; *pPos++ = c1.z;
 
             TexForGenBsx texture;
-            AddTexture(texture, textures);
+            AddTexture( texture, textures );
 
             Ogre::Vector2 at;
             Ogre::Vector2 bt;
@@ -256,26 +266,20 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
 
             u8 texture_coords_id = GetU8(offset_to_poly + 0x10);
             int x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             at.x = x / (float)tex_width;
             int y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             at.y = y / (float)tex_height;
 
             texture_coords_id = GetU8(offset_to_poly + 0x11);
             x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             bt.x = x / (float)tex_width;
             y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             bt.y = y / (float)tex_height;
 
             texture_coords_id = GetU8(offset_to_poly + 0x12);
             x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             ct.x = x / (float)tex_width;
             y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             ct.y = y / (float)tex_height;
 
             *tPos++ = at.x; *tPos++ = at.y;
@@ -316,7 +320,7 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
             *pPos++ = d1.x; *pPos++ = d1.y; *pPos++ = d1.z;
 
             TexForGenBsx texture;
-            AddTexture(texture, textures);
+            AddTexture( texture, textures );
 
             Ogre::Vector2 at;
             Ogre::Vector2 bt;
@@ -325,34 +329,26 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
 
             u8 texture_coords_id = GetU8(offset_to_poly + 0x8);
             int x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             at.x = x / (float)tex_width;
             int y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             at.y = y / (float)tex_height;
 
             texture_coords_id = GetU8(offset_to_poly + 0x9);
             x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             bt.x = x / (float)tex_width;
             y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             bt.y = y / (float)tex_height;
 
             texture_coords_id = GetU8(offset_to_poly + 0xa);
             x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             dt.x = x / (float)tex_width;
             y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             dt.y = y / (float)tex_height;
 
             texture_coords_id = GetU8(offset_to_poly + 0xb);
             x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             ct.x = x / (float)tex_width;
             y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             ct.y = y / (float)tex_height;
 
             *tPos++ = at.x; *tPos++ = at.y;
@@ -399,7 +395,7 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
             *pPos++ = c1.x; *pPos++ = c1.y; *pPos++ = c1.z;
 
             TexForGenBsx texture;
-            AddTexture(texture, textures);
+            AddTexture( texture, textures );
 
             Ogre::Vector2 at;
             Ogre::Vector2 bt;
@@ -407,26 +403,20 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
 
             u8 texture_coords_id = GetU8(offset_to_poly + 0x8);
             int x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             at.x = x / (float)tex_width;
             int y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             at.y = y / (float)tex_height;
 
             texture_coords_id = GetU8(offset_to_poly + 0x9);
             x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             bt.x = x / (float)tex_width;
             y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             bt.y = y / (float)tex_height;
 
             texture_coords_id = GetU8(offset_to_poly + 0xa);
             x = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x00) + texture.start_x;
-            x = (texture.type == 0 && x >= 32) ? x - 32 : x;
             ct.x = x / (float)tex_width;
             y = GetU8(offset_to_texture_coords + texture_coords_id * 0x02 + 0x01) + texture.start_y;
-            y = (texture.type == 1) ? y + 32 : y;
             ct.y = y / (float)tex_height;
 
             *tPos++ = at.x; *tPos++ = at.y;
@@ -644,15 +634,15 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
 
 
 void
-MeshFile::AddTexture(TexForGenBsx& texture, VectorTexForGenBsx& textures)
+MeshFile::AddTexture( TexForGenBsx& texture, VectorTexForGenBsx& textures )
 {
     u8 control = GetU8(offset_to_5);
     //LOGGER->Log(LOGGER_INFO, "quad control: %02x", control);
     ++offset_to_5;
 
-    u8 blend = (control >> 4) & 0x3;
+    u8 blend = ( control >> 4 ) & 0x3;
     u8 flag_id = control & 0xf;
-    u32 flag = GetU32LE(offset_to_4 + flag_id * 4);
+    u32 flag = GetU32LE( offset_to_4 + flag_id * 4 );
     int type = flag & 0x3f;
     int bpp = (flag >> 0x6) & 0x3;
     int vram_x = ((flag >> 0x8) & 0xf) * 64;
@@ -677,7 +667,7 @@ MeshFile::AddTexture(TexForGenBsx& texture, VectorTexForGenBsx& textures)
         }
     }
 
-    //LOGGER->Log(LOGGER_INFO, "New Texture: X:0x%04x, Y:0x%04x, CLUTX:0x%04x, CLUTY:0x%04x, bpp:0x%02x, type:0x%02x", texture.texture_x, texture.texture_y, texture.palette_x, texture.palette_y, texture.bpp, texture.type);
+    LOGGER->Log( "New Texture: X:0x" + HexToString( texture.texture_x, 4, '0' ) + ", Y:0x" + HexToString( texture.texture_y, 4, '0' ) + ", CLUTX:0x" + HexToString( texture.palette_x, 4, '0' ) + ", CLUTY:0x" + HexToString( texture.palette_y, 4, '0' ) + ", bpp:0x" + HexToString( texture.bpp, 2, '0' ) + ", type:0x" + HexToString( texture.type, 2, '0' ) + "\n" );
 
     texture.start_x = 0;
     texture.start_y = 0;
@@ -689,7 +679,7 @@ MeshFile::AddTexture(TexForGenBsx& texture, VectorTexForGenBsx& textures)
         }
     }
 
-    textures.push_back(texture);
+    textures.push_back( texture );
 
     //LOGGER->Log(LOGGER_INFO, "Startx:0x%04x, Starty:0x%04x", texture.start_x, texture.start_y);
 }

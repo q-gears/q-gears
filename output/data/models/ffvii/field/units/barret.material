@@ -18,7 +18,6 @@ material ffvii/model/field/barret
 			{
 				texture models/ffvii/field/units/barret.png 0
 				filtering point point none
-				scroll 0.0625 0
 			}
 		}
 

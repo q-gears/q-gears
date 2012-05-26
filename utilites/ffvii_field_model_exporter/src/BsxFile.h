@@ -33,7 +33,7 @@ struct TexForGenBsx: TexForGen
                i.palette_y == palette_y &&
                i.palette_x == palette_x &&
                i.bpp       == bpp &&
-               i.type      == type;
+             ( i.type == type || ( i.type < 2 && type < 2 ) );
     }
 };
 

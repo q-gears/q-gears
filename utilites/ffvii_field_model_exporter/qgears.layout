@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="..\common\OgreGenUtilites.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor1 position="1283" topLine="28" />
+	<File name="..\common\OgreGenUtilites.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1283" topLine="28" />
 	</File>
-	<File name="..\common\OgreGenUtilites.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="334" topLine="22" />
+	<File name="..\common\OgreGenUtilites.h" open="0" top="0" tabpos="0">
+		<Cursor position="334" topLine="22" />
 	</File>
-	<File name="..\common\Vram.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1170" topLine="27" />
+	<File name="..\common\Vram.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1170" topLine="27" />
 	</File>
-	<File name="src\AnimationFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="3870" topLine="71" />
+	<File name="src\AnimationFile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3870" topLine="71" />
 	</File>
-	<File name="src\AnimationFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="796" topLine="25" />
+	<File name="src\AnimationFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="796" topLine="25" />
 	</File>
-	<File name="src\BcxFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2101" topLine="66" />
+	<File name="src\BcxFile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2101" topLine="66" />
 	</File>
-	<File name="src\BcxFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="66" topLine="0" />
+	<File name="src\BcxFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="66" topLine="0" />
 	</File>
-	<File name="src\BsxFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8462" topLine="254" />
+	<File name="src\BsxFile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="8462" topLine="254" />
 	</File>
-	<File name="src\BsxFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="876" topLine="35" />
+	<File name="src\BsxFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="876" topLine="35" />
 	</File>
-	<File name="src\DatFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="138" topLine="0" />
+	<File name="src\DatFile.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="533" topLine="24" />
 	</File>
-	<File name="src\DatFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="326" topLine="9" />
+	<File name="src\DatFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="326" topLine="9" />
 	</File>
-	<File name="src\Main.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="159" topLine="0" />
+	<File name="src\Main.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="159" topLine="0" />
 	</File>
-	<File name="src\MeshFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="33563" topLine="640" />
+	<File name="src\MeshFile.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="33892" topLine="657" />
 	</File>
-	<File name="src\MeshFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="442" topLine="0" />
+	<File name="src\MeshFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="442" topLine="0" />
 	</File>
-	<File name="src\SkeletonFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="788" topLine="52" />
+	<File name="src\SkeletonFile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="788" topLine="52" />
 	</File>
-	<File name="src\SkeletonFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="634" topLine="0" />
+	<File name="src\SkeletonFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="634" topLine="0" />
 	</File>
-	<File name="src\TdbFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1259" topLine="233" />
+	<File name="src\TdbFile.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="5719" topLine="168" />
 	</File>
-	<File name="src\TdbFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="531" topLine="0" />
+	<File name="src\TdbFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="531" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
