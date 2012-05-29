@@ -4,8 +4,12 @@
         <sprite name="Cursor" image="screens/images/cursor.png" x="132" y="99" width="24" height="16" visible="true">
             <animation name="Position1" length="0" y="0:0 99" />
             <animation name="Position2" length="0" y="0:0 111" />
+            <animation name="Position3" length="0" y="0:0 123" />
+            <animation name="Position4" length="0" y="0:0 135" />
         </sprite>
         <text_area name="Text1" x="158" y="99" text_name="BeginMenuNewGame" font="FFVIIFont" visible="true" />
-        <text_area name="Text2" x="158" y="111" text_name="BeginMenuContinue" font="FFVIIFont" visible="true" />
+        <text_area name="Text2" x="158" y="111" text_name="BeginMenu1" font="FFVIIFont" visible="true" />
+        <text_area name="Text3" x="158" y="123" text_name="BeginMenu2" font="FFVIIFont" visible="true" />
+        <text_area name="Text4" x="158" y="135" text_name="BeginMenu3" font="FFVIIFont" visible="true" />
     </widget>
 </screen>

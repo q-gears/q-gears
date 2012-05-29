@@ -1363,58 +1363,30 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
 
                     AdvanceScript(6, script, end);
                 }
-                else if (opcode == 0x64) // SCR2D
+                else if( opcode == 0x64 ) // SCR2D
                 {
-                    export_script->Log(
-                        "field:screen_set_scroll_to_coords_instant( " +
-                        ParseGetVariable(GetU8(script + 1) >> 4, GetU16LE(script + 2)) +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 1) & 0x0F, GetU16LE(script + 4)) +
-                        " );\n"
-                    );
-
-                    AdvanceScript(6, script, end);
+                    export_script->Log( "background2d:scroll_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 2 ) ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 4 ) ) + ", Background2D.NONE, 0 )\n" );
+                    AdvanceScript( 6, script, end );
                 }
-                else if (opcode == 0x65) // SCRCC
+                else if( opcode == 0x65 ) // SCRCC
                 {
-                    export_script->Log(
-                        "field:screen_set_scroll_to_pc_instant(); -- SCRCC\n"
-                    );
-
-                    AdvanceScript(1, script, end);
+                    export_script->Log( "background2d:autoscroll_to_entity( --[[ player entity object here ]] )\n" );
+                    AdvanceScript( 1, script, end );
                 }
-                else if (opcode == 0x66) // SCR2DC
+                else if( opcode == 0x66 ) // SCR2DC
                 {
-                    export_script->Log(
-                        "field:screen_set_scroll_to_coords_smooth( " +
-                        ParseGetVariable(GetU8(script + 1) >> 4, GetU16LE(script + 3)) +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 1) & 0x0F, GetU16LE(script + 5)) +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 2) & 0x0F, GetU16LE(script + 7), false, 30.0f) +
-                        " );\n"
-                    );
-
-                    AdvanceScript(9, script, end);
+                    export_script->Log( "background2d:scroll_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 3 ) ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 5 ) ) + ", Background2D.SMOOTH, " + ParseGetVariable( GetU8( script + 2 ) & 0x0F, ( s16 )GetU16LE( script + 7 ), false, 30.0f ) + " )\n" );
+                    AdvanceScript( 9, script, end );
                 }
-                else if (opcode == 0x67) // SCRLW
+                else if( opcode == 0x67 ) // SCRLW
                 {
-                    export_script->Log("field:screen_scroll_wait();\n");
-                    AdvanceScript(1, script, end);
+                    export_script->Log( "background2d:scroll_sync()\n" );
+                    AdvanceScript( 1, script, end );
                 }
                 else if (opcode == 0x68) // SCR2DL
                 {
-                    export_script->Log(
-                        "field:screen_set_scroll_to_coords_linear( " +
-                        ParseGetVariable(GetU8(script + 1) >> 4, GetU16LE(script + 3)) +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 1) & 0x0F, GetU16LE(script + 5)) +
-                        ", " +
-                        ParseGetVariable(GetU8(script + 2) & 0x0F, GetU16LE(script + 7), false, 30.0f) +
-                        " );\n"
-                    );
-
-                    AdvanceScript(9, script, end);
+                    export_script->Log( "background2d:scroll_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 3 ) ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 5 ) ) + ", Background2D.LINEAR, " + ParseGetVariable( GetU8( script + 2 ) & 0x0F, ( s16 )GetU16LE( script + 7 ), false, 30.0f ) + " )\n" );
+                    AdvanceScript( 9, script, end );
                 }
                 else if (opcode == 0x6A) // VWOFT
                 {

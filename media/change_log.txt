@@ -14,6 +14,8 @@ Q-Gears v0.22 (4th blow for a win) | 2012-09-??
 
 To Do
 ----------
+* [Content FFVII] Implement Model shadowing and related KAWAI used on phoenix chest.
+* [Content FFVII] Implement Eye blinking.
 * [Content FFVII] All FFVII fields maps from 1st mission until reactor blow must be fully playable.
 * [Sound] Implement all sounds that used in FFVII 1st mission until reactor blow.
 * [Content FFVII] Add FFVII fields maps from 1st mission until reactor blow.
@@ -32,13 +34,22 @@ To Do
 ----------
 * [Content] Add FFVII fields maps startmap mdstin md1_1 and md1_2 maps and transitions between them.
 * [Background] Implement all background features that used in FFVII 1st mission until reactor blow.
-* [Background] Implement background auto scroll to pc.
-* [Background] Implement background script scroll.
+* [Background] Implement background borders.
 * [Background] Implement palette animation.
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 * [Entity] Separate auto and pc move speed.
-* [Content UI] Main menu don't play appear animations for first time.
 
+
+
+
+2012-05-30
+----------
+* [Content] Add start menu options for v0.21. [Akari]
+* [Background] Add autoscrolling of background and camera to given position. [Akari]
+
+2012-05-28
+----------
+* [Background & Camera] Add autoscrolling of background and camera to given entity. [Akari]
 
 2012-05-26
 ----------

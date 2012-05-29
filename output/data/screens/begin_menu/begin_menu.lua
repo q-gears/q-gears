@@ -4,7 +4,7 @@ if UiContainer == nil then UiContainer = {} end
 
 UiContainer.BeginMenu = {
     position = 1,
-    position_total = 2,
+    position_total = 4,
 
 
 
@@ -27,6 +27,12 @@ UiContainer.BeginMenu = {
                 if self.position == 1 then
                     load_field_map_request( "ffvii_md1stin", "" )
                     script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
+                elseif self.position == 2 then
+                    script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
+                    map( "test_3" )
+                elseif self.position == 3 then
+                    script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
+                    map( "test_1" )
                 else
                     script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
                     script:request_end_sync( "UiContainer.Idol", "show", 0 )

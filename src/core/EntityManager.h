@@ -55,6 +55,7 @@ private:
     void SetNextTurnStep( Entity* entity );
     void SetNextLinearStep( Entity* entity );
     void SetNextJumpStep( Entity* entity );
+    void SetNextScrollStep();
 
 private:
     bool                          m_Paused;

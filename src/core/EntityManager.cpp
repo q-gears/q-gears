@@ -3,6 +3,7 @@
 #include <OgreEntity.h>
 #include <OgreRoot.h>
 
+#include "CameraManager.h"
 #include "ConfigVar.h"
 #include "DebugDraw.h"
 #include "EntityModel.h"
@@ -189,6 +190,21 @@ EntityManager::Update()
 
 
 
+        // update screen scroll
+        Entity* scroll_entity = m_Background2D.GetAutoScrollEntity();
+        if( scroll_entity == m_EntityModels[ i ] )
+        {
+            Ogre::Vector3 view = CameraManager::getSingleton().ProjectPointToScreen( scroll_entity->GetPosition() );
+            Ogre::Vector2 pos = m_Background2D.GetScroll();
+            float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+            float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+            view.x = view.x - width / 2 - pos.x;
+            view.y = view.y - height / 2 - pos.y;
+            m_Background2D.SetScroll( Ogre::Vector2( -view.x, -view.y ) );
+        }
+
+
+
         // update offseting
         if( m_EntityModels[ i ]->GetOffsetType() != AT_NONE )
         {
@@ -295,6 +311,10 @@ EntityManager::Update()
 
 
 
+    if( m_Background2D.GetScrollType() != Background2D::NONE )
+    {
+        SetNextScrollStep();
+    }
     m_Background2D.Update();
 }
 
@@ -1303,5 +1323,36 @@ EntityManager::SetNextJumpStep( Entity* entity )
     else
     {
         entity->SetJumpCurrentSeconds( current );
+    }
+}
+
+
+
+void
+EntityManager::SetNextScrollStep()
+{
+    Background2D::ScrollType type = m_Background2D.GetScrollType();
+    float total = m_Background2D.GetScrollSeconds();
+    float current = m_Background2D.GetScrollCurrentSeconds();
+
+    current += Timer::getSingleton().GetGameTimeDelta();
+    current = ( current > total ) ? total : current;
+
+    Ogre::Vector2 start = m_Background2D.GetScrollPositionStart();
+    Ogre::Vector2 end = m_Background2D.GetScrollPositionEnd();
+
+    float x = current / total;
+    float smooth_modifier = ( type == Background2D::SMOOTH ) ? -2 * x * x * x + 3 * x * x : x;
+    Ogre::Vector2 scroll = start + ( end - start ) * smooth_modifier;
+
+    m_Background2D.SetScroll( scroll );
+
+    if( current == total )
+    {
+        m_Background2D.UnsetScroll();
+    }
+    else
+    {
+        m_Background2D.SetScrollCurrentSeconds( current );
     }
 }

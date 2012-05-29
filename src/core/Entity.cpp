@@ -773,7 +773,7 @@ Entity::UnsetOffset()
 {
     m_OffsetType = AT_NONE;
 
-    for( size_t i = 0; i < m_OffsetSync.size(); ++i)
+    for( unsigned int i = 0; i < m_OffsetSync.size(); ++i )
     {
         ScriptManager::getSingleton().ContinueScriptExecution( m_OffsetSync[ i ] );
     }
@@ -897,7 +897,7 @@ Entity::UnsetTurn()
 {
     m_TurnType = AT_NONE;
 
-    for( size_t i = 0; i < m_TurnSync.size(); ++i)
+    for( unsigned int i = 0; i < m_TurnSync.size(); ++i )
     {
         ScriptManager::getSingleton().ContinueScriptExecution( m_TurnSync[ i ] );
     }

@@ -1,9 +1,9 @@
 dir
 script_0:
-03a4 (end 03a4): field:screen_set_scroll_to_coords_instant( 0, 40 );
+03a4 (end 03a4): background2d:scroll_to_position( 0, 40, Background2D.NONE, 0 )
 03aa (end 03aa): if ( game:variable_get( "progress_game" ) == 0 ) then continue else jumpto(03d1);
 03b2 (end 03d1): fade:black();
-03bb (end 03d1): field:screen_set_scroll_to_coords_instant( 0, 0 );
+03bb (end 03d1): background2d:scroll_to_position( 0, 0, Background2D.NONE, 0 )
 03c1 (end 03d1): music:execute_akao( f0, 00000000, 00000000, 00000000, 00000000, 00007100, 00008101 );
 03cf (end 03d1): field:random_encounter_on( false );
 03d1 (end 03d1): temp6_09 = 12;
@@ -46,13 +46,13 @@ script_0:
 046a (end 04bd): script:wait( 2.33333 )
 046d (end 04bd): script:request( "ba", "script_3", 2 )
 0470 (end 04bd): script:wait( 2.66667 )
-0473 (end 04bd): field:screen_set_scroll_to_coords_smooth( 65516, 130, 0.4 );
+0473 (end 04bd): background2d:scroll_to_position( -20, 130, Background2D.SMOOTH, 0.4 )
 047c (end 04bd): script:wait( 0.466667 )
 047f (end 04bd): script:request( "cl", "script_3", 2 )
 0482 (end 04bd): script:wait( 0.0666667 )
 0485 (end 04bd): music:execute_akao( 20, 00000040, 00000037 ); -- play sound
 048a (end 04bd): script:wait( 0.733333 )
-048d (end 04bd): field:screen_set_scroll_to_coords_smooth( 10, 35, 0.5 );
+048d (end 04bd): background2d:scroll_to_position( 10, 35, Background2D.SMOOTH, 0.5 )
 0496 (end 04bd): script:wait( 0.533333 )
 0499 (end 04bd): music:execute_akao( 20, 00000040, 00000038 ); -- play sound
 049e (end 04bd): script:wait( 1.93333 )
@@ -212,6 +212,7 @@ script_3:
                  av_m:animation_sync()
 0626 (end 0626): script:wait( 0.266667 )
 0629 (end 0629): av_m:turn_to_direction( 326.25, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
+av_m:turn_sync()
 062f (end 062f): script:wait( 0.333333 )
 0632 (end 0632): av_m:play_animation( "4" ) -- speed=1
                  av_m:animation_sync()
@@ -279,6 +280,7 @@ script_3:
                  av_s:animation_sync()
 06c5 (end 06c5): script:wait( 0.266667 )
 06c8 (end 06c8): av_s:turn_to_direction( 326.25, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
+av_s:turn_sync()
 06ce (end 06ce): script:wait( 2 )
 06d1 (end 06d1): av_s:set_move_speed( 2.34375 )
 06d5 (end 06d5): av_s:move_to_position( 29.9688, 228.867 )
@@ -326,6 +328,7 @@ script_1:
 script_3:
 0761 (end 0761): gu0:set_solid( false )
 0763 (end 0763): gu0:turn_to_direction( 135, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
+gu0:turn_sync()
 0769 (end 0769): script:wait( 1.06667 )
 076c (end 076c): gu0:play_animation( "4" ) -- speed=1
                  gu0:animation_sync()

@@ -5,6 +5,7 @@
 #include <OgreRenderQueueListener.h>
 #include <OgreRoot.h>
 #include "Background2DAnimation.h"
+#include "Entity.h"
 #include "ScriptManager.h"
 
 
@@ -18,6 +19,13 @@ public:
         ADD
     };
 
+    enum ScrollType
+    {
+        NONE,
+        LINEAR,
+        SMOOTH
+    };
+
     Background2D();
     virtual ~Background2D();
 
@@ -27,7 +35,20 @@ public:
 
     void Clear();
 
-    void Set2DPosition( const Ogre::Vector2& position );
+    void ScriptAutoScrollToEntity( Entity* entity );
+    Entity* GetAutoScrollEntity() const;
+    void ScriptScrollToPosition( const float x, const float y, const ScrollType type, const float seconds );
+    int ScriptScrollSync();
+    void UnsetScroll();
+    const Ogre::Vector2& GetScrollPositionStart() const;
+    const Ogre::Vector2& GetScrollPositionEnd() const;
+    ScrollType GetScrollType() const;
+    float GetScrollSeconds() const;
+    void SetScrollCurrentSeconds( const float seconds );
+    float GetScrollCurrentSeconds() const;
+
+    void SetScroll( const Ogre::Vector2& position );
+    const Ogre::Vector2& GetScroll() const;
 
     void SetImage( const Ogre::String& image );
     void AddTile( const int x, const int y, const int width, const int height, const float depth, const float u1, const float v1, const float u2, const float v2, const Blending blending );
@@ -76,6 +97,13 @@ private:
     unsigned int                          m_AddMaxVertexCount;
     Ogre::MaterialPtr                     m_AddMaterial;
 
+    Entity*                               m_ScrollEntity;
+    Ogre::Vector2                         m_ScrollPositionStart;
+    Ogre::Vector2                         m_ScrollPositionEnd;
+    ScrollType                            m_ScrollType;
+    float                                 m_ScrollSeconds;
+    float                                 m_ScrollCurrentSeconds;
+    std::vector< ScriptId >               m_ScrollSync;
     Ogre::Vector2                         m_Position;
 
     Ogre::String                          m_AnimationCurrent;

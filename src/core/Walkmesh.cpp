@@ -63,6 +63,7 @@ Walkmesh::UpdateDebug()
             }
             DEBUG_DRAW.Line3d( m_Triangles[ i ].c, m_Triangles[ i ].a );
 
+            /*
             if( m_Triangles[ i ].locked == false )
             {
                 DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 0.5 ) );
@@ -71,7 +72,8 @@ Walkmesh::UpdateDebug()
             {
                 DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 0.5 ) );
             }
-            DEBUG_DRAW.Triangle3d( m_Triangles[ i ].a, m_Triangles[ i ].b, m_Triangles[ i ].c );
+            */
+            //DEBUG_DRAW.Triangle3d( m_Triangles[ i ].a, m_Triangles[ i ].b, m_Triangles[ i ].c );
 
             DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
             DEBUG_DRAW.SetFadeDistance( 30, 40 );

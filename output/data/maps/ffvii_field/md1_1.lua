@@ -4,7 +4,7 @@ EntityContainer = {}
 
 EntityContainer[ "Director" ] = {
     on_start = function( self )
-        --03a5 (end 03a5): field:screen_set_scroll_to_pc_instant(); -- SCRCC
+        background2d:autoscroll_to_entity( entity_manager:get_entity( "Cloud" ) )
         --03a6 (end 03a6): [UNREVERSED] BTLMD(20, 00);
         --03a9 (end 03a9): music:execute_akao( 10, pointer_to_field_AKAO_0 ); -- play field music
         --03ab (end 03ab): field:map_name(1);
@@ -19,7 +19,7 @@ EntityContainer[ "Director" ] = {
 
                 if ( Savemap.progress_game < 7 ) and ( triangle_id == 62 ) then
                     player_lock( true )
-                    --03c6 (end 043e): field:screen_set_scroll_to_coords_smooth( 65440, 60, 1.06667 );
+                    background2d:scroll_to_position( -288, 180, Background2D.SMOOTH, 1.06667 )
 
                     script:request( "EntityContainer.Cloud", "scene_part_1", 6 )
 
@@ -52,11 +52,11 @@ EntityContainer[ "Director" ] = {
                     script:request( "EntityContainer.Barret", "scene_part_15", 6 )
                     script:wait( 1 )
                     --0429 (end 043e): field:movie_set( 20 );
-                    --042b (end 043e): temp5_15 = 1;
+                    EntityContainer.Movie.movie_check = true
                     --042f (end 043e): field:play_movie();
                     --0430 (end 043e): field:jump_to_map(118, 3549, 30574, 60, 180);
 
-                    player_lock( false )
+                    --player_lock( false )
                 end
             end
 
@@ -131,19 +131,19 @@ EntityContainer[ "Cloud" ] = {
         return 0
     end,
 
-    script_9 = function( self )
---[[
-04a5 (end 04a5): -- set speed of entity animation to "32"
-04a9 (end 04a9): script:wait( 0.6 )
-04ac (end 04ac): cl:play_animation_stop( "5" ) -- speed=1
-                 cl:animation_sync()
-04af (end 04af): cl:set_move_speed( 1.17187 )
-04b3 (end 04b3): cl:set_default_animation( "0" ) -- speed=1
-                 cl:play_animation( "0" )
-04b6 (end 04b6): cl:move_to_position( 5.02344, 11.4141 )
-                 cl:move_sync()
-04bc (end 04bc): return;
-]]
+    --[[ look at reactor and run after Barret and others. ]]
+    scene_part_16 = function( self )
+--04a5 (end 04a5): -- set speed of entity animation to "32"
+        script:wait( 0.6 )
+--ANIM!2 (05,01)
+        self.cloud:play_animation_stop( "5" )
+        self.cloud:animation_sync()
+        self.cloud:set_move_speed( 1.17187 )
+        self.cloud:set_default_animation( "0" )
+        self.cloud:play_animation( "0" )
+        self.cloud:move_to_position( 5.02344, 11.4141 )
+        self.cloud:move_sync()
+
         return 0
     end,
 }
@@ -445,18 +445,28 @@ EntityContainer[ "DoorRight" ] = {
 
 
 
---[[
-unnamed_8
-script_0:
-070a (end 070a): return;
-070b (end 070b): if ( temp5_15 == 1 ) then continue else jumpto(0729);
-0711 (end 0729): if ( temp5_0b == 0 ) then continue else jumpto(0729);
-0717 (end 0729): temp6_09 = field:get_movie_frame();
-071a (end 0729): if ( temp6_09 > 30 ) then continue else jumpto(0729);
-0722 (end 0729): temp5_0b = 1;
-0726 (end 0729): script:request( "cl", "script_9", 6 );
-0729 (end 0729): jumpto( 070b );
+EntityContainer[ "Movie" ] = {
+    movie_check = false,
 
+    on_start = function( self )
+        while true do
+            if self.movie_check == true then
+                --0717 (end 0729): temp6_09 = field:get_movie_frame();
+                --071a (end 0729): if ( temp6_09 > 30 ) then continue else jumpto(0729);
+                script:request( "EntityContainer.Cloud", "scene_part_16", 6 )
+                break
+            end
+
+            script:wait( 0 )
+        end
+
+        return 0
+    end,
+}
+
+
+
+--[[
 fan
 script_0:
 072c (end 072c): field:background_clear( "2" ); -- turns off all layer of background animation with given id

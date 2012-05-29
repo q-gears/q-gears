@@ -12,6 +12,7 @@
     <entity_model name="Wedge" file_name="models/ffvii/field/units/wedge.mesh" position="0 0 0" direction="0" />
     <entity_model name="DoorLeft" file_name="models/ffvii/field/units/door1.mesh" position="0 0 0" direction="0" />
     <entity_model name="DoorRight" file_name="models/ffvii/field/units/door1.mesh" position="0 0 0" direction="0" />
+    <entity_script name="Movie" />
 
     <entity_trigger name="Gateway0" point1="3.89062 1.11328 5.0625" point2="3.62891 1.92578 5.0625" enabled="true" />
     <entity_trigger name="Gateway1" point1="3.98047 6.75 5.07031" point2="5.07031 6.66016 5.07031" enabled="true" />

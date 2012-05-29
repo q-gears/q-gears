@@ -9,8 +9,6 @@ UiContainer.MainMenu = {
 
 
     on_start = function( self )
-        --script:request( "UiContainer.MainMenu", "show", 0 )
-
         return 0
     end,
 

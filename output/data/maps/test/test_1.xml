@@ -1,10 +1,9 @@
 <map>
+<!--
     <script file_name="maps/test/test_1.lua" />
-<!--
     <background2d file_name="maps/test/test_1_bg.xml" />
--->
     <walkmesh file_name="maps/test/test_1_wm.xml" />
-<!--
+-->
     <entity_model name="Background0" file_name="models/field/maps/lahan/lahan0.mesh" position="0 0 0" direction="0" />
     <entity_model name="Background1" file_name="models/field/maps/lahan/lahan1.mesh" position="0 0 0" direction="0" />
     <entity_model name="Background2" file_name="models/field/maps/lahan/lahan2.mesh" position="0 0 0" direction="0" />
@@ -24,13 +23,16 @@
     <entity_model name="Background16" file_name="models/field/maps/lahan/lahan16.mesh" position="0 0 0" direction="0" />
     <entity_model name="Background17" file_name="models/field/maps/lahan/lahan17.mesh" position="0 0 0" direction="0" />
     <entity_model name="Background18" file_name="models/field/maps/lahan/lahan18.mesh" position="0 0 0" direction="0" />
--->
+
+<!--
     <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="0 0 10" direction="0" />
     <entity_model name="Player" file_name="models/field/units/zidane.mesh" position="-1 0 -10" direction="0" />
+-->
     <entity_model name="Robo" file_name="models/xenogears/field/units/robo1.mesh" position="7 7 0" direction="-85" />
     <entity_model name="Weltall" file_name="models/xenogears/field/units/weltall.mesh" position="-7 -7 0" direction="125" />
+<!--
     <entity_trigger name="Trigger" point1="-2 0 0.1" point2="2 2 0.1" enabled="true" />
     <entity_point name="Spawn" point="0 0 0" />
     <entity_script name="Manager" />
-
+-->
 </map>

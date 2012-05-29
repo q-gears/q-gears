@@ -1,8 +1,8 @@
 ﻿<texts>
-    <text name="BeginMenuContinue">Continue?</text>
     <text name="BeginMenuNewGame">NEW GAME</text>
-
-
+    <text name="BeginMenu1">Battle map</text>
+    <text name="BeginMenu2">Xenogears map</text>
+    <text name="BeginMenu3">Idol menu</text>
 
     <text name="MainMenuGil">Gil</text>
     <text name="MainMenuGilAmount">     12005</text>

@@ -4,12 +4,11 @@ EntityContainer = {}
 
 EntityContainer[ "Director" ] = {
     on_start = function( self )
-        --03a4 (end 03a4): field:screen_set_scroll_to_coords_instant( 0, 40 );
+        background2d:scroll_to_position( 0, 120, Background2D.NONE, 0 )
         if Savemap.progress_game == 0 then
             player_lock( true )
-
             --03b2 (end 03d1): fade:black();
-            --03bb (end 03d1): field:screen_set_scroll_to_coords_instant( 0, 0 );
+            background2d:scroll_to_position( 0, 0, Background2D.NONE, 0 )
             --03c1 (end 03d1): music:execute_akao( f0, 00000000, 00000000, 00000000, 00000000, 00007100, 00008101 );
             --03cf (end 03d1): field:random_encounter_on( false );
         end
@@ -49,13 +48,13 @@ EntityContainer[ "Director" ] = {
             script:wait( 2.33333 )
             script:request( "EntityContainer.Barret", "action1", 2 )
             script:wait( 2.66667 )
-            --0473 (end 04bd): field:screen_set_scroll_to_coords_smooth( 65516, 130, 0.4 );
+            background2d:scroll_to_position( -60, 390, Background2D.SMOOTH, 0.4 )
             script:wait( 0.466667 )
             script:request( "EntityContainer.Cloud", "action1", 2 )
             script:wait( 0.0666667 )
             --0485 (end 04bd): music:execute_akao( 20, 00000040, 00000037 ); -- play sound
             script:wait( 0.733333 )
-            --048d (end 04bd): field:screen_set_scroll_to_coords_smooth( 10, 35, 0.5 );
+            background2d:scroll_to_position( 30, 105, Background2D.SMOOTH, 0.5 )
             script:wait( 0.533333 )
             --0499 (end 04bd): music:execute_akao( 20, 00000040, 00000038 ); -- play sound
             script:wait( 1.93333 )

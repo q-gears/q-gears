@@ -1039,7 +1039,6 @@ if (model_id != FF)
 // move pointer by 6
 script_pointer = script_pointer + 6;
 [800831FC + current_entity * 2] = h(script_pointer);
-return 0;
 ////////////////////////////////
 
 

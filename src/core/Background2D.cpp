@@ -19,6 +19,13 @@ ConfigVar cv_background2d_show( "background2d_show", "Draw background or not", "
 Background2D::Background2D():
     m_AlphaMaxVertexCount( 0 ),
     m_AddMaxVertexCount( 0 ),
+
+    m_ScrollEntity( NULL ),
+    m_ScrollPositionStart( Ogre::Vector2::ZERO ),
+    m_ScrollPositionEnd( Ogre::Vector2::ZERO ),
+    m_ScrollType( Background2D::NONE ),
+    m_ScrollSeconds( 0 ),
+    m_ScrollCurrentSeconds( 0 ),
     m_Position( Ogre::Vector2::ZERO ),
 
     m_AnimationCurrent( "" ),
@@ -218,6 +225,13 @@ Background2D::OnResize()
 void
 Background2D::Clear()
 {
+    m_ScrollEntity = NULL;
+    m_ScrollPositionStart = Ogre::Vector2::ZERO;
+    m_ScrollPositionEnd = Ogre::Vector2::ZERO;
+    m_ScrollSeconds = 0;
+    m_ScrollCurrentSeconds = 0;
+    UnsetScroll();
+
     for( unsigned int i = 0; i < m_Animations.size(); ++i )
     {
         delete m_Animations[ i ];
@@ -241,9 +255,142 @@ Background2D::Clear()
 
 
 void
-Background2D::Set2DPosition( const Ogre::Vector2& position )
+Background2D::ScriptAutoScrollToEntity( Entity* entity )
+{
+    m_ScrollEntity = entity;
+}
+
+
+
+Entity*
+Background2D::GetAutoScrollEntity() const
+{
+    return m_ScrollEntity;
+}
+
+
+
+void
+Background2D::ScriptScrollToPosition( const float x, const float y, const ScrollType type, const float seconds )
+{
+    LOG_TRIVIAL( "[SCRIPT] Background2d set scroll to position \"" + Ogre::StringConverter::toString( Ogre::Vector2( x, y ) ) + "\"." );
+
+    Ogre::Vector2 position = Ogre::Vector2( x, y );
+
+    m_ScrollEntity = NULL;
+
+    if( type == Background2D::NONE )
+    {
+        SetScroll( position );
+        return;
+    }
+
+    m_ScrollPositionStart = GetScroll();
+    m_ScrollPositionEnd = position;
+    m_ScrollType = type;
+    m_ScrollSeconds = seconds;
+    m_ScrollCurrentSeconds = 0;
+}
+
+
+
+int
+Background2D::ScriptScrollSync()
+{
+    ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
+
+    LOG_TRIVIAL( "[SCRIPT] Wait Background2d scroll for function \"" + script.function + "\" in script entity \"" + script.entity + "\"." );
+
+    m_ScrollSync.push_back( script );
+    return -1;
+}
+
+
+
+void
+Background2D::UnsetScroll()
+{
+    m_ScrollType = Background2D::NONE;
+
+    for( unsigned int i = 0; i < m_ScrollSync.size(); ++i )
+    {
+        ScriptManager::getSingleton().ContinueScriptExecution( m_ScrollSync[ i ] );
+    }
+    m_ScrollSync.clear();
+}
+
+
+
+const Ogre::Vector2&
+Background2D::GetScrollPositionStart() const
+{
+    return m_ScrollPositionStart;
+}
+
+
+
+const Ogre::Vector2&
+Background2D::GetScrollPositionEnd() const
+{
+    return m_ScrollPositionEnd;
+}
+
+
+
+Background2D::ScrollType
+Background2D::GetScrollType() const
+{
+    return m_ScrollType;
+}
+
+
+
+float
+Background2D::GetScrollSeconds() const
+{
+    return m_ScrollSeconds;
+}
+
+
+
+void
+Background2D::SetScrollCurrentSeconds( const float seconds )
+{
+    m_ScrollCurrentSeconds = seconds;
+}
+
+
+
+float
+Background2D::GetScrollCurrentSeconds() const
+{
+    return m_ScrollCurrentSeconds;
+}
+
+
+
+void
+Background2D::SetScroll( const Ogre::Vector2& position )
 {
     m_Position = position;
+
+    float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+    float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+
+    float left, right, top, bottom;
+    CameraManager::getSingleton().GetCurrentCamera()->resetFrustumExtents();
+    CameraManager::getSingleton().GetCurrentCamera()->getFrustumExtents( left, right, top, bottom );
+    float move_x = ( ( right - left ) / width ) * position.x;
+    float move_y = ( ( bottom - top ) / height ) * -position.y;
+    CameraManager::getSingleton().GetCurrentCamera()->setFrustumExtents( left - move_x, right - move_x, top + move_y, bottom + move_y );
+}
+
+
+
+const Ogre::Vector2&
+Background2D::GetScroll() const
+{
+    return m_Position;
 }
 
 
@@ -553,14 +700,12 @@ Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& in
     if( queueGroupId == Ogre::RENDER_QUEUE_MAIN )
     {
         m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
-        m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
         m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
+
         float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
         float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
-
         Ogre::Matrix4 view;
-        view.makeTrans( Ogre::Vector3( m_Position.x / width, m_Position.y / height, 0 ) );
-
+        view.makeTrans( Ogre::Vector3( m_Position.x * 2 / width, -m_Position.y * 2 / height, 0 ) );
         m_RenderSystem->_setViewMatrix( view );
 
         if( m_AlphaRenderOp.vertexData->vertexCount != 0 )

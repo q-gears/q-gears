@@ -122,12 +122,22 @@ ScriptManager::InitBinds()
     luabind::module( m_LuaState )
     [
         luabind::class_< Background2D >( "Background2D" )
+            .def( "autoscroll_to_entity", ( void( Background2D::* )( Entity* ) ) &Background2D::ScriptAutoScrollToEntity )
+            .def( "scroll_to_position", ( void( Background2D::* )( const float, const float, const Background2D::ScrollType, const float ) ) &Background2D::ScriptScrollToPosition )
+            .def( "scroll_sync", ( int( Background2D::* )() ) &Background2D::ScriptScrollSync, luabind::yield )
             .def( "play_animation", ( void( Background2D::* )( const char* ) ) &Background2D::ScriptPlayAnimation )
             .def( "play_animation_stop", ( void( Background2D::* )( const char* ) ) &Background2D::ScriptPlayAnimationStop )
             .def( "play_animation", ( void( Background2D::* )( const char*, const float, const float ) ) &Background2D::ScriptPlayAnimation )
             .def( "play_animation_stop", ( void( Background2D::* )( const char*, const float, const float ) ) &Background2D::ScriptPlayAnimationStop )
             .def( "set_default_animation", ( void( Background2D::* )( const char* ) ) &Background2D::ScriptSetDefaultAnimation )
             .def( "animation_sync", ( int( Background2D::* )() ) &Background2D::ScriptAnimationSync, luabind::yield )
+
+            .enum_( "constants" )
+            [
+                luabind::value( "NONE", AT_NONE ),
+                luabind::value( "LINEAR", AT_LINEAR ),
+                luabind::value( "SMOOTH", AT_SMOOTH )
+            ]
     ];
 
     // ui widget access

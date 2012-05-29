@@ -84,81 +84,77 @@ CmdConfigVarList( const Ogre::StringVector& params )
 
 
 void
-CmdConfigCmdList(const Ogre::StringVector& params)
+CmdConfigCmdList( const Ogre::StringVector& params )
 {
-    if (params.size() > 2)
+    if( params.size() > 2 )
     {
-        Console::getSingleton().AddTextToOutput("Usage: /config_cmd_list [search string]");
+        Console::getSingleton().AddTextToOutput( "Usage: /config_cmd_list [search string]" );
         return;
     }
 
     int number = 0;
     int num_cmds = ConfigCmdManager::getSingleton().GetConfigCmdNumber();
-    for (int i = 0; i < num_cmds; ++i)
+    for( int i = 0; i < num_cmds; ++i )
     {
-        ConfigCmd* cmd = ConfigCmdManager::getSingleton().GetConfigCmd(i);
+        ConfigCmd* cmd = ConfigCmdManager::getSingleton().GetConfigCmd( i );
         Ogre::String name = cmd->GetName();
 
-        if (params.size() > 1)
+        if( params.size() > 1 )
         {
-            //Ogre::LogManager::getSingletonPtr()->logMessage("Search for " + params[1] + " in " + name);
+            int found = name.find( params[ 1 ] );
 
-            int found = name.find(params[1]);
-
-            //Ogre::LogManager::getSingletonPtr()->logMessage("Found " + Ogre::StringConverter::toString(found));
-
-            if (found == 0)
+            if( found == 0 )
             {
-                Console::getSingleton().AddTextToOutput(cmd->GetName());
+                Console::getSingleton().AddTextToOutput( cmd->GetName() );
                 ++number;
             }
         }
         else
         {
-            Console::getSingleton().AddTextToOutput(cmd->GetName());
+            Console::getSingleton().AddTextToOutput( cmd->GetName() );
             ++number;
         }
     }
 
-    Console::getSingleton().AddTextToOutput(Ogre::StringConverter::toString(number) + " config commands.\n");
+    Console::getSingleton().AddTextToOutput( Ogre::StringConverter::toString( number ) + " config commands.\n" );
 }
 
 
 
 // set cvar value
 void
-CmdSetConfigVar(const Ogre::StringVector& params)
+CmdSetConfigVar( const Ogre::StringVector& params )
 {
-    if (params.size() < 2 || params.size() > 3)
+    if( params.size() < 2 || params.size() > 3 )
     {
-        Console::getSingleton().AddTextToOutput("Usage: /set <config variable> [value]");
+        Console::getSingleton().AddTextToOutput( "Usage: /set <config variable> [value]" );
         return;
     }
 
-    Ogre::String name = params[1];
+    Ogre::String name = params[ 1 ];
 
-    ConfigVar* cvar = ConfigVarManager::getSingleton().Find(name);
-    if (cvar == NULL)
+    ConfigVar* cvar = ConfigVarManager::getSingleton().Find( name );
+    if( cvar == NULL )
     {
-        LOG_ERROR("Config variable \"" + name + "\" not found.");
+        LOG_ERROR( "Config variable \"" + name + "\" not found." );
         return;
     }
 
-    if (params.size() == 3)
+    if( params.size() == 3 )
     {
-        cvar->SetS(params[2]);
+        cvar->SetS( params[ 2 ] );
 
         Console* console = Console::getSingletonPtr();
-        if (console != NULL)
+        if( console != NULL )
         {
-            LOG_TRIVIAL(params[1] + " changed to \"" + params[2] + "\".");
+            LOG_TRIVIAL( params[ 1 ] + " changed to \"" + params[ 2 ] + "\"." );
         }
     }
     else
     {
         // reset to default
-        cvar->SetS(cvar->GetDefaultValue());
-        LOG_TRIVIAL(params[1] + " changed to default \"" + cvar->GetDefaultValue() + "\".");
+        cvar->SetS( cvar->GetDefaultValue() );
+        LOG_TRIVIAL( params[ 1 ] + " changed to default \"" + cvar->GetDefaultValue() + "\"." );
     }
 }
 

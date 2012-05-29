@@ -1,7 +1,7 @@
 dir
 script_0:
 03a0 (end 03a0): temp6_06 = 62;
-03a5 (end 03a5): field:screen_set_scroll_to_pc_instant(); -- SCRCC
+03a5 (end 03a5): background2d:autoscroll_to_entity( --[[ player entity object here ]] )
 03a6 (end 03a6): [UNREVERSED] BTLMD(20, 00);
 03a9 (end 03a9): music:execute_akao( 10, pointer_to_field_AKAO_0 ); -- play field music
 03ab (end 03ab): field:map_name(1);
@@ -11,7 +11,7 @@ script_0:
 03ba (end 043e): if ( game:variable_get( "progress_game" ) < 7 ) then continue else jumpto(043e);
 03c2 (end 043e): field:pc_lock(true);
 03c4 (end 043e): field:menu_lock(true);
-03c6 (end 043e): field:screen_set_scroll_to_coords_smooth( 65440, 60, 1.06667 );
+03c6 (end 043e): background2d:scroll_to_position( -96, 60, Background2D.SMOOTH, 1.06667 )
 03cf (end 043e): script:request( "cl", "script_3", 6 )
 03d2 (end 043e): game:variable_set("progress_game", 7);
 03d7 (end 043e): script:request_end_sync( "av_m", "script_3", 6 )
@@ -143,6 +143,7 @@ script_4:
                  ba:move_sync()
 0516 (end 0516): script:wait( 1 )
 0519 (end 0519): ba:turn_to_direction( 16.875, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
+ba:turn_sync()
 051f (end 051f): script:wait( 0.666667 )
 0522 (end 0522): -- set window parameters (id = 0, x = 30, y = 20, width = 135, height = 41);
 052c (end 052c): message:show_text_wait(0, 41, x, y);
@@ -175,6 +176,7 @@ script_0:
 
 script_3:
 0576 (end 0576): av_m:turn_to_direction( 39.375, Entity.CLOSEST, Entity.SMOOTH, 0.333333 )
+av_m:turn_sync()
 057c (end 057c): script:wait( 0.0333333 )
 057f (end 057f): av_m:play_animation_stop( "3", 0, 0.3 ) -- speed=1
                  av_m:animation_sync()
