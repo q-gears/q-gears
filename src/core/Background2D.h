@@ -51,6 +51,7 @@ public:
     const Ogre::Vector2& GetScroll() const;
 
     void SetImage( const Ogre::String& image );
+    void SetRange( const int min_x, const int min_y, const int max_x, const int max_y );
     void AddTile( const int x, const int y, const int width, const int height, const float depth, const float u1, const float v1, const float u2, const float v2, const Blending blending );
     void UpdateTileUV( const unsigned int tile_id, const float u1, const float v1, const float u2, const float v2 );
 
@@ -73,6 +74,11 @@ private:
 private:
     Ogre::SceneManager*                   m_SceneManager;
     Ogre::RenderSystem*                   m_RenderSystem;
+
+    int                                   m_RangeMinX;
+    int                                   m_RangeMinY;
+    int                                   m_RangeMaxX;
+    int                                   m_RangeMaxY;
 
     struct Tile
     {

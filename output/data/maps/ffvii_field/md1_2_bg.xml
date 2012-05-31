@@ -1,4 +1,4 @@
-<background2d image="maps/ffvii_field/md1_2.png" position="39.027 227.173 26.4208" orientation="0.887914 0.381507 0.101529 0.23619" fov="14.3239" >
+<background2d image="maps/ffvii_field/md1_2.png" position="39.027 227.173 26.4208" orientation="0.887914 0.381507 0.101529 0.23619" fov="14.3239" range="-768 -768 768 768">
     <tile destination="144 -624" width="48" height="48" uv="0 0 0.015625 0.03125" depth="999" blending="alpha" />
     <tile destination="192 -624" width="48" height="48" uv="0.015625 0 0.03125 0.03125" depth="999" blending="alpha" />
     <tile destination="240 -624" width="48" height="48" uv="0 0.03125 0.015625 0.0625" depth="999" blending="alpha" />

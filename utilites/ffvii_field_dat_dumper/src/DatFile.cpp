@@ -2642,6 +2642,26 @@ DatFile::GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre
 
 
 void
+DatFile::GetScreenRange( int& min_x, int& min_y, int& max_x, int& max_y )
+{
+    // sector 5
+    u32 offset_to_triggers = 0x1c + GetU32LE( 0x10 ) - GetU32LE( 0x00 );
+
+    min_x = ( s16 )GetU16LE( offset_to_triggers + 0x0c ) * 3;
+    min_y = ( s16 )GetU16LE( offset_to_triggers + 0x0e ) * 3;
+    max_x = ( s16 )GetU16LE( offset_to_triggers + 0x10 ) * 3;
+    max_y = ( s16 )GetU16LE( offset_to_triggers + 0x12 ) * 3;
+
+    //LOGGER->Log(LOGGER_INFO, "Screen range: x: max = %d", max_x);
+    //LOGGER->Log(LOGGER_INFO, "                 min = %d", min_x);
+    //LOGGER->Log(LOGGER_INFO, "              y: max = %d", max_y);
+    //LOGGER->Log(LOGGER_INFO, "                 min = %d", min_y);
+    //LOGGER->Log(LOGGER_INFO, "Leftover info %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x %08x %08x %08x %08x %08x %08x", GetU8(offset_to_triggers + 0x14), GetU8(offset_to_triggers + 0x15), GetU8(offset_to_triggers + 0x16), GetU8(offset_to_triggers + 0x17), GetU8(offset_to_triggers + 0x18), GetU8(offset_to_triggers + 0x19), GetU8(offset_to_triggers + 0x1A), GetU8(offset_to_triggers + 0x1B), GetU8(offset_to_triggers + 0x1C), GetU8(offset_to_triggers + 0x1D), GetU8(offset_to_triggers + 0x1E), GetU8(offset_to_triggers + 0x1F), GetU32LE(offset_to_triggers + 0x20), GetU32LE(offset_to_triggers + 0x24), GetU32LE(offset_to_triggers + 0x28), GetU32LE(offset_to_triggers + 0x2C), GetU32LE(offset_to_triggers + 0x30), GetU32LE(offset_to_triggers + 0x34));
+}
+
+
+
+void
 DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim )
 {
     Logger* export_text = new Logger( export_path + "maps/ffvii_field/" + field.name + "_bg.xml" );
@@ -2655,7 +2675,10 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     Ogre::Degree fov = Ogre::Degree( 90 );
     GetCamera( position, orientation, fov, field );
 
-    export_text->Log( "<background2d image=\"maps/ffvii_field/" + field.name + ".png\" position=\"" + Ogre::StringConverter::toString( position ) + "\" orientation=\"" + Ogre::StringConverter::toString( orientation ) + "\" fov=\"" + Ogre::StringConverter::toString( fov ) + "\" >\n" );
+    int min_x, min_y, max_x, max_y;
+    GetScreenRange( min_x, min_y, max_x, max_y );
+
+    export_text->Log( "<background2d image=\"maps/ffvii_field/" + field.name + ".png\" position=\"" + Ogre::StringConverter::toString( position ) + "\" orientation=\"" + Ogre::StringConverter::toString( orientation ) + "\" fov=\"" + Ogre::StringConverter::toString( fov ) + "\" range=\"" + IntToString( min_x ) + " " + IntToString( min_y ) + " " + IntToString( max_x ) + " " + IntToString( max_y ) + "\">\n" );
 
     full_image = CreateSurface( width, height );
     x_32 = 0; y_32 = 0;

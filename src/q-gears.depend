@@ -26197,7 +26197,7 @@
 	"Event.h"
 	"Walkmesh.h"
 
-1338229050 k:\q-gears\src\core\background2d.h
+1338490350 k:\q-gears\src\core\background2d.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
@@ -26825,7 +26825,7 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1338409298 source:k:\q-gears\src\core\background2d.cpp
+1338494346 source:k:\q-gears\src\core\background2d.cpp
 	"Background2D.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
@@ -27091,7 +27091,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1338409054 source:k:\q-gears\src\core\xmlbackground2dfile.cpp
+1338493682 source:k:\q-gears\src\core\xmlbackground2dfile.cpp
 	"XmlBackground2DFile.h"
 	"Background2D.h"
 	"Background2DAnimation.h"

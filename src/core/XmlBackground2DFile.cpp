@@ -40,10 +40,12 @@ XmlBackground2DFile::Load()
     {
         background->SetImage( image );
 
+        Ogre::Quaternion range = GetQuaternion( node, "range", Ogre::Quaternion( -100000, -100000, 100000, 100000 ) );
+        background->SetRange( ( int )range.w, ( int )range.x, ( int )range.y, ( int )range.z );
+
         Ogre::Vector3 position = GetVector3( node, "position", Ogre::Vector3::ZERO );
         Ogre::Quaternion orientation = GetQuaternion( node, "orientation", Ogre::Quaternion::IDENTITY );
         float fov = GetFloat( node, "fov", 90 );
-
         CameraManager::getSingleton().Set2DCamera( position, orientation, Ogre::Radian( Ogre::Degree( fov ) ) );
 
         int tile_id = 0;

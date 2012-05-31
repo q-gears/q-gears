@@ -119,6 +119,7 @@ CameraManager::SetCameraFree( const bool enable )
     if( m_CameraFree == true )
     {
         m_Camera->resetFrustumExtents();
+        CameraManager::getSingleton().GetCurrentCamera()->setFOVy( Ogre::Radian( Ogre::Math::PI / 4.0 ) );
     }
     else
     {

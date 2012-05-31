@@ -32,8 +32,6 @@ Q-Gears v0.21 (3rd run wild) | 2012-06-??
 
 To Do
 ----------
-* [Background] Implement all background features that used in FFVII 1st mission until reactor blow.
-* [Background] Implement background borders.
 * [Background] Free 2d Scroll.
 * [Background] Implement palette animation.
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
@@ -41,6 +39,12 @@ To Do
 * [Script] Try to separate ui and entity script debug.
 
 
+
+2012-06-01
+----------
+* [Camera] Add reset of ingame FOV when switch to free cemera. [Akari]
+* [Background] Add config variable to disable range limitations. [Akari]
+* [Background] Range of Background2D scrolling has been exported and implemented. [Akari]
 
 2012-05-31
 ----------

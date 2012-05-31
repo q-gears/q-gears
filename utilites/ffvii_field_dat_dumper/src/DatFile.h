@@ -131,6 +131,7 @@ public:
     void DumpScript( const Ogre::String& export_path, const Field& field );
     void DumpWalkmesh( const Ogre::String& export_path, const Field& field );
     void GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre::Degree& fov, const Field& field );
+    void GetScreenRange( int& min_x, int& min_y, int& max_x, int& max_y );
     void DumpBackground( const Ogre::String& export_path, const Field& field, MimFile& mim );
     void DumpTriggers( const Ogre::String& export_path, const Field& field );
     static void DumpSoundOpcodesData( const Ogre::String& export_file );

@@ -12,13 +12,19 @@
 
 
 ConfigVar cv_debug_background2d( "debug_background2d", "Draw background debug info", "false" );
-ConfigVar cv_background2d_show( "background2d_show", "Draw background or not", "true" );
+ConfigVar cv_show_background2d( "show_background2d", "Draw background", "true" );
+ConfigVar cv_background2d_range( "background2d_range", "Use range limit when scroll background", "true" );
 
 
 
 Background2D::Background2D():
     m_AlphaMaxVertexCount( 0 ),
     m_AddMaxVertexCount( 0 ),
+
+    m_RangeMinX( -100000 ),
+    m_RangeMinY( -100000 ),
+    m_RangeMaxX( 100000 ),
+    m_RangeMaxY( 100000 ),
 
     m_ScrollEntity( NULL ),
     m_ScrollPositionStart( Ogre::Vector2::ZERO ),
@@ -377,7 +383,18 @@ void
 Background2D::SetScroll( const Ogre::Vector2& position )
 {
     m_Position = position;
-    CameraManager::getSingleton().Set2DScroll( position );
+
+    if( cv_background2d_range.GetB() == true )
+    {
+        float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth() / 2.0f;
+        float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight() / 2.0f;
+        m_Position.x = ( m_Position.x + scr_width > m_RangeMaxX ) ? m_RangeMaxX - scr_width : m_Position.x;
+        m_Position.x = ( m_Position.x - scr_width < m_RangeMinX ) ? m_RangeMinX + scr_width : m_Position.x;
+        m_Position.y = ( m_Position.y + scr_height > m_RangeMaxY ) ? m_RangeMaxY - scr_height : m_Position.y;
+        m_Position.y = ( m_Position.y - scr_height < m_RangeMinY ) ? m_RangeMinY + scr_height : m_Position.y;
+    }
+
+    CameraManager::getSingleton().Set2DScroll( m_Position );
 }
 
 
@@ -399,6 +416,20 @@ Background2D::SetImage( const Ogre::String& image )
     pass = m_AddMaterial->getTechnique( 0 )->getPass( 0 );
     tex = pass->getTextureUnitState( 0 );
     tex->setTextureName( image );
+}
+
+
+
+void
+Background2D::SetRange( const int min_x, const int min_y, const int max_x, const int max_y )
+{
+    // if screen range lesser than screen size - expand screen range to screen size
+    float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth() / 2.0f;
+    float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight() / 2.0f;
+    m_RangeMinX = ( min_x > -scr_width ) ? -scr_width : min_x;
+    m_RangeMinY = ( min_y > -scr_height ) ? -scr_height : min_y;
+    m_RangeMaxX = ( max_x < scr_width ) ? scr_width : max_x;
+    m_RangeMaxY = ( max_y < scr_height ) ? scr_height : max_y;
 }
 
 
@@ -685,7 +716,7 @@ Background2D::ScriptAnimationSync()
 void
 Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation )
 {
-    if( cv_background2d_show.GetB() == false )
+    if( cv_show_background2d.GetB() == false )
     {
         return;
     }
