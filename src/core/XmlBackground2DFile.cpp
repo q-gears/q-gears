@@ -44,9 +44,7 @@ XmlBackground2DFile::Load()
         Ogre::Quaternion orientation = GetQuaternion( node, "orientation", Ogre::Quaternion::IDENTITY );
         float fov = GetFloat( node, "fov", 90 );
 
-        CameraManager::getSingleton().GetCurrentCamera()->setPosition( position );
-        CameraManager::getSingleton().GetCurrentCamera()->setOrientation( orientation );
-        CameraManager::getSingleton().GetCurrentCamera()->setFOVy( Ogre::Radian( Ogre::Degree( fov ) ) );
+        CameraManager::getSingleton().Set2DCamera( position, orientation, Ogre::Radian( Ogre::Degree( fov ) ) );
 
         int tile_id = 0;
 

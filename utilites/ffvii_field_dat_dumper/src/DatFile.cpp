@@ -1858,15 +1858,10 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                     export_script->Log( "                 " + entity_list[ i ] + ":animation_sync()\n" );
                     AdvanceScript( 5, script, end );
                 }
-                else if (opcode == 0xBD) // ASPED
+                else if( opcode == 0xBD ) // ASPED
                 {
-                    export_script->Log(
-                        "-- set speed of entity animation to \"" +
-                        ParseGetVariable(GetU8(script + 1), GetU16LE(script + 2)) +
-                        "\"\n"
-                    );
-
-                    AdvanceScript(4, script, end);
+                    export_script->Log( "-- set speed of entity animation to \"" + ParseGetVariable( GetU8( script + 1 ), GetU16LE( script + 2 ), false, 0x10 ) + "\"\n" );
+                    AdvanceScript( 4, script, end );
                 }
                 else if (opcode == 0xBF) // CC
                 {

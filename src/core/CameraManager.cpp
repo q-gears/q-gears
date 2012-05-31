@@ -1,4 +1,5 @@
 #include "CameraManager.h"
+#include "CameraManagerCommands.h"
 
 #include <OgreRenderWindow.h>
 #include <OgreRoot.h>
@@ -11,7 +12,6 @@
 
 
 ConfigVar cv_cam_speed( "camera_speed", "Camera speed", "0.02" );
-ConfigVar cv_cam_free( "camera_free", "Enable or disable free camera", "false" );
 
 
 
@@ -20,9 +20,17 @@ template<>CameraManager* Ogre::Singleton< CameraManager >::ms_Singleton = NULL;
 
 
 CameraManager::CameraManager():
-    m_CameraFreeRotate( false )
+    m_CameraFree( false ),
+    m_CameraFreeRotate( false ),
+
+    m_2DPosition( Ogre::Vector3::ZERO ),
+    m_2DOrientation( Ogre::Quaternion::ZERO ),
+    m_2DFOV( 0 ),
+    m_2DScroll( Ogre::Vector2::ZERO )
 {
     LOG_TRIVIAL( "CameraManager started." );
+
+    InitCommands();
 
     m_Camera = Ogre::Root::getSingleton().getSceneManager( "Scene" )->createCamera( "Camera" );
     m_Camera->setNearClipDistance( 0.001f );
@@ -46,7 +54,7 @@ CameraManager::~CameraManager()
 void
 CameraManager::Input( const Event& event )
 {
-    if( cv_cam_free.GetB() == true )
+    if( m_CameraFree == true )
     {
         float speed = cv_cam_speed.GetF();
         if( InputManager::getSingleton().IsButtonPressed( OIS::KC_RSHIFT ) || InputManager::getSingleton().IsButtonPressed( OIS::KC_LSHIFT ) )
@@ -99,6 +107,70 @@ void
 CameraManager::OnResize()
 {
     m_Camera->setAspectRatio( Ogre::Real( m_Viewport->getActualWidth() ) / Ogre::Real( m_Viewport->getActualHeight() ) );
+}
+
+
+
+void
+CameraManager::SetCameraFree( const bool enable )
+{
+    m_CameraFree = enable;
+
+    if( m_CameraFree == true )
+    {
+        m_Camera->resetFrustumExtents();
+    }
+    else
+    {
+        CameraManager::getSingleton().GetCurrentCamera()->setPosition( m_2DPosition );
+        CameraManager::getSingleton().GetCurrentCamera()->setOrientation( m_2DOrientation );
+        CameraManager::getSingleton().GetCurrentCamera()->setFOVy( m_2DFOV );
+        Set2DScroll( Get2DScroll() );
+    }
+}
+
+
+
+void
+CameraManager::Set2DCamera( const Ogre::Vector3 position, const Ogre::Quaternion orientation, const Ogre::Radian fov )
+{
+    m_2DPosition = position;
+    m_2DOrientation = orientation;
+    m_2DFOV = fov;
+    CameraManager::getSingleton().GetCurrentCamera()->setPosition( m_2DPosition );
+    CameraManager::getSingleton().GetCurrentCamera()->setOrientation( m_2DOrientation );
+    CameraManager::getSingleton().GetCurrentCamera()->setFOVy( m_2DFOV );
+    Set2DScroll( Ogre::Vector2::ZERO );
+}
+
+
+
+void
+CameraManager::Set2DScroll( const Ogre::Vector2& position )
+{
+    m_2DScroll = position;
+
+    if( m_CameraFree == true )
+    {
+        return;
+    }
+
+    float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
+    float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    float left, right, top, bottom;
+    m_Camera->resetFrustumExtents();
+    m_Camera->getFrustumExtents( left, right, top, bottom );
+    float move_x = ( ( right - left ) / width ) * position.x;
+    float move_y = ( ( bottom - top ) / height ) * -position.y;
+    m_Camera->setFrustumExtents( left - move_x, right - move_x, top + move_y, bottom + move_y );
+}
+
+
+
+const Ogre::Vector2&
+CameraManager::Get2DScroll() const
+{
+    return m_2DScroll;
 }
 
 

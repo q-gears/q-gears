@@ -166,17 +166,14 @@ if (current_model != FF)
         }
     }
 
-    V1 = w[8009C6DC];
+    V1 = w[8009c6dc];
     V0 = hu[script_pointer_offset];
     A1 = bu[V1 + V0 + 4];
 
-    V1 = bu[V1 + V0 + 1];
-    [model_data_offset + current_model * 84 + 5E] = b(V1);
+    [model_data_offset + current_model * 84 + 5E] = b(bu[V1 + V0 + 1]);
 
-    A0 = h[8009D828 + current_model * 2];
-    A0 = A0 / A1;
-    A2 = w[8009C6DC];
-    [model_data_offset + current_model * 84 + 60] = h(A0);
+    A2 = w[8009c6dc];
+    [model_data_offset + current_model * 84 + 60] = h(h[8009d828 + current_model * 2] / A1);
 
     V0 = hu[script_pointer_offset];
     V1 = bu[A2 + V0 + 2];
@@ -187,9 +184,9 @@ if (current_model != FF)
     A2 = bu[A2 + V0 + 3];
     A2 = A2 / A1;
 
-    V1 = w[8008357C];
+    V1 = w[8008357c];
     V0 = bu[V1 + current_model * 8 + 4];
-    A0 = w[8004A62C];
+    A0 = w[8004a62c];
     V0 = w[A0 + 4];
     A0 = hu[V0 + V1 * 24 + 1A];
     V1 = w[V0 + V1 * 24 + 1C];

@@ -92,9 +92,9 @@
                 4 - up/down LADER.
                 5 - left/right LADER.
 + 5e []       animation id.
-+ 60 [][]     animation speed. Store 10 here during MOVE opcode and animation speed during LADER.
-+ 62 [][]     current frame. Store 0 here during MOVE and LADER opcode.
-+ 64 [][]     number of frames. Set during MOVE and LADER opcode (animation related. maybe frames number)
++ 60 [][]     animation speed. Store 10 here during MOVE opcode and animation speed during LADER. 4bit fixed point.
++ 62 [][]     current frame. Store 0 here during MOVE and LADER opcode. 4bit fixed point.
++ 64 [][]     number of frames. Set during MOVE and LADER opcode.
 + 66 [][]     store CHAR byte here.
 + 68 [][]     0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
 + 6a [][]     stage of state.
@@ -354,7 +354,7 @@
 
 8009d820 unknown value that checked x & 3 == 0.
 
-8009d828 [][] array of animation speed. ASPED set speed to model data+60 and here.
+8009d828 [][] array of animation speed. ASPED set speed to model data+60 and here. 4bit fixed point.
 
 800a00dc []       some flag in model loading functions. If true - load global texture.
 
@@ -505,7 +505,7 @@
 
 
 
-80138250        [8004a62c]  header for new model structures (size 0x24).
+80138250 [8004a62c]  header for new model structures (size 0x24).
 80138250 + 00 []       number of models.
 80138250 + 01 []       store 00 here during init.
 80138250 + 02 [][]     store 00 here during init.
@@ -533,6 +533,6 @@
 
 
 
-8013C864                    BALLET.BCX
+8013c864                    BALLET.BCX
 
-8013F558                    BSX file.
+8013f558                    BSX file.

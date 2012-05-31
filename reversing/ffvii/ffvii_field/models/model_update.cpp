@@ -34,13 +34,13 @@ if (number_of_model > 0)
             A1 = SP + 18;
             field_calculate_distance_to_screen; // calculate distance to screen
 
-            if (V0 < 0f00)
+            if( V0 < 0f00 )
             {
                 V0 = w[model_struct + 4] + bu[block7_data + S2 * 8 + 4] * 24; // new_structures_header
                 [V0 + 7] = b(bu[80074ea4 + S2 * 84 + 38]); // model direction
 
                 V1 = b[V0 + 1]; // +1[] KAWAI byte in new structure
-                if (V1 == 4 || V1 == 8 || V1 == 9 || V1 == b || V1 == c)
+                if( V1 == 4 || V1 == 8 || V1 == 9 || V1 == b || V1 == c )
                 {
                     // identity matrix
                     [SP + 20] = h(1000); [SP + 22] = h(0); [SP + 24] = h(0);

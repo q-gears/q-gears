@@ -60,6 +60,7 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_TurnSeconds( 0 ),
     m_TurnCurrentSeconds( 0 ),
 
+    m_AnimationSpeed( 1 ),
     m_AnimationDefault( "Idle" ),
     m_AnimationCurrentName( "" ),
     m_AnimationAutoPlay( true )
@@ -141,7 +142,7 @@ Entity::UpdateDebug()
         DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
         DEBUG_DRAW.SetScreenSpace( true );
         DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.CENTER );
-        DEBUG_DRAW.SetFadeDistance( 20, 30 );
+        DEBUG_DRAW.SetFadeDistance( 40, 50 );
 
         Ogre::Vector3 entity_pos = GetPosition();
 
@@ -1001,6 +1002,14 @@ float
 Entity::GetTurnCurrentSeconds() const
 {
     return m_TurnCurrentSeconds;
+}
+
+
+
+void
+Entity::ScriptSetAnimationSpeed( const float speed )
+{
+    m_AnimationSpeed = speed;
 }
 
 

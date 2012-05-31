@@ -218,6 +218,10 @@ Background2D::OnResize()
 
         vertex_buffer->unlock();
     }
+
+
+
+    SetScroll( GetScroll() );
 }
 
 
@@ -373,16 +377,7 @@ void
 Background2D::SetScroll( const Ogre::Vector2& position )
 {
     m_Position = position;
-
-    float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
-
-    float left, right, top, bottom;
-    CameraManager::getSingleton().GetCurrentCamera()->resetFrustumExtents();
-    CameraManager::getSingleton().GetCurrentCamera()->getFrustumExtents( left, right, top, bottom );
-    float move_x = ( ( right - left ) / width ) * position.x;
-    float move_y = ( ( bottom - top ) / height ) * -position.y;
-    CameraManager::getSingleton().GetCurrentCamera()->setFrustumExtents( left - move_x, right - move_x, top + move_y, bottom + move_y );
+    CameraManager::getSingleton().Set2DScroll( position );
 }
 
 

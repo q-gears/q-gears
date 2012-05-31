@@ -34,6 +34,6 @@ CmdScriptRunFile( const Ogre::StringVector& params )
 void
 ScriptManager::InitCmd()
 {
-    ConfigCmdManager::getSingleton().AddCmd( "script_run_string", "Run script string", "", CmdScriptRunString, NULL );
-    ConfigCmdManager::getSingleton().AddCmd( "script_run_file", "Run script file", "", CmdScriptRunFile, NULL );
+    ConfigCmdManager::getSingleton().AddCommand( "script_run_string", "Run script string", "", CmdScriptRunString, NULL );
+    ConfigCmdManager::getSingleton().AddCommand( "script_run_file", "Run script file", "", CmdScriptRunFile, NULL );
 }

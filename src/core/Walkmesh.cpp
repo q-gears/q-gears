@@ -76,7 +76,7 @@ Walkmesh::UpdateDebug()
             //DEBUG_DRAW.Triangle3d( m_Triangles[ i ].a, m_Triangles[ i ].b, m_Triangles[ i ].c );
 
             DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
-            DEBUG_DRAW.SetFadeDistance( 30, 40 );
+            DEBUG_DRAW.SetFadeDistance( 40, 50 );
             Ogre::Vector3 triangle_pos = ( m_Triangles[ i ].a + m_Triangles[ i ].b + m_Triangles[ i ].c) / 3;
             DEBUG_DRAW.Text( triangle_pos, 0, 0, Ogre::StringConverter::toString( i ) );
         }

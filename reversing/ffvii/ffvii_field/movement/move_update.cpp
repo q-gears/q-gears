@@ -1,4 +1,4 @@
-﻿//////////////////////////////////////////////////////////
+﻿////////////////////////////////
 // handle_update
 S4 = A0;
 
@@ -577,7 +577,7 @@ if (number_of_models > 0)
                         }
                         else
                         {
-                            if (up_down_switch == 0)
+                            if( up_down_switch == 0 )
                             {
                                 start = 4000;
                                 ens = 1000;
@@ -589,60 +589,50 @@ if (number_of_models > 0)
                             }
                         }
 
-                        if (S4 & start)
+                        if( S4 & start )
                         {
-                            step = h[80074EA4 + S2 * 84 + 32];
-                            if (step == 0)
+                            step = h[80074ea4 + S2 * 84 + 32];
+                            if( step == 0 )
                             {
-                                [80074EA4 + S2 * 84 + 6A] = h(2);
+                                [80074ea4 + S2 * 84 + 6a] = h(2);
                             }
                             else
                             {
                                 step = step - 1;
-                                [80074EA4 + S2 * 84 + 32] = h(step);
+                                [80074ea4 + S2 * 84 + 32] = h(step);
 
-
-                                V0 = hu[80074EA4 + S2 * 84 + 62];
-                                animation_speed = hu[80074EA4 + S2 * 84 + 60];
-                                V0 = V0 - animation_speed;
-                                [80074EA4 + S2 * 84 + 62] = h(V0);
+                                V0 = hu[80074ea4 + S2 * 84 + 62] - hu[80074ea4 + S2 * 84 + 60]; // reduce by animation_speed
+                                [80074ea4 + S2 * 84 + 62] = h(V0);
                                 V0 = V0 << 10;
 
-                                if (V0 < 0)
+                                if( V0 < 0 )
                                 {
-                                    V0 = hu[80074EA4 + S2 * 84 + 64];
-                                    V0 = V0 * 10;
-                                    [80074EA4 + S2 * 84 + 62] = h(V0);
+                                    [80074ea4 + S2 * 84 + 62] = h(hu[80074EA4 + S2 * 84 + 64] * 10);
                                 }
                             }
                         }
 
-                        if (S4 & end)
+                        if( S4 & end )
                         {
-                            step = h[80074EA4 + S2 * 84 + 32];
-                            steps = h[80074EA4 + S2 * 84 + 30];
-                            if (step == steps)
+                            step = h[80074ea4 + S2 * 84 + 32];
+                            steps = h[80074ea4 + S2 * 84 + 30];
+                            if( step == steps )
                             {
-                                move_to_triangle = hu[80074EA4 + S2 * 84 + 74];
-                                [80074EA4 + S2 * 84 + 72] = h(move_to_triangle);
-                                [80074EA4 + S2 * 84 + 6A] = h(2);
+                                move_to_triangle = hu[80074ea4 + S2 * 84 + 74];
+                                [80074ea4 + S2 * 84 + 72] = h(move_to_triangle);
+                                [80074ea4 + S2 * 84 + 6a] = h(2);
                             }
                             else
                             {
                                 step = step + 1;
-                                [80074EA4 + S2 * 84 + 32] = h(step);
+                                [80074ea4 + S2 * 84 + 32] = h(step);
 
-                                V0 = hu[80074EA4 + S2 * 84 + 62];
-                                animation_speed = hu[80074EA4 + S2 * 84 + 60];
-                                V0 = V0 + animation_speed;
-                                [80074EA4 + S2 * 84 + 62] = h(V0);
+                                V0 = hu[80074EA4 + S2 * 84 + 62] + hu[80074EA4 + S2 * 84 + 60]; // increment by animation speed
+                                [80074ea4 + S2 * 84 + 62] = h(V0);
 
-                                V1 = hu[80074EA4 + S2 * 84 + 64];
-                                V0 = V0 * 10;
-
-                                if (V1 < V0)
+                                if( hu[80074ea4 + S2 * 84 + 64] < V0 * 10 )
                                 {
-                                    [80074EA4 + S2 * 84 + 62] = h(0);
+                                    [80074ea4 + S2 * 84 + 62] = h(0);
                                 }
                             }
                         }
@@ -713,21 +703,21 @@ if (number_of_models > 0)
 
 La8274:	; 800A8274
 return;
-//////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////
+////////////////////////////////
 // handle_animation_update
-A2 = A0;
-V0 = w[8008357C];
-A0 = bu[V0 + A2 * 8 + 4];
-if (A0 != FF)
+model_id = A0;
+dat_block7 = w[8008357c];
+A0 = bu[dat_block7 + model_id * 8 + 4];
+if( A0 != ff )
 {
-    V1 = w[8004A62C];
+    V1 = w[8004a62c];
     V1 = w[V1 + 4];
-    new_structure_data = w[V1 + A0 * 24 + 1C];
-    new_structure_animation = hu[V1 + A0 * 24 + 1A];
+    new_structure_data = w[V1 + A0 * 24 + 1c];
+    new_structure_animation = hu[V1 + A0 * 24 + 1a];
 
     // don't play automove
     if( bu[8009abf4 + 33] == 1 )
@@ -735,41 +725,38 @@ if (A0 != FF)
         return;
     }
 
-    current_animation_value = hu[80074ea4 + A2 * 84 + 62];
-    animation_speed = hu[80074ea4 + A2 * 84 + 60];
-    [80074ea4 + A2 * 84 + 62] = h(current_animation_value + animation_speed);
+    // increase current frame if value by animation speed
+    [80074ea4 + model_id * 84 + 62] = h(hu[80074ea4 + model_id * 84 + 62] + hu[80074ea4 + model_id * 84 + 60]);
 
     // if manual visible entity and UC == 0
-    if (A2 == h[800965e0] && bu[8009abf4 + 32] == 0)
+    if( model_id == h[800965e0] && bu[8009abf4 + 32] == 0 )
     {
-        animation_id = bu[80074ea4 + A2 * 84 + 5e];
+        animation_id = bu[80074ea4 + model_id * 84 + 5e];
         number_of_frame = hu[new_structure_data + new_structure_animation + animation_id * 10];
-        [80074ea4 + A2 * 84 + 64] = h(number_of_frame - 1);
+        [80074ea4 + model_id * 84 + 64] = h(number_of_frame - 1);
 
-        current_animation_value = h[80074ea4 + A2 * 84 + 62];
-        if (current_animation_value > (number_of_frame - 1) * 10)
+        if( h[80074ea4 + model_id * 84 + 62] > ( number_of_frame - 1 ) * 10 )
         {
-            [80074ea4 + A2 * 84 + 62] = h(0);
+            [80074ea4 + model_id * 84 + 62] = h(0);
         }
     }
     else
     {
-        number_of_frame = h[80074ea4 + A2 * 84 + 64];
-        current_animation_value = h[80074ea4 + A2 * 84 + 62];
+        number_of_frame = h[80074ea4 + model_id * 84 + 64];
 
-        if (current_animation_value > number_of_frame * 10)
+        if( h[80074ea4 + model_id * 84 + 62] > ( number_of_frame << 4 ) )
         {
-            [80074ea4 + A2 * 84 + 62] = h(number_of_frame * 10);
+            [80074ea4 + model_id * 84 + 62] = h(number_of_frame << 4);
         }
     }
 }
 
 return;
-////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////
+////////////////////////////////
 // calculate_current_value_by_steps
 start        = A0;
 final        = A1;
@@ -787,11 +774,11 @@ else
 }
 
 return start + V0;
-////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////
+////////////////////////////////
 // line_clear_entity_in_line
 V0 = 1F;
 
@@ -802,11 +789,11 @@ loopaa330:	; 800AA330
 800AA338	bgez   v0, loopaa330 [$800aa330]
 
 return;
-////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////////
+////////////////////////////////
 La8858
 model_data_offset = A0;
 model_data_68 = A1;
@@ -868,11 +855,11 @@ if (length_square >= V0 && length_square >= 4)
 [model_data_offset + 10] = w(w[model_data_offset + 7C]);
 
 return 0;
-////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////
+////////////////////////////////
 // move_add_shift_rotate
 // A0 - button
 // A1 - model_id
@@ -895,11 +882,11 @@ if (bu[8009abf4 + 32] == 0) // UC byte
 }
 
 return;
-////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////
+////////////////////////////////
 // funcaba70
 
 // get encounter table address
@@ -1161,4 +1148,4 @@ if (V0 == 0)
 
 Labef0:	; 800ABEF0
 return;
-////////////////////////////////////////////////////
+////////////////////////////////

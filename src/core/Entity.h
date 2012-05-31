@@ -170,6 +170,7 @@ public:
     float                GetTurnCurrentSeconds() const;
 
     // animation related
+    void                 ScriptSetAnimationSpeed( const float speed );
     const Ogre::String&  GetDefaultAnimationName() const;
     const Ogre::String&  GetCurrentAnimationName() const;
     AnimationState       GetAnimationState() const;
@@ -257,6 +258,7 @@ protected:
     std::vector< ScriptId > m_TurnSync;
 
     // animation
+    float                   m_AnimationSpeed;
     Ogre::String            m_AnimationCurrentName;
     std::vector< ScriptId > m_AnimationSync;
     AnimationState          m_AnimationState;

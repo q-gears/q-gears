@@ -419,20 +419,20 @@ CmdViewerCompletion( Ogre::StringVector& complete_params )
 void
 ConfigCmdManager::InitCmd()
 {
-    AddCmd( "quit", "Stops application and quit", "", CmdQuit, NULL );
-    AddCmd( "echo", "Print command parameters", "", CmdEcho, NULL );
-    AddCmd( "config_var_list", "List of registered config variables", "[<filter substring>]", CmdConfigVarList, NULL );
-    AddCmd( "config_cmd_list", "List of registered config commands", "[<filter substring>]", CmdConfigCmdList, NULL );
-    AddCmd( "set", "Set cvar value", "<cvar name> [value]", CmdSetConfigVar, NULL );
-    AddCmd( "toggle", "Toggle cvar value", "<cvar name> [value1] [value2] ...", CmdToggleConfigVar, NULL );
-    AddCmd( "increment", "Increment cvar value", "<cvar name> [value min] [value max] [step]", CmdIncrementConfigVar, NULL );
+    AddCommand( "quit", "Stops application and quit", "", CmdQuit, NULL );
+    AddCommand( "echo", "Print command parameters", "", CmdEcho, NULL );
+    AddCommand( "config_var_list", "List of registered config variables", "[<filter substring>]", CmdConfigVarList, NULL );
+    AddCommand( "config_cmd_list", "List of registered config commands", "[<filter substring>]", CmdConfigCmdList, NULL );
+    AddCommand( "set", "Set cvar value", "<cvar name> [value]", CmdSetConfigVar, NULL );
+    AddCommand( "toggle", "Toggle cvar value", "<cvar name> [value1] [value2] ...", CmdToggleConfigVar, NULL );
+    AddCommand( "increment", "Increment cvar value", "<cvar name> [value min] [value max] [step]", CmdIncrementConfigVar, NULL );
 
-    AddCmd( "set_log_level", "Set log messages level", "", CmdSetLogLevel, NULL );
+    AddCommand( "set_log_level", "Set log messages level", "", CmdSetLogLevel, NULL );
 
-    AddCmd( "map", "Run game module", "", CmdMap, CmdMapCompletion );
+    AddCommand( "map", "Run game module", "", CmdMap, CmdMapCompletion );
 
-    AddCmd( "resolution", "Change resolution", "", CmdResolution, CmdResolutionCompletition );
-    AddCmd( "screenshot", "Capture current screen content", "", CmdScreenshot, NULL );
+    AddCommand( "resolution", "Change resolution", "", CmdResolution, CmdResolutionCompletition );
+    AddCommand( "screenshot", "Capture current screen content", "", CmdScreenshot, NULL );
 
-    //AddCmd( "viewer", "Run viewer module", "", CmdViewer, CmdViewerCompletion );
+    //AddCommand( "viewer", "Run viewer module", "", CmdViewer, CmdViewerCompletion );
 }

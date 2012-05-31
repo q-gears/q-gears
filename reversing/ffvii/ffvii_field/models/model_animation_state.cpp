@@ -35,8 +35,8 @@ if( number_of_entity > 0 )
                             A1 = bu[V1 + model * 8 + 4];
                             V1 = w[8004a62c];
                             V1 = w[V1 + 4];
-                            A1 = hu[V1 + A1 * 24 + 1A];
-                            A0 = w[V1 + A1 * 24 + 1C];
+                            A1 = hu[V1 + A1 * 24 + 1a];
+                            A0 = w[V1 + A1 * 24 + 1c];
                             number_of_frames = hu[A0 + A1 + default_animation * 10];
                             [offset_to_model + model * 84 + 64] = h(number_of_frames - 1);
                         }

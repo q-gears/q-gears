@@ -19,7 +19,6 @@
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
-					<Add library="D:\Program Files\mingw\lib\z.lib" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
 					<Add directory="$(OGRE_HOME)\lib\opt\release" />

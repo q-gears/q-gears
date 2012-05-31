@@ -75,13 +75,13 @@ EntityContainer[ "Cloud" ] = {
     on_start = function( self )
         set_entity_to_character( "Cloud", "Cloud" )
         self.cloud = entity_manager:get_entity( "Cloud" )
-        self.cloud:set_move_speed( 1.875 )
 
         return 0
     end,
 
     --[[ Move Cloud to talk position for the scene. ]]
     scene_part_1 = function( self )
+        self.cloud:set_move_speed( 1.875 )
         self.cloud:move_to_position( 4.48438, 5.30469 )
         self.cloud:move_sync()
         self.cloud:set_direction( 174.375 )
@@ -133,14 +133,13 @@ EntityContainer[ "Cloud" ] = {
 
     --[[ look at reactor and run after Barret and others. ]]
     scene_part_16 = function( self )
---04a5 (end 04a5): -- set speed of entity animation to "32"
+        self.cloud:set_animation_speed( 2 ) -- suspisious. Looks like it must be 0.5
         script:wait( 0.6 )
---ANIM!2 (05,01)
-        self.cloud:play_animation_stop( "5" )
+        self.cloud:play_animation_stop( "LookUp" )
         self.cloud:animation_sync()
         self.cloud:set_move_speed( 1.17187 )
-        self.cloud:set_default_animation( "0" )
-        self.cloud:play_animation( "0" )
+        self.cloud:set_default_animation( "Idle" )
+        self.cloud:play_animation( "Idle" )
         self.cloud:move_to_position( 5.02344, 11.4141 )
         self.cloud:move_sync()
 
@@ -215,7 +214,6 @@ EntityContainer[ "Barret" ] = {
 
 
 
--- AvM
 EntityContainer[ "Biggs" ] = {
     biggs = nil,
 
@@ -295,7 +293,6 @@ EntityContainer[ "Biggs" ] = {
 
 
 
--- AvL
 EntityContainer[ "Jessie" ] = {
     jessie = nil,
 
@@ -348,7 +345,6 @@ EntityContainer[ "Jessie" ] = {
 
 
 
--- AvS
 EntityContainer[ "Wedge" ] = {
     wedge = nil,
 

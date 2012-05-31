@@ -47,5 +47,5 @@ CmdBind( const Ogre::StringVector& params )
 void
 InputManager::InitCmd()
 {
-    ConfigCmdManager::getSingleton().AddCmd( "bind", "Bind command to keys", "", CmdBind, NULL );
+    ConfigCmdManager::getSingleton().AddCommand( "bind", "Bind command to keys", "", CmdBind, NULL );
 }

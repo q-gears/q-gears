@@ -18,7 +18,7 @@ ConfigCmdManager::ConfigCmdManager()
 
 ConfigCmdManager::~ConfigCmdManager()
 {
-    for( size_t i = 0; i < m_Commands.size(); ++i )
+    for( unsigned int i = 0; i < m_Commands.size(); ++i )
     {
         delete m_Commands[ i ];
     }
@@ -27,13 +27,13 @@ ConfigCmdManager::~ConfigCmdManager()
 
 
 void
-ConfigCmdManager::AddCmd( const Ogre::String& name, const Ogre::String& description, const Ogre::String& params_description, ConfigCmdHandler handler, ConfigCmdCompletion completion )
+ConfigCmdManager::AddCommand( const Ogre::String& name, const Ogre::String& description, const Ogre::String& params_description, ConfigCmdHandler handler, ConfigCmdCompletion completion )
 {
     QGEARS_ASSERT( name != "", "Command name shouldn't be empty." );
     QGEARS_ASSERT( handler, "Null command handler." );
 
     // see if command already added
-    for( size_t i = 0; i < m_Commands.size(); ++i )
+    for( unsigned int i = 0; i < m_Commands.size(); ++i )
     {
         QGEARS_ASSERT( m_Commands[ i ]->GetName() != name, "Command already exist." );
     }
@@ -53,7 +53,7 @@ ConfigCmdManager::ExecuteString( const Ogre::String& cmd_string )
 ConfigCmd*
 ConfigCmdManager::Find( const Ogre::String& name ) const
 {
-    for( size_t i = 0; i < m_Commands.size(); ++i )
+    for( unsigned int i = 0; i < m_Commands.size(); ++i )
     {
         if( m_Commands[ i ]->GetName() == name )
         {
@@ -75,7 +75,7 @@ ConfigCmdManager::GetConfigCmdNumber()
 
 
 ConfigCmd*
-ConfigCmdManager::GetConfigCmd( size_t i ) const
+ConfigCmdManager::GetConfigCmd( unsigned int i ) const
 {
     if( i < m_Commands.size() )
     {

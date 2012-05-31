@@ -101,7 +101,7 @@ script_8:
 04a4 (end 04a4): return
 
 script_9:
-04a5 (end 04a5): -- set speed of entity animation to "32"
+04a5 (end 04a5): -- set speed of entity animation to "2"
 04a9 (end 04a9): script:wait( 0.6 )
 04ac (end 04ac): cl:play_animation_stop( "5" ) -- speed=1
                  cl:animation_sync()

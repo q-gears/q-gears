@@ -32,15 +32,24 @@ Q-Gears v0.21 (3rd run wild) | 2012-06-??
 
 To Do
 ----------
-* [Content] Add FFVII fields maps startmap mdstin md1_1 and md1_2 maps and transitions between them.
 * [Background] Implement all background features that used in FFVII 1st mission until reactor blow.
 * [Background] Implement background borders.
+* [Background] Free 2d Scroll.
 * [Background] Implement palette animation.
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 * [Entity] Separate auto and pc move speed.
+* [Script] Try to separate ui and entity script debug.
 
 
 
+2012-05-31
+----------
+* [Content FFVII] Add md1_2 map. [Akari]
+* [Camera] Camera now set and scrolled correctly in free camera mode. [Akari]
+* [Background & Camera] Make background and camera correctly recalculate on resolution change. [Akari]
+* [Camera] Make "camera_free" congig command instead of config variable. [Akari]
+* [Entity] Add entity animation speed and related lua binds. [Akari]
+* [Background & Camera] Move a ot of camera related code from Background2D to CameraManager. [Akari]
 
 2012-05-30
 ----------

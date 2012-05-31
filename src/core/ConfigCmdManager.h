@@ -14,14 +14,14 @@ public:
     ConfigCmdManager();
     ~ConfigCmdManager();
 
-    void                AddCmd( const Ogre::String& name, const Ogre::String& description, const Ogre::String& params_description, ConfigCmdHandler handler, ConfigCmdCompletion completion );
+    void AddCommand( const Ogre::String& name, const Ogre::String& description, const Ogre::String& params_description, ConfigCmdHandler handler, ConfigCmdCompletion completion );
 
-    void                ExecuteString( const Ogre::String& cmd_string );
+    void ExecuteString( const Ogre::String& cmd_string );
 
     // return command with specified name
-    ConfigCmd*          Find( const Ogre::String& name ) const;
-    int                 GetConfigCmdNumber();
-    ConfigCmd*          GetConfigCmd( size_t i ) const;
+    ConfigCmd* Find( const Ogre::String& name ) const;
+    int GetConfigCmdNumber();
+    ConfigCmd* GetConfigCmd( unsigned int i ) const;
 
 private:
     // forbid copy

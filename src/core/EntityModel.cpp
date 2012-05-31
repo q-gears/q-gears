@@ -107,7 +107,9 @@ EntityModel::UpdateAnimation( const float delta )
 {
     if( m_AnimationCurrent != NULL )
     {
-        bool stop_check = ( m_AnimationCurrent->hasEnded() == true ) || ( m_AnimationCurrent->getTimePosition() + delta >= m_AnimationEndTime );
+        float delta_mod = delta * m_AnimationSpeed;
+
+        bool stop_check = ( m_AnimationCurrent->hasEnded() == true ) || ( m_AnimationCurrent->getTimePosition() + delta_mod >= m_AnimationEndTime );
 
         if( stop_check == true )
         {
@@ -122,18 +124,18 @@ EntityModel::UpdateAnimation( const float delta )
             {
                 float time = ( m_AnimationCurrent->hasEnded() != true ) ? m_AnimationCurrent->getTimePosition() : 0;
                 PlayAnimation( m_AnimationDefault, Entity::AUTO_ANIMATION, Entity::PLAY_LOOPED, time, -1 );
-                m_AnimationCurrent->addTime( delta );
+                m_AnimationCurrent->addTime( delta_mod );
             }
             else if( m_AnimationPlayType == Entity::PLAY_LOOPED )
             {
                 float time = ( m_AnimationCurrent->hasEnded() != true ) ? m_AnimationCurrent->getTimePosition() : m_AnimationCurrent->getTimePosition() - m_AnimationCurrent->getLength();
                 PlayAnimation( m_AnimationCurrentName, Entity::AUTO_ANIMATION, Entity::PLAY_LOOPED, time, -1 );
-                m_AnimationCurrent->addTime( delta );
+                m_AnimationCurrent->addTime( delta_mod );
             }
         }
         else
         {
-            m_AnimationCurrent->addTime( delta );
+            m_AnimationCurrent->addTime( delta_mod );
         }
     }
 }
