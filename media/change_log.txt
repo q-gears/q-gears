@@ -40,6 +40,10 @@ To Do
 
 
 
+2012-06-02
+----------
+* [Entity] Movement direction on fields has been exported and implemented. [Akari]
+
 2012-06-01
 ----------
 * [Camera] Add reset of ingame FOV when switch to free cemera. [Akari]
@@ -51,9 +55,9 @@ To Do
 * [Content FFVII] Add md1_2 map. [Akari]
 * [Camera] Camera now set and scrolled correctly in free camera mode. [Akari]
 * [Background & Camera] Make background and camera correctly recalculate on resolution change. [Akari]
-* [Camera] Make "camera_free" congig command instead of config variable. [Akari]
+* [Camera] Make "camera_free" config command instead of config variable. [Akari]
 * [Entity] Add entity animation speed and related lua binds. [Akari]
-* [Background & Camera] Move a ot of camera related code from Background2D to CameraManager. [Akari]
+* [Background & Camera] Move a lot of camera related code from Background2D to CameraManager. [Akari]
 
 2012-05-30
 ----------
@@ -80,7 +84,7 @@ To Do
 * [Entity] Add pause functionality to EntityManager and "set_paused" bind to LUA. [Akari]
 * [Debug] Separate usual update and debug update. When game is on pause debug still must be drawn. [Akari]
 * [Export FFVII] Fix export for offset opcode 0xC3. Make it downscaled like all others position data. [Akari]
-* [Export FFVII] Fix export for turn opcode 0xB4 and 0xB5. Forgot that turns are always sybcronized in FFVII. [Akari]
+* [Export FFVII] Fix export for turn opcode 0xB4 and 0xB5. Forgot that turns are always syncronized in FFVII. [Akari]
 
 2012-05-21
 ----------

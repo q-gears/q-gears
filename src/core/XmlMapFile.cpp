@@ -44,6 +44,11 @@ XmlMapFile::LoadMap()
                 file.Load();
             }
         }
+        else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "movement_rotation" )
+        {
+            Ogre::Degree rotation = Ogre::Degree( GetFloat( node, "degree", 0 ) );
+            EntityManager::getSingleton().SetPlayerMoveRotation( Ogre::Radian( rotation ) );
+        }
         else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "background2d" )
         {
             Ogre::String name = GetString( node, "file_name" );

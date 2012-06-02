@@ -3,6 +3,7 @@
     <script file_name="maps/ffvii_field/md1_2.lua" />
     <background2d file_name="maps/ffvii_field/md1_2_bg.xml" />
     <walkmesh file_name="maps/ffvii_field/md1_2_wm.xml" />
+    <movement_rotation degree="-5.625" />
 
     <entity_script name="Director" />
     <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="0 0 0" direction="0" />

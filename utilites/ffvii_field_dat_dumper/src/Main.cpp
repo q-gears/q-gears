@@ -160,7 +160,7 @@ main( int argc, char *argv[] )
         MimFile mim( "data/en/" + fields[ f ].name + ".mim" );
         dat.DumpScript(  "export_en/", fields[ f ] );
         dat.DumpText( "export_en/", fields[ f ], true );
-        dat.DumpTriggers( "export_en/", fields[ f ] );
+        dat.DumpTriggersMovements( "export_en/", fields[ f ] );
         dat.DumpWalkmesh( "export_en/", fields[ f ] );
         dat.DumpBackground( "export_en/", fields[ f ], mim );
     }

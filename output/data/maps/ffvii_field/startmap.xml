@@ -2,6 +2,7 @@
 <map>
     <background2d file_name="maps/ffvii_field/startmap_bg.xml" />
     <walkmesh file_name="maps/ffvii_field/startmap_wm.xml" />
+    <movement_rotation degree="0" />
 
     <entity_trigger name="Gateway0" point1="-2.625 1.84375 0" point2="-2.65625 -2.0625 0" enabled="false" />
     <entity_trigger name="Gateway1" point1="-0.4375 1.82812 0" point2="0.4375 1.82812 0" enabled="false" />

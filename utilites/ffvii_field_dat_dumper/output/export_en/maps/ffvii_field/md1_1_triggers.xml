@@ -4,3 +4,4 @@
     <entity_trigger name="Gateway1" point1="3.98047 6.75 5.07031" point2="5.07031 6.66016 5.07031" enabled="true" />
     <entity_point name="Spawn_md1_1" position="27.8125 238.898 0.453125" rotation="186.353" />
     <!-- map "ffvii_md1_2" -->
+<movement_rotation degree="-5.625" />

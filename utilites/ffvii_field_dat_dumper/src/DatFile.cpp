@@ -3379,7 +3379,7 @@ DatFile::DumpWalkmesh( const Ogre::String& export_path, const Field& field )
 
 
 void
-DatFile::DumpTriggers( const Ogre::String& export_path, const Field& field )
+DatFile::DumpTriggersMovements( const Ogre::String& export_path, const Field& field )
 {
     Logger* export_script = new Logger( export_path + "/maps/ffvii_field/" + field.name + "_triggers.xml" );
 
@@ -3417,6 +3417,14 @@ DatFile::DumpTriggers( const Ogre::String& export_path, const Field& field )
 
         start_triggers += 0x18;
     }
+
+
+
+    // movement rotation
+    u32 movement = GetU32LE( offset_to_triggers + 0x08 );
+    export_script->Log( "<movement_rotation degree=\"" + Ogre::StringConverter::toString( 180.0f * ( ( float )movement - 32768.0f ) / 32768.0f ) + "\" />\n" );
+
+
 
     delete export_script;
 }

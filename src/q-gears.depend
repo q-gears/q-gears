@@ -26188,7 +26188,7 @@
 	<OgreRoot.h>
 	<OgreSingleton.h>
 
-1338229262 k:\q-gears\src\core\entitymanager.h
+1338624876 k:\q-gears\src\core\entitymanager.h
 	<OgreSingleton.h>
 	"Background2D.h"
 	"Entity.h"
@@ -26835,7 +26835,7 @@
 	"Logger.h"
 	"Timer.h"
 
-1338429426 source:k:\q-gears\src\core\cameramanager.cpp
+1338494810 source:k:\q-gears\src\core\cameramanager.cpp
 	"CameraManager.h"
 	"CameraManagerCommands.h"
 	<OgreRenderWindow.h>
@@ -27852,7 +27852,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1338318620 source:k:\q-gears\src\core\entitymanager.cpp
+1338624020 source:k:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>

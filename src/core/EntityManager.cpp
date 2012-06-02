@@ -83,6 +83,7 @@ EntityManager::EntityManager():
     m_EntityTableName( "EntityContainer" ),
     m_PlayerEntity( NULL ),
     m_PlayerMove( Ogre::Vector3::ZERO ),
+    m_PlayerMoveRotation( 0 ),
     m_PlayerLock( false )
 {
     LOG_TRIVIAL( "EntityManager created." );
@@ -145,6 +146,11 @@ EntityManager::Input( const Event& event )
         {
             m_PlayerMove.y = 1;
         }
+
+        //rotate move vector to field move rotation
+        Ogre::Quaternion q1;
+        q1.FromAngleAxis( m_PlayerMoveRotation, Ogre::Vector3::UNIT_Z );
+        m_PlayerMove = q1 * m_PlayerMove;
     }
 }
 
@@ -378,6 +384,8 @@ EntityManager::Clear()
     m_EntityModels.clear();
     m_PlayerEntity = NULL;
     m_PlayerMove = Ogre::Vector3::ZERO;
+    m_PlayerMoveRotation = 0;
+
     m_PlayerLock = false;
 
     for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
@@ -545,6 +553,14 @@ EntityManager::ScriptPlayerLock( const bool lock )
     {
         m_PlayerMove = Ogre::Vector3::ZERO;
     }
+}
+
+
+
+void
+EntityManager::SetPlayerMoveRotation( const Ogre::Radian rotation )
+{
+    m_PlayerMoveRotation = rotation;
 }
 
 

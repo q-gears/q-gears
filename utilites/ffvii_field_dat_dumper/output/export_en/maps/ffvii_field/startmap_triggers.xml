@@ -31,3 +31,4 @@
     <entity_trigger name="Gateway10" point1="-3.14062 -2.49219 0" point2="3.14062 -2.49219 0" enabled="true" />
     <entity_point name="Spawn_startmap" position="0 0 0.0234375" rotation="0" />
     <!-- map "Unknown_0x0070" -->
+<movement_rotation degree="0" />

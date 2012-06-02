@@ -41,6 +41,7 @@ public:
     void ScriptSetPlayerEntity( const char* name );
     void ScriptUnsetPlayerEntity();
     void ScriptPlayerLock( const bool lock );
+    void SetPlayerMoveRotation( const Ogre::Radian rotation );
 
 private:
     // movement
@@ -67,6 +68,7 @@ private:
     std::vector< Entity* >        m_EntityModels;
     Entity*                       m_PlayerEntity;
     Ogre::Vector3                 m_PlayerMove;
+    Ogre::Radian                  m_PlayerMoveRotation;
     bool                          m_PlayerLock;
 
     std::vector< EntityTrigger* > m_EntityTriggers;
