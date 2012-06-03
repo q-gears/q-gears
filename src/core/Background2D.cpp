@@ -51,7 +51,6 @@ Background2D::Background2D():
     pass->setDepthWriteEnabled( true );
     pass->setLightingEnabled( false );
     pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
-
     pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
     pass->setAlphaRejectValue( 0 );
     Ogre::TextureUnitState* tex = pass->createTextureUnitState();
@@ -67,7 +66,6 @@ Background2D::Background2D():
     pass->setDepthWriteEnabled( true );
     pass->setLightingEnabled( false );
     pass->setSceneBlending( Ogre::SBT_ADD );
-
     pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
     pass->setAlphaRejectValue( 0 );
     tex = pass->createTextureUnitState();

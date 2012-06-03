@@ -33,12 +33,16 @@ Q-Gears v0.21 (3rd run wild) | 2012-06-??
 To Do
 ----------
 * [Background] Free 2d Scroll.
-* [Background] Implement palette animation.
+* [Background] All animations must be lpayed at once.
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 * [Entity] Separate auto and pc move speed.
 * [Script] Try to separate ui and entity script debug.
 
 
+
+2012-06-04
+----------
+* [Export Background] Add export for palette (CLUT) animations. [Akari]
 
 2012-06-02
 ----------

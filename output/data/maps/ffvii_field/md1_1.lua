@@ -518,11 +518,38 @@ script_0:
 
 
 
-
-EntityContainer[ "Background" ] = {
+EntityContainer[ "BackgroundFan" ] = {
     on_start = function( self )
+        --while true do
+            --background2d:play_animation( "Fan" )
+            --background2d:animation_sync()
+        --end
+
+        return 0
+    end,
+}
+
+
+
+EntityContainer[ "BackgroundLight1" ] = {
+    on_start = function( self )
+        --while true do
+            --background2d:play_animation( "Light1" )
+            --background2d:animation_sync()
+        --end
+
+        return 0
+    end,
+}
+
+
+
+EntityContainer[ "BackgroundLight2" ] = {
+    on_start = function( self )
+        script:wait( 0.666667 )
+
         while true do
-            background2d:play_animation( "Fan" )
+            background2d:play_animation( "Light2" )
             background2d:animation_sync()
         end
 

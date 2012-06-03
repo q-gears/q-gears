@@ -20,7 +20,11 @@ public:
                ( a.page_y == m_Surface.page_y ) &&
                ( a.clut_y == m_Surface.clut_y ) &&
                ( a.clut_x == m_Surface.clut_x ) &&
-               ( a.bpp    == m_Surface.bpp );
+               ( a.bpp    == m_Surface.bpp ) &&
+               ( a.type == m_Surface.type ) &&
+               ( a.r_mod == m_Surface.r_mod ) &&
+               ( a.g_mod == m_Surface.g_mod ) &&
+               ( a.b_mod == m_Surface.b_mod );
     }
 
 private:
@@ -47,7 +51,11 @@ public:
                ( a.clut_y     == m_Tile.clut_y ) &&
                ( a.bpp        == m_Tile.bpp ) &&
                ( a.page_x     == m_Tile.page_x ) &&
-               ( a.page_y     == m_Tile.page_y );
+               ( a.page_y     == m_Tile.page_y ) &&
+               ( a.type       == m_Tile.type ) &&
+               ( a.r_mod      == m_Tile.r_mod ) &&
+               ( a.g_mod      == m_Tile.g_mod ) &&
+               ( a.b_mod      == m_Tile.b_mod );
     }
 
 private:
@@ -2899,13 +2907,49 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     std::vector< Tile > temp_tiles;
     for( unsigned int i = 0; i < tiles.size(); ++i )
     {
-        if( tiles[ i ].clut_y == 0x1ed )
-        {
-            LOGGER->Log( "Tile \"" + IntToString( i ) + "\" dest \"" + IntToString( tiles[ i ].dest_x ) + " " + IntToString( tiles[ i ].dest_y ) + "\" with animation \"" + IntToString( tiles[ i ].animation ) + "\" and animation_index \"" + IntToString( tiles[ i ].animation_index ) + "\"\n" );
-        }
-
         if( tiles[ i ].animation == 0 )
         {
+            for( unsigned int j = 0; j < field.animations.size(); ++j )
+            {
+                if( field.animations[ j ].type == FAT_CLUT )
+                {
+                    if( tiles[ i ].clut_y == ( 0x1e0 + field.animations[ j ].clut ) )
+                    {
+                        Animation animation;
+                        animation.name = field.animations[ j ].name;
+                        animation.time = field.animations[ j ].time;
+
+                        for( unsigned int k = 0; k < field.animations[ j ].keyframes.size(); ++k )
+                        {
+                            KeyFrame frame;
+                            frame.time   = field.animations[ j ].keyframes[ k ].time;
+                            frame.src_x  = tiles[ i ].src_x;
+                            frame.src_y  = tiles[ i ].src_y;
+                            frame.clut_x = tiles[ i ].clut_x;
+                            frame.clut_y = tiles[ i ].clut_y;
+                            frame.bpp    = tiles[ i ].bpp;
+                            frame.page_x = tiles[ i ].page_x;
+                            frame.page_y = tiles[ i ].page_y;
+
+                            frame.type   = field.animations[ j ].keyframes[ k ].type;
+                            frame.r_mod  = field.animations[ j ].keyframes[ k ].r_mod;
+                            frame.g_mod  = field.animations[ j ].keyframes[ k ].g_mod;
+                            frame.b_mod  = field.animations[ j ].keyframes[ k ].b_mod;
+
+                            animation.keyframes.push_back( frame );
+                        }
+
+                        tiles[ i ].animations.push_back( animation );
+
+                        LOGGER->Log( "Tile \"" + IntToString( i ) + "\" dest \"" + IntToString( tiles[ i ].dest_x ) + " " + IntToString( tiles[ i ].dest_y ) + "\" with animation \"" + IntToString( tiles[ i ].animation ) + "\" and animation_index \"" + IntToString( tiles[ i ].animation_index ) + "\"\n" );
+                    }
+                }
+            }
+
+            if( tiles[ i ].animations.size() > 0 )
+            {
+                LOGGER->Log( "Add temp tile with anim.\n" );
+            }
             temp_tiles.push_back( tiles[ i ] );
         }
     }
@@ -3019,8 +3063,18 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     //LOGGER->Log( "Start adding blank values.\n" );
     for( unsigned int i = 0; i < temp_tiles.size(); ++i )
     {
+        if( temp_tiles[ i ].animation == 0 )
+        {
+            continue;
+        }
+
         for( unsigned int k = 0; k < field.animations.size(); ++k )
         {
+            if( field.animations[ k ].type != FAT_ANIMATION )
+            {
+                continue;
+            }
+
             unsigned int j = 0;
             for( ; j < temp_tiles[ i ].animations.size(); ++j )
             {
@@ -3135,7 +3189,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 void
 DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
 {
-    AddedTile added_main_tile = AddTileTex( tile.background, tile.src_x, tile.src_y, tile.clut_x, tile.clut_y, tile.bpp, tile.page_x, tile.page_y, mim );
+    AddedTile added_main_tile = AddTileTex( tile.background, tile.src_x, tile.src_y, tile.clut_x, tile.clut_y, tile.bpp, tile.page_x, tile.page_y, mim, "", 1, 1, 1 );
 
     Ogre::String blending_str = "";
     if( tile.blending == 0 )
@@ -3169,11 +3223,11 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
                         " " +
                         Ogre::StringConverter::toString( ( added_main_tile.y + added_main_tile.height ) / ( float ) full_image->height ) +
                         "\" depth=\"" +
-                        Ogre::StringConverter::toString( tile.depth ) +
+                        Ogre::StringConverter::toString( ( tile.depth > 0.001f ) ? tile.depth : 0.001f ) +
                         "\" blending=\"" + blending_str + "\""
     );
 
-    if( tile.animation == 0 )
+    if( tile.animations.size() == 0 )
     {
         export_text->Log( " />\n" );
     }
@@ -3193,7 +3247,7 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
                 }
 
                 //LOGGER->Log( "Animation tile pixels src_x=\"" + IntToString( tile.animation_key.keyframes[ i ].src_x ) + "\" src_y=\"" + IntToString( tile.animation_key.keyframes[ i ].src_y ) + "\"\n" );
-                AddedTile added_tile = AddTileTex( tile.background, tile.animations[ l ].keyframes[ i ].src_x, tile.animations[ l ].keyframes[ i ].src_y, tile.animations[ l ].keyframes[ i ].clut_x, tile.animations[ l ].keyframes[ i ].clut_y, tile.animations[ l ].keyframes[ i ].bpp, tile.animations[ l ].keyframes[ i ].page_x, tile.animations[ l ].keyframes[ i ].page_y, mim );
+                AddedTile added_tile = AddTileTex( tile.background, tile.animations[ l ].keyframes[ i ].src_x, tile.animations[ l ].keyframes[ i ].src_y, tile.animations[ l ].keyframes[ i ].clut_x, tile.animations[ l ].keyframes[ i ].clut_y, tile.animations[ l ].keyframes[ i ].bpp, tile.animations[ l ].keyframes[ i ].page_x, tile.animations[ l ].keyframes[ i ].page_y, mim, tile.animations[ l ].keyframes[ i ].type, tile.animations[ l ].keyframes[ i ].r_mod, tile.animations[ l ].keyframes[ i ].g_mod, tile.animations[ l ].keyframes[ i ].b_mod );
                 //LOGGER->Log( "Animation tile pixels x=\"" + IntToString( x ) + "\" y=\"" + IntToString( y ) + "\"\n" );
                 export_text->Log( Ogre::StringConverter::toString( tile.animations[ l ].keyframes[ i ].time ) +
                                   ":" +
@@ -3217,7 +3271,7 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
 
 
 AddedTile
-DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, MimFile& mim )
+DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, MimFile& mim, const Ogre::String& type, const float r_mod, const float g_mod, const float b_mod )
 {
     AddedTile tile;
     tile.background = background;
@@ -3228,6 +3282,10 @@ DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const 
     tile.bpp        = bpp;
     tile.page_x     = page_x;
     tile.page_y     = page_x;
+    tile.type       = type;
+    tile.r_mod      = r_mod;
+    tile.g_mod      = g_mod;
+    tile.b_mod      = b_mod;
     std::vector< AddedTile >::iterator tile_it = std::find_if( m_AddedTiles.begin(), m_AddedTiles.end(), added_tile_find( tile ) );
 
     if( tile_it != m_AddedTiles.end() )
@@ -3243,12 +3301,16 @@ DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const 
     surface.clut_x = clut_x;
     surface.clut_y = clut_y;
     surface.bpp    = bpp;
+    surface.type   = type;
+    surface.r_mod  = r_mod;
+    surface.g_mod  = g_mod;
+    surface.b_mod  = b_mod;
 
     std::vector< SurfaceTexData >::iterator it = std::find_if( m_Surfaces.begin(), m_Surfaces.end(), surface_find( surface ) );
 
     if( it == m_Surfaces.end() )
     {
-        surface.surface = mim.GetSurface( surface.page_x, surface.page_y, surface.clut_x, surface.clut_y, surface.bpp );
+        surface.surface = mim.GetSurface( surface.page_x, surface.page_y, surface.clut_x, surface.clut_y, surface.bpp, surface.type, surface.r_mod, surface.g_mod, surface.b_mod );
         m_Surfaces.push_back( surface );
     }
     else

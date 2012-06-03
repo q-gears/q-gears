@@ -14,10 +14,12 @@
     <entity_model name="DoorLeft" file_name="models/ffvii/field/units/door1.mesh" position="0 0 0" direction="0" />
     <entity_model name="DoorRight" file_name="models/ffvii/field/units/door1.mesh" position="0 0 0" direction="0" />
     <entity_script name="Movie" />
+    <entity_script name="BackgroundFan" />
+    <entity_script name="BackgroundLight1" />
+    <entity_script name="BackgroundLight2" />
 
     <entity_trigger name="Gateway0" point1="3.89062 1.11328 5.0625" point2="3.62891 1.92578 5.0625" enabled="true" />
     <entity_trigger name="Gateway1" point1="3.98047 6.75 5.07031" point2="5.07031 6.66016 5.07031" enabled="true" />
     <entity_point name="Spawn_md1stin" position="4.09766 1.5625 5.0625" rotation="81.8824" />
     <entity_point name="Spawn_md1_2" position="4.61719 6.21875 5.07" rotation="0" />
-    <entity_script name="Background" />
 </map>

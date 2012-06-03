@@ -1142,20 +1142,20 @@
     <tile destination="480 96" width="48" height="48" uv="0.90625 0.5 0.921875 0.53125" depth="0.03125" blending="alpha" />
     <tile destination="624 96" width="48" height="48" uv="0.921875 0.5 0.9375 0.53125" depth="0.03125" blending="alpha" />
     <tile destination="672 96" width="48" height="48" uv="0.90625 0.53125 0.921875 0.5625" depth="0.03125" blending="alpha" />
-    <tile destination="-624 144" width="48" height="48" uv="0.921875 0.53125 0.9375 0.5625" depth="0" blending="add" />
-    <tile destination="-576 144" width="48" height="48" uv="0.9375 0.5 0.953125 0.53125" depth="0" blending="add" />
+    <tile destination="-624 144" width="48" height="48" uv="0.921875 0.53125 0.9375 0.5625" depth="0.001" blending="add" />
+    <tile destination="-576 144" width="48" height="48" uv="0.9375 0.5 0.953125 0.53125" depth="0.001" blending="add" />
     <tile destination="-384 144" width="48" height="48" uv="0.953125 0.5 0.96875 0.53125" depth="29" blending="alpha" />
     <tile destination="-336 144" width="48" height="48" uv="0.9375 0.53125 0.953125 0.5625" depth="29" blending="alpha" />
     <tile destination="48 144" width="48" height="48" uv="0.953125 0.53125 0.96875 0.5625" depth="29" blending="alpha" />
-    <tile destination="-624 192" width="48" height="48" uv="0.96875 0.5 0.984375 0.53125" depth="0" blending="add" />
-    <tile destination="-576 192" width="48" height="48" uv="0.984375 0.5 1 0.53125" depth="0" blending="add" />
-    <tile destination="-528 192" width="48" height="48" uv="0.96875 0.53125 0.984375 0.5625" depth="0" blending="add" />
+    <tile destination="-624 192" width="48" height="48" uv="0.96875 0.5 0.984375 0.53125" depth="0.001" blending="add" />
+    <tile destination="-576 192" width="48" height="48" uv="0.984375 0.5 1 0.53125" depth="0.001" blending="add" />
+    <tile destination="-528 192" width="48" height="48" uv="0.96875 0.53125 0.984375 0.5625" depth="0.001" blending="add" />
     <tile destination="-336 192" width="48" height="48" uv="0.984375 0.53125 1 0.5625" depth="29.25" blending="alpha" />
     <tile destination="-768 240" width="48" height="48" uv="0 0.5625 0.015625 0.59375" depth="127.906" blending="alpha" />
     <tile destination="-720 240" width="48" height="48" uv="0.015625 0.5625 0.03125 0.59375" depth="127.906" blending="alpha" />
-    <tile destination="-624 240" width="48" height="48" uv="0 0.59375 0.015625 0.625" depth="0" blending="add" />
-    <tile destination="-576 240" width="48" height="48" uv="0.015625 0.59375 0.03125 0.625" depth="0" blending="add" />
-    <tile destination="-528 240" width="48" height="48" uv="0.03125 0.5625 0.046875 0.59375" depth="0" blending="add" />
+    <tile destination="-624 240" width="48" height="48" uv="0 0.59375 0.015625 0.625" depth="0.001" blending="add" />
+    <tile destination="-576 240" width="48" height="48" uv="0.015625 0.59375 0.03125 0.625" depth="0.001" blending="add" />
+    <tile destination="-528 240" width="48" height="48" uv="0.03125 0.5625 0.046875 0.59375" depth="0.001" blending="add" />
     <tile destination="-96 240" width="48" height="48" uv="0.046875 0.5625 0.0625 0.59375" depth="0.0625" blending="alpha" />
     <tile destination="-48 240" width="48" height="48" uv="0.03125 0.59375 0.046875 0.625" depth="0.0625" blending="alpha" />
     <tile destination="96 240" width="48" height="48" uv="0.046875 0.59375 0.0625 0.625" depth="0.1875" blending="alpha" />

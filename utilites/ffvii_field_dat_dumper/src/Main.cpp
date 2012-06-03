@@ -107,19 +107,40 @@ fill_names()
                 FieldKeyFrame frame;
                 frame.time = Ogre::StringConverter::parseReal( anim_frame[ 0 ] );
 
-                if( anim_frame[ 1 ] == "blank" )
+                if( animation.type == FAT_ANIMATION )
                 {
-                    frame.blank = true;
-                    frame.animation_index = 0;
+                    if( anim_frame[ 1 ] == "blank" )
+                    {
+                        frame.blank = true;
+                        frame.animation_index = 0;
+                    }
+                    else
+                    {
+                        frame.blank = false;
+                        frame.animation_index = Ogre::StringConverter::parseInt( anim_frame[ 1 ] );
+                    }
+
+                    LOGGER->Log( "Animation keyframe add at time \"" + FloatToString( frame.time ) + "\". Settings blank=\"" + BoolToString( frame.blank ) + "\", animation_index=\"" + IntToString( frame.animation_index ) + "\".\n" );
                 }
-                else
+                else if( animation.type == FAT_CLUT )
                 {
-                    frame.blank = false;
-                    frame.animation_index = Ogre::StringConverter::parseInt( anim_frame[ 1 ] );
+                    Ogre::StringVector anim_frame_data = Ogre::StringUtil::split( anim_frame[ 1 ], "-", 2 );
+                    if( anim_frame_data.size() < 2 )
+                    {
+                        LOGGER->Log("In \"" + anim_frame[ 1 ] + "\" not enough data separated by \"-\". Must be 2.\n");
+                        continue;
+                    }
+
+                    frame.type = anim_frame_data[ 0 ];
+                    Ogre::Vector3 rgb = Ogre::StringConverter::parseVector3( anim_frame_data[ 1 ] );
+                    frame.r_mod = rgb.x;
+                    frame.g_mod = rgb.y;
+                    frame.b_mod = rgb.z;
+
+                    LOGGER->Log( "Clut keyframe add at time \"" + FloatToString( frame.time ) + "\". Settings type=\"" + frame.type + "\", r_mod=\"" + FloatToString( frame.r_mod ) + "\", g_mod=\"" + FloatToString( frame.g_mod ) + "\", b_mod=\"" + FloatToString( frame.b_mod ) + "\".\n" );
                 }
 
                 animation.keyframes.push_back( frame );
-                LOGGER->Log("Keyframe add at time \"" + FloatToString( frame.time ) + "\". Settings blank=\"" + BoolToString( frame.blank ) + "\", animation_index=\"" + IntToString( frame.animation_index ) + "\".\n");
             }
 
             field.animations.push_back( animation );

@@ -43,7 +43,7 @@ MimFile::~MimFile()
 
 
 Surface*
-MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const u16 clut_y, const u8 bpp )
+MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const Ogre::String& type, const float r_mod, const float g_mod, const float b_mod )
 {
     // lastest texture page x are on the border with vram so we need get smaller tex
     u16 size_x = ( page_x >= 15 && bpp == 1 ) ? 128 : 256;
@@ -51,7 +51,7 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
 
     if( clut_y > mClutHeight + mClutVramPositionY )
     {
-        LOGGER->Log( "MimFile::GetSurface: Warning: 'clut_number' is greater than number of clut in file." );
+        LOGGER->Log( "MimFile::GetSurface: Warning: \"clut_number\" is greater than number of clut in file." );
         return ret;
     }
 
@@ -73,7 +73,12 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 color.r = ( ( col       ) & 31 ) * 255 / 31;
                 color.g = ( ( col >>  5 ) & 31 ) * 255 / 31;
                 color.b = ( ( col >> 10 ) & 31 ) * 255 / 31;
-
+                if( type == "mult" )
+                {
+                    color.r *= r_mod;
+                    color.g *= g_mod;
+                    color.b *= b_mod;
+                }
                 u8 stp = (col & 0x80) >> 15;
 
                 if( col == 0x0000 )
@@ -103,6 +108,12 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 color.r = ((col      ) & 31) * 255 / 31;
                 color.g = ((col >>  5) & 31) * 255 / 31;
                 color.b = ((col >> 10) & 31) * 255 / 31;
+                if( type == "mult" )
+                {
+                    color.r *= r_mod;
+                    color.g *= g_mod;
+                    color.b *= b_mod;
+                }
                 stp = (col & 0x80) >> 15;
 
                 if( col == 0x0000 )
@@ -133,17 +144,23 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
     {
         for( int y = 0; y < 256; ++y )
         {
-            for (int x = 0; x < size_x; ++x)
+            for( int x = 0; x < size_x; ++x )
             {
                 u16 real_x = mImageVramPositionX + page_x * 128 + x;
                 u16 real_y = mImageVramPositionY + page_y * 256 + y;
 
-                u8 data = m_Vram.GetU8(real_x, real_y);
-                u16 col = m_Vram.GetU16(data * 2 + clut_x * 2, clut_y);
+                u8 data = m_Vram.GetU8( real_x, real_y );
+                u16 col = m_Vram.GetU16( data * 2 + clut_x * 2, clut_y );
 
                 color.r = ((col      ) & 31) * 255 / 31;
                 color.g = ((col >>  5) & 31) * 255 / 31;
                 color.b = ((col >> 10) & 31) * 255 / 31;
+                if( type == "mult" )
+                {
+                    color.r *= r_mod;
+                    color.g *= g_mod;
+                    color.b *= b_mod;
+                }
                 u8 stp = (col & 0x8000) >> 15;
 
                 if( col == 0x0000 )
