@@ -1,0 +1,13 @@
+<screen name="PauseMenu" script="screens/pause_menu/pause_menu.lua" visible="false">
+    <widget name="Menu" x="50%-195" y="50%-75" width="150" height="50" scale="2.61 3" visible="true">
+        <prototype name="Window" />
+        <text_area name="Header" x="50%" y="5" text_name="PauseMenuHeader" font="FFVIIFont" text_align="center" visible="true" />
+        <text_area name="Text" x="50%" y="20" text_name="PauseMenuText" font="FFVIIFont" text_align="center" visible="true" />
+        <text_area name="Yes" x="40" y="35" text_name="PauseMenuYes" font="FFVIIFont" visible="true" />
+        <text_area name="No" x="90" y="35" text_name="PauseMenuNo" font="FFVIIFont" visible="true" />
+        <sprite name="Cursor" image="screens/images/cursor.png" x="15" y="35" width="24" height="16" visible="true">
+            <animation name="Position1" length="0" x="0:0 15" />
+            <animation name="Position2" length="0" x="0:0 65" />
+        </sprite>
+    </widget>
+</screen>

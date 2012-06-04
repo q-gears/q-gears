@@ -19,6 +19,7 @@ Savemap = {
 
 MenuSettings = {
     available = false,
+    pause_available = false,
 }
 
 

@@ -2,7 +2,13 @@
     <text name="BeginMenuNewGame">NEW GAME</text>
     <text name="BeginMenu1">Battle map</text>
     <text name="BeginMenu2">Xenogears map</text>
-    <text name="BeginMenu3">Idol menu</text>
+    <text name="BeginMenu3">Entity testarea</text>
+    <text name="BeginMenu4">Idol menu</text>
+
+    <text name="PauseMenuHeader">Paused</text>
+    <text name="PauseMenuText">Are you want to quit?</text>
+    <text name="PauseMenuYes">Yes</text>
+    <text name="PauseMenuNo">No</text>
 
     <text name="MainMenuGil">Gil</text>
     <text name="MainMenuGilAmount">     12005</text>

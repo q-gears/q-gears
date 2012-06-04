@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <map>
-    <script file_name="maps/test/test_ffvii_2.lua" />
+    <background2d file_name="maps/test/test_3_bg.xml" />
+
     <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="0 -2 0" direction="180" />
     <entity_model name="Background" file_name="models/battle/stages/reactor_1.mesh" position="0 0 0" direction="0" />
     <entity_model name="GuardScorpion" file_name="models/battle/units/guard_scorpion.mesh" position="0 7 0" direction="0" />

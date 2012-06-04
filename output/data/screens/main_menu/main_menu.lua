@@ -50,6 +50,7 @@ UiContainer.MainMenu = {
 
     show = function( self )
         entity_manager:set_paused( true )
+        MenuSettings.pause_available = false
 
         ui_manager:get_widget( "MainMenu" ):set_visible( true )
 
@@ -88,6 +89,7 @@ UiContainer.MainMenu = {
 
         ui_manager:get_widget( "MainMenu" ):set_visible( false )
 
+        MenuSettings.pause_available = true
         entity_manager:set_paused( false )
 
         return 0;

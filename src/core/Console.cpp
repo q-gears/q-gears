@@ -97,7 +97,10 @@ Console::Input( const Event& event )
         {
             if( m_InputLine.size() > 1 )
             {
-                ExecuteCommand();
+                // remove backslash
+                m_InputLine.erase( 0, 1 );
+
+                ExecuteCommand( m_InputLine );
             }
         }
         else
@@ -531,14 +534,11 @@ Console::AddTextToOutput( const Ogre::String& text, const Ogre::ColourValue& col
 
 
 void
-Console::ExecuteCommand()
+Console::ExecuteCommand( const Ogre::String& command )
 {
     bool handled = false;
 
-    // remove backslash
-    m_InputLine.erase( 0, 1 );
-
-    Ogre::StringVector params = StringTokenise( m_InputLine );
+    Ogre::StringVector params = StringTokenise( command );
 
     // is it cvar
     ConfigVar* cvar = ConfigVarManager::getSingleton().Find( params[ 0 ] );
@@ -564,10 +564,10 @@ Console::ExecuteCommand()
     if( handled == false )
     {
         // handle command
-        ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find(params[0]);
-        if (cmd != NULL)
+        ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find( params[ 0 ] );
+        if( cmd != NULL )
         {
-            cmd->GetHandler()(params);
+            cmd->GetHandler()( params );
             return;
         }
         else

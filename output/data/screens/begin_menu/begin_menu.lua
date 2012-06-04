@@ -4,7 +4,7 @@ if UiContainer == nil then UiContainer = {} end
 
 UiContainer.BeginMenu = {
     position = 1,
-    position_total = 4,
+    position_total = 5,
 
 
 
@@ -26,14 +26,25 @@ UiContainer.BeginMenu = {
             if button == "X" and event == "Press" then
                 if self.position == 1 then
                     load_field_map_request( "ffvii_md1stin", "" )
+                    console( "camera_free false" )
                     script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
+                    MenuSettings.pause_available = true
                 elseif self.position == 2 then
                     script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
+                    console( "camera_free true" )
                     map( "test_3" )
+                    MenuSettings.pause_available = true
                 elseif self.position == 3 then
                     script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
+                    console( "camera_free true" )
                     map( "test_1" )
-                else
+                    MenuSettings.pause_available = true
+                elseif self.position == 4 then
+                    script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
+                    console( "camera_free true" )
+                    map( "test_2" )
+                    MenuSettings.pause_available = true
+                elseif self.position == 5 then
                     script:request_end_sync( "UiContainer.BeginMenu", "hide", 0 )
                     script:request_end_sync( "UiContainer.Idol", "show", 0 )
                 end

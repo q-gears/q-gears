@@ -6,10 +6,12 @@
             <animation name="Position2" length="0" y="0:0 111" />
             <animation name="Position3" length="0" y="0:0 123" />
             <animation name="Position4" length="0" y="0:0 135" />
+            <animation name="Position5" length="0" y="0:0 147" />
         </sprite>
         <text_area name="Text1" x="158" y="99" text_name="BeginMenuNewGame" font="FFVIIFont" visible="true" />
         <text_area name="Text2" x="158" y="111" text_name="BeginMenu1" font="FFVIIFont" visible="true" />
         <text_area name="Text3" x="158" y="123" text_name="BeginMenu2" font="FFVIIFont" visible="true" />
         <text_area name="Text4" x="158" y="135" text_name="BeginMenu3" font="FFVIIFont" visible="true" />
+        <text_area name="Text5" x="158" y="147" text_name="BeginMenu4" font="FFVIIFont" visible="true" />
     </widget>
 </screen>

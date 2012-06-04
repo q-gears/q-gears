@@ -32,13 +32,22 @@ ScriptMap( const char* text )
 
 
 void
+ScriptConsole( const char* text )
+{
+    Console::getSingleton().ExecuteCommand( text );
+}
+
+
+
+void
 ScriptManager::InitBinds()
 {
     // globals
     luabind::module( m_LuaState )
     [
         luabind::def( "print", ( void( * )( const char* ) ) &ScriptPrint ),
-        luabind::def( "map", ( void( * )( const char* ) ) &ScriptMap )
+        luabind::def( "map", ( void( * )( const char* ) ) &ScriptMap ),
+        luabind::def( "console", ( void( * )( const char* ) ) &ScriptConsole )
     ];
 
     // entity access

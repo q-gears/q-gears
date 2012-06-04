@@ -75,6 +75,8 @@ EntityContainer[ "Cloud" ] = {
     on_start = function( self )
         set_entity_to_character( "Cloud", "Cloud" )
         self.cloud = entity_manager:get_entity( "Cloud" )
+        self.cloud:set_solid( true )
+        self.cloud:set_visible( true )
 
         return 0
     end,

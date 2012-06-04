@@ -102,12 +102,13 @@ EntityContainer[ "Cloud" ] = {
         set_entity_to_character( "Cloud", "Cloud" );
         self.cloud = entity_manager:get_entity( "Cloud" )
         if Savemap.progress_game == 0 then
-            --04fa (end 0512): field:pc_lock(true);
-            --04fc (end 0512): field:menu_lock(true);
             self.cloud:set_position( 28.5547, 214.312, 2.42188 )
             self.cloud:set_direction( 180 )
             self.cloud:set_solid( false )
             self.cloud:set_visible( false )
+        else
+            self.cloud:set_solid( true )
+            self.cloud:set_visible( true )
         end
 
         return 0

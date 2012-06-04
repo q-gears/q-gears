@@ -68,6 +68,7 @@ ScriptManager::Input( const Event& event )
 {
     if( ( event.type == ET_KEY_PRESS || event.type == ET_KEY_REPEAT ) &&
                                       (
+                                        event.param1 == OIS::KC_RETURN ||
                                         event.param1 == OIS::KC_LEFT ||
                                         event.param1 == OIS::KC_RIGHT ||
                                         event.param1 == OIS::KC_DOWN ||
@@ -357,10 +358,6 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
 
         m_ScriptEntity.push_back( script_entity );
     }
-    else
-    {
-        LOG_WARNING( "Tables for entity \"" + entity_name + "\" doesn't exist." );
-    }
 }
 
 
@@ -382,8 +379,6 @@ ScriptManager::RemoveEntity( const Ogre::String& entity_name )
             return;
         }
     }
-
-    LOG_WARNING( "Entity \"" + entity_name + "\" not found in script manager." );
 }
 
 

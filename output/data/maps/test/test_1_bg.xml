@@ -1,8 +1,2 @@
-<background2d image="maps/test/test_1.jpg">
-    <tile destination="-128 -128" width="128" height="128" uv="0 0 0.5 0.5" depth="1" />
-    <tile destination="0 -128" width="128" height="128" uv="0.5 0 1 0.5" depth="1" />
-    <tile destination="-128 0" width="128" height="128" uv="0 0.5 0.5 1" depth="1" />
-    <tile destination="0 0" width="64" height="64" uv="0.5 0.5 0.75 0.75" depth="1">
-        <animation name="Fan" length="2" uv="0:0.5 0.5 0.75 0.75,0.5:0.75 0.5 1 0.75,1:0.5 0.75 0.75 1,1.5:0.75 0.75 1 1" />
-    </tile>
+<background2d image="maps/test/test_1.jpg" position="6.27335 -17.9212 11.2853" orientation="-0.782742 -0.583965 -0.128717 -0.172524">
 </background2d>

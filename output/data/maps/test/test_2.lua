@@ -83,7 +83,7 @@ EntityContainer[ "Chaser_Slow" ] = {
         local chaser_slow = entity_manager:get_entity( "Chaser_Slow" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser_slow:set_move_speed( 0.5 )
+        chaser_slow:set_move_auto_speed( 0.5 )
         chaser_slow:set_solid_radius( 0.35 )
         chaser_slow:move_auto_animation( false )
 
@@ -112,7 +112,7 @@ EntityContainer[ "Chasers_Speed1" ] = {
         local chaser1 = entity_manager:get_entity( "Chasers_Speed1" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser1:set_move_speed( 3 )
+        chaser1:set_move_auto_speed( 3 )
         chaser1:set_solid_radius( 0.15 )
         chaser1:set_solid( true )
         chaser1:move_auto_animation( false )
@@ -140,7 +140,7 @@ EntityContainer[ "Chasers_Speed2" ] = {
         local chaser2 = entity_manager:get_entity( "Chasers_Speed2" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser2:set_move_speed( 3 )
+        chaser2:set_move_auto_speed( 3 )
         chaser2:set_solid_radius( 0.15 )
         chaser2:set_solid( true )
         chaser2:move_auto_animation( false )
@@ -168,7 +168,7 @@ EntityContainer[ "Chasers_Speed3" ] = {
         local chaser3 = entity_manager:get_entity( "Chasers_Speed3" )
         local player = entity_manager:get_entity( "Player" )
 
-        chaser3:set_move_speed( 3 )
+        chaser3:set_move_auto_speed( 3 )
         chaser3:set_solid_radius( 0.15 )
         chaser3:set_solid( true )
         chaser3:move_auto_animation( false )
@@ -196,7 +196,7 @@ EntityContainer[ "Watcher1" ] = {
         local watcher1 = entity_manager:get_entity( "Watcher1" )
         local player = entity_manager:get_entity( "Player" )
 
-        watcher1:set_move_speed( 1.5 )
+        watcher1:set_move_auto_speed( 1.5 )
         watcher1:set_solid_radius( 0.3 )
         watcher1:set_solid( true )
 

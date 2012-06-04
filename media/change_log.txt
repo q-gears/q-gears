@@ -36,13 +36,22 @@ To Do
 * [Background] All animations must be played at once.
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 * [Script] Try to separate ui and entity script debug.
+* [Script] When entity manager paused and stop updating - waited scripts continue to work. This cause errors.
 
 
+
+2012-06-05
+----------
+* [Content Map] Add empty map used in main menu to remove 3d content from background. [Akari]
+* [Content Map] Clean up test maps included in v0.21. Set camera and update scripts. [Akari]
+* [Content UI] Add new option to mainmenu (Entity Testing) where most of entity movement features tested. [Akari]
+* [Content UI] Add pause menu to enable exiting from game back to main menu. [Akari]
 
 2012-06-04
 ----------
 * [Export Background] Add export for palette (CLUT) animations. [Akari]
 * [Entity] Auto and Manual move speed has been separated. [Akari]
+* [Script] Add binding to enable script to run console commands. [Akari]
 
 2012-06-02
 ----------

@@ -6,7 +6,7 @@
     <movement_rotation degree="-5.625" />
 
     <entity_script name="Director" />
-    <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="29.0547 229.234 2.56082" direction="0" />
     <entity_model name="Barret" file_name="models/ffvii/field/units/barret.mesh" position="0 0 0" direction="0" />
     <entity_script name="View" />
     <entity_model name="Hei0" file_name="models/ffvii/field/units/soldier.mesh" position="0 0 0" direction="0" />

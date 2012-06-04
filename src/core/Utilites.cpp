@@ -21,6 +21,8 @@ struct KeyName
 
 KeyName key_names[] =
 {
+    { "Enter", OIS::KC_RETURN },
+
     { "LShift", OIS::KC_LSHIFT },
     { "RShift", OIS::KC_RSHIFT },
     { "LCtrl", OIS::KC_LCONTROL },
@@ -125,17 +127,17 @@ KeyToString( OIS::KeyCode key )
 
 
 OIS::KeyCode
-StringToKey(const Ogre::String& str)
+StringToKey( const Ogre::String& str )
 {
-    if (str == "")
+    if( str == "" )
     {
         return OIS::KC_UNASSIGNED;
     }
 
     // find key by string
-    for (KeyName* kn = key_names; kn->name != "UNASSIGNED"; ++kn)
+    for( KeyName* kn = key_names; kn->name != "UNASSIGNED"; ++kn )
     {
-        if (kn->name == str)
+        if( kn->name == str )
         {
             return kn->key;
         }

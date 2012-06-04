@@ -30,7 +30,7 @@ public:
     bool IsVisible() const;
 
     void AddTextToOutput( const Ogre::String& text, const Ogre::ColourValue& colour = Ogre::ColourValue::White );
-    void ExecuteCommand();
+    void ExecuteCommand( const Ogre::String& command );
     void ExecuteScript();
     void CompleteInput();
     void ResetAutoCompletion();
