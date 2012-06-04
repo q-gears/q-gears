@@ -81,7 +81,7 @@ EntityContainer[ "Cloud" ] = {
 
     --[[ Move Cloud to talk position for the scene. ]]
     scene_part_1 = function( self )
-        self.cloud:set_move_speed( 1.875 )
+        self.cloud:set_move_auto_speed( 1.875 )
         self.cloud:move_to_position( 4.48438, 5.30469 )
         self.cloud:move_sync()
         self.cloud:set_direction( 174.375 )
@@ -137,7 +137,7 @@ EntityContainer[ "Cloud" ] = {
         script:wait( 0.6 )
         self.cloud:play_animation_stop( "LookUp" )
         self.cloud:animation_sync()
-        self.cloud:set_move_speed( 1.17187 )
+        self.cloud:set_move_auto_speed( 1.17187 )
         self.cloud:set_default_animation( "Idle" )
         self.cloud:play_animation( "Idle" )
         self.cloud:move_to_position( 5.02344, 11.4141 )
@@ -169,7 +169,7 @@ EntityContainer[ "Barret" ] = {
     scene_part_8 = function( self )
         self.barret:set_solid( true )
         self.barret:set_visible( true )
-        self.barret:set_move_speed( 1.17187 )
+        self.barret:set_move_auto_speed( 1.17187 )
         script:request( "EntityContainer.Cloud", "scene_part_9", 6 )
         self.barret:move_to_position( 5.96094, 5.08594 )
         self.barret:move_sync()
@@ -183,7 +183,7 @@ EntityContainer[ "Barret" ] = {
     end,
 
     scene_part_13 = function( self )
-        self.barret:set_move_speed( 1.17187 )
+        self.barret:set_move_auto_speed( 1.17187 )
         script:request( "EntityContainer.Cloud", "scene_part_14", 6 )
         self.barret:move_to_position( 4.39844, 7.3125 )
         self.barret:move_sync()
@@ -279,7 +279,7 @@ EntityContainer[ "Biggs" ] = {
     end,
 
     scene_part_11 = function( self )
-        self.biggs:set_move_speed( 1.17187 )
+        self.biggs:set_move_auto_speed( 1.17187 )
         self.biggs:move_to_position( 4.57422, 6.82812 )
         self.biggs:move_sync()
         self.biggs:move_to_position( 5.29297, 13.1875 )
@@ -331,7 +331,7 @@ EntityContainer[ "Jessie" ] = {
     end,
 
     scene_part_10 = function( self )
-        self.jessie:set_move_speed( 1.17187 )
+        self.jessie:set_move_auto_speed( 1.17187 )
         self.jessie:play_animation( "BreakUpGetUp" )
         self.jessie:animation_sync()
         self.jessie:move_to_position( 5.29297, 13.1875 )
@@ -367,7 +367,7 @@ EntityContainer[ "Wedge" ] = {
     end,
 
     scene_part_12 = function( self )
-        self.wedge:set_move_speed( 1.17187 )
+        self.wedge:set_move_auto_speed( 1.17187 )
         self.wedge:move_to_position( 4.57422, 6.82812 )
         self.wedge:move_sync()
         self.wedge:move_to_position( 5.29297, 13.1875 )

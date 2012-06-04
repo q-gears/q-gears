@@ -176,7 +176,7 @@ EntityManager::Update()
         Entity::State state = m_PlayerEntity->GetState();
         if( state == Entity::WALKMESH || state == Entity::NONE )
         {
-            m_PlayerMove *= m_PlayerEntity->GetMoveSpeed() * Timer::getSingleton().GetGameTimeDelta();
+            m_PlayerMove *= m_PlayerEntity->GetMoveWalkSpeed() * Timer::getSingleton().GetGameTimeDelta();
             m_PlayerEntity->SetMovePosition( m_PlayerEntity->GetPosition() + m_PlayerMove );
             m_PlayerEntity->SetState( Entity::WALKMESH );
         }
@@ -247,21 +247,28 @@ EntityManager::Update()
                 // perform move
                 if( m_EntityModels[ i ]->GetState() == Entity::WALKMESH )
                 {
-                    float store_speed = m_EntityModels[ i ]->GetMoveSpeed();
-
-                    // run check
-                    if( m_PlayerLock == false && m_PlayerEntity == m_EntityModels[ i ] && InputManager::getSingleton().IsButtonPressed( OIS::KC_X ) == true )
+                    float speed = 0;
+                    if( m_PlayerLock == false && m_PlayerEntity == m_EntityModels[ i ] )
                     {
-                        m_EntityModels[ i ]->SetMoveSpeed( store_speed * 4 );
+                        speed = m_EntityModels[ i ]->GetMoveWalkSpeed();
+
+                        if( InputManager::getSingleton().IsButtonPressed( OIS::KC_X ) == true )
+                        {
+                            speed *= 4;
+                        }
+                    }
+                    else
+                    {
+                        speed = m_EntityModels[ i ]->GetMoveAutoSpeed();
                     }
 
-                    is_move = PerformWalkmeshMove( m_EntityModels[ i ] );
+                    is_move = PerformWalkmeshMove( m_EntityModels[ i ], speed );
 
                     if( m_EntityModels[ i ]->GetMoveAutoAnimation() == true )
                     {
                         if( is_move == true )
                         {
-                            if( m_EntityModels[ i ]->GetMoveSpeed() >= m_EntityModels[ i ]->GetMoveSpeedRun() )
+                            if( speed >= m_EntityModels[ i ]->GetMoveRunSpeed() )
                             {
                                 m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetMoveAnimationRunName() );
                             }
@@ -275,8 +282,6 @@ EntityManager::Update()
                             m_EntityModels[ i ]->PlayAnimationContinue( m_EntityModels[ i ]->GetDefaultAnimationName() );
                         }
                     }
-
-                    m_EntityModels[ i ]->SetMoveSpeed( store_speed );
                 }
             }
             break;
@@ -652,7 +657,7 @@ EntityManager::SetEntityOnWalkmesh( Entity* entity )
 
 
 bool
-EntityManager::PerformWalkmeshMove( Entity* entity )
+EntityManager::PerformWalkmeshMove( Entity* entity, const float speed )
 {
     Ogre::Vector3 start_point = entity->GetPosition();
     Ogre::Vector3 move_vector = entity->GetMovePosition() - start_point;
@@ -660,7 +665,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
 
     direction.normalise();
     direction *= Timer::getSingleton().GetGameTimeDelta();
-    direction *= entity->GetMoveSpeed();
+    direction *= speed;
 
     // if we still need to move but speed ot time don't allow us to do this just return for now
     if( direction.isZeroLength() == true )
@@ -922,7 +927,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity )
 
     // if we come to destination point - finish movement
     Ogre::Vector3 final = entity->GetMovePosition() - end_point;
-    if( Ogre::Vector2( final.x, final.y ).length() <= entity->GetMoveStopDistance() + entity->GetMoveSpeed() / 10 )
+    if( Ogre::Vector2( final.x, final.y ).length() <= entity->GetMoveStopDistance() + speed / 10 )
     {
         entity->UnsetMove();
     }

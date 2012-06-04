@@ -104,10 +104,12 @@ public:
     State                GetState() const;
 
     // movement related
-    void                 SetMoveSpeed( const float speed );
-    float                GetMoveSpeed() const;
-    void                 SetMoveSpeedRun( const float speed );
-    float                GetMoveSpeedRun() const;
+    void                 SetMoveAutoSpeed( const float speed );
+    float                GetMoveAutoSpeed() const;
+    void                 SetMoveWalkSpeed( const float speed );
+    float                GetMoveWalkSpeed() const;
+    void                 SetMoveRunSpeed( const float speed );
+    float                GetMoveRunSpeed() const;
     void                 SetMovePosition( const Ogre::Vector3& target );
     const Ogre::Vector3& GetMovePosition() const;
     float                GetMoveStopDistance() const;
@@ -217,8 +219,9 @@ protected:
     std::vector< ScriptId > m_Sync;
 
     // move related
-    float                   m_MoveSpeed;
-    float                   m_MoveSpeedRun;
+    float                   m_MoveAutoSpeed;
+    float                   m_MoveWalkSpeed;
+    float                   m_MoveRunSpeed;
     Ogre::Vector3           m_MovePosition;
     Entity*                 m_MoveEntity;
     float                   m_MoveStopDistance;

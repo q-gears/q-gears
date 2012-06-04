@@ -46,7 +46,7 @@ public:
 private:
     // movement
     bool SetEntityOnWalkmesh( Entity* entity );
-    bool PerformWalkmeshMove( Entity* entity );
+    bool PerformWalkmeshMove( Entity* entity, const float speed );
     bool WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, const Ogre::Vector2& move_vector );
     bool CheckSolidCollisions( Entity* entity, Ogre::Vector3& position );
     void SetEntityDirectionByVector( Entity* entity, const Ogre::Vector2& vector );

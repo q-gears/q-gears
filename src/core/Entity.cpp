@@ -26,8 +26,9 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
 
     m_State( Entity::NONE ),
 
-    m_MoveSpeed( 0.7f ),
-    m_MoveSpeedRun( 0.8f ),
+    m_MoveAutoSpeed( 0.7f ),
+    m_MoveWalkSpeed( 0.7f ),
+    m_MoveRunSpeed( 0.8f ),
     m_MovePosition( Ogre::Vector3( 0, 0, 0 ) ),
     m_MoveEntity( NULL ),
     m_MoveStopDistance( 0 ),
@@ -384,33 +385,49 @@ Entity::GetState() const
 
 
 void
-Entity::SetMoveSpeed( const float speed )
+Entity::SetMoveAutoSpeed( const float speed )
 {
-    m_MoveSpeed = speed;
+    m_MoveAutoSpeed = speed;
 }
 
 
 
 float
-Entity::GetMoveSpeed() const
+Entity::GetMoveAutoSpeed() const
 {
-    return m_MoveSpeed;
+    return m_MoveAutoSpeed;
 }
 
 
 
 void
-Entity::SetMoveSpeedRun( const float speed )
+Entity::SetMoveWalkSpeed( const float speed )
 {
-    m_MoveSpeedRun = speed;
+    m_MoveWalkSpeed = speed;
 }
 
 
 
 float
-Entity::GetMoveSpeedRun() const
+Entity::GetMoveWalkSpeed() const
 {
-    return m_MoveSpeedRun;
+    return m_MoveWalkSpeed;
+}
+
+
+
+void
+Entity::SetMoveRunSpeed( const float speed )
+{
+    m_MoveRunSpeed = speed;
+}
+
+
+
+float
+Entity::GetMoveRunSpeed() const
+{
+    return m_MoveRunSpeed;
 }
 
 

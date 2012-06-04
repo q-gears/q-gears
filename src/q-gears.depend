@@ -24402,7 +24402,7 @@
 
 1314721440 m:\q-gears\src\main.h
 
-1337600368 m:\q-gears\src\core\cameramanager.h
+1338409560 m:\q-gears\src\core\cameramanager.h
 	<OgreCamera.h>
 	<OgreSingleton.h>
 	"Event.h"
@@ -24410,7 +24410,7 @@
 1328639646 m:\q-gears\src\core\event.h
 	<OIS.h>
 
-1329163962 m:\q-gears\src\core\configcmdmanager.h
+1338405314 m:\q-gears\src\core\configcmdmanager.h
 	<OgreSingleton.h>
 	<vector>
 	"ConfigCmd.h"
@@ -24447,7 +24447,7 @@
 	<OgreRoot.h>
 	<OgreSingleton.h>
 
-1338144234 m:\q-gears\src\core\entitymanager.h
+1338790142 m:\q-gears\src\core\entitymanager.h
 	<OgreSingleton.h>
 	"Background2D.h"
 	"Entity.h"
@@ -24456,7 +24456,7 @@
 	"Event.h"
 	"Walkmesh.h"
 
-1338204720 m:\q-gears\src\core\background2d.h
+1338490350 m:\q-gears\src\core\background2d.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
@@ -24464,7 +24464,7 @@
 	"Entity.h"
 	"ScriptManager.h"
 
-1337622686 m:\q-gears\src\core\entity.h
+1338790838 m:\q-gears\src\core\entity.h
 	<OgreString.h>
 	"EntityCollision.h"
 	"EntityDirection.h"
@@ -25084,7 +25084,7 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1338204380 source:m:\q-gears\src\core\background2d.cpp
+1338744492 source:m:\q-gears\src\core\background2d.cpp
 	"Background2D.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
@@ -25094,8 +25094,9 @@
 	"Logger.h"
 	"Timer.h"
 
-1337681664 source:m:\q-gears\src\core\cameramanager.cpp
+1338494810 source:m:\q-gears\src\core\cameramanager.cpp
 	"CameraManager.h"
+	"CameraManagerCommands.h"
 	<OgreRenderWindow.h>
 	<OgreRoot.h>
 	<OIS.h>
@@ -25106,12 +25107,12 @@
 1306971022 source:m:\q-gears\src\core\configcmd.cpp
 	"ConfigCmd.h"
 
-1329163904 source:m:\q-gears\src\core\configcmdmanager.cpp
+1338405360 source:m:\q-gears\src\core\configcmdmanager.cpp
 	"ConfigCmdManager.h"
 	"ConfigCmdManagerCommands.h"
 	"Assert.h"
 
-1337795396 m:\q-gears\src\core\configcmdmanagercommands.h
+1338405404 m:\q-gears\src\core\configcmdmanagercommands.h
 	<OgreRenderWindow.h>
 	<OgreRoot.h>
 	<OgreStringConverter.h>
@@ -25182,7 +25183,7 @@
 	"CameraManager.h"
 	"Logger.h"
 
-1337622736 source:m:\q-gears\src\core\entity.cpp
+1338789340 source:m:\q-gears\src\core\entity.cpp
 	"Entity.h"
 	<OgreSceneNode.h>
 	"ConfigVar.h"
@@ -25197,10 +25198,11 @@
 	"EntityDirection.h"
 	<OgreHardwareBufferManager.h>
 
-1337623718 source:m:\q-gears\src\core\entitymanager.cpp
+1338624020 source:m:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
+	"CameraManager.h"
 	"ConfigVar.h"
 	"DebugDraw.h"
 	"EntityModel.h"
@@ -25212,7 +25214,7 @@
 1335606908 m:\q-gears\src\core\entitymodel.h
 	"Entity.h"
 
-1335607020 source:m:\q-gears\src\core\entitymodel.cpp
+1338319902 source:m:\q-gears\src\core\entitymodel.cpp
 	"EntityModel.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -25242,7 +25244,7 @@
 	"Logger.h"
 	"Timer.h"
 
-1330878144 m:\q-gears\src\core\inputmanagercommands.h
+1338405418 m:\q-gears\src\core\inputmanagercommands.h
 	<OgreStringConverter.h>
 	"Console.h"
 	"ConfigCmdManager.h"
@@ -25265,7 +25267,7 @@
 	"library/luabind/luabind.hpp"
 	"library/luabind/yield_policy.hpp"
 
-1338204574 m:\q-gears\src\core\scriptmanagerbinds.h
+1338788978 m:\q-gears\src\core\scriptmanagerbinds.h
 	"Console.h"
 	"Logger.h"
 	"Entity.h"
@@ -25275,7 +25277,7 @@
 	"XmlMapFile.h"
 	"XmlMapsFile.h"
 
-1314721440 m:\q-gears\src\core\scriptmanagercommands.h
+1338405440 m:\q-gears\src\core\scriptmanagercommands.h
 	"ConfigCmdManager.h"
 	"Console.h"
 
@@ -25362,13 +25364,13 @@
 	"Utilites.h"
 	<OgreStringConverter.h>
 
-1337622904 source:m:\q-gears\src\core\walkmesh.cpp
+1338407512 source:m:\q-gears\src\core\walkmesh.cpp
 	"Walkmesh.h"
 	"ConfigVar.h"
 	"DebugDraw.h"
 	"Logger.h"
 
-1337684844 source:m:\q-gears\src\core\xmlbackground2dfile.cpp
+1338493682 source:m:\q-gears\src\core\xmlbackground2dfile.cpp
 	"XmlBackground2DFile.h"
 	"Background2D.h"
 	"Background2DAnimation.h"
@@ -25399,7 +25401,7 @@
 	"Logger.h"
 	"XmlFontFile.h"
 
-1337418106 source:m:\q-gears\src\core\xmlmapfile.cpp
+1338625024 source:m:\q-gears\src\core\xmlmapfile.cpp
 	"XmlMapFile.h"
 	"EntityManager.h"
 	"Logger.h"
@@ -27951,6 +27953,12 @@
 	"ConfigVar.h"
 
 1338406206 k:\q-gears\src\core\cameramanagercommands.h
+	<OgreStringConverter.h>
+	"CameraManager.h"
+	"ConfigCmdManager.h"
+	"Console.h"
+
+1338406206 m:\q-gears\src\core\cameramanagercommands.h
 	<OgreStringConverter.h>
 	"CameraManager.h"
 	"ConfigCmdManager.h"

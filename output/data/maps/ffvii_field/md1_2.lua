@@ -39,7 +39,7 @@ EntityContainer[ "Biggs" ] = {
 
         if Savemap.progress_game < 8 then
             self.biggs:set_visible( true )
-            self.biggs:set_move_speed( 3.75 )
+            self.biggs:set_move_auto_speed( 3.75 )
             self.biggs:move_to_position( 28.4844, 243.898 )
             self.biggs:move_sync()
             -- this needs to be called after some sync because other entity check this in on_start too.
@@ -72,7 +72,7 @@ EntityContainer[ "Jessie" ] = {
 
         self.jessie:set_default_animation( "LookAround" )
         self.jessie:play_animation( "LookAround" )
-        self.jessie:set_move_speed( 3.75 )
+        self.jessie:set_move_auto_speed( 3.75 )
         self.jessie:set_direction( 354.375 )
         self.jessie:set_position( 27.9219, 253.773, 4.96875 )
         self.jessie:set_solid( false )
@@ -101,7 +101,7 @@ EntityContainer[ "Wedge" ] = {
         self.wedge = entity_manager:get_entity( "Wedge" )
         self.wedge:set_default_animation( "LookAround" )
         self.wedge:play_animation( "LookAround" )
-        self.wedge:set_move_speed( 3.75 )
+        self.wedge:set_move_auto_speed( 3.75 )
         self.wedge:set_direction( 354.375 )
         self.wedge:set_position( 34.0312, 247.484, 5.09375 )
         self.wedge:set_solid( false )
