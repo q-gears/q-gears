@@ -94,7 +94,7 @@
     + 3b []       ? in 0xa8 and 0xe2 opcode. Index of model data struct.
     + 3c []       solid radius.
     + 3d []       talk radius.
-    + 3e []       store some window id here.?
+    + 3e []       store some window id here.
     + 40 [][][][] destination x?
     + 44 [][][][] destination y?
     + 48 [][][][] destination z?
@@ -206,7 +206,7 @@
 8007ae5c [][][][] set to 0 at start of text opcode parsing.
 8007ae60 [][][][] set to 0 at start of text opcode parsing.
 8007ae64 [][][][] set to 0 at start of text opcode parsing.
-8007ae68 [][][][] set to 0 during script initialization.
+8007ae68 [][][][] set to 0 during script initialization. Store current script data here when adding new dialog window.
 8007ae8c [][][][] store here pointer to +2c data in script file (+2c).
 8007aea0 [][][][] store pointer to start of current opcode here (to restore it if needed)
 8007aec0 [][][][] set to 0 during script initialization.

@@ -32,11 +32,7 @@ Background2D::Background2D():
     m_ScrollType( Background2D::NONE ),
     m_ScrollSeconds( 0 ),
     m_ScrollCurrentSeconds( 0 ),
-    m_Position( Ogre::Vector2::ZERO ),
-
-    m_AnimationCurrent( "" ),
-    m_AnimationDefault( "" ),
-    m_AnimationState( Background2DAnimation::DEFAULT )
+    m_Position( Ogre::Vector2::ZERO )
 {
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
@@ -95,46 +91,58 @@ Background2D::~Background2D()
 void
 Background2D::Update()
 {
-    if( m_AnimationCurrent != "" )
+    for( unsigned int i = 0; i < m_AnimationPlayed.size(); ++i )
     {
-        for( unsigned int i = 0; i < m_Animations.size(); ++i )
+        for( unsigned int j = 0; j < m_Animations.size(); ++j )
         {
-            if( m_Animations[ i ]->GetName() == m_AnimationCurrent )
+            if( m_Animations[ j ]->GetName() == m_AnimationPlayed[ i ].name )
             {
                 float delta_time = Timer::getSingleton().GetGameTimeDelta();
-                float time = m_Animations[ i ]->GetTime();
+                float time = m_Animations[ j ]->GetTime();
+                float end_time = m_Animations[ j ]->GetLength();
 
                 // if animation ended
-                if( time + delta_time >= m_AnimationEndTime )
+                if( time + delta_time >= end_time )
                 {
-                    if( time != m_AnimationEndTime )
+                    // set to last frame of animation
+                    if( time != end_time )
                     {
-                        m_Animations[ i ]->AddTime( m_AnimationEndTime - time );
+                        m_Animations[ j ]->SetTime( end_time );
                     }
 
-                    for( unsigned int j = 0; j < m_AnimationSync.size(); ++j )
+                    if( m_AnimationPlayed[ i ].state == Background2DAnimation::ONCE )
                     {
-                        ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationSync[ j ] );
+                        for( unsigned int k = 0; k < m_AnimationPlayed[ i ].sync.size(); ++k )
+                        {
+                            ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationPlayed[ i ].sync[ k ] );
+                        }
+                        m_AnimationPlayed[ i ].sync.clear();
+                        m_AnimationPlayed[ i ].name = ""; // mark to erase this way
                     }
-                    m_AnimationSync.clear();
-
-                    if( m_AnimationState == Background2DAnimation::DEFAULT && m_AnimationDefault != "" )
+                    else // LOOPED
                     {
-                        // in case of cycled default we need to sync with end
-                        time = time + delta_time - m_Animations[ i ]->GetLength();
-                        PlayAnimation( m_AnimationDefault, Background2DAnimation::DEFAULT, time, -1 );
+                        // in case of looped we need to sync with end
+                        m_Animations[ j ]->SetTime( time + delta_time - end_time );
                     }
                 }
                 else
                 {
-                    m_Animations[ i ]->AddTime( delta_time );
+                    m_Animations[ j ]->AddTime( delta_time );
                 }
             }
         }
     }
-    else if( m_AnimationCurrent == "" && m_AnimationState == Background2DAnimation::DEFAULT && m_AnimationDefault != "" )
+
+
+
+    // remove stopped animations
+    std::vector< AnimationPlayed >::iterator i = m_AnimationPlayed.begin();
+    for( ; i != m_AnimationPlayed.end(); ++i )
     {
-        PlayAnimation( m_AnimationDefault, Background2DAnimation::DEFAULT, 0, -1 );
+        if( ( *i ).name == "" )
+        {
+            i = m_AnimationPlayed.erase( i );
+        }
     }
 }
 
@@ -148,7 +156,10 @@ Background2D::UpdateDebug()
         DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
         DEBUG_DRAW.SetScreenSpace( true );
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.0, 0.8, 0.8, 1 ) );
-        DEBUG_DRAW.Text( 150, 34, "Background 2D animation: " + GetCurrentAnimationName() );
+        for( unsigned int i = 0; i < m_AnimationPlayed.size(); ++i )
+        {
+            DEBUG_DRAW.Text( 150, 34 + i * 12, "Background 2D animation: " + m_AnimationPlayed[ i ].name );
+        }
     }
 }
 
@@ -245,15 +256,15 @@ Background2D::Clear()
         delete m_Animations[ i ];
     }
     m_Animations.clear();
-    m_AnimationCurrent = "";
-    m_AnimationDefault = "";
-    for( unsigned int i = 0; i < m_AnimationSync.size(); ++i)
+
+    for( unsigned int i = 0; i < m_AnimationPlayed.size(); ++i )
     {
-        ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationSync[ i ] );
+        for( unsigned int j = 0; j < m_AnimationPlayed[ i ].sync.size(); ++j )
+        {
+            ScriptManager::getSingleton().ContinueScriptExecution( m_AnimationPlayed[ i ].sync[ j ] );
+        }
     }
-    m_AnimationSync.clear();
-    m_AnimationState = Background2DAnimation::DEFAULT;
-    m_AnimationEndTime = 0;
+    m_AnimationPlayed.clear();
 
     m_Tiles.clear();
     DestroyVertexBuffers();
@@ -621,39 +632,38 @@ Background2D::AddAnimation( Background2DAnimation* animation )
 
 
 
-const Ogre::String&
-Background2D::GetCurrentAnimationName() const
-{
-    return m_AnimationCurrent;
-}
-
-
-
 void
-Background2D::PlayAnimation( const Ogre::String& animation, Background2DAnimation::State state, const float start, const float end )
+Background2D::PlayAnimation( const Ogre::String& animation, const Background2DAnimation::State state )
 {
     bool found = false;
 
-    m_AnimationCurrent = animation;
-    m_AnimationState = state;
-
-    for( unsigned int i = 0; i < m_Animations.size(); ++i)
+    for( unsigned int i = 0; i < m_Animations.size(); ++i )
     {
         if( m_Animations[ i ]->GetName() == animation )
         {
             found = true;
-            m_Animations[ i ]->SetTime( ( start == -1 ) ? m_Animations[ i ]->GetLength() : start );
+            m_Animations[ i ]->SetTime( 0 );
             m_Animations[ i ]->AddTime( 0 );
-            m_AnimationEndTime = ( end == -1 ) ? m_Animations[ i ]->GetLength() : end;
-
         }
     }
 
-    if( found == false )
+    for( unsigned int i = 0; i < m_AnimationPlayed.size(); ++i )
     {
-        // stop current state and animation
-        m_AnimationCurrent = "";
-        m_AnimationState = Background2DAnimation::ONCE;
+        if( m_AnimationPlayed[ i ].name == animation )
+        {
+            m_AnimationPlayed.erase( m_AnimationPlayed.begin() + i );
+        }
+    }
+
+    if( found == true )
+    {
+        AnimationPlayed anim;
+        anim.name = animation;
+        anim.state = state;
+        m_AnimationPlayed.push_back( anim );
+    }
+    else
+    {
         LOG_ERROR( "Background2D doesn't has animation \"" + animation + "\"." );
     }
 }
@@ -661,52 +671,35 @@ Background2D::PlayAnimation( const Ogre::String& animation, Background2DAnimatio
 
 
 void
-Background2D::ScriptPlayAnimation( const char* name )
+Background2D::ScriptPlayAnimationLooped( const char* name )
 {
-    PlayAnimation( Ogre::String( name ), Background2DAnimation::DEFAULT, 0, -1 );
+    PlayAnimation( Ogre::String( name ), Background2DAnimation::LOOPED );
 }
 
 
 
 void
-Background2D::ScriptPlayAnimationStop( const char* name )
+Background2D::ScriptPlayAnimationOnce( const char* name )
 {
-    PlayAnimation( Ogre::String( name ), Background2DAnimation::ONCE, 0, -1 );
-}
-
-
-
-void
-Background2D::ScriptPlayAnimation( const char* name, const float start, const float end )
-{
-    PlayAnimation( Ogre::String( name ), Background2DAnimation::DEFAULT, start, end );
-}
-
-
-
-void
-Background2D::ScriptPlayAnimationStop( const char* name, const float start, const float end )
-{
-    PlayAnimation( Ogre::String( name ), Background2DAnimation::ONCE, start, end );
-}
-
-
-
-void
-Background2D::ScriptSetDefaultAnimation( const char* animation )
-{
-    m_AnimationDefault = Ogre::String( animation );
-    m_AnimationState = Background2DAnimation::DEFAULT;
+    PlayAnimation( Ogre::String( name ), Background2DAnimation::ONCE );
 }
 
 
 
 int
-Background2D::ScriptAnimationSync()
+Background2D::ScriptAnimationSync( const char* animation )
 {
-    ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
-    m_AnimationSync.push_back( script );
-    return -1;
+    for( unsigned int i = 0; i < m_AnimationPlayed.size(); ++i )
+    {
+        if( m_AnimationPlayed[ i ].name == animation )
+        {
+            ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
+            m_AnimationPlayed[ i ].sync.push_back( script );
+            return -1;
+        }
+    }
+
+    return 1;
 }
 
 

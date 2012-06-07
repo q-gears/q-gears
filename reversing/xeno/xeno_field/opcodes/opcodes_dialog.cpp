@@ -146,7 +146,7 @@ if( w[800ad048] == 0 && func89b2c != 0 )
 // if we cant find avatar
 V0 = w[800af54c];
 A0 = bu[V0 + 80];
-if (A0 != ff && func9b728 == -1)
+if( A0 != ff && func9b728 == -1 )
 {
     [800af594] = w(1);
     return -1;
@@ -179,15 +179,15 @@ dialog_id = V0;
 
 
 func7fd34; // search for not opened window slot
-if( V0 != 0 ) if not found
+if( V0 != 0 ) // if not found
 {
     func7fd74; // search lowest opened window
-
-    [800c1b6c + V0 * 498 + 414] = h(0); say it to close
-
+    [800c1b6c + V0 * 498 + 414] = h(0); // say it to close
     [800af594] = w(1);
     return -1;
 }
+
+
 
 func7fdc8; // get free window slot
 S1 = V0;
@@ -231,18 +231,16 @@ A0 = A2 & ffff;
 
 
 // read last byte in opcode
-V1 = w[800ad0d8];
-V0 = V1 + hu[A1 + cc];
+V0 = w[800ad0d8] + hu[A1 + cc];
 V1 = bu[V0 + 3];
 
 S6 = A0;
-if (V1 != 0)
+if( V1 != 0 )
 {
     V0 = A2 & ff00;
     S6 = V0 | V1;
     V0 = S6 << 10;
-    V0 = A0 | V0;
-    [A1 + 84] = w(V0);
+    [A1 + 84] = w(A0 | V0);
 }
 
 V0 = S6 >> 4;
@@ -543,9 +541,9 @@ return bu[A0 + V0 * 2 + A1 * 2 + 6 + 1];
 A0 = 0;
 
 loop7fddc:	; 8007FDDC
-    if (hu[800c1b6c + A0 * 498 + 410] != ffff)
+    if( hu[800c1b6c + A0 * 498 + 410] != ffff )
     {
-        [800c1b6c + A0 * 498 + 410] = h(V0 + 1);
+        [800c1b6c + A0 * 498 + 410] = h(hu[800c1b6c + A0 * 498 + 410] + 1); // increase order of existed window
     }
 
     A0 = A0 + 1;
@@ -554,9 +552,9 @@ loop7fddc:	; 8007FDDC
 
 A0 = 0;
 loop7fe1c:	; 8007FE1C
-    if (hu[800c1b6c + A0 * 498 + 410] == ffff)
+    if( hu[800c1b6c + A0 * 498 + 410] == ffff )
     {
-        [800c1b6c + A0 * 498 + 410] = h(0);
+        [800c1b6c + A0 * 498 + 410] = h(0); // add new window on top
         return A0;
     }
 
@@ -571,15 +569,15 @@ return ffff;
 
 ////////////////////////////////
 // func7fd74
-A2 = 0;
+order = 0;
 A3 = ffff;
-A0 = 0;
 
+A0 = 0;
 loop7fd88:	; 8007FD88
     V1 = hu[800c1b6c + A0 * 498 + 410];
-    if (V1 != ffff && V1 >= A2)
+    if( V1 != ffff && V1 >= order )
     {
-        A2 = V1;
+        order = V1;
         A3 = A0;
     }
 
@@ -594,9 +592,10 @@ return A3;
 
 ////////////////////////////////
 // func7fd34
+// is there are not opened windows
 A0 = 0;
 loop7fd40:	; 8007FD40
-    if (hu[800c1b6c + A0 * 498 + 410] == ffff)
+    if( hu[800c1b6c + A0 * 498 + 410] == ffff )
     {
         return 0;
     }
@@ -605,7 +604,7 @@ loop7fd40:	; 8007FD40
     V0 = A0 < 4;
 8007FD60	bne    v0, zero, loop7fd40 [$8007fd40]
 
-return -1;
+return ffff;
 ////////////////////////////////
 
 

@@ -1349,7 +1349,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                         "field:screen_set_scroll_to_pc(" +
                         ((type == 4) ? "Field.NONE" : ((type == 5) ? "Field.LINEAR" : ((type == 6) ? "Field.SMOOTH" : "Unknown_type_" + IntToString(type)))) +
                         ", " +
-                        ParseGetVariable(GetU8(script + 1) & 0x0F, GetU16LE(script + 2), false, 30.0f) +
+                        ParseGetVariable(GetU8(script + 1) & 0x0F, GetU16LE(script + 2), 0, 30.0f) +
                         ");\n"
                     );
 
@@ -1365,7 +1365,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                         ", " +
                         ((type == 1) ? "Field.NONE" : ((type == 2) ? "Field.LINEAR" : ((type == 3) ? "Field.SMOOTH" : "Unknown_type_" + IntToString(type)))) +
                         ", " +
-                        ParseGetVariable(GetU8(script + 1), GetU16LE(script + 2), false, 30.0f) +
+                        ParseGetVariable(GetU8(script + 1), GetU16LE(script + 2), 0, 30.0f) +
                         ");\n"
                     );
 
@@ -1383,7 +1383,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if( opcode == 0x66 ) // SCR2DC
                 {
-                    export_script->Log( "background2d:scroll_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 3 ) ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 5 ) ) + ", Background2D.SMOOTH, " + ParseGetVariable( GetU8( script + 2 ) & 0x0F, ( s16 )GetU16LE( script + 7 ), false, 30.0f ) + " )\n" );
+                    export_script->Log( "background2d:scroll_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 3 ) ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 5 ) ) + ", Background2D.SMOOTH, " + ParseGetVariable( GetU8( script + 2 ) & 0x0F, ( s16 )GetU16LE( script + 7 ), 0, 30.0f ) + " )\n" );
                     AdvanceScript( 9, script, end );
                 }
                 else if( opcode == 0x67 ) // SCRLW
@@ -1393,7 +1393,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if (opcode == 0x68) // SCR2DL
                 {
-                    export_script->Log( "background2d:scroll_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 3 ) ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 5 ) ) + ", Background2D.LINEAR, " + ParseGetVariable( GetU8( script + 2 ) & 0x0F, ( s16 )GetU16LE( script + 7 ), false, 30.0f ) + " )\n" );
+                    export_script->Log( "background2d:scroll_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 3 ) ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 5 ) ) + ", Background2D.LINEAR, " + ParseGetVariable( GetU8( script + 2 ) & 0x0F, ( s16 )GetU16LE( script + 7 ), 0, 30.0f ) + " )\n" );
                     AdvanceScript( 9, script, end );
                 }
                 else if (opcode == 0x6A) // VWOFT
@@ -1661,7 +1661,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if( opcode == 0xA5 ) // XYZI
                 {
-                    export_script->Log( entity_list[ i ] + ":set_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 3 ), false, downscaler ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 5 ), false, downscaler ) + ", " + ParseGetVariable( GetU8( script + 2 ) >> 4, ( s16 )GetU16LE( script + 7 ), false, downscaler ) + " ) -- triangle_id=" + ParseGetVariable( GetU8( script + 2 ) & 0x0F, ( s16 )GetU16LE( script + 9 ) ) + "\n" );
+                    export_script->Log( entity_list[ i ] + ":set_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 3 ), 0, downscaler ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 5 ), 0, downscaler ) + ", " + ParseGetVariable( GetU8( script + 2 ) >> 4, ( s16 )GetU16LE( script + 7 ), 0, downscaler ) + " ) -- triangle_id=" + ParseGetVariable( GetU8( script + 2 ) & 0x0F, ( s16 )GetU16LE( script + 9 ) ) + "\n" );
                     AdvanceScript( 11, script, end );
                 }
                 else if( opcode == 0xA6 ) // XYI
@@ -1692,9 +1692,9 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                         ":set_rotation_lock( true );\n" +
                         entity_list[ i ] +
                         ":move_to_position( " +
-                        ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 2), false, downscaler ) +
+                        ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 2), 0, downscaler ) +
                         ", " +
-                        ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 4 ), false, downscaler ) +
+                        ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 4 ), 0, downscaler ) +
                         ", false );\n" +
                         entity_list[ i ] +
                         ":set_rotation_lock( false );\n"
@@ -1789,19 +1789,19 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if( opcode == 0xB2 ) // MSPED
                 {
-                    export_script->Log( entity_list[ i ] + ":set_move_speed( " + ParseGetVariable( GetU8( script + 1 ), GetU16LE( script + 2 ), false, 256.0f * downscaler / ( 30.0f ) ) + " )\n" );
+                    export_script->Log( entity_list[ i ] + ":set_move_speed( " + ParseGetVariable( GetU8( script + 1 ), GetU16LE( script + 2 ), 0, 256.0f * downscaler / ( 30.0f ) ) + " )\n" );
                     AdvanceScript( 4, script, end );
                 }
                 else if( opcode == 0xB3 ) // DIR
                 {
-                    export_script->Log( entity_list[ i ] + ":set_direction( " + ParseGetVariable( GetU8( script + 1 ), GetU8( script + 2 ), false, 256.0f / 360.0f ) + " )\n" );
+                    export_script->Log( entity_list[ i ] + ":set_direction( " + ParseGetVariable( GetU8( script + 1 ), GetU8( script + 2 ), 0, 256.0f / 360.0f ) + " )\n" );
                     AdvanceScript(3, script, end);
                 }
                 else if( opcode == 0xB4 ) // TURNGEN
                 {
                     u8 type = GetU8( script + 3 );
                     u8 calc = GetU8( script + 5 );
-                    export_script->Log( entity_list[ i ] + ":turn_to_direction( " + ParseGetVariable( GetU8( script + 1 ), GetU8( script + 2 ), false, 256.0f / 360.0f ) + ", " + ( ( type == 0 ) ? "Entity.CLOCKWISE" : ( ( type == 1 ) ? "Entity.ANTICLOCKWISE" : "Entity.CLOSEST" ) ) + ", " + ( ( calc == 1 ) ? "Entity.LINEAR" : "Entity.SMOOTH" ) + ", " + FloatToString( GetU8( script + 4 ) / 30.0f ) + " )\n" );
+                    export_script->Log( entity_list[ i ] + ":turn_to_direction( " + ParseGetVariable( GetU8( script + 1 ), GetU8( script + 2 ), 0, 256.0f / 360.0f ) + ", " + ( ( type == 0 ) ? "Entity.CLOCKWISE" : ( ( type == 1 ) ? "Entity.ANTICLOCKWISE" : "Entity.CLOSEST" ) ) + ", " + ( ( calc == 1 ) ? "Entity.LINEAR" : "Entity.SMOOTH" ) + ", " + FloatToString( GetU8( script + 4 ) / 30.0f ) + " )\n" );
                     export_script->Log( entity_list[ i ] + ":turn_sync()\n" );
                     AdvanceScript( 6, script, end );
                 }
@@ -1812,7 +1812,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                     export_script->Log(
                         entity_list[i] +
                         ":turn_to_direction( " +
-                        ParseGetVariable(GetU8(script + 1), GetU16LE(script + 2), false, 256.0f / 360.0f) +
+                        ParseGetVariable(GetU8(script + 1), GetU16LE(script + 2), 0, 256.0f / 360.0f) +
                         ", Entity.CLOCKWISE, " +
                         ((calc == 1) ? "Field.LINEAR" : "Field.SMOOTH") +
                         ", " +
@@ -1868,7 +1868,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if( opcode == 0xBD ) // ASPED
                 {
-                    export_script->Log( "-- set speed of entity animation to \"" + ParseGetVariable( GetU8( script + 1 ), GetU16LE( script + 2 ), false, 0x10 ) + "\"\n" );
+                    export_script->Log( "-- set speed of entity animation to \"" + ParseGetVariable( GetU8( script + 1 ), GetU16LE( script + 2 ), 0, 0x10 ) + "\"\n" );
                     AdvanceScript( 4, script, end );
                 }
                 else if (opcode == 0xBF) // CC
@@ -1892,7 +1892,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                         ", " +
                         ParseGetVariable(GetU8(script + 2) >> 4, GetU16LE(script + 7)) +
                         ", " +
-                        ParseGetVariable(GetU8(script + 2) & 0x0F, GetU16LE(script + 9), false, 30.0f) +
+                        ParseGetVariable(GetU8(script + 2) & 0x0F, GetU16LE(script + 9), 0, 30.0f) +
                         " );\n"
                     );
 
@@ -1938,7 +1938,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 else if( opcode == 0xC3 ) // OFST
                 {
                     u8 type = GetU8( script + 3 );
-                    export_script->Log( entity_list[ i ] + ":offset_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 4 ), false, downscaler ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 6 ), false, downscaler ) + ", " + ParseGetVariable( GetU8( script + 2 ) >> 4, ( s16 )GetU16LE( script + 8 ), false, downscaler ) + ", " + ( ( type == 2 ) ? "Entity.SMOOTH" : "Entity.LINEAR" ) + ", " + ParseGetVariable( GetU8( script + 2 ) & 0x0F, GetU16LE( script + 10 ), false, 30.0f ) + " )\n" );
+                    export_script->Log( entity_list[ i ] + ":offset_to_position( " + ParseGetVariable( GetU8( script + 1 ) >> 4, ( s16 )GetU16LE( script + 4 ), 0, downscaler ) + ", " + ParseGetVariable( GetU8( script + 1 ) & 0x0F, ( s16 )GetU16LE( script + 6 ), false, downscaler ) + ", " + ParseGetVariable( GetU8( script + 2 ) >> 4, ( s16 )GetU16LE( script + 8 ), false, downscaler ) + ", " + ( ( type == 2 ) ? "Entity.SMOOTH" : "Entity.LINEAR" ) + ", " + ParseGetVariable( GetU8( script + 2 ) & 0x0F, GetU16LE( script + 10 ), 0, 30.0f ) + " )\n" );
                     AdvanceScript( 12, script, end );
                 }
                 else if( opcode == 0xC4 ) // OFSTW
@@ -2108,17 +2108,17 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                     Ogre::String sound = "music:execute_akao( " +
                         HexToString(sub_opcode, 2, '0') +
                         ", " +
-                        ParseGetVariable(GetU8(script + 1) >> 4, GetU16LE(script + 5), true) +
+                        ParseGetVariable(GetU8(script + 1) >> 4, GetU16LE(script + 5), 4) +
                         ", " +
-                        ParseGetVariable(GetU8(script + 1) & 0x0F, GetU16LE(script + 7), true) +
+                        ParseGetVariable(GetU8(script + 1) & 0x0F, GetU16LE(script + 7), 4) +
                         ", " +
-                        ParseGetVariable(GetU8(script + 2) >> 4, GetU16LE(script + 9), true) +
+                        ParseGetVariable(GetU8(script + 2) >> 4, GetU16LE(script + 9), 4) +
                         ", " +
-                        ParseGetVariable(GetU8(script + 2) & 0x0F, GetU16LE(script + 11), true) +
+                        ParseGetVariable(GetU8(script + 2) & 0x0F, GetU16LE(script + 11), 4) +
                         ", " +
-                        ParseGetVariable(GetU8(script + 3) >> 4, GetU16LE(script + 13), true) +
+                        ParseGetVariable(GetU8(script + 3) >> 4, GetU16LE(script + 13), 4) +
                         ", " +
-                        ParseGetVariable(GetU8(script + 3) & 0x0F, GetU16LE(script + 15), true) +
+                        ParseGetVariable(GetU8(script + 3) & 0x0F, GetU16LE(script + 15), 4) +
                         " );\n";
 
                     m_SoundOpcodes.push_back(sound);
@@ -2177,12 +2177,12 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if( opcode == 0xE5 ) // STPAL
                 {
-                    export_script->Log( "[UNREVERSED] STPAL( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    export_script->Log( "-- store palette \"" + ParseGetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 2 ) ) + "\" to slot \"0x" + ParseGetVariable( GetU8( script + 1 ) & 0x0f, GetU8( script + 3 ), 2 ) + "\" starting from clut_x=\"0x00\" and with width=\"0x" + HexToString( GetU8( script + 4 ) + 1, 2, '0' ) + "\"\n" );
                     AdvanceScript( 5, script, end );
                 }
                 else if( opcode == 0xE6 ) // LDPAL
                 {
-                    export_script->Log( "[UNREVERSED] LDPAL( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    export_script->Log( "-- load palette \"" + ParseGetVariable( GetU8( script + 1 ) & 0x0f, GetU8( script + 3 ) ) + "\" from slot \"0x" + ParseGetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 2 ), 2 ) + "\" starting from clut_x=\"0x00\" and with width=\"0x" + HexToString( GetU8( script + 4 ) + 1, 2, '0' ) + "\"\n" );
                     AdvanceScript( 5, script, end );
                 }
                 else if( opcode == 0xE7 ) // CPPAL
@@ -2192,7 +2192,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if( opcode == 0xE9 ) // ADPAL
                 {
-                    export_script->Log( "[UNREVERSED] ADPAL( " + ArgumentString( script + 1, 9 ) + " );\n" );
+                    export_script->Log( "-- add to palette stored in slot \"0x" + ParseGetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 4 ), 2 ) + "\" and " + IntToString( GetU8( script + 9 ) ) + " next slots values R=\"" + ParseGetVariable( GetU8( script + 3 ) >> 4, GetU8( script + 8 ) ) + "\", G=\"" + ParseGetVariable( GetU8( script + 2 ) & 0x0f, GetU8( script + 7 ) ) + "\", B=\"" + ParseGetVariable( GetU8( script + 2 ) >> 4, GetU8( script + 6 ) ) + "\" and store it to slot \"0x" + ParseGetVariable( GetU8( script + 1 ) & 0x0f, GetU8( script + 5 ), 2 ) + "\"\n" );
                     AdvanceScript( 10, script, end );
                 }
                 else if( opcode == 0xEA ) // MPPAL2
@@ -2202,12 +2202,12 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if( opcode == 0xEB ) // STPLS
                 {
-                    export_script->Log( "[UNREVERSED] STPLS( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    export_script->Log( "-- store palette \"" + IntToString( GetU8( script + 1 ) ) + "\" to slot \"0x" + HexToString( GetU8( script + 2 ), 2, '0' ) + "\" starting from clut_x=\"0x" + HexToString( GetU8( script + 3 ), 2, '0' ) + "\" and with width=\"0x" + HexToString( GetU8( script + 4 ) + 1, 2, '0' ) + "\"\n" );
                     AdvanceScript( 5, script, end );
                 }
                 else if( opcode == 0xEC ) // LDPLS
                 {
-                    export_script->Log( "[UNREVERSED] LDPLS( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    export_script->Log( "-- load palette \"" + IntToString( GetU8( script + 2 ) ) + "\" from slot \"0x" + HexToString( GetU8( script + 1 ), 2, '0' ) + "\" starting from clut_x=\"0x" + HexToString( GetU8( script + 3 ), 2, '0' ) + "\" and with width=\"0x" + HexToString( GetU8( script + 4 ) + 1, 2, '0' ) + "\"\n" );
                     AdvanceScript( 5, script, end );
                 }
                 else if( opcode == 0xEE ) // RTPAL2
@@ -2472,13 +2472,13 @@ DatFile::ParseVariableName(int slot, int value)
 
 
 Ogre::String
-DatFile::ParseGetVariable( int get_slot, int get_value, bool hex, float fixed )
+DatFile::ParseGetVariable( int get_slot, int get_value, unsigned int hex, float fixed )
 {
     if( get_slot == 0 )
     {
-        if( hex == true )
+        if( hex > 0 )
         {
-            return HexToString( get_value, 8, '0' );
+            return HexToString( get_value, hex, '0' );
         }
         else
         {

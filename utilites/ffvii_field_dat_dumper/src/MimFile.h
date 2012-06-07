@@ -9,12 +9,21 @@
 class MimFile : public LzsFile
 {
 public:
+    struct ClutColor
+    {
+        u8 r;                 /**< @brief red color in CLUT */
+        u8 g;                 /**< @brief green color in CLUT */
+        u8 b;                 /**< @brief blue color in CLUT */
+        u8 a;                 /**< @brief alpha in CLUT */
+    };
+
     MimFile( const Ogre::String& file );
     MimFile( File* pFile );
     MimFile( File* pFile, const u32 offset, const u32 length );
     MimFile( u8* pBuffer, const u32 offset, const u32 length );
     virtual ~MimFile();
     Surface* GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const Ogre::String& type, const float r_mod, const float g_mod, const float b_mod );
+    void GetModifiedClut( ClutColor& clut, const Ogre::String& type, const float r_mod, const float g_mod, const float b_mod );
 
 private:
     void InnerGetImage();
@@ -36,14 +45,6 @@ private:
         u16 y;                /**< @brief y position of image in VRAM */
         u16 width;            /**< @brief width of image */
         u16 height;           /**< @brief height of image */
-    };
-
-    struct ClutColor
-    {
-        u8 r;                 /**< @brief red color in CLUT */
-        u8 g;                 /**< @brief green color in CLUT */
-        u8 b;                 /**< @brief blue color in CLUT */
-        u8 a;                 /**< @brief alpha in CLUT */
     };
 
     u16  mClutVramPositionX;

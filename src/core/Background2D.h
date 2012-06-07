@@ -56,14 +56,10 @@ public:
     void UpdateTileUV( const unsigned int tile_id, const float u1, const float v1, const float u2, const float v2 );
 
     void AddAnimation( Background2DAnimation* animation );
-    const Ogre::String& GetCurrentAnimationName() const;
-    void PlayAnimation( const Ogre::String& animation, Background2DAnimation::State state, const float start, const float end );
-    void ScriptPlayAnimation( const char* name );
-    void ScriptPlayAnimationStop( const char* name );
-    void ScriptPlayAnimation( const char* name, const float start, const float end );
-    void ScriptPlayAnimationStop( const char* name, const float start, const float end );
-    void ScriptSetDefaultAnimation( const char* animation );
-    int ScriptAnimationSync();
+    void PlayAnimation( const Ogre::String& animation, const Background2DAnimation::State state );
+    void ScriptPlayAnimationLooped( const char* name );
+    void ScriptPlayAnimationOnce( const char* name );
+    int ScriptAnimationSync( const char* name );
 
     void renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
 
@@ -112,11 +108,13 @@ private:
     std::vector< ScriptId >               m_ScrollSync;
     Ogre::Vector2                         m_Position;
 
-    Ogre::String                          m_AnimationCurrent;
-    std::vector< ScriptId >               m_AnimationSync;
-    Background2DAnimation::State          m_AnimationState;
-    Ogre::String                          m_AnimationDefault;
-    float                                 m_AnimationEndTime;
+    struct AnimationPlayed
+    {
+        Ogre::String                 name;
+        std::vector< ScriptId >      sync;
+        Background2DAnimation::State state;
+    };
+    std::vector< AnimationPlayed >        m_AnimationPlayed;
     std::vector< Background2DAnimation* > m_Animations;
 };
 

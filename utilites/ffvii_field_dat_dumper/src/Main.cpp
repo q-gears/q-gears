@@ -32,7 +32,7 @@ fill_names()
             continue;
         }
 
-        Ogre::StringVector name = Ogre::StringUtil::split( names, ":", 3 );
+        Ogre::StringVector name = Ogre::StringUtil::split( names, ":", 2 );
         if( name.size() < 3 )
         {
             LOGGER->Log( "In \"" + names + "\" not enough data. Must be 3.\n" );
@@ -41,7 +41,7 @@ fill_names()
         field.name = name[ 0 ];
         field.scale = Ogre::StringConverter::parseReal( name[ 2 ] );
 
-        Ogre::StringVector tex_size = Ogre::StringUtil::split( name[ 1 ], "x", 2 );
+        Ogre::StringVector tex_size = Ogre::StringUtil::split( name[ 1 ], "x", 1 );
         field.tex_width = Ogre::StringConverter::parseInt( tex_size[ 0 ] );
         field.tex_height = Ogre::StringConverter::parseInt( tex_size[ 1 ] );
 
@@ -53,14 +53,14 @@ fill_names()
             FiledAnimation animation;
             animation.name = i->first;
 
-            Ogre::StringVector anim = Ogre::StringUtil::split( i->second, ";", 2 );
+            Ogre::StringVector anim = Ogre::StringUtil::split( i->second, ";", 1 );
             if( anim.size() < 2 )
             {
                 LOGGER->Log("In \"" + i->second + "\" not enough data separated by \";\". Must be 2.\n");
                 continue;
             }
 
-            Ogre::StringVector anim_data = Ogre::StringUtil::split( anim[ 0 ], ":", 2 );
+            Ogre::StringVector anim_data = Ogre::StringUtil::split( anim[ 0 ], ":", 1 );
             if( anim_data.size() < 2 )
             {
                 LOGGER->Log("In \"" + anim[ 0 ] + "\" not enough data. Must be 2.\n");
@@ -69,7 +69,7 @@ fill_names()
 
             animation.time = Ogre::StringConverter::parseReal( anim_data[ 0 ] );
 
-            Ogre::StringVector anim_type = Ogre::StringUtil::split( anim_data[ 1 ], "-", 2 );
+            Ogre::StringVector anim_type = Ogre::StringUtil::split( anim_data[ 1 ], "-", 1 );
             if( anim_type.size() < 2 )
             {
                 LOGGER->Log("In \"" + anim_data[ 1 ] + "\" not enough data. Must be 2.\n");
@@ -97,7 +97,7 @@ fill_names()
             Ogre::StringVector anim_keyframes = Ogre::StringUtil::split( anim[ 1 ], "," );
             for( unsigned int j = 0; j < anim_keyframes.size(); ++j )
             {
-                Ogre::StringVector anim_frame = Ogre::StringUtil::split( anim_keyframes[ j ], ":", 2 );
+                Ogre::StringVector anim_frame = Ogre::StringUtil::split( anim_keyframes[ j ], ":", 1 );
                 if( anim_frame.size() < 2 )
                 {
                     LOGGER->Log("In \"" + anim_keyframes[ j ] + "\" not enough data. Must be 2.\n");
@@ -124,7 +124,7 @@ fill_names()
                 }
                 else if( animation.type == FAT_CLUT )
                 {
-                    Ogre::StringVector anim_frame_data = Ogre::StringUtil::split( anim_frame[ 1 ], "-", 2 );
+                    Ogre::StringVector anim_frame_data = Ogre::StringUtil::split( anim_frame[ 1 ], "=", 1 );
                     if( anim_frame_data.size() < 2 )
                     {
                         LOGGER->Log("In \"" + anim_frame[ 1 ] + "\" not enough data separated by \"-\". Must be 2.\n");

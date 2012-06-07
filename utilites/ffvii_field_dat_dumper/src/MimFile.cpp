@@ -73,12 +73,7 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 color.r = ( ( col       ) & 31 ) * 255 / 31;
                 color.g = ( ( col >>  5 ) & 31 ) * 255 / 31;
                 color.b = ( ( col >> 10 ) & 31 ) * 255 / 31;
-                if( type == "mult" )
-                {
-                    color.r *= r_mod;
-                    color.g *= g_mod;
-                    color.b *= b_mod;
-                }
+                GetModifiedClut( color, type, r_mod, g_mod, b_mod );
                 u8 stp = (col & 0x80) >> 15;
 
                 if( col == 0x0000 )
@@ -108,12 +103,7 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 color.r = ((col      ) & 31) * 255 / 31;
                 color.g = ((col >>  5) & 31) * 255 / 31;
                 color.b = ((col >> 10) & 31) * 255 / 31;
-                if( type == "mult" )
-                {
-                    color.r *= r_mod;
-                    color.g *= g_mod;
-                    color.b *= b_mod;
-                }
+                GetModifiedClut( color, type, r_mod, g_mod, b_mod );
                 stp = (col & 0x80) >> 15;
 
                 if( col == 0x0000 )
@@ -155,12 +145,8 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 color.r = ((col      ) & 31) * 255 / 31;
                 color.g = ((col >>  5) & 31) * 255 / 31;
                 color.b = ((col >> 10) & 31) * 255 / 31;
-                if( type == "mult" )
-                {
-                    color.r *= r_mod;
-                    color.g *= g_mod;
-                    color.b *= b_mod;
-                }
+                GetModifiedClut( color, type, r_mod, g_mod, b_mod );
+
                 u8 stp = (col & 0x8000) >> 15;
 
                 if( col == 0x0000 )
@@ -280,4 +266,58 @@ MimFile::InnerGetImage()
     mImageHeight = 512;
 
     //m_Vram.Save( "export" );
+}
+
+
+
+void
+MimFile::GetModifiedClut( MimFile::ClutColor& clut, const Ogre::String& type, const float r_mod, const float g_mod, const float b_mod )
+{
+    if( type == "mult" )
+    {
+        clut.r *= r_mod;
+        clut.g *= g_mod;
+        clut.b *= b_mod;
+    }
+    else if( type == "add" )
+    {
+        if( clut.r + r_mod * 8 >= 256 )
+        {
+            clut.r = 255;
+        }
+        else if( clut.r + r_mod * 8 < 0 )
+        {
+            clut.r = 0;
+        }
+        else
+        {
+            clut.r += r_mod * 8;
+        }
+
+        if( clut.g + g_mod * 8 >= 256 )
+        {
+            clut.g = 255;
+        }
+        else if( clut.g + g_mod * 8 < 0 )
+        {
+            clut.g = 0;
+        }
+        else
+        {
+            clut.g += g_mod * 8;
+        }
+
+        if( clut.b + b_mod * 8 >= 256 )
+        {
+            clut.b = 255;
+        }
+        else if( clut.b + b_mod * 8 < 0 )
+        {
+            clut.b = 0;
+        }
+        else
+        {
+            clut.b += b_mod * 8;
+        }
+    }
 }

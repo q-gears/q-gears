@@ -19,8 +19,8 @@ public:
 
     enum State
     {
-        DEFAULT,
-        ONCE
+        ONCE,
+        LOOPED
     };
 
     void  AddTime( const float time );

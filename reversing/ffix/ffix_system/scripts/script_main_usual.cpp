@@ -415,7 +415,7 @@ case 1f: // 90B90380
     A0 = current_script_data;
     A1 = S3;
     A2 = S5;
-    func39660;
+    func39660; // text function
 
     A0 = S3;
     A1 = bu[current_script_data + 10];
@@ -444,13 +444,14 @@ case 20: // CCBB0380
     A2 = bu[current_script_data + 10];
     if( ( S5 & a0 == 80 ) && ( bu[current_script_data + 5] == 4 ) ) // if normal model dialog
     {
+        // go through all model script datas and if someone uses this window_id then remove it
         V0 = w[8007aecc];
         A0 = w[V0 + 16d8];
-        if (A0 != 0)
+        if( A0 != 0 )
         {
             loop3bcf8:	; 8003BCF8
                 V1 = w[A0 + 4];
-                if (bu[V1 + 5] == 4 && bu[V1 + 3e] == A2)
+                if( bu[V1 + 5] == 4 && bu[V1 + 3e] == A2 )
                 {
                     [V1 + 3e] = b(ff);
                 }
@@ -468,9 +469,9 @@ case 20: // CCBB0380
     S3 = V0;
 
     A0 = current_script_data;
-    A1 = S3;
+    A1 = S3; // text id
     A2 = S5;
-    func39660;
+    func39660; // text function
 
     A0 = S3;
     A1 = bu[current_script_data + 10];

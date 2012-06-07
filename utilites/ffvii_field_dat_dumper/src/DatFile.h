@@ -167,7 +167,7 @@ public:
     void AdvanceScript( u32 value, u32& current, u32& end );
 
     Ogre::String ParseVariableName( int slot, int value );
-    Ogre::String ParseGetVariable( int get_slot, int get_value, bool hex = false, float fixed = 1.0f );
+    Ogre::String ParseGetVariable( int get_slot, int get_value, unsigned int hex = 0, float fixed = 1.0f );
     Ogre::String SetVariable( int set_slot, int set_value, Ogre::String get_string );
     Ogre::String SetBitChange( int set_slot, int set_value, int get_slot, int get_value, bool on );
     Ogre::String ParseRelation( int relation, Ogre::String string1, Ogre::String string2 );

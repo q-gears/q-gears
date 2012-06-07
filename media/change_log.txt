@@ -33,12 +33,15 @@ Q-Gears v0.21 (3rd run wild) | 2012-06-??
 To Do
 ----------
 * [Background] Free 2d Scroll.
-* [Background] All animations must be played at once.
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 * [Script] Try to separate ui and entity script debug.
 * [Script] When entity manager paused and stop updating - waited scripts continue to work. This cause errors.
+* [Content Map] Add background animations on md1_2.
 
 
+2012-06-06
+----------
+* [Background] All animations now can be played at once. [Akari]
 
 2012-06-05
 ----------
@@ -373,7 +376,7 @@ Q-Gears v0.20 (2nd alpha ui) | 2011-08-10
 
 2011-06-22
 ----------
-* [Script] Rework script managet to allow work with nested tables. [Akari]
+* [Script] Rework script manager to allow work with nested tables. [Akari]
 
 2011-06-21
 ----------
@@ -448,8 +451,7 @@ Q-Gears v0.19 (1st alpha renew) | 2011-06-06
 
 2011-05-07
 ----------
-* [Application] Get rid of video config and initialise render manually.
-                For now we use OpenGl and 800x600 resolution. [Akari]
+* [Application] Get rid of video config and initialise render manually. For now we use OpenGl and 800x600 resolution. [Akari]
 
 2011-05-06
 ----------
@@ -461,8 +463,7 @@ Q-Gears v0.19 (1st alpha renew) | 2011-06-06
 
 2011-05-05
 ----------
-* [Entity & Script] Add animation sequences and functions to manage entity animations
-                    (play_animation, play_animation_stop, set_default_animation). [Akari]
+* [Entity & Script] Add animation sequences and functions to manage entity animations (play_animation, play_animation_stop, set_default_animation). [Akari]
 
 2011-05-04
 ----------
@@ -475,17 +476,16 @@ Q-Gears v0.19 (1st alpha renew) | 2011-06-06
 
 2011-05-03
 ----------
-* [Entity] add try to run "idle" animation by default during adding entity to scene. [Akari]
-* [Entity] add animation start and update. [Akari]
-* [Script] add "script_run_file" console command that executes lua file. [Akari]
+* [Entity] Add try to run "idle" animation by default during adding entity to scene. [Akari]
+* [Entity] Add animation start and update. [Akari]
+* [Script] Add "script_run_file" console command that executes lua file. [Akari]
 
 2011-05-02
 ----------
 * [Entity] Add base Entity class and EntityModel to implement models in scene. [Akari]
 * [Entity] Add <entity_model> tag into scene file with position and direction. [Akari]
 * [Script] Add script manager with Lua 5.1 and luabind. [Akari]
-* [Console & Script] Add posibility to directly print lua script from console
-                     (mainly for debugging purpose). [Akari]
+* [Console & Script] Add posibility to directly print lua script from console (mainly for debugging purpose). [Akari]
 * [Script] Add "q_print" global function to scripts. [Akari]
 
 2010-12-12

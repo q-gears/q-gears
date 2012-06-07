@@ -33,15 +33,15 @@ mulR = V0;
 
 end = start + length;
 
-if (start < end)
+if( start < end )
 {
     S1 = start;
     loopcea00:	; 800CEA00
         A3 = hu[80095de0 + src_id * 20 + S1 * 2];
-        if (A3 != 0)
+        if( A3 != 0 )
         {
             A1 = (mulB * ((A3 >> 9) & 3f)) >> 7;
-            if (A1 >= 20)
+            if( A1 >= 20 )
             {
                 A1 = 1f;
             }
@@ -83,9 +83,6 @@ return 0;
 current_entity = bu[800722c4];
 script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
-A0 = SP + 10;
-funccdc14;
-
 A0 = 1;
 A1 = 2;
 read_memory_block_one_byte;
@@ -112,9 +109,6 @@ func44064;
 // 0xE6 LDPAL
 current_entity = bu[800722c4];
 script = w[8009c6dc] + hu[800831fc + current_entity * 2];
-
-A0 = SP + 10;
-funccdc14;
 
 A0 = 2;
 A1 = 3;
@@ -239,136 +233,88 @@ S4 = bu[script + 9] + 1;
 A0 = 1;
 A1 = 4;
 read_memory_block_one_byte;
-S2 = V0;
+src_id = V0;
 
 A0 = 2;
 A1 = 5;
 read_memory_block_one_byte;
-S3 = V0;
+dst_id = V0;
 
 A0 = 3;
 A1 = 6;
 read_memory_block_one_byte;
-S1 = V0;
+addB = V0; // signed
 
 A0 = 4;
 A1 = 7;
 read_memory_block_one_byte;
-S0 = V0;
+addG = V0; // signed
 
 A0 = 5;
 A1 = 8;
 read_memory_block_one_byte;
-T2 = V0;
-
-if (S1 & 80)
-{
-    S1 = S1 ^ ff00;
-}
-
-if (S0 & 80)
-{
-    S0 = S0 ^ ff00;
-}
-
-if (T2 & 80)
-{
-    T2 = T2 ^ ff00;
-}
+addR = V0; // signed
 
 T1 = 0;
 A0 = S4;
-V0 = S2 & ff;
 
-if (A0 != 0)
+if( A0 != 0 )
 {
-    V1 = 80095de0;
-    V0 = V0 * 20;
-    T5 = V0 + V1;
-    V0 = S3;
-    V0 = V0 * 20;
-    T4 = V0 + V1;
+    T5 = 80095de0 + src_id * 20;
+    T4 = 80095de0 + dst_id * 20;
     T3 = A0;
 
     loopce32c:	; 800CE32C
-        A1 = V1 * 2;
-        V0 = A1 + T5;
+        A1 = T1 * 2;
 
-        T0 = hu[V0];
-        V0 = T0 & 1f;
-        V0 = T2 + V0;
+        T0 = hu[A1 + T5];
 
-        A2 = V0;
-        if (V0 >= 20)
+        A2 = T0 & 1f + addR;
+        if( A2 >= 20 )
         {
             A2 = 1f;
         }
-
-        V0 = A2 << 10;
-        A3 = T0 & ffff;
-        if (V0 < 0)
+        if( A2 < 0 )
         {
             A2 = 0;
         }
 
-        800CE370	srl    v0, a3, $05
-        800CE374	andi   v0, v0, $001f
-        800CE378	addu   v0, s0, v0
-        800CE37C	addu   v1, v0, zero
-        if (V0 >= 20)
+        V1 = (T0 >> 5) & 1f + addG;
+        if( V1 >= 20 )
         {
             V1 = 1f;
         }
-
-        V0 = V1 << 10;
-        if (V0 < 0)
+        if( V1 < 0 )
         {
             V1 = 0;
         }
 
-        800CE3A0	srl    v0, a3, $0a
-        800CE3A8	andi   v0, v0, $001f
-        800CE3AC	addu   v0, s1, v0
-        800CE3B0	addu   a0, v0, zero
-        800CE3B4	sll    v0, v0, $10
-        800CE3B8	sra    v0, v0, $10
-        800CE3BC	slti   v0, v0, $0020
-        if (V0 >= 20)
+        A0 = (T0 >> a) & 1f + addB;
+        if( A0 >= 20 )
         {
             A0 = 1f;
         }
-
-        800CE3C4	sll    v0, a0, $10
-        A1 = A1 + T4;
-        if (V0 < 0)
+        if( A0 < 0 )
         {
             A0 = 0;
         }
 
-        V0 = A0 << a;
-        V1 = V1 * 20;
-        V0 = V0 | V1;
-        V0 = A2 | V0;
-        V1 = T0 & 8000;
-        V0 = V0 | V1;
+        A1 = A1 + T4;
+        [A1] = h((T0 & 8000) | A2 | (A0 << a) | (V1 << 5));
 
-        [A1] = h(V0);
         V0 = h[A1];
 
-        if (V0 == 0 && A3 != 0)
+        if( V0 == 0 && T0 != 0 )
         {
             [A1]= h(8000);
         }
 
-        V0 = T1 + 1;
-        T1 = V0;
-        V0 = V0 < T3;
+        T1 = T1 + 1;
+        V0 = T1 < T3;
     800CE42C	bne    v0, zero, loopce32c [$800ce32c]
 }
 
 [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + a);
-
-return 0;
 ////////////////////////////////
 
 
@@ -453,9 +399,6 @@ return 0;
 
 ////////////////////////////////
 // 0xEB STPLS
-A0 = SP + 10;
-funccdc14;
-
 current_entity = bu[800722c4];
 script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
@@ -469,82 +412,26 @@ A1 = 80095de0 + bu[script + 2] * 20 + bu[script + 3] * 2;
 func44064;
 
 [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
-
-return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xEC LDPLS
-800CDB0C	lui    v0, $800a
-800CDB10	lbu    v0, $d820(v0)
-800CDB14	addiu  sp, sp, $ffe0 (=-$20)
-800CDB18	sw     ra, $001c(sp)
-800CDB1C	andi   v0, v0, $0003
-800CDB20	beq    v0, zero, Lcdb38 [$800cdb38]
-800CDB24	sw     s0, $0018(sp)
-800CDB28	lui    a0, $800a
-800CDB2C	addiu  a0, a0, $0c60
-800CDB30	jal    funcbead4 [$800bead4]
-800CDB34	ori    a1, zero, $0004
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
-Lcdb38:	; 800CDB38
-800CDB38	jal    funccdc14 [$800cdc14]
-800CDB3C	addiu  a0, sp, $0010
-800CDB40	lui    s0, $8008
-800CDB44	addiu  s0, s0, $31fc
-800CDB48	lui    a0, $8007
-800CDB4C	lbu    a0, $22c4(a0)
-800CDB50	lui    a1, $800a
-800CDB54	lw     a1, $c6dc(a1)
-800CDB58	sll    a0, a0, $01
-800CDB5C	addu   a0, a0, s0
-800CDB60	lhu    v0, $0000(a0)
-800CDB64	nop
-800CDB68	addu   v0, a1, v0
-800CDB6C	lbu    v0, $0002(v0)
-800CDB70	nop
-800CDB74	addiu  v0, v0, $01e0
-800CDB78	sh     v0, $0012(sp)
-800CDB7C	lhu    v0, $0000(a0)
-800CDB80	nop
-800CDB84	addu   v0, a1, v0
-800CDB88	lbu    a2, $0003(v0)
-800CDB8C	nop
-800CDB90	sh     a2, $0010(sp)
-800CDB94	lhu    v0, $0000(a0)
-800CDB98	ori    v1, zero, $0001
-800CDB9C	addu   v0, a1, v0
-800CDBA0	lbu    v0, $0004(v0)
-800CDBA4	sll    a2, a2, $01
-800CDBA8	sh     v1, $0016(sp)
-800CDBAC	addiu  v0, v0, $0001
-800CDBB0	sh     v0, $0014(sp)
-800CDBB4	lhu    v0, $0000(a0)
-800CDBB8	addiu  a0, sp, $0010
-800CDBBC	addu   a1, a1, v0
-800CDBC0	lui    v0, $8009
-800CDBC4	addiu  v0, v0, $5de0
-800CDBC8	lbu    a1, $0001(a1)
-800CDBCC	addu   a2, a2, v0
-800CDBD0	sll    a1, a1, $05
-800CDBD4	jal    func44000 [$80044000]
-800CDBD8	addu   a1, a1, a2
-800CDBDC	lui    a0, $8007
-800CDBE0	lbu    a0, $22c4(a0)
-800CDBE4	nop
-800CDBE8	sll    a0, a0, $01
-800CDBEC	addu   a0, a0, s0
-800CDBF0	lhu    v1, $0000(a0)
-800CDBF4	addu   v0, zero, zero
-800CDBF8	addiu  v1, v1, $0005
-800CDBFC	sh     v1, $0000(a0)
-800CDC00	lw     ra, $001c(sp)
-800CDC04	lw     s0, $0018(sp)
-800CDC08	addiu  sp, sp, $0020
-800CDC0C	jr     ra 
-800CDC10	nop
+A2 = bu[script + 3];
+[SP + 10] = h(A2);
+[SP + 12] = h(bu[script + 2] + 1e0);
+[SP + 14] = h(bu[script + 4] + 1);
+[SP + 16] = h(1);
+
+A0 = SP + 10;
+A1 = 80095de0 + bu[script + 1] * 20 + A2 * 2;
+func44000;
+
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
 ////////////////////////////////
 
 

@@ -4,6 +4,10 @@ EntityContainer = {}
 
 EntityContainer[ "Director" ] = {
     on_start = function( self )
+        background2d:play_animation_looped( "Light1" )
+        background2d:play_animation_looped( "Light2" )
+        background2d:play_animation_looped( "Fan" )
+
         background2d:autoscroll_to_entity( entity_manager:get_entity( "Cloud" ) )
         --03a6 (end 03a6): [UNREVERSED] BTLMD(20, 00);
         --03a9 (end 03a9): music:execute_akao( 10, pointer_to_field_AKAO_0 ); -- play field music
@@ -517,47 +521,6 @@ script_0:
 07e2 (end 07e4): jumpto( 07c4 );
 07e4 (end 07e4): jumpto( 07a4 );
 ]]
-
-
-
-EntityContainer[ "BackgroundFan" ] = {
-    on_start = function( self )
-        --while true do
-            --background2d:play_animation( "Fan" )
-            --background2d:animation_sync()
-        --end
-
-        return 0
-    end,
-}
-
-
-
-EntityContainer[ "BackgroundLight1" ] = {
-    on_start = function( self )
-        --while true do
-            --background2d:play_animation( "Light1" )
-            --background2d:animation_sync()
-        --end
-
-        return 0
-    end,
-}
-
-
-
-EntityContainer[ "BackgroundLight2" ] = {
-    on_start = function( self )
-        script:wait( 0.666667 )
-
-        while true do
-            background2d:play_animation( "Light2" )
-            background2d:animation_sync()
-        end
-
-        return 0
-    end,
-}
 
 
 

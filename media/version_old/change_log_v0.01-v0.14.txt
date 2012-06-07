@@ -419,7 +419,7 @@ Q-Gears v0.08 | 2006-11-10
 2006-11-03
 ----------
 * [xeno] Add WalkMesh loader to FieldModule and display walkmesh. [Akari]
-* [xeno] Add FieldModule placeholder alonf with unit manager (as in ffvii). [Akari]
+* [xeno] Add FieldModule placeholder along with unit manager (as in ffvii). [Akari]
 * [xeno] Add ArchiveFile class that handles archives. [Akari]
 
 2006-11-02

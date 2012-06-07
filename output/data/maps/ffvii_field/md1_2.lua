@@ -128,53 +128,6 @@ EntityContainer[ "Wedge" ] = {
 
 
 --[[
-light0
-script_0:
-045e (end 045e): temp5_1c = 0;
-0462 (end 0462): temp5_1f = 255;
-0466 (end 0466): return
-0467 (end 0467): [UNREVERSED] STPLS( 0d, 20, 00, 0f );
-046c (end 046c): if ( temp5_1c == 0 ) then continue else jumpto(0484);
-0472 (end 0484): if ( temp5_1f > 250 ) then continue else jumpto(047d);
-0478 (end 0484): temp5_1f = temp5_1f - 1;
-047b (end 0484): jumpto( 0484 );
-047d (end 0484): temp5_1c = 1;
-0481 (end 0484): script:wait( 0.133333 )
-0484 (end 0484): if ( temp5_1c == 1 ) then continue else jumpto(049c);
-048a (end 049c): if ( temp5_1f < 255 ) then continue else jumpto(0495);
-0490 (end 049c): temp5_1f = temp5_1f + 1;
-0493 (end 049c): jumpto( 049c );
-0495 (end 049c): temp5_1c = 0;
-0499 (end 049c): script:wait( 0.133333 )
-049c (end 049c): [UNREVERSED] ADPAL( 00, 55, 50, 20, 2a, 1f, 1f, 1f, 1f );
-04a6 (end 04a6): [UNREVERSED] LDPLS( 2a, 0d, 00, 0f );
-04ab (end 04ab): script:wait( 0.0666667 )
-04ae (end 04ae): jumpto( 046c );
-
-light1
-script_0:
-04b1 (end 04b1): temp5_1d = 0;
-04b5 (end 04b5): temp5_20 = 255;
-04b9 (end 04b9): return
-04ba (end 04ba): [UNREVERSED] STPAL( 00, 0e, 22, 1f );
-04bf (end 04bf): script:wait( 0.133333 )
-04c2 (end 04c2): if ( temp5_1d == 0 ) then continue else jumpto(04da);
-04c8 (end 04da): if ( temp5_20 > 250 ) then continue else jumpto(04d3);
-04ce (end 04da): temp5_20 = temp5_20 - 1;
-04d1 (end 04da): jumpto( 04da );
-04d3 (end 04da): temp5_1d = 1;
-04d7 (end 04da): script:wait( 0.133333 )
-04da (end 04da): if ( temp5_1d == 1 ) then continue else jumpto(04f2);
-04e0 (end 04f2): if ( temp5_20 < 255 ) then continue else jumpto(04eb);
-04e6 (end 04f2): temp5_20 = temp5_20 + 1;
-04e9 (end 04f2): jumpto( 04f2 );
-04eb (end 04f2): temp5_1d = 0;
-04ef (end 04f2): script:wait( 0.133333 )
-04f2 (end 04f2): [UNREVERSED] ADPAL( 00, 55, 50, 22, 2c, 20, 20, 20, 1f );
-04fc (end 04fc): [UNREVERSED] LDPAL( 00, 2c, 0e, 1f );
-0501 (end 0501): script:wait( 0.0666667 )
-0504 (end 0504): jumpto( 04c2 );
-
 light2
 script_0:
 0507 (end 0507): field:background_clear( "2" ); -- turns off all layer of background animation with given id
@@ -280,6 +233,12 @@ script_1:
 
 EntityContainer[ "Background" ] = {
     on_start = function( self )
+        background2d:play_animation_looped( "Light0" )
+        script:wait( 0.133333 )
+        background2d:play_animation_looped( "Light1" )
+
+
+
         local temp5_27 = 0;
 
         while true do

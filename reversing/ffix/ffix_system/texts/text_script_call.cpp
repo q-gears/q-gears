@@ -331,8 +331,8 @@ return;
 ////////////////////////////////
 // func39660
 // text related
-script_data = A0;
-A0 = A1; // value??
+script_data = A0; // entity script data
+A0 = A1; // text id
 S2 = A2; // style flags
 A1 = 8007ae5c;
 A2 = 8007ae60;
