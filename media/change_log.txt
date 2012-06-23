@@ -36,8 +36,13 @@ To Do
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 * [Script] Try to separate ui and entity script debug.
 * [Script] When entity manager paused and stop updating - waited scripts continue to work. This cause errors.
-* [Content Map] Add background animations on md1_2.
 
+
+
+2012-06-23
+----------
+* [Content Map] Add all background animations on md1_2. [Akari]
+* [Export Background] Rework export algorythm. [Akari]
 
 2012-06-06
 ----------
