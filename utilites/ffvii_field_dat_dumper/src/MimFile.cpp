@@ -282,9 +282,44 @@ MimFile::GetModifiedClut( MimFile::ClutColor& clut, const Ogre::String& mod_type
 {
     if( mod_type == "mult" )
     {
-        clut.r *= mod_r;
-        clut.g *= mod_g;
-        clut.b *= mod_b;
+        if( clut.r * mod_r >= 256 )
+        {
+            clut.r = 255;
+        }
+        else if( clut.r * mod_r < 0 )
+        {
+            clut.r = 0;
+        }
+        else
+        {
+            clut.r *= mod_r;
+        }
+
+        if( clut.g * mod_g >= 256 )
+        {
+            clut.g = 255;
+        }
+        else if(clut.g * mod_g < 0 )
+        {
+            clut.g = 0;
+        }
+        else
+        {
+            clut.g *= mod_g;
+        }
+
+        if( clut.b * mod_b >= 256 )
+        {
+            clut.b = 255;
+        }
+        else if( clut.b * mod_b < 0 )
+        {
+            clut.b = 0;
+        }
+        else
+        {
+            clut.b *= mod_b;
+        }
     }
     else if( mod_type == "add" )
     {

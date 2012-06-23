@@ -162,7 +162,7 @@ EntityContainer[ "BackgroundLight2" ] = {
 
 
 
-EntityContainer[ "Background" ] = {
+EntityContainer[ "BackgroundWarning" ] = {
     on_start = function( self )
         local temp5_27 = 0;
 
@@ -181,11 +181,17 @@ EntityContainer[ "Background" ] = {
                 background2d:animation_sync( "Warning" .. temp5_27 .. "Zizizi" )
             end
 
-            background2d:play_animation_once( "Warning" .. temp5_27 )
-            background2d:animation_sync( "Warning" .. temp5_27 )
-
+            background2d:play_animation_once( "Warning" .. temp5_27 .. "Light" )
+            background2d:animation_sync( "Warning" .. temp5_27 .. "Light" )
+            script:wait( 0.0333333 )
+            background2d:play_animation_once( "Warning" .. temp5_27 .. "Light" )
+            background2d:animation_sync( "Warning" .. temp5_27 .. "Light" )
+            script:wait( 0.0333333 )
+            background2d:play_animation_once( "Warning" .. temp5_27 .. "Light" )
+            background2d:animation_sync( "Warning" .. temp5_27 .. "Light" )
             background2d:play_animation_once( "WarningBlank" )
             background2d:animation_sync( "WarningBlank" )
+            script:wait( 0.0333333 )
 
             temp5_27 = temp5_27 + 1
         end

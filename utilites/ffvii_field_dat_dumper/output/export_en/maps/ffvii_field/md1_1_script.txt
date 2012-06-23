@@ -361,14 +361,14 @@ script_0:
 0750 (end 0750): -- store palette "13" to slot "0x00" starting from clut_x="0x00" and with width="0x100"
 0755 (end 0755): if ( temp5_16 < 62 ) then continue else jumpto(0775);
 075b (end 0775): temp5_16 = temp5_16 + 2;
-075f (end 0775): [UNREVERSED] MPPAL2( 00, 55, 50, 00, 10, 16, 16, 16, ff );
-0769 (end 0775): [UNREVERSED] CPPAL( 00, 00, 10, 00 );
+075f (end 0775): -- multiply palette stored in slot "0x00" with width="0x100 with values R="temp5_16", G="temp5_16", B="temp5_16" (note: 64 - 1.0f, 32 - 0.5f) and store it to slot "0x10"
+0769 (end 0775): -- copy palette stored in slot "0x00" with width="0x01 to slot "0x10"
 076e (end 0775): -- load palette "13" from slot "0x10" starting from clut_x="0x00" and with width="0x100"
 0773 (end 0775): jumpto( 0755 );
 0775 (end 0775): if ( temp5_16 > 32 ) then continue else jumpto(0795);
 077b (end 0795): temp5_16 = temp5_16 - 2;
-077f (end 0795): [UNREVERSED] MPPAL2( 00, 55, 50, 00, 10, 16, 16, 16, ff );
-0789 (end 0795): [UNREVERSED] CPPAL( 00, 00, 10, 00 );
+077f (end 0795): -- multiply palette stored in slot "0x00" with width="0x100 with values R="temp5_16", G="temp5_16", B="temp5_16" (note: 64 - 1.0f, 32 - 0.5f) and store it to slot "0x10"
+0789 (end 0795): -- copy palette stored in slot "0x00" with width="0x01 to slot "0x10"
 078e (end 0795): -- load palette "13" from slot "0x10" starting from clut_x="0x00" and with width="0x100"
 0793 (end 0795): jumpto( 0775 );
 0795 (end 0795): jumpto( 0755 );
@@ -381,14 +381,14 @@ script_0:
 079f (end 079f): -- store palette "14" to slot "0x20" starting from clut_x="0x00" and with width="0x100"
 07a4 (end 07a4): if ( temp5_17 < 62 ) then continue else jumpto(07c4);
 07aa (end 07c4): temp5_17 = temp5_17 + 1;
-07ae (end 07c4): [UNREVERSED] MPPAL2( 00, 55, 50, 20, 30, 17, 17, 17, ff );
-07b8 (end 07c4): [UNREVERSED] CPPAL( 00, 20, 30, 00 );
+07ae (end 07c4): -- multiply palette stored in slot "0x20" with width="0x100 with values R="temp5_17", G="temp5_17", B="temp5_17" (note: 64 - 1.0f, 32 - 0.5f) and store it to slot "0x30"
+07b8 (end 07c4): -- copy palette stored in slot "0x20" with width="0x01 to slot "0x30"
 07bd (end 07c4): -- load palette "14" from slot "0x30" starting from clut_x="0x00" and with width="0x100"
 07c2 (end 07c4): jumpto( 07a4 );
 07c4 (end 07c4): if ( temp5_17 > 16 ) then continue else jumpto(07e4);
 07ca (end 07e4): temp5_17 = temp5_17 - 1;
-07ce (end 07e4): [UNREVERSED] MPPAL2( 00, 55, 50, 20, 30, 17, 17, 17, ff );
-07d8 (end 07e4): [UNREVERSED] CPPAL( 00, 20, 30, 00 );
+07ce (end 07e4): -- multiply palette stored in slot "0x20" with width="0x100 with values R="temp5_17", G="temp5_17", B="temp5_17" (note: 64 - 1.0f, 32 - 0.5f) and store it to slot "0x30"
+07d8 (end 07e4): -- copy palette stored in slot "0x20" with width="0x01 to slot "0x30"
 07dd (end 07e4): -- load palette "14" from slot "0x30" starting from clut_x="0x00" and with width="0x100"
 07e2 (end 07e4): jumpto( 07c4 );
 07e4 (end 07e4): jumpto( 07a4 );

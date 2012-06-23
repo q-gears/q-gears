@@ -143,27 +143,24 @@ length = bu[script + 4] + 1;
 A0 = 1;
 A1 = 2;
 read_memory_block_one_byte;
-S1 = V0;
+src_id = V0;
 
 A0 = 2;
 A1 = 3;
 read_memory_block_one_byte;
-
+dst_id = V0;
 
 if( length != 0 )
 {
     A1 = 0;
     loopcdcd0:	; 800CDCD0
-        [80095de0 + V0 * 20 + A1 * 2] = h(hu[80095de0 + S1 * 20 + A1 * 2]);
-
+        [80095de0 + dst_id * 20 + A1 * 2] = h(hu[80095de0 + src_id * 20 + A1 * 2]);
         A1 = A1 + 1;
         V1 = A1 < length;
     800CDCF8	bne    v1, zero, loopcdcd0 [$800cdcd0]
 }
 
 [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
-
-return 0;
 ////////////////////////////////
 
 
@@ -381,8 +378,6 @@ if( length != 0 )
 }
 
 [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + a);
-
-return 0;
 ////////////////////////////////
 
 

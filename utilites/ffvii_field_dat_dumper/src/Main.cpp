@@ -54,27 +54,30 @@ fill_names()
             animation.name = i->first;
 
             Ogre::StringVector anim = Ogre::StringUtil::split( i->second, "|" );
-            if( anim.size() < 2 )
+            if( anim.size() < 1 )
             {
-                LOGGER->Log( "In \"" + i->second + "\" not enough data separated by \"|\". Must be more than 1.\n" );
+                LOGGER->Log( "In \"" + i->second + "\" not enough data separated by \"|\". Must be at least 1.\n" );
                 continue;
             }
 
-            animation.time = Ogre::StringConverter::parseReal( anim[ 0 ] );
-            LOGGER->Log( "Animation \"" + animation.name + "\" added with total time \"" + FloatToString( animation.time ) + "\".\n" );
+            float total_time = 0;
+
+            LOGGER->Log( "Animation \"" + animation.name + "\" added.\n" );
 
             // go through all frames
-            for( unsigned int j = 1; j < anim.size(); ++j )
+            for( unsigned int j = 0; j < anim.size(); ++j )
             {
                 Ogre::StringVector frame_data = Ogre::StringUtil::split( anim[ j ], ";", 2 );
                 if( frame_data.size() < 2 )
                 {
-                    LOGGER->Log( "In \"" + anim[ j ] + "\" not enough data separated by \";\". Must be more than 1.\n" );
+                    total_time += Ogre::StringConverter::parseReal( anim[ j ] );
+                    LOGGER->Log( "In \"" + anim[ j ] + "\" not enough data separated by \";\". Must be more than 1. Insert pause this way.\n" );
                     continue;
                 }
 
                 FieldKeyFrame frame;
-                frame.time = Ogre::StringConverter::parseReal( frame_data[ 0 ] );
+                total_time += Ogre::StringConverter::parseReal( frame_data[ 0 ] );
+                frame.time = total_time;
 
                 for( unsigned int k = 1; k < frame_data.size(); ++k )
                 {
@@ -148,6 +151,7 @@ fill_names()
                 LOGGER->Log( "Keyframe added at time \"" + FloatToString( frame.time ) + "\". Settings blank=\"" + BoolToString( frame.blank ) + "\", animation_id=\"" + IntToString( frame.animation_id ) + "\", animation_frame=\"" + IntToString( frame.animation_frame ) + "\" clut_y=\"" + IntToString( frame.clut_y ) + "\", clut_start=\"" + IntToString( frame.clut_start ) + "\", clut_width=\"" + IntToString( frame.clut_width ) + "\", mod_type=\"" + frame.mod_type + "\", mod_r=\"" + FloatToString( frame.mod_r ) + "\", mod_g=\"" + FloatToString( frame.mod_g ) + "\", mod_b=\"" + FloatToString( frame.mod_b ) + "\".\n" );
             }
 
+            animation.time = total_time;
             field.animations.push_back( animation );
         }
 

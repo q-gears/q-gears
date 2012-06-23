@@ -11,10 +11,10 @@ class MimFile : public LzsFile
 public:
     struct ClutColor
     {
-        u8 r;                 /**< @brief red color in CLUT */
-        u8 g;                 /**< @brief green color in CLUT */
-        u8 b;                 /**< @brief blue color in CLUT */
-        u8 a;                 /**< @brief alpha in CLUT */
+        u8 r;
+        u8 g;
+        u8 b;
+        u8 a;
     };
 
     MimFile( const Ogre::String& file );

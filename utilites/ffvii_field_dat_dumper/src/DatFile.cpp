@@ -2191,17 +2191,17 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
                 }
                 else if( opcode == 0xE7 ) // CPPAL
                 {
-                    export_script->Log( "[UNREVERSED] CPPAL( " + ArgumentString( script + 1, 4 ) + " );\n" );
+                    export_script->Log( "-- copy palette stored in slot \"0x" + ParseGetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 2 ), 2 ) + "\" with width=\"0x" + HexToString( GetU8( script + 4 ) + 1, 2, '0' ) + " to slot \"0x" + ParseGetVariable( GetU8( script + 1 ) & 0x0f, GetU8( script + 3 ), 2 ) + "\"\n" );
                     AdvanceScript( 5, script, end );
                 }
                 else if( opcode == 0xE9 ) // ADPAL
                 {
-                    export_script->Log( "-- add to palette stored in slot \"0x" + ParseGetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 4 ), 2 ) + "\" and " + IntToString( GetU8( script + 9 ) ) + " next slots values R=\"" + ParseGetVariable( GetU8( script + 3 ) >> 4, GetU8( script + 8 ) ) + "\", G=\"" + ParseGetVariable( GetU8( script + 2 ) & 0x0f, GetU8( script + 7 ) ) + "\", B=\"" + ParseGetVariable( GetU8( script + 2 ) >> 4, GetU8( script + 6 ) ) + "\" and store it to slot \"0x" + ParseGetVariable( GetU8( script + 1 ) & 0x0f, GetU8( script + 5 ), 2 ) + "\"\n" );
+                    export_script->Log( "-- add to palette stored in slot \"0x" + ParseGetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 4 ), 2 ) + "\" with width=\"0x" + HexToString( GetU8( script + 9 ) + 1, 2, '0' ) + "\" with values R=\"" + ParseGetVariable( GetU8( script + 3 ) >> 4, GetU8( script + 8 ) ) + "\", G=\"" + ParseGetVariable( GetU8( script + 2 ) & 0x0f, GetU8( script + 7 ) ) + "\", B=\"" + ParseGetVariable( GetU8( script + 2 ) >> 4, GetU8( script + 6 ) ) + "\" and store it to slot \"0x" + ParseGetVariable( GetU8( script + 1 ) & 0x0f, GetU8( script + 5 ), 2 ) + "\"\n" );
                     AdvanceScript( 10, script, end );
                 }
                 else if( opcode == 0xEA ) // MPPAL2
                 {
-                    export_script->Log( "[UNREVERSED] MPPAL2( " + ArgumentString( script + 1, 9 ) + " );\n" );
+                    export_script->Log( "-- multiply palette stored in slot \"0x" + ParseGetVariable( GetU8( script + 1 ) >> 4, GetU8( script + 4 ), 2 ) + "\" with width=\"0x" + HexToString( GetU8( script + 9 ) + 1, 2, '0' ) + " with values R=\"" + ParseGetVariable( GetU8( script + 3 ) >> 4, GetU8( script + 8 ) ) + "\", G=\"" + ParseGetVariable( GetU8( script + 2 ) & 0x0f, GetU8( script + 7 ) ) + "\", B=\"" + ParseGetVariable( GetU8( script + 2 ) >> 4, GetU8( script + 6 ) ) + "\" (note: 64 - 1.0f, 32 - 0.5f) and store it to slot \"0x" + ParseGetVariable( GetU8( script + 1 ) & 0x0f, GetU8( script + 5 ), 2 ) + "\"\n" );
                     AdvanceScript( 10, script, end );
                 }
                 else if( opcode == 0xEB ) // STPLS

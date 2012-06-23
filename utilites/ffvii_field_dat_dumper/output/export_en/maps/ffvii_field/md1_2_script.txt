@@ -114,7 +114,7 @@ script_0:
 0493 (end 049c): jumpto( 049c );
 0495 (end 049c): temp5_1c = 0;
 0499 (end 049c): script:wait( 0.133333 )
-049c (end 049c): -- add to palette stored in slot "0x20" and 31 next slots values R="temp5_1f", G="temp5_1f", B="temp5_1f" and store it to slot "0x2a"
+049c (end 049c): -- add to palette stored in slot "0x20" with width="0x20" with values R="temp5_1f", G="temp5_1f", B="temp5_1f" and store it to slot "0x2a"
 04a6 (end 04a6): -- load palette "13" from slot "0x2a" starting from clut_x="0x00" and with width="0x10"
 04ab (end 04ab): script:wait( 0.0666667 )
 04ae (end 04ae): jumpto( 046c );
@@ -138,7 +138,7 @@ script_0:
 04e9 (end 04f2): jumpto( 04f2 );
 04eb (end 04f2): temp5_1d = 0;
 04ef (end 04f2): script:wait( 0.133333 )
-04f2 (end 04f2): -- add to palette stored in slot "0x22" and 31 next slots values R="temp5_20", G="temp5_20", B="temp5_20" and store it to slot "0x2c"
+04f2 (end 04f2): -- add to palette stored in slot "0x22" with width="0x20" with values R="temp5_20", G="temp5_20", B="temp5_20" and store it to slot "0x2c"
 04fc (end 04fc): -- load palette "14" from slot "0x2c" starting from clut_x="0x00" and with width="0x20"
 0501 (end 0501): script:wait( 0.0666667 )
 0504 (end 0504): jumpto( 04c2 );
@@ -152,7 +152,7 @@ script_0:
 0513 (end 0513): -- store palette "13" to slot "0x24" starting from clut_x="0x10" and with width="0x20"
 0518 (end 0518): temp5_21 = 255;
 051c (end 051c): if ( temp5_21 > 252 ) then continue else jumpto(0539);
-0522 (end 0539): -- add to palette stored in slot "0x24" and 31 next slots values R="temp5_21", G="temp5_21", B="temp5_21" and store it to slot "0x2e"
+0522 (end 0539): -- add to palette stored in slot "0x24" with width="0x20" with values R="temp5_21", G="temp5_21", B="temp5_21" and store it to slot "0x2e"
 052c (end 0539): -- load palette "13" from slot "0x2e" starting from clut_x="0x10" and with width="0x20"
 0531 (end 0539): temp5_21 = temp5_21 - 1;
 0534 (end 0539): script:wait( 0.0666667 )
@@ -204,15 +204,15 @@ script_1:
 05b7 (end 05b7): temp5_18 = 66;
 05bb (end 05bb): if ( temp5_18 < 98 ) then continue else jumpto(05de);
 05c1 (end 05de): temp5_18 = temp5_18 + 16;
-05c5 (end 05de): [UNREVERSED] MPPAL2( 00, 55, 50, 00, 10, 18, 18, 18, ff );
-05cf (end 05de): [UNREVERSED] CPPAL( 00, 00, 10, 00 );
+05c5 (end 05de): -- multiply palette stored in slot "0x00" with width="0x100 with values R="temp5_18", G="temp5_18", B="temp5_18" (note: 64 - 1.0f, 32 - 0.5f) and store it to slot "0x10"
+05cf (end 05de): -- copy palette stored in slot "0x00" with width="0x01 to slot "0x10"
 05d4 (end 05de): -- load palette "11" from slot "0x10" starting from clut_x="0x00" and with width="0x100"
 05d9 (end 05de): script:wait( 0.0666667 )
 05dc (end 05de): jumpto( 05bb );
 05de (end 05de): if ( temp5_18 > 4 ) then continue else jumpto(0601);
 05e4 (end 0601): temp5_18 = temp5_18 - 24;
-05e8 (end 0601): [UNREVERSED] MPPAL2( 00, 55, 50, 00, 10, 18, 18, 18, ff );
-05f2 (end 0601): [UNREVERSED] CPPAL( 00, 00, 10, 00 );
+05e8 (end 0601): -- multiply palette stored in slot "0x00" with width="0x100 with values R="temp5_18", G="temp5_18", B="temp5_18" (note: 64 - 1.0f, 32 - 0.5f) and store it to slot "0x10"
+05f2 (end 0601): -- copy palette stored in slot "0x00" with width="0x01 to slot "0x10"
 05f7 (end 0601): -- load palette "11" from slot "0x10" starting from clut_x="0x00" and with width="0x100"
 05fc (end 0601): script:wait( 0.0666667 )
 05ff (end 0601): jumpto( 05de );

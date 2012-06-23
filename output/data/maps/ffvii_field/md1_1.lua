@@ -139,7 +139,7 @@ EntityContainer[ "Cloud" ] = {
 
     --[[ look at reactor and run after Barret and others. ]]
     scene_part_16 = function( self )
-        self.cloud:set_animation_speed( 2 ) -- suspisious. Looks like it must be 0.5
+        self.cloud:set_animation_speed( 0.5 )
         script:wait( 0.6 )
         self.cloud:play_animation_stop( "LookUp" )
         self.cloud:animation_sync()
