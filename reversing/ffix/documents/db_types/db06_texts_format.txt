@@ -4,3 +4,26 @@ next block of texts offsets and something 0x4 bytes each.
 +02 []       width?
 +03 []       height?
 next block - textes itself in FFIX format.
+
+
+
+text format.
+
+0xf9 - special opcodes (only used at the beginning of text).
+    0x03 [[x position]][y position]         - set position of dialog and set 8007b94a to 0xff.
+    0x07 [unknown][unknown]                 - ???
+    0x0b                                    - set 8007bb90 to 1.
+    0x45                                    - set 8007b94b to 1.
+    0x5f [[unknown]][[unknown]][[unknown]]  - 
+
+
+
+0x0F is used to insert a space
+0xF7 is used to insert a newline
+0xF8 is unknown
+0xF9 is used to request an opcode
+0xFA is used to request a character from Kanji Table A
+0xFB is used to request a character from Kanji Table B
+0xFC is used to request a character from External Kanji Table (only avalible for dialog scripts)
+0xFE is marker for End of Page
+0xFF is a marker for End of String

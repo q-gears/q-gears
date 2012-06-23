@@ -16,15 +16,17 @@ public:
     bool
     operator()( const SurfaceTexData& a ) const
     {
-        return ( a.page_x == m_Surface.page_x ) &&
-               ( a.page_y == m_Surface.page_y ) &&
-               ( a.clut_y == m_Surface.clut_y ) &&
-               ( a.clut_x == m_Surface.clut_x ) &&
-               ( a.bpp    == m_Surface.bpp ) &&
-               ( a.type == m_Surface.type ) &&
-               ( a.r_mod == m_Surface.r_mod ) &&
-               ( a.g_mod == m_Surface.g_mod ) &&
-               ( a.b_mod == m_Surface.b_mod );
+        return ( a.page_x     == m_Surface.page_x ) &&
+               ( a.page_y     == m_Surface.page_y ) &&
+               ( a.clut_y     == m_Surface.clut_y ) &&
+               ( a.clut_x     == m_Surface.clut_x ) &&
+               ( a.bpp        == m_Surface.bpp ) &&
+               ( a.clut_start == m_Surface.clut_start ) &&
+               ( a.clut_width == m_Surface.clut_width ) &&
+               ( a.mod_type   == m_Surface.mod_type ) &&
+               ( a.mod_r      == m_Surface.mod_r ) &&
+               ( a.mod_g      == m_Surface.mod_g ) &&
+               ( a.mod_b      == m_Surface.mod_b );
     }
 
 private:
@@ -52,10 +54,12 @@ public:
                ( a.bpp        == m_Tile.bpp ) &&
                ( a.page_x     == m_Tile.page_x ) &&
                ( a.page_y     == m_Tile.page_y ) &&
-               ( a.type       == m_Tile.type ) &&
-               ( a.r_mod      == m_Tile.r_mod ) &&
-               ( a.g_mod      == m_Tile.g_mod ) &&
-               ( a.b_mod      == m_Tile.b_mod );
+               ( a.clut_start == m_Tile.clut_start ) &&
+               ( a.clut_width == m_Tile.clut_width ) &&
+               ( a.mod_type   == m_Tile.mod_type ) &&
+               ( a.mod_r      == m_Tile.mod_r ) &&
+               ( a.mod_g      == m_Tile.mod_g ) &&
+               ( a.mod_b      == m_Tile.mod_b );
     }
 
 private:
@@ -2689,20 +2693,15 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     export_text->Log( "<background2d image=\"maps/ffvii_field/" + field.name + ".png\" position=\"" + Ogre::StringConverter::toString( position ) + "\" orientation=\"" + Ogre::StringConverter::toString( orientation ) + "\" fov=\"" + Ogre::StringConverter::toString( fov ) + "\" range=\"" + IntToString( min_x ) + " " + IntToString( min_y ) + " " + IntToString( max_x ) + " " + IntToString( max_y ) + "\">\n" );
 
     full_image = CreateSurface( width, height );
-    x_32 = 0; y_32 = 0;
-    x_16 = 0; y_16 = 0;
-    n_16 = 0;
+    x_32 = 0; y_32 = 0; x_16 = 0; y_16 = 0; n_16 = 0;
 
     // sector 3
     u32 offset_to_background = 0x1c + GetU32LE( 0x08 ) - GetU32LE( 0x00 );
-    //LOGGER->Log( "offset_to_background = " + ToHexString( offset_to_background, 8, '0' ) + "\n" );
-
     u32 offset_to_1 = offset_to_background + 0x10;
     u32 offset_to_2 = offset_to_background + GetU32LE( offset_to_background + 0x00 );
     u32 offset_to_3 = offset_to_background + GetU32LE( offset_to_background + 0x04 );
     u32 offset_to_4 = offset_to_background + GetU32LE( offset_to_background + 0x08 );
     u32 offset_to_5 = offset_to_background + GetU32LE( offset_to_background + 0x0c );
-
     u32 s1 = offset_to_1;
     u32 s2 = offset_to_2;
     u32 s3 = offset_to_3;
@@ -2717,7 +2716,6 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     u8  g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
     u8  g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
     s3 += 0x02;
-    //LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
 
 
 
@@ -2732,7 +2730,6 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             g_blending = ( GetU16LE( s3 ) & 0x0060 ) >> 0x05;
             g_bpp      = ( GetU16LE( s3 ) & 0x0180 ) >> 0x07;
             s3 += 0x02;
-            //LOGGER->Log( "Set global tex page x = " + ToHexString( g_page_x, 4, '0' ) +", tex page y = " + ToHexString( g_page_y, 4, '0' ) + ", blending = " + ToHexString( g_blending, 2, '0' ) + ", bpp = " + ToHexString( g_bpp, 2, '0' ) + "\n" );
             s1 += 0x06;
         }
         if( GetU16LE( s1 ) == 0x7fff )
@@ -2746,22 +2743,21 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
         for( u16 i = 0; i < sprite_num; ++i )
         {
             Tile tile;
-            tile.background = 0;
-            tile.dest_x     = GetU16LE( s2 + 0x00 );
-            tile.dest_y     = GetU16LE( s2 + 0x02 );
-            tile.src_x      = GetU8( s2 + 0x04 );
-            tile.src_y      = GetU8( s2 + 0x05 );
-            tile.clut_y     = ( GetU16LE( s2 + 0x06 ) & 0xffc0 ) >> 6;
-            tile.clut_x     = ( GetU16LE( s2 + 0x06 ) & 0x003f ) << 4;
-            tile.bpp        = g_bpp;
-            tile.page_x     = g_page_x;
-            tile.page_y     = g_page_y;
-            tile.depth      = 999;
-            tile.blending   = 0;
-            tile.animation  = 0;
-            tile.animation_index = 0;
+            tile.background      = 0;
+            tile.dest_x          = GetU16LE( s2 + 0x00 );
+            tile.dest_y          = GetU16LE( s2 + 0x02 );
+            tile.src_x           = GetU8( s2 + 0x04 );
+            tile.src_y           = GetU8( s2 + 0x05 );
+            tile.clut_y          = ( GetU16LE( s2 + 0x06 ) & 0xffc0 ) >> 6;
+            tile.clut_x          = ( GetU16LE( s2 + 0x06 ) & 0x003f ) << 4;
+            tile.bpp             = g_bpp;
+            tile.page_x          = g_page_x;
+            tile.page_y          = g_page_y;
+            tile.depth           = 999;
+            tile.blending        = 0;
+            tile.animation_id    = 0;
+            tile.animation_frame = 0;
             tiles.push_back( tile );
-
             s2 += 0x08;
         }
     }
@@ -2781,31 +2777,21 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
         for( u32 i = 0; i < sprite_num; ++i )
         {
             Tile tile;
-            tile.background = 1;
-            tile.dest_x     = GetU16LE( s4 + 0x00 );
-            tile.dest_y     = GetU16LE( s4 + 0x02 );
-            tile.src_x      = GetU16LE( s4 + 0x04 );
-            tile.src_y      = GetU16LE( s4 + 0x05 );
-            tile.clut_y     = ( GetU16LE( s4 + 0x06 ) & 0xffc0 ) >> 6;
-            tile.clut_x     = ( GetU16LE( s4 + 0x06 ) & 0x003f ) << 4;
-            tile.bpp        = ( GetU16LE( s4 + 0x08 ) & 0x0180 ) >> 0x07;
-            tile.page_x     = GetU16LE( s4 + 0x08 ) & 0x000f;
-            tile.page_y     = ( GetU16LE( s4 + 0x08 ) & 0x0010 ) >> 0x04;
-
-            //u32 offset_to_camera = 0x1c + GetU32LE( 0x0c ) - GetU32LE( 0x00 );
-            //float distance  = GetU16LE( offset_to_camera + 0x24 ) / 128.0f;
-            float depth     = GetU16LE( s4 + 0x0a ) / ( 32.0f * field.scale );
-
-            //LOGGER->Log( "Depth = " + FloatToString( depth ) +", distance = " + FloatToString( distance ) +"\n" );
-
-            tile.depth      = depth/* + distance*/;
-            tile.blending   = ( GetU16LE( s4 + 0x08 ) & 0x60 ) >> 0x05;
-            tile.animation  = GetU8( s4 + 0x0c ) & 0x0f;
-            tile.animation_index = GetU8( s4 + 0x0d );
+            tile.background      = 1;
+            tile.dest_x          = GetU16LE( s4 + 0x00 );
+            tile.dest_y          = GetU16LE( s4 + 0x02 );
+            tile.src_x           = GetU16LE( s4 + 0x04 );
+            tile.src_y           = GetU16LE( s4 + 0x05 );
+            tile.clut_y          = ( GetU16LE( s4 + 0x06 ) & 0xffc0 ) >> 6;
+            tile.clut_x          = ( GetU16LE( s4 + 0x06 ) & 0x003f ) << 4;
+            tile.bpp             = ( GetU16LE( s4 + 0x08 ) & 0x0180 ) >> 0x07;
+            tile.page_x          = GetU16LE( s4 + 0x08 ) & 0x000f;
+            tile.page_y          = ( GetU16LE( s4 + 0x08 ) & 0x0010 ) >> 0x04;
+            tile.depth           = GetU16LE( s4 + 0x0a ) / ( 32.0f * field.scale );
+            tile.blending        = ( GetU16LE( s4 + 0x08 ) & 0x60 ) >> 0x05;
+            tile.animation_id    = GetU8( s4 + 0x0c ) & 0x0f;
+            tile.animation_frame = GetU8( s4 + 0x0d );
             tiles.push_back( tile );
-
-            //LOGGER->Log( "Tile animation = " + HexToString( tile.animation, 2, '0' ) +", index = " + HexToString( tile.animation_index, 2, '0' ) +", blending = " + HexToString( tile.blending, 4, '0' ) +", src_x = " + HexToString( tile.src_x, 2, '0' ) +", src_y = " + HexToString( tile.src_y, 2, '0' ) + ", depth = " + HexToString( tile.depth, 4, '0' ) + ", dest_x = " + HexToString( tile.dest_x, 4, '0' ) + " dest_y = " + HexToString( tile.dest_y, 4, '0' ) + "\n" );
-
             s4 += 0x0e;
         }
     }
@@ -2905,235 +2891,190 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
     // unify animations
     std::vector< Tile > temp_tiles;
-    for( unsigned int i = 0; i < tiles.size(); ++i )
-    {
-        if( tiles[ i ].animation == 0 )
-        {
-            for( unsigned int j = 0; j < field.animations.size(); ++j )
-            {
-                if( field.animations[ j ].type == FAT_CLUT )
-                {
-                    if( tiles[ i ].clut_y == ( 0x1e0 + field.animations[ j ].clut ) )
-                    {
-                        Animation animation;
-                        animation.name = field.animations[ j ].name;
-                        animation.time = field.animations[ j ].time;
 
-                        for( unsigned int k = 0; k < field.animations[ j ].keyframes.size(); ++k )
-                        {
-                            KeyFrame frame;
-                            frame.time   = field.animations[ j ].keyframes[ k ].time;
-                            frame.src_x  = tiles[ i ].src_x;
-                            frame.src_y  = tiles[ i ].src_y;
-                            frame.clut_x = tiles[ i ].clut_x;
-                            frame.clut_y = tiles[ i ].clut_y;
-                            frame.bpp    = tiles[ i ].bpp;
-                            frame.page_x = tiles[ i ].page_x;
-                            frame.page_y = tiles[ i ].page_y;
 
-                            frame.type   = field.animations[ j ].keyframes[ k ].type;
-                            frame.r_mod  = field.animations[ j ].keyframes[ k ].r_mod;
-                            frame.g_mod  = field.animations[ j ].keyframes[ k ].g_mod;
-                            frame.b_mod  = field.animations[ j ].keyframes[ k ].b_mod;
 
-                            animation.keyframes.push_back( frame );
-                        }
-
-                        tiles[ i ].animations.push_back( animation );
-
-                        LOGGER->Log( "Tile \"" + IntToString( i ) + "\" dest \"" + IntToString( tiles[ i ].dest_x ) + " " + IntToString( tiles[ i ].dest_y ) + "\" with animation \"" + IntToString( tiles[ i ].animation ) + "\" and animation_index \"" + IntToString( tiles[ i ].animation_index ) + "\"\n" );
-                    }
-                }
-            }
-
-            if( tiles[ i ].animations.size() > 0 )
-            {
-                LOGGER->Log( "Add temp tile with anim.\n" );
-            }
-            temp_tiles.push_back( tiles[ i ] );
-        }
-    }
     for( unsigned int i = 0; i < field.animations.size(); ++i )
     {
-        if( field.animations[ i ].type != FAT_ANIMATION )
-        {
-            continue;
-        }
+        LOGGER->Log( "Start add animation \"" + field.animations[ i ].name + "\".\n" );
 
-        //LOGGER->Log( "Start add animation \"" + field.animations[ i ].name + "\" with animation \"" + IntToString( field.animations[ i ].animation ) + "\"\n" );
-
-        for( unsigned int k = 0; k < tiles.size(); ++k )
+        for( unsigned int j = 0; j < field.animations[ i ].keyframes.size(); ++j )
         {
-            if( tiles[ k ].animation == field.animations[ i ].animation )
+            if( field.animations[ i ].keyframes[ j ].blank != true )
             {
-                //LOGGER->Log( "Try add tile \"" + IntToString( k ) + "\" with animation \"" + IntToString( tiles[ k ].animation ) + "\" and animation_index \"" + IntToString( tiles[ k ].animation_index ) + "\"\n" );
-                //LOGGER->Log( "Search for existed temp_tile.\n" );
+                LOGGER->Log( "Start add not blank keyframe at time \"" + FloatToString( field.animations[ i ].keyframes[ j ].time ) + "\".\n" );
 
-                Tile tile;
-
-                unsigned int l = 0;
-                for( ; l < temp_tiles.size(); ++l )
+                for( unsigned int k = 0; k < tiles.size(); ++k )
                 {
-                    if( temp_tiles[ l ].animation == field.animations[ i ].animation && temp_tiles[ l ].dest_x == tiles[ k ].dest_x && temp_tiles[ l ].dest_y == tiles[ k ].dest_y )
+                    if( TileCompare( tiles[ k ], field.animations[ i ].keyframes[ j ], mim ) == true )
                     {
-                        tile = temp_tiles[ l ];
-                        break;
-                    }
-                }
+                        tiles[ k ].animated = true;
 
-                if( l == temp_tiles.size() )
-                {
-                    //LOGGER->Log( "Temp_tile not found add new one.\n" );
+                        Tile tile;
 
-                    tile.background = tiles[ k ].background;
-                    tile.dest_x     = tiles[ k ].dest_x;
-                    tile.dest_y     = tiles[ k ].dest_y;
-                    tile.src_x      = tiles[ k ].src_x;
-                    tile.src_y      = tiles[ k ].src_y;
-                    tile.clut_x     = tiles[ k ].clut_x;
-                    tile.clut_y     = tiles[ k ].clut_y;
-                    tile.bpp        = tiles[ k ].bpp;
-                    tile.page_x     = tiles[ k ].page_x;
-                    tile.page_y     = tiles[ k ].page_y;
-                    tile.depth      = tiles[ k ].depth;
-                    tile.blending   = tiles[ k ].blending;
-                    tile.animation  = tiles[ k ].animation;
-                }
-
-                //LOGGER->Log( "Search for existed animation in temp_tile.\n" );
-                unsigned int m = 0;
-                for( ; m < tile.animations.size(); ++m )
-                {
-                    if( tile.animations[ m ].name == field.animations[ i ].name )
-                    {
-                        break;
-                    }
-                }
-
-                if( m == tile.animations.size() )
-                {
-                    //LOGGER->Log( "Animation not found add new one.\n" );
-                    Animation animation;
-                    animation.name = field.animations[ i ].name;
-                    animation.time = field.animations[ i ].time;
-                    tile.animations.push_back( animation );
-                }
-
-                unsigned int j = 0;
-                for( ; j < field.animations[ i ].keyframes.size(); ++j )
-                {
-                    //LOGGER->Log( "Keyframe with animation_index \"" + FloatToString( field.animations[ i ].keyframes[ j ].animation_index ) + "\"\n" );
-
-                    if( field.animations[ i ].keyframes[ j ].blank != true )
-                    {
-                        if( ( 1 << field.animations[ i ].keyframes[ j ].animation_index ) == tiles[ k ].animation_index )
+                        unsigned int l = 0;
+                        for( ; l < temp_tiles.size(); ++l )
                         {
-                            KeyFrame frame;
-                            frame.time   = field.animations[ i ].keyframes[ j ].time;
-                            frame.src_x  = tiles[ k ].src_x;
-                            frame.src_y  = tiles[ k ].src_y;
-                            frame.clut_x = tiles[ k ].clut_x;
-                            frame.clut_y = tiles[ k ].clut_y;
-                            frame.bpp    = tiles[ k ].bpp;
-                            frame.page_x = tiles[ k ].page_x;
-                            frame.page_y = tiles[ k ].page_y;
-                            tile.animations[ m ].keyframes.push_back( frame );
-                            break;
-                        }
-                    }
-                }
-
-                if( l == temp_tiles.size() )
-                {
-                    // do not add empty animations
-                    if( j != field.animations[ i ].keyframes.size() )
-                    {
-                        temp_tiles.push_back( tile );
-                    }
-                }
-                else
-                {
-                    temp_tiles[ l ] = tile;
-                }
-            }
-        }
-    }
-    // there can be tiles at given animation coords with only one state. Yo handle this we add blank instead missing animation indexes.
-    // we also add normal blank here as well
-    //LOGGER->Log( "Start adding blank values.\n" );
-    for( unsigned int i = 0; i < temp_tiles.size(); ++i )
-    {
-        if( temp_tiles[ i ].animation == 0 )
-        {
-            continue;
-        }
-
-        for( unsigned int k = 0; k < field.animations.size(); ++k )
-        {
-            if( field.animations[ k ].type != FAT_ANIMATION )
-            {
-                continue;
-            }
-
-            unsigned int j = 0;
-            for( ; j < temp_tiles[ i ].animations.size(); ++j )
-            {
-                if( field.animations[ k ].name == temp_tiles[ i ].animations[ j ].name )
-                {
-                    for( unsigned int l = 0; l < field.animations[ k ].keyframes.size(); ++l )
-                    {
-                        unsigned int m = 0;
-                        for( ; m < temp_tiles[ i ].animations[ j ].keyframes.size(); ++m )
-                        {
-                            if( temp_tiles[ i ].animations[ j ].keyframes[ m ].time == field.animations[ k ].keyframes[ l ].time )
+                            if(   tiles[ k ].dest_x == temp_tiles[ l ].dest_x &&
+                                  tiles[ k ].dest_y == temp_tiles[ l ].dest_y &&
+                                  tiles[ k ].blending == temp_tiles[ l ].blending &&
+                                ( tiles[ k ].animation_id == temp_tiles[ l ].animation_id ||
+                                  tiles[ k ].depth == temp_tiles[ l ].depth ) )
                             {
+                                LOGGER->Log( "Temp_tile found use existed one.\n" );
+                                tile = temp_tiles[ l ];
                                 break;
                             }
                         }
 
-                        // if this frame is missing add it
-                        if( m == temp_tiles[ i ].animations[ j ].keyframes.size() )
+                        if( l == temp_tiles.size() )
                         {
-                            KeyFrame frame;
-                            frame.time   = field.animations[ k ].keyframes[ l ].time;
-                            frame.src_x  = 0;
-                            frame.src_y  = 0;
-                            frame.clut_x = 0;
-                            frame.clut_y = 0;
-                            frame.bpp    = 0;
-                            frame.page_x = 0;
-                            frame.page_y = 0;
-                            temp_tiles[ i ].animations[ j ].keyframes.push_back( frame );
+                            LOGGER->Log( "Temp_tile not found add new one.\n" );
+                            tile = tiles[ k ];
+                        }
+
+                        LOGGER->Log( "Search for existed animation in temp_tiles.\n" );
+                        unsigned int m = 0;
+                        for( ; m < tile.animations.size(); ++m )
+                        {
+                            if( tile.animations[ m ].name == field.animations[ i ].name )
+                            {
+                                LOGGER->Log( "Animation found.\n" );
+                                break;
+                            }
+                        }
+
+                        if( m == tile.animations.size() )
+                        {
+                            LOGGER->Log( "Animation not found add new one.\n" );
+                            Animation animation;
+                            animation.name = field.animations[ i ].name;
+                            animation.time = field.animations[ i ].time;
+                            tile.animations.push_back( animation );
+                        }
+
+                        KeyFrame frame;
+                        frame.time       = field.animations[ i ].keyframes[ j ].time;
+                        frame.src_x      = tiles[ k ].src_x;
+                        frame.src_y      = tiles[ k ].src_y;
+                        frame.clut_x     = tiles[ k ].clut_x;
+                        frame.clut_y     = tiles[ k ].clut_y;
+                        frame.bpp        = tiles[ k ].bpp;
+                        frame.page_x     = tiles[ k ].page_x;
+                        frame.page_y     = tiles[ k ].page_y;
+                        frame.clut_start = field.animations[ i ].keyframes[ j ].clut_start;
+                        frame.clut_width = field.animations[ i ].keyframes[ j ].clut_width;
+                        frame.mod_type   = field.animations[ i ].keyframes[ j ].mod_type;
+                        frame.mod_r      = field.animations[ i ].keyframes[ j ].mod_r;
+                        frame.mod_g      = field.animations[ i ].keyframes[ j ].mod_g;
+                        frame.mod_b      = field.animations[ i ].keyframes[ j ].mod_b;
+
+
+                        tile.animations[ m ].keyframes.push_back( frame );
+                        LOGGER->Log( "Keyframe at time \"" + FloatToString( field.animations[ i ].keyframes[ j ].time ) + "\" added.\n" );
+
+                        if( l == temp_tiles.size() )
+                        {
+                            temp_tiles.push_back( tile );
+                        }
+                        else
+                        {
+                            temp_tiles[ l ] = tile;
                         }
                     }
-
-                    break;
                 }
             }
-
-            if( j == temp_tiles[ i ].animations.size() )
+            else
             {
-                Animation animation;
-                animation.name = field.animations[ k ].name;
-                animation.time = field.animations[ k ].time;
-                for( unsigned int l = 0; l < field.animations[ k ].keyframes.size(); ++l )
+                LOGGER->Log( "Start add blank keyframe at time \"" + FloatToString( field.animations[ i ].keyframes[ j ].time ) + "\".\n" );
+
+                for( unsigned int k = 0; k < tiles.size(); ++k )
                 {
-                    KeyFrame frame;
-                    frame.time   = field.animations[ k ].keyframes[ l ].time;
-                    frame.src_x  = 0;
-                    frame.src_y  = 0;
-                    frame.clut_x = 0;
-                    frame.clut_y = 0;
-                    frame.bpp    = 0;
-                    frame.page_x = 0;
-                    frame.page_y = 0;
-                    animation.keyframes.push_back( frame );
+                    if( tiles[ k ].animation_id == field.animations[ i ].keyframes[ j ].animation_id && tiles[ k ].animation_frame == 1 )
+                    {
+                        Tile tile;
+
+                        unsigned int l = 0;
+                        for( ; l < temp_tiles.size(); ++l )
+                        {
+                            if(   tiles[ k ].dest_x == temp_tiles[ l ].dest_x &&
+                                  tiles[ k ].dest_y == temp_tiles[ l ].dest_y &&
+                                  tiles[ k ].blending == temp_tiles[ l ].blending &&
+                                ( tiles[ k ].animation_id == temp_tiles[ l ].animation_id ||
+                                  tiles[ k ].depth == temp_tiles[ l ].depth ) )
+                            {
+                                LOGGER->Log( "Temp_tile found use existed one.\n" );
+                                tile = temp_tiles[ l ];
+                                break;
+                            }
+                        }
+
+                        if( l == temp_tiles.size() )
+                        {
+                            LOGGER->Log( "Temp_tile not found add new one.\n" );
+                            tile = tiles[ k ];
+                        }
+
+                        LOGGER->Log( "Search for existed animation in temp_tiles.\n" );
+                        unsigned int m = 0;
+                        for( ; m < tile.animations.size(); ++m )
+                        {
+                            if( tile.animations[ m ].name == field.animations[ i ].name )
+                            {
+                                LOGGER->Log( "Animation found.\n" );
+                                break;
+                            }
+                        }
+
+                        if( m == tile.animations.size() )
+                        {
+                            LOGGER->Log( "Animation not found add new one.\n" );
+                            Animation animation;
+                            animation.name = field.animations[ i ].name;
+                            animation.time = field.animations[ i ].time;
+                            tile.animations.push_back( animation );
+                        }
+
+                        KeyFrame frame;
+                        frame.time       = field.animations[ i ].keyframes[ j ].time;
+                        frame.src_x      = 0;
+                        frame.src_y      = 0;
+                        frame.clut_x     = 0;
+                        frame.clut_y     = 0;
+                        frame.bpp        = 0;
+                        frame.page_x     = 0;
+                        frame.page_y     = 0;
+                        frame.mod_type   = "";
+                        tile.animations[ m ].keyframes.push_back( frame );
+                        LOGGER->Log( "Keyframe at time \"" + FloatToString( field.animations[ i ].keyframes[ j ].time ) + "\" added.\n" );
+
+                        if( l == temp_tiles.size() )
+                        {
+                            temp_tiles.push_back( tile );
+                        }
+                        else
+                        {
+                            temp_tiles[ l ] = tile;
+                        }
+                    }
                 }
-                temp_tiles[ i ].animations.push_back( animation );
             }
         }
     }
-    //LOGGER->Log( "Start sorting all tiles.\n" );
+
+
+
+    for( unsigned int i = 0; i < tiles.size(); ++i )
+    {
+        if( tiles[ i ].animated != true )
+        {
+             temp_tiles.push_back( tiles[ i ] );
+        }
+    }
+
+
+
+    LOGGER->Log( "Start sorting all tiles.\n" );
     for( int i = 0; i < temp_tiles.size(); ++i )
     {
         for( int l = 0; l < temp_tiles[ i ].animations.size(); ++l )
@@ -3142,17 +3083,20 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
         }
         std::sort( temp_tiles[ i ].animations.begin(), temp_tiles[ i ].animations.end(), anim_name_sort() );
     }
-    //LOGGER->Log( "Finish sorting all tiles.\n" );
+    LOGGER->Log( "Finish sorting all tiles.\n" );
+
+
+
     tiles = temp_tiles;
 
 
 
-    //LOGGER->Log( "Start add tiles to file.\n" );
+    LOGGER->Log( "Start add tiles to file.\n" );
     for( unsigned int i = 0; i < tiles.size(); ++i )
     {
         AddTile( tiles[ i ], mim, export_text );
     }
-    //LOGGER->Log( "Finish add tiles to file.\n" );
+    LOGGER->Log( "Finish add tiles to file.\n" );
 
 
 
@@ -3186,10 +3130,53 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
 
 
+bool
+DatFile::TileCompare( const Tile& tile, const FieldKeyFrame& keyframe, MimFile& mim )
+{
+    bool ret = true;
+
+    // compare animations
+    if( keyframe.animation_id != tile.animation_id )
+    {
+        ret = false;
+    }
+    else if( keyframe.animation_id != 0 )
+    {
+        if( ( 1 << keyframe.animation_frame ) != tile.animation_frame )
+        {
+            ret = false;
+        }
+    }
+
+    // compare palette
+    if( keyframe.clut_y != -1 )
+    {
+        if( keyframe.clut_y != tile.clut_y )
+        {
+            ret = false;
+        }
+/*
+        else
+        {
+            // set size depending on background
+            u8 size = ( tile.background > 1 ) ? 32 : 16;
+            if( mim.ClutCheck( tile.page_x, tile.page_y, tile.clut_x, tile.bpp, tile.src_x, tile.src_y, size, size, keyframe.clut_x, keyframe.clut_width ) == false )
+            {
+                ret = false;
+            }
+        }
+*/
+    }
+
+    return ret;
+}
+
+
+
 void
 DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
 {
-    AddedTile added_main_tile = AddTileTex( tile.background, tile.src_x, tile.src_y, tile.clut_x, tile.clut_y, tile.bpp, tile.page_x, tile.page_y, mim, "", 1, 1, 1 );
+    AddedTile added_main_tile = AddTileTex( tile.background, tile.src_x, tile.src_y, tile.clut_x, tile.clut_y, tile.bpp, tile.page_x, tile.page_y, mim, 0, 0, "", 1, 1, 1 );
 
     Ogre::String blending_str = "";
     if( tile.blending == 0 )
@@ -3223,7 +3210,7 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
                         " " +
                         Ogre::StringConverter::toString( ( added_main_tile.y + added_main_tile.height ) / ( float ) full_image->height ) +
                         "\" depth=\"" +
-                        Ogre::StringConverter::toString( ( tile.depth > 0.001f ) ? tile.depth : 0.001f ) +
+                        Ogre::StringConverter::toString( ( tile.depth > 0.002f ) ? tile.depth : 0.002f ) +
                         "\" blending=\"" + blending_str + "\""
     );
 
@@ -3247,7 +3234,7 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
                 }
 
                 //LOGGER->Log( "Animation tile pixels src_x=\"" + IntToString( tile.animation_key.keyframes[ i ].src_x ) + "\" src_y=\"" + IntToString( tile.animation_key.keyframes[ i ].src_y ) + "\"\n" );
-                AddedTile added_tile = AddTileTex( tile.background, tile.animations[ l ].keyframes[ i ].src_x, tile.animations[ l ].keyframes[ i ].src_y, tile.animations[ l ].keyframes[ i ].clut_x, tile.animations[ l ].keyframes[ i ].clut_y, tile.animations[ l ].keyframes[ i ].bpp, tile.animations[ l ].keyframes[ i ].page_x, tile.animations[ l ].keyframes[ i ].page_y, mim, tile.animations[ l ].keyframes[ i ].type, tile.animations[ l ].keyframes[ i ].r_mod, tile.animations[ l ].keyframes[ i ].g_mod, tile.animations[ l ].keyframes[ i ].b_mod );
+                AddedTile added_tile = AddTileTex( tile.background, tile.animations[ l ].keyframes[ i ].src_x, tile.animations[ l ].keyframes[ i ].src_y, tile.animations[ l ].keyframes[ i ].clut_x, tile.animations[ l ].keyframes[ i ].clut_y, tile.animations[ l ].keyframes[ i ].bpp, tile.animations[ l ].keyframes[ i ].page_x, tile.animations[ l ].keyframes[ i ].page_y, mim, tile.animations[ l ].keyframes[ i ].clut_start, tile.animations[ l ].keyframes[ i ].clut_width, tile.animations[ l ].keyframes[ i ].mod_type, tile.animations[ l ].keyframes[ i ].mod_r, tile.animations[ l ].keyframes[ i ].mod_g, tile.animations[ l ].keyframes[ i ].mod_b );
                 //LOGGER->Log( "Animation tile pixels x=\"" + IntToString( x ) + "\" y=\"" + IntToString( y ) + "\"\n" );
                 export_text->Log( Ogre::StringConverter::toString( tile.animations[ l ].keyframes[ i ].time ) +
                                   ":" +
@@ -3271,7 +3258,7 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
 
 
 AddedTile
-DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, MimFile& mim, const Ogre::String& type, const float r_mod, const float g_mod, const float b_mod )
+DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, MimFile& mim, const int clut_start, const int clut_width, const Ogre::String& mod_type, const float mod_r, const float mod_g, const float mod_b )
 {
     AddedTile tile;
     tile.background = background;
@@ -3282,10 +3269,12 @@ DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const 
     tile.bpp        = bpp;
     tile.page_x     = page_x;
     tile.page_y     = page_x;
-    tile.type       = type;
-    tile.r_mod      = r_mod;
-    tile.g_mod      = g_mod;
-    tile.b_mod      = b_mod;
+    tile.clut_start = clut_start;
+    tile.clut_width = clut_width;
+    tile.mod_type   = mod_type;
+    tile.mod_r      = mod_r;
+    tile.mod_g      = mod_g;
+    tile.mod_b      = mod_b;
     std::vector< AddedTile >::iterator tile_it = std::find_if( m_AddedTiles.begin(), m_AddedTiles.end(), added_tile_find( tile ) );
 
     if( tile_it != m_AddedTiles.end() )
@@ -3296,21 +3285,23 @@ DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const 
 
 
     SurfaceTexData surface;
-    surface.page_x = page_x;
-    surface.page_y = page_y;
-    surface.clut_x = clut_x;
-    surface.clut_y = clut_y;
-    surface.bpp    = bpp;
-    surface.type   = type;
-    surface.r_mod  = r_mod;
-    surface.g_mod  = g_mod;
-    surface.b_mod  = b_mod;
+    surface.page_x     = page_x;
+    surface.page_y     = page_y;
+    surface.clut_x     = clut_x;
+    surface.clut_y     = clut_y;
+    surface.bpp        = bpp;
+    surface.clut_start = clut_start;
+    surface.clut_width = clut_width;
+    surface.mod_type   = mod_type;
+    surface.mod_r      = mod_r;
+    surface.mod_g      = mod_g;
+    surface.mod_b      = mod_b;
 
     std::vector< SurfaceTexData >::iterator it = std::find_if( m_Surfaces.begin(), m_Surfaces.end(), surface_find( surface ) );
 
     if( it == m_Surfaces.end() )
     {
-        surface.surface = mim.GetSurface( surface.page_x, surface.page_y, surface.clut_x, surface.clut_y, surface.bpp, surface.type, surface.r_mod, surface.g_mod, surface.b_mod );
+        surface.surface = mim.GetSurface( page_x, page_y, clut_x, clut_y, bpp, clut_start, clut_width, mod_type, mod_r, mod_g, mod_b );
         m_Surfaces.push_back( surface );
     }
     else

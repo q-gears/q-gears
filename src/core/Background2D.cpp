@@ -137,11 +137,15 @@ Background2D::Update()
 
     // remove stopped animations
     std::vector< AnimationPlayed >::iterator i = m_AnimationPlayed.begin();
-    for( ; i != m_AnimationPlayed.end(); ++i )
+    for( ; i != m_AnimationPlayed.end(); )
     {
         if( ( *i ).name == "" )
         {
             i = m_AnimationPlayed.erase( i );
+        }
+        else
+        {
+            ++i;
         }
     }
 }

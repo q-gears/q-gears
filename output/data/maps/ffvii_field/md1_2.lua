@@ -127,118 +127,43 @@ EntityContainer[ "Wedge" ] = {
 
 
 
---[[
-light2
-script_0:
-0507 (end 0507): field:background_clear( "2" ); -- turns off all layer of background animation with given id
-050a (end 050a): field:background_on( "2", 0 ); -- turns on layer of background animation with given id
-050e (end 050e): temp5_21 = 255;
-0512 (end 0512): return
-0513 (end 0513): [UNREVERSED] STPLS( 0d, 24, 10, 1f );
-0518 (end 0518): temp5_21 = 255;
-051c (end 051c): if ( temp5_21 > 252 ) then continue else jumpto(0539);
-0522 (end 0539): [UNREVERSED] ADPAL( 00, 55, 50, 24, 2e, 21, 21, 21, 1f );
-052c (end 0539): [UNREVERSED] LDPLS( 2e, 0d, 10, 1f );
-0531 (end 0539): temp5_21 = temp5_21 - 1;
-0534 (end 0539): script:wait( 0.0666667 )
-0537 (end 0539): jumpto( 051c );
-0539 (end 0539): [UNREVERSED] LDPLS( 24, 0d, 10, 1f );
-053e (end 053e): temp5_21 = math.rand();
-0541 (end 0541): temp5_21 = temp5_21 % 3;
-0545 (end 0545): temp5_21 = temp5_21 + 1;
-0548 (end 0548): if ( temp5_21 > 0 ) then continue else jumpto(055e);
-054e (end 055e): field:background_off( "2", 0 ); -- turns off layer of background animation with given id
-0552 (end 055e): script:wait( 0.0333333 )
-0555 (end 055e): field:background_on( "2", 0 ); -- turns on layer of background animation with given id
-0559 (end 055e): temp5_21 = temp5_21 - 1;
-055c (end 055e): jumpto( 0548 );
-055e (end 055e): script:wait( 2 )
-0561 (end 0561): jumpto( 0518 );
+EntityContainer[ "BackgroundLight0" ] = {
+    on_start = function( self )
+        background2d:play_animation_looped( "Light0" )
 
-warning
-script_0:
-0564 (end 0564): field:background_clear( "1" ); -- turns off all layer of background animation with given id
-0567 (end 0567): field:background_off( "1", 0 ); -- turns off layer of background animation with given id
-056b (end 056b): temp5_18 = 0;
-056f (end 056f): temp5_1b = 255;
-0573 (end 0573): return
-0574 (end 0574): [UNREVERSED] STPAL( 00, 0b, 00, ff );
-0579 (end 0579): temp5_1b = temp5_1b + 1;
-057d (end 057d): if ( temp5_1b > 2 ) then continue else jumpto(0587);
-0583 (end 0587): temp5_1b = 0;
-0587 (end 0587): script:request_end_sync( "zizizi", "script_1", 2 )
-058a (end 058a): field:background_on( "1", temp5_1b ); -- turns on layer of background animation with given id
-058e (end 058e): script:request_end_sync( "light", "script_1", 2 )
-0591 (end 0591): [UNREVERSED] LDPAL( 00, 00, 0b, ff );
-0596 (end 0596): script:wait( 0.0333333 )
-0599 (end 0599): script:request_end_sync( "light", "script_1", 2 )
-059c (end 059c): [UNREVERSED] LDPAL( 00, 00, 0b, ff );
-05a1 (end 05a1): script:wait( 0.0333333 )
-05a4 (end 05a4): script:request_end_sync( "light", "script_1", 2 )
-05a7 (end 05a7): field:background_off( "1", temp5_1b ); -- turns off layer of background animation with given id
-05ab (end 05ab): [UNREVERSED] LDPAL( 00, 00, 0b, ff );
-05b0 (end 05b0): script:wait( 0.0333333 )
-05b3 (end 05b3): jumpto( 0579 );
+        return 0
+    end,
+}
 
-light
-script_0:
-05b5 (end 05b5): return
-05b6 (end 05b6): return
 
-script_1:
-05b7 (end 05b7): temp5_18 = 66;
-05bb (end 05bb): if ( temp5_18 < 98 ) then continue else jumpto(05de);
-05c1 (end 05de): temp5_18 = temp5_18 + 16;
-05c5 (end 05de): [UNREVERSED] MPPAL2( 00, 55, 50, 00, 10, 18, 18, 18, ff );
-05cf (end 05de): [UNREVERSED] CPPAL( 00, 00, 10, 00 );
-05d4 (end 05de): [UNREVERSED] LDPAL( 00, 10, 0b, ff );
-05d9 (end 05de): script:wait( 0.0666667 )
-05dc (end 05de): jumpto( 05bb );
-05de (end 05de): if ( temp5_18 > 4 ) then continue else jumpto(0601);
-05e4 (end 0601): temp5_18 = temp5_18 - 24;
-05e8 (end 0601): [UNREVERSED] MPPAL2( 00, 55, 50, 00, 10, 18, 18, 18, ff );
-05f2 (end 0601): [UNREVERSED] CPPAL( 00, 00, 10, 00 );
-05f7 (end 0601): [UNREVERSED] LDPAL( 00, 10, 0b, ff );
-05fc (end 0601): script:wait( 0.0666667 )
-05ff (end 0601): jumpto( 05de );
-0601 (end 0601): return
 
-zizizi
-script_0:
-0602 (end 0602): return
-0603 (end 0603): return
+EntityContainer[ "BackgroundLight1" ] = {
+    on_start = function( self )
+        script:wait( 0.133333 )
+        background2d:play_animation_looped( "Light1" )
 
-script_1:
-0604 (end 0604): temp5_19 = 0;
-0608 (end 0608): temp5_1a = math.rand();
-060b (end 060b): temp5_1a = temp5_1a % 4;
-060f (end 060f): if ( temp5_1a == 0 ) then continue else jumpto(0619);
-0615 (end 0619): temp5_1a = 1;
-0619 (end 0619): if ( temp5_19 < temp5_1a ) then continue else jumpto(0640);
-061f (end 0640): field:background_on( "1", temp5_1b ); -- turns on layer of background animation with given id
-0623 (end 0640): script:wait( 0.0333333 )
-0626 (end 0640): field:background_off( "1", temp5_1b ); -- turns off layer of background animation with given id
-062a (end 0640): script:wait( 0.0333333 )
-062d (end 0640): field:background_on( "1", 3 ); -- turns on layer of background animation with given id
-0631 (end 0640): script:wait( 0.0333333 )
-0634 (end 0640): field:background_off( "1", 3 ); -- turns off layer of background animation with given id
-0638 (end 0640): script:wait( 0.0333333 )
-063b (end 0640): temp5_19 = temp5_19 + 1;
-063e (end 0640): jumpto( 0619 );
-0640 (end 0640): return
-]]
+        return 0
+    end,
+}
 
+
+
+EntityContainer[ "BackgroundLight2" ] = {
+    on_start = function( self )
+        while true do
+            local number = math.random( 1, 3 )
+            background2d:play_animation_once( "Light2_" .. number )
+            background2d:animation_sync( "Light2_" .. number )
+        end
+
+        return 0
+    end,
+}
 
 
 
 EntityContainer[ "Background" ] = {
     on_start = function( self )
-        background2d:play_animation_looped( "Light0" )
-        script:wait( 0.133333 )
-        background2d:play_animation_looped( "Light1" )
-
-
-
         local temp5_27 = 0;
 
         while true do
@@ -252,15 +177,15 @@ EntityContainer[ "Background" ] = {
             end
 
             for v = 0, number, 1 do
-                background2d:play_animation( "Warning" .. temp5_27 .. "Zizizi" )
-                background2d:animation_sync()
+                background2d:play_animation_once( "Warning" .. temp5_27 .. "Zizizi" )
+                background2d:animation_sync( "Warning" .. temp5_27 .. "Zizizi" )
             end
 
-            background2d:play_animation( "Warning" .. temp5_27 )
-            background2d:animation_sync()
+            background2d:play_animation_once( "Warning" .. temp5_27 )
+            background2d:animation_sync( "Warning" .. temp5_27 )
 
-            background2d:play_animation( "WarningBlank" )
-            background2d:animation_sync()
+            background2d:play_animation_once( "WarningBlank" )
+            background2d:animation_sync( "WarningBlank" )
 
             temp5_27 = temp5_27 + 1
         end

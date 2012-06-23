@@ -14,5 +14,8 @@
     <entity_trigger name="Gateway0" point1="27.2266 238.578 5.07031" point2="28.25 238.516 5.07031" enabled="true" />
     <entity_trigger name="Gateway1" point1="23.7266 252.461 5.09375" point2="23.6797 253.219 5.09375" enabled="true" />
     <entity_point name="Spawn_md1_1" position="27.8125 238.898 5.07" rotation="186.353" />
-    <entity_script name="Background" />
+    <entity_script name="BackgroundLight0" />
+    <entity_script name="BackgroundLight1" />
+    <entity_script name="BackgroundLight2" />
+    <entity_script name="BackgroundWarning" />
 </map>

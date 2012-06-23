@@ -244,9 +244,12 @@
                     0x02 - target on the top.
 8007b948 []       top y pos of dialog.
 8007b949 []       dialog height in pixels.
-8007b94a []       init with 0 at start of text opcode parsing.
-8007b94b []       init with 0 at start of text opcode parsing. If this &1 == 0 then we set current dialog as active dialog.
+8007b94a []       init with 0 at start of text opcode parsing. Set to 0xff in 0xf903 text opcode. Store subopcode here (50-5c) in 0xf950-0xf95c text opcodes.
+8007b94b []       init with 0 at start of text opcode parsing. If this &1 == 0 then we set current dialog as active dialog. Set to 1 in 0xf945 text opcode.
 8007b954 [][][][] pointer to text data.
+8007b95c [][][][] set to 1st 1 byte argument of 0xf907 text opcode.
+8007b960 [][][][] set to -1 in 0xf907 text opcode.
+8007b96c [][][][] set to 2nd 1 byte argument of 0xf907 text opcode minus 1.
 
 8007b97c [][][][] maybe pressed buttons?
 
@@ -278,7 +281,7 @@
                 0x02 - target on the top.
 8007bb78 [][][][] pointer to active dialog.
 
-8007bb90 [][][][] store 0 here at start of text opcode parsing.
+8007bb90 [][][][] store 0 here at start of text opcode parsing. Set to 1 in 0xf90b text opcode.
 
 8007bba8 array of 8 elements of some data (0x4 size).
 

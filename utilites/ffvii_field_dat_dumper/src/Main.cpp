@@ -53,94 +53,99 @@ fill_names()
             FiledAnimation animation;
             animation.name = i->first;
 
-            Ogre::StringVector anim = Ogre::StringUtil::split( i->second, ";", 1 );
+            Ogre::StringVector anim = Ogre::StringUtil::split( i->second, "|" );
             if( anim.size() < 2 )
             {
-                LOGGER->Log("In \"" + i->second + "\" not enough data separated by \";\". Must be 2.\n");
+                LOGGER->Log( "In \"" + i->second + "\" not enough data separated by \"|\". Must be more than 1.\n" );
                 continue;
             }
 
-            Ogre::StringVector anim_data = Ogre::StringUtil::split( anim[ 0 ], ":", 1 );
-            if( anim_data.size() < 2 )
-            {
-                LOGGER->Log("In \"" + anim[ 0 ] + "\" not enough data. Must be 2.\n");
-                continue;
-            }
+            animation.time = Ogre::StringConverter::parseReal( anim[ 0 ] );
+            LOGGER->Log( "Animation \"" + animation.name + "\" added with total time \"" + FloatToString( animation.time ) + "\".\n" );
 
-            animation.time = Ogre::StringConverter::parseReal( anim_data[ 0 ] );
-
-            Ogre::StringVector anim_type = Ogre::StringUtil::split( anim_data[ 1 ], "-", 1 );
-            if( anim_type.size() < 2 )
+            // go through all frames
+            for( unsigned int j = 1; j < anim.size(); ++j )
             {
-                LOGGER->Log("In \"" + anim_data[ 1 ] + "\" not enough data. Must be 2.\n");
-                continue;
-            }
-
-            if( anim_type[ 0 ] == "anim" )
-            {
-                animation.type = FAT_ANIMATION;
-                animation.animation = Ogre::StringConverter::parseInt( anim_type[ 1 ] );
-            }
-            else if( anim_type[ 0 ] == "clut" )
-            {
-                animation.type = FAT_CLUT;
-                animation.clut = Ogre::StringConverter::parseInt( anim_type[ 1 ] );
-            }
-            else
-            {
-                LOGGER->Log( "Unknown animation type \"" + anim_type[ 0 ] + "\".\n");
-                continue;
-            }
-
-            LOGGER->Log("Animation \"" + animation.name + "\" add with total time \"" + FloatToString( animation.time ) + "\" and animation_id \"" + IntToString( animation.animation ) + "\", clut \"" + IntToString( animation.clut ) + "\".\n" );
-
-            Ogre::StringVector anim_keyframes = Ogre::StringUtil::split( anim[ 1 ], "," );
-            for( unsigned int j = 0; j < anim_keyframes.size(); ++j )
-            {
-                Ogre::StringVector anim_frame = Ogre::StringUtil::split( anim_keyframes[ j ], ":", 1 );
-                if( anim_frame.size() < 2 )
+                Ogre::StringVector frame_data = Ogre::StringUtil::split( anim[ j ], ";", 2 );
+                if( frame_data.size() < 2 )
                 {
-                    LOGGER->Log("In \"" + anim_keyframes[ j ] + "\" not enough data. Must be 2.\n");
+                    LOGGER->Log( "In \"" + anim[ j ] + "\" not enough data separated by \";\". Must be more than 1.\n" );
                     continue;
                 }
 
                 FieldKeyFrame frame;
-                frame.time = Ogre::StringConverter::parseReal( anim_frame[ 0 ] );
+                frame.time = Ogre::StringConverter::parseReal( frame_data[ 0 ] );
 
-                if( animation.type == FAT_ANIMATION )
+                for( unsigned int k = 1; k < frame_data.size(); ++k )
                 {
-                    if( anim_frame[ 1 ] == "blank" )
+                    Ogre::StringVector frame_data_settings = Ogre::StringUtil::split( frame_data[ k ], "=", 1 );
+                    if( frame_data_settings.size() != 2 )
                     {
-                        frame.blank = true;
-                        frame.animation_index = 0;
-                    }
-                    else
-                    {
-                        frame.blank = false;
-                        frame.animation_index = Ogre::StringConverter::parseInt( anim_frame[ 1 ] );
-                    }
-
-                    LOGGER->Log( "Animation keyframe add at time \"" + FloatToString( frame.time ) + "\". Settings blank=\"" + BoolToString( frame.blank ) + "\", animation_index=\"" + IntToString( frame.animation_index ) + "\".\n" );
-                }
-                else if( animation.type == FAT_CLUT )
-                {
-                    Ogre::StringVector anim_frame_data = Ogre::StringUtil::split( anim_frame[ 1 ], "=", 1 );
-                    if( anim_frame_data.size() < 2 )
-                    {
-                        LOGGER->Log("In \"" + anim_frame[ 1 ] + "\" not enough data separated by \"-\". Must be 2.\n");
+                        LOGGER->Log( "In \"" + frame_data[ k ] + "\" not enough data separated by \"=\". Must be 2.\n" );
                         continue;
                     }
 
-                    frame.type = anim_frame_data[ 0 ];
-                    Ogre::Vector3 rgb = Ogre::StringConverter::parseVector3( anim_frame_data[ 1 ] );
-                    frame.r_mod = rgb.x;
-                    frame.g_mod = rgb.y;
-                    frame.b_mod = rgb.z;
+                    if( frame_data_settings[ 0 ] == "animation" )
+                    {
+                        Ogre::StringVector animation_settings = Ogre::StringUtil::split( frame_data_settings[ 1 ], " ", 1 );
+                        if( animation_settings.size() != 2 )
+                        {
+                            LOGGER->Log( "In \"" + frame_data_settings[ 1 ] + "\" not enough data separated by \" \". Must be 2.\n" );
+                            continue;
+                        }
 
-                    LOGGER->Log( "Clut keyframe add at time \"" + FloatToString( frame.time ) + "\". Settings type=\"" + frame.type + "\", r_mod=\"" + FloatToString( frame.r_mod ) + "\", g_mod=\"" + FloatToString( frame.g_mod ) + "\", b_mod=\"" + FloatToString( frame.b_mod ) + "\".\n" );
+                        frame.animation_id = Ogre::StringConverter::parseInt( animation_settings[ 0 ] );
+                        if( animation_settings[ 1 ] == "blank" )
+                        {
+                            frame.blank = true;
+                        }
+                        else
+                        {
+                            frame.animation_frame = Ogre::StringConverter::parseInt( animation_settings[ 1 ] );
+                        }
+                    }
+                    else if( frame_data_settings[ 0 ] == "clut" )
+                    {
+                        Ogre::StringVector clut_total_settings = Ogre::StringUtil::split( frame_data_settings[ 1 ], ",", 1 );
+                        if( clut_total_settings.size() != 2 )
+                        {
+                            LOGGER->Log( "In \"" + frame_data_settings[ 1 ] + "\" not enough data separated by \",\". Must be 2.\n" );
+                            continue;
+                        }
+
+                        Ogre::StringVector clut_palette_settings = Ogre::StringUtil::split( clut_total_settings[ 0 ], " ", 2 );
+                        if( clut_palette_settings.size() != 3 )
+                        {
+                            LOGGER->Log( "In \"" + clut_total_settings[ 0 ] + "\" not enough data separated by \" \". Must be 3.\n" );
+                            continue;
+                        }
+
+                        frame.clut_y      = Ogre::StringConverter::parseInt( clut_palette_settings[ 0 ] ) + 0x1e0;
+                        frame.clut_start  = Ogre::StringConverter::parseInt( clut_palette_settings[ 1 ] );
+                        frame.clut_width = Ogre::StringConverter::parseInt( clut_palette_settings[ 2 ] );
+
+                        Ogre::StringVector clut_mod_settings = Ogre::StringUtil::split( clut_total_settings[ 1 ], ":", 1 );
+                        if( clut_mod_settings.size() != 2 )
+                        {
+                            LOGGER->Log( "In \"" + clut_total_settings[ 1 ] + "\" not enough data separated by \":\". Must be 2.\n" );
+                            continue;
+                        }
+
+                        frame.mod_type = clut_mod_settings[ 0 ];
+                        Ogre::Vector3 rgb = Ogre::StringConverter::parseVector3( clut_mod_settings[ 1 ] );
+                        frame.mod_r = rgb.x;
+                        frame.mod_g = rgb.y;
+                        frame.mod_b = rgb.z;
+                    }
+                    else
+                    {
+                        LOGGER->Log( "Unknown animation type \"" + frame_data_settings[ 0 ] + "\".\n");
+                        continue;
+                    }
                 }
 
                 animation.keyframes.push_back( frame );
+                LOGGER->Log( "Keyframe added at time \"" + FloatToString( frame.time ) + "\". Settings blank=\"" + BoolToString( frame.blank ) + "\", animation_id=\"" + IntToString( frame.animation_id ) + "\", animation_frame=\"" + IntToString( frame.animation_frame ) + "\" clut_y=\"" + IntToString( frame.clut_y ) + "\", clut_start=\"" + IntToString( frame.clut_start ) + "\", clut_width=\"" + IntToString( frame.clut_width ) + "\", mod_type=\"" + frame.mod_type + "\", mod_r=\"" + FloatToString( frame.mod_r ) + "\", mod_g=\"" + FloatToString( frame.mod_g ) + "\", mod_b=\"" + FloatToString( frame.mod_b ) + "\".\n" );
             }
 
             field.animations.push_back( animation );

@@ -242,17 +242,31 @@ return 0;
 
 
 ////////////////////////////////
+// 0x12 JMPB
+current_entity            = bu[800722c4];
+current_script_pointer    = 800831fc + current_entity * 2;
+field_file_offset         = w[8009c6dc];
+A0 = hu[current_script_pointer + 0];
+
+[current_script_pointer] = h(hu[current_script_pointer] - bu[field_file_offset + A0 + 1]);
+
+return 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // funcc33b4
-current_entity            = bu[800722C4];
-current_script_pointer    = 800831FC + current_entity * 2;
-target_script_pointer     = 800831FC + target_id * 2;
-target_current_slot       = 8009A1C4 + target_id;
+current_entity            = bu[800722c4];
+current_script_pointer    = 800831fc + current_entity * 2;
+target_script_pointer     = 800831fc + target_id * 2;
+target_current_slot       = 8009a1c4 + target_id;
 request_id                = A0; // 3 - reqEW
 target_id                 = A1;
 priority_id               = A2;
 script_id                 = A3;
-script_state              = 800833F8 + target_id * 8 + priority_id;
-field_file_offset         = w[8009C6DC];
+script_state              = 800833f8 + target_id * 8 + priority_id;
+field_file_offset         = w[8009c6dc];
 field_extra_offset_number = hu[field_file_offset + 6]
 field_entity_number       = bu[field_file_offset + 2];
 

@@ -3771,8 +3771,9 @@ L3bfdc:	; 8003BFDC
 8003BFF4	addiu  v1, zero, $0001
 8003BFF8	sw     v1, $b6f8(a3)
 8003BFFC	srav   v0, v1, v0
-8003C000	jal    func39660 [$80039660]
 8003C004	sw     v0, $b6f4(t0)
+8003C000	jal    func39660 [$80039660]
+
 8003C008	addu   a0, s3, zero
 8003C00C	lui    s0, $8008
 8003C010	lw     v1, $b704(s0)

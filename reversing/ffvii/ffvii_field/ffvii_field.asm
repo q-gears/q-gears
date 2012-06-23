@@ -7145,39 +7145,12 @@ funcc33b4
 
 
 
-800C3EA0	lui    v0, $800a
-800C3EA4	lbu    v0, $d820(v0)
-800C3EA8	addiu  sp, sp, $ffe8 (=-$18)
-800C3EAC	andi   v0, v0, $0003
-800C3EB0	beq    v0, zero, Lc3ec8 [$800c3ec8]
-800C3EB4	sw     ra, $0010(sp)
-800C3EB8	lui    a0, $800a
-800C3EBC	addiu  a0, a0, $0820
-800C3EC0	jal    funcbead4 [$800bead4]
-800C3EC4	ori    a1, zero, $0001
+////////////////////////////////
+// 0x12 JMPB
+800C3EA0-800C3F18
+////////////////////////////////
 
-Lc3ec8:	; 800C3EC8
-800C3EC8	lui    v1, $8007
-800C3ECC	lbu    v1, $22c4(v1)
-800C3ED0	lui    v0, $8008
-800C3ED4	addiu  v0, v0, $31fc
-800C3ED8	sll    v1, v1, $01
-800C3EDC	addu   v1, v1, v0
-800C3EE0	lhu    a0, $0000(v1)
-800C3EE4	lui    v0, $800a
-800C3EE8	lw     v0, $c6dc(v0)
-800C3EEC	nop
-800C3EF0	addu   v0, v0, a0
-800C3EF4	lbu    a0, $0001(v0)
-800C3EF8	lhu    v0, $0000(v1)
-800C3EFC	nop
-800C3F00	subu   v0, v0, a0
-800C3F04	sh     v0, $0000(v1)
-800C3F08	ori    v0, zero, $0001
-800C3F0C	lw     ra, $0010(sp)
-800C3F10	addiu  sp, sp, $0018
-800C3F14	jr     ra 
-800C3F18	nop
+
 
 800C3F1C	lui    v0, $800a
 800C3F20	lbu    v0, $d820(v0)

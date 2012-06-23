@@ -332,8 +332,9 @@ return;
 // func39660
 // text related
 script_data = A0; // entity script data
-A0 = A1; // text id
 S2 = A2; // style flags
+
+A0 = A1; // text id
 A1 = 8007ae5c;
 A2 = 8007ae60;
 A3 = 8007ae64;
@@ -496,59 +497,59 @@ return S0;
 
 ////////////////////////////////
 // func4e248
-//A0 = A1; // value??
 //A1 = 8007ae5c;
 //A2 = 8007ae60;
 //A3 = 8007ae64;
 
+text_id = A0;
 S4 = A1;
 S5 = A2;
 S6 = A3;
-A1 = 0;
 
-if (A0 >= 0)
+
+
+pointer_to_text = 0;
+
+if( text_id >= 0 )
 {
     texts_data = w[8007b954];
 
-    if (A0 < w[texts_data + 0]) // index less than number of texts
+    if( text_id < w[texts_data + 0] ) // index less than number of texts
     {
-        A1 = text_datas + 4;
+        pointer_to_text = texts_data + 4;
 
-        if (w[8007b708] == 4)
+        if( w[8007b708] == 4 ) // if battle
         {
-            V0 = A0 * 4;
+            V0 = text_id * 4;
         }
         else
         {
-            V0 = A0 * 8;
+            V0 = text_id * 8;
         }
 
-        A2 = w[A1 + V0];
+        A2 = w[pointer_to_text + V0];
 
         [8007b942] = h(((A2 >> 10) & fff) + 9);
 
-        if (w[8007b708] == 4) // if battle
+        if( w[8007b708] == 4 ) // if battle
         {
             V1 = A2 >> 1c;
         }
         else
         {
-            V1 = bu[A1 + A0 * 8 + 6]; // number of lines
+            V1 = bu[pointer_to_text + text_id * 8 + 6]; // number of lines
         }
 
         [8007b949] = b(V1 * e + 6);
 
-        A1 = A1 + (A2 & ffff); // pointer to text data
+        pointer_to_text = pointer_to_text + (A2 & ffff); // pointer to text data
     }
 }
 
-[SP + 10] = w(A1);
 
-if (A1 != 0)
+
+if( pointer_to_text != 0 )
 {
-    S3 = 0;
-    S1 = SP + 10;
-
     [8007bb90] = w(0);
     [8007b94a] = b(0);
     [8007b94b] = b(0);
@@ -557,288 +558,179 @@ if (A1 != 0)
     [S6] = w(0);
 
     L4e36c:	; 8004E36C
-        V0 = w[SP + 10];
-        V1 = bu[V0];
-        [SP + 10] = w(V0 + 1);
+        V1 = bu[pointer_to_text];
+        pointer_to_text = pointer_to_text + 1;
 
-        if (V1 != f9)
+        if( V1 != f9 )
         {
             break;
         }
 
-        V0 = w[S1];
-        V1 = bu[V0];
-        [S1] = w(V0 + 1);
+        V1 = bu[pointer_to_text];
+        pointer_to_text = pointer_to_text +1;
 
-        if (V1 - 3 >= 5d)
+        switch( V1 )
         {
-            return 8007b940;
+            case 07: // CCE30480
+            {
+                [8007b960] = w(-1);
+                [8007b95c] = w(bu[pointer_to_text + 0]);
+                [8007b96c] = w(bu[pointer_to_text + 1] - 1)
+                pointer_to_text = pointer_to_text + 2;
+            }
+            break;
+
+            case 4f: // 04E40480
+            {
+                V1 = w[8007b974];
+                [8007b960] = w(V1);
+                A1 = bu[pointer_to_text];
+                A2 = V1;
+                V1 = A1 - 1;
+                if( A1 != 0 )
+                {
+
+                    loop4e428:	; 8004E428
+                        V0 = A2 ^ 1;
+                        V0 = V0 & 1;
+                        A1 = A1 - V0;
+                        A2 = A2 >> 1;
+                        V1 = V1 - 1;
+                    8004E438	bne    v1, -1, loop4e428 [$8004e428]
+                }
+
+                A2 = w[8007b960];
+                [8007b95c] = w(A1);
+                V1 = bu[pointer_to_text];
+                pointer_to_text = pointer_to_text + 1;
+                V1 = V1 - A1;
+                A1 = -1;
+                V0 = V1 << 3;
+                V0 = V0 - V1;
+                V1 = bu[8007b949];
+                8004E470	sll    v0, v0, $01
+                8004E474	subu   v1, v1, v0
+                [8007b949] = b(V1);
+                V1 = bu[pointer_to_text];
+                pointer_to_text = pointer_to_text + 1;
+                V1 = V1 + A1;
+                if( V1 != A1 )
+                {
+                    A0 = A1;
+
+                    loop4e494:	; 8004E494
+                        V0 = A1 & 1;
+                        A1 = A1 + V0;
+                        V1 = V1 - 1;
+                        A2 = A2 >> 1;
+                    8004E4A0	bne    v1, a0, loop4e494 [$8004e494]
+                }
+
+                V1 = w[8007b95c];
+                if( A1 >= V1 )
+                {
+                    A1 = V1 - 1;
+                }
+
+                [8007b96c] = w(A1);
+            }
+            break;
+
+            case 03: // C8E40480
+            {
+                [8007b940] = h(hu[pointer_to_text + 0]); // left x pos of dialog.
+                [8007b948] = b(bu[pointer_to_text + 2]); // top y pos of dialog.
+                [8007b94a] = b(ff);
+                pointer_to_text = pointer_to_text + 3;
+            }
+            break;
+
+            case 50-5c: // 14E50480
+            {
+                [8007b94a] = b(bu[pointer_to_text - 1]);
+            }
+            break;
+
+            case 5f: // 28E50480
+            {
+                [S4] = w(h[pointer_to_text + 0]);
+                [S5] = w(h[pointer_to_text + 2]);
+                [S6] = w(h[pointer_to_text + 4]);
+                pointer_to_text = pointer_to_text + 6;
+            }
+            break;
+
+            case 0b: // F4E50480
+            {
+                [8007bb90] = w(1);
+            }
+            break
+
+            case 45: // 04E60480
+            {
+                [8007b94b] = b(1);
+            }
+            break;
+
+            case 0d: // 10E60480
+            {
+                [SP + 14] = w(hu[pointer_to_text + 0])
+                pointer_to_text = pointer_to_text + 2;
+
+                if( w[SP + 14] != ffff )
+                {
+                    loop4e648:	; 8004E648
+                        [SP + 14] = w(A0);
+                        V1 = w[SP + 14];
+
+                        [SP + 14] = w(V1 & 0fff);
+
+                        V1 = V1 >> c;
+                        V1 = V1 & f;
+
+                        if( ( V1 == 0 ) || ( w[8007b960] >> (V1 - 1) & 1 ) )
+                        {
+                            [SP + 10] = w(pointer_to_text);
+                            A0 = SP + 10;
+                            A1 = SP + 14;
+                            8004E680	jal    func4c2c0 [$8004c2c0]
+
+                            pointer_to_text = w[SP + 10];
+
+                            if( h[8007b942] < w[SP + 14] )
+                            {
+                                [8007b942] = h(hu[SP + 14]);
+                            }
+                        }
+                        else
+                        {
+                            V1 = bu[pointer_to_text];
+                            pointer_to_text = pointer_to_text +1;
+                            if( V1 != ff )
+                            {
+                                loop4e6d0:	; 8004E6D0
+                                    V1 = bu[pointer_to_text];
+                                    pointer_to_text = pointer_to_text + 1;
+                                8004E6E0	bne    v1, ff, loop4e6d0 [$8004e6d0]
+                            }
+                        }
+
+                        [SP + 14] = w(hu[pointer_to_text + 0]);
+                        pointer_to_text = pointer_to_text + 2;
+
+                        A0 = w[SP + 14];
+                    8004E718	bne    a0, ffff, loop4e648 [$8004e648]
+                }
+            }
+            break;
+
+            default:
+            {
+                return 8007b940;
+            }
         }
-
-        V0 = w[80011f1c + V1 * 4];
-
-        8004E3C4	jr     v0 
-
-        C8E40480 03
-        28E70480 04
-        28E70480 05
-        28E70480 06
-        CCE30480 07
-        28E70480 08
-        28E70480 09
-        28E70480 0a
-        F4E50480 0b
-        28E70480 0c
-        10E60480 0d
-        28E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048004E6048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048028E7048004E4048014E5048014E5048014E5048014E5048014E5048014E5048028E7048028E7048014E5048014E5048014E5048014E5048014E5048028E7048028E7048028E50480
-
-        8004E3CC	lw     v1, $0010(sp)
-        [8007b960] = w(-1);
-        8004E3D8	lbu    a0, $0000(v1)
-        8004E3DC	addiu  v0, v1, $0001
-        8004E3E0	sw     v0, $0010(sp)
-        [8007b95c] = w(A0);
-        8004E3E8	lbu    v0, $0001(v1)
-        8004E3EC	addiu  v1, v1, $0002
-        8004E3F0	sw     v1, $0010(sp)
-        8004E3F4	lui    v1, $8008
-        8004E3F8	addiu  v0, v0, $ffff (=-$1)
-        8004E3FC	j      L4e72c [$8004e72c]
-        8004E400	sw     v0, $b96c(v1)
-        8004E404	lui    v0, $8008
-        8004E408	lw     v1, $b974(v0)
-        8004E40C	lw     v0, $0010(sp)
-        [8007b960] = w(V1);
-        8004E414	lbu    a1, $0000(v0)
-        8004E418	addu   a2, v1, zero
-        8004E41C	beq    a1, zero, L4e440 [$8004e440]
-        8004E420	addiu  v1, a1, $ffff (=-$1)
-        8004E424	addiu  a0, zero, $ffff (=-$1)
-
-        loop4e428:	; 8004E428
-            8004E428	xori   v0, a2, $0001
-            8004E42C	andi   v0, v0, $0001
-            8004E430	subu   a1, a1, v0
-            8004E43C	sra    a2, a2, $01
-            8004E434	addiu  v1, v1, $ffff (=-$1)
-        8004E438	bne    v1, a0, loop4e428 [$8004e428]
-
-        L4e440:	; 8004E440
-        A2 = w[8007b960];
-        8004E444	lw     v0, $0010(sp)
-        [8007b95c] = w(A1);
-        8004E44C	addu   a0, v0, zero
-        8004E450	lbu    v1, $0000(v0)
-        8004E454	addiu  v0, a0, $0001
-        8004E458	sw     v0, $0010(sp)
-        8004E45C	subu   v1, v1, a1
-        8004E460	addiu  a1, zero, $ffff (=-$1)
-        8004E464	sll    v0, v1, $03
-        8004E468	subu   v0, v0, v1
-        V1 = bu[8007b949];
-        8004E470	sll    v0, v0, $01
-        8004E474	subu   v1, v1, v0
-        [8007b949] = b(V1);
-        8004E47C	lbu    v1, $0001(a0)
-        8004E480	addiu  a0, a0, $0002
-        8004E484	addu   v1, v1, a1
-        8004E488	beq    v1, a1, L4e4a8 [$8004e4a8]
-        8004E48C	sw     a0, $0010(sp)
-        8004E490	addu   a0, a1, zero
-
-        loop4e494:	; 8004E494
-            8004E494	andi   v0, a2, $0001
-            8004E498	addu   a1, a1, v0
-            8004E49C	addiu  v1, v1, $ffff (=-$1)
-            8004E4A4	sra    a2, a2, $01
-        8004E4A0	bne    v1, a0, loop4e494 [$8004e494]
-
-        L4e4a8:	; 8004E4A8
-        V1 = w[8007b95c];
-        8004E4AC	nop
-        8004E4B0	slt    v0, a1, v1
-        if (V0 == 0)
-        {
-            8004E4BC	addiu  a1, v1, $ffff (=-$1)
-        }
-
-        8004E4B8	lui    v0, $8008
-        8004E4C0	j      L4e72c [$8004e72c]
-        8004E4C4	sw     a1, $b96c(v0)
-        8004E4C8	lw     v0, $0010(sp)
-        8004E4CC	nop
-        8004E4D0	lbu    a0, $0000(v0)
-        8004E4D4	addiu  a1, v0, $0001
-        8004E4D8	sw     a1, $0010(sp)
-        [8007b940] = h(A0);
-        8004E4E0	lbu    v1, $0001(v0)
-        8004E4E4	addiu  v0, v0, $0002
-        8004E4E8	sw     v0, $0010(sp)
-        8004E4EC	sll    v1, v1, $08
-        8004E4F0	or     a0, a0, v1
-        [8007b940] = h(A0);
-        8004E4F8	lbu    v1, $0001(a1)
-        8004E4FC	addiu  v0, v0, $0001
-        8004E500	sw     v0, $0010(sp)
-        8004E504	addiu  v0, zero, $00ff
-        [8007b94a] = b(V0);
-        [8007b948] = b(V1);
-        8004E50C	j      L4e72c [$8004e72c]
-
-        8004E514	lw     v0, $0010(sp)
-        8004E518	nop
-        8004E51C	lbu    v0, $ffff(v0)
-        [8007b94a] = b(V0);
-        8004E520	j      L4e72c [$8004e72c]
-
-        8004E528	lw     v0, $0010(sp)
-        8004E52C	nop
-        8004E530	lbu    v0, $0000(v0)
-        8004E534	nop
-        8004E538	sw     v0, $0000(s4)
-        8004E53C	lw     v1, $0010(sp)
-        8004E540	nop
-        8004E544	addiu  v0, v1, $0001
-        8004E548	sw     v0, $0010(sp)
-        8004E54C	lb     v0, $0001(v1)
-        8004E550	lw     v1, $0000(s4)
-        8004E554	sll    v0, v0, $08
-        8004E558	or     v1, v1, v0
-        8004E55C	sw     v1, $0000(s4)
-        8004E560	lw     v1, $0010(sp)
-        8004E564	nop
-        8004E568	addiu  v0, v1, $0001
-        8004E56C	sw     v0, $0010(sp)
-        8004E570	lbu    v0, $0001(v1)
-        8004E574	nop
-        8004E578	sw     v0, $0000(s5)
-        8004E57C	lw     v1, $0010(sp)
-        8004E580	nop
-        8004E584	addiu  v0, v1, $0001
-        8004E588	sw     v0, $0010(sp)
-        8004E58C	lb     v0, $0001(v1)
-        8004E590	lw     v1, $0000(s5)
-        8004E594	sll    v0, v0, $08
-        8004E598	or     v1, v1, v0
-        8004E59C	sw     v1, $0000(s5)
-        8004E5A0	lw     v1, $0010(sp)
-        8004E5A4	nop
-        8004E5A8	addiu  v0, v1, $0001
-        8004E5AC	sw     v0, $0010(sp)
-        8004E5B0	lbu    v0, $0001(v1)
-        8004E5B4	nop
-        8004E5B8	sw     v0, $0000(s6)
-        8004E5BC	lw     v1, $0010(sp)
-        8004E5C0	nop
-        8004E5C4	addiu  v0, v1, $0001
-        8004E5C8	sw     v0, $0010(sp)
-        8004E5CC	lb     v0, $0001(v1)
-        8004E5D0	lw     v1, $0000(s6)
-        8004E5D4	sll    v0, v0, $08
-        8004E5D8	or     v1, v1, v0
-        8004E5DC	sw     v1, $0000(s6)
-        8004E5E0	lw     v0, $0010(sp)
-        8004E5E4	nop
-        8004E5E8	addiu  v0, v0, $0001
-        8004E5EC	j      L4e72c [$8004e72c]
-        8004E5F0	sw     v0, $0010(sp)
-        8004E5F4	lui    v1, $8008
-        8004E5F8	addiu  v0, zero, $0001
-        8004E5FC	j      L4e72c [$8004e72c]
-        8004E600	sw     v0, $bb90(v1)
-        8004E604	addiu  v0, zero, $0001
-        [8007b94b] = b(V0);
-        8004E608	j      L4e72c [$8004e72c]
-
-        8004E610	lw     v1, $0010(sp)
-        8004E614	nop
-        8004E618	lbu    a0, $0000(v1)
-        8004E61C	addiu  v0, v1, $0001
-        8004E620	sw     v0, $0010(sp)
-        8004E624	sw     a0, $0014(sp)
-        8004E628	lbu    v0, $0001(v1)
-        8004E62C	addiu  v1, v1, $0002
-        8004E630	sw     v1, $0010(sp)
-        8004E634	sll    v0, v0, $08
-        8004E638	or     a0, a0, v0
-        8004E63C	ori    v0, zero, $ffff
-        8004E640	beq    a0, v0, L4e72c [$8004e72c]
-        8004E644	sw     a0, $0014(sp)
-
-        loop4e648:	; 8004E648
-        8004E648	lw     v1, $0014(sp)
-        8004E64C	nop
-        8004E650	andi   v0, v1, $0fff
-        8004E654	sra    v1, v1, $0c
-        8004E658	andi   v1, v1, $000f
-        8004E65C	beq    v1, zero, L4e67c [$8004e67c]
-        8004E660	sw     v0, $0014(sp)
-        V0 = w[8007b960];
-        8004E668	addiu  v1, v1, $ffff (=-$1)
-        8004E66C	srav   v0, v1, v0
-        8004E670	andi   v0, v0, $0001
-        8004E674	beq    v0, zero, L4e6ac [$8004e6ac]
-        8004E678	nop
-
-        L4e67c:	; 8004E67C
-        8004E67C	addiu  a0, sp, $0010
-        8004E680	jal    func4c2c0 [$8004c2c0]
-        8004E684	addiu  a1, sp, $0014
-        V0 = h[8007b942];
-        8004E68C	lw     v1, $0014(sp)
-        8004E690	nop
-        8004E694	slt    v0, v0, v1
-        8004E698	beq    v0, zero, L4e6e8 [$8004e6e8]
-        8004E69C	nop
-        8004E6A0	lhu    v0, $0014(sp)
-        [8007b942] = h(V0);
-        8004E6A4	j      L4e6e8 [$8004e6e8]
-
-        L4e6ac:	; 8004E6AC
-        8004E6AC	lw     v0, $0000(s1)
-        8004E6B0	nop
-        8004E6B4	lbu    v1, $0000(v0)
-        8004E6B8	addiu  v0, v0, $0001
-        8004E6BC	sw     v0, $0000(s1)
-        8004E6C0	addiu  v0, zero, $00ff
-        8004E6C4	beq    v1, v0, L4e6e8 [$8004e6e8]
-        8004E6C8	addiu  a0, sp, $0010
-        8004E6CC	addu   a1, v0, zero
-
-        loop4e6d0:	; 8004E6D0
-        8004E6D0	lw     v0, $0000(a0)
-        8004E6D4	nop
-        8004E6D8	lbu    v1, $0000(v0)
-        8004E6DC	addiu  v0, v0, $0001
-        8004E6E0	bne    v1, a1, loop4e6d0 [$8004e6d0]
-        8004E6E4	sw     v0, $0000(a0)
-
-        L4e6e8:	; 8004E6E8
-        8004E6E8	lw     v0, $0010(sp)
-        8004E6EC	nop
-        8004E6F0	lbu    a0, $0000(v0)
-        8004E6F4	addiu  v1, v0, $0001
-        8004E6F8	sw     v1, $0010(sp)
-        8004E6FC	sw     a0, $0014(sp)
-        8004E700	lbu    v1, $0001(v0)
-        8004E704	addiu  v0, v0, $0002
-        8004E708	sw     v0, $0010(sp)
-        8004E70C	ori    v0, zero, $ffff
-        8004E710	sll    v1, v1, $08
-        8004E714	or     a0, a0, v1
-        8004E718	bne    a0, v0, loop4e648 [$8004e648]
-        8004E71C	sw     a0, $0014(sp)
-        8004E720	j      L4e72c [$8004e72c]
-        8004E724	nop
-
-        L4e728:	; 8004E728
-        8004E728	addiu  s3, zero, $0001
-
-        L4e72c:	; 8004E72C
-    8004E72C	beq    s3, zero, L4e36c [$8004e36c]
+    8004E72C	beq    zero, zero, L4e36c [$8004e36c]
 }
-
-return 8007b940;
 ////////////////////////////////
 
 

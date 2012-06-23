@@ -22,8 +22,9 @@ public:
     MimFile( File* pFile, const u32 offset, const u32 length );
     MimFile( u8* pBuffer, const u32 offset, const u32 length );
     virtual ~MimFile();
-    Surface* GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const Ogre::String& type, const float r_mod, const float g_mod, const float b_mod );
-    void GetModifiedClut( ClutColor& clut, const Ogre::String& type, const float r_mod, const float g_mod, const float b_mod );
+    Surface* GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const int clut_start, const int clut_width, const Ogre::String& mod_type, const float mod_r, const float mod_g, const float mod_b );
+    void GetModifiedClut( ClutColor& clut, const Ogre::String& mod_type, const float mod_r, const float mod_g, const float mod_b );
+    //bool ClutCheck(const u16 page_x, const u16 page_y, const u16 clut_x, const u8 bpp, const u8 src_x, const u8 src_y, const u8 width, const u8 height, const u16 check_clut_x, const u16 check_clut_width );
 
 private:
     void InnerGetImage();

@@ -255,19 +255,12 @@ A1 = 8;
 read_memory_block_one_byte;
 addR = V0; // signed
 
-T1 = 0;
-A0 = S4;
-
-if( A0 != 0 )
+if( S4 != 0 )
 {
-    T5 = 80095de0 + src_id * 20;
-    T4 = 80095de0 + dst_id * 20;
-    T3 = A0;
+    T1 = 0;
 
     loopce32c:	; 800CE32C
-        A1 = T1 * 2;
-
-        T0 = hu[A1 + T5];
+        T0 = hu[80095de0 + src_id * 20 + T1 * 2];
 
         A2 = T0 & 1f + addR;
         if( A2 >= 20 )
@@ -299,18 +292,15 @@ if( A0 != 0 )
             A0 = 0;
         }
 
-        A1 = A1 + T4;
-        [A1] = h((T0 & 8000) | A2 | (A0 << a) | (V1 << 5));
+        [80095de0 + dst_id * 20 + T1 * 2] = h((T0 & 8000) | A2 | (A0 << a) | (V1 << 5));
 
-        V0 = h[A1];
-
-        if( V0 == 0 && T0 != 0 )
+        if( h[80095de0 + dst_id * 20 + T1 * 2] == 0 && T0 != 0 )
         {
-            [A1]= h(8000);
+            [80095de0 + dst_id * 20 + T1 * 2]= h(8000);
         }
 
         T1 = T1 + 1;
-        V0 = T1 < T3;
+        V0 = T1 < S4;
     800CE42C	bne    v0, zero, loopce32c [$800ce32c]
 }
 

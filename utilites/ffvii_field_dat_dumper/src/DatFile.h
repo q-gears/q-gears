@@ -10,29 +10,40 @@
 
 struct FieldKeyFrame
 {
+    FieldKeyFrame():
+        time( 0 ),
+        blank( false ),
+        animation_id( 0 ),
+        animation_frame( 0 ),
+        clut_y( -1 ),
+        clut_start( 0 ),
+        clut_width( 0 ),
+        mod_type( "add" ),
+        mod_r( 0 ),
+        mod_g( 0 ),
+        mod_b( 0 )
+    {
+    }
+
     float time;
     bool blank;
-    unsigned char animation_index;
 
-    Ogre::String type;
-    float r_mod;
-    float g_mod;
-    float b_mod;
-};
+    int animation_id;
+    int animation_frame;
 
-enum FiledAnimationType
-{
-    FAT_ANIMATION,
-    FAT_CLUT
+    int clut_y;
+    int clut_start;
+    int clut_width;
+    Ogre::String mod_type;
+    float mod_r;
+    float mod_g;
+    float mod_b;
 };
 
 struct FiledAnimation
 {
     Ogre::String name;
     float time;
-    FiledAnimationType type;
-    unsigned char animation;
-    unsigned char clut;
     std::vector< FieldKeyFrame > keyframes;
 };
 
@@ -45,6 +56,8 @@ struct Field
     std::vector< FiledAnimation > animations;
 };
 
+
+
 struct DatModelData
 {
     int face_id;
@@ -53,6 +66,8 @@ struct DatModelData
     int number_of_animation;
     int global_model_id;
 };
+
+
 
 struct SurfaceTexData
 {
@@ -63,24 +78,18 @@ struct SurfaceTexData
     u16 clut_y;
     u8 bpp;
 
-    Ogre::String type;
-    float r_mod;
-    float g_mod;
-    float b_mod;
+    int clut_start;
+    int clut_width;
+    Ogre::String mod_type;
+    float mod_r;
+    float mod_g;
+    float mod_b;
 };
 
 
 
 struct KeyFrame
 {
-    KeyFrame():
-        type( "" ),
-        r_mod( 1 ),
-        g_mod( 1 ),
-        b_mod( 1 )
-    {
-    }
-
     float time;
     u8 src_x;
     u8 src_y;
@@ -90,10 +99,12 @@ struct KeyFrame
     u8 page_x;
     u8 page_y;
 
-    Ogre::String type;
-    float r_mod;
-    float g_mod;
-    float b_mod;
+    int clut_start;
+    int clut_width;
+    Ogre::String mod_type;
+    float mod_r;
+    float mod_g;
+    float mod_b;
 };
 
 struct Animation
@@ -103,8 +114,16 @@ struct Animation
     std::vector< KeyFrame > keyframes;
 };
 
+
+
 struct Tile
 {
+    Tile():
+        animated( false )
+    {
+    }
+
+    bool animated;
     u8 background;
     s16 dest_x;
     s16 dest_y;
@@ -117,10 +136,11 @@ struct Tile
     u8 page_y;
     float depth;
     u8 blending;
-    u8 animation;
-    u8 animation_index;
+    u8 animation_id;
+    u8 animation_frame;
     std::vector< Animation > animations;
 };
+
 
 
 struct AddedTile
@@ -134,16 +154,19 @@ struct AddedTile
     u8 page_x;
     u8 page_y;
 
-    Ogre::String type;
-    float r_mod;
-    float g_mod;
-    float b_mod;
+    int clut_start;
+    int clut_width;
+    Ogre::String mod_type;
+    float mod_r;
+    float mod_g;
+    float mod_b;
 
     float x;
     float y;
     float width;
     float height;
 };
+
 
 
 class DatFile : public LzsFile
@@ -177,8 +200,9 @@ public:
     Ogre::String ArgumentString( int script, int number );
     Ogre::String OffsetString( int val );
 
+    bool TileCompare( const Tile& tile, const FieldKeyFrame& keyframe, MimFile& mim );
     void AddTile( const Tile& tile, MimFile& mim, Logger* export_text );
-    AddedTile AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, MimFile& mim, const Ogre::String& type, const float r_mod, const float g_mod, const float b_mod );
+    AddedTile AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const u16 clut_x, const u16 clut_y, const u8 bpp, const u8 page_x, const u8 page_y, MimFile& mim, const int clut_start, const int clut_width, const Ogre::String& mod_type, const float mod_r, const float mod_g, const float mod_b );
 
 private:
     std::vector< int > m_Dialogs;

@@ -24456,7 +24456,7 @@
 	"Event.h"
 	"Walkmesh.h"
 
-1338490350 m:\q-gears\src\core\background2d.h
+1338919848 m:\q-gears\src\core\background2d.h
 	<OgreHardwareVertexBuffer.h>
 	<OgreRenderQueueListener.h>
 	<OgreRoot.h>
@@ -25084,7 +25084,7 @@
 	<OgreScriptTranslator.h>
 	<OgreSingleton.h>
 
-1338744492 source:m:\q-gears\src\core\background2d.cpp
+1340277146 source:m:\q-gears\src\core\background2d.cpp
 	"Background2D.h"
 	<OgreHardwareBufferManager.h>
 	<OgreMaterialManager.h>
@@ -25094,7 +25094,7 @@
 	"Logger.h"
 	"Timer.h"
 
-1338494810 source:m:\q-gears\src\core\cameramanager.cpp
+1338830862 source:m:\q-gears\src\core\cameramanager.cpp
 	"CameraManager.h"
 	"CameraManagerCommands.h"
 	<OgreRenderWindow.h>
@@ -25252,7 +25252,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1338808288 source:m:\q-gears\src\core\scriptmanager.cpp
+1338834000 source:m:\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.h"
 	"ScriptManagerCommands.h"
@@ -25267,7 +25267,7 @@
 	"library/luabind/luabind.hpp"
 	"library/luabind/yield_policy.hpp"
 
-1338807248 m:\q-gears\src\core\scriptmanagerbinds.h
+1338917942 m:\q-gears\src\core\scriptmanagerbinds.h
 	"Console.h"
 	"Logger.h"
 	"Entity.h"
@@ -25370,7 +25370,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1338493682 source:m:\q-gears\src\core\xmlbackground2dfile.cpp
+1338829992 source:m:\q-gears\src\core\xmlbackground2dfile.cpp
 	"XmlBackground2DFile.h"
 	"Background2D.h"
 	"Background2DAnimation.h"
@@ -25421,7 +25421,7 @@
 	"Logger.h"
 	"UiManager.h"
 
-1332910952 source:m:\q-gears\src\core\xmlscreenfile.cpp
+1338810180 source:m:\q-gears\src\core\xmlscreenfile.cpp
 	"XmlScreenFile.h"
 	"Logger.h"
 	"ScriptManager.h"
@@ -27882,7 +27882,7 @@
 	"Background2D.h"
 	"Logger.h"
 
-1333816196 m:\q-gears\src\core\background2danimation.h
+1338917874 m:\q-gears\src\core\background2danimation.h
 	<OgreString.h>
 	<OgreVector2.h>
 	<vector>
