@@ -120,10 +120,16 @@ EntityManager::~EntityManager()
 void
 EntityManager::Input( const Event& event )
 {
+    m_Background2D.InputDebug( event );
+
+
+
     if( m_Paused == true )
     {
         return;
     }
+
+
 
     if( m_PlayerEntity != NULL && m_PlayerLock == false )
     {

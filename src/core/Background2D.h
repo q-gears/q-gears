@@ -29,6 +29,7 @@ public:
     Background2D();
     virtual ~Background2D();
 
+    void InputDebug( const Event& event );
     void Update();
     void UpdateDebug();
     void OnResize();
@@ -107,6 +108,7 @@ private:
     float                                 m_ScrollCurrentSeconds;
     std::vector< ScriptId >               m_ScrollSync;
     Ogre::Vector2                         m_Position;
+    Ogre::Vector2                         m_PositionReal;
 
     struct AnimationPlayed
     {

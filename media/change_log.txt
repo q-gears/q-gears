@@ -14,6 +14,7 @@ Q-Gears v0.22 (4th blow for a win) | 2012-09-??
 
 To Do
 ----------
+* [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 * [Content FFVII] Implement Model shadowing and related KAWAI used on phoenix chest.
 * [Content FFVII] Implement Eye blinking.
 * [Content FFVII] All FFVII fields maps from 1st mission until reactor blow must be fully playable.
@@ -27,18 +28,12 @@ To Do
 
 
 ================================================================================
-Q-Gears v0.21 (3rd run wild) | 2012-06-??
+Q-Gears v0.21 (3rd run wild) | 2012-06-25
 --------------------------------------------------------------------------------
-
-To Do
-----------
-* [Background] Free 2d Scroll.
-* [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
-
-
 
 2012-06-24
 ----------
+* [Background] Add console command "background2d_manual" to enable manual background scrolling. [Akari]
 * [Script] System, Entity and Ui script debug can be shown separately. "debug_script" now workd as bit flags 0x1, 0x2, 0x4. [Akari]
 * [Script] Fix ScriptEntity was updating even if EntityManager was paused. [Akari]
 * [Script] Entity, System and Ui scripts has been separated internaly to better handle updates and debug. [Akari]

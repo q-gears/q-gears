@@ -13,8 +13,7 @@
 
 ConfigVar cv_debug_background2d( "debug_background2d", "Draw background debug info", "false" );
 ConfigVar cv_show_background2d( "show_background2d", "Draw background", "true" );
-ConfigVar cv_background2d_range( "background2d_range", "Use range limit when scroll background", "true" );
-
+ConfigVar cv_background2d_manual( "background2d_manual", "Manual scrolling for 2d background", "false" );
 
 
 Background2D::Background2D():
@@ -32,7 +31,8 @@ Background2D::Background2D():
     m_ScrollType( Background2D::NONE ),
     m_ScrollSeconds( 0 ),
     m_ScrollCurrentSeconds( 0 ),
-    m_Position( Ogre::Vector2::ZERO )
+    m_Position( Ogre::Vector2::ZERO ),
+    m_PositionReal( Ogre::Vector2::ZERO )
 {
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
@@ -84,6 +84,34 @@ Background2D::~Background2D()
     }
 
     DestroyVertexBuffers();
+}
+
+
+
+void
+Background2D::InputDebug( const Event& event )
+{
+    if( cv_background2d_manual.GetB() == true )
+    {
+        if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_W )
+        {
+            m_PositionReal.y += 2;
+        }
+        else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_A )
+        {
+            m_PositionReal.x += 2;
+        }
+        else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_S )
+        {
+            m_PositionReal.y -= 2;
+        }
+        else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_D )
+        {
+            m_PositionReal.x -= 2;
+        }
+
+        CameraManager::getSingleton().Set2DScroll( m_PositionReal );
+    }
 }
 
 
@@ -155,6 +183,15 @@ Background2D::Update()
 void
 Background2D::UpdateDebug()
 {
+    if( m_Position != m_PositionReal )
+    {
+        if( cv_background2d_manual.GetB() != true )
+        {
+            m_PositionReal = m_Position;
+            CameraManager::getSingleton().Set2DScroll( m_Position );
+        }
+    }
+
     if( cv_debug_background2d.GetB() == true )
     {
         DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
@@ -253,6 +290,8 @@ Background2D::Clear()
     m_ScrollPositionEnd = Ogre::Vector2::ZERO;
     m_ScrollSeconds = 0;
     m_ScrollCurrentSeconds = 0;
+    m_Position = Ogre::Vector2::ZERO;
+    m_PositionReal = Ogre::Vector2::ZERO;
     UnsetScroll();
 
     for( unsigned int i = 0; i < m_Animations.size(); ++i )
@@ -397,17 +436,18 @@ Background2D::SetScroll( const Ogre::Vector2& position )
 {
     m_Position = position;
 
-    if( cv_background2d_range.GetB() == true )
-    {
-        float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth() / 2.0f;
-        float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight() / 2.0f;
-        m_Position.x = ( m_Position.x + scr_width > m_RangeMaxX ) ? m_RangeMaxX - scr_width : m_Position.x;
-        m_Position.x = ( m_Position.x - scr_width < m_RangeMinX ) ? m_RangeMinX + scr_width : m_Position.x;
-        m_Position.y = ( m_Position.y + scr_height > m_RangeMaxY ) ? m_RangeMaxY - scr_height : m_Position.y;
-        m_Position.y = ( m_Position.y - scr_height < m_RangeMinY ) ? m_RangeMinY + scr_height : m_Position.y;
-    }
+    float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth() / 2.0f;
+    float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight() / 2.0f;
+    m_Position.x = ( m_Position.x + scr_width > m_RangeMaxX ) ? m_RangeMaxX - scr_width : m_Position.x;
+    m_Position.x = ( m_Position.x - scr_width < m_RangeMinX ) ? m_RangeMinX + scr_width : m_Position.x;
+    m_Position.y = ( m_Position.y + scr_height > m_RangeMaxY ) ? m_RangeMaxY - scr_height : m_Position.y;
+    m_Position.y = ( m_Position.y - scr_height < m_RangeMinY ) ? m_RangeMinY + scr_height : m_Position.y;
 
-    CameraManager::getSingleton().Set2DScroll( m_Position );
+    if( cv_background2d_manual.GetB() != true )
+    {
+        m_PositionReal = m_Position;
+        CameraManager::getSingleton().Set2DScroll( m_PositionReal );
+    }
 }
 
 
@@ -726,7 +766,7 @@ Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& in
         float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
         float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
         Ogre::Matrix4 view;
-        view.makeTrans( Ogre::Vector3( m_Position.x * 2 / width, -m_Position.y * 2 / height, 0 ) );
+        view.makeTrans( Ogre::Vector3( m_PositionReal.x * 2 / width, -m_PositionReal.y * 2 / height, 0 ) );
         m_RenderSystem->_setViewMatrix( view );
 
         if( m_AlphaRenderOp.vertexData->vertexCount != 0 )
