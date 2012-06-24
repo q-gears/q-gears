@@ -11,7 +11,7 @@ UiContainer.Idol = {
 
 
     on_start = function( self )
-        --script:request( "UiContainer.Idol", "show", 0 )
+        --script:request( Script.UI, "Idol", "show", 0 )
 
         for i = 1, self.picture_number, 1 do
             self.picture_state[ i ] = {}
@@ -40,8 +40,8 @@ UiContainer.Idol = {
     on_button = function( self, button, event )
         if ui_manager:get_widget( "Idol" ):is_visible() ~= false then
             if button == "Z" and event == "Press" then
-                script:request_end_sync( "UiContainer.Idol", "hide", 0 )
-                script:request_end_sync( "UiContainer.BeginMenu", "show", 0 )
+                script:request_end_sync( Script.UI, "Idol", "hide", 0 )
+                script:request_end_sync( Script.UI, "BeginMenu", "show", 0 )
             elseif button == "Left" then
                 if self.picture_current < self.picture_number then
 

@@ -23,7 +23,7 @@ UiContainer.MainMenu = {
             local location    = ui_manager:get_widget( "MainMenu.Container.Location" )
 
             if button == "Z" and event == "Press" then
-                script:request_end_sync( "UiContainer.MainMenu", "hide", 0 )
+                script:request_end_sync( Script.UI, "MainMenu", "hide", 0 )
             elseif button == "Down" then
                 self.position = self.position + 1
                 if self.position > self.position_total then
@@ -39,7 +39,7 @@ UiContainer.MainMenu = {
             end
         elseif MenuSettings.available == true then
             if button == "S" and event == "Press" then
-                script:request_end_sync( "UiContainer.MainMenu", "show", 0 )
+                script:request_end_sync( Script.UI, "MainMenu", "show", 0 )
             end
         end
 

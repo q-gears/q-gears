@@ -69,11 +69,18 @@ struct ScriptEntity
 class ScriptManager : public Ogre::Singleton< ScriptManager >
 {
 public:
+    enum Type
+    {
+        SYSTEM,
+        ENTITY,
+        UI
+    };
+
     ScriptManager();
     virtual ~ScriptManager();
 
     void Input( const Event& event );
-    void Update();
+    void Update( const Type type );
 
     void RunString( const Ogre::String& lua );
     void RunFile( const Ogre::String& file );
@@ -82,21 +89,21 @@ public:
     void InitBinds();
     void InitCmd();
 
-    void AddEntity( const Ogre::String& entity_name );
-    void RemoveEntity( const Ogre::String& entity_name );
+    void AddEntity( const Type type, const Ogre::String& entity_name );
+    void RemoveEntity( const Type type, const Ogre::String& entity_name );
     void AddEntityScript( const Ogre::String& entity_name, const Ogre::String& function_name, int priority );
     void RemoveEntityTopScript( ScriptEntity& entity );
 
     luabind::object GetTableByEntityName( const Ogre::String& name, lua_State* state ) const;
     QueueScript* GetScriptByScriptId( const ScriptId& script ) const;
-    ScriptEntity* GetScriptEntityByName( const Ogre::String& name ) const;
+    ScriptEntity* GetScriptEntityByName( const Type type, const Ogre::String& entity_name ) const;
     const ScriptId GetCurrentScriptId() const;
     void ContinueScriptExecution( const ScriptId& script );
 
     int ScriptWait( const float seconds );
-    void ScriptRequest( const char* entity, const char* function, const int priority );
-    int ScriptRequestStartSync( const char* entity, const char* function, const int priority );
-    int ScriptRequestEndSync( const char* entity, const char* function, const int priority );
+    void ScriptRequest( const Type type, const char* entity, const char* function, const int priority );
+    int ScriptRequestStartSync( const Type type, const char* entity, const char* function, const int priority );
+    int ScriptRequestEndSync( const Type type, const char* entity, const char* function, const int priority );
     bool ScriptRequest( ScriptEntity* script_entity, const Ogre::String& function, const int priority, const Ogre::String& argument1, const Ogre::String& argument2, bool start_sync, bool end_sync );
 
     void AddValueToStack( const float value );
@@ -104,7 +111,14 @@ public:
 private:
     lua_State* m_LuaState;
 
-    std::vector< ScriptEntity > m_ScriptEntity;
+    Ogre::String m_SystemTableName;
+    Ogre::String m_EntityTableName;
+    Ogre::String m_UiTableName;
+
+    std::vector< ScriptEntity > m_SystemScriptEntity;
+    std::vector< ScriptEntity > m_EntityScriptEntity;
+    std::vector< ScriptEntity > m_UiScriptEntity;
+
     ScriptId m_CurrentScriptId;
 };
 

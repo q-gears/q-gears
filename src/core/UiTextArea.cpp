@@ -121,11 +121,11 @@ UiTextArea::SetFont( const Ogre::String& font )
 
     if( m_Font == NULL )
     {
-        LOG_ERROR( "Could not find font \"" + font + "\" for \"" + m_UiTableName + "." + m_PathName + "\"." );
+        LOG_ERROR( "Could not find font \"" + font + "\" for \"" + m_PathName + "\"." );
         return;
     }
 
-    m_Material = Ogre::MaterialManager::getSingleton().create( m_UiTableName + "." + m_PathName, "General" );
+    m_Material = Ogre::MaterialManager::getSingleton().create( "UiMaterials." + m_PathName, "General" );
     Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
     pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
     pass->setCullingMode( Ogre::CULL_NONE );
@@ -149,13 +149,13 @@ UiTextArea::UpdateGeometry()
 {
     if( m_Font == NULL )
     {
-        LOG_ERROR( "Font for \"" + m_UiTableName + "." + m_PathName + "\" if not set." );
+        LOG_ERROR( "Font for \"" + m_PathName + "\" if not set." );
         return;
     }
 
     if( m_Text.size() > m_MaxLetters )
     {
-        LOG_ERROR( "Max number of text reached in \"" + m_UiTableName + "." + m_PathName + "\". Can't render text \"" + m_Text + "\". Max number of letters is " + Ogre::StringConverter::toString( m_MaxLetters ) + "." );
+        LOG_ERROR( "Max number of text reached in \"" + m_PathName + "\". Can't render text \"" + m_Text + "\". Max number of letters is " + Ogre::StringConverter::toString( m_MaxLetters ) + "." );
         return;
     }
 

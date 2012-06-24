@@ -112,7 +112,7 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
 
     Console::getSingleton().Update();
 
-    ScriptManager::getSingleton().Update();
+    ScriptManager::getSingleton().Update( ScriptManager::SYSTEM );
     UiManager::getSingleton().Update();
     CameraManager::getSingleton().Update();
     EntityManager::getSingleton().Update();

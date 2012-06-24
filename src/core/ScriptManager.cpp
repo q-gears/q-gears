@@ -34,7 +34,10 @@ template<>ScriptManager *Ogre::Singleton< ScriptManager >::ms_Singleton = NULL;
 
 
 
-ScriptManager::ScriptManager()
+ScriptManager::ScriptManager():
+    m_SystemTableName( "System" ),
+    m_EntityTableName( "EntityContainer" ),
+    m_UiTableName( "UiContainer" )
 {
     LOG_TRIVIAL( "ScriptManager started." );
 
@@ -49,7 +52,7 @@ ScriptManager::ScriptManager()
     InitCmd();
 
     RunFile( "system/system.lua" );
-    AddEntity( "System.MapChanger" );
+    AddEntity( ScriptManager::SYSTEM, "MapChanger" );
 }
 
 
@@ -79,7 +82,7 @@ ScriptManager::Input( const Event& event )
                                         event.param1 == OIS::KC_Z
                                       ) )
     {
-        for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
+        for( size_t i = 0; i < m_UiScriptEntity.size(); ++i )
         {
             Ogre::String argument2 = "";
             if( event.type == ET_KEY_PRESS )
@@ -90,7 +93,7 @@ ScriptManager::Input( const Event& event )
             {
                 argument2 = "Repeat";
             }
-            ScriptRequest( &m_ScriptEntity[ i ], "on_button", 100, KeyToString( ( OIS::KeyCode )event.param1 ), argument2, false, false );
+            ScriptRequest( &m_UiScriptEntity[ i ], "on_button", 100, KeyToString( ( OIS::KeyCode )event.param1 ), argument2, false, false );
         }
     }
 }
@@ -98,17 +101,30 @@ ScriptManager::Input( const Event& event )
 
 
 void
-ScriptManager::Update()
+ScriptManager::Update( const ScriptManager::Type type )
 {
-    // resort all queue. This will give us correct info for debug draw.
-    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
+    // select requested type
+    std::vector< ScriptEntity >* se_pointer = NULL;
+    switch( type )
     {
-        if( m_ScriptEntity[ i ].queue.size() > 0 )
+        case ScriptManager::SYSTEM: se_pointer = &m_SystemScriptEntity; break;
+        case ScriptManager::ENTITY: se_pointer = &m_EntityScriptEntity; break;
+        case ScriptManager::UI: se_pointer = &m_UiScriptEntity; break;
+        default: return;
+    }
+
+
+
+    // resort all queue. This will give us correct info for debug draw.
+    for( unsigned int i = 0; i < ( *se_pointer ).size(); ++i )
+    {
+        if( ( *se_pointer )[ i ].queue.size() > 0 )
         {
-            if( m_ScriptEntity[ i ].resort == true )
+
+            if( ( *se_pointer )[ i ].resort == true )
             {
-                std::stable_sort( m_ScriptEntity[ i ].queue.begin(), m_ScriptEntity[ i ].queue.end(), priority_queue_compare );
-                m_ScriptEntity[ i ].resort = false;
+                std::stable_sort( ( *se_pointer )[ i ].queue.begin(), ( *se_pointer )[ i ].queue.end(), priority_queue_compare );
+                ( *se_pointer )[ i ].resort = false;
             }
         }
     }
@@ -123,11 +139,11 @@ ScriptManager::Update()
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.8, 0.8, 0, 1 ) );
         DEBUG_DRAW.Text( 10, 34, "Script entity:" );
 
-        for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
+        for( unsigned int i = 0; i < ( *se_pointer ).size(); ++i )
         {
-            Ogre::String text = m_ScriptEntity[ i ].name;
+            Ogre::String text = ( *se_pointer )[ i ].name;
 
-            int queue_size = m_ScriptEntity[ i ].queue.size();
+            unsigned int queue_size = ( *se_pointer )[ i ].queue.size();
             if( queue_size > 0 )
             {
                 text += ": ";
@@ -137,19 +153,19 @@ ScriptManager::Update()
             {
                 DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.5, 0.5, 0.5, 1 ) );
             }
-            for( int j = 0; j < queue_size; ++j )
+            for( unsigned int j = 0; j < queue_size; ++j )
             {
                 if( j > 0 )
                 {
                     text += ", ";
                 }
-                text += "(" + Ogre::StringConverter::toString( m_ScriptEntity[ i ].queue[ j ].priority ) + ")" + m_ScriptEntity[ i ].queue[ j ].function;
+                text += "(" + Ogre::StringConverter::toString( ( *se_pointer )[ i ].queue[ j ].priority ) + ")" + ( *se_pointer )[ i ].queue[ j ].function;
 
-                if( m_ScriptEntity[ i ].queue[ j ].wait == true )
+                if( ( *se_pointer )[ i ].queue[ j ].wait == true )
                 {
-                    if( m_ScriptEntity[ i ].queue[ j ].seconds_to_wait != 0 )
+                    if( ( *se_pointer )[ i ].queue[ j ].seconds_to_wait != 0 )
                     {
-                        text += ":wait( " + Ogre::StringConverter::toString( m_ScriptEntity[ i ].queue[ j ].seconds_to_wait ) + " )";
+                        text += ":wait( " + Ogre::StringConverter::toString( ( *se_pointer )[ i ].queue[ j ].seconds_to_wait ) + " )";
                     }
                 }
             }
@@ -160,32 +176,26 @@ ScriptManager::Update()
 
 
 
-    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
+    for( unsigned int i = 0; i < ( *se_pointer ).size(); ++i )
     {
-        if( m_ScriptEntity[ i ].queue.size() > 0 )
+        if( ( *se_pointer )[ i ].queue.size() > 0 )
         {
-            m_CurrentScriptId.entity = m_ScriptEntity[ i ].name;
-            m_CurrentScriptId.function = m_ScriptEntity[ i ].queue[ 0 ].function;
+            m_CurrentScriptId.entity = ( *se_pointer )[ i ].name;
+            m_CurrentScriptId.function = ( *se_pointer )[ i ].queue[ 0 ].function;
 
-
-
-            if( m_ScriptEntity[ i ].queue[ 0 ].wait == false )
+            if( ( *se_pointer )[ i ].queue[ 0 ].wait == false )
             {
-                if( m_ScriptEntity[ i ].queue[ 0 ].yield == false)
+                if( ( *se_pointer )[ i ].queue[ 0 ].yield == false)
                 {
-                    LOG_TRIVIAL( "[SCRIPT] Start script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "'." );
+                    LOG_TRIVIAL( "[SCRIPT] Start script \"" + m_CurrentScriptId.function + "\" for entity \"" + m_CurrentScriptId.entity + "\"." );
 
-                    if( m_ScriptEntity[ i ].queue[ 0 ].paused_script_start.entity != "" )
+                    if( ( *se_pointer )[ i ].queue[ 0 ].paused_script_start.entity != "" )
                     {
-                        ContinueScriptExecution( m_ScriptEntity[ i ].queue[ 0 ].paused_script_start );
-                        m_ScriptEntity[ i ].queue[ 0 ].paused_script_start.entity = "";
+                        ContinueScriptExecution( ( *se_pointer )[ i ].queue[ 0 ].paused_script_start );
+                        ( *se_pointer )[ i ].queue[ 0 ].paused_script_start.entity = "";
                     }
 
-
-
-                    luabind::object table = GetTableByEntityName( m_CurrentScriptId.entity, m_ScriptEntity[ i ].queue[ 0 ].state );
-
-
+                    luabind::object table = GetTableByEntityName( m_CurrentScriptId.entity, ( *se_pointer )[ i ].queue[ 0 ].state );
 
                     if( table.is_valid() &&
                         luabind::type( table ) == LUA_TTABLE &&
@@ -195,7 +205,7 @@ ScriptManager::Update()
 
                         try
                         {
-                            ret = luabind::resume_function< int >( table[ m_CurrentScriptId.function ], table, m_ScriptEntity[ i ].queue[ 0 ].argument1.c_str(), m_ScriptEntity[ i ].queue[ 0 ].argument2.c_str() );
+                            ret = luabind::resume_function< int >( table[ m_CurrentScriptId.function ], table, ( *se_pointer )[ i ].queue[ 0 ].argument1.c_str(), ( *se_pointer )[ i ].queue[ 0 ].argument2.c_str() );
                         }
                         catch( luabind::error& e )
                         {
@@ -205,39 +215,39 @@ ScriptManager::Update()
 
                         if( ret == 0 )
                         {
-                            LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' finished." );
-                            if( m_ScriptEntity[ i ].queue[ 0 ].function != "on_update" )
+                            LOG_TRIVIAL( "[SCRIPT] Script \"" + m_CurrentScriptId.function + "\" for entity \"" + m_CurrentScriptId.entity + "\" finished." );
+                            if( ( *se_pointer )[ i ].queue[ 0 ].function != "on_update" )
                             {
-                                RemoveEntityTopScript( m_ScriptEntity[ i ] );
+                                RemoveEntityTopScript( ( *se_pointer )[ i ] );
                             }
                         }
                         else if( ret == 1 )
                         {
-                            LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' not paused and will be continued next cycle." );
-                            m_ScriptEntity[ i ].queue[ 0 ].yield = true;
+                            LOG_TRIVIAL( "[SCRIPT] Script \"" + m_CurrentScriptId.function + "\" for entity \"" + m_CurrentScriptId.entity + "\" not paused and will be continued next cycle." );
+                            ( *se_pointer )[ i ].queue[ 0 ].yield = true;
                         }
                         else
                         {
-                            LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' not finished yet." );
-                            m_ScriptEntity[ i ].queue[ 0 ].yield = true;
-                            m_ScriptEntity[ i ].queue[ 0 ].wait = true;
+                            LOG_TRIVIAL( "[SCRIPT] Script \"" + m_CurrentScriptId.function + "\" for entity \"" + m_CurrentScriptId.entity + "\" not finished yet." );
+                            ( *se_pointer )[ i ].queue[ 0 ].yield = true;
+                            ( *se_pointer )[ i ].queue[ 0 ].wait = true;
                         }
                     }
                     else
                     {
-                        LOG_WARNING( "Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' doesn't exist." );
-                        RemoveEntityTopScript( m_ScriptEntity[ i ] );
+                        LOG_WARNING( "Script \"" + m_CurrentScriptId.function + "\" for entity \"" + m_CurrentScriptId.entity + "\" doesn't exist." );
+                        RemoveEntityTopScript( ( *se_pointer )[ i ] );
                     }
                 }
                 else
                 {
-                    LOG_TRIVIAL( "[SCRIPT] Continue function '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "'." );
+                    LOG_TRIVIAL( "[SCRIPT] Continue function \"" + m_CurrentScriptId.function + "\" for entity \"" + m_CurrentScriptId.entity + "\"." );
 
                     int ret = 0;
 
                     try
                     {
-                        ret = luabind::resume< int >( m_ScriptEntity[ i ].queue[ 0 ].state );
+                        ret = luabind::resume< int >( ( *se_pointer )[ i ].queue[ 0 ].state );
                     }
                     catch( luabind::error& e )
                     {
@@ -247,35 +257,35 @@ ScriptManager::Update()
 
                     if( ret == 0 ) // finished
                     {
-                        LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' finished." );
+                        LOG_TRIVIAL( "[SCRIPT] Script \"" + m_CurrentScriptId.function + "\" for entity \"" + m_CurrentScriptId.entity + "\" finished." );
 
                         // stop yield for on_update
-                        m_ScriptEntity[ i ].queue[ 0 ].yield = false;
+                        ( *se_pointer )[ i ].queue[ 0 ].yield = false;
 
-                        if( m_ScriptEntity[ i ].queue[ 0 ].function != "on_update" )
+                        if( ( *se_pointer )[ i ].queue[ 0 ].function != "on_update" )
                         {
-                            RemoveEntityTopScript( m_ScriptEntity[ i ] );
+                            RemoveEntityTopScript( ( *se_pointer )[ i ] );
                         }
                     }
                     else if (ret == 1)
                     {
-                        LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' not paused and will be continued next cycle." );
+                        LOG_TRIVIAL( "[SCRIPT] Script \"" + m_CurrentScriptId.function + "\"for entity \"" + m_CurrentScriptId.entity + "\" not paused and will be continued next cycle." );
                     }
                     else
                     {
-                        LOG_TRIVIAL( "[SCRIPT] Script '" + m_CurrentScriptId.function + "' for entity '" + m_CurrentScriptId.entity + "' not finished yet." );
-                        m_ScriptEntity[ i ].queue[ 0 ].wait = true;
+                        LOG_TRIVIAL( "[SCRIPT] Script \"" + m_CurrentScriptId.function + "\" for entity \"" + m_CurrentScriptId.entity + "\" not finished yet." );
+                        ( *se_pointer )[ i ].queue[ 0 ].wait = true;
                     }
                 }
             }
-            else if( m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait > 0 )
+            else if( ( *se_pointer )[ i ].queue[ 0 ].seconds_to_wait > 0 )
             {
-                m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait -= Timer::getSingleton().GetGameTimeDelta();
-                m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait = ( m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait < 0 ) ? 0 : m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait;
+                ( *se_pointer )[ i ].queue[ 0 ].seconds_to_wait -= Timer::getSingleton().GetGameTimeDelta();
+                ( *se_pointer )[ i ].queue[ 0 ].seconds_to_wait = ( ( *se_pointer )[ i ].queue[ 0 ].seconds_to_wait < 0 ) ? 0 : ( *se_pointer )[ i ].queue[ 0 ].seconds_to_wait;
 
-                if( m_ScriptEntity[ i ].queue[ 0 ].seconds_to_wait == 0 )
+                if( ( *se_pointer )[ i ].queue[ 0 ].seconds_to_wait == 0 )
                 {
-                    m_ScriptEntity[ i ].queue[ 0 ].wait = false;
+                    ( *se_pointer )[ i ].queue[ 0 ].wait = false;
                 }
             }
         }
@@ -309,22 +319,33 @@ ScriptManager::RunFile( const Ogre::String& file )
 
 
 void
-ScriptManager::AddEntity( const Ogre::String& entity_name )
+ScriptManager::AddEntity( const ScriptManager::Type type, const Ogre::String& entity_name )
 {
-    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
+    // select requested type
+    std::vector< ScriptEntity >* se_pointer = NULL;
+    Ogre::String name = "";
+    switch( type )
     {
-        if( m_ScriptEntity[ i ].name == entity_name )
+        case ScriptManager::SYSTEM: se_pointer = &m_SystemScriptEntity; name = m_SystemTableName + "." + entity_name; break;
+        case ScriptManager::ENTITY: se_pointer = &m_EntityScriptEntity; name = m_EntityTableName + "." + entity_name; break;
+        case ScriptManager::UI: se_pointer = &m_UiScriptEntity; name = m_UiTableName + "." + entity_name; break;
+        default: return;
+    }
+
+    for( unsigned int i = 0; i < ( *se_pointer ).size(); ++i )
+    {
+        if( ( *se_pointer )[ i ].name == name )
         {
-            LOG_ERROR( "Script entity \"" + entity_name + "\" already exist in script manager." );
+            LOG_ERROR( "Script entity \"" + name + "\" already exist in script manager." );
             return;
         }
     }
 
-    luabind::object table = GetTableByEntityName( entity_name, m_LuaState );
+    luabind::object table = GetTableByEntityName( name, m_LuaState );
     if( table.is_valid() && luabind::type( table ) == LUA_TTABLE )
     {
         ScriptEntity script_entity;
-        script_entity.name = entity_name;
+        script_entity.name = name;
 
         // check "on_start" script
         if( luabind::type( table[ "on_start" ] ) == LUA_TFUNCTION )
@@ -356,25 +377,36 @@ ScriptManager::AddEntity( const Ogre::String& entity_name )
             script_entity.queue.push_back( script );
         }
 
-        m_ScriptEntity.push_back( script_entity );
+        ( *se_pointer ).push_back( script_entity );
     }
 }
 
 
 
 void
-ScriptManager::RemoveEntity( const Ogre::String& entity_name )
+ScriptManager::RemoveEntity( const ScriptManager::Type type, const Ogre::String& entity_name )
 {
-    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
+    // select requested type
+    std::vector< ScriptEntity >* se_pointer = NULL;
+    Ogre::String name = "";
+    switch( type )
     {
-        if( m_ScriptEntity[ i ].name == entity_name )
+        case ScriptManager::SYSTEM: se_pointer = &m_SystemScriptEntity; name = m_SystemTableName + "." + entity_name; break;
+        case ScriptManager::ENTITY: se_pointer = &m_EntityScriptEntity; name = m_EntityTableName + "." + entity_name; break;
+        case ScriptManager::UI: se_pointer = &m_UiScriptEntity; name = m_UiTableName + "." + entity_name; break;
+        default: return;
+    }
+
+    for( unsigned int i = 0; i < ( *se_pointer ).size(); ++i )
+    {
+        if( ( *se_pointer )[ i ].name == name )
         {
-            while( m_ScriptEntity[ i ].queue.size() > 0 )
+            while( ( *se_pointer )[ i ].queue.size() > 0 )
             {
-                ScriptManager::RemoveEntityTopScript( m_ScriptEntity[ i ] );
+                ScriptManager::RemoveEntityTopScript( ( *se_pointer )[ i ] );
             }
 
-            m_ScriptEntity.erase( m_ScriptEntity.begin() + i );
+            ( *se_pointer ).erase( ( *se_pointer ).begin() + i );
 
             return;
         }
@@ -427,15 +459,47 @@ ScriptManager::GetTableByEntityName( const Ogre::String& name, lua_State* state 
 QueueScript*
 ScriptManager::GetScriptByScriptId( const ScriptId& script ) const
 {
-    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
+    for( unsigned int i = 0; i < m_SystemScriptEntity.size(); ++i )
     {
-        if( script.entity == m_ScriptEntity[ i ].name )
+        if( script.entity == m_SystemScriptEntity[ i ].name )
         {
-            for( size_t j = 0; j < m_ScriptEntity[ i ].queue.size(); ++j )
+            for( unsigned int j = 0; j < m_SystemScriptEntity[ i ].queue.size(); ++j )
             {
-                if( script.function == m_ScriptEntity[ i ].queue[ j ].function )
+                if( script.function == m_SystemScriptEntity[ i ].queue[ j ].function )
                 {
-                    return (QueueScript*) &( m_ScriptEntity[ i ].queue[ j ] );
+                    return (QueueScript*) &( m_SystemScriptEntity[ i ].queue[ j ] );
+                }
+            }
+
+            return NULL;
+        }
+    }
+
+    for( unsigned int i = 0; i < m_EntityScriptEntity.size(); ++i )
+    {
+        if( script.entity == m_EntityScriptEntity[ i ].name )
+        {
+            for( unsigned int j = 0; j < m_EntityScriptEntity[ i ].queue.size(); ++j )
+            {
+                if( script.function == m_EntityScriptEntity[ i ].queue[ j ].function )
+                {
+                    return (QueueScript*) &( m_EntityScriptEntity[ i ].queue[ j ] );
+                }
+            }
+
+            return NULL;
+        }
+    }
+
+    for( unsigned int i = 0; i < m_UiScriptEntity.size(); ++i )
+    {
+        if( script.entity == m_UiScriptEntity[ i ].name )
+        {
+            for( unsigned int j = 0; j < m_UiScriptEntity[ i ].queue.size(); ++j )
+            {
+                if( script.function == m_UiScriptEntity[ i ].queue[ j ].function )
+                {
+                    return (QueueScript*) &( m_UiScriptEntity[ i ].queue[ j ] );
                 }
             }
 
@@ -449,13 +513,24 @@ ScriptManager::GetScriptByScriptId( const ScriptId& script ) const
 
 
 ScriptEntity*
-ScriptManager::GetScriptEntityByName( const Ogre::String& name ) const
+ScriptManager::GetScriptEntityByName( const Type type, const Ogre::String& entity_name ) const
 {
-    for( size_t i = 0; i < m_ScriptEntity.size(); ++i )
+    // select requested type
+    const std::vector< ScriptEntity >* se_pointer = NULL;
+    Ogre::String name = "";
+    switch( type )
     {
-        if( name == m_ScriptEntity[ i ].name )
+        case ScriptManager::SYSTEM: se_pointer = &m_SystemScriptEntity; name = m_SystemTableName + "." + entity_name; break;
+        case ScriptManager::ENTITY: se_pointer = &m_EntityScriptEntity; name = m_EntityTableName + "." + entity_name; break;
+        case ScriptManager::UI: se_pointer = &m_UiScriptEntity; name = m_UiTableName + "." + entity_name; break;
+        default: return NULL;
+    }
+
+    for( size_t i = 0; i < ( *se_pointer ).size(); ++i )
+    {
+        if( ( *se_pointer )[ i ].name == name )
         {
-            return (ScriptEntity*) &( m_ScriptEntity[ i ] );
+            return ( ScriptEntity* ) &( ( *se_pointer )[ i ] );
         }
     }
 
@@ -514,11 +589,11 @@ ScriptManager::ScriptWait( const float seconds )
 
 
 void
-ScriptManager::ScriptRequest( const char* entity, const char* function, const int priority )
+ScriptManager::ScriptRequest( const Type type, const char* entity, const char* function, const int priority )
 {
     LOG_TRIVIAL( "[SCRIPT] script:request: Request function \"" + Ogre::String( function ) + "\" for entity \"" + Ogre::String( entity ) + "\" with priority " + Ogre::StringConverter::toString( priority ) + "." );
 
-    ScriptEntity* script_entity = GetScriptEntityByName( Ogre::String( entity ) );
+    ScriptEntity* script_entity = GetScriptEntityByName( type, Ogre::String( entity ) );
 
     if( script_entity == NULL )
     {
@@ -537,11 +612,11 @@ ScriptManager::ScriptRequest( const char* entity, const char* function, const in
 
 
 int
-ScriptManager::ScriptRequestStartSync( const char* entity, const char* function, const int priority )
+ScriptManager::ScriptRequestStartSync( const Type type, const char* entity, const char* function, const int priority )
 {
     LOG_TRIVIAL( "[SCRIPT] script:request_start_sync: Request function \"" + Ogre::String( function ) + "\" for entity \"" + Ogre::String( entity ) + "\" with priority " + Ogre::StringConverter::toString( priority ) + "." );
 
-    ScriptEntity* script_entity = GetScriptEntityByName( Ogre::String( entity ) );
+    ScriptEntity* script_entity = GetScriptEntityByName( type, Ogre::String( entity ) );
 
     if( script_entity == NULL )
     {
@@ -563,11 +638,11 @@ ScriptManager::ScriptRequestStartSync( const char* entity, const char* function,
 
 
 int
-ScriptManager::ScriptRequestEndSync( const char* entity, const char* function, const int priority )
+ScriptManager::ScriptRequestEndSync( const Type type, const char* entity, const char* function, const int priority )
 {
     LOG_TRIVIAL( "[SCRIPT] script:request_end_sync: Request function \"" + Ogre::String( function ) + "\" for entity \"" + Ogre::String( entity ) + "\" with priority " + Ogre::StringConverter::toString( priority ) + "." );
 
-    ScriptEntity* script_entity = GetScriptEntityByName( Ogre::String( entity ) );
+    ScriptEntity* script_entity = GetScriptEntityByName( type, Ogre::String( entity ) );
 
     if( script_entity == NULL )
     {

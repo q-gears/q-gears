@@ -25,35 +25,35 @@ EntityContainer[ "Director" ] = {
                     player_lock( true )
                     background2d:scroll_to_position( -288, 180, Background2D.SMOOTH, 1.06667 )
 
-                    script:request( "EntityContainer.Cloud", "scene_part_1", 6 )
+                    script:request( Script.ENTITY, "Cloud", "scene_part_1", 6 )
 
                     Savemap.progress_game = 7
 
-                    script:request_end_sync( "EntityContainer.Biggs", "scene_part_2", 6 )
+                    script:request_end_sync( Script.ENTITY, "Biggs", "scene_part_2", 6 )
                     script:wait( 0.2 )
-                    script:request_end_sync( "EntityContainer.Jessie", "scene_part_3", 6 )
+                    script:request_end_sync( Script.ENTITY, "Jessie", "scene_part_3", 6 )
                     script:wait( 0.333333 )
-                    script:request_end_sync( "EntityContainer.Biggs", "scene_part_4", 5 )
+                    script:request_end_sync( Script.ENTITY, "Biggs", "scene_part_4", 5 )
                     script:wait( 0.266667 )
-                    script:request_end_sync( "EntityContainer.Cloud", "scene_part_6", 6 )
+                    script:request_end_sync( Script.ENTITY, "Cloud", "scene_part_6", 6 )
                     script:wait( 0.266667 )
-                    script:request_end_sync( "EntityContainer.Barret", "scene_part_8", 6 )
+                    script:request_end_sync( Script.ENTITY, "Barret", "scene_part_8", 6 )
                     script:wait( 0.4 )
                     --03f5 (end 043e): music:execute_akao( 20, 00000040, 00000034 ); -- play sound
                     script:wait( 0.266667 )
                     --03fd (end 043e): music:execute_akao( 20, 00000040, 00000020 ); -- play sound
-                    script:request( "EntityContainer.DoorLeft", "open", 6 )
-                    script:request( "EntityContainer.DoorRight", "open", 6 )
+                    script:request( Script.ENTITY, "DoorLeft", "open", 6 )
+                    script:request( Script.ENTITY, "DoorRight", "open", 6 )
                     script:wait( 0.333333 )
-                    script:request( "EntityContainer.Jessie", "scene_part_10", 6 )
+                    script:request( Script.ENTITY, "Jessie", "scene_part_10", 6 )
                     script:wait( 1 )
-                    script:request( "EntityContainer.Biggs", "scene_part_11", 6 )
+                    script:request( Script.ENTITY, "Biggs", "scene_part_11", 6 )
                     script:wait( 0.2 )
-                    script:request( "EntityContainer.Wedge", "scene_part_12", 6 )
+                    script:request( Script.ENTITY, "Wedge", "scene_part_12", 6 )
                     script:wait( 0.5 )
-                    script:request_end_sync( "EntityContainer.Barret", "scene_part_13", 6 )
+                    script:request_end_sync( Script.ENTITY, "Barret", "scene_part_13", 6 )
                     --0420 (end 043e): [UNREVERSED] PMJMP(76, 00);
-                    script:request( "EntityContainer.Barret", "scene_part_15", 6 )
+                    script:request( Script.ENTITY, "Barret", "scene_part_15", 6 )
                     script:wait( 1 )
                     --0429 (end 043e): field:movie_set( 20 );
                     EntityContainer.Movie.movie_check = true
@@ -111,7 +111,7 @@ EntityContainer[ "Cloud" ] = {
     scene_part_6 = function( self )
         self.cloud:play_animation( "TalkNo" )
         self.cloud:animation_sync()
-        script:request( "EntityContainer.Biggs", "scene_part_7", 6 )
+        script:request( Script.ENTITY, "Biggs", "scene_part_7", 6 )
         self.cloud:play_animation_stop( "LookAtPeople", 0, 0.233333 )
         self.cloud:animation_sync()
         --0483 (end 0483): -- set window parameters (id = 0, x = 30, y = 150, width = 249, height = 57);
@@ -176,7 +176,7 @@ EntityContainer[ "Barret" ] = {
         self.barret:set_solid( true )
         self.barret:set_visible( true )
         self.barret:set_move_auto_speed( 1.17187 )
-        script:request( "EntityContainer.Cloud", "scene_part_9", 6 )
+        script:request( Script.ENTITY, "Cloud", "scene_part_9", 6 )
         self.barret:move_to_position( 5.96094, 5.08594 )
         self.barret:move_sync()
         self.barret:set_direction( 241.875 )
@@ -190,7 +190,7 @@ EntityContainer[ "Barret" ] = {
 
     scene_part_13 = function( self )
         self.barret:set_move_auto_speed( 1.17187 )
-        script:request( "EntityContainer.Cloud", "scene_part_14", 6 )
+        script:request( Script.ENTITY, "Cloud", "scene_part_14", 6 )
         self.barret:move_to_position( 4.39844, 7.3125 )
         self.barret:move_sync()
         script:wait( 1 )
@@ -267,7 +267,7 @@ EntityContainer[ "Biggs" ] = {
         script:wait( 0.1 )
         --05be (end 05be): [UNREVERSED] MENU(00, 06, 00);
         script:wait( 0.1 )
-        script:request_end_sync( "EntityContainer.Cloud", "scene_part_5", 6 )
+        script:request_end_sync( Script.ENTITY, "Cloud", "scene_part_5", 6 )
         script:wait( 0.2 )
         self.biggs:play_animation_stop( "TalkGesture", 0, 0.466667 )
         self.biggs:animation_sync()
@@ -455,7 +455,7 @@ EntityContainer[ "Movie" ] = {
             if self.movie_check == true then
                 --0717 (end 0729): temp6_09 = field:get_movie_frame();
                 --071a (end 0729): if ( temp6_09 > 30 ) then continue else jumpto(0729);
-                script:request( "EntityContainer.Cloud", "scene_part_16", 6 )
+                script:request( Script.ENTITY, "Cloud", "scene_part_16", 6 )
                 break
             end
 

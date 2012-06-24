@@ -29,7 +29,7 @@ load_field_map_request = function( map_name, point_name )
     if type( map_name ) == "string" and map_name ~= "" then
         System.MapChanger.map_name = map_name
         System.MapChanger.point_name = point_name
-        script:request( "System.MapChanger", "change_map", 0 )
+        script:request( Script.SYSTEM, "MapChanger", "change_map", 0 )
     end
 end
 
@@ -70,11 +70,11 @@ System[ "MapChanger" ] = {
     change_map = function( self )
         if self.map_name ~= "" then
             player_lock( true ) -- disable menu and pc movement while load map
-            script:request_end_sync( "UiContainer.Fade", "fade_out", 0 )
+            script:request_end_sync( Script.UI, "Fade", "fade_out", 0 )
             map( self.map_name )
             player_lock( false ) -- enable menu and pc movement after load map
             self.map_name = ""
-            script:request_end_sync( "UiContainer.Fade", "fade_in", 0 )
+            script:request_end_sync( Script.UI, "Fade", "fade_in", 0 )
         end
 
         return 0

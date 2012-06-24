@@ -61,6 +61,11 @@ UiManager::Initialise()
 void
 UiManager::Update()
 {
+    // update all ui scripts
+    ScriptManager::getSingleton().Update( ScriptManager::UI );
+
+
+
     for( unsigned int i = 0; i < m_Widgets.size(); ++i )
     {
         m_Widgets[ i ]->Update();

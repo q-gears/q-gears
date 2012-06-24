@@ -15,10 +15,6 @@ ConfigVar cv_debug_ui( "debug_ui", "Draw ui debug info", "0" );
 
 
 
-Ogre::String UiWidget::m_UiTableName = "UiContainer";
-
-
-
 UiWidget::UiWidget( const Ogre::String& name ):
     m_Name( name ),
     m_PathName( name ),
@@ -46,7 +42,7 @@ UiWidget::~UiWidget()
         delete m_Animations[ i ];
     }
 
-    ScriptManager::getSingleton().RemoveEntity( m_UiTableName + "." + m_PathName );
+    ScriptManager::getSingleton().RemoveEntity( ScriptManager::UI, m_PathName );
 
     RemoveAllChildren();
 }
@@ -103,7 +99,7 @@ UiWidget::Initialise()
     m_Colour3 = Ogre::ColourValue( 1, 1, 1, 1 );
     m_Colour4 = Ogre::ColourValue( 1, 1, 1, 1 );
 
-    ScriptManager::getSingleton().AddEntity( m_UiTableName + "." + m_PathName );
+    ScriptManager::getSingleton().AddEntity( ScriptManager::UI, m_PathName );
 }
 
 
@@ -227,7 +223,7 @@ UiWidget::Update()
         {
             DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
             DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
-            DEBUG_DRAW.Text( x1 + 3, y1, m_UiTableName + "." + m_PathName );
+            DEBUG_DRAW.Text( x1 + 3, y1, m_PathName );
             DEBUG_DRAW.Text( x1 + 3, y1 + 12, GetCurrentAnimationName() );
         }
 

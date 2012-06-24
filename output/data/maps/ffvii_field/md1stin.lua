@@ -25,7 +25,7 @@ EntityContainer[ "Director" ] = {
         if Savemap.progress_game == 0 then
             --03f0 (end 04bd): field:movie_set( 53 );
             --03f2 (end 04bd): music:execute_akao( c8, 00007000, 00000000, 00000000, 00000000, 00000000, 00000301 );
-            script:request( "EntityContainer.View", "script_3", 6 )
+            script:request( Script.ENTITY, "View", "script_3", 6 )
             --0404 (end 04bd): field:play_movie();
             --0405 (end 04bd): music:execute_akao( c8, 00007fff, 00000000, 00000000, 00000000, 00000000, 00002081 );
             --0414 (end 04bd): game:variable_set("menu_appear", 763);
@@ -34,23 +34,23 @@ EntityContainer[ "Director" ] = {
             --043f (end 04bd): music:execute_akao( 20, 00000040, 00000035 ); -- play sound
 
             script:wait( 1 )
-            script:request( "EntityContainer.Biggs", "action1", 2 )
+            script:request( Script.ENTITY, "Biggs", "action1", 2 )
             script:wait( 1.1 )
-            script:request( "EntityContainer.Gu1", "action1", 2 )
+            script:request( Script.ENTITY, "Gu1", "action1", 2 )
             script:wait( 1 )
-            script:request( "EntityContainer.Gu0", "action1", 2 )
+            script:request( Script.ENTITY, "Gu0", "action1", 2 )
             script:wait( 2 )
             --0459 (end 04bd): music:execute_akao( 20, 00000040, 00000039 ); -- play sound
-            script:request( "EntityContainer.Jessie", "action1", 2 )
+            script:request( Script.ENTITY, "Jessie", "action1", 2 )
             script:wait( 0.333333 )
             script:wait( 2 )
-            script:request( "EntityContainer.Wedge", "action1", 2 )
+            script:request( Script.ENTITY, "Wedge", "action1", 2 )
             script:wait( 2.33333 )
-            script:request( "EntityContainer.Barret", "action1", 2 )
+            script:request( Script.ENTITY, "Barret", "action1", 2 )
             script:wait( 2.66667 )
             background2d:scroll_to_position( -60, 390, Background2D.SMOOTH, 0.4 )
             script:wait( 0.466667 )
-            script:request( "EntityContainer.Cloud", "action1", 2 )
+            script:request( Script.ENTITY, "Cloud", "action1", 2 )
             script:wait( 0.0666667 )
             --0485 (end 04bd): music:execute_akao( 20, 00000040, 00000037 ); -- play sound
             script:wait( 0.733333 )
@@ -60,7 +60,7 @@ EntityContainer[ "Director" ] = {
             script:wait( 1.93333 )
             --04a1 (end 04bd): -- set window parameters (id = 3, x = 40, y = 20, width = 133, height = 41);
             --04ab (end 04bd): message:show_text_wait(3, 30, x, y);
-            script:request( "EntityContainer.Barret", "action2", 2 )
+            script:request( Script.ENTITY, "Barret", "action2", 2 )
             script:wait( 0.666667 )
 
             Savemap.progress_game = 1
@@ -79,8 +79,8 @@ EntityContainer[ "Director" ] = {
                 if ( Savemap.progress_game == 1 ) and ( triangle_id == 12 ) then
                     Savemap.progress_game = 6
                     player_lock( true )
-                    script:request( "EntityContainer.Hei0", "action1", 2 )
-                    script:request_end_sync( "EntityContainer.Hei1", "action1", 2 )
+                    script:request( Script.ENTITY, "Hei0", "action1", 2 )
+                    script:request_end_sync( Script.ENTITY, "Hei1", "action1", 2 )
                     --04e2 (end 04ea): field:battle_run( 300 );
                     player_lock( false )
                 end
@@ -443,7 +443,7 @@ EntityContainer[ "Gu0" ] = {
         self.gu0:set_direction( 191.25 )
         self.gu0:play_animation_stop( "Kicked" )
         self.gu0:animation_sync()
-        script:request_end_sync( "EntityContainer.Gu1", "activate", 6 )
+        script:request_end_sync( Script.ENTITY, "Gu1", "activate", 6 )
         --0785 (end 0785): gu0:set_talkable( false )
         self.gu0:set_solid( false )
         self.gu0:set_visible( false )
@@ -511,7 +511,7 @@ EntityContainer[ "Gu1" ] = {
         self.gu1:set_direction( 56.25 )
         self.gu1:play_animation_stop( "Throwed" )
         self.gu1:animation_sync()
-        script:request( "EntityContainer.GuAdd", "activate", 6 )
+        script:request( Script.ENTITY, "GuAdd", "activate", 6 )
         --081d (end 081d): gu1:set_talkable( false )
         self.gu1:set_solid( false )
         self.gu1:set_visible( false )

@@ -176,9 +176,15 @@ ScriptManager::InitBinds()
     [
         luabind::class_< ScriptManager >( "Script" )
             .def( "wait", ( int( ScriptManager::* )( const float ) ) &ScriptManager::ScriptWait, luabind::yield )
-            .def( "request", ( void( ScriptManager::* )( const char*, const char*, const int ) ) &ScriptManager::ScriptRequest )
-            .def( "request_start_sync", ( int( ScriptManager::* )( const char*, const char*, const int ) ) &ScriptManager::ScriptRequestStartSync, luabind::yield )
-            .def( "request_end_sync", ( int( ScriptManager::* )( const char*, const char*, const int ) ) &ScriptManager::ScriptRequestEndSync, luabind::yield )
+            .def( "request", ( void( ScriptManager::* )( const ScriptManager::Type, const char*, const char*, const int ) ) &ScriptManager::ScriptRequest )
+            .def( "request_start_sync", ( int( ScriptManager::* )( const ScriptManager::Type, const char*, const char*, const int ) ) &ScriptManager::ScriptRequestStartSync, luabind::yield )
+            .def( "request_end_sync", ( int( ScriptManager::* )( const ScriptManager::Type, const char*, const char*, const int ) ) &ScriptManager::ScriptRequestEndSync, luabind::yield )
+            .enum_( "constants" )
+            [
+                luabind::value( "SYSTEM", ScriptManager::SYSTEM ),
+                luabind::value( "ENTITY", ScriptManager::ENTITY ),
+                luabind::value( "UI", ScriptManager::UI )
+            ]
     ];
 
     luabind::globals( m_LuaState )[ "entity_manager" ] = boost::ref( *( EntityManager::getSingletonPtr() ) );

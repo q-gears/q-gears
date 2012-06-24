@@ -39,6 +39,10 @@ To Do
 
 
 
+2012-06-24
+----------
+* [Script] Entity, System and Ui scripts has been separated internaly to better handle updates and debug. [Akari]
+
 2012-06-23
 ----------
 * [Content Map] Add all background animations on md1_2. [Akari]

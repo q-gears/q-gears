@@ -80,7 +80,6 @@ GetDirectionToPoint( const Ogre::Vector3& current_point, const Ogre::Vector3& di
 
 EntityManager::EntityManager():
     m_Paused( false ),
-    m_EntityTableName( "EntityContainer" ),
     m_PlayerEntity( NULL ),
     m_PlayerMove( Ogre::Vector3::ZERO ),
     m_PlayerMoveRotation( 0 ),
@@ -167,6 +166,11 @@ EntityManager::Update()
     {
         return;
     }
+
+
+
+    // update all entity scripts
+    ScriptManager::getSingleton().Update( ScriptManager::ENTITY );
 
 
 
@@ -383,7 +387,7 @@ EntityManager::Clear()
 
     for( unsigned int i = 0; i < m_EntityModels.size(); ++i )
     {
-        ScriptManager::getSingleton().RemoveEntity( m_EntityTableName + "." + m_EntityModels[ i ]->GetName() );
+        ScriptManager::getSingleton().RemoveEntity( ScriptManager::ENTITY, m_EntityModels[ i ]->GetName() );
         delete m_EntityModels[ i ];
     }
     m_EntityModels.clear();
@@ -395,7 +399,7 @@ EntityManager::Clear()
 
     for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
     {
-        ScriptManager::getSingleton().RemoveEntity( m_EntityTableName + "." + m_EntityTriggers[ i ]->GetName() );
+        ScriptManager::getSingleton().RemoveEntity( ScriptManager::ENTITY, m_EntityTriggers[ i ]->GetName() );
         delete m_EntityTriggers[ i ];
     }
     m_EntityTriggers.clear();
@@ -408,7 +412,7 @@ EntityManager::Clear()
 
     for( unsigned int i = 0; i < m_EntityScripts.size(); ++i )
     {
-        ScriptManager::getSingleton().RemoveEntity( m_EntityTableName + "." + m_EntityScripts[ i ] );
+        ScriptManager::getSingleton().RemoveEntity( ScriptManager::ENTITY, m_EntityScripts[ i ] );
     }
 
     m_SceneNode->removeAndDestroyAllChildren();
@@ -450,7 +454,7 @@ EntityManager::AddEntityModel( const Ogre::String& name, const Ogre::String& fil
 
     m_EntityModels.push_back( entity );
 
-    ScriptManager::getSingleton().AddEntity( m_EntityTableName + "." + entity->GetName() );
+    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, entity->GetName() );
 }
 
 
@@ -463,7 +467,7 @@ EntityManager::AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& 
     trigger->SetEnabled( enabled );
     m_EntityTriggers.push_back( trigger );
 
-    ScriptManager::getSingleton().AddEntity( m_EntityTableName + "." + trigger->GetName() );
+    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, trigger->GetName() );
 }
 
 
@@ -483,7 +487,7 @@ void
 EntityManager::AddEntityScript( const Ogre::String& name )
 {
     m_EntityScripts.push_back( name );
-    ScriptManager::getSingleton().AddEntity( m_EntityTableName + "." + name );
+    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, name );
 }
 
 
@@ -1078,7 +1082,7 @@ EntityManager::CheckTriggers( Entity* entity, Ogre::Vector3& position )
 
     for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
     {
-        ScriptEntity* scr_entity = ScriptManager::getSingleton().GetScriptEntityByName( m_EntityTableName + "." + m_EntityTriggers[ i ]->GetName() );
+        ScriptEntity* scr_entity = ScriptManager::getSingleton().GetScriptEntityByName( ScriptManager::ENTITY, m_EntityTriggers[ i ]->GetName() );
 
         if( scr_entity != NULL && m_EntityTriggers[ i ]->IsEnabled() == true )
         {
