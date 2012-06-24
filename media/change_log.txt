@@ -34,13 +34,13 @@ To Do
 ----------
 * [Background] Free 2d Scroll.
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
-* [Script] Try to separate ui and entity script debug.
-* [Script] When entity manager paused and stop updating - waited scripts continue to work. This cause errors.
 
 
 
 2012-06-24
 ----------
+* [Script] System, Entity and Ui script debug can be shown separately. "debug_script" now workd as bit flags 0x1, 0x2, 0x4. [Akari]
+* [Script] Fix ScriptEntity was updating even if EntityManager was paused. [Akari]
 * [Script] Entity, System and Ui scripts has been separated internaly to better handle updates and debug. [Akari]
 
 2012-06-23

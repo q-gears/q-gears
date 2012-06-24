@@ -25,6 +25,8 @@ struct ScriptId
 
 
 
+struct ScriptEntity;
+
 
 
 struct QueueScript
@@ -51,17 +53,6 @@ struct QueueScript
     bool yield;
     ScriptId paused_script_start; // script paused by call of this script.
     ScriptId paused_script_end; // script paused by call of this script.
-};
-
-
-
-struct ScriptEntity
-{
-    ScriptEntity(): name( "" ), resort( false ){}
-
-    Ogre::String name;
-    std::vector< QueueScript > queue;
-    bool resort;
 };
 
 
@@ -94,7 +85,7 @@ public:
     void AddEntityScript( const Ogre::String& entity_name, const Ogre::String& function_name, int priority );
     void RemoveEntityTopScript( ScriptEntity& entity );
 
-    luabind::object GetTableByEntityName( const Ogre::String& name, lua_State* state ) const;
+    luabind::object GetTableByEntityName( const ScriptManager::Type type, const Ogre::String& name, lua_State* state ) const;
     QueueScript* GetScriptByScriptId( const ScriptId& script ) const;
     ScriptEntity* GetScriptEntityByName( const Type type, const Ogre::String& entity_name ) const;
     const ScriptId GetCurrentScriptId() const;
@@ -115,11 +106,26 @@ private:
     Ogre::String m_EntityTableName;
     Ogre::String m_UiTableName;
 
-    std::vector< ScriptEntity > m_SystemScriptEntity;
-    std::vector< ScriptEntity > m_EntityScriptEntity;
-    std::vector< ScriptEntity > m_UiScriptEntity;
+    std::vector< ScriptEntity > m_ScriptEntity;
 
     ScriptId m_CurrentScriptId;
+};
+
+
+
+struct ScriptEntity
+{
+    ScriptEntity():
+        name( "" ),
+        type( ScriptManager::SYSTEM ),
+        resort( false )
+    {
+    }
+
+    Ogre::String name;
+    ScriptManager::Type type;
+    std::vector< QueueScript > queue;
+    bool resort;
 };
 
 

@@ -68,7 +68,7 @@
 		<Cursor1 position="969" topLine="50" />
 	</File>
 	<File name="core\EntityManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8289" topLine="175" />
+		<Cursor1 position="36403" topLine="1157" />
 	</File>
 	<File name="core\EntityManager.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="2501" topLine="47" />
@@ -116,13 +116,13 @@
 		<Cursor1 position="408" topLine="20" />
 	</File>
 	<File name="core\ScriptManager.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="20826" topLine="602" />
+		<Cursor1 position="21166" topLine="568" />
 	</File>
 	<File name="core\ScriptManager.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="109" topLine="0" />
+		<Cursor1 position="402" topLine="12" />
 	</File>
 	<File name="core\ScriptManagerBinds.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="928" topLine="30" />
+		<Cursor1 position="10406" topLine="166" />
 	</File>
 	<File name="core\Timer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="227" topLine="6" />
@@ -149,19 +149,19 @@
 		<Cursor1 position="1437" topLine="25" />
 	</File>
 	<File name="core\UiSprite.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="7028" topLine="203" />
+		<Cursor1 position="723" topLine="27" />
 	</File>
 	<File name="core\UiSprite.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="42" topLine="0" />
 	</File>
 	<File name="core\UiTextArea.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="7299" topLine="289" />
+		<Cursor1 position="3213" topLine="144" />
 	</File>
 	<File name="core\UiTextArea.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1414" topLine="53" />
 	</File>
 	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="704" topLine="20" />
+		<Cursor1 position="6492" topLine="211" />
 	</File>
 	<File name="core\UiWidget.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="880" topLine="11" />
