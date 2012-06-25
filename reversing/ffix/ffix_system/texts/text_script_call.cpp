@@ -582,10 +582,9 @@ if( pointer_to_text != 0 )
 
             case 4f: // 04E40480
             {
-                V1 = w[8007b974];
-                [8007b960] = w(V1);
+                [8007b960] = w(w[8007b974]);
                 A1 = bu[pointer_to_text];
-                A2 = V1;
+                A2 = w[8007b974];
                 V1 = A1 - 1;
                 if( A1 != 0 )
                 {
@@ -604,26 +603,24 @@ if( pointer_to_text != 0 )
                 V1 = bu[pointer_to_text];
                 pointer_to_text = pointer_to_text + 1;
                 V1 = V1 - A1;
-                A1 = -1;
                 V0 = V1 << 3;
                 V0 = V0 - V1;
-                V1 = bu[8007b949];
-                8004E470	sll    v0, v0, $01
-                8004E474	subu   v1, v1, v0
-                [8007b949] = b(V1);
+                V0 = V0 << 1;
+                [8007b949] = b(bu[8007b949] - V0);
                 V1 = bu[pointer_to_text];
                 pointer_to_text = pointer_to_text + 1;
-                V1 = V1 + A1;
-                if( V1 != A1 )
+
+                V1 = V1 - 1;
+                if( V1 != -1 )
                 {
-                    A0 = A1;
+                    A1 = -1;
 
                     loop4e494:	; 8004E494
                         V0 = A1 & 1;
                         A1 = A1 + V0;
-                        V1 = V1 - 1;
                         A2 = A2 >> 1;
-                    8004E4A0	bne    v1, a0, loop4e494 [$8004e494]
+                        V1 = V1 - 1;
+                    8004E4A0	bne    v1, -1, loop4e494 [$8004e494]
                 }
 
                 V1 = w[8007b95c];

@@ -262,7 +262,7 @@ EntityManager::Update()
                     {
                         speed = m_EntityModels[ i ]->GetMoveWalkSpeed();
 
-                        if( InputManager::getSingleton().IsButtonPressed( OIS::KC_X ) == true )
+                        if( InputManager::getSingleton().IsButtonPressed( OIS::KC_LCONTROL ) == true )
                         {
                             speed *= 4;
                         }

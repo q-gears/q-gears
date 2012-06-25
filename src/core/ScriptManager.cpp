@@ -72,14 +72,13 @@ ScriptManager::Input( const Event& event )
     if( ( event.type == ET_KEY_PRESS || event.type == ET_KEY_REPEAT ) &&
                                       (
                                         event.param1 == OIS::KC_RETURN ||
+                                        event.param1 == OIS::KC_ESCAPE ||
+                                        event.param1 == OIS::KC_SPACE ||
+                                        event.param1 == OIS::KC_LCONTROL ||
                                         event.param1 == OIS::KC_LEFT ||
                                         event.param1 == OIS::KC_RIGHT ||
                                         event.param1 == OIS::KC_DOWN ||
-                                        event.param1 == OIS::KC_UP ||
-                                        event.param1 == OIS::KC_A ||
-                                        event.param1 == OIS::KC_S ||
-                                        event.param1 == OIS::KC_X ||
-                                        event.param1 == OIS::KC_Z
+                                        event.param1 == OIS::KC_UP
                                       ) )
     {
         for( unsigned int i = 0; i < m_ScriptEntity.size(); ++i )
@@ -338,6 +337,7 @@ ScriptManager::AddEntity( const ScriptManager::Type type, const Ogre::String& en
     }
 
     luabind::object table = GetTableByEntityName( type, entity_name, m_LuaState );
+
     if( table.is_valid() && luabind::type( table ) == LUA_TTABLE )
     {
         ScriptEntity script_entity;
@@ -435,10 +435,14 @@ ScriptManager::GetTableByEntityName( const ScriptManager::Type type, const Ogre:
         case ScriptManager::UI: table = table[ m_UiTableName ]; break;
     }
 
+    if( luabind::type( table ) != LUA_TTABLE )
+    {
+        return luabind::object();
+    }
+
     for( unsigned int i = 0; i < table_path.size(); ++i )
     {
         table = table[ table_path[ i ] ];
-
         if( luabind::type( table ) != LUA_TTABLE )
         {
             return luabind::object();

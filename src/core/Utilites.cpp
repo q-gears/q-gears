@@ -22,7 +22,8 @@ struct KeyName
 KeyName key_names[] =
 {
     { "Enter", OIS::KC_RETURN },
-
+    { "Escape", OIS::KC_ESCAPE },
+    { "Space", OIS::KC_SPACE },
     { "LShift", OIS::KC_LSHIFT },
     { "RShift", OIS::KC_RSHIFT },
     { "LCtrl", OIS::KC_LCONTROL },

@@ -12,8 +12,6 @@ UiContainer.BeginMenu = {
         local cursor = ui_manager:get_widget( "BeginMenu.Container.Cursor" )
         cursor:set_default_animation( "Position" .. self.position )
 
-        --script:request( Script.UI, "BeginMenu", "show", 0 )
-
         return 0
     end,
 
@@ -23,25 +21,29 @@ UiContainer.BeginMenu = {
         if ui_manager:get_widget( "BeginMenu" ):is_visible() ~= false then
             local cursor = ui_manager:get_widget( "BeginMenu.Container.Cursor" )
 
-            if button == "X" and event == "Press" then
+            if button == "Enter" and event == "Press" then
                 if self.position == 1 then
                     load_field_map_request( "ffvii_md1stin", "" )
                     console( "camera_free false" )
+                    console( "debug_walkmesh false" )
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
                     MenuSettings.pause_available = true
                 elseif self.position == 2 then
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
                     console( "camera_free true" )
+                    console( "debug_walkmesh true" )
                     map( "test_3" )
                     MenuSettings.pause_available = true
                 elseif self.position == 3 then
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
                     console( "camera_free true" )
+                    console( "debug_walkmesh true" )
                     map( "test_1" )
                     MenuSettings.pause_available = true
                 elseif self.position == 4 then
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
                     console( "camera_free true" )
+                    console( "debug_walkmesh true" )
                     map( "test_2" )
                     MenuSettings.pause_available = true
                 elseif self.position == 5 then

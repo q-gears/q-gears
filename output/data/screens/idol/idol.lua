@@ -39,7 +39,7 @@ UiContainer.Idol = {
 
     on_button = function( self, button, event )
         if ui_manager:get_widget( "Idol" ):is_visible() ~= false then
-            if button == "Z" and event == "Press" then
+            if button == "Escape" and event == "Press" then
                 script:request_end_sync( Script.UI, "Idol", "hide", 0 )
                 script:request_end_sync( Script.UI, "BeginMenu", "show", 0 )
             elseif button == "Left" then

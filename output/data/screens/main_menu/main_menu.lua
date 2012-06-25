@@ -22,7 +22,7 @@ UiContainer.MainMenu = {
             local timegil     = ui_manager:get_widget( "MainMenu.Container.TimeGil" )
             local location    = ui_manager:get_widget( "MainMenu.Container.Location" )
 
-            if button == "Z" and event == "Press" then
+            if button == "Escape" and event == "Press" then
                 script:request_end_sync( Script.UI, "MainMenu", "hide", 0 )
             elseif button == "Down" then
                 self.position = self.position + 1
@@ -38,7 +38,7 @@ UiContainer.MainMenu = {
                 menu_cursor:set_default_animation( "Position" .. self.position )
             end
         elseif MenuSettings.available == true then
-            if button == "S" and event == "Press" then
+            if button == "Space" and event == "Press" then
                 script:request_end_sync( Script.UI, "MainMenu", "show", 0 )
             end
         end

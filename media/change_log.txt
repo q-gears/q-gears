@@ -1,5 +1,5 @@
 ================================================================================
-Q-Gears v0.23 (5th cool guys chose to fight) | 2012-12-??
+Q-Gears v0.23 (5th cool guys choose to fight) | 2012-12-??
 --------------------------------------------------------------------------------
 
 To Do
@@ -14,22 +14,31 @@ Q-Gears v0.22 (4th blow for a win) | 2012-09-??
 
 To Do
 ----------
+* Implement base battle sequence. Add script storing and restoring.
+* [Entity] Implement mixed walkmesh movement from Xeno and FFIX.
+* [UI Dialog] Implement all dialogs feature from FFVII Xeno and FFIX.
 * [Entity] Understand why in real FFVII we dont intersect with background on md1stin but here we are.
 * [Content FFVII] Implement Model shadowing and related KAWAI used on phoenix chest.
 * [Content FFVII] Implement Eye blinking.
 * [Content FFVII] All FFVII fields maps from 1st mission until reactor blow must be fully playable.
 * [Sound] Implement all sounds that used in FFVII 1st mission until reactor blow.
-* [Content FFVII] Add FFVII fields maps from 1st mission until reactor blow.
 * [Content Xeno] Add all Lahan maps without scripted events and entitys and transitions between them.
 * [Content FFIX] Add all Alexandria maps and transitions between them without scripted events and entitys.
-* [Entity] Implement mixed walkmesh movement from Xeno and FFIX.
-* [UI Dialog] Implement all dialogs feature from FFVII Xeno and FFIX.
 
 
 
 ================================================================================
-Q-Gears v0.21 (3rd run wild) | 2012-06-25
+Q-Gears v0.21 (3rd run wild) | 2012-06-26
 --------------------------------------------------------------------------------
+
+2012-06-25
+----------
+* [UI] Fix a lot of errors with main menu shown at wrong times. [Akari]
+* [UI] Change button used to be more like on PC. [Akari]
+
+2012-06-25
+----------
+* [Script] Fix bug where game crushed when map loaded without script file. [Akari]
 
 2012-06-24
 ----------

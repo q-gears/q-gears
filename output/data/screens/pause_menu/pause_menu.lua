@@ -18,15 +18,18 @@ UiContainer.PauseMenu = {
         if ui_manager:get_widget( "PauseMenu" ):is_visible() == true then
             local menu_cursor = ui_manager:get_widget( "PauseMenu.Menu.Cursor" )
 
-            if button == "X" and event == "Press" then
+            if button == "Enter" and event == "Press" then
                 script:request_end_sync( Script.UI, "PauseMenu", "hide", 0 )
                 if self.position == 1 then
                     script:request_end_sync( Script.UI, "BeginMenu", "show", 0 )
                     map( "empty" )
                     MenuSettings.pause_available = false
+                else
+                    MenuSettings.available = true
                 end
-            elseif button == "Z" and event == "Press" then
+            elseif button == "Escape" and event == "Press" then
                 script:request_end_sync( Script.UI, "PauseMenu", "hide", 0 )
+                MenuSettings.available = true
             elseif button == "Right" then
                 self.position = self.position + 1
                 if self.position > self.position_total then
@@ -42,6 +45,7 @@ UiContainer.PauseMenu = {
             end
         elseif MenuSettings.pause_available == true then
             if button == "Enter" and event == "Press" then
+                MenuSettings.available = false
                 script:request_end_sync( Script.UI, "PauseMenu", "show", 0 )
             end
         end
