@@ -31,6 +31,10 @@ To Do
 Q-Gears v0.21 (3rd run wild) | 2012-06-26
 --------------------------------------------------------------------------------
 
+2012-06-26
+----------
+* [Script] Make auto runned script list and scripts directory to easy adding new scripts and system script entities. [Akari]
+
 2012-06-25
 ----------
 * [UI] Fix a lot of errors with main menu shown at wrong times. [Akari]

@@ -25198,7 +25198,7 @@
 	"EntityDirection.h"
 	<OgreHardwareBufferManager.h>
 
-1340614438 source:m:\q-gears\src\core\entitymanager.cpp
+1340653988 source:m:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -25252,7 +25252,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1340615578 source:m:\q-gears\src\core\scriptmanager.cpp
+1340698904 source:m:\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.h"
 	"ScriptManagerCommands.h"
@@ -25261,6 +25261,7 @@
 	"Logger.h"
 	"Timer.h"
 	"Utilites.h"
+	"XmlScriptsFile.h"
 	"library/lua/lua.h"
 	"library/lua/lualib.h"
 	"library/lua/lauxlib.h"
@@ -25360,7 +25361,7 @@
 	"ScriptManager.h"
 	"Timer.h"
 
-1338807932 source:m:\q-gears\src\core\utilites.cpp
+1340653750 source:m:\q-gears\src\core\utilites.cpp
 	"Utilites.h"
 	<OgreStringConverter.h>
 
@@ -27963,4 +27964,12 @@
 	"CameraManager.h"
 	"ConfigCmdManager.h"
 	"Console.h"
+
+1340690062 m:\q-gears\src\core\xmlscriptsfile.h
+	"XmlFile.h"
+
+1340698898 source:m:\q-gears\src\core\xmlscriptsfile.cpp
+	"XmlScriptsFile.h"
+	"Logger.h"
+	"ScriptManager.h"
 

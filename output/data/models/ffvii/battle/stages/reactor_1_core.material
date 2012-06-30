@@ -1,0 +1,20 @@
+
+material ffvii/battle_stage/reactor_1_core
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+			alpha_rejection greater 0
+
+			texture_unit
+			{
+				texture models/ffvii/battle/stages/reactor_1_core.png
+				filtering point point none
+			}
+		}
+
+	}
+
+}

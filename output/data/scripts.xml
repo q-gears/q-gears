@@ -1,0 +1,11 @@
+<scripts>
+    <script file="scripts/ffvii/data.lua" />
+    <script file="scripts/ffvii/field.lua" />
+<!--
+    <script file="scripts/ffvii/battle.lua" />
+-->
+    <entity_script name="MapChanger" />
+<!--
+    <entity_script name="Battle" />
+-->
+</scripts>

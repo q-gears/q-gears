@@ -1,0 +1,20 @@
+
+material ffvii/battle_model/mono_drive
+{
+	technique
+	{
+		pass
+		{
+			ambient vertexcolour
+			alpha_rejection greater 0
+
+			texture_unit
+			{
+				texture models/ffvii/battle/units/mono_drive.png
+				filtering point point none
+			}
+		}
+
+	}
+
+}

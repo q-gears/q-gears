@@ -2,10 +2,12 @@
 <maps>
     <map name="empty" file_name="maps/empty.xml" />
 
-    <map name="ffvii_startmap" file_name="maps/ffvii_field/startmap.xml" />
-    <map name="ffvii_md1stin" file_name="maps/ffvii_field/md1stin.xml" />
-    <map name="ffvii_md1_1" file_name="maps/ffvii_field/md1_1.xml" />
-    <map name="ffvii_md1_2" file_name="maps/ffvii_field/md1_2.xml" />
+    <map name="ffvii_startmap" file_name="maps/ffvii/field/startmap.xml" />
+    <map name="ffvii_md1stin" file_name="maps/ffvii/field/md1stin.xml" />
+    <map name="ffvii_md1_1" file_name="maps/ffvii/field/md1_1.xml" />
+    <map name="ffvii_md1_2" file_name="maps/ffvii/field/md1_2.xml" />
+
+    <map name="ffvii_battle_300" file_name="maps/ffvii/battle/300.xml" />
 
     <map name="test_1" file_name="maps/test/test_1.xml" />
     <map name="test_2" file_name="maps/test/test_2.xml" />

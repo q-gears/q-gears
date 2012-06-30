@@ -7,6 +7,7 @@
 #include "Logger.h"
 #include "Timer.h"
 #include "Utilites.h"
+#include "XmlScriptsFile.h"
 extern "C"
 {
     #include "library/lua/lua.h"
@@ -52,7 +53,9 @@ ScriptManager::ScriptManager():
     InitCmd();
 
     RunFile( "system/system.lua" );
-    AddEntity( ScriptManager::SYSTEM, "MapChanger" );
+
+    XmlScriptsFile scripts( "./data/scripts.xml" );
+    scripts.LoadScripts();
 }
 
 

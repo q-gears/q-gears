@@ -1,0 +1,17 @@
+<map>
+    <background2d file_name="maps/ffvii/field/startmap_bg.xml" />
+    <walkmesh file_name="maps/ffvii/field/startmap_wm.xml" />
+    <movement_rotation degree="0" />
+
+    <entity_trigger name="Gateway0" point1="-2.625 1.84375 0" point2="-2.65625 -2.0625 0" enabled="false" />
+    <entity_trigger name="Gateway1" point1="-0.4375 1.82812 0" point2="0.4375 1.82812 0" enabled="false" />
+    <entity_trigger name="Gateway2" point1="1.96094 0.53125 0" point2="1.96094 -0.28125 0" enabled="false" />
+    <entity_trigger name="Gateway3" point1="1.46094 -0.625 0" point2="0.882812 -1.26562 0" enabled="false" />
+    <entity_trigger name="Gateway4" point1="-0.40625 -1.66406 0" point2="0.328125 -1.61719 0" enabled="false" />
+    <entity_trigger name="Gateway5" point1="1.39062 0.890625 0" point2="0.992188 1.44531 0" enabled="false" />
+    <entity_trigger name="Gateway6" point1="-1.41406 -0.726562 0" point2="-0.90625 -1.22656 0" enabled="false" />
+    <entity_trigger name="Gateway7" point1="-1.96094 0.40625 0" point2="-1.96094 -0.3125 0" enabled="false" />
+    <entity_trigger name="Gateway8" point1="-1.54688 0.90625 0" point2="-0.945312 1.41406 0" enabled="false" />
+    <entity_trigger name="Gateway9" point1="-3.15625 2.91406 0" point2="3.09375 2.91406 0" enabled="false" />
+    <entity_trigger name="Gateway10" point1="-3.14062 -2.49219 0" point2="3.14062 -2.49219 0" enabled="false" />
+</map>
