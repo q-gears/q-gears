@@ -259,7 +259,7 @@ if (V0 & 0004)
     S0 = 0;
     loop1b03a0:	; 801B03A0
         V1 = w[T1];
-        if (V1 & A0)
+        if( V1 & A0 )
         {
             801B03B0	nor    v0, zero, a0
             801B03B4	and    v0, v1, v0

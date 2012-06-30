@@ -276,96 +276,96 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f5bb8               some unit structure. (size 0x44).
 800f5cc8               some unit structure. enemy starts here. (size 0x44).
-00 [][]     looks like unit speed.
-02 [][]     time value addition (increase with it). Initialized in funcae954 with (battle_speed * unit_dexterity / party_dexterity). We read this in main battle queue function.
-04 [][]     init with 0. Time value (init in battleinit_init_units_time_value).
-06 [][]
-08 [][]     add 0x0001 bit if player with limit break and remove it during init. Limit time speed (time speed increased 4 times when this flag is on).
-0a [][]     init with 0x00, 0x22, 0x44, 0x88 in case of (dead slow normal haste).
-0c []       init with 0xff. if this is not 0xff add to target mask during sense.
-0c []       init with 0xff. if this is not 0xff add to target mask.
-0d []       init with 0xff. set if hypno clown equipped (acording to TF).
-0e []       add 0x01 bit if player with limit break.
-0f []       Init with 0xff. Store enemy type number (+0c from  from 800f83e0) here (formation number).
-10 []       store 0 here during init.
-11 []       store 0 here during init.
-12 []       init with 0. Store 0xff here if we set death sentence through curse ring equip.
-13 []       store 0 here during init.
-14 []       store 0 here during init.
-15 []       store 0 here during init.
-16 []       store 0 here during init.
-17 []       store 0 here during init.
-18 []       store 0 here during init.
-19 []       store 0 here during init.
-1a []       store 0 here during init.
-1b []       store 0 here during init.
-1c []       store 0 here during init.
-1d []       store 0 here during init.
-1e []       store 0 here during init.
-1f []       store 0 here during init.
-20 []       store 0 here during init. Attack multiplier. Rised by hero drink for example.
-21 []       store 0 here during init. Magical attack multiplier.
-22 []       store 0 here during init. Physical defense multiplier.
-23 []       store 0 here during init. Magical defense multiplier
-24 []       store 0 here during init.
-25 []       store 0 here during init. Some dexterity multiplier. (0x64 - twice).
-26 []       store 0 here during init.
-27 []       store 0 here during init.
-28 []
-29 []       add 0x02 bit if weapon is long ranged. Checked if A0 & 80 and then stored A0 & 7F back. Checked if A0 & 04 and then stored A0 & FB back. Init whth 0 in case of enemy. If 0x04 write "XX was cought by surprize" to output string.
-            0x01 - can't steal from this entity. Add for enemy target if we stole something from it. Init with this flag in case of player.
-2a []       ???
-2b
-2c [][][][] some data checked after damage apply in action_type_09 function.
-30 [][][][] some data checked after damage apply in action_type_09 function.
-34 [][][][] init with status protect in case of player. Add statuses from equipment here (like haste or barrier from accessory). Set inversed status immunities from enemy data structure in case of enemy (+b0).
-38 [][][][] pointer to original enemy data structure (800f5f44 + index * b8).
-3c [][]     current hp.
-3e [][]     current mp.
-40
-41
-42
-43
+    +00 [][]     looks like unit speed.
+    +02 [][]     time value addition (increase with it). Initialized in funcae954 with (battle_speed * unit_dexterity / party_dexterity). We read this in main battle queue function.
+    +04 [][]     init with 0. Time value (init in battleinit_init_units_time_value).
+    +06 [][]
+    +08 [][]     add 0x0001 bit if player with limit break and remove it during init. Limit time speed (time speed increased 4 times when this flag is on).
+    +0a [][]     init with 0x00, 0x22, 0x44, 0x88 in case of (dead slow normal haste).
+    +0c []       init with 0xff. if this is not 0xff add to target mask during sense.
+    +0c []       init with 0xff. if this is not 0xff add to target mask.
+    +0d []       init with 0xff. set if hypno clown equipped (acording to TF).
+    +0e []       add 0x01 bit if player with limit break.
+    +0f []       Init with 0xff. Store enemy type number (+0c from  from 800f83e0) here (formation number).
+    +10 []       store 0 here during init.
+    +11 []       store 0 here during init.
+    +12 []       init with 0. Store 0xff here if we set death sentence through curse ring equip.
+    +13 []       store 0 here during init.
+    +14 []       store 0 here during init.
+    +15 []       store 0 here during init.
+    +16 []       store 0 here during init.
+    +17 []       store 0 here during init.
+    +18 []       store 0 here during init.
+    +19 []       store 0 here during init.
+    +1a []       store 0 here during init.
+    +1b []       store 0 here during init.
+    +1c []       store 0 here during init.
+    +1d []       store 0 here during init.
+    +1e []       store 0 here during init.
+    +1f []       store 0 here during init.
+    +20 []       store 0 here during init. Attack multiplier. Rised by hero drink for example.
+    +21 []       store 0 here during init. Magical attack multiplier.
+    +22 []       store 0 here during init. Physical defense multiplier.
+    +23 []       store 0 here during init. Magical defense multiplier
+    +24 []       store 0 here during init.
+    +25 []       store 0 here during init. Some dexterity multiplier. (0x64 - twice).
+    +26 []       store 0 here during init.
+    +27 []       store 0 here during init.
+    +28 []
+    +29 []       add 0x02 bit if weapon is long ranged. Checked if A0 & 80 and then stored A0 & 7F back. Checked if A0 & 04 and then stored A0 & FB back. Init whth 0 in case of enemy. If 0x04 write "XX was cought by surprize" to output string.
+                0x01 - can't steal from this entity. Add for enemy target if we stole something from it. Init with this flag in case of player.
+    +2a []       ???
+    +2b
+    +2c [][][][] some data checked after damage apply in action_type_09 function.
+    +30 [][][][] some data checked after damage apply in action_type_09 function.
+    +34 [][][][] init with status protect in case of player. Add statuses from equipment here (like haste or barrier from accessory). Set inversed status immunities from enemy data structure in case of enemy (+b0).
+    +38 [][][][] pointer to original enemy data structure (800f5f44 + index * b8).
+    +3c [][]     current hp.
+    +3e [][]     current mp.
+    +40
+    +41
+    +42
+    +43
 
 800f5e60               some unit structure (posibly data for battle hud unit records) (size 0x34 3 items).
-+00 [][][][] pointer to character data in savemap.
-+05 []       limit level (0-3,0xff)
-+06 []       manipulated entity id?
-+08 [][]     init with limit bar value. We copy this to +0a every battle cycle (for player units).
-+0a [][]     init with limit bar value. We copy +08 here every battle cycle (for player units).
-+0c [][]     store current unit MP here.
-+0e [][]     store current unit HP here.
-+10 [][]     store max mp here.
-+12 [][]     store max hp here
-+14 [][]     store 999 here as init (9999 if hp<>mp). max mp?
-+16 [][]     store 9999 here as init (999 if hp<>mp). max hp?
-+18 [][]     if this is not -1 get this value and store -1 back (during attacks with 0x40 bit seted). Some 1st value checked in large function.
-+1a [][]     if this is not -1 get this value and store -1 back (during attacks with 0x40 bit seted). Some 2nd value checked in large function.
-+1c [][][][] hp divisor for limit break.
-+20 [][][][] init with 0. Add player status mask here.
-+24 [][][][] store here 80XXXXXX if unit has materia with materia type lower 4 bitx == 7 (in game there only enemy skill materia whth enemy type 57) where XXXXXX expirience in materia.
-+28 [][][][] store here 80XXXXXX if unit has materia with materia type lower 4 bitx == 7 (in game there only enemy skill materia whth enemy type 57) where XXXXXX expirience in materia.
+    +00 [][][][] pointer to character data in savemap.
+    +05 []       limit level (0-3,0xff)
+    +06 []       manipulated entity id?
+    +08 [][]     init with limit bar value. We copy this to +0a every battle cycle (for player units).
+    +0a [][]     init with limit bar value. We copy +08 here every battle cycle (for player units).
+    +0c [][]     store current unit MP here.
+    +0e [][]     store current unit HP here.
+    +10 [][]     store max mp here.
+    +12 [][]     store max hp here
+    +14 [][]     store 999 here as init (9999 if hp<>mp). max mp?
+    +16 [][]     store 9999 here as init (999 if hp<>mp). max hp?
+    +18 [][]     if this is not -1 get this value and store -1 back (during attacks with 0x40 bit seted). Some 1st value checked in large function.
+    +1a [][]     if this is not -1 get this value and store -1 back (during attacks with 0x40 bit seted). Some 2nd value checked in large function.
+    +1c [][][][] hp divisor for limit break.
+    +20 [][][][] init with 0. Add player status mask here.
+    +24 [][][][] store here 80XXXXXX if unit has materia with materia type lower 4 bitx == 7 (in game there only enemy skill materia whth enemy type 57) where XXXXXX expirience in materia.
+    +28 [][][][] store here 80XXXXXX if unit has materia with materia type lower 4 bitx == 7 (in game there only enemy skill materia whth enemy type 57) where XXXXXX expirience in materia.
 
 800f5efc Struct with weapon attack info for each player. (0x18 size)
-+00 []       target type flags (0x20 - not long range). Set from +0 equipped weapon data.
-+01 []       set from +1 equipped weapon data.
-+02 []       damage formula id. Set from +2 equipped weapon data.
-+03 []       weapon hit chance. Set from +8 equipped weapon data.
-+04 []       impact effect id. Set from +27 equipped weapon data.
-+05 []       critical hit chance. Set from +7 equipped weapon data.
-+06
-+07
-+08 [][]     normal attack sound. Set from +24[] equipped weapon data. Add bit 0x0100 if something in +b[] equipped weapon data
-+0a [][]     critical attack sound. Set from +25[] equipped weapon data. Add bit 0x0100 if something in +b[] equipped weapon data
-+0c [][]     miss attack sound. Set from +26[] equipped weapon data. Add bit 0x0100 if something in +b[] equipped weapon data
-+0e [][]     attack element. Set from +10 equipped weapon data and currently calculated attack element in player structure.
-+10 [][]     set from +c equipped weapon data. (always 0xffff)
-+12 [][]     spesial attack flags. set from +28 equipped weapon data. (always 0xffff)
-+14 [][][][] set status attack mask from player structure.
+    +00 []       target type flags (0x20 - not long range). Set from +0 equipped weapon data.
+    +01 []       set from +1 equipped weapon data.
+    +02 []       damage formula id. Set from +2 equipped weapon data.
+    +03 []       weapon hit chance. Set from +8 equipped weapon data.
+    +04 []       impact effect id. Set from +27 equipped weapon data.
+    +05 []       critical hit chance. Set from +7 equipped weapon data.
+    +06
+    +07
+    +08 [][]     normal attack sound. Set from +24[] equipped weapon data. Add bit 0x0100 if something in +b[] equipped weapon data
+    +0a [][]     critical attack sound. Set from +25[] equipped weapon data. Add bit 0x0100 if something in +b[] equipped weapon data
+    +0c [][]     miss attack sound. Set from +26[] equipped weapon data. Add bit 0x0100 if something in +b[] equipped weapon data
+    +0e [][]     attack element. Set from +10 equipped weapon data and currently calculated attack element in player structure.
+    +10 [][]     set from +c equipped weapon data. (always 0xffff)
+    +12 [][]     spesial attack flags. set from +28 equipped weapon data. (always 0xffff)
+    +14 [][][][] set status attack mask from player structure.
 
 
 
-800f5f44               enemy data structure from scene file (0xb8 size 0x3 records).
+800f5f44 enemy data structure from scene file (0xb8 size 0x3 records).
     +20 []       level.
     +21 []       dexterity.
     +22 []       luck.
@@ -388,7 +388,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +94 [][]     manipulate attack id 0.
     +96 [][]     manipulate attack id 1.
     +98 [][]     manipulate attack id 2.
-    +9a [][]     padding 0xffff
+    +9a [][]     unknown, 0xffff and 0xfffe
     +9c [][]     mp.
 
     +a4 [][][][] hp.
@@ -396,8 +396,22 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +ac [][][][] gil.
     +b0 [][][][] statuses that can affect enemy.
 
-800f616c               attack data structure from scene file (0x1c size 0x20 records).
-800f64ec               attack id data from scene file (0x02 size 0x20 records).
+800f616c attack data structure from scene file (0x1c size 0x20 records).
+800f64ec attack id data from scene file (0x02 size 0x20 records).
+    +00 []       hit %.
+    +02 []       target Hurt Action Index.
+    +04 [][]     mp cost.
+    +06 [][]     impact sound id.
+    +08 [][]     Camera Movement Id for single target.
+    +0a [][]     Camera Movement Id for multiple targets.
+    +0c []       target flags.
+    +0e []       formula.
+    +0f []       strength of attack for damage calculation.
+    +11 []       Status Effect Change.
+    +14 [][][][] Statuses
+    +18 [][]     element mask (-1 means no element).
+
+
 
 800f692c               attack stack data (0x200(all) + 0x8(current)).
 +00 []       priority. Init with 0xff (exept current).
@@ -1220,7 +1234,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80166f78 some structure where we store manipulate attacks from monster (size 0x6, 0x10 per monster (only 0-2 inited as manipulate, others inited with base value0xff 0 0 3))
     +00 []       init with 0xff. Attack index (from scene file)
     +01 []       init with 0.
-    +02 []       init with 0. +c[] from attack data (XX XOR 2).
+    +02 []       init with 0. +c[] from attack data (XX ^ 2).
     +03 []       init with 3. Set 0 here if attack is added.
     +04
     +05
@@ -1304,7 +1318,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                                                           00000800 - if add cut need to be performed.
                                                           00020000 - add if long range materia equipped in something related to target rows in funcab674.
                                                           00080000 - if this flag is set - do something in action_type_09 function.
-                                                          00400000 - add bit if unknown data in large function file exist.
+                                                          00400000 - add bit if unknown data in large function file exist. Reduce mp cost to 0.
                                                           00100000 - add bit if no mega all stars left (force single target?).
                                                           01000000 - if this bit is set we can attack dead units too.
 1f800094 target mask

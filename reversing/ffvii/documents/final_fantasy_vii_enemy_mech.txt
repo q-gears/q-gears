@@ -1,7 +1,7 @@
-THE FF7 ENEMY MECHANICS v1.06
+THE FF7 ENEMY MECHANICS v1.11
 ======================= =====
 
-by Terence Fergusson <tf_faq@dsl.pipex.com>
+by Terence Fergusson <tf_faq@btinternet.com>
 
 Final Fantasy 7 Copyright 1997, 1998 Square Co., Ltd.  Final Fantasy and
 Squaresoft are registered trademarks of Square Co., Ltd.
@@ -36,6 +36,14 @@ v1.05 : 26/04/05 : Fixed a few errors in certain counter scripts
 v1.06 : 14/07/05 : Updated a few terms and rewrote all status chances to make
                      them clearer.  Also finished research on the unknown
                      elemental resistances, and updated accordingly
+v1.10 : 29/06/09 : Added Run Difficulty to all encounters.  A number of
+                     slight inaccuracies and AI errors were found and
+                     corrected too
+                   Synched with sister guides
+v1.11 : 31/07/09 : Enemy Data underwent a full reverification, and a good
+                     30+ errors were found and fixed
+                   Chocobo Ratings were added
+                   World Map Encounter details were revised
 
 
 
@@ -52,8 +60,8 @@ enemies you meet.  The other two are:
   understanding this current guide.
 
   The FF7 Party Mechanics:
-    Covers the various battle formulas relating to the party, notably
-  formulas regarding spell damage, materia use, and limit breaks.
+    Covers the various battle data relating to the party, notably data
+  regarding spell stats, materia use, and limit breaks.
 
 
 The FF7 Battle Mechanics is the main one to start with, since it will define
@@ -76,8 +84,10 @@ CONTENTS
 2.1.2   Stealing Items
 3.  Random Encounters
 3.1   Encounter Basics
-3.2   World Map Encounters
-3.3   Field Map Encounters
+3.2   Encounter List
+3.2.1   World Map Encounters
+3.2.2   Field Map Encounters
+3.2.3   Unique Random Encounters
 4.  Enemy Data Key
 4.1   Basic Data
 4.2   AI Data
@@ -187,16 +197,17 @@ things that must be said, especially regarding the accuracy and layout of
 this guide.
 
 First off, while this is not specifically a technical document, it *does*
-strive to be accurate in the large majority of cases.  Thus, many enemies
-will be shown that you will not be able to fight; these are often 3D objects
-FF7 uses in battle to simulate something in battle.  A good example of this
-is the helicopter in the Rufus Boss Battle.  The helicopter is a complete
-enemy with listed stats, but you cannot fight it and you will never have to
-destroy it.  But because it is included in the battle itself, it will also
-be included here.
+strive to be accurate in the large majority of cases.  Many parts of the
+document are written to be accurate with the game code itself.  However,
+other parts have been translated into data that are not precisely what the
+game does, but are easier to understand: for example, the AI routines of
+each enemy have been simplified where possible for this guide.  Previous
+versions of this document also listed what untargetable enemies existed;
+this has since been removed since it really adds nothing to the guide and
+was incomplete, in any case.
 
 Also, many enemies share the same attacks.  No indication of which attacks
-are shared will be given in this guide; there are many attacks which have
+are shared will be given in this guide - there are many attacks which have
 exactly the same name and effect but may have different attack IDs.  This is
 also sometimes the case when the same enemy has multiple attacks with the
 same name and effect.  In this case, the only difference is when it is used
@@ -219,16 +230,15 @@ still elusive.  As such, if you wish to use this guide, please take its
 faults into account.
 
 
-NOTE (19/08/2004): While almost fully complete, there are still some things
-left to do.  Of high importance are certain unknown variables in the AI
+NOTE (26/06/2009): While quite extensive, there are still some things left
+missing.  Of particular interest are certain unknown variables in the AI
 scripts.  If you see a variable listed like [0000] or [2040], please do not
-worry overmuch about it; I know they exist, and am still trying to translate
-the last few details.  Furthermore, this FAQ hasn't been adequately stress-
-tested yet, so many errors may remain.  It's 900+ KB of text.  All I can say
-is that I've tried my best.
+worry overmuch about it; I know they exist, and am fairly sure that most
+are merely technical changes that do not affect how a battle plays out.
 
-Further note: I will not be updating the Battle Mechanics immediately; it's
-awaiting some further information before the next update is ready for it.
+Many things have been corrected as time has passed, but I still cannot be
+sure that none do not remain.  It's 1000+ KB of text.  All I can say is that
+I've tried my best, and I hope you find use from it.
 
 
 
@@ -252,9 +262,10 @@ From a single enemy, it is only possible to earn one of these items.  The
 item you get depends on what you use (either stealing or simply killing them)
 and random chance.
 
-Each item, whether it be Won or Stolen has an Item Chance, which is a unique
-number that determines how often it drops.  The following two sections detail
-how this number becomes an actual probability of dropping or being stolen.
+Each item - whether it be Won or Stolen - has an Item Chance, which is a
+unique number that determines how often it drops.  The following two sections
+detail how this number becomes an actual probability of dropping or being
+stolen.
 
 
 2.1.1 Winning Items
@@ -421,14 +432,14 @@ FF7 is divided into areas.  A single screen in a dungeon or town is called
 a Field Map area, and when you change Field Maps, you very often change the
 rate you will encounter enemies.
 
-On the world map, however, the division of areas is through defined borders.
+On the World Map, however, the division of areas is through defined borders.
 For instance, there is a mountain range and river that seperates Corel Area
 from both North Corel Area and Gold Saucer Area.  You can see which area you
 are currently in by opening up the menu and looking at the bottom right of
 the screen.
 
 Each unique area can support up to 6 Normal battles and 4 Special Formation
-battles.  In addition, world map areas can support a further 4 Chocobo
+battles.  In addition, World Map areas can support a further 4 Chocobo
 battles.
 
 
@@ -441,9 +452,10 @@ this, so we shall look at them in turn.
 Field Maps
 ==========
 While moving, a variable called the Field Danger Counter is incremented every
-second or so.  The higher the Danger Counter, the more likely you are to
-enter a random battle.  Some areas increase the Danger Counter more quickly
-than others.  This is called the Encounter Value.
+so often.  The higher the Danger Counter, the more likely you are to enter a
+random battle.  Some areas increase the Danger Counter at a larger rate than
+others.  The difference between more and less dangerous areas is marked by a
+stat known as the area's Encounter Value.
 
 High Encounter Values are safer than normal, and you can usually run quite a
 distance without getting into a random battle.  Low Encounter Values are more
@@ -479,7 +491,7 @@ as much as it usually does.  The average value per battle check tends to be
 512, since Enemy Lure Value is usually 16/16ths and Grass areas tend to have
 an Encounter Value of 32.
 
-Battle checks occur less often on the world map, averaging about one per
+Battle checks occur less often on the World Map, averaging about one per
 second while moving.  However, the higher increase of the Danger Counter
 makes up for this.
 
@@ -504,7 +516,7 @@ following things are considered in order:
 
 Unique/Chocobo Battles
 ======================
-On the world map, there are a few unique checks that must be made.  The
+On the World Map, there are a few unique checks that must be made.  The
 very first is the Mystery Ninja check.  If you are in a forest or jungle and
 a random battle occurs, there is a chance you will face the Mystery Ninja
 instead... providing you haven't recruited Yuffie yet.  See the Mystery Ninja
@@ -540,7 +552,7 @@ because the Battle ID is included in the numerical check, it is required to
 list the entire number when giving the chances to get a Chocobo Battle.
 
 Please note that a standard L1 Chocobo Lure gives you a Chocobo Lure Rating
-of 8.  An L2 Lure grants a Rating of 12, and an L3 or L4 Chocobo Lure grants
+of 8.  A L2 Lure grants a Rating of 12, and a L3 or L4 Chocobo Lure grants
 a final Rating of 16.  While Chocobo Lures do stack, the maximum Rating you
 can get is 32.
 
@@ -564,16 +576,20 @@ Pre-emptive Chance
 ==================
 Pre-emptive chance is worked out next.  You have a base chance of 16/256 of
 getting a Pre-emptive battle.  A mastered Pre-emptive Materia will boost this
-up to 64/256.  The maximum this value can go to is 85/256, which is a roughly
+up to 64/256.  The maximum this value can go to is 85/256, which is roughly a
 1/3rd chance.  Rnd(0..255) is rolled for this: if the number is lower than
 your Pre-emptive chance, then you are rewarded with Pre-emptive status when
 the battle begins... assuming the battle allows a Pre-emptive attack.
 
 
+For the remaining battle types, we will focus on how the Field Map deals
+with them.  The World Map has slightly different rules, and the differences
+between them will be looked at at the end of this section.
+
 Special Formation Battles
 =========================
 If the area has any Special Formation battles, you have a chance of getting
-them first (excepting Mystery Ninja and Chocobo battles, of course).  These
+them first (after Mystery Ninja and Chocobo battles, of course).  These
 almost always have you at a disadvantage.  However, a 5-star Pre-emptive
 Materia will help protect you against these battles by halving the chances of
 the disadvantageous ones.  We will call this an Ambush Alert bonus.
@@ -623,29 +639,30 @@ Side Attack:
   group.  Ambush Alert will *not* reduce the chances of getting this
   advantageous battle.  Pre-emptive chance is not removed by getting a Side
   Attack, but it either has no effect or a different effect from normal; your
-  entire party begins a Side Attack with all their time bars filled.
+  entire party begins a Side Attack with all their time bars filled, while
+  the enemies have theirs delayed significantly.
 
 Ambush:
   The final possible battle is an attack from both sides for the enemy, where
   you are surrounded by two enemy groups.  Ambush Alert reduces the chance
   of Ambushes by half.  While Pre-emptive chance is not removed by getting
   this battle, it either has no effect or a different effect from normal;
-  you begin an ambush with your time bars fully depleted.
+  you begin an ambush with your time bars fully depleted, while your enemies
+  gain a slight increase to their own time bar values.
 
 
 All Special Formation Battles have a chance out of 64 of occurring.  A single
-random number (Rnd(0..63)) is rolled to determine both if you will get a
+random number - Rnd(0..63) - is rolled to determine both if you will get a
 Special Formation battle *and* which one you get if you do.  The chance of
-not getting a Special Formation battle is equal to 64/64 minus the sum of
-the probabilities of all available Special Formation battles (this includes
-the probability halving for Back Attacks and Ambushes that Ambush Alert
-grants).
+not getting a Special Formation battle is equal to 64/64 minus the sum of the
+probabilities of all available Special Formation battles (this includes the
+probability halving for Back Attacks and Ambushes that Ambush Alert grants).
 
 Rarely, a Back Attack battle will be placed in the Ambush slot, or an Ambush
 battle will be placed in the Back Attack slots.  Where this occurs, I will
 mark the battles as "BAtt (Ambush) #1" or "Amb. (Back Attack)".  Even rarer,
 a Special Battle may be placed in the Normal slots below.  For this, I will
-use "Side (NrmBatt #1)" or similar.
+use "Normal (Side) #1" or similar.
 
 
 Normal Battles
@@ -656,21 +673,99 @@ of 64 for each battle allowed, with a single Rnd(0..63) deciding which of the
 battles is chosen.
 
 There is one exception however: if you get the *exact* same battle formation
-as you did last time, then the game will reroll *once*.  If you still get the
-same battle, then no further rerolls are done.  However, this does mean that
-you are less likely (in general) to get the same battle than you are to get a
-new battle.
+as you did last time, then the game will reroll *once* for a new Normal
+Battle.  If you still get the same battle, then no further rerolls are done.
+However, this does mean that you are less likely (in general) to get the same
+battle than you are to get a new battle.
 
 Note that Special Formation battles never share the same IDs of Normal
 Battles, so only Normal Battles will count for rerolls.
 
 
+BUG: Due to an error with regards to signed numbers, any Normal Battle chance
+that is 32/64 or greater will actually be treated as a negative number:
+Chance - 64.  How FF7 reacts to this depends, but for the most part, if it
+was the first encounter in the list, it will cause it to have a 100% chance
+of being selected, providing no Special Battle was encountered.
 
-------------------------
-3.2 World Map Encounters
-------------------------
-The following is a listing of all random encounters available on the world
-map, divided by area and then terrain.  Areas are listed in story order.
+Note that World Map encounters do not suffer from this bug, and all chances
+listed in this document already take this bug into account: if you see a
+battle with 32/64 chance or greater, then it is because it's a group of
+battles pointing to the same encounter.  The bugged encounters have already
+been modified to show 64/64 instead.
+
+
+World Map Differences
+=====================
+The way encounters are decided on the World Map are slightly different,
+despite being based around the same data system.  The key differences are
+as follows:
+
+
+  Special Formation Battles
+  -------------------------
+Instead of a single random value being used for all four types of Special
+Formations, they are checked individually in a particularly obtuse way.
+
+The two Back Attack slots are checked first, using a single Rnd(0..255).
+The usual chances out of 64 are multiplied by either 2 if you have Ambush
+Alert, or 4 if you don't.  However, due to the way the battles are compared,
+the first Back Attack will have a 1/256 greater chance of being picked
+overall.  For example, if the Back Attack battle had a 4/64 chance
+originally, the true chance would instead be 17/256 (or 9/256 under Ambush
+Alert).  The 2nd Back Attack battle (if it exists) is not affected by this
+bug.
+
+If you don't get a Back Attack, then Side Attack is checked next, and a new
+Rnd(0..255) is used for it.  And once again, the usual chance out of 64 is
+multiplied by 64, and the same bug gives a 1/256 greater chance of the Side
+Attack happening.
+
+If you fail to get either a Back or Side Attack, then Ambush is checked last.
+Again, it has a new Rnd(0..255) used, and the chance out of 64 is multiplied
+by either 2 (if Ambush Alert) or 4 (if not under Ambush Alert).  The same
+1/256 greater chance is also applied due to the bug in comparing the chances.
+
+This means that the chance of not getting a Special Formation on the World
+Map is not the sum of the chances subtracted from 64, but instead the three
+chances of not getting a Back Attack, not getting a Side Attack and not
+getting an Ambush multiplied together.  On top of that, Side Attacks and
+Ambushes hinge on having failed to get any previous Special Formation that
+exists in the current World Map area, which reduce the chances of seeing them
+further.
+
+
+  Normal Battles
+  --------------
+Like the Special Formations, a single Rnd(0..255) is used with the chances
+out of 64 multiplied by 4.  The same bug described previously exists with the
+Normal Battles on the World Map too, so the first battle in each list has a
+1/256 greater chance than indicated, whilst the *last* battle in each list
+has a 1/256 *lesser* chance than indicated.  So if an area had two battles
+marked 32/64 each, then the first battle would instead have a 129/256 chance
+of being chosen, whilst the second (and last) battle would have a 127/256
+chance of being chosen.
+
+Note that there is still a reroll if a Normal Battle is chosen that matches
+the same battle that was encountered last time, which further complicates
+the chances of a battle being picked.
+
+
+In the encounter table in the next section, all World Map encounters will be
+displayed with their standard chance out of 64, but please be aware of the
+various ways the chances are manipulated due to the mentioned bugs and
+checked parameters.
+
+
+
+------------------
+3.2 Encounter List
+------------------
+In this section, we will list all random encounters in the game, sorting them
+by location.  The first subsection will deal with World Map encounters, while
+the second subsection will deal with Field Map encounters.  The final
+subsection will deal with certain uniquely random encounters that do not use
+the previously defined encounter system.
 
 A few things about how encounters are listed.  First, I only list the enemies
 that can be targeted and are visible at the start of battle.  A number of
@@ -680,7 +775,21 @@ section.  I will not, for example, expressely state that Grangalan can
 summon a Grangalan Jr. here, or that a Grosspanzer comprises of
 Grosspanzer*Big, Grosspanzer*Mobile and two Grosspanzer*Smalls.
 
-Secondly, each battle is listed by which 'Row' an enemy is in.  A Row is a
+Also, anytime two different chances point to the same battle, I have combined
+them into a single chance.  This also means that if there are two battles
+that I have listed with the *same* apparent formation, then they are
+*DIFFERENT* battles.  This is important to note in regards to the 'reroll'
+clause that reduces the chance of getting the same battle twice in a row.
+
+Thirdly, every encounter has its unique Run Difficulty.  The large majority
+of encounters have a Run Difficulty of 1 - these are very easy to escape.
+Back Attacks and encounters with certain enemies or in certain locations have
+been designed to have an increased Run Difficulty though, so for every
+encounter that has a Run Difficulty higher than 1, it will be listed in the
+encounter itself.  The higher the Run Difficulty, the longer it takes for
+your escape to be successful.
+
+And finally, each battle is listed by which 'Row' an enemy is in.  A Row is a
 measure of Range; enemies in higher Rows are considered to be behind enemies
 in lower Rows.  This is where the 'Back Row' definition for enemies comes
 from; an enemy is considered to be in the Back Row until *all* enemies in
@@ -692,12 +801,19 @@ Kalm Fang A has been killed... but Kalm Fang C is in the Back Row until both
 Kalm Fang A *and* B have been dispatched.  Certain rare enemies can change
 'rows' via their AI script; there, it is called the Range variable.
 
-Final note on rows/range: RowFl means Row 'Flying', which is another way of
-saying Row 16.  Any enemy at Row 16 or above can no longer be hit by short
-range abilities.  This is known as "Can't Reach" - the message that appears
-when you try to hit such a target.  Very few enemies start in Row 16, but
-several can change their Range to 16.  Further information can be found in
-the appropriate enemy descriptions in the Enemy Data section.
+Note on rows/range: RowFl means Row 'Flying', which is another way of saying
+Row 16.  Any enemy at Row 16 or above can no longer be hit by short range
+abilities.  This is known as "Can't Reach" - the message that appears when
+you try to hit such a target.  Very few enemies start in Row 16, but several
+can change their Range to 16.  Further information can be found in the
+appropriate enemy descriptions in the Enemy Data section.
+
+
+3.2.1 World Map Encounters
+----- --------------------
+The list of World Map Encounters is divided first by area and then terrain -
+each area can have up to four different terrain possibilities, which can have
+their own individual encounter chances.  Areas are listed in story order.
 
 
 
@@ -706,12 +822,12 @@ the appropriate enemy descriptions in the Enemy Data section.
 
 Midgar Area - Grass                            Encounter Value:  32
   Normal Battle #1:  16/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Kalm Fang                   Row 1: 1x Kalm Fang, 1x Prowler
-     Row 2: 1x Kalm Fang                   Row 2: 1x Prowler
-     Row 3: 1x Kalm Fang                Ambush:             4/64 Chance
-  Normal Battle #2:  16/64 Chance          Grp 1: 1x Prowler
-     Row 1: 2x Kalm Fang, 1x Prowler       Grp 2: 2x Kalm Fang
-  Normal Battle #3:  16/64 Chance
+     Row 1: 1x Kalm Fang                  RUN DIFFICULTY:  2
+     Row 2: 1x Kalm Fang                   Row 1: 1x Kalm Fang, 1x Prowler
+     Row 3: 1x Kalm Fang                   Row 2: 1x Prowler
+  Normal Battle #2:  16/64 Chance       Ambush:             4/64 Chance
+     Row 1: 2x Kalm Fang, 1x Prowler       Grp 1: 1x Prowler
+  Normal Battle #3:  16/64 Chance          Grp 2: 2x Kalm Fang
      Row 1: 2x Devil Ride
   Normal Battle #4:  16/64 Chance
      Row 1: 1x Kalm Fang
@@ -719,10 +835,10 @@ Midgar Area - Grass                            Encounter Value:  32
 
 Midgar Area - Dirt                             Encounter Value:  20
   Normal Battle #1:  16/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Devil Ride                  Row 1: 2x Devil Ride
-  Normal Battle #2:  16/64 Chance       Side Attack:       10/64 Chance
-     Row 1: 1x Custom Sweeper              Row 1: 2x Custom Sweeper
-     Row 2: 1x Custom Sweeper
+     Row 1: 1x Devil Ride                 RUN DIFFICULTY:  2
+  Normal Battle #2:  16/64 Chance          Row 1: 2x Devil Ride
+     Row 1: 1x Custom Sweeper           Side Attack:       10/64 Chance
+     Row 2: 1x Custom Sweeper              Row 1: 2x Custom Sweeper
   Normal Battle #3:  16/64 Chance
      Row 1: 2x Kalm Fang
      Row 2: 1x Devil Ride
@@ -746,16 +862,18 @@ Midgar Area - Beach                            Encounter Value:  64
                                 =========
 
 Kalm Area - Grass                              Encounter Value:  32
-  Normal Battle #1:  13/64 Chance       Back Attack #1:     2/64 Chance
+  Normal Battle #1:  13/64 Chance       BAtt (Normal) #1:   2/64 Chance
      Row 1: 1x Levrikon                    Row 1: 1x Elfadunk
      Row 2: 2x Mu                          Row 2: 1x Elfadunk
-  Normal Battle #2:  13/64 Chance       Back Attack #2:     2/64 Chance
+  Normal Battle #2:  13/64 Chance       BAtt (Normal) #2:   2/64 Chance
      Row 1: 1x Levrikon                    Row 1: 1x Elfadunk
      Row 2: 1x Levrikon                    Row 2: 2x Elfadunk
-     Row 3: 1x Levrikon                 Amb. (Back Attack): 4/64 Chance
-  Normal Battle #3:  13/64 Chance          Row 1: 1x Levrikon, 2x Mandragora
-     Row 1: 2x Levrikon                    Row 2: 1x Elfadunk
-  Normal Battle #4:  13/64 Chance
+     Row 3: 1x Levrikon                 Amb. (Normal):      4/64 Chance
+  Normal (BAtt) #3:  13/64 Chance          Row 1: 1x Levrikon, 2x Mandragora
+    RUN DIFFICULTY:  2                     Row 2: 1x Elfadunk
+     Row 1: 2x Levrikon                    
+  Normal (BAtt) #4:  13/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 3x Levrikon
   Normal Battle #5:  12/64 Chance
      Row 1: 4x Mandragora
@@ -778,20 +896,20 @@ Kalm Area - Beach                              Encounter Value:  64
 
 Junon Area - Grass                             Encounter Value:  32
   Normal Battle #1:  16/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Nerosuferoth                Row 2: 2x Nerosuferoth
-  Normal Battle #2:  16/64 Chance       Back Attack #2:     4/64 Chance
-     Row 1: 2x Nerosuferoth                Row 1: 1x Nerosuferoth
-     Row 2: 1x Formula                     Row 2: 2x Nerosuferoth
-  Normal Battle #3:  16/64 Chance
-     Row 1: 1x Zemzelett
+     Row 1: 2x Nerosuferoth               RUN DIFFICULTY:  2
+  Normal Battle #2:  16/64 Chance          Row 2: 2x Nerosuferoth
+     Row 1: 2x Nerosuferoth             Back Attack #2:     4/64 Chance
+     Row 2: 1x Formula                    RUN DIFFICULTY:  2
+  Normal Battle #3:  16/64 Chance          Row 1: 1x Nerosuferoth
+     Row 1: 1x Zemzelett                   Row 2: 2x Nerosuferoth
   Normal Battle #4:  16/64 Chance
      Row 1: 1x Zemzelett,
                2x Nerosuferoth
 
 Junon Area - Dirt                              Encounter Value:  20
   Normal Battle #1:  22/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Hell Rider VR2              Row 1: 1x Zemzelett
-  Normal Battle #2:  21/64 Chance
+     Row 1: 1x Hell Rider VR2             RUN DIFFICULTY:  2 
+  Normal Battle #2:  21/64 Chance          Row 1: 1x Zemzelett
      Row 1: 1x Formula
      Row 2: 1x Formula
   Normal Battle #3:  21/64 Chance
@@ -799,8 +917,8 @@ Junon Area - Dirt                              Encounter Value:  20
 
 Junon Area - Forest                            Encounter Value:  12
   Normal Battle #1:  32/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Formula                     Row 1: 2x Capparwire
-     Row 2: 1x Formula
+     Row 1: 2x Formula                    RUN DIFFICULTY:  2 
+     Row 2: 1x Formula                     Row 1: 2x Capparwire
   Normal Battle #2:  32/64 Chance
      Row 1: 2x Capparwire
      Row 2: 3x Capparwire
@@ -826,10 +944,10 @@ Corel Area - Grass                             Encounter Value:  32
 
 Corel Area - Mountain Path                     Encounter Value:  32
   Normal Battle #1:  22/64 Chance       Back Attack #1:     8/64 Chance
-     Row 3: 1x Grangalan                   Row 1: 2x Needle Kiss
-  Normal Battle #2:  21/64 Chance       Side Attack:       16/64 Chance
-     Row 1: 2x Needle Kiss                 Row 1: 2x Needle Kiss
-  Normal Battle #3:  21/64 Chance
+     Row 3: 1x Grangalan                  RUN DIFFICULTY:  2
+  Normal Battle #2:  21/64 Chance          Row 1: 2x Needle Kiss
+     Row 1: 2x Needle Kiss              Side Attack:       16/64 Chance
+  Normal Battle #3:  21/64 Chance          Row 1: 2x Needle Kiss
      Row 1: 1x Cokatolis,
                 1x Needle Kiss
      Row 2: 1x Needle Kiss
@@ -843,7 +961,7 @@ Corel Area - Beach                             Encounter Value:  64
   Normal Battle #3:  16/64 Chance
      Row 1: 3x Beachplug
      Row 2: 1x Beachplug
-  Side (NrmBatt #4): 16/64 Chance
+  Normal (Side) #4:  16/64 Chance
      Row 1: 3x Beachplug
 
 
@@ -853,8 +971,8 @@ Corel Area - Beach                             Encounter Value:  64
 
 Gold Saucer Area - Grass                       Encounter Value:  32
   Normal Battle #1:  22/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 3x Spencer                     Row 1: 1x Joker, 2x Flapbeat
-     Row 2: 1x Flapbeat
+     Row 1: 3x Spencer                    RUN DIFFICULTY:  2 
+     Row 2: 1x Flapbeat                    Row 1: 1x Joker, 2x Flapbeat
   Normal Battle #2:  21/64 Chance
      Row 1: 1x Flapbeat
      Row 2: 2x Flapbeat
@@ -888,11 +1006,11 @@ Gold Saucer Area - Beach                       Encounter Value:  64
 
 Gongaga Area - Grass                           Encounter Value:  32
   Normal Battle #1:  22/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Grand Horn                  Row 1: 1x Grand Horn
-  Normal Battle #2:  21/64 Chance       Ambush:             4/64 Chance
-     Row 1: 2x Gagighandi                  Grp 1: 1x Gagighandi
-  Normal Battle #3:  21/64 Chance          Grp 2: 2x Gagighandi
-     Row 1: 2x Grand Horn
+     Row 1: 1x Grand Horn                 RUN DIFFICULTY:  2
+  Normal Battle #2:  21/64 Chance          Row 1: 1x Grand Horn
+     Row 1: 2x Gagighandi               Ambush:             4/64 Chance
+  Normal Battle #3:  21/64 Chance          Grp 1: 1x Gagighandi
+     Row 1: 2x Grand Horn                  Grp 2: 2x Gagighandi
 
 Gongaga Area - Jungle                          Encounter Value:  20
   Normal Battle #1:  22/64 Chance       Ambush:             8/64 Chance
@@ -922,16 +1040,16 @@ Gongaga Area - Beach                           Encounter Value:  64
 
 Cosmo Area - Grass                             Encounter Value:  32
   Normal Battle #1:  22/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Grand Horn                  Row 1: 1x Grand Horn
-  Normal Battle #2:  21/64 Chance       Ambush:             4/64 Chance
-     Row 1: 2x Gagighandi                  Grp 1: 1x Gagighandi
-  Normal Battle #3:  21/64 Chance          Grp 2: 2x Gagighandi
-     Row 1: 2x Grand Horn
+     Row 1: 1x Grand Horn                 RUN DIFFICULTY:  2
+  Normal Battle #2:  21/64 Chance          Row 1: 1x Grand Horn
+     Row 1: 2x Gagighandi               Ambush:             4/64 Chance
+  Normal Battle #3:  21/64 Chance          Grp 1: 1x Gagighandi
+     Row 1: 2x Grand Horn                  Grp 2: 2x Gagighandi
 
 Cosmo Area - Dirt                              Encounter Value:  20
   Normal Battle #1:  22/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Bagrisk                     Row 1: 3x Bagrisk
-     Row 2: 1x Bagrisk
+     Row 1: 2x Bagrisk                    RUN DIFFICULTY:  2 
+     Row 2: 1x Bagrisk                     Row 1: 3x Bagrisk
   Normal Battle #2:  21/64 Chance
      Row 1: 1x Griffin
   Normal Battle #3:  21/64 Chance
@@ -940,16 +1058,16 @@ Cosmo Area - Dirt                              Encounter Value:  20
 
 Cosmo Area - Canyon                            Encounter Value:  32
   Normal Battle #1:  11/64 Chance       Back Attack #1:     2/64 Chance
-     Row 1: 2x Skeeskee                    Row 1: 2x Desert Sahagin
-     Row 2: 1x Skeeskee                 Back Attack #2:     2/64 Chance
-  Normal Battle #2:  11/64 Chance          Row 1: 3x Skeeskee
-     Row 1: 1x Griffin                  Side Attack:       10/64 Chance
+     Row 1: 2x Skeeskee                   RUN DIFFICULTY:  2
+     Row 2: 1x Skeeskee                    Row 1: 2x Desert Sahagin
+  Normal Battle #2:  11/64 Chance       Back Attack #2:     2/64 Chance
+     Row 1: 1x Griffin                    RUN DIFFICULTY:  2
   Normal Battle #3:  11/64 Chance          Row 1: 3x Skeeskee
-     Row 1: 1x Golem                    Ambush:             4/64 Chance
-  Normal Battle #4:  11/64 Chance          Grp 1: 1x Desert Sahagin
-     Row 1: 2x Skeeskee                    Grp 2: 1x Desert Sahagin
-     Row 2: 1x Griffin
-  Normal Battle #5:  10/64 Chance
+     Row 1: 1x Golem                    Side Attack:       10/64 Chance
+  Normal Battle #4:  11/64 Chance          Row 1: 3x Skeeskee
+     Row 1: 2x Skeeskee                 Ambush:             4/64 Chance
+     Row 2: 1x Griffin                     Grp 1: 1x Desert Sahagin
+  Normal Battle #5:  10/64 Chance          Grp 2: 1x Desert Sahagin
      Row 1: 1x Desert Sahagin
      Row 2: 2x Desert Sahagin
   Normal Battle #6:  10/64 Chance
@@ -972,8 +1090,8 @@ Cosmo Area - Beach                             Encounter Value:  64
 
 Nibel Area - Grass                             Encounter Value:  32
   Normal Battle #1:  22/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Nibel Wolf                  Row 1: 2x Nibel Wolf
-     Row 2: 1x Nibel Wolf
+     Row 1: 1x Nibel Wolf                 RUN DIFFICULTY:  2 
+     Row 2: 1x Nibel Wolf                  Row 1: 2x Nibel Wolf
   Normal Battle #2:  21/64 Chance
      Row 1: 1x Valron, 2x Nibel Wolf
   Normal Battle #3:  21/64 Chance
@@ -1019,8 +1137,8 @@ Rocket Launch Pad Area - Grass                 Encounter Value:  32
 
 Rocket Launch Pad Area - Forest                Encounter Value:  12
   Normal Battle #1:  22/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Kyuvilduns                  Row 1: 2x Velcher Task
-     Row 2: 2x Kyuvilduns
+     Row 1: 1x Kyuvilduns                 RUN DIFFICULTY:  2 
+     Row 2: 2x Kyuvilduns                  Row 1: 2x Velcher Task
      Row 3: 1x Kyuvilduns
   Normal Battle #2:  21/64 Chance
      Row 1: 1x Valron
@@ -1059,17 +1177,17 @@ Wutai Area - Grass                             Encounter Value:  64
 
 Wutai Area - Dirt                              Encounter Value:  64
   Normal Battle #1:  16/64 Chance       Back Attack #1:     2/64 Chance
-     Row 1: 2x Thunderbird                 Row 1: 3x Thunderbird
-     Row 2: 2x Thunderbird              Back Attack #1:     2/64 Chance
-  Normal Battle #2:  16/64 Chance          Row 1: 2x Tail Vault
-     Row 1: 2x Bizarre Bug              Side Attack:       10/64 Chance
-     Row 2: 3x Thunderbird                 Row 1: 3x Bizarre Bug
-  Normal Battle #3:  16/64 Chance       Ambush:             4/64 Chance
-     Row 1: 2x Tail Vault                  Grp 1: 1x Tail Vault,
-     Row 2: 1x Tail Vault                            1x Thunderbird
-  Normal Battle #4:  16/64 Chance          Grp 2: 2x Bizarre Bug
-     Row 1: 1x Tail Vault,
-               2x Bizarre Bug
+     Row 1: 2x Thunderbird                RUN DIFFICULTY:  2
+     Row 2: 2x Thunderbird                 Row 1: 3x Thunderbird
+  Normal Battle #2:  16/64 Chance       Back Attack #1:     2/64 Chance
+     Row 1: 2x Bizarre Bug                RUN DIFFICULTY:  2
+     Row 2: 3x Thunderbird                 Row 1: 2x Tail Vault
+  Normal Battle #3:  16/64 Chance       Side Attack:       10/64 Chance
+     Row 1: 2x Tail Vault                  Row 1: 3x Bizarre Bug   
+     Row 2: 1x Tail Vault               Ambush:             4/64 Chance   
+  Normal Battle #4:  16/64 Chance          Grp 1: 1x Tail Vault,
+     Row 1: 1x Tail Vault,                           1x Thunderbird
+               2x Bizarre Bug              Grp 2: 2x Bizarre Bug
 
 Wutai Area - Beach                             Encounter Value:  96
   Normal Battle #1:  64/64 Chance
@@ -1082,8 +1200,8 @@ Wutai Area - Beach                             Encounter Value:  96
 
 Woodlands Area - Grass                         Encounter Value:  32
   Normal Battle #1:  22/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Under Lizard                Row 1: 1x Dual Horn
-  Normal Battle #2:  21/64 Chance
+     Row 1: 1x Under Lizard               RUN DIFFICULTY:  2 
+  Normal Battle #2:  21/64 Chance          Row 1: 1x Dual Horn
      Row 1: 1x Dual Horn
   Normal Battle #3:  21/64 Chance
      Row 1: 2x Dual Horn
@@ -1118,19 +1236,19 @@ Woodlands Area - Beach                         Encounter Value:  96
 
 Icicle Area - Grass                            Encounter Value:  32
   Normal Battle #1:  22/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Vlakorados                  Row 1: 2x Trickplay
-  Normal Battle #2:  21/64 Chance       Back Attack #2:     4/64 Chance
-     Row 1: 1x Trickplay                   Row 1: 1x Vlakorados
-  Normal Battle #3:  21/64 Chance
-     Row 1: 2x Trickplay
+     Row 1: 1x Vlakorados                 RUN DIFFICULTY:  2
+  Normal Battle #2:  21/64 Chance          Row 1: 2x Trickplay
+     Row 1: 1x Trickplay                Back Attack #2:     4/64 Chance   
+  Normal Battle #3:  21/64 Chance         RUN DIFFICULTY:  2
+     Row 1: 2x Trickplay                   Row 1: 1x Vlakorados
 
 Icicle Area - Snow                             Encounter Value:  32
   Normal Battle #1:  13/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Bandersnatch                Row 1: 2x Bandersnatch
-  Normal Battle #2:  13/64 Chance       Ambush:             4/64 Chance
-     Row 1: 1x Bandersnatch                Grp 1: 1x Bandersnatch
-     Row 2: 1x Bandersnatch                Grp 2: 1x Bandersnatch
-  Normal Battle #3:  13/64 Chance
+     Row 1: 1x Bandersnatch               RUN DIFFICULTY:  2
+  Normal Battle #2:  13/64 Chance          Row 1: 2x Bandersnatch
+     Row 1: 1x Bandersnatch             Ambush:             4/64 Chance
+     Row 2: 1x Bandersnatch                Grp 1: 1x Bandersnatch
+  Normal Battle #3:  13/64 Chance          Grp 2: 1x Bandersnatch
      Row 1: 1x Bandersnatch
      Row 2: 2x Bandersnatch
   Normal Battle #4:  13/64 Chance
@@ -1162,8 +1280,8 @@ Mideel Area - Grass                            Encounter Value:  32
 
 Mideel Area - Dirt                             Encounter Value:  20
   Normal Battle #1:  22/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Spiral                      Row 1: 2x Spiral
-     Row 2: 1x Spiral
+     Row 1: 1x Spiral                     RUN DIFFICULTY:  2 
+     Row 2: 1x Spiral                      Row 1: 2x Spiral
      Row 3: 1x Spiral
   Normal Battle #2:  21/64 Chance
      Row 1: 2x Spiral
@@ -1182,6 +1300,7 @@ Mideel Area - Jungle                           Encounter Value:  12
 
 Mideel Area - Beach                            Encounter Value:  96
   Normal Battle #1:  64/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Sea Worm
 
 
@@ -1191,8 +1310,10 @@ Mideel Area - Beach                            Encounter Value:  96
 
 North Corel Area - Desert                      Encounter Value:  96
   Normal Battle #1:  20/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Sea Worm
   Normal Battle #2:  20/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Tonadu
   Normal Battle #3:  16/64 Chance
      Row 1: 1x Cactuer
@@ -1229,130 +1350,126 @@ Goblin Island - Grass and Beach                Encounter Value:  64
 
 Goblin Island and Round Island - Forest        Encounter Value:  64
   Normal Battle #1:  22/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Goblin                      Row 1: 1x Goblin
-  Normal Battle #2:  21/64 Chance       Side Attack:       10/64 Chance
-     Row 1: 1x Goblin                      Row 1: 2x Goblin
-     Row 2: 2x Goblin                   Ambush:             4/64 Chance
-  Normal Battle #3:  21/64 Chance          Grp 1: 2x Goblin
-     Row 1: 1x Goblin                      Grp 2: 1x Goblin
-
+     Row 1: 2x Goblin                     RUN DIFFICULTY:  2
+  Normal Battle #2:  21/64 Chance          Row 1: 1x Goblin
+     Row 1: 1x Goblin                   Side Attack:       10/64 Chance
+     Row 2: 2x Goblin                      Row 1: 2x Goblin
+  Normal Battle #3:  21/64 Chance       Ambush:             4/64 Chance
+     Row 1: 1x Goblin                      Grp 1: 2x Goblin
+                                           Grp 2: 1x Goblin
 
 
 Finally, a listing of all Chocobo Encounters in the game:
 
   ======================================================================
     Kalm Area Chocobos                                          Chance
-      Chocobo Battle #1:                                         24632
+      Chocobo Battle #1 - (7) Bad:                               24632
          Row 1: 1x Chocobo (L13)
          Row 2: 2x Mandragora
-      Chocobo Battle #2:                                         24633
+      Chocobo Battle #2 - (7) Bad:                               24633
          Row 1: 1x Mandragora, 1x Chocobo (L13)
          Row 2: 1x Levrikon
-      Chocobo Battle #3:                                         24636
+      Chocobo Battle #3 - (8) Terrible:                          24636
          Row 1: 1x Chocobo (L16)
          Row 2: 1x Levrikon
          Row 3: 1x Levrikon
-      Chocobo Battle #4:                                         24637
+      Chocobo Battle #4 - (8) Terrible:                          24637
          Row 1: 1x Elfadunk
          Row 2: 1x Chocobo (L16)
          Row 3: 1x Elfadunk
                                                   Total Chance:  98538
   ======================================================================
     Junon Area Chocobos                                         Chance
-      Chocobo Battle #1:                                         16462
+      Chocobo Battle #1 - (6) Poor:                              16462
          Row 1: 3x Capparwire
          Row 2: 1x Chocobo (L19)
-      Chocobo Battle #2:                                         16463
+      Chocobo Battle #2 - (6) Poor:                              16463
          Row 1: 1x Chocobo (L19)
          Row 2: 2x Capparwire
-      Chocobo Battle #3:                                         16464
+      Chocobo Battle #3 - (7) Bad:                               16464
          Row 1: 2x Nerosuferoth
          Row 2: 1x Chocobo (L19)
-      Chocobo Battle #4:                                         16465
+      Chocobo Battle #4 - (7) Bad:                               16465
          Row 1: 2x Capparwire, 1x Chocobo (L19)
                                                   Total Chance:  65854
   ======================================================================
     Gold Saucer Area Chocobos                                   Chance
-      Chocobo Battle #1:                                          5218
+      Chocobo Battle #1 - (3) Good:                               5218
          Row 1: 1x Chocobo (L29)
          Row 2: 2x Flapbeat
-      Chocobo Battle #2:                                          5219
+      Chocobo Battle #2 - (3) Good:                               5219
          Row 1: 2x Spencer
          Row 2: 1x Chocobo (L29)
-      Chocobo Battle #3:                                         11368
+      Chocobo Battle #3 - (5) Average:                           11368
          Row 1: 2x Flapbeat
          Row 2: 1x Chocobo (L22)
-      Chocobo Battle #4:                                         11369
+      Chocobo Battle #4 - (5) Average:                           11369
          Row 1: 1x Chocobo (L22), 1x Harpy
                                                   Total Chance:  33174
   ======================================================================
     Rocket Launch Pad Area Chocobos                             Chance
-      Chocobo Battle #1:                                          5272
+      Chocobo Battle #1 - (2) Great:                              5272
          Row 1: 1x Chocobo (L22)
          Row 2: 2x Valron
-      Chocobo Battle #2:                                          5273
+      Chocobo Battle #2 - (2) Great:                              5273
          Row 1: 2x Kyuvilduns
          Row 2: 1x Chocobo (L22)
-      Chocobo Battle #3:                                         11420
+      Chocobo Battle #3 - (4) So-So:                             11420
          Row 1: 1x Chocobo (L22), 1x Velcher Task, 1x Kyuvilduns
-      Chocobo Battle #4:                                         11421
+      Chocobo Battle #4 - (4) So-So:                             11421
          Row 1: 2x Velcher Task
          Row 2: 1x Chocobo (L22)
                                                   Total Chance:  33386
   ======================================================================
     Wutai Area Chocobos                                         Chance
-      Chocobo Battle #1:                                          8354
+      Chocobo Battle #1 - (6) Poor:                               8354
          Row 1: 1x Chocobo (L30)
          Row 2: 2x Tail Vault
-      Chocobo Battle #2:                                          8355
+      Chocobo Battle #2 - (6) Poor:                               8355
          Row 1: 3x Razor Weed, 1x Chocobo (L30)
-      Chocobo Battle #3:                                          8358
+      Chocobo Battle #3 - (5) Average:                            8358
          Row 1: 1x Chocobo (L30)
          Row 2: 3x Tail Vault
-      Chocobo Battle #4:                                          8359
+      Chocobo Battle #4 - (5) Average:                            8359
          Row 1: 1x Chocobo (L30)
          Row 2: 2x Tail Vault
                                                   Total Chance:  33426
   ======================================================================
     Icicle Area Chocobos                                        Chance
-      Chocobo Battle #1:                                          3274
+      Chocobo Battle #1 - (1) Wonderful:                          3274
          Row 1: 1x Chocobo (L33), 1x Jumping
-      Chocobo Battle #2:                                          3275
+      Chocobo Battle #2 - (1) Wonderful:                          3275
          Row 1: 1x Chocobo (L33)
          Row 2: 2x Jumping
-      Chocobo Battle #3:                                         13518
+      Chocobo Battle #3 - (8) Terrible:                          13518
          Row 1: 1x Chocobo (L33)
          Row 2: 1x Bandersnatch, 1x Jumping
-      Chocobo Battle #4:                                         13519
+      Chocobo Battle #4 - (8) Terrible:                          13519
          Row 1: 2x Bandersnatch, 1x Chocobo (L33)
                                                   Total Chance:  33586
   ======================================================================
     Mideel Area Chocobos                                        Chance
-      Chocobo Battle #1:                                          7382
+      Chocobo Battle #1 - (2) Great:                              7382
          Row 1: 1x Spiral, 1x Chocobo (L36)
-      Chocobo Battle #2:                                          7383
+      Chocobo Battle #2 - (2) Great:                              7383
          Row 1: 2x Spiral
          Row 2: 1x Chocobo (L36)
-      Chocobo Battle #3:                                          9434
+      Chocobo Battle #3 - (6) Poor:                               9434
          Row 1: 1x Chocobo (L36)
          Row 2: 3x Head Hunter
-      Chocobo Battle #4:                                          9435
+      Chocobo Battle #4 - (6) Poor:                               9435
          Row 1: 1x Chocobo (L36), 2x Head Hunter
                                                   Total Chance:  33634
   ======================================================================
 
 
 
-------------------------
-3.3 Field Map Encounters
-------------------------
-And now, here are the random encounters for every field map in the game.
-Note that I have left out any field maps that do not have random encounters.
-In addition, anytime two different chances point to the same battle, I have
-combined them into a single chance.  This also means that if there are two
-battles that I have listed with the *same* apparent formation, then they are
-*DIFFERENT* battles.  This is important to note in regards to the 'reroll'
-clause that reduces the chance of getting the same battle twice in a row.
+3.2.2 Field Map Encounters
+----- --------------------
+In this section, we will deal with the random encounters for every field map
+in the game.  Note that I have left out any field maps that do not have
+random encounters.  This also includes some seemingly random encounters that
+are *not* random - they will be dealt with in the final subsection.
 
 I have also placed section headings which co-incide with the Enemy Data
 sections I use later in this guide.  As always, everything is listed in
@@ -1368,8 +1485,8 @@ No. 1 Reactor
 =============
 Midgar - Sector 1 (Outside Reactor)            Encounter Value: 128
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x MP                          Row 1: 1x Guard Hound
-  Normal Battle #2:  22/64 Chance
+     Row 1: 2x MP                         RUN DIFFICULTY:  2
+  Normal Battle #2:  22/64 Chance          Row 1: 1x Guard Hound
      Row 1: 1x Guard Hound
   Normal Battle #3:  18/64 Chance
      Row 1: 1x MP, 1x Guard Hound
@@ -1400,12 +1517,12 @@ Reactor #1 - Entrance                          Encounter Value:  48
 
 Reactor #1 - Main Staircase                    Encounter Value: 128
   Normal Battle #1:  14/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Mono Drive                  Row 1: 2x Mono Drive
-     Row 2: 1x 1st Ray                  Back Attack #2:     4/64 Chance
-  Normal Battle #2:  12/64 Chance          Row 1: 1x Grunt
-     Row 1: 2x 1st Ray                     Row 2: 2x Grunt
-  Normal Battle #3:  11/64 Chance
-     Row 1: 2x Grunt
+     Row 1: 2x Mono Drive                 RUN DIFFICULTY:  2
+     Row 2: 1x 1st Ray                     Row 1: 2x Mono Drive
+  Normal Battle #2:  12/64 Chance       Back Attack #2:     4/64 Chance
+     Row 1: 2x 1st Ray                    RUN DIFFICULTY:  2
+  Normal Battle #3:  11/64 Chance          Row 1: 1x Grunt
+     Row 1: 2x Grunt                       Row 2: 2x Grunt
   Normal Battle #4:  10/64 Chance
      Row 1: 1x 1st Ray, 1x Grunt
      Row 2: 1x 1st Ray
@@ -1418,9 +1535,9 @@ Reactor #1 - Main Staircase                    Encounter Value: 128
 
 Reactor #1 - Upper Piping                      Encounter Value:  72
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Grunt                       Row 1: 2x Grunt
-     Row 2: 2x Mono Drive                  Row 2: 1x Mono Drive
-  Normal Battle #2:  22/64 Chance
+     Row 1: 2x Grunt                      RUN DIFFICULTY:  2
+     Row 2: 2x Mono Drive                  Row 1: 2x Grunt
+  Normal Battle #2:  22/64 Chance          Row 2: 1x Mono Drive
      Row 1: 2x Grunt
      Row 2: 3x Mono Drive
   Normal Battle #3:  18/64 Chance
@@ -1430,8 +1547,8 @@ Reactor #1 - Upper Piping                      Encounter Value:  72
 
 Reactor #1 - Lower Piping                      Encounter Value:  72
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Sweeper                     Row 1: 2x Grunt
-  Normal Battle #2:  22/64 Chance
+     Row 1: 1x Sweeper                    RUN DIFFICULTY:  2
+  Normal Battle #2:  22/64 Chance          Row 1: 2x Grunt
      Row 1: 1x Sweeper
      Row 2: 2x Grunt
   Normal Battle #3:  18/64 Chance
@@ -1460,12 +1577,15 @@ Lower Sector 4 Plate
 ====================
 Midgar - Sector 4 Train Tunnel                 Encounter Value:  72
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
+    RUN DIFFICULTY:  2                    RUN DIFFICULTY:  3
      Row 1: 2x Rocket Launcher             Row 1: 4x Grashtrike
      Row 2: 2x Rocket Launcher
   Normal Battle #2:  22/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 2x Grashtrike
      Row 2: 1x Grashtrike
   Normal Battle #3:  18/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 2x Grashtrike
      Row 2: 2x Grashtrike
 
@@ -1484,9 +1604,9 @@ Lower Sector 4 Plate - Corridors               Encounter Value:  72
 
 Lower Sector 4 Plate - Lattice Walkways        Encounter Value:  72
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Rocket Launcher             Row 1: 1x Chuse Tank
-     Row 2: 2x Rocket Launcher             Row 2: 3x Blugu
-  Normal Battle #2:  22/64 Chance
+     Row 1: 1x Rocket Launcher            RUN DIFFICULTY:  2
+     Row 2: 2x Rocket Launcher             Row 1: 1x Chuse Tank
+  Normal Battle #2:  22/64 Chance          Row 2: 3x Blugu
      Row 1: 2x Rocket Launcher
      Row 2: 2x Blugu
   Normal Battle #3:  18/64 Chance
@@ -1515,9 +1635,9 @@ Reactor #5 - Upper Piping                      Encounter Value:  72
 Reactor #5 - Lower Piping                      Encounter Value:  72
 Reactor #5 - Reactor Valve                     Encounter Value:  72
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Proto Machinegun            Row 1: 2x Blood Taste
-     Row 2: 3x Proto Machinegun            Row 2: 1x Blood Taste
-  Normal Battle #2:  22/64 Chance
+     Row 1: 2x Proto Machinegun           RUN DIFFICULTY:  2
+     Row 2: 3x Proto Machinegun            Row 1: 2x Blood Taste
+  Normal Battle #2:  22/64 Chance          Row 2: 1x Blood Taste
      Row 1: 2x Smogger
      Row 2: 1x Blood Taste
   Normal Battle #3:  18/64 Chance
@@ -1526,15 +1646,15 @@ Reactor #5 - Reactor Valve                     Encounter Value:  72
 
 Reactor #5 - Entrance                          Encounter Value:  72
   Normal Battle #1:  15/64 Chance       Back Attack #1:     2/64 Chance
-     Row 1: 2x Special Combatant           Row 1: 2x Special Combatant
-     Row 2: 1x Special Combatant           Row 2: 1x Proto Machinegun
-  Normal Battle #2:  14/64 Chance       Back Attack #2:     2/64 Chance
-     Row 1: 2x Proto Machinegun            Row 1: 3x Blood Taste
-     Row 2: 1x Proto Machinegun         Ambush:             4/64 Chance
-  Normal Battle #3:  13/64 Chance          Grp 1: 1x Blood Taste
-     Row 1: 2x Proto Machinegun            Grp 2: 2x Blood Taste
-     Row 3: 2x Special Combatant
-  Normal Battle #4:  12/64 Chance
+     Row 1: 2x Special Combatant          RUN DIFFICULTY:  2
+     Row 2: 1x Special Combatant           Row 1: 2x Special Combatant
+  Normal Battle #2:  14/64 Chance          Row 2: 1x Proto Machinegun
+     Row 1: 2x Proto Machinegun         Back Attack #2:     2/64 Chance
+     Row 2: 1x Proto Machinegun           RUN DIFFICULTY:  2
+  Normal Battle #3:  13/64 Chance          Row 1: 3x Blood Taste
+     Row 1: 2x Proto Machinegun         Ambush:             4/64 Chance
+     Row 3: 2x Special Combatant           Grp 1: 1x Blood Taste
+  Normal Battle #4:  12/64 Chance          Grp 2: 2x Blood Taste
      Row 1: 2x Blood Taste
      Row 2: 2x Special Combatant
   Normal Battle #5:  10/64 Chance
@@ -1547,16 +1667,17 @@ Sector 5 Slum
 =============
 Church Rafters                                 Encounter Value: 128
   Normal Battle #1:  46/64 Chance       Back Attack #1:     6/64 Chance
-     Row 1: 1x Hedgehog Pie                Row 1: 2x Hedgehog Pie
-     Row 2: 2x Hedgehog Pie             Ambush:             6/64 Chance
-  Normal Battle #2:  18/64 Chance          Grp 1: 2x Hedgehog Pie
-     Row 1: 2x Hedgehog Pie                Grp 2: 1x Hedgehog Pie
+     Row 1: 1x Hedgehog Pie               RUN DIFFICULTY:  2
+     Row 2: 2x Hedgehog Pie                Row 1: 2x Hedgehog Pie
+  Normal Battle #2:  18/64 Chance       Ambush:             6/64 Chance
+     Row 1: 2x Hedgehog Pie                Grp 1: 2x Hedgehog Pie
+                                           Grp 2: 1x Hedgehog Pie
 
 
 Midgar - Sector 5 Slums                        Encounter Value: 128
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Whole Eater                 Row 1: 1x Vice
-     Row 2: 1x Whole Eater
+     Row 1: 1x Whole Eater                RUN DIFFICULTY:  2
+     Row 2: 1x Whole Eater                 Row 1: 1x Vice
   Normal Battle #2:  22/64 Chance
      Row 1: 1x Whole Eater,
                1x Hedgehog Pie
@@ -1631,8 +1752,8 @@ Plate Support
 =============
 Midgar - Sector 7 Support Pillar (Lower)       Encounter Value:  72
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Aero Combatant              Row 1: 2x Aero Combatant
-     Row 2: 1x Aero Combatant
+     Row 1: 1x Aero Combatant             RUN DIFFICULTY:  2
+     Row 2: 1x Aero Combatant              Row 1: 2x Aero Combatant
   Normal Battle #2:  22/64 Chance
      Row 1: 1x Aero Combatant
      Row 2: 1x Aero Combatant
@@ -1641,13 +1762,13 @@ Midgar - Sector 7 Support Pillar (Lower)       Encounter Value:  72
 
 
 Midgar - Sector 7 Support Pillar (Upper)       Encounter Value:  72
-  Normal Battle #1:  24/64 Chance       Back Attack #1:     3/64 Chance
-     Row 1: 1x Aero Combatant              Row 1: 2x Aero Combatant
-     Row 2: 1x Aero Combatant           Back Attack #2:     3/64 Chance
-  Normal Battle #2:  22/64 Chance          [Same as Back Attack #1]
-     Row 1: 1x Aero Combatant           Ambush:             6/64 Chance
-     Row 2: 1x Aero Combatant              Grp 1: 1x Aero Combatant
-  Normal Battle #3:  18/64 Chance          Grp 2: 1x Aero Combatant
+  Normal Battle #1:  24/64 Chance       Back Attack #1:     6/64 Chance
+     Row 1: 1x Aero Combatant             RUN DIFFICULTY:  2
+     Row 2: 1x Aero Combatant              Row 1: 2x Aero Combatant
+  Normal Battle #2:  22/64 Chance       Ambush:             6/64 Chance
+     Row 1: 1x Aero Combatant              Grp 1: 1x Aero Combatant
+     Row 2: 1x Aero Combatant              Grp 2: 1x Aero Combatant
+  Normal Battle #3:  18/64 Chance
      Row 1: 1x Aero Combatant
 
 
@@ -1713,7 +1834,7 @@ Shinra HQ - Floor 63                           Encounter Value: 192
 
 
 Shinra HQ - Floor 65                           Encounter Value: 240
-  Normal Battle #1:  15/64 Chance       BAtt (Ambush) #1    8/64 Chance
+  Normal Battle #1:  15/64 Chance       BAtt (Ambush) #1:   8/64 Chance
      Row 2: 1x Hammer Blaster              Grp 1: 1x Hammer Blaster
   Normal Battle #2:  14/64 Chance          Grp 2: 1x Hammer Blaster
      Row 1: 1x Sword Dance
@@ -1728,8 +1849,8 @@ Shinra HQ - Floor 65                           Encounter Value: 240
 
 Shinra HQ - Floor 67 (Before Escape)           Encounter Value: 192
   Normal Battle #1:  18/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Warning Board               Row 1: 1x Moth Slasher
-  Normal Battle #2:  17/64 Chance
+     Row 1: 1x Warning Board              RUN DIFFICULTY:  2
+  Normal Battle #2:  17/64 Chance          Row 1: 1x Moth Slasher
      Row 1: 1x Moth Slasher
   Normal Battle #3:  15/64 Chance
      Row 1: 1x SOLDIER:3rd
@@ -1741,8 +1862,8 @@ Shinra HQ - Floor 67 (Before Escape)           Encounter Value: 192
 
 Shinra HQ - Floor 68 (Before Escape)           Encounter Value: 192
   Normal Battle #1:  18/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Warning Board               Row 1: 2x SOLDIER:3rd
-     Row 2: 1x Warning Board
+     Row 1: 1x Warning Board              RUN DIFFICULTY:  2
+     Row 2: 1x Warning Board               Row 1: 2x SOLDIER:3rd
   Normal Battle #2:  17/64 Chance
      Row 1: 2x SOLDIER:3rd
      Row 2: 1x SOLDIER:3rd
@@ -1760,9 +1881,9 @@ Escape
 ======
 Shinra HQ - Floor 67 (After Escape)            Encounter Value: 192
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Brain Pod                   Row 1: 1x Brain Pod,
-     Row 2: 1x Brain Pod                             2x Vargid Police
-  Normal Battle #2:  22/64 Chance
+     Row 1: 1x Brain Pod                  RUN DIFFICULTY:  2
+     Row 2: 1x Brain Pod                   Row 1: 1x Brain Pod,
+  Normal Battle #2:  22/64 Chance                    2x Vargid Police
      Row 1: 1x Brain Pod
   Normal Battle #3:  18/64 Chance
      Row 1: 3x Vargid Police
@@ -1782,11 +1903,11 @@ Shinra HQ - Floor 68 (After Escape)            Encounter Value: 128
 
 Shinra HQ - Floor 69                           Encounter Value: 192
   Normal Battle #1:  18/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Zenene                      Row 1: 2x Zenene
-  Normal Battle #2:  17/64 Chance       Ambush:             4/64 Chance
-     Row 1: 2x Vargid Police               Grp 1: 2x Vargid Police
-  Normal Battle #3:  15/64 Chance          Grp 2: 1x Vargid Police
-     Row 1: 1x Vargid Police
+     Row 1: 1x Zenene                     RUN DIFFICULTY:  2
+  Normal Battle #2:  17/64 Chance          Row 1: 2x Zenene
+     Row 1: 2x Vargid Police            Ambush:             4/64 Chance
+  Normal Battle #3:  15/64 Chance          Grp 1: 2x Vargid Police
+     Row 1: 1x Vargid Police               Grp 2: 1x Vargid Police
      Row 2: 1x Zenene
   Normal Battle #4:  14/64 Chance
      Row 1: 2x Brain Pod
@@ -1799,9 +1920,9 @@ Mythril Mines
 Mythril Mines - Zolom Swamp Side               Encounter Value:  48
 Mythril Mines - Fort Condor Side               Encounter Value:  48
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Madouge                     Row 1: 2x Crawler
-  Normal Battle #2:  22/64 Chance          Row 2: 2x Crawler
-     Row 1: 1x Madouge, 2x Crawler
+     Row 1: 2x Madouge                    RUN DIFFICULTY:  2
+  Normal Battle #2:  22/64 Chance          Row 1: 2x Crawler
+     Row 1: 1x Madouge, 2x Crawler         Row 2: 2x Crawler
      Row 2: 1x Madouge, 1x Crawler
   Normal Battle #3:  18/64 Chance
      Row 1: 2x Castanets
@@ -1810,27 +1931,34 @@ Mythril Mines - Fort Condor Side               Encounter Value:  48
 
 Mythril Mines - Eastern Peninsula              Encounter Value:  40
   Normal Battle #1:  24/64 Chance       Ambush:             8/64 Chance
+    RUN DIFFICULTY:  2                    RUN DIFFICULTY:  3
      Row 1: 3x Crawler                     Grp 1: 1x Ark Dragon
      Row 2: 1x Ark Dragon                  Grp 2: 1x Ark Dragon
   Normal Battle #2:  22/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 2x Castanets
      Row 2: 2x Castanets
   Normal Battle #3:  18/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 2x Castanets
      Row 2: 1x Ark Dragon, 1x Crawler
 
 
 Mythril Mines - Northern Peninsula             Encounter Value:  40
   Normal Battle #1:  18/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 3x Crawler
      Row 2: 1x Ark Dragon
   Normal Battle #2:  17/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 2x Castanets
      Row 2: 2x Castanets
   Normal Battle #3:  15/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 2x Castanets
      Row 2: 1x Ark Dragon, 1x Crawler
   Normal Battle #4:  14/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 5x Crawler
 
 
@@ -1839,9 +1967,9 @@ Cargo Ship
 ==========
 Cargo Ship                                     Encounter Value:  40
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Scrutin Eye                 Row 1: 2x Scrutin Eye
-     Row 2: 2x Scrutin Eye                 Row 2: 2x Scrutin Eye
-  Normal Battle #2:  22/64 Chance
+     Row 1: 2x Scrutin Eye                RUN DIFFICULTY:  2
+     Row 2: 2x Scrutin Eye                 Row 1: 2x Scrutin Eye
+  Normal Battle #2:  22/64 Chance          Row 2: 2x Scrutin Eye
      Row 1: 2x Marine
   Normal Battle #3:  18/64 Chance
      Row 1: 1x Marine
@@ -1853,9 +1981,9 @@ Mt. Corel
 =========
 Mt Corel - 1st and 2nd Screen                  Encounter Value:  48
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Needle Kiss                 Row 1: 2x Needle Kiss
-     Row 2: 1x Needle Kiss                 Row 2: 1x Needle Kiss
-  Normal Battle #2:  22/64 Chance
+     Row 1: 2x Needle Kiss                RUN DIFFICULTY:  2
+     Row 2: 1x Needle Kiss                 Row 1: 2x Needle Kiss
+  Normal Battle #2:  22/64 Chance          Row 2: 1x Needle Kiss
      Row 1: 3x Search Crown
      Row 2: 1x Needle Kiss
   Normal Battle #3:  18/64 Chance
@@ -1893,12 +2021,12 @@ Mt Corel - Bridge Start                        Encounter Value:  72
 
 
 Mt Corel - Rollercoaster Tracks                Encounter Value:  72
-  Normal Battle #1:  34/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 3x Needle Kiss                 Row 1: 1x Cokatolis
-     Row 2: 1x Cokatolis                Ambush:             4/64 Chance
-  Normal Battle #2:  30/64 Chance          Grp 1: 3x Needle Kiss
-     Row 1: 1x Cokatolis                   Grp 2: 2x Needle Kiss
-     Row 2: 1x Cokatolis
+  Normal Battle #1:  64/64 Chance       Back Attack #1:     4/64 Chance
+     Row 1: 3x Needle Kiss                RUN DIFFICULTY:  2
+     Row 2: 1x Cokatolis                   Row 1: 1x Cokatolis
+                                        Ambush:             4/64 Chance
+                                           Grp 1: 3x Needle Kiss
+                                           Grp 2: 2x Needle Kiss
 
 
 Mt Corel - Waterside Tracks                    Encounter Value:  72
@@ -1914,10 +2042,9 @@ Mt Corel - Waterside Tracks                    Encounter Value:  72
 
 
 Mt Corel - Final Bridge                        Encounter Value:  72
-  Normal Battle #1:  34/64 Chance       Ambush:            12/64 Chance
+  Normal Battle #1:  64/64 Chance       Ambush:            12/64 Chance
      Row 1: 1x Bomb                        Grp 1: 1x Cokatolis
-  Normal Battle #2:  30/64 Chance          Grp 2: 2x Cokatolis
-     Row 1: 1x Bagnadrana
+                                           Grp 2: 2x Cokatolis
 
 
 
@@ -2009,6 +2136,7 @@ Meltdown Reactor
 ================
 Gongaga - Wasteland and Mako Reactor           Encounter Value:  48
   Normal Battle #1:  64/64 Chance       Back Attack #1:     8/64 Chance
+    RUN DIFFICULTY:  2                    RUN DIFFICULTY:  3
      Row 1: 1x Heavy Tank                  Row 1: 1x Heavy Tank
 
 
@@ -2028,8 +2156,8 @@ Caverns of the Gi - 1st Screen                 Encounter Value:  48
 
 Caverns of the Gi - 2nd Screen                 Encounter Value:  48
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Sneaky Step                 Row 1: 2x Sneaky Step
-     Row 2: 2x Sneaky Step
+     Row 1: 1x Sneaky Step                RUN DIFFICULTY:  2
+     Row 2: 2x Sneaky Step                 Row 1: 2x Sneaky Step
   Normal Battle #2:  22/64 Chance
      Row 1: 2x Sneaky Step
   Normal Battle #3:  18/64 Chance
@@ -2039,13 +2167,13 @@ Caverns of the Gi - 2nd Screen                 Encounter Value:  48
 
 Caverns of the Gi - 3rd Screen                 Encounter Value:  72
   Normal Battle #1:  18/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Sneaky Step                 Row 1: 2x Sneaky Step
-     Row 2: 3x Heg                      Side Attack:        8/64 Chance
-  Normal Battle #2:  17/64 Chance          Row 1: 2x Sneaky Step
-     Row 1: 1x Gi Spector               Ambush:             4/64 Chance       
-  Normal Battle #3:  15/64 Chance          Grp 1: 1x Gi Spector
-     Row 1: 2x Heg                         Grp 2: 1x Gi Spector
-     Row 2: 1x Sneaky Step
+     Row 1: 1x Sneaky Step                RUN DIFFICULTY:  2
+     Row 2: 3x Heg                         Row 1: 2x Sneaky Step
+  Normal Battle #2:  17/64 Chance       Side Attack:        8/64 Chance
+     Row 1: 1x Gi Spector                  Row 1: 2x Sneaky Step
+  Normal Battle #3:  15/64 Chance       Ambush:             4/64 Chance
+     Row 1: 2x Heg                         Grp 1: 1x Gi Spector
+     Row 2: 1x Sneaky Step                 Grp 2: 1x Gi Spector
   Normal Battle #4:  14/64 Chance
      Row 1: 2x Heg
      Row 2: 3x Heg
@@ -2062,11 +2190,13 @@ Nibelheim Mansion - 1st Floor                  Encounter Value:  48
      Row 1: 2x Dorky Face
      Row 2: 2x Dorky Face
   Normal Battle #1:  18/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Ghirofelgo
 
 
 Nibelheim Mansion - 2nd Floor                  Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     4/64 Chance
+    RUN DIFFICULTY:  2                    RUN DIFFICULTY:  3
      Row 1: 1x Ghirofelgo                  Row 1: 1x Ghirofelgo
   Normal Battle #2:  17/64 Chance       Ambush:             4/64 Chance
      Row 1: 1x Dorky Face                  Grp 1: 1x Jersey
@@ -2081,6 +2211,7 @@ Nibelheim Mansion - 2nd Floor                  Encounter Value:  48
 
 Nibelheim Mansion - Spiral Staircase           Encounter Value:  40
   Normal Battle #1:  24/64 Chance       Back Attack #1:     4/64 Chance
+    RUN DIFFICULTY:  2                    RUN DIFFICULTY:  2
      Row 1: 1x Ghirofelgo                  Row 1: 1x Black Bat
   Normal Battle #2:  22/64 Chance          Row 2: 2x Black Bat
      Row 1: 2x Dorky Face               Ambush:             4/64 Chance
@@ -2092,15 +2223,15 @@ Nibelheim Mansion - Spiral Staircase           Encounter Value:  40
 
 Nibelheim Mansion - Caves                      Encounter Value:  40
   Normal Battle #1:  15/64 Chance       Back Attack #1:     2/64 Chance
-     Row 1: 1x Black Bat                   Row 1: 2x Black Bat
-     Row 2: 1x Black Bat                   Row 2: 1x Black Bat
-  Normal Battle #2:  14/64 Chance       Back Attack #2:     2/64 Chance
-     Row 1: 2x Black Bat                   Row 1: 1x Ying, 1x Yang
-     Row 2: 1x Black Bat                Ambush:             4/64 Chance
-  Normal Battle #3:  13/64 Chance          Grp 1: 2x Black Bat
-     Row 1: 1x Black Bat                   Grp 2: 1x Black Bat
-     Row 2: 2x Black Bat
-     Row 3: 1x Black Bat
+     Row 1: 1x Black Bat                  RUN DIFFICULTY:  2
+     Row 2: 1x Black Bat                   Row 1: 2x Black Bat
+  Normal Battle #2:  14/64 Chance          Row 2: 1x Black Bat
+     Row 1: 2x Black Bat                Back Attack #2:     2/64 Chance
+     Row 2: 1x Black Bat                  RUN DIFFICULTY:  2
+  Normal Battle #3:  13/64 Chance          Row 1: 1x Ying, 1x Yang
+     Row 1: 1x Black Bat                Ambush:             4/64 Chance
+     Row 2: 2x Black Bat                   Grp 1: 2x Black Bat
+     Row 3: 1x Black Bat                   Grp 2: 1x Black Bat
   Normal Battle #4:  12/64 Chance
      Row 1: 1x Ying, 1x Yang
   Normal Battle #5:  10/64 Chance
@@ -2128,13 +2259,10 @@ Mt Nibel - Western Base (Normal)               Encounter Value:  72
 
 
 Mt Nibel - Wooden Bridge (Flashback)           Encounter Value: 128
-  Normal Battle #1:  34/64 Chance
+  Normal Battle #1:  64/64 Chance
      Row 1: 1x Sonic Speed
      Row 2: 1x Sonic Speed
      Row 3: 1x Sonic Speed
-  Normal Battle #2:  30/64 Chance
-     Row 1: 1x Sonic Speed
-     Row 2: 1x Sonic Speed
 
 
 Mt Nibel - Wooden Bridge (Normal)              Encounter Value:  72
@@ -2182,8 +2310,8 @@ Mt Nibel - Reactor Approach (Normal)           Encounter Value: 128
 
 Mt Nibel - Reactor Area (Normal)               Encounter Value: 128
   Normal Battle #1:  15/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Twin Brain                  Row 1: 2x Screamer
-     Row 2: 1x Sonic Speed
+     Row 1: 2x Twin Brain                 RUN DIFFICULTY:  2
+     Row 2: 1x Sonic Speed                 Row 1: 2x Screamer
   Normal Battle #2:  14/64 Chance
      Row 1: 1x Twin Brain
      Row 2: 2x Twin Brain
@@ -2199,11 +2327,11 @@ Mt Nibel - Reactor Area (Normal)               Encounter Value: 128
 
 Mt Nibel - In Front of Reactor (Normal)        Encounter Value: 128
   Normal Battle #1:  15/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Twin Brain                  Row 1: 2x Screamer
-     Row 2: 1x Sonic Speed              Ambush:             4/64 Chance
-  Normal Battle #2:  14/64 Chance          Grp 1: 1x Screamer
-     Row 1: 1x Twin Brain                  Grp 2: 1x Screamer
-     Row 2: 2x Twin Brain
+     Row 1: 2x Twin Brain                 RUN DIFFICULTY:  2
+     Row 2: 1x Sonic Speed                 Row 1: 2x Screamer
+  Normal Battle #2:  14/64 Chance       Ambush:             4/64 Chance
+     Row 1: 1x Twin Brain                  Grp 1: 1x Screamer
+     Row 2: 2x Twin Brain                  Grp 2: 1x Screamer
   Normal Battle #3:  13/64 Chance
      Row 1: 1x Sonic Speed
      Row 2: 2x Sonic Speed
@@ -2240,6 +2368,7 @@ Nibel Caves - Pipe Room                        Encounter Value:  72
      Row 1: 2x Twin Brain
      Row 2: 3x Kyuvilduns
   Normal Battle #4:  14/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Dragon
 
 
@@ -2248,8 +2377,8 @@ Wutai, Da-chao Statue
 =====================
 Da Chao - Base                                 Encounter Value:  48
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 3x Razor Weed                  Row 1: 3x Razor Weed
-  Normal Battle #2:  22/64 Chance
+     Row 1: 3x Razor Weed                 RUN DIFFICULTY:  2
+  Normal Battle #2:  22/64 Chance          Row 1: 3x Razor Weed
      Row 1: 1x Bizarre Bug
      Row 2: 1x Bizarre Bug
   Normal Battle #3:  18/64 Chance
@@ -2259,9 +2388,9 @@ Da Chao - Base                                 Encounter Value:  48
 
 Da Chao - Far Left Hand                        Encounter Value:  48
   Normal Battle #1:  24/64 Chance       Back Attack #1:    12/64 Chance
-     Row 1: 1x Foulander                   Row 1: 1x Foulander
-     Row 2: 3x Bizarre Bug                 Row 2: 1x Foulander
-  Normal Battle #2:  22/64 Chance
+     Row 1: 1x Foulander                  RUN DIFFICULTY:  2
+     Row 2: 3x Bizarre Bug                 Row 1: 1x Foulander
+  Normal Battle #2:  22/64 Chance          Row 2: 1x Foulander
      Row 1: 2x Foulander
   Normal Battle #3:  18/64 Chance
      Row 1: 3x Foulander
@@ -2269,9 +2398,9 @@ Da Chao - Far Left Hand                        Encounter Value:  48
 
 Da Chao - Lower Junction                       Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Foulander                   Row 1: 1x Foulander
-     Row 2: 3x Bizarre Bug                 Row 2: 1x Foulander
-  Normal Battle #2:  17/64 Chance
+     Row 1: 1x Foulander                  RUN DIFFICULTY:  2
+     Row 2: 3x Bizarre Bug                 Row 1: 1x Foulander
+  Normal Battle #2:  17/64 Chance          Row 2: 1x Foulander
      Row 1: 2x Foulander
   Normal Battle #3:  15/64 Chance
      Row 1: 3x Foulander
@@ -2309,11 +2438,11 @@ Da Chao - Upper Junction                       Encounter Value:  48
 
 Da Chao - Topmost Hand                         Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Garuda                      Row 1: 3x Razor Weed
-     Row 2: 1x Foulander                Ambush:             4/64 Chance
-  Normal Battle #2:  17/64 Chance          Grp 1: 2x Foulander
-     Row 1: 1x Garuda                      Grp 2: 1x Garuda
-     Row 2: 2x Garuda
+     Row 1: 2x Garuda                     RUN DIFFICULTY:  2
+     Row 2: 1x Foulander                   Row 1: 3x Razor Weed
+  Normal Battle #2:  17/64 Chance       Ambush:             4/64 Chance
+     Row 1: 1x Garuda                      Grp 1: 2x Foulander
+     Row 2: 2x Garuda                      Grp 2: 1x Garuda
   Normal Battle #3:  15/64 Chance
      Row 1: 2x Foulander
   Normal Battle #4:  14/64 Chance
@@ -2326,15 +2455,15 @@ Temple of the Ancients
 ======================
 Temple of the Ancients - Main Area             Encounter Value: 128
   Normal Battle #1:  15/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Kelzmelzer                  Row 1: 1x Kelzmelzer
-  Normal Battle #2:  14/64 Chance          Row 2: 1x Kelzmelzer
-     Row 1: 1x Under Lizard             Back Attack #1:     4/64 Chance
-  Normal Battle #3:  13/64 Chance          Row 1: 1x Kelzmelzer
-     Row 1: 2x Kelzmelzer                  Row 2: 2x Toxic Frog
-     Row 2: 2x Toxic Frog               Side Attack:        8/64 Chance
-  Normal Battle #4:  12/64 Chance          Row 1: 2x Kelzmelzer
-     Row 1: 1x Under Lizard
-     Row 2: 2x Toxic Frog
+     Row 1: 2x Kelzmelzer                 RUN DIFFICULTY:  2
+  Normal Battle #2:  14/64 Chance          Row 1: 1x Kelzmelzer
+     Row 1: 1x Under Lizard                Row 2: 1x Kelzmelzer
+  Normal Battle #3:  13/64 Chance       Back Attack #2:     4/64 Chance
+     Row 1: 2x Kelzmelzer                 RUN DIFFICULTY:  2
+     Row 2: 2x Toxic Frog                  Row 1: 1x Kelzmelzer
+  Normal Battle #4:  12/64 Chance          Row 2: 2x Toxic Frog
+     Row 1: 1x Under Lizard             Side Attack:        8/64 Chance
+     Row 2: 2x Toxic Frog                  Row 1: 2x Kelzmelzer
   Normal Battle #5:  10/64 Chance
      Row 1: 1x Doorbull
 
@@ -2372,8 +2501,8 @@ Corel Valley - Approaching Forgotten City      Encounter Value:  72
 
 Corel Valley - Giant Conch Shell               Encounter Value:  72
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Boundfat                    Row 1: 3x Boundfat
-     Row 2: 1x Boundfat
+     Row 1: 2x Boundfat                   RUN DIFFICULTY:  2
+     Row 2: 1x Boundfat                    Row 1: 3x Boundfat
   Normal Battle #2:  22/64 Chance
      Row 1: 1x Trickplay
      Row 2: 2x Boundfat
@@ -2386,11 +2515,11 @@ Corel Valley Cave
 =================
 Corel Valley Cave                              Encounter Value:  72
   Normal Battle #1:  15/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 3x Grimguard                   Row 1: 2x Boundfat, 1x Hungry
-  Normal Battle #2:  14/64 Chance       Ambush:             4/64 Chance
-     Row 1: 1x Acrophies                   Grp 1: 1x Hungry
-  Normal Battle #3:  13/64 Chance          Grp 2: 1x Hungry
-     Row 1: 2x Hungry
+     Row 1: 3x Grimguard                  RUN DIFFICULTY:  2
+  Normal Battle #2:  14/64 Chance          Row 1: 2x Boundfat, 1x Hungry
+     Row 1: 1x Acrophies                Ambush:             4/64 Chance
+  Normal Battle #3:  13/64 Chance          Grp 1: 1x Hungry
+     Row 1: 2x Hungry                      Grp 2: 1x Hungry
   Normal Battle #4:  12/64 Chance
      Row 1: 3x Boundfat
      Row 2: 1x Hungry
@@ -2423,11 +2552,11 @@ Glacier Pass - L/R Snow and L/R Ice            Encounter Value: 128
 
 Glacier Pass - L/R Narrow, Diagonal, Forest    Encounter Value: 128
   Normal Battle #1:  17/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Shred                       Row 1: 2x Bandersnatch
-     Row 2: 1x Shred                    Ambush:             4/64 Chance
-  Normal Battle #2:  16/64 Chance          Grp 1: 2x Bandersnatch
-     Row 1: 1x Frozen Nail                 Grp 2: 1x Bandersnatch
-     Row 2: 1x Frozen Nail
+     Row 1: 2x Shred                      RUN DIFFICULTY:  2
+     Row 2: 1x Shred                       Row 1: 2x Bandersnatch
+  Normal Battle #2:  16/64 Chance       Ambush:             4/64 Chance
+     Row 1: 1x Frozen Nail                 Grp 1: 2x Bandersnatch
+     Row 2: 1x Frozen Nail                 Grp 2: 1x Bandersnatch
   Normal Battle #3:  15/64 Chance
      Row 1: 2x Shred
      Row 2: 1x Frozen Nail
@@ -2440,8 +2569,9 @@ Glacier Pass - L/R Narrow, Diagonal, Forest    Encounter Value: 128
 
 Great Glacier - Southern Ice Cave              Encounter Value: 128
   Normal Battle #1:  24/64 Chance       Ambush:             8/64 Chance
-     Row 1: 1x Lessaloploth                Grp 1: 2x Hungry
-  Normal Battle #2:  22/64 Chance          Grp 2: 1x Hungry
+    RUN DIFFICULTY:  2                     Grp 1: 2x Hungry
+     Row 1: 1x Lessaloploth                Grp 2: 1x Hungry
+  Normal Battle #2:  22/64 Chance          
      Row 1: 3x Hungry
   Normal Battle #3:  18/64 Chance
      Row 1: 2x Bandersnatch
@@ -2450,13 +2580,13 @@ Great Glacier - Southern Ice Cave              Encounter Value: 128
 
 Great Glacier - Center Areas and Caves         Encounter Value: 128
   Normal Battle #1:  15/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Bandersnatch                Row 1: 2x Bandersnatch
-     Row 2: 1x Bandersnatch             Side Attack:        8/64 Chance
-  Normal Battle #2:  14/64 Chance          Row 1: 2x Bandersnatch, 1x Snow
-     Row 1: 1x Ice Golem                Ambush:             4/64 Chance
-  Normal Battle #3:  13/64 Chance          Grp 1: 1x Bandersnatch
-     Row 1: 2x Bandersnatch                Grp 2: 2x Bandersnatch
-  Normal Battle #4:  12/64 Chance
+     Row 1: 2x Bandersnatch               RUN DIFFICULTY:  2
+     Row 2: 1x Bandersnatch                Row 1: 2x Bandersnatch
+  Normal Battle #2:  14/64 Chance       Side Attack:        8/64 Chance
+     Row 1: 1x Ice Golem                   Row 1: 2x Bandersnatch, 1x Snow
+  Normal Battle #3:  13/64 Chance       Ambush:             4/64 Chance
+     Row 1: 2x Bandersnatch                Grp 1: 1x Bandersnatch
+  Normal Battle #4:  12/64 Chance          Grp 2: 2x Bandersnatch
      Row 1: 1x Snow
   Normal Battle #5:  10/64 Chance
      Row 1: 2x Ice Golem
@@ -2464,6 +2594,7 @@ Great Glacier - Center Areas and Caves         Encounter Value: 128
 
 Great Glacier - Northwest Areas and Caves      Encounter Value:  72
   Normal Battle #1:  14/64 Chance       Back Attack #1:     4/64 Chance
+    RUN DIFFICULTY:  2                    RUN DIFFICULTY:  3
      Row 1: 1x Magnade                     Row 1: 1x Magnade
   Normal Battle #2:  12/64 Chance       Ambush:             4/64 Chance
      Row 1: 1x Lessaloploth                Grp 1: 1x Bandersnatch
@@ -2472,11 +2603,14 @@ Great Glacier - Northwest Areas and Caves      Encounter Value:  72
      Row 1: 2x Bandersnatch
      Row 2: 2x Bandersnatch
   Normal Battle #4:  10/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Snow
      Row 2: 1x Lessaloploth
   Normal Battle #5:   9/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Snow
   Normal Battle #6:   8/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 2x Magnade
 
 
@@ -2500,9 +2634,10 @@ Gaea's Cliff
 ============
 Gaea's Cliff - Outdoors                        Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Headbomber                  Row 1: 2x Headbomber
-     Row 2: 1x Headbomber
+     Row 1: 2x Headbomber                 RUN DIFFICULTY:  2 
+     Row 2: 1x Headbomber                  Row 1: 2x Headbomber
   Normal Battle #2:  17/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Malboro
   Normal Battle #3:  15/64 Chance
      Row 1: 2x Zolokalter
@@ -2513,11 +2648,11 @@ Gaea's Cliff - Outdoors                        Encounter Value:  48
 
 Gaea's Cliff - Indoors                         Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Stilva                      Row 1: 1x Stilva
-  Normal Battle #2:  17/64 Chance       Ambush:             4/64 Chance
-     Row 1: 2x Headbomber,                 Grp 1: 1x Evilhead
-               1x Zolokalter               Grp 2: 1x Evilhead
-  Normal Battle #3:  15/64 Chance
+     Row 1: 1x Stilva                     RUN DIFFICULTY:  2
+  Normal Battle #2:  17/64 Chance          Row 1: 1x Stilva
+     Row 1: 2x Headbomber,              Ambush:             4/64 Chance
+               1x Zolokalter               Grp 1: 1x Evilhead
+  Normal Battle #3:  15/64 Chance          Grp 2: 1x Evilhead
      Row 1: 2x Zolokalter
      Row 2: 2x Zolokalter
   Normal Battle #4:  14/64 Chance
@@ -2527,8 +2662,8 @@ Gaea's Cliff - Indoors                         Encounter Value:  48
 
 Gaea's Cliff - Schizo's Lair                   Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 3x Evilhead                    Row 1: 2x Cuahl
-  Normal Battle #2:  17/64 Chance
+     Row 1: 3x Evilhead                   RUN DIFFICULTY:  2
+  Normal Battle #2:  17/64 Chance          Row 1: 2x Cuahl
      Row 1: 2x Cuahl
   Normal Battle #3:  15/64 Chance
      Row 1: 1x Cuahl, 2x Headbomber
@@ -2551,8 +2686,8 @@ Whirlwind Maze - Crater                        Encounter Value:  32
 
 Whirlwind Maze - Long Straight L/R Road        Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 3x Gremlin                     Row 1: 2x Gremlin
-  Normal Battle #2:  17/64 Chance
+     Row 1: 3x Gremlin                    RUN DIFFICULTY:  2
+  Normal Battle #2:  17/64 Chance          Row 1: 2x Gremlin
      Row 1: 2x Sculpture
   Normal Battle #3:  15/64 Chance
      Row 1: 1x Ironite
@@ -2563,11 +2698,11 @@ Whirlwind Maze - Long Straight L/R Road        Encounter Value:  48
 
 Whirlwind Maze - Winding Path                  Encounter Value:  48
   Normal Battle #1:  15/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Wind Wing                   Row 1: 2x Wind Wing
-     Row 2: 1x Wind Wing                Ambush:             4/64 Chance
-  Normal Battle #2:  14/64 Chance          Grp 1: 1x Wind Wing
-     Row 1: 1x Dragon Rider                Grp 2: 2x Wind Wing
-  Normal Battle #3:  13/64 Chance
+     Row 1: 1x Wind Wing                  RUN DIFFICULTY:  2
+     Row 2: 1x Wind Wing                   Row 1: 2x Wind Wing
+  Normal Battle #2:  14/64 Chance       Ambush:             4/64 Chance
+     Row 1: 1x Dragon Rider                Grp 1: 1x Wind Wing
+  Normal Battle #3:  13/64 Chance          Grp 2: 2x Wind Wing
      Row 1: 1x Ironite
      Row 2: 2x Wind Wing
   Normal Battle #4:  12/64 Chance
@@ -2580,10 +2715,8 @@ Whirlwind Maze - Winding Path                  Encounter Value:  48
 Junon (Disc Two): Aljunon
 =========================
 Aljunon - Outside Execution Room (During Esc.) Encounter Value:  48
-  Normal Battle #1:  34/64 Chance
+  Normal Battle #1:  64/64 Chance
      Row 1: 1x SOLDIER:2nd
-  Normal Battle #2:  30/64 Chance
-     Row 1: 2x SOLDIER:2nd
 
 
 Junon - Barret's Escape on Main Concourse      Encounter Value:  48
@@ -2591,6 +2724,7 @@ Junon - Airship Dock (During Escape)           Encounter Value:  48
   Normal Battle #1:  24/64 Chance
      Row 1: 1x SOLDIER:2nd
   Normal Battle #2:  22/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Roulette Cannon
   Normal Battle #3:  18/64 Chance
      Row 1: 2x SOLDIER:2nd
@@ -2601,8 +2735,9 @@ Junon Path
 ==========
 Junon - Airship Dock (After Escape)            Encounter Value:  48
   Normal Battle #1:  24/64 Chance       Ambush:             4/64 Chance
-     Row 1: 1x Roulette Cannon             Grp 1: 1x SOLDIER:2nd
-  Normal Battle #2:  22/64 Chance          Grp 2: 1x SOLDIER:2nd
+    RUN DIFFICULTY:  2                     Grp 1: 1x SOLDIER:2nd
+     Row 1: 1x Roulette Cannon             Grp 2: 1x SOLDIER:2nd
+  Normal Battle #2:  22/64 Chance       
      Row 1: 2x SOLDIER:2nd
   Normal Battle #3:  18/64 Chance
      Row 1: 2x SOLDIER:2nd,
@@ -2613,31 +2748,29 @@ Aljunon - Outside Execution Room (After Esc.)  Encounter Value:  48
 Junon Path - Outside Elevator                  Encounter Value:  48
 Junon Path - 1st Corridor                      Encounter Value:  48
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 2x Slalom                      Row 1: 2x Slalom
-  Normal Battle #2:  22/64 Chance       Side Attack:        8/64 Chance
-     Row 1: 1x Slalom                      Row 1: 1x Death Machine
-     Row 2: 2x Slalom
+     Row 1: 2x Slalom                     RUN DIFFICULTY:  2
+  Normal Battle #2:  22/64 Chance          Row 1: 2x Slalom
+     Row 1: 1x Slalom                   Side Attack:        8/64 Chance
+     Row 2: 2x Slalom                      Row 1: 1x Death Machine
   Normal Battle #3:  18/64 Chance
      Row 1: 1x Death Machine
 
 
 Junon Path - Submarine Dock                    Encounter Value:  48
-  Normal Battle #1:  34/64 Chance
+  Normal Battle #1:  64/64 Chance
      Row 1: 3x SOLDIER:2nd
-  Normal Battle #2:  30/64 Chance
-     Row 2: 2x SOLDIER:2nd
 
 
 Junon Path - 2nd and 3rd Corridor              Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     2/64 Chance
-     Row 1: 1x Death Machine               Row 1: 2x SOLDIER:2nd
-     Row 2: 1x Death Machine            Back Attack #2:     2/64 Chance
-  Normal Battle #2:  17/64 Chance          Row 1: 2x Slalom
-     Row 1: 1x Guard System             Ambush:             4/64 Chance
-  Normal Battle #3:  15/64 Chance          Grp 1: 2x SOLDIER:2nd
-     Row 1: 2x Slalom                      Grp 2: 1x SOLDIER:2nd
-     Row 2: 1x SOLDIER:2nd
-  Normal Battle #4:  14/64 Chance
+     Row 1: 1x Death Machine              RUN DIFFICULTY:  2
+     Row 2: 1x Death Machine               Row 1: 2x SOLDIER:2nd
+  Normal Battle #2:  17/64 Chance       Back Attack #2:     2/64 Chance
+     Row 1: 1x Guard System               RUN DIFFICULTY:  2
+  Normal Battle #3:  15/64 Chance          Row 1: 2x Slalom
+     Row 1: 2x Slalom                   Ambush:             4/64 Chance
+     Row 2: 1x SOLDIER:2nd                 Grp 1: 2x SOLDIER:2nd
+  Normal Battle #4:  14/64 Chance          Grp 2: 1x SOLDIER:2nd
      Row 1: 2x Guard System
   
 
@@ -2658,9 +2791,9 @@ Underwater Reactor
 Underwater Reactor - Walkway Over Subs         Encounter Value:  48
 Underwater Reactor - Save Point Corridor       Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Senior Grunt,               Row 1: 1x Gun Carrier
-               1x Gun Carrier              Row 2: 1x Senior Grunt
-  Normal Battle #2:  17/64 Chance
+     Row 1: 1x Senior Grunt,              RUN DIFFICULTY:  2
+               1x Gun Carrier              Row 1: 1x Gun Carrier
+  Normal Battle #2:  17/64 Chance          Row 2: 1x Senior Grunt
      Row 1: 1x Hard Attacker
      Row 2: 1x Hard Attacker
   Normal Battle #3:  15/64 Chance
@@ -2672,12 +2805,12 @@ Underwater Reactor - Save Point Corridor       Encounter Value:  48
 
 Underwater Reactor - Reactor Chamber           Encounter Value:  48
   Normal Battle #1:  18/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Guardian                    Row 1: 1x Guardian
-  Normal Battle #2:  17/64 Chance       Back Attack #2:     4/64 Chance
-     Row 1: 1x Guardian                    Row 1: 1x Gun Carrier
-     Row 2: 1x Guardian                    Row 2: 1x Senior Grunt
-  Normal Battle #3:  15/64 Chance
-     Row 1: 1x Senior Grunt,
+     Row 1: 1x Guardian                   RUN DIFFICULTY:  2
+  Normal Battle #2:  17/64 Chance          Row 1: 1x Guardian
+     Row 1: 1x Guardian                 Back Attack #2:     4/64 Chance
+     Row 2: 1x Guardian                   RUN DIFFICULTY:  2
+  Normal Battle #3:  15/64 Chance          Row 1: 1x Gun Carrier
+     Row 1: 1x Senior Grunt,               Row 2: 1x Senior Grunt
                1x Gun Carrier
   Normal Battle #4:  14/64 Chance
      Row 1: 1x Hard Attacker
@@ -2689,7 +2822,7 @@ The Ancient Forest
 ==================
 Ancient Forest - 1st Screen and Treetops       Encounter Value: 128
   Normal Battle #1:  18/64 Chance
-     Row 1: Rilfsak
+     Row 1: 1x Rilfsak
      Row 2: 2x Rilfsak
   Normal Battle #2:  17/64 Chance
      Row 1: 2x Epiolnis
@@ -2701,20 +2834,20 @@ Ancient Forest - 1st Screen and Treetops       Encounter Value: 128
 
 Ancient Forest - 2nd and 3rd Screen            Encounter Value: 128
   Normal Battle #1:  18/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: Rilfsak                        Row 1: 2x Rilfsak
-     Row 2: 2x Rilfsak                  Side Attack:        8/64 Chance
-  Normal Battle #2:  17/64 Chance          Row 1: 3x Rilfsak
-     Row 1: 2x Epiolnis                 Ambush:             4/64 Chance
-  Normal Battle #3:  15/64 Chance          Grp 1: 2x Rilfsak
-     Row 1: 2x Diablo                      Grp 2: 1x Rilfsak
-  Normal Battle #4:  14/64 Chance
+     Row 1: 1x Rilfsak                    RUN DIFFICULTY:  2
+     Row 2: 2x Rilfsak                     Row 1: 2x Rilfsak
+  Normal Battle #2:  17/64 Chance       Side Attack:        8/64 Chance
+     Row 1: 2x Epiolnis                    Row 1: 3x Rilfsak
+  Normal Battle #3:  15/64 Chance       Ambush:             4/64 Chance
+     Row 1: 2x Diablo                      Grp 1: 2x Rilfsak
+  Normal Battle #4:  14/64 Chance          Grp 2: 1x Rilfsak
      Row 1: 1x Diablo, 2x Rilfsak
 
 
 Ancient Forest - Cave                          Encounter Value:  48
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
-     Row 1: 1x Diablo                      Row 1: 2x Diablo
-     Row 2: 1x Diablo
+     Row 1: 1x Diablo                     RUN DIFFICULTY:  2
+     Row 2: 1x Diablo                      Row 1: 2x Diablo
   Normal Battle #2:  22/64 Chance
      Row 1: 2x Rilfsak
      Row 2: 1x Epiolnis
@@ -2727,10 +2860,13 @@ The Gelnika
 ===========
 Gelnika - Northern Room                        Encounter Value:  40
   Normal Battle #1:  24/64 Chance       Back Attack #1:     8/64 Chance
+    RUN DIFFICULTY:  3                    RUN DIFFICULTY:  4
      Row 1: 1x Unknown                     Row 1: 1x Unknown
   Normal Battle #2:  22/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Unknown 3
   Normal Battle #3:  18/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 2x Unknown 2
   
 
@@ -2748,12 +2884,16 @@ Gelnika - Connecting Corridor                  Encounter Value:  48
 
 Gelnika - Flooded Cargo Bay                    Encounter Value:  48
   Normal Battle #1:  18/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Serpent
   Normal Battle #2:  17/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Unknown
   Normal Battle #3:  15/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Unknown 3
   Normal Battle #4:  14/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 2x Unknown 2
 
 
@@ -2762,14 +2902,14 @@ Sector 8 Underground
 ====================
 Midgar - Sector 8 Underground (Upper)          Encounter Value:  48
   Normal Battle #1:  14/64 Chance       Back Attack #1:     2/64 Chance
-     Row 1: 2x Cromwell                    Row 1: 1x Cromwell
-  Normal Battle #2:  12/64 Chance       Back Attack #2:     2/64 Chance
-     Row 1: 1x Manhole                     Row 1: 2x Cromwell
-     Row 2: 2x Manhole                  Ambush:             4/64 Chance
-  Normal Battle #3:  11/64 Chance          Grp 1: 1x Cromwell
-     Row 1: 1x Manhole                     Grp 2: 1x Cromwell
-     Row 2: 2x Manhole
-  Normal Battle #4:  10/64 Chance
+     Row 1: 2x Cromwell                   RUN DIFFICULTY:  2
+  Normal Battle #2:  12/64 Chance          Row 1: 1x Cromwell
+     Row 1: 1x Manhole                  Back Attack #2:     2/64 Chance
+     Row 2: 2x Manhole                    RUN DIFFICULTY:  2
+  Normal Battle #3:  11/64 Chance          Row 1: 2x Cromwell
+     Row 1: 1x Manhole                  Ambush:             4/64 Chance
+     Row 2: 2x Manhole                     Grp 1: 1x Cromwell
+  Normal Battle #4:  10/64 Chance          Grp 2: 1x Cromwell
      Row 1: 1x Behemoth
   Normal Battle #5:   9/64 Chance
      Row 1: 1x Crazy Saw
@@ -2780,14 +2920,14 @@ Midgar - Sector 8 Underground (Upper)          Encounter Value:  48
 
 Midgar - Sector 8 Underground (Lower)          Encounter Value:  48
   Normal Battle #1:  14/64 Chance       Back Attack #1:     2/64 Chance
-     Row 1: 1x Cromwell                    Row 1: 1x Cromwell
-     Row 2: 2x Cromwell                 Back Attack #2:     2/64 Chance
-  Normal Battle #2:  12/64 Chance          Row 1: 2x Cromwell
-     Row 1: 1x Manhole                  Ambush:             4/64 Chance
-     Row 2: 2x Manhole                     Grp 1: 1x Cromwell
-  Normal Battle #3:  11/64 Chance          Grp 2: 1x Cromwell
-     Row 1: 1x Manhole
-     Row 2: 2x Manhole
+     Row 1: 1x Cromwell                   RUN DIFFICULTY:  2
+     Row 2: 2x Cromwell                    Row 1: 1x Cromwell
+  Normal Battle #2:  12/64 Chance       Back Attack #2:     2/64 Chance
+     Row 1: 1x Manhole                    RUN DIFFICULTY:  2
+     Row 2: 2x Manhole                     Row 1: 2x Cromwell
+  Normal Battle #3:  11/64 Chance       Ambush:             4/64 Chance
+     Row 1: 1x Manhole                     Grp 1: 1x Cromwell
+     Row 2: 2x Manhole                     Grp 2: 1x Cromwell
   Normal Battle #4:  10/64 Chance
      Row 1: 1x Behemoth
   Normal Battle #5:   9/64 Chance
@@ -2800,11 +2940,11 @@ Midgar - Sector 8 Underground (Lower)          Encounter Value:  48
 Midgar Raid - Train Tunnel Segments            Encounter Value:  72
 Midgar Raid - Train Tunnel Junctions           Encounter Value: 128
   Normal Battle #1:  18/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Crazy Saw                   Row 1: 2x Shadow Maker
-  Normal Battle #2:  17/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Shadow Maker                Row 1: 1x Crazy Saw
-  Normal Battle #3:  15/64 Chance
-     Row 1: 1x Shadow Maker
+     Row 1: 1x Crazy Saw                  RUN DIFFICULTY:  2
+  Normal Battle #2:  17/64 Chance          Row 1: 2x Shadow Maker
+     Row 1: 2x Shadow Maker             Back Attack #2:     4/64 Chance
+  Normal Battle #3:  15/64 Chance         RUN DIFFICULTY:  2
+     Row 1: 1x Shadow Maker                Row 1: 1x Crazy Saw
      Row 2: 2x Shadow Maker
   Normal Battle #4:  14/64 Chance
      Row 1: 2x Shadow Maker
@@ -2827,11 +2967,11 @@ Midgar - Sister Ray Base                       Encounter Value:  48
 
 Sister Ray - Upper Gantries                    Encounter Value:  48
   Normal Battle #1:  15/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x SOLDIER:1st                 Row 1: 2x SOLDIER:1st
-  Normal Battle #2:  14/64 Chance       Ambush:             4/64 Chance
-     Row 1: 1x XCannon                     Grp 1: 1x SOLDIER:1st
-  Normal Battle #3:  13/64 Chance          Grp 2: 1x SOLDIER:1st
-     Row 1: 2x SOLDIER:1st
+     Row 1: 2x SOLDIER:1st                RUN DIFFICULTY:  2
+  Normal Battle #2:  14/64 Chance          Row 1: 2x SOLDIER:1st
+     Row 1: 1x XCannon                  Ambush:             4/64 Chance
+  Normal Battle #3:  13/64 Chance          Grp 1: 1x SOLDIER:1st
+     Row 1: 2x SOLDIER:1st                 Grp 2: 1x SOLDIER:1st
      Row 2: 1x SOLDIER:1st
   Normal Battle #4:  12/64 Chance
      Row 1: 1x Maximum Kimaira
@@ -2855,22 +2995,22 @@ Northern Crater - Descent (1st Screen)         Encounter Value:  32
 
 Northern Crater - Descent (2nd Screen)         Encounter Value:  24
   Normal Battle #1:  18/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Scissors                    Row 1: 2x Parasite
-  Normal Battle #2:  17/64 Chance       Back Attack #2:     4/64 Chance
-     Row 1: 1x Dark Dragon                 Row 1: 1x Scissors
-  Normal Battle #3:  15/64 Chance
-     Row 1: 2x Parasite
+     Row 1: 1x Scissors                   RUN DIFFICULTY:  2
+  Normal Battle #2:  17/64 Chance          Row 1: 2x Parasite
+     Row 1: 1x Dark Dragon              Back Attack #2:     4/64 Chance
+  Normal Battle #3:  15/64 Chance         RUN DIFFICULTY:  2
+     Row 1: 2x Parasite                    Row 1: 1x Scissors
   Normal Battle #4:  14/64 Chance
      Row 1: 2x Gargoyle
 
 
 Northern Crater - Descent (3rd Screen - Outer) Encounter Value:  24
   Normal Battle #1:  15/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Scissors                    Row 1: 2x Parasite
-  Normal Battle #2:  14/64 Chance       Back Attack #2:     4/64 Chance
-     Row 1: 1x Dark Dragon                 Row 1: 1x Scissors
-  Normal Battle #3:  13/64 Chance
-     Row 1: 2x Parasite
+     Row 1: 1x Scissors                   RUN DIFFICULTY:  2
+  Normal Battle #2:  14/64 Chance          Row 1: 2x Parasite
+     Row 1: 1x Dark Dragon              Back Attack #2:     4/64 Chance
+  Normal Battle #3:  13/64 Chance         RUN DIFFICULTY:  2
+     Row 1: 2x Parasite                    Row 1: 1x Scissors
   Normal Battle #4:  12/64 Chance
      Row 1: 1x Parasite
      Row 2: 2x Parasite
@@ -2881,33 +3021,36 @@ Northern Crater - Descent (3rd Screen - Outer) Encounter Value:  24
 Northern Crater - Descent (3rd Screen - Cave)  Encounter Value:  32
 Northern Crater - Dividing Point               Encounter Value:  40
   Normal Battle #1:  14/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 2x Scissors                    Row 1: 2x Parasite
-  Normal Battle #2:  12/64 Chance       Back Attack #2:     4/64 Chance
-     Row 1: 1x Dark Dragon                 Row 1: 1x Scissors
-  Normal Battle #3:  11/64 Chance
-     Row 1: 2x Parasite
+     Row 1: 2x Scissors                   RUN DIFFICULTY:  2
+  Normal Battle #2:  12/64 Chance          Row 1: 2x Parasite
+     Row 1: 1x Dark Dragon              Back Attack #2:     4/64 Chance
+  Normal Battle #3:  11/64 Chance         RUN DIFFICULTY:  2
+     Row 1: 2x Parasite                    Row 1: 1x Scissors
   Normal Battle #4:  10/64 Chance
      Row 1: 1x Scissors
   Normal Battle #5:   9/64 Chance
      Row 1: 1x Parasite
      Row 2: 2x Parasite
   Normal Battle #6:   8/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Master Tonberry
 
 
 Northern Crater - Graveyard (Upp/Lwr Pillar)   Encounter Value:  32
 Northern Crater - Graveyard (Hatchery+Spine)   Encounter Value:  24
   Normal Battle #1:  14/64 Chance       Back Attack #1:     4/64 Chance
-     Row 1: 1x Pollensalta                 Row 1: 1x Death Dealer
-  Normal Battle #2:  12/64 Chance       Ambush:             4/64 Chance
-     Row 1: 2x Death Dealer                Grp 1: 1x Death Dealer
-  Normal Battle #3:  11/64 Chance          Grp 2: 1x Death Dealer
-     Row 1: 1x Pollensalta, 2x Parasite
+     Row 1: 1x Pollensalta                RUN DIFFICULTY:  2
+  Normal Battle #2:  12/64 Chance          Row 1: 1x Death Dealer
+     Row 1: 2x Death Dealer             Ambush:             4/64 Chance
+  Normal Battle #3:  11/64 Chance          Grp 1: 1x Death Dealer
+     Row 1: 1x Pollensalta, 2x Parasite    Grp 2: 1x Death Dealer
   Normal Battle #4:  10/64 Chance
      Row 1: 3x Parasite
   Normal Battle #5:   9/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Malboro
   Normal Battle #6:   8/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Dragon Zombie
 
 
@@ -2915,12 +3058,16 @@ Northern Crater - Left Junction                Encounter Value:  32
 Northern Crater - Floating Platforms           Encounter Value:  32
 Northern Crater - Grassy Area                  Encounter Value:  32
   Normal Battle #1:  18/64 Chance       Back Attack #1:     8/64 Chance
+    RUN DIFFICULTY:  2                    RUN DIFFICULTY:  3
      Row 1: 1x King Behemoth               Row 1: 1x Allemagne
   Normal Battle #2:  17/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Allemagne
   Normal Battle #3:  15/64 Chance
+    RUN DIFFICULTY:  2
      Row 1: 1x Armored Golem
   Normal Battle #4:  14/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Master Tonberry
 
 
@@ -2935,9 +3082,128 @@ Northern Crater - Water Area (2nd Screen)      Encounter Value:  32
   Normal Battle #4:  11/64 Chance
      Row 1: 1x Allemagne
   Normal Battle #5:   9/64 Chance
+    RUN DIFFICULTY:  3
      Row 1: 1x Master Tonberry
   Normal Battle #6:   4/64 Chance
      Row 1: 3x Mover
+
+
+
+3.2.3 Unique Random Encounters
+----- ------------------------
+There are a few areas in the game where encounters are random, but are
+event-driven and do not use the standard encounter system.  The first main
+one is Battle Square, but that has been dealt with already in the individual
+Battle Square sections within the Enemy Listing.
+
+The other two areas that we will touch on are the Shinra HQ Elevator and the
+final descent in the Northern Crater.
+
+
+  Shinra HQ Elevator
+  ==================
+When infiltrating Shinra HQ, one of the optional routes you can take is the
+central elevator up to the 59th floor.  As you do so, however, the elevator
+goes haywire and you are forced to stop at random floors of the building,
+which frequently prompt a battle.  The battle you encounter is tied to the
+floor you stop on.
+
+You begin the trip starting on Floor 6.  Everytime Cloud presses the button
+to stop the elevator, you will end up a random number of floors higher than
+your last stop with the following chances of each:
+
+                      2/16 chance:  7 Floors higher
+                      2/16 chance:  8 Floors higher
+                      2/16 chance:  9 Floors higher
+                      2/16 chance: 10 Floors higher
+                      2/16 chance: 11 Floors higher
+                      2/16 chance: 12 Floors higher
+                      2/16 chance: 13 Floors higher
+                      1/16 chance: 14 Floors higher
+                      1/16 chance: 15 Floors higher
+
+
+This means that your first stop will be between Floors 13 and 21 inclusive.
+The doors will open and you will face the battle for that floor.  Once the
+battle is over, you are able to progress another 7 to 15 floors, all until
+the elevator reaches Floor 59, ending this journey.  Obviously, the elevator
+will not go higher than this floor and will stop as soon as it passes it.
+
+As stated previously, the encounter you get depends on the floor the elevator
+stops at.  However, not all the floors trigger a battle.  Certain floors,
+instead, reveal an unfortunate Shinra employee who simply lets you go on your
+way.  Meeting Hito (the name of this employee in the data files) is simply
+an amusing little event that can happen randomly and can even happen multiple
+times if you hit the right floors.
+
+With that aside, we'll list the floors and their appropriate encounters.
+
+   Floor 13:  2x Grenade Combatant
+   Floor 14:  3x Grenade Combatant
+   Floor 15:  1x Mighty Grunt
+   Floor 16:  2x Mighty Grunt
+   Floor 17:  2x Grenade Combatant
+   Floor 18:  3x Grenade Combatant
+   Floor 19:  1x Mighty Grunt
+   Floor 20:  2x Mighty Grunt
+   Floor 21:  3x Grenade Combatant
+   Floor 22:  2x Mighty Grunt
+   Floor 23:  2x Grenade Combatant
+   Floor 24:  2x Mighty Grunt
+   Floor 25:  1x Mighty Grunt
+   Floor 26:  2x Grenade Combatant
+   Floor 27:  3x Grenade Combatant
+   Floor 28:  1x Mighty Grunt
+   Floor 29: Meeting with Hito
+   Floor 30:  1x Hammer Blaster
+   Floor 31:  1x Sword Dance
+   Floor 32:  2x Sword Dance
+   Floor 33:  1x Moth Slasher
+   Floor 34:  1x Hammer Blaster
+   Floor 35:  1x Sword Dance
+   Floor 36:  2x Sword Dance
+   Floor 37:  1x Moth Slasher
+   Floor 38: Meeting with Hito
+   Floor 39:  1x Hammer Blaster
+   Floor 40:  2x Sword Dance
+   Floor 41:  1x Moth Slasher
+   Floor 42:  1x Sword Dance
+   Floor 43:  1x Sword Dance
+   Floor 44:  1x Hammer Blaster
+   Floor 45:  1x Moth Slasher
+   Floor 46:  2x Sword Dance
+   Floor 47: Meeting with Hito
+   Floor 48:  1x Moth Slasher
+   Floor 49:  1x Sword Dance
+   Floor 50:  1x Hammer Blaster
+   Floor 51:  1x Sword Dance
+   Floor 52:  1x Moth Slasher
+   Floor 53:  1x Hammer Blaster
+   Floor 54:  2x Sword Dance
+   Floor 55:  2x Sword Dance
+   Floor 56: Meeting with Hito
+   Floor 57:  1x Hammer Blaster
+   Floor 58:  1x Moth Slasher
+   Floor 59: Final Stop
+
+
+
+  Final Descent
+  =============
+After passing the point of no return in the Northern Crater, you descend
+down a series of hovering platforms towards the battle with Jenova*SYNTHESIS.
+
+Every time you hop to a new platform, you have a 76/256 (29.69%) chance of
+being attacked.  If you are attacked, the enemy will be one of the following:
+
+                 1x Allemagne:        26/256 (10.2%) chance
+                 1x Iron Man:        128/256 (50.0%) chance
+                 1x Dragon Zombie:   102/256 (39.8%) chance
+
+
+These battles occur only when you jump to a new platform.  There are 5 jumps
+on the first screen and 8 jumps on the second screen.
+
 
 
 
@@ -3055,12 +3321,11 @@ Each of these fields contain the following data:
     Auto Hit       that use the hit formula for magic abilities, and Auto Hit
                    is displayed for anything that uses neither the PAt% or
                    MAt% methods to hit.  The algorithms and formulas that use
-                   these values will be found in the Battle Mechanics guide
-                   in due course
+                   these values can be found in the Battle Mechanics guide
     Cost       - How much MP the attack costs the enemy.  If an enemy does
                    not have the MP the attack requires, it can no longer use
                    this attack
-    Tar        - The target(s) of the attack.  See section 1.2.3 in the FF7
+    Tar        - The target(s) of the attack.  See section 1.2.4 in the FF7
                    Battle Mechanics for details.  In the case of attacks that
                    can switch between 1 Tar and All Tar, the first listed
                    will be the default the monster uses
@@ -3095,9 +3360,9 @@ exploit.
 
   Another note about Dex: with regards to how fast an enemy's Time Bar fills,
 you should consider their Dex value to be *50 points lower* than their actual
-value is, when comparing to members of Cloud's party.  That means that an
-Unknown 2, with a listed value of 150 Dex, is no faster than a party member
-with 100 Dex; while a 1st Ray with a Dex of 40 will never be able to move
+value is when you compare to members of Cloud's party.  That means that an
+Unknown 2 - with a listed value of 150 Dex - is no faster than a party member
+with 100 Dex, while a 1st Ray with a Dex of 40 will never be able to move
 faster than any of your party members.
 
   The reason for this is that party members get a 50 point bonus to their Dex
@@ -3122,11 +3387,11 @@ This part is split into sections:
                  be run whenever the enemy experiences the listed effect.
 
 Note that the AI data listed in this document is translated, and is not an
-*EXACT* translation of exactly what it's doing behind the scenes, but it will
-always have the same effect and will hopefully be easier to understand as a
-result.  There are many cases where I have rewritten the structure of an AI
-script so that it takes up less space and is easier to read.  The end effect
-should be the same in all cases however.
+*EXACT* translation of precisely what it's doing behind the scenes.  But it
+will always have the same effect and will hopefully be easier to understand
+as a result.  There are many cases where I have rewritten the structure of an
+AI script so that it takes up less space and is easier to read.  The end
+effect should be the same in all cases however.
 
 Also note that much of the time, an AI script has access to many temporary
 variables.  These are all reset to 0 at the start of battle, and are
@@ -3146,9 +3411,9 @@ certain temporary variables if they're used in a certain way:
       SpclChance: Often, the chance for using a certain special effect will
                     change depending on certain situations, like as the
                     enemy nears death.  This variable dictates how often
-                    they tend to go over.  Lower values generally indicate a
-                    higher chance that the enemy will use more desperate
-                    moves.
+                    they tend to use these moves.  Lower values generally
+                    indicate a higher chance that the enemy will use more
+                    desperate attacks.
       CustomVar:  A special TempVar that can be checked by other monsters in
                     the same battle.  These, like other TempVars, will be
                     given names.
@@ -3179,7 +3444,9 @@ A few common commands and terminology will also be described here:
     the selection - 'All Opponents (incl. Dead)' as an example.  Also note
     that if an enemy Chooses a target that the attack it uses doesn't accept
     (a single target when the attack is an area), then the attack's targets
-    take priority.
+    take priority, and a random target out of the default list will be chosen
+    regardless of who was Chosen.  This can unfortunately lead to a few rare
+    bugs.
 
   x/y Chance
     This is a shorthand to indicate the chance of something happening.  When
@@ -3258,7 +3525,8 @@ No Elemental Properties
  Att: 6          Def: 4           Df%: 0           Dex: 50
  MAt: 0          MDf: 0                            Lck: 4
  ---
-No Special Attributes
+BUG: Due to flaws in MP's AI Script, they will not react differently to
+targets in different rows.
  ---
 Attacks:
   Machine Gun
@@ -3283,43 +3551,22 @@ AI: Main
 {
    If (MP is in Front Row) Then
    {
-      If (All Opponents are in Front Row) Then
+      If (1/2 Chance) Then
       {
          Choose Random Opponent
-         1/4 Chance: TempVar:ChosenAtt = Machine Gun
-         3/4 Chance: TempVar:ChosenAtt = <Tonfa>
-      } Else If (All Opponents are in Back Row) Then {
-         1/8 Chance: TempVar:ChosenAtt = <Tonfa>
-         7/8 Chance: TempVar:ChosenAtt = Machine Gun
+         TempVar:ChosenAtt = Machine Gun
       } Else {
-         If (1/2 Chance) Then
-         {
-            Choose Random Opponent in Back Row
-            TempVar:ChosenAtt = Machine Gun
-         } Else {
-            Choose Random Opponent in Front Row
-            TempVar:ChosenAtt = <Tonfa>
-         }
+         Choose Random Opponent
+         TempVar:ChosenAtt = <Tonfa>
       }
    } Else {
-      If (All Opponents are in Front Row) Then
+      If (1/6 Chance) Then
       {
          Choose Random Opponent
-         1/4 Chance: TempVar:ChosenAtt = <Tonfa>
-         3/4 Chance: TempVar:ChosenAtt = Machine Gun
-      } Else If (All Opponents are in Back Row) Then {
-         Choose Random Opponent
-         1/8 Chance: TempVar:ChosenAtt = <Tonfa>
-         7/8 Chance: TempVar:ChosenAtt = Machine Gun
+         TempVar:ChosenAtt = <Tonfa>
       } Else {
-         If (1/6 Chance) Then
-         {
-            Choose Random Opponent in Front Row
-            TempVar:ChosenAtt = <Tonfa>
-         } Else {
-            Choose Random Opponent in Back Row
-            TempVar:ChosenAtt = Machine Gun
-         }
+         Choose Random Opponent
+         TempVar:ChosenAtt = Machine Gun
       }
    }
    Use TempVar:ChosenAtt on Target
@@ -3338,7 +3585,8 @@ No Elemental Properties
  Att: 8          Def: 4           Df%: 6           Dex: 64
  MAt: 2          MDf: 2                            Lck: 6
  ---
-No Special Attributes
+BUG: Due to flaws in Guard Hound's AI Script, they will not react differently
+to targets in different rows.
  ---
 Attacks:
   <Bite>
@@ -3350,8 +3598,7 @@ Attacks:
     Elm: Hit
     Attr: Berserk Attack
           Manip.
-    Notes: Always targets a Front Row target, or else whoever has the
-           lowest HP
+    Notes: Always targets whoever has the lowest HP
   Tentacle
     Physical Attack
     Formula: Physical
@@ -3360,26 +3607,15 @@ Attacks:
     Tar: 1 Op
     Elm: Hit
     Attr: Manip.
-    Notes: Always targets a Back Row target, or else whoever has the
-           lowest HP
+    Notes: Always targets whoever has the lowest HP
  ---
 AI: Main
 {
    If (1/3 Chance) Then {
-      If (At Least One Opponent is in Back Row) Then
-      {
-         Choose Random Opponent in Back Row
-      } Else {
-         Choose Random Opponent with Lowest HP
-      }
+      Choose Random Opponent with Lowest HP
       TempVar:ChosenAtt = Tentacle
    } Else {
-      If (At Least One Opponent is in Front Row) Then
-      {
-         Choose Random Opponent in Front Row
-      } Else {
-         Choose Random Opponent with Lowest HP
-      }
+      Choose Random Opponent with Lowest HP
       TempVar:ChosenAtt = <Bite>
    }
    Use TempVar:ChosenAtt on Target
@@ -3400,6 +3636,9 @@ Void:   Earth
  MAt: 3          MDf: 4                            Lck: 2
  ---
 Immune: Stop, Frog, Paralysed
+
+BUG: Due to flaws in Mono Drive's AI Script, they will not react differently
+to targets in different rows.
  ---
 Attacks:
   <Drilldrive>
@@ -3411,8 +3650,7 @@ Attacks:
     Elm: Punch
     Attr: Berserk Attack
           Manip.
-    Notes: Always targets a Front Row target, or else whoever has the
-           lowest Def
+    Notes: Always targets whoever has the lowest Def
   Fire
     Magical Attack
     Formula: Magical
@@ -3423,8 +3661,7 @@ Attacks:
     Elm: Fire
     Attr: Reflectable
           Manip.
-    Notes: Always targets a Back Row target, or else whoever has the
-           lowest MDf
+    Notes: Always targets whoever has the lowest MDf
  ---
 AI: Main
 {
@@ -3438,21 +3675,11 @@ AI: Main
       TempVar:TakeTurn = 1
       If (1/3 Chance) Then
       {
-         If (At Least One Opponent is in Back Row) Then
-         {
-            Choose Random Opponent in Back Row
-         } Else {
-            Choose Random Opponent with Lowest MDf
-         }
+         Choose Random Opponent with Lowest MDf
          TempVar:ChosenAtt = Fire
          TempVar:MagicAtt = 1
       } Else {
-         If (At Least One Opponent is in Front Row) Then
-         {
-            Choose Random Opponent in Front Row
-         } Else {
-            Choose Random Opponent with Lowest Def
-         }
+         Choose Random Opponent with Lowest Def
          TempVar:ChosenAtt = <Drilldrive>
          TempVar:MagicAtt = 0
       }
@@ -3461,12 +3688,7 @@ AI: Main
    {
       If (Mono Drive's MP < 4) Then
       {
-         If (At Least One Opponent is in Front Row) Then
-         {
-            Choose Random Opponent in Front Row
-         } Else {
-            Choose Random Opponent with Lowest Def
-         }
+         Choose Random Opponent with Lowest Def
          TempVar:ChosenAtt = <Drilldrive>
       }
    }
@@ -3489,7 +3711,8 @@ No Elemental Properties
  Att: 12         Def: 10          Df%: 4           Dex: 58
  MAt: 2          MDf: 2                            Lck: 8
  ---
-No Special Attributes
+BUG: Due to flaws in Grunt's AI Script, they will not react differently to
+targets in different rows.
  ---
 Attacks:
   <Handclaw>
@@ -3509,50 +3732,29 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Manip.
+          Can't Cover
  ---
 AI: Main
 {
    If (Grunt is in Front Row) Then
    {
-      If (All Opponents are in Front Row) Then
+      If (1/2 Chance) Then
       {
          Choose Random Opponent
-         1/8 Chance: TempVar:ChosenAtt = Beam Gun
-         7/8 Chance: TempVar:ChosenAtt = <Handclaw>
-      } Else If (All Opponents are in Back Row) Then {
-         Choose Random Opponent
-         1/6 Chance: TempVar:ChosenAtt = <Handclaw>
-         5/6 Chance: TempVar:ChosenAtt = Beam Gun
+         TempVar:ChosenAtt = Beam Gun
       } Else {
-         If (1/2 Chance) Then
-         {
-            Choose Random Opponent in Back Row
-            TempVar:ChosenAtt = Beam Gun
-         } Else {
-            Choose Random Opponent in Front Row
-            TempVar:ChosenAtt = <Handclaw>
-         }         
-      }
+         Choose Random Opponent
+         TempVar:ChosenAtt = <Handclaw>
+      }         
    } Else {
-      If (All Opponents are in Front Row) Then
+      If (1/12 Chance) Then
       {
          Choose Random Opponent
-         1/8 Chance: TempVar:ChosenAtt = <Handclaw>
-         7/8 Chance: TempVar:ChosenAtt = Beam Gun
-      } Else If (All Opponents are in Back Row) Then {
-         Choose Random Opponent
-          1/16 Chance: TempVar:ChosenAtt = <Handclaw>
-         15/16 Chance: TempVar:ChosenAtt = Beam Gun
+         TempVar:ChosenAtt = <Handclaw>
       } Else {
-         If (1/12 Chance) Then
-         {
-            Choose Random Opponent in Front Row
-            TempVar:ChosenAtt = <Handclaw>
-         } Else {
-            Choose Random Opponent in Back Row
-            TempVar:ChosenAtt = Beam Gun
-         }         
-      }
+         Choose Random Opponent
+         TempVar:ChosenAtt = Beam Gun
+      }         
    }
    Use TempVar:ChosenAtt on Target
 }
@@ -3583,6 +3785,7 @@ Attacks:
     Elm: Shoot
     Attr: Berserk Attack
           Manip.
+          Can't Cover
     Notes: Always targets whoever has the highest HP
  ---
 AI: Main
@@ -3641,6 +3844,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Manip.
+          Can't Cover
  ---
 AI: Main
 {
@@ -3679,7 +3883,7 @@ Name: Guard Scorpion
   MP: 0          Gil: 100         Morph:      -
  ---
 Weak:   Lightning
-Void:   Poison, Gravity
+Void:   Gravity
  ---
  Att: 30         Def: 40          Df%: 0           Dex: 60
  MAt: 15         MDf: 300                          Lck: 1
@@ -3898,6 +4102,7 @@ Attacks:
     Elm: Shoot
     Attr: Berserk Attack
           Manip.
+          Can't Cover
     Notes: Always targets whoever has the lowest HP
  ---
 AI: Main
@@ -4052,7 +4257,7 @@ Name: Smogger
 Asrb:   Poison
  ---
  Att: 22         Def: 24          Df%: 1           Dex: 47
- MAt: 8          MDf: 64                           Lck: 1
+ MAt: 4          MDf: 64                           Lck: 1
  ---
 Immune: Sleep, Poison, Sadness, Fury, Frog, Small, Death-sentence, Paralysed,
         Darkness
@@ -4076,6 +4281,7 @@ Attacks:
     Elm: Non-Element
     Attr: [ 88] Inflict 'Poison'
           Manip.
+          Can't Cover
   Smog
     Physical Attack
     Formula: Physical
@@ -4085,6 +4291,7 @@ Attacks:
     Elm: Non-Element
     Attr: [ 92] Inflict 'Darkness'
           Manip.
+          Can't Cover
  ---
 AI: Setup
 {
@@ -4173,6 +4380,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Manip.
+          Can't Cover
   Wave
     Physical Attack
     Formula: Physical
@@ -4181,6 +4389,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shout
     Attr: Manip.
+          Can't Cover
     Notes: Always targets whoever has the lowest HP
  ---
 AI: Setup
@@ -4390,7 +4599,8 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shoot
-    Can only use in Program 1 Operation
+    Attr: Can't Cover
+    Notes: Can only use in Program 1 Operation
   Energy Ball
     Physical Attack
     Formula: Physical
@@ -4398,7 +4608,8 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shout
-    Can only use in Program 2 Operation
+    Attr: Can't Cover
+    Notes: Can only use in Program 2 Operation
   Rear Gun
     Physical Attack
     Formula: Physical
@@ -4434,7 +4645,7 @@ AI: Setup
 {
    TempVar:InitFacing = Air Buster's Facing
    TempVar:CurFacing = TempVar:InitFacing
-   Air Buster's [402C] = 1
+   Turn off Death Handling for Air Buster
    TempVar:Ammo = 4
    Air Buster's MDf = 320
 }
@@ -4602,7 +4813,7 @@ AI: Counter - General
 }
 AI: Counter - Death
 {
-   Air Buster's [402C] = 1
+   Turn off Death Handling for Air Buster
    Choose Self
    If (TempVar:CurFacing == Facing Cloud) Then
    {
@@ -4854,6 +5065,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: [ 28] Inflict 'Darkness'
+          Can't Cover
   Hell Bomber
     Physical Attack
     Formula: Physical
@@ -4861,6 +5073,7 @@ Attacks:
     PAt%:  88
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
   Suicide Drop
     Physical Attack
     Formula: Physical
@@ -5166,6 +5379,7 @@ Attacks:
     Tar: 1 Op
     Elm: Non-Element
     Attr: 100%  Inflict 'Sadness'
+          Can't Cover
   Sewer Tsunami
     Physical Attack
     Formula: Physical
@@ -5294,6 +5508,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Manip.
+          Can't Cover
 
 Animations:
   <Shell Defense>
@@ -5336,15 +5551,15 @@ AI: Counter - PreTurn
 
 -----------------------------------------------------------------------------
 Name: Ceasar
- Lvl: 11         EXP: 23            Win: [ 8] Potion, [ 2] Tranquilizer
+ Lvl:  8         EXP: 23            Win: [ 8] Potion, [ 2] Tranquilizer
   HP: 120         AP: 2           Steal: [ 8] Tranquilizer
   MP: 0          Gil: 55          Morph:      Potion
  ---
 AutoH:  Punch
 Weak:   Ice
  ---
- Att: 22         Def: 32          Df%: 5           Dex: 47
- MAt: 33         MDf: 18                           Lck: 10
+ Att: 14         Def: 108         Df%: 3           Dex: 47
+ MAt: 6          MDf: 32                           Lck: 10
  ---
 At 25% or less HP, they will continually use a Bubble+<Bodyblow> combo
  ---
@@ -5352,7 +5567,7 @@ Attacks:
   <Bodyblow>
     Physical Attack
     Formula: Physical
-    Pwr: 1x Base       (29)
+    Pwr: 1x Base       (14)
     PAt%:  95
     Tar: 1 Op
     Elm: Hit
@@ -5361,11 +5576,12 @@ Attacks:
   Bubble
     Physical Attack
     Formula: Physical
-    Pwr: 3/4x Base     (21.75)
+    Pwr: 3/4x Base     (10.5)
     PAt%:  75
     Tar: 1 Op
     Elm: Water
     Attr: Manip.
+          Can't Cover
  ---
 AI: Main
 {
@@ -5445,6 +5661,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Manip.
+          Can't Cover
     Notes: At 50% HP or lower, will start being used in a combo against all
            party members
   Silence
@@ -6049,6 +6266,7 @@ Attacks:
     Elm: Non-Element
     Attr: 100%  Inflict 'Imprisoned'
     Notes: Create 'Pyramid' over target
+           This version of Imprisoned acts like Stop
   Electro-mag Rod
     Physical Attack
     Formula: Physical
@@ -6153,7 +6371,7 @@ AI: Counter - Death
    Remove Sleep/Poison/Silence/Haste/Slow/Regen/Death-sentence/Manipulate/
                   Berserk Statuses from Turks:Reno
    Print Message [Reno "It's time."]
-   Turks:Reno's [402C] = 1
+   Turn off Death Handling for Turks:Reno
    Choose Self
    Use <(Report)> on Target
 }
@@ -6289,7 +6507,7 @@ AI: Counter - General
 Name: Mighty Grunt
  Lvl: 12         EXP: 50            Win: [ 8] Tranquilizer
   HP: 230         AP: 5           Steal: [32] Tranquilizer, [ 8] Grenade
-  MP: 0          Gil: 98          Morph: -
+  MP: 0          Gil: 98          Morph:      -
  ---
 No Elemental Properties
  ---
@@ -6360,7 +6578,7 @@ AI: Counter - Death
 Name: Mighty Grunt
  Lvl: 12         EXP: 50            Win: [ 8] Tranquilizer
   HP: 230         AP: 5           Steal: [32] Tranquilizer, [ 8] Grenade
-  MP: 0          Gil: 98          Morph: -
+  MP: 0          Gil: 98          Morph:      -
  ---
 No Elemental Properties
  ---
@@ -6489,6 +6707,7 @@ Attacks:
     Tar: 1 Op
     Elm: Hit
     Attr: [ 48] Inflict 'Fury'
+          Manip.
   Sawback
     Physical Attack
     Formula: Physical
@@ -6504,8 +6723,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Cut
-    Attr: Manip.
-    Notes: Sword Dance will never use this normally
+    Notes: Sword Dance will never use this
   Spinning Cut
     Physical Attack
     Formula: Physical
@@ -6720,32 +6938,11 @@ AI: Counter - General
 }
 AI: Counter - Death
 {
-   Hammer Blaster's [402C] = 1
+   Turn off Death Handling for Hammer Blaster
    Choose Self
    Use <(Report)> on Target
    Remove Hammer Blaster's Base
 }
-
-
-
------------------------------------------------------------------------------
-Name:
- Lvl: 12         EXP: 0             Win:      -
-  HP: 10          AP: 0           Steal:      -
-  MP: 0          Gil: 0           Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 0          Def: 0           Df%: 0           Dex: 1
- MAt: 0          MDf: 0                            Lck: 0
- ---
-Untargetable.  Does not need to be killed to end the battle
-
-This is Hammer Blaster's base
- ---
-No Attacks
- ---
-No AI Script
 
 
 
@@ -6790,7 +6987,7 @@ AI: Main
 }
 AI: Counter - Death
 {
-   Warning Board's [402C] = 1
+   Turn off Death Handling for Warning Board
    Choose Self
    Use <Vanish> on Target
    Remove TempVar:WBGroup
@@ -6801,7 +6998,7 @@ AI: Counter - Death
 -----------------------------------------------------------------------------
 Name: Machine Gun
  Lvl:  8         EXP: 5             Win:      -
-  HP: 155         AP: 4           Steal:      -
+  HP: 155         AP: 0           Steal:      -
   MP: 0          Gil: 0           Morph:      Hi-Potion
  ---
 Weak:   Lightning
@@ -6899,7 +7096,7 @@ AI: Main
 -----------------------------------------------------------------------------
 Name: Laser Cannon
  Lvl:  8         EXP: 5             Win:      -
-  HP: 155         AP: 4           Steal:      -
+  HP: 155         AP: 0           Steal:      -
   MP: 0          Gil: 0           Morph:      Hi-Potion
  ---
 Weak:   Lightning
@@ -6919,6 +7116,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Berserk Attack
+          Can't Cover
   Paralaser
     Physical Attack
     Formula: Physical
@@ -6927,6 +7125,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: [  8] Inflict 'Paralysed'
+          Can't Cover
 
 Animations:
   <Vanish>
@@ -7215,7 +7414,7 @@ Attacks:
     Magical Change Status
     MAt%: 255
     Cost: 4 MP
-    Tar: All Op
+    Tar: All Op (NS)
     Elm: Poison
     Attr: [ 72] Inflict 'Poison'
   Reanimagic
@@ -7236,7 +7435,7 @@ Animations:
  ---
 AI: Setup
 {
-   Sample:H0512's [402C] = 1
+   Turn off Death Handling for Sample:H0512
 }
 AI: Main
 {
@@ -7634,6 +7833,7 @@ Attacks:
     PAt%: 120
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
     Notes: Used only in 1st Form
   Main Artillery
     Physical Attack
@@ -7794,6 +7994,8 @@ Attacks:
     Elm: Shoot
     Attr: [ 20] Inflict 'Poison', 'Sleep'
     Notes: Used only in 1st Form
+           Status infliction done via Firing Line is considered to be No
+             Split, even though the damage itself is split
   Spinning Bodyblow
     Physical Attack
     Formula: Physical
@@ -7958,7 +8160,7 @@ AI: Counter - Death
 
 -----------------------------------------------------------------------------
 Name: Dark Nation
- Lvl: 15         EXP: 70            Win: 100% Guard Source
+ Lvl: 18         EXP: 70            Win: 100% Guard Source
   HP: 140         AP: 7           Steal:      -
   MP: 80         Gil: 250         Morph:      -
  ---
@@ -7973,7 +8175,7 @@ Attacks:
   <Bite>
     Physical Attack
     Formula: Physical
-    Pwr: 1x Base       (63)
+    Pwr: 1x Base       (67)
     PAt%: 100
     Tar: 1 Op
     Elm: Hit
@@ -7998,7 +8200,7 @@ Attacks:
   Bolt
     Magical Attack
     Formula: Magical
-    Pwr: 1/2x Base     (90)
+    Pwr: 1/2x Base     (99)
     MAt%: 100
     Cost: 4 MP
     Tar: 1 Op/All Op
@@ -8077,27 +8279,6 @@ AI: Main
       }
    }
 }
-
-
-
------------------------------------------------------------------------------
-Name:
- Lvl:  1         EXP: 0             Win:      -
-  HP: 1           AP: 0           Steal:      -
-  MP: 1          Gil: 0           Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 1          Def: 2           Df%: 1           Dex: 1
- MAt: 1          MDf: 2                            Lck: 1
- ---
-Untargetable.  Does not need to be killed to end the battle
-
-This is the helicopter that flies around behind Rufus
- ---
-No Attacks
- ---
-No AI Script
 
 
 
@@ -8268,7 +8449,7 @@ AI: Counter - General
 Name: Devil Ride
  Lvl: 13         EXP: 60            Win: [ 8] Potion
   HP: 240         AP: 6           Steal: [32] Hi-Potion
-  MP: 0          Gil: 100         Morph:      -
+  MP: 0          Gil: 100         Morph:      Hi-Potion
  ---
 No Elemental Properties
  ---
@@ -8316,7 +8497,7 @@ AI: Main
 Name: Custom Sweeper
  Lvl: 15         EXP: 63            Win: [ 8] Potion
   HP: 300         AP: 7           Steal: [ 8] Atomic Scissors
-  MP: 100        Gil: 120         Morph:      Hi-Potion
+  MP: 100        Gil: 120         Morph:      X-Potion
  ---
 Weak:   Lightning
  ---
@@ -8344,6 +8525,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Manip.
+          Can't Cover
   Matra Magic
     Magical Attack
     Formula: Magical
@@ -8386,7 +8568,7 @@ AI: Main
 Name: Kalm Fang
  Lvl: 10         EXP: 53            Win: [ 8] Potion
   HP: 160         AP: 5           Steal: [ 8] Ether
-  MP: 0          Gil: 92          Morph:      X-Potion
+  MP: 0          Gil: 92          Morph:      Hi-Potion
  ---
 Weak:   Fire
  ---
@@ -8431,7 +8613,7 @@ Name: Prowler
  ---
 No Elemental Properties
  ---
- Att: 23         Def: 28          Df%: 12          Dex: 66
+ Att: 23         Def: 28          Df%: 18          Dex: 66
  MAt: 0          MDf: 28                           Lck: 8
  ---
 Immune: Frog
@@ -8575,7 +8757,7 @@ AI: Main
 Name: Mu
  Lvl: 12         EXP: 54            Win: [ 8] Hi-Potion
   HP: 210         AP: 6           Steal:      -
-  MP: 52         Gil: 130         Morph:      Hi-Potion
+  MP: 52         Gil: 130         Morph:      -
  ---
 No Elemental Properties
  ---
@@ -8593,6 +8775,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Berserk Attack
+          Can't Cover
   Sewer
     Magical Attack
     Formula: Magical
@@ -8607,6 +8790,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Earth
+    Attr: Can't Cover
   Hot Springs
     Magical HP Restore
     Formula: Cure
@@ -8912,8 +9096,8 @@ Attacks:
     Tar: 1 Op
     Elm: Non-Element
     Notes: Only used as a 100% C/A under the following conditions:
-             The Chocobo has been fed either Sylkis or Mimett Greens during
-               the battle
+             The Chocobo has been fed at least one Sylkis or Mimett Greens
+               during the battle
              The Chocobo's HP is reduced to less than or equal to
                [Chocobo's Max HP / 32] + 1, but greater than 0 HP
   <Chocobo, goes nuts>
@@ -8950,7 +9134,7 @@ Animations:
 AI: Setup
 {
    TempVar:RunChance = 2
-   Chocobo's [402C] = 1
+   Turn off Death Handling for Chocobo
 }
 AI: Main
 {
@@ -9114,9 +9298,9 @@ this document.  Only enemy specific code will be listed, if any.
 5.3 Mythril Mines
 -----------------
 Name: Madouge
- Lvl: 16         EXP: 70            Win: [ 8] Potion
-  HP: 220         AP: 8           Steal: [ 8] Grand Glove      
-  MP: 0          Gil: 150         Morph:      Potion
+ Lvl: 16         EXP: 70            Win: [ 8] Hi-Potion
+  HP: 220         AP: 8           Steal: [ 8] Grand Glove
+  MP: 0          Gil: 150         Morph:      Hi-Potion
  ---
 No Elemental Properties
  ---
@@ -9144,6 +9328,7 @@ Attacks:
     Elm: Hit
     Attr: 100%  Inflict 'Darkness'
           Manip.
+          Can't Cover
  ---
 AI: Main
 {
@@ -9162,7 +9347,7 @@ AI: Main
 
 -----------------------------------------------------------------------------
 Name: Crawler
- Lvl: 15         EXP: 56            Win: [ 8] Potion
+ Lvl: 15         EXP: 56            Win: [ 8] Hi-Potion
   HP: 140         AP: 6           Steal:      -      
   MP: 48         Gil: 65          Morph:      -
  ---
@@ -9258,7 +9443,7 @@ AI: Main
 
 -----------------------------------------------------------------------------
 Name: Castanets
- Lvl: 15         EXP: 65            Win: [ 8] Potion
+ Lvl: 15         EXP: 65            Win: [ 8] Hi-Potion
   HP: 190         AP: 7           Steal:      -      
   MP: 0          Gil: 113         Morph:      -
  ---
@@ -9287,6 +9472,7 @@ Attacks:
     Tar: 1 Op
     Elm: Lightning
     Attr: Manip.
+          Can't Cover
  ---
 AI: Main
 {
@@ -9311,7 +9497,7 @@ Name: Hell Rider VR2
  ---
 Half:   Gravity
  ---
- Att: 78         Def: 46          Df%: 1           Dex: 60
+ Att: 76         Def: 46          Df%: 1           Dex: 60
  MAt: 5          MDf: 60                           Lck: 0
  ---
 Immune: Death, Stop, Frog, Small, Petrify, Death-sentence, Manipulate,
@@ -9321,7 +9507,7 @@ Attacks:
   <Iron Mallet>
     Physical Attack
     Formula: Physical
-    Pwr: 1x Base       (207)
+    Pwr: 1x Base       (160)
     PAt%:  95
     Tar: 1 Op
     Elm: Hit
@@ -9329,7 +9515,7 @@ Attacks:
   <Ballistic>
     Physical Attack
     Formula: Physical
-    Pwr: 1 1/2x Base   (310.5)
+    Pwr: 1 1/2x Base   (240)
     PAt%:  95
     Tar: 1 Op
     Elm: Hit
@@ -9376,13 +9562,14 @@ Transformation: 1st Form is default
                 2nd Form has Can't Reach; Def:  20, Df%:  60
  ---
 Attacks:
-  <Clap>
+  <Flap>
     Physical Attack
     Formula: Physical
     Pwr: 1x Base       (45)
     PAt%: 100
     Tar: All Op
     Elm: Wind
+    Attr: Can't Cover
   Thunderbolt
     Magical Attack
     Formula: Magical
@@ -9758,7 +9945,7 @@ Attacks:
  ---
 AI: Setup
 {
-   Mystery Ninja's [402C] = 1
+   Turn off Death Handling for Mystery Ninja
 }
 AI: Main
 {
@@ -9871,7 +10058,7 @@ Attacks:
  ---
 AI: Setup
 {
-   Mystery Ninja's [402C] = 1
+   Turn off Death Handling for Mystery Ninja
 }
 AI: Main
 {
@@ -9988,11 +10175,12 @@ Attacks:
     PAt%:  95
     Tar: All Op/1 Op
     Elm: Lightning
+    Attr: Can't Cover
     Notes: Mystery Ninja can also use this against 1 Op
  ---
 AI: Setup
 {
-   Mystery Ninja's [402C] = 1
+   Turn off Death Handling for Mystery Ninja
 }
 AI: Main
 {
@@ -10113,11 +10301,12 @@ Attacks:
     PAt%:  95
     Tar: All Op/1 Op
     Elm: Lightning
+    Attr: Can't Cover
     Notes: Mystery Ninja can also use this against 1 Op
  ---
 AI: Setup
 {
-   Mystery Ninja's [402C] = 1
+   Turn off Death Handling for Mystery Ninja
 }
 AI: Main
 {
@@ -10238,11 +10427,12 @@ Attacks:
     PAt%:  95
     Tar: All Op/1 Op
     Elm: Lightning
+    Attr: Can't Cover
     Notes: Mystery Ninja can also use this against 1 Op
  ---
 AI: Setup
 {
-   Mystery Ninja's [402C] = 1
+   Turn off Death Handling for Mystery Ninja
 }
 AI: Main
 {
@@ -10367,7 +10557,7 @@ Attacks:
  ---
 AI: Setup
 {
-   Mystery Ninja's [402C] = 1
+   Turn off Death Handling for Mystery Ninja
 }
 AI: Main
 {
@@ -10674,7 +10864,7 @@ AI: Counter - Death
          Remove Imprisoned Status from Target
          Choose Waterpolo (Self)
          Use <Vanish> on Target
-         Waterpolo (Self)'s [402C] = 1
+         Turn off Death Handling for Waterpolo (Self)
          Remove Waterpolo (Self)
       }
       BattleVar:CharID = BattleVar:CharID + 1
@@ -10748,6 +10938,7 @@ Attacks:
     Elm: Non-Element
     Attr: 100%  Inflict 'Death', 'Imprisoned'
     Notes: Create 'Waterpolo' over target
+           This version of Imprisoned acts like Paralysed
            Only used in 3rd Form
            Despite attempting to inflict 'Death', this is actually only a
              flag that will instead place a Seizure effect on the Imprisoned
@@ -10772,7 +10963,7 @@ Animations:
  ---
 AI: Setup
 {
-   Bottomswell's [402C] = 1
+   Turn off Death Handling for Bottomswell
    TempVar:HitsTilNextStage = 6
    Bottomswell's Range = 16
 }
@@ -11136,6 +11327,7 @@ Attacks:
     Tar: All Op
     Elm: Non-Element
     Attr: Manip.
+          Can't Cover
   <Smoke Bullet>
     Physical Change Status
     PAt%:  75
@@ -11212,6 +11404,7 @@ Attacks:
     PAt%:  90
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
     Notes: Cannot Critical
            Will sometimes use Laser against all non-Stopped/non-Dead party
              members in a single combo
@@ -11222,6 +11415,7 @@ Attacks:
     PAt%:  90
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
     Notes: Cannot Critical
   W-Laser
     Physical Attack
@@ -11230,6 +11424,7 @@ Attacks:
     PAt%:  90
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
     Notes: Cannot Critical
            Will sometimes use W-Laser against all non-Stopped/non-Dead party
              members in a single combo
@@ -11356,7 +11551,7 @@ Void:   Earth, Water, Gravity
  MAt: 25         MDf: 120                          Lck: 0
  ---
 Immune: Death, Confusion, Stop, Frog, Small, Petrify, Death-sentence,
-        Manipulate, Darkness
+        Manipulate, Peerless, Paralysed
  ---
 Attacks:
   Darkeye
@@ -11375,6 +11570,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shout
+    Attr: Can't Cover
 
 Animations:
   <Put out>
@@ -11450,7 +11646,7 @@ Void:   Earth, Water, Gravity
  MAt: 15         MDf: 80                           Lck: 0
  ---
 Immune: Death, Confusion, Stop, Frog, Small, Petrify, Death-sentence,
-        Manipulate, Darkness
+        Manipulate, Peerless, Paralysed
 
 If Grangalan dies before Grangalan Jr. is killed, Grangalan will remove
 Grangalan Jr., leaving no EXP, AP, Gil or items.
@@ -11472,6 +11668,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shout
+    Attr: Can't Cover
 
 Animations:
   <Put out>
@@ -11533,7 +11730,7 @@ Void:   Earth, Water, Gravity
  MAt: 5          MDf: 40                           Lck: 0
  ---
 Immune: Death, Confusion, Stop, Frog, Small, Petrify, Death-sentence,
-        Manipulate, Darkness
+        Manipulate, Peerless, Paralysed
 
 If Grangalan dies before Grangalan Jr.Jr. is killed, Grangalan will remove
 Grangalan Jr.Jr., leaving no EXP, AP, Gil or items.
@@ -11555,6 +11752,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shout
+    Attr: Can't Cover
  ---
 AI: Main
 {
@@ -11666,7 +11864,7 @@ Attacks:
     Magical Change Status
     MAt%: 255
     Cost: 56 MP
-    Tar: All Al
+    Tar: All Al (NS)
     Elm: Non-Element
     Attr: 100%  Inflict 'Barrier', 'MBarrier', 'Haste'
           Manip.
@@ -11744,6 +11942,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Berserk Attack
+          Can't Cover
   Four Laser
     Magical Attack
     Formula: Magical
@@ -11853,6 +12052,7 @@ Attacks:
     Tar: 1 Op
     Elm: Non-Element
     Attr: Manip.
+          Can't Cover
   Spiky Hell
     Magical Attack
     Formula: Fixed
@@ -11984,7 +12184,7 @@ AI: Main
 -----------------------------------------------------------------------------
 Name: Bomb
  Lvl: 18         EXP: 150           Win: [ 8] Shrapnel
-  HP: 600         AP: 20          Steal: [ 8] Right Arm
+  HP: 600         AP: 20          Steal: [ 8] Right arm
   MP: 30         Gil: 192         Morph:      Shrapnel
  ---
 Void:   Fire, Earth
@@ -12039,6 +12239,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
     Notes: 100% C/A if HP drops to 25% of Max HP and below without dying
            Kills Bomb when used
            Bomb leaves no EXP/AP/Gil/Items after using this
@@ -12159,7 +12360,7 @@ AI: Counter - General
 -----------------------------------------------------------------------------
 Name: Bandit
  Lvl: 17         EXP: 99            Win: [ 8] Tent
-  HP: 360         AP: 10          Steal: [32] X-Potion
+  HP: 360         AP: 10          Steal: [ 8] X-Potion
   MP: 0          Gil: 220         Morph:      Hi-Potion
  ---
 No Elemental Properties
@@ -12436,6 +12637,8 @@ Attacks:
     Elm: Earth
     Attr: [ 48] Inflict 'Darkness'
           Manip.
+    Notes: Status infliction done via Sandstorm is considered to be No Split,
+             even though the damage itself is split
  ---
 AI: Main
 {
@@ -12576,6 +12779,7 @@ Attacks:
     PAt%:  90
     Tar: 1 Op
     Elm: Hit
+    Attr: Can't Cover
   Molotov Cocktail
     Physical Attack
     Formula: Physical
@@ -12597,7 +12801,7 @@ Attacks:
 AI: Setup
 {
    Stage = 3
-   Dyne's [402C] = 1
+   Turn off Death Handling for Dyne
 }
 AI: Main
 {
@@ -12613,16 +12817,9 @@ AI: Main
       Choose Random Opponent
       Use S-Mine on Target
    } Else If (Stage == 2) Then {
-      1/4 Chance:
-      {
-         Choose Random Opponent
-         Use S-Mine on Target
-      }
-      3/4 Chance:
-      {
-         Choose Random Opponent
-         Use Needle Gun on Target
-      }
+      Choose Random Opponent
+      1/4 Chance: Use S-Mine on Target
+      3/4 Chance: Use Needle Gun on Target
    } Else {
       Choose Random Opponent
       Use Needle Gun on Target
@@ -12782,6 +12979,7 @@ Attacks:
     PAt%: 130
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
   Heart
     Magical HP Restore
     Formula: Cure
@@ -13282,7 +13480,7 @@ AI: Counter - Death
           Manipulate/Berserk Statuses from Turks:Reno
    Print Message [Reno "We may be retreating, but...]
    Print Message [we're still victorious."]
-   Turks:Reno's [402C] = 1
+   Turn off Death Handling for Turks:Reno
    Choose Self
    Use <(Report)> on Target
 }
@@ -13420,7 +13618,7 @@ AI: Counter - Death
    Print Message [Rude ".................."]
    Remove Sleep/Poison/Silence/Haste/Slow/Regen/Death-sentence/
           Manipulate/Berserk Statuses from Turks:Rude
-   Turks:Reno's [402C] = 1
+   Turn off Death Handling for Turks:Reno
    Choose Self
    Use <(Report)> on Target
 }
@@ -13466,6 +13664,7 @@ Attacks:
     Tar: 1 Op
     Elm: Cut
     Attr: Manip.
+          Can't Cover
  ---
 AI: Main
 {
@@ -13492,7 +13691,7 @@ Name: Flower Prong
 Weak:   Fire, Earth
 Asrb:   Poison
  ---
- Att: 40         Def: 58          Df%: 0           Dex: 68
+ Att: 40         Def: 58          Df%: 1           Dex: 68
  MAt: 30         MDf: 200                          Lck: 0
  ---
 Immune: Confusion, Frog, Small, Slow-numb, Petrify, Death-sentence,
@@ -13583,7 +13782,7 @@ Name: Flower Prong
 Weak:   Fire, Earth
 Asrb:   Poison
  ---
- Att: 42         Def: 58          Df%: 0           Dex: 68
+ Att: 42         Def: 58          Df%: 1           Dex: 68
  MAt: 38         MDf: 250                          Lck: 0
  ---
 Immune: Confusion, Frog, Small, Slow-numb, Petrify, Death-sentence,
@@ -13603,6 +13802,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
   Energy Siphon
     Magical MP Absorb
     Formula: Magical
@@ -13654,7 +13854,7 @@ Name: Flower Prong
 Weak:   Fire, Earth
 Asrb:   Poison
  ---
- Att: 44         Def: 58          Df%: 0           Dex: 68
+ Att: 44         Def: 58          Df%: 1           Dex: 68
  MAt: 46         MDf: 300                          Lck: 0
  ---
 Immune: Confusion, Frog, Small, Slow-numb, Petrify, Death-sentence,
@@ -13678,6 +13878,8 @@ Attacks:
     Tar: All Op
     Elm: Non-Element
     Attr: [ 80] Inflict 'Sleep'
+    Notes: Status infliction done via Pollen is considered to be No Split,
+             even though the damage itself is split
   Bio2
     Magical Attack
     Formula: Magical
@@ -14843,9 +15045,9 @@ AI: Main
 }
 AI: Counter - Death
 {
-   Soul Fires' [402C] = 1
+   Turn off Death Handling for all Soul Fires
    Remove Soul Fires
-   Gi Nattak's [402C] = 1
+   Turn off Death Handling for Gi Nattak
    Choose Self
    Use <Vanish> on Target
 }
@@ -15261,7 +15463,7 @@ AI: Main
 Name: Mirage
  Lvl: 24         EXP: 290           Win: [ 8] Mirror
   HP: 570         AP: 22          Steal:      -
-  MP: 0          Gil: 180         Morph:      -
+  MP: 0          Gil: 280         Morph:      -
  ---
 No Elemental Properties
  ---
@@ -15342,7 +15544,7 @@ Attacks:
     Magical Change Status
     MAt%: 255
     Cost: 10 MP
-    Tar: All Op
+    Tar: All Op (NS)
     Elm: Hidden
     Attr: [ 24] Inflict 'Confusion'
           Manip.
@@ -15626,29 +15828,6 @@ AI: Counter - General
       Ghirofelgo's HurtAnim = Flinch (Fallen)
    }
 }
-
-
-
------------------------------------------------------------------------------
-Name: Chain
- Lvl:  1         EXP: 0             Win:      -
-  HP: 1           AP: 0           Steal:      -
-  MP: 0          Gil: 0           Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 0          Def: 0           Df%: 0           Dex: 0
- MAt: 0          MDf: 0                            Lck: 0
- ---
-Immune: Confusion, Manipulate, Berserk
-
-Untargetable.  Does not need to be killed to end the battle
-
-This is the chain Ghirofelgo hangs on
- ---
-No Attacks
- ---
-No AI Script
 
 
 
@@ -16122,7 +16301,7 @@ AI: Counter - Death
 {
    If (Yang has Death Status) Then
    {
-      Ying's [402C] = 1
+      Turn off Death Handling for Ying
       Choose Self
       Use <Vanish> on Target
       Remove Ying/Yang
@@ -16221,7 +16400,7 @@ AI: Counter - Death
 {
    If (Ying has Death Status) Then
    {
-      Yang's [402C] = 1
+      Turn off Death Handling for Yang
       Choose Self
       Use <Vanish> on Target
       Remove Ying/Yang
@@ -16250,30 +16429,6 @@ AI: Counter - Magical
    RunCmd 0x24/0x00
 }
  
-
-
------------------------------------------------------------------------------
-Name: Ying/Yang
- Lvl: 24         EXP: 700           Win:      -
-  HP: 1200        AP: 80          Steal:      -
-  MP: 0          Gil: 800         Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 0          Def: 0           Df%: 0           Dex: 0
- MAt: 0          MDf: 0                            Lck: 0
- ---
-Immune: Manipulate
-
-Untargetable.  Does not need to be killed to end the battle
-
-This is the legs for Ying and Yang
- ---
-No Attacks
- ---
-No AI Script
-
-
 
 
 -----------------------------------------------------------------------------
@@ -16361,6 +16516,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Hit
+    Attr: Can't Cover
  ---
 AI: Setup
 {
@@ -16489,6 +16645,8 @@ Attacks:
     Tar: All Op
     Elm: Wind
     Attr: [ 40] Inflict 'Darkness'
+    Notes: Status infliction done via Great Gale is considered to be No
+             Split, even though the damage itself is split
  ---
 AI: Setup
 {
@@ -16523,7 +16681,7 @@ AI: Main
       }
    } Else {
       Choose All Opponents
-      Used Great Gale on Target
+      Use Great Gale on Target
       Count = 0
    }
 }
@@ -16977,7 +17135,7 @@ Name: Battery Cap
 No Elemental Properties
  ---
  Att: 41         Def: 38          Df%: 1           Dex: 40
- MAt: 42         MDf: 150                          Lck: 0
+ MAt: 42         MDf: 146                          Lck: 0
  ---
 Immune: Confusion, Frog, Small, Manipulate
  ---
@@ -17193,48 +17351,6 @@ AI: Counter - Death
    Choose Self
    Use Palmer "Ugh!" on Target
 }
-
-
-
------------------------------------------------------------------------------
-Name:
- Lvl:  1         EXP: 0             Win:      -
-  HP: 1           AP: 0           Steal:      -
-  MP: 0          Gil: 0           Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 1          Def: 2           Df%: 0           Dex: 1
- MAt: 1          MDf: 2                            Lck: 0
- ---
-Untargetable.  Does not need to be killed to end the battle
-
-This is the Tiny Bronco in the Palmer battle
- ---
-No Attacks
- ---
-No AI Script
-
-
-
------------------------------------------------------------------------------
-Name:
- Lvl:  1         EXP: 0             Win:      -
-  HP: 1           AP: 0           Steal:      -
-  MP: 0          Gil: 0           Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 0          Def: 0           Df%: 0           Dex: 1
- MAt: 0          MDf: 0                            Lck: 0
- ---
-Untargetable.  Does not need to be killed to end the battle
-
-This is the truck that knocks Palmer down in the Palmer battle
- ---
-No Attacks
- ---
-No AI Script
 
 
 
@@ -17552,6 +17668,8 @@ Attacks:
     Elm: Poison
     Attr: 100%  Inflict 'Poison'
     Notes: Only used in 2nd Form and once per battle
+           Status infliction done via Toxic Powder is considered to be No
+             Split, even though the damage itself is split
  ---
 AI: Setup
 {
@@ -17713,6 +17831,7 @@ Attacks:
     Elm: Shout
     Attr: Berserk Attack
           Manip.
+          Can't Cover
     Notes: Only used as a 100% C/A
   Death Force
     Magical Change Status
@@ -19089,6 +19208,8 @@ Attacks:
     Elm: Wind
     Attr: [ 40] Inflict 'Darkness'
           Manip.
+    Notes: Status infliction done via Great Gale is considered to be No
+             Split, even though the damage itself is split
   Big Sound
     Physical Attack
     Formula: Physical
@@ -19097,6 +19218,7 @@ Attacks:
     Tar: All Op/1 Op
     Elm: Wind
     Attr: Manip.
+          Can't Cover
     Notes: Tonadu will never use this normally
  ---
 AI: Setup
@@ -19132,7 +19254,7 @@ AI: Main
       }
    } Else {
       Choose All Opponents
-      Used Great Gale on Target
+      Use Great Gale on Target
       Count = 0
    }
 }
@@ -19292,6 +19414,7 @@ Attacks:
     PAt%:  95
     Tar: 1 Op
     Elm: Fire
+    Attr: Can't Cover
   Light Shell
     Physical Attack
     Formula: Physical
@@ -19299,6 +19422,7 @@ Attacks:
     PAt%:  95
     Tar: 1 Op
     Elm: Shout
+    Attr: Can't Cover
  ---
 AI: Main
 {
@@ -19358,6 +19482,7 @@ Attacks:
     Tar: 1 Op
     Elm: Ice
     Attr: Manip.
+          Can't Cover
  ---
 AI: Setup
 {
@@ -19624,7 +19749,7 @@ AI: Main
 -----------------------------------------------------------------------------
 Name: Demons Gate
  Lvl: 45         EXP: 3800          Win: 100% Gigas Armlet
-  HP: 10000       AP: 400         Steal:      -
+  HP: 10000       AP: 220         Steal:      -
   MP: 400        Gil: 4000        Morph:      -
  ---
 Half:   Earth
@@ -19644,6 +19769,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Hit
+    Attr: Can't Cover
   Cave-in
     Physical Attack
     Formula: Physical
@@ -19651,6 +19777,9 @@ Attacks:
     PAt%: 100
     Tar: All Op
     Elm: Ice
+    Notes: Cave-in will only be used on one target if all other party
+           members are either non-targetable or under either the Slow-numb
+           or Petrify statuses
   Petrif-Eye
     Magical Change Status
     MAt%: 255
@@ -19901,6 +20030,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Berserk Attack
+          Can't Cover
   Magma
     Physical Attack
     Formula: Physical
@@ -19908,6 +20038,7 @@ Attacks:
     PAt%:  95
     Tar: 1 Op
     Elm: Fire
+    Attr: Can't Cover
   Sewer
     Magical Attack
     Formula: Magical
@@ -19922,6 +20053,7 @@ Attacks:
     PAt%:  95
     Tar: 1 Op
     Elm: Earth
+    Attr: Can't Cover
   Hot Springs
     Magical HP Restore
     Formula: Cure
@@ -19936,6 +20068,7 @@ Attacks:
     PAt%:  95
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
     Notes: Adds 800 to Trickplay's Gil Value
   L4 Suicide
     Magical Attack
@@ -20109,6 +20242,8 @@ Attacks:
     Elm: Non-Element
     Attr: 100%  Inflict 'Slow', 'Darkness'
           Manip.
+    Notes: Status infliction done via Dance is considered to be No Split,
+             even though the damage itself is split
  ---
 AI: Main
 {
@@ -20768,6 +20903,7 @@ Attacks:
     PAt%:  95
     Tar: 1 Op
     Elm: Ice
+    Attr: Can't Cover
   Wide Grazer
     Magical Attack
     Formula: Magical
@@ -21181,7 +21317,7 @@ Immune: Death, Sleep, Poison, Confusion, Haste, Slow, Stop, Frog, Small,
 
 Magnade will have a Df% of 255 until his Shields break, which will do so
 after 20 to 24 abilities have been used collectively by all battle objects.
-After this, their Df% will return to 5
+After this, his Df% will return to 5
  ---
 Attacks:
   <Shield Throw>
@@ -21191,6 +21327,7 @@ Attacks:
     PAt%:  95
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
     Notes: Only used if Magnade has his Shields
   W-Shield Throw
     Physical Attack
@@ -21199,6 +21336,7 @@ Attacks:
     PAt%:  95
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
     Notes: Only used if Magnade has his Shields
   Strong Kick
     Physical Attack
@@ -21306,7 +21444,7 @@ AI: Counter - General
 }
 AI: Counter - Death
 {
-   Magnade's [402C] = 1
+   Turn off Death Handling for Magnade
    Choose Self
    Use <Vanish> on Target
 }
@@ -21324,54 +21462,6 @@ AI: Counter - PreTurn
       Use <Vanish> on Target
    }
 }
-
-
-
------------------------------------------------------------------------------
-Name:
- Lvl:  1         EXP: 0             Win:      -
-  HP: 1           AP: 0           Steal:      -
-  MP: 1          Gil: 0           Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 1          Def: 2           Df%: 1           Dex: 1
- MAt: 1          MDf: 2                            Lck: 1
- ---
-Immune: Sleep, Poison, Confusion, Haste, Slow, Stop, Frog, Small, Slow-numb,
-        Petrify, Manipulate, Berserk, Peerless, Paralysed, Seizure
-
-Untargetable.  Does not need to be killed to end the battle
-
-This is the first shield that Magnade carries
- ---
-No Attacks
- ---
-No AI Script
-
-
-
------------------------------------------------------------------------------
-Name:
- Lvl:  1         EXP: 0             Win:      -
-  HP: 1           AP: 0           Steal:      -
-  MP: 1          Gil: 0           Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 1          Def: 2           Df%: 1           Dex: 1
- MAt: 1          MDf: 2                            Lck: 1
- ---
-Immune: Sleep, Poison, Confusion, Haste, Slow, Stop, Frog, Small, Slow-numb,
-        Petrify, Manipulate, Berserk, Peerless, Paralysed, Seizure
-
-Untargetable.  Does not need to be killed to end the battle
-
-This is the second shield that Magnade carries
- ---
-No Attacks
- ---
-No AI Script
 
 
 
@@ -21537,7 +21627,7 @@ Attacks:
     Magical Change Status
     MAt%: 100
     Cost: 58 MP
-    Tar: All Op
+    Tar: All Op (NS)
     Elm: Non-Element
     Attr: 100%  Inflict 'Poison', 'Confusion', 'Sleep', 'Silence', 'Frog',
                         'Small'
@@ -21654,6 +21744,8 @@ Attacks:
     Tar: All Op
     Elm: Wind
     Attr: [ 40] Inflict 'Darkness'
+    Notes: Status infliction done via Great Gale is considered to be No
+             Split, even though the damage itself is split
   Dragon Force
     Increase Base Defensive Power
     MAt%: 255
@@ -21875,7 +21967,6 @@ Immune: Death, Sleep, Poison, Confusion, Silence, Frog, Small, Slow-numb,
 
 When killed, all unkilled Evilheads will be removed giving
   no EXP/AP/Gil/Items
-Icicle is also removed, granting no EXP/AP/Gil
  ---
 Attacks:
   Icicle Drop
@@ -21885,6 +21976,7 @@ Attacks:
     PAt%:  90
     Tar: 1 Op
     Elm: Hit
+    Attr: Can't Cover
     Notes: Only used as 50% C/A
   <Crack>
     Physical Attack
@@ -21906,7 +21998,7 @@ AI: Counter - General
 }
 AI: Counter - Death
 {
-   Icicle's [402C] = 1
+   Turn off Death Handling for Icicle
    Choose Self
    Use <Crack> on Target
    Remove Self
@@ -21998,6 +22090,7 @@ Attacks:
     Elm: Shout
     Attr: Berserk Attack
           Manip.
+          Can't Cover
     Notes: Only used after Cuahl has been hit by a magical ability
   Blaster
     Magical Attack
@@ -22105,7 +22198,7 @@ Attacks:
 AI: Setup
 {
    TempVar:HitsUntilCounter = 4
-   Schizo(Right)'s [402C] = 1
+   Turn off Death Handling for Schizo(Right)
 }
 AI: Main
 {
@@ -22153,9 +22246,9 @@ AI: Counter - General
       Choose All Opponents
       If (Schizo(Left) doesn't have Death Status) Then
       {
-         Use Tremor (LeftAlive Version) on Target
+         Use <Tremor> (LeftAlive Version) on Target
       } Else {
-         Use Tremor (LeftDead Version) on Target
+         Use <Tremor> (LeftDead Version) on Target
       }
       TempVar:HitsUntilCounter = 4
    } Else {
@@ -22171,7 +22264,7 @@ AI: Counter - Death
       Schizo(Right)'s CustomVar:Dead = 1
       Both Schizo's IdleAnim = Right Head Dead
    } Else {
-      Schizo(Left)'s [402C] = 0
+      Turn on Death Handling for Schizo(Left)
       Choose All Opponents
       Use <Right Breath 2> (LeftDead Version) on Target
    }
@@ -22250,7 +22343,7 @@ Attacks:
 AI: Setup
 {
    TempVar:HitsUntilCounter = 5
-   Schizo(Left)'s [402C] = 1
+   Turn off Death Handling for Schizo(Left)
 }
 AI: Main
 {
@@ -22298,9 +22391,9 @@ AI: Counter - General
       Choose All Opponents
       If (Schizo(Right) doesn't have Death Status) Then
       {
-         Use Tremor (RightAlive Version) on Target
+         Use <Tremor> (RightAlive Version) on Target
       } Else {
-         Use Tremor (RightDead Version) on Target
+         Use <Tremor> (RightDead Version) on Target
       }
       TempVar:HitsUntilCounter = 5
    } Else {
@@ -22316,7 +22409,7 @@ AI: Counter - Death
       Schizo(Left)'s CustomVar:Dead = 1
       Both Schizo's IdleAnim = Left Head Dead
    } Else {
-      Schizo(Right)'s [402C] = 0
+      Turn on Death Handling for Schizo(Right)
       Choose All Opponents
       Use <Left Breath 2> (RightDead Version) on Target
    }
@@ -22519,6 +22612,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Fire
+    Attr: Can't Cover
     Notes: Only used in 2nd Form
   <Bodyblow>
     Physical Attack
@@ -22543,6 +22637,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
     Notes: Used randomly in 3rd Form
            100% C/A if HP drops to 25% of Max HP and below without dying
            Kills Grenade when used
@@ -22624,6 +22719,7 @@ Attacks:
     Tar: 1 Op
     Elm: Hit
     Attr: 100%  Inflict 'Sadness'
+          Can't Cover
 
 Animations:
   <Fury>
@@ -22840,6 +22936,7 @@ Attacks:
     Tar: 1 Op
     Elm: Fire
     Attr: Manip.
+          Can't Cover
     Notes: Sometimes used 2 to 3 times in a single combo depending on HP%
  ---
 AI: Setup
@@ -22916,6 +23013,7 @@ Attacks:
     Tar: 1 Op
     Elm: Cut
     Attr: Manip.
+          Can't Cover
   Aero3
     Magical Attack
     Formula: Magical
@@ -23291,7 +23389,9 @@ Immune: Death, Poison, Confusion, Silence, Frog, Small, Slow-numb, Petrify,
         Death-sentence, Manipulate, Berserk
 
 Although planned as an enemy found in the Whirlwind Maze, it is impossible to
-fight it outside of Battle Square
+fight it outside of Battle Square.  Stats listed here are base stats for
+outside Battle Square - remember to multiply HP by 2 and Att/MAt by 1.25 for
+encounters within Battle Square
  ---
 Attacks:
   Time Damage
@@ -23301,6 +23401,7 @@ Attacks:
     PAt%: 255
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
     Notes: Only used as C/A against 3rd attack since Tonberry's last turn
   Knife
     Magical Change Status
@@ -23615,6 +23716,7 @@ Attacks:
     PAt%: 255
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
     Notes: Only used as a 100% C/A
            Will not use if two party members have Death Status
 
@@ -23647,32 +23749,11 @@ AI: Counter - General
 }
 AI: Counter - Death
 {
-   Roulette Cannon's [402C] = 1
+   Turn off Death Handling for Roulette Cannon
    Choose Self
    Use <Vanish> on Target
    Remove Pedestal
 }
-
-
-
------------------------------------------------------------------------------
-Name: Pedestal
- Lvl:  1         EXP: 0             Win:      -
-  HP: 1           AP: 0           Steal:      -
-  MP: 1          Gil: 0           Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 1          Def: 2           Df%: 1           Dex: 1
- MAt: 1          MDf: 2                            Lck: 0
- ---
-Untargetable.  Does not need to be killed to end the battle
-
-This is the pedestal that Roulette Cannon rides upon
- ---
-No Attacks
- ---
-No AI Script
 
 
 
@@ -23830,6 +23911,7 @@ Attacks:
     Cost: 16 MP
     Tar: 1 Op
     Elm: Hit
+    Attr: Can't Cover
     Notes: Only used in 1st Form after Hippogriff has been in the air once
   L2 Confu
     Magical Change Status
@@ -23856,6 +23938,7 @@ Attacks:
     Cost: 16 MP
     Tar: 1 Op
     Elm: Hit
+    Attr: Can't Cover
     Notes: Hippogriff will never use this
  ---
 AI: Setup
@@ -23944,7 +24027,7 @@ AI: Counter - Magical
       Hippogriff's HurtAnim = Flinch (In Air)
       If (TempVar:HitsUntilLanding == 0) Then
       {
-         Choose Slef
+         Choose Self
          Use <> on Target
          Hippogriff's IdleAnim = On Land
          Hippogriff's Df% = TempVar:DfltDf%
@@ -24161,7 +24244,7 @@ Asrb:   Earth
  MAt: 42         MDf: 230                          Lck: 0
  ---
 Immune: Death, Confusion, Stop, Frog, Small, Petrify, Death-sentence,
-        Manipulate, Darkness
+        Manipulate, Peerless, Paralysed
  ---
 Attacks:
   Earthquake
@@ -24183,6 +24266,8 @@ Attacks:
     Elm: Earth
     Attr: [ 48] Inflict 'Darkness'
           Manip.
+    Notes: Status infliction done via Sandstorm is considered to be No Split,
+             even though the damage itself is split
   Crush
     Physical Attack
     Formula: Physical
@@ -24429,7 +24514,7 @@ Name: Gas Ducter
 Asrb:   Poison
  ---
  Att: 88         Def: 76          Df%: 1           Dex: 85
- MAt: 80         MDf: 68                           Lck: 0
+ MAt: 80         MDf: 136                          Lck: 0
  ---
 Immune: Sleep, Poison, Sadness, Fury, Frog, Small, Death-sentence, Paralysed,
         Darkness
@@ -24454,6 +24539,7 @@ Attacks:
     Elm: Non-Element
     Attr: 100%  Inflict 'Poison', 'Sadness', 'Silence', 'Darkness'
           Manip.
+          Can't Cover
     Notes: Will sometimes use Smog Alert twice in a single combo
  ---
 AI: Setup
@@ -24542,7 +24628,7 @@ Attacks:
     Magical Change Status
     MAt%: 255
     Cost: 56 MP
-    Tar: All Al
+    Tar: All Al (NS)
     Elm: Non-Element
     Attr: 100%  Inflict 'Barrier', 'MBarrier', 'Haste'
  ---
@@ -24606,7 +24692,7 @@ AI: Counter - General
 Name: Eagle Gun
  Lvl: 46         EXP: 2000          Win: 100% X-Potion
   HP: 17000       AP: 90          Steal: [32] Warrior Bangle
-  MP: 50         Gil: 1600        Morph:      -
+  MP: 50         Gil: 3800        Morph:      -
  ---
 Weak:   Lightning
 Void:   Earth, Water
@@ -24678,7 +24764,7 @@ AI: Main
 =============================================================================
 5.24 Ultimate Weapon
 --------------------
-At this point, when you return to Mideel you will face Ultimate Weapon for
+At this point when you return to Mideel, you will face Ultimate Weapon for
 the first time.  You will also later have the chance to fight Ultimate Weapon
 after defeating Diamond Weapon.  However, the first battle is just as
 important as the rest, because Ultimate Weapon's HP carries over after each
@@ -24747,7 +24833,7 @@ Attacks:
  ---
 AI: Setup
 {
-   Ultimate Weapon's [402C] = 1
+   Turn off Death Handling for Ultimate Weapon
    GlobalVar:UltimateWeaponHP = Ultimate Weapon's HP
    If (Ultimate Weapon's HP <= 20000) Then
    {
@@ -24875,7 +24961,7 @@ Attacks:
 AI: Setup
 {
    Ultimate Weapon's HP = GlobalVar:UltimateWeaponHP
-   Ultimate Weapon's [402C] = 1
+   Turn off Death Handling for Ultimate Weapon
    TempVar:TurnsLeft = Rnd(3..5)
    TempVar:LastHP = Ultimate Weapon's HP
 }
@@ -24996,7 +25082,7 @@ Attacks:
 AI: Setup
 {
    Ultimate Weapon's HP = GlobalVar:UltimateWeaponHP
-   Ultimate Weapon's [402C] = 1
+   Turn off Death Handling for Ultimate Weapon
    TempVar:TurnsLeft = Rnd(3..5)
    TempVar:LastHP = Ultimate Weapon's HP
 }
@@ -25304,6 +25390,7 @@ Attacks:
     Tar: 1 Op
     Elm: Non-Element
     Attr: Manip.
+          Can't Cover
   Matra Magic
     Magical Attack
     Formula: Magical
@@ -25440,7 +25527,7 @@ Name: Slalom
   HP: 1600        AP: 70          Steal: [ 8] Smoke Bomb
   MP: 30         Gil: 1500        Morph:      Hi-Potion
  ---
-Half:   Water
+Asrb:   Poison
  ---
  Att: 70         Def: 74          Df%: 10          Dex: 60
  MAt: 45         MDf: 80                           Lck: 12
@@ -25468,6 +25555,7 @@ Attacks:
     Elm: Non-Element
     Attr: [ 88] Inflict 'Poison'
           Manip.
+          Can't Cover
     Notes: Will sometimes use the Darkness version of Smog immediately after
              this in a single combo
   Smog
@@ -25479,6 +25567,7 @@ Attacks:
     Elm: Non-Element
     Attr: [ 92] Inflict 'Darkness'
           Manip.
+          Can't Cover
     Notes: Will only use this as a random combo after using the Poison
              version of Smog
  ---
@@ -25533,7 +25622,7 @@ Name: Guard System
   HP: 2200        AP: 80          Steal:      -
   MP: 200        Gil: 1200        Morph:      -
  ---
-Weak:   Gravity
+Void:   Lightning
  ---
  Att: 55         Def: 70          Df%: 0           Dex: 67
  MAt: 56         MDf: 50                           Lck: 0
@@ -25564,7 +25653,7 @@ AI: Main
 }
 AI: Counter - Death
 {
-   Guard System's [402C] = 1
+   Turn off Death Handling for Guard System
    Choose Self
    Use <Vanish> on Target
    Remove TempVar:WBGroup
@@ -25726,6 +25815,7 @@ Attacks:
     PAt%:  75
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
   Confu Missile
     Physical Attack
     Formula: Physical
@@ -25734,6 +25824,7 @@ Attacks:
     Tar: 1 Op
     Elm: Non-Element
     Attr: 100%  Inflict 'Confusion'
+          Can't Cover
 
 Animations:
   <Appear>
@@ -25941,6 +26032,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
   Goannai
     Remove Target from Battle
     Auto Hit
@@ -26313,6 +26405,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: Manip.
+          Can't Cover
   Water Wave
     Physical Attack
     Formula: Physical
@@ -26321,6 +26414,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shout
     Attr: Manip.
+          Can't Cover
  ---
 AI: Main
 {
@@ -26346,7 +26440,7 @@ Name: Hard Attacker
   HP: 2500        AP: 58          Steal:      -
   MP: 150        Gil: 600         Morph:      -
  ---
-Half: Fire, Water
+Half:   Fire, Water
  ---
  Att: 80         Def: 90          Df%: 3           Dex: 77
  MAt: 55         MDf: 74                           Lck: 6
@@ -26371,6 +26465,7 @@ Attacks:
     Tar: 1 Op
     Elm: Fire
     Attr: Manip.
+          Can't Cover
  ---
 AI: Main
 {
@@ -26419,6 +26514,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Hit
+    Attr: Can't Cover
     Notes: Will sometimes use Rocket Punch twice in a single combo
   W Rocket Punch
     Physical Attack
@@ -26427,6 +26523,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Hit
+    Attr: Can't Cover
     Notes: Will sometimes use W Rocket Punch twice in a single combo
   Jumping Blow
     Physical Attack
@@ -26511,62 +26608,12 @@ AI: Counter - General
 }
 AI: Counter - Death
 {
-   Guardian's [402C] = 1
+   Turn off Death Handling for Guardian
    Choose Self
    Use <Vanish> on Target
    Remove Guardian(Right)
    Remove Guardian(Left)
 }
-
-
-
------------------------------------------------------------------------------
-Name: Guardian(Right)
- Lvl: 40         EXP: 940           Win:      -
-  HP: 4000        AP: 60          Steal:      -
-  MP: 340        Gil: 500         Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 80         Def: 76          Df%: 8           Dex: 67
- MAt: 66         MDf: 80                           Lck: 10
- ---
-Immune: Death, Sleep, Poison, Sadness, Fury, Confusion, Haste, Slow, Stop,
-        Frog, Small, Slow-numb, Petrify, Death-sentence, Manipulate,
-        Peerless, Paralysed, Darkness, Seizure
-
-Untargetable.  Does not need to be killed to end the battle
-
-This is the Guardian's right fist
- ---
-No Attacks
- ---
-No AI Script
-
-
-
------------------------------------------------------------------------------
-Name: Guardian(Left)
- Lvl: 40         EXP: 940           Win:      -
-  HP: 4000        AP: 60          Steal:      -
-  MP: 340        Gil: 500         Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 80         Def: 76          Df%: 8           Dex: 67
- MAt: 66         MDf: 80                           Lck: 10
- ---
-Immune: Death, Sleep, Poison, Sadness, Fury, Confusion, Haste, Slow, Stop,
-        Frog, Small, Slow-numb, Petrify, Death-sentence, Manipulate,
-        Peerless, Paralysed, Darkness, Seizure
-
-Untargetable.  Does not need to be killed to end the battle
-
-This is the Guardian's left fist
- ---
-No Attacks
- ---
-No AI Script
 
 
 
@@ -26678,7 +26725,7 @@ Name: Captain
 No Elemental Properties
  ---
  Att: 84         Def: 66          Df%: 1           Dex: 63
- MAt: 34         MDf: 80                           Lck: 0
+ MAt: 35         MDf: 80                           Lck: 0
  ---
 No Special Attributes
  ---
@@ -26887,7 +26934,7 @@ Animations:
  ---
 AI: Setup
 {
-   Carry Armor's [402C] = 1
+   Turn off Death Handling for Carry Armor
    SpclChance = 4
    If (1/3 Chance) Then
    {
@@ -26998,7 +27045,8 @@ Attacks:
     Tar: 1 Op
     Elm: Non-Element
     Attr: 100%  Inflict 'Death', 'Near-death', 'Imprisoned'
-    Notes: Despite attempting to inflict 'Death' and 'Near-death', this is
+    Notes: This version of Imprisoned acts like Stop
+           Despite attempting to inflict 'Death' and 'Near-death', this is
              actually only a flag that will instead move the Imprisoned
              character into Right Arm's claws
   <Damage Attack>
@@ -27109,7 +27157,7 @@ AI: Counter - Death
          }
       }
    } Else {
-      Right Arm's [402C] = 1
+      Turn off Death Handling for Right Arm
    }
 }
 
@@ -27145,7 +27193,8 @@ Attacks:
     Tar: 1 Op
     Elm: Non-Element
     Attr: 100%  Inflict 'Death', 'Near-death', 'Imprisoned'
-    Notes: Despite attempting to inflict 'Death' and 'Near-death', this is
+    Notes: This version of Imprisoned acts like Stop
+           Despite attempting to inflict 'Death' and 'Near-death', this is
              actually only a flag that will instead move the Imprisoned
              character into Left Arm's claws
   <Damage Attack>
@@ -27256,7 +27305,7 @@ AI: Counter - Death
          }
       }
    } Else {
-      Left Arm's [402C] = 1
+      Turn off Death Handling for Left Arm
    }
 }
 
@@ -27279,8 +27328,8 @@ Void:   Gravity
 Immune: Death, Sleep, Confusion, Silence, Frog, Small, Slow-numb, Petrify,
         Death-sentence, Manipulate, Berserk, Peerless, Seizure
 
-Note: If Turks:Rude uses a spell, he may use any of the spells under certain
-conditions, all in the same turn
+Note: If Turks:Rude uses a spell, he may use any of his other spells in the
+same turn, depending on certain conditions
 
 Turks:Rude also has an aversion to attacking Tifa, and will only target her
 once all other party members have been disabled or via the Bolt2 desperation
@@ -27342,7 +27391,7 @@ Attacks:
  ---
 AI: Setup
 {
-   Turks:Rude's [402C] = 1
+   Turn off Death Handling for Turks:Rude
 }
 AI: Main
 {
@@ -27407,7 +27456,7 @@ AI: Counter - Death
           Berserk from All Allies
    Remove All Allies
    Print Message [Rude "Ugh.........gh........."]
-   Turks:Rude's [402C] = 1
+   Turn off Death Handling for Turks:Rude
    Choose Self
    Use <(Report)> on Target
 }
@@ -27563,7 +27612,7 @@ Attacks:
     Tar: 1 Op
     Elm: Fire
     Attr: Manip.
-    Notes: Only after receiving a Ice-Elemental Magical attack from Magic,
+    Notes: Only after receiving an Ice-Elemental Magical attack from Magic,
              Summon or E-Skill
            See Special Attributes Section regarding bugs regarding when
              Diablo uses this
@@ -27700,7 +27749,9 @@ Immune: Death, Sleep, Poison, Stop, Frog, Small, Petrify, Death-sentence,
         Manipulate, Peerless, Paralysed
 
 Although planned as an enemy for the Ancient Forest, it is impossible to
-fight it outside of Battle Square
+fight it outside of Battle Square.  Stats listed here are base stats for
+outside Battle Square - remember to multiply HP by 2 and Att/MAt by 1.25 for
+encounters within Battle Square
  ---
 Attacks:
   Whip Sting
@@ -27814,7 +27865,7 @@ AI: Counter - Death
    Remove Sleep/Poison/Silence/Haste/Slow/Regen/Death-sentence/Manipulate/
           Berserk Statuses from Turks:Reno
    Print Message [Reno "These guys are pretty tough."]
-   Turks:Reno's [402C] = 1
+   Turn off Death Handling for Turks:Reno
    Choose Self
    Use <(Report)> on Target
 }
@@ -27847,7 +27898,7 @@ Turks:Rude has an aversion to attacking Tifa, and will only target her once
 all other party members have been disabled.  Even then, he has a 1/3 chance
 of hesitating instead
 
-BUG: Note that once Turks:Rude has done anything except Shoulder Attack,
+BUG: Note that once Turks:Rude has done anything other than Shoulder Attack,
 he cannot do anything for the rest of the battle
  ---
 Attacks:
@@ -27982,7 +28033,7 @@ AI: Counter - Death
    Remove Sleep/Poison/Silence/Haste/Slow/Regen/Death-sentence/Manipulate/
           Berserk Statuses from Turks:Rude
    Print Message [Rude ".................."]
-   Turks:Reno's [402C] = 1
+   Turn off Death Handling for Turks:Reno
    Choose Self
    Use <(Report)> on Target
 }
@@ -28106,6 +28157,7 @@ Attacks:
     Tar: 1 Op
     Elm: Poison
     Attr: 100%  Inflict 'Darkness'
+          Can't Cover
  ---
 AI: Setup
 {
@@ -28271,14 +28323,14 @@ AI: Counter - Magical
 
 -----------------------------------------------------------------------------
 Name: Unknown 2
- Lvl: 51         EXP: 900           Win: [ 2] Lunar Curtain
+ Lvl: 51         EXP: 3000          Win: [ 2] Lunar Curtain
   HP: 13000       AP: 300         Steal: [ 8] Aurora Armlet
   MP: 130        Gil: 10000       Morph:      Guard Source
  ---
 Asrb:   Poison
  ---
- Att: 130        Def: 130         Df%: 1           Dex: 150
- MAt: 130        MDf: 130                          Lck: 13
+ Att: 130        Def: 130         Df%: 1           Dex: 130
+ MAt: 130        MDf: 130                          Lck: 12
  ---
 Immune: Death, Confusion, Silence, Frog, Small, Slow-numb, Petrify,
         Death-sentence, Manipulate, Berserk, Peerless, Seizure
@@ -28352,8 +28404,8 @@ Name: Unknown 3
  ---
 Asrb:   Lightning
  ---
- Att: 150        Def: 150         Df%: 1           Dex: 130
- MAt: 150        MDf: 150                          Lck: 12
+ Att: 150        Def: 150         Df%: 1           Dex: 150
+ MAt: 150        MDf: 150                          Lck: 13
  ---
 Immune: Death, Confusion, Silence, Stop, Frog, Small, Slow-numb, Petrify,
         Death-sentence, Manipulate, Berserk, Peerless, Paralysed, Seizure
@@ -28491,6 +28543,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
     Notes: Only used if Serpent's HP is roughly below 20% of the
              party's average HP (party members in Death Status don't count)
  ---
@@ -29055,27 +29108,6 @@ AI: Counter - Death
 
 
 -----------------------------------------------------------------------------
-Name: Manhole(Lid)
- Lvl:  1         EXP: 0             Win:      -
-  HP: 1           AP: 0           Steal:      -
-  MP: 1          Gil: 0           Morph:      -
- ---
-No Elemental Properties
- ---
- Att: 1          Def: 2           Df%: 1           Dex: 1
- MAt: 1          MDf: 2                            Lck: 0
- ---
-Untargetable.  Does not need to be killed to end the battle
-
-This is the lid for each Manhole
- ---
-No Attacks
- ---
-No AI Script
-
-
-
------------------------------------------------------------------------------
 Name: Crazy Saw
  Lvl: 44         EXP: 800           Win: [ 8] Phoenix Down, [ 8] Ether
   HP: 3900        AP: 80          Steal: [32] Mute Mask
@@ -29234,6 +29266,7 @@ Attacks:
     PAt%:  90
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
   <(Report)>
     Physical Escape Battle
     Auto Hit
@@ -29422,9 +29455,18 @@ Immune: Death, Sleep, Confusion, Silence, Stop, Frog, Small, Slow-numb,
         Petrify, Death-sentence, Manipulate, Berserk, Peerless, Paralysed,
         Seizure
 
-Turks:Rude has an aversion to attacking Tifa, and will only target her once
-all other party members have been disabled.  Even then, he has a 2/3 chance
-of hesitating instead
+BUG: Turks:Rude's normal aversion to attacking Tifa is improperly coded -
+if there's more than one choice of target other than Tifa for him to attack,
+he will try to attack *both* of them with a 1 Op-type ability.  Since this
+cannot possibly hit two targets at once, Turks:Rude will instead pick a new
+random target out of *all three characters*, which includes Tifa.
+
+If Turks:Rude can only choose between Tifa and one other party member (the
+third party member being KOed or some other method of making them
+untargetable), then the code works correctly and Turks:Rude will never attack
+Tifa.  And if Tifa is the final person left, Turks:Rude will hesitate 2/3rds
+of the time instead of attacking her.
+
 
 As soon as any one of the Turks are defeated, all three Turks will flee the
 battle.  Any Turks that have not been defeated by this time will not drop any
@@ -29476,7 +29518,7 @@ Attacks:
  ---
 AI: Main
 {
-   Choose Random Opponent that isn't Tifa
+   Choose All Opponents that aren't Tifa
    If (Target exists) Then
    {
       If (Count == 0 or 1) Then
@@ -29553,6 +29595,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
     Notes: Will sometimes use Wrist Laser twice in a single combo
   Knee Fire
     Physical Attack
@@ -29561,6 +29604,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
     Notes: Will sometimes use Knee Fire twice in a single combo
   Knee Blend
     Physical Attack
@@ -29569,6 +29613,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
     Notes: Will sometimes use Knee Blend twice in a single combo
   <W Machine Gun>
     Physical Attack
@@ -29601,7 +29646,7 @@ Animations:
  ---
 AI: Setup
 {
-   Proud Clod's [402C] = 1
+   Turn off Death Handling for Proud Clod
    Count = Rnd(0..6)
    SpclChance = 5
 }
@@ -29766,6 +29811,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Fire
+    Attr: Can't Cover
  ---
 AI: Setup
 {
@@ -29849,6 +29895,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Fire
+    Attr: Can't Cover
     Notes: Only used if Grosspanzer*Big is alive
   <Normal Shell>
     Physical Attack
@@ -30367,12 +30414,12 @@ Void:   Gravity
  Att: 60         Def: 130         Df%: 5           Dex: 78
  MAt: 60         MDf: 150                          Lck: 6
  ---
-Hojo is accompanied by a Bad Rap Sample and Poodler Sample, who begin battle
-in Death status
-
 Immune: Death, Sleep, Poison, Confusion, Silence, Haste, Slow, Stop, Frog,
         Small, Slow-numb, Petrify, Death-sentence, Manipulate, Berserk,
         Peerless, Paralysed, Seizure
+
+Hojo is accompanied by a Bad Rap Sample and Poodler Sample, who begin battle
+in Death status
  ---
 Attacks:
   Capsule
@@ -30399,7 +30446,7 @@ Animations:
  ---
 AI: Setup
 {
-   Hojo's [402C] = 1
+   Turn off Death Handling for Hojo
    Print Message [Hojo "Gwah, haw, haw!!"]
    Choose Self
    Use <> on Target
@@ -30557,6 +30604,7 @@ Attacks:
     Tar: 1 Op
     Elm: Poison
     Attr: 100%  Inflict 'Darkness'
+          Can't Cover
  ---
 AI: Setup
 {
@@ -30687,7 +30735,7 @@ Animations:
  ---
 AI: Setup
 {
-   Helletic Hojo's [402C] = 1
+   Turn off Death Handling for Helletic Hojo
    TempVar:HHGroup = Helletic Hojo, Right Arm and Left Arm with same
                        Formation ID as Helletic Hojo
    Count = Rnd(0..4)
@@ -30811,7 +30859,7 @@ AI: Counter - Death
 {
    Remove Sleep/Poison/Haste/Slow/Death-sentence/Berserk Statuses from
      Helletic Hojo
-   TempVar:HHGroup's [402C] = 0
+   Turn on Death Handling for TempVar:HHGroup
    Choose Self
    Use <Vanish> on Target
    Choose Self
@@ -30851,7 +30899,7 @@ Animations:
  ---
 AI: Setup
 {
-   Right Arm's [402C] = 1
+   Turn off Death Handling for Right Arm
    TempVar:HHGroup = Helletic Hojo, Right Arm and Left Arm with same
                        Formation ID as Right Arm
 }
@@ -30902,7 +30950,7 @@ Animations:
  ---
 AI: Setup
 {
-   Left Arm's [402C] = 1
+   Turn off Death Handling for Left Arm
    TempVar:HHGroup = Helletic Hojo, Right Arm and Left Arm with same
                        Formation ID as Left Arm
 }
@@ -31169,9 +31217,9 @@ Despite how the battle looks when it starts, it is *not* a normal battle.
 You have been Ambushed (despite the lack of Ambush message), so your Time
 Bars start empty.  In addition, your entire party have their *back* to Ruby
 Weapon, despite it seeming like you're facing him.  The first occurrence of
-Big Swing will thus deal Back Attack damage to your party until you attack
-him.  As stated earlier in this document, attempting to run away to change
-your facing will not correct this Back Attack problem
+Big Swing will thus deal Back Attack damage to your party unless you attack
+him first.  As stated earlier in this document, attempting to run away to
+change your facing will not correct this Back Attack problem
  ---
 Attacks:
   <Big Claw>
@@ -31191,6 +31239,8 @@ Attacks:
     Elm: Hit
     Attr: [ 40] Inflict 'Paralysed'
     Notes: Only used when Ruby's Tentacles are not present
+           Status infliction done via Big Swing is considered to be No Split,
+             even though the damage itself is split
   Comet2
     Magical Attack
     Formula: Magical
@@ -31283,7 +31333,7 @@ AI: Setup
    TempVar:DfltIdle = Ruby Weapon's IdleAnim
    TempVar:DfltHurt = Ruby Weapon's HurtAnim
    Remove Ruby's Tentacles
-   Ruby's Tentacles [402C] = 1
+   Turn off Death Handling for all of Ruby's Tentacles
    Ruby Weapon's Additional Absorbs = Fire, Ice, Lightning, Earth, Hidden
    Ruby Weapon's Physical Immunity = On
    Ruby Weapon's Magical Immunity  = On
@@ -31376,7 +31426,7 @@ AI: Main
             Ruby Weapon's Physical Immunity = Off
             Ruby Weapon's Magical Immunity  = Off
             Remove Death Status from Ruby's Tentacles
-            Ruby's Tentacles' [402C] = 1
+            Turn off Death Handling for all of Ruby's Tentacles
             Set Ruby's Tentacles' HP to Ruby's Tentacles' Max HP
             Activate Ruby's Tentacles
          }
@@ -31412,7 +31462,7 @@ AI: Main
             Use Comet2 on Target
          }
       } Else {
-         If (Number of Targetable Opponents > 1) Then
+         If (Number of Targetable Opponents >= 2) Then
          {
             TempVar:Sequence = (Count MOD 3)
             If (TempVar:Sequence == 1) Then
@@ -31426,7 +31476,7 @@ AI: Main
                Choose All Opponents
                Use Big Swing on Target
             }
-         } Else If (Number of Targetable Opponents < 2) Then {
+         } Else If (Number of Targetable Opponents <= 1) Then {
             Choose Self
             Use <> on Target
             Stage = 1
@@ -31435,7 +31485,7 @@ AI: Main
             Ruby Weapon's Physical Immunity = Off
             Ruby Weapon's Magical Immunity  = Off
             Remove Death Status from Ruby's Tentacles
-            Ruby's Tentacles' [402C] = 1
+            Turn off Death Handling for all of Ruby's Tentacles
             Set Ruby's Tentacles' HP to Ruby's Tentacles' Max HP
             Activate Ruby's Tentacles
          } Else {
@@ -31567,6 +31617,8 @@ Attacks:
     Elm: Non-Element
     Attr: 100%  Cure 'Haste'
     Notes: Only used as C/A when at least one Eye is alive
+           Status removal done via Revenge Stamp is considered to be No
+             Split, even though the damage itself is split
   Aire Tam Storm
     Physical Absorb
     Formula: Custom
@@ -31732,40 +31784,6 @@ AI: Counter - Death
    Remove all Eyes
    GlobalVar:EmeraldDefeated = 1
 }
-
-
-
------------------------------------------------------------------------------
-Name: Leg
- Lvl:  1         EXP: -             Win:      -         
-  HP: 1           AP: -           Steal:      -
-  MP: 1          Gil: -           Morph:      -
- ---
-Void:   Earth, Gravity
-Asrb:   Water
- ---
- Att:  1         Def: 2           Df%: 1           Dex: 1
- MAt:  1         MDf: 2                            Lck: 1
- ---
-Immune: Death, Sleep, Poison, Confusion, Silence, Stop, Frog, Small,
-        Slow-numb, Petrify, Regen, Death-sentence, Manipulate, Berserk,
-        Peerless, Paralysed, Seizure
-
-Untargetable.  Does not need to be killed to end the battle
- ---
-Attacks:
-  Aire Tam Storm
-    Physical Absorb
-    Formula: Custom
-    Pwr: 1111 * No. of Materia Equipped by Target
-    PAt%: 255
-    Tar: All Op (NS)
-    Elm: Non-Element
-    Attr: 100%  Cure 'Haste', 'Slow', 'Stop', 'Regen', 'Barrier', 'MBarrier',
-                     'Reflect', 'Shield', 'Death Force', 'Resist'
-    Notes: Leg will never use this
- ---
-No AI Script
 
 
 
@@ -32023,7 +32041,7 @@ Name: Dark Dragon
   HP: 14000       AP: 350         Steal: [ 8] Dragon Armlet
   MP: 600        Gil: 2500        Morph:      Vaccine
  ---
-Weak:   Gravity
+Void:   Lightning
  ---
  Att: 150        Def: 120         Df%: 5           Dex: 100
  MAt: 90         MDf: 240                          Lck: 3
@@ -32446,7 +32464,7 @@ Attacks:
     Magical Change Status
     Auto Hit
     Cost: 22 MP
-    Tar: All Op
+    Tar: All Op (NS)
     Elm: Non-Element
     Attr: 100%  Inflict 'Death'
           Manip.
@@ -32651,6 +32669,7 @@ Attacks:
     PAt%: 255
     Tar: 1 Op
     Elm: Non-Element
+    Attr: Can't Cover
     Notes: Only used as C/A against 2nd attack since Master Tonberry's last
              turn
   Knife
@@ -32958,6 +32977,7 @@ Attacks:
     Tar: 1 Op
     Elm: Shoot
     Attr: 100%  Inflict 'Sadness'
+          Can't Cover
     Notes: Only used as random C/A against physical abilities
   Big Breath
     Magical Attack
@@ -33286,6 +33306,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
     Notes: Will sometimes use Star twice in a single combo
   Sun
     Magical Change Status
@@ -33661,6 +33682,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
 
 Animations:
   <Exchange>
@@ -33750,7 +33772,6 @@ Attacks:
     Notes: Randomly picks item from party inventory and removes it
            Kill enemy to get it back
            Used only as C/A against attacks
-
   <(Report)>
     Physical Escape Battle
     Auto Hit
@@ -33884,6 +33905,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Shoot
+    Attr: Can't Cover
     Notes: Can only use if Gighee is alive
  ---
 AI: Setup
@@ -34408,7 +34430,7 @@ AI: Setup
    GlobalVar:JenovaKoR = 0
    If (Self is Jenova*SYNTHESISA) Then
    {
-      Jenova*SYNTHESISA's [402C] = 0,
+      Turn on Death Handling for Jenova*SYNTHESISA
       Jenova*SYNTHESISA's [4278] = 3
       TempVar:AvgPLv     = Average Party Level
       TempVar:CharNum    = Number of Party Members
@@ -34679,15 +34701,15 @@ You will face the single party version if any one of the following are true:
       couldn't do anything due to an Arm being dead.  Also note that the
       very first turn Jenova begins the countdown on does not count.
 
-   2. The average party level is 53 or less.  Aeris is not included in
+   2. Your lowest levelled party member is L34 or less.  A character in this
+      level range automatically earns you the single party version of
+      Bizarro*Sephiroth.
+
+   3. The average party level is 53 or less.  Aeris is not included in
       this count, and if you have skipped Yuffie or Vincent, then whoever
       you've skipped will not be included either.  The average is the sum
       of your party's levels divided by the number of party members,
       rounded down.
-
-   3. At least one party member is L34 or less.  A character in this level
-      range automatically earns you the single party version of
-      Bizarro*Sephiroth.
 
 
 This version of Bizarro*Sephiroth is the easiest and least complex of the
@@ -34748,6 +34770,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Cut
+    Attr: Can't Cover
     Notes: Also used if the planned attack for this turn fails due to the
              conditions for using it not being met
   Aurora Fence
@@ -34768,6 +34791,8 @@ Attacks:
              Barrier/MBarrier/Reflect/Shield/Death-sentence/Berserk/
              Peerless/Paralysed/Seizure Statuses from ALL party members
            Only used when Head is dead
+           Status removal done via Aurora Fence is considered to be No Split,
+             even though the healing itself is split
   Bolt3
     Magical Attack
     Formula: Magical
@@ -34855,7 +34880,7 @@ AI: Setup
    TempVar:Core     = Bizarro*Sephiroth C
    TempVar:RightMgc = Bizarro*Sephiroth D
    TempVar:LeftMgc  = Bizarro*Sephiroth E
-   Bizarro*Sephiroth's [402C] = 1
+   Turn off Death Handling for Bizarro*Sephiroth
    If (Self is TempVar:MainBody) Then
    {
       TempVar:CharLv99 = GlobalVar:CharLv99
@@ -35124,11 +35149,11 @@ AI: Counter - Death
 You will face the two party version if you do not qualify for the single
 party version, but one of the following is true:
 
-   1. At least one party member is L44 or less.
+   1. You are missing either Vincent or Yuffie or both.
 
-   2. You are missing either Vincent or Yuffie or both.
+   2. Your lowest levelled party member is between L35 and L44 inclusive.
 
-   3. The average party level is 67 or less.
+   3. The average party level is between 54 and 67 inclusive.
 
 
 This is a slightly more complex battle.  Cloud's party will face the Right
@@ -35217,6 +35242,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Cut
+    Attr: Can't Cover
     Notes: Also used if the planned attack for this turn fails due to the
              conditions for using it not being met
   Aurora Fence
@@ -35237,6 +35263,8 @@ Attacks:
              Barrier/MBarrier/Reflect/Shield/Death-sentence/Berserk/
              Peerless/Paralysed/Seizure Statuses from ALL party members
            Only used when Head is dead
+           Status removal done via Aurora Fence is considered to be No Split,
+             even though the healing itself is split
   Bolt3
     Magical Attack
     Formula: Magical
@@ -35322,7 +35350,7 @@ AI: Setup
    TempVar:Core      = Bizarro*Sephiroth C
    TempVar:RightShld = Bizarro*Sephiroth D
    TempVar:RightArm  = Bizarro*Sephiroth E
-   Bizarro*Sephiroth's [402C] = 1
+   Turn off Death Handling for Bizarro*Sephiroth
    If (Self is TempVar:MainBody) Then
    {
       TempVar:CharLv99 = GlobalVar:CharLv99
@@ -35562,7 +35590,7 @@ AI: Main
       TempVar:Core's MP = TempVar:Core's Max MP
    }
 }
-AI: Death
+AI: Counter - Death
 {
    If (TempVar:Head has Death Status) Then
    {
@@ -35721,6 +35749,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Cut
+    Attr: Can't Cover
     Notes: Also used if the planned attack for this turn fails due to the
              conditions for using it not being met
   Aurora Fence
@@ -35741,6 +35770,8 @@ Attacks:
              Barrier/MBarrier/Reflect/Shield/Death-sentence/Berserk/
              Peerless/Paralysed/Seizure Statuses from ALL party members
            Only used when Head is dead
+           Status removal done via Aurora Fence is considered to be No Split,
+             even though the healing itself is split
   Fire3
     Magical Attack
     Formula: Magical
@@ -35829,7 +35860,7 @@ AI: Setup
    TempVar:Core     = Bizarro*Sephiroth C
    TempVar:LeftShld = Bizarro*Sephiroth D
    TempVar:LeftArm  = Bizarro*Sephiroth E
-   Bizarro*Sephiroth's [402C] = 1
+   Turn off Death Handling for Bizarro*Sephiroth
    If (Self is TempVar:MainBody) Then
    {
       TempVar:CharLv99 = GlobalVar:CharLv99
@@ -36037,7 +36068,7 @@ AI: Main
       }
    }
 }
-AI: Death
+AI: Counter - Death
 {
    If (TempVar:Head has Death Status) Then
    {
@@ -36140,14 +36171,14 @@ Finally, you will get the three party version if you fail to qualify for
 the previous two versions.  To be precise, this means that all of the
 following is true:
 
-   1. Jenova*SYNTHESIS only achieved 12 turns or less before she began her
-      Ultima countdown.
+   1. Both Vincent and Yuffie have been recruited into your party.
 
-   2. The average level of the party is 68 or greater.
+   2. Jenova*SYNTHESIS only achieved 12 turns or less before she began her
+      Ultima countdown.
 
    3. The lowest level character in your party is L45 or greater.
 
-   4. Both Vincent and Yuffie have been recruited into your party.
+   4. The average level of the party is 68 or greater.
 
 
 This is it.  This time, Cloud's party stands dead center, the 2nd party
@@ -36234,6 +36265,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Cut
+    Attr: Can't Cover
     Notes: Also used if the planned attack for this turn fails due to the
              conditions for using it not being met
   Aurora Fence
@@ -36254,6 +36286,8 @@ Attacks:
              Barrier/MBarrier/Reflect/Shield/Death-sentence/Berserk/
              Peerless/Paralysed/Seizure Statuses from ALL party members
            Only used when Head is dead
+           Status removal done via Aurora Fence is considered to be No Split,
+             even though the healing itself is split
   Bolt3
     Magical Attack
     Formula: Magical
@@ -36349,7 +36383,7 @@ AI: Setup
    TempVar:Core      = Bizarro*Sephiroth C
    TempVar:RightMgc  = Bizarro*Sephiroth D
    TempVar:LeftMgc   = Bizarro*Sephiroth E
-   Bizarro*Sephiroth's [402C] = 1
+   Turn off Death Handling for Bizarro*Sephiroth
    If (Self is TempVar:MainBody) Then
    {
       TempVar:CharLv99 = GlobalVar:CharLv99
@@ -36591,7 +36625,7 @@ AI: Main
       TempVar:Core's MP = TempVar:Core's Max MP
    }
 }
-AI: Death
+AI: Counter - Death
 {
    If (TempVar:Head has Death Status) Then
    {
@@ -36712,7 +36746,7 @@ Head shares Death status with the Heads in all Three Party battles
 Right Shoulder shares Death status with Right Magic in the Main battle
 Right Shoulder and Right Arm will absorb Ice and Lightning Elements
 Core is immune to all attacks until both Right Shoulder and Right Arm are
-  dead.  The immunity will return if both parts of Left Magic are revived
+  dead.  The immunity will return if both parts of Right Magic are revived
 If Core is destroyed and Left Core in Sub Battle 2 is dead, then the Core in
   the Main Battle will lose its immunity
 
@@ -36730,6 +36764,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Cut
+    Attr: Can't Cover
     Notes: Also used if the planned attack for this turn fails due to the
              conditions for using it not being met
   Aurora Fence
@@ -36750,6 +36785,8 @@ Attacks:
              Barrier/MBarrier/Reflect/Shield/Death-sentence/Berserk/
              Peerless/Paralysed/Seizure Statuses from ALL party members
            Only used when Head is dead
+           Status removal done via Aurora Fence is considered to be No Split,
+             even though the healing itself is split
   Bolt3
     Magical Attack
     Formula: Magical
@@ -36827,17 +36864,6 @@ Attacks:
 Animations:
   <Vanish>
   <Vanish>
-
-Dummy Moves:
-  Think about the sequence of the 5 targets
-  and beat them!
-    First attack
-    Takes no time
-    Does nothing
-  If a part dies, change to a different party.
-    Used immediately after first attack if you have more than one party
-    Takes no time
-    Does nothing
  ---
 AI: Setup
 {
@@ -36846,7 +36872,7 @@ AI: Setup
    TempVar:Core      = Bizarro*Sephiroth C
    TempVar:RightShld = Bizarro*Sephiroth D
    TempVar:RightArm  = Bizarro*Sephiroth E
-   Bizarro*Sephiroth's [402C] = 1
+   Turn off Death Handling for Bizarro*Sephiroth
    If (Self is TempVar:MainBody) Then
    {
       TempVar:CharLv99 = GlobalVar:CharLv99
@@ -37053,7 +37079,7 @@ AI: Main
       }
    }
 }
-AI: Death
+AI: Counter - Death
 {
    If (TempVar:Head has Death Status) Then
    {
@@ -37197,6 +37223,7 @@ Attacks:
     PAt%: 100
     Tar: 1 Op
     Elm: Cut
+    Attr: Can't Cover
     Notes: Also used if the planned attack for this turn fails due to the
              conditions for using it not being met
   Aurora Fence
@@ -37217,6 +37244,8 @@ Attacks:
              Barrier/MBarrier/Reflect/Shield/Death-sentence/Berserk/
              Peerless/Paralysed/Seizure Statuses from ALL party members
            Only used when Head is dead
+           Status removal done via Aurora Fence is considered to be No Split,
+             even though the healing itself is split
   Fire3
     Magical Attack
     Formula: Magical
@@ -37294,17 +37323,6 @@ Attacks:
 Animations:
   <Vanish>
   <Vanish>
-
-Dummy Moves:
-  Think about the sequence of the 5 targets
-  and beat them!
-    First attack
-    Takes no time
-    Does nothing
-  If a part dies, change to a different party.
-    Used immediately after first attack if you have more than one party
-    Takes no time
-    Does nothing
  ---
 AI: Setup
 {
@@ -37313,7 +37331,7 @@ AI: Setup
    TempVar:Core     = Bizarro*Sephiroth C
    TempVar:LeftShld = Bizarro*Sephiroth D
    TempVar:LeftArm  = Bizarro*Sephiroth E
-   Bizarro*Sephiroth's [402C] = 1
+   Turn off Death Handling for Bizarro*Sephiroth
    If (Self is TempVar:MainBody) Then
    {
       TempVar:CharLv99 = GlobalVar:CharLv99
@@ -37520,7 +37538,7 @@ AI: Main
       }
    }
 }
-AI: Death
+AI: Counter - Death
 {
    If (TempVar:Head has Death Status) Then
    {
@@ -37733,7 +37751,7 @@ Animations:
  ---
 AI: Setup
 {
-   Safer*Sephiroth's [402C] = 1
+   Turn off Death Handling for Safer*Sephiroth
    TempVar:CharLv99 = GlobalVar:CharLv99
    TempVar:BzHeadDeaths = GlobalVar:BzHeadDeaths
    If (GlobalVar:JenovaKoR == 1) Then
@@ -37840,8 +37858,8 @@ AI: Counter - 13
 5.34.4 Sephiroth
 ------ ---------
 This battle has an extra script which sets Battle Variable [2160] to
-[2160] OR 0x28, and sets Battle Variable [2180] to 0xDE (222).  The effect of
-this is currently unknown.
+[2160] OR 0x28, and sets Battle Variable [2180] to 0xDE (222).  The complete
+effect of this is currently unknown.
 
 
 Name: Sephiroth
@@ -37849,7 +37867,7 @@ Name: Sephiroth
   HP: 1           AP: 0           Steal:      -
   MP: 0          Gil: 0           Morph:      -
  ---
-Void:   Earth, Gravity
+No Elemental Properties
  ---
  Att: 0          Def: 0           Df%: 0           Dex: 100
  MAt: 0          MDf: 0                            Lck: 0
@@ -37876,7 +37894,7 @@ Animations:
  ---
 AI: Setup
 {
-   Sephiroth's [402C] = 1
+   Turn off Death Handling for Sephiroth
 }
 AI: Main
 {
@@ -37910,4 +37928,4 @@ AI: Counter - 13
 =============================================================================
 =============================================================================
 
-The FF7 Enemy Mechanics, copyright 2001-2005 Terence Fergusson
+The FF7 Enemy Mechanics, copyright 2001-2009 Terence Fergusson

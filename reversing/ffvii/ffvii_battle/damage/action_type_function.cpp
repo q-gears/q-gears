@@ -588,13 +588,13 @@ S4 = 0;
 
 
 V1 = w[address + 28];
-if (V1 == 20)
+if( V1 == 20 )
 {
     A0 = w[address + 2C];
     battle_get_attack_index_by_attack_id;
     [address + 98] = w(V0);
 
-    S4 = 800f616C + V0 * 1c;
+    S4 = 800f616c + V0 * 1c;
 }
 else
 {
@@ -681,7 +681,7 @@ else
 }
 
 La7b74:	; 800A7B74
-if (S4 == 0)
+if( S4 == 0 )
 {
     A0 = 20;
     func155a4;
@@ -692,7 +692,7 @@ if (S4 == 0)
 
 
 // we use magic 0x36 (there is only 0x35 magic in game)
-if (w[address + c] == 2 && w[address + 2c] == 36)
+if( w[address + c] == 2 && w[address + 2c] == 36 )
 {
     [SP + 10] = w(1);
 }
@@ -700,7 +700,7 @@ if (w[address + c] == 2 && w[address + 2c] == 36)
 
 
 A1 = w[address + 14];
-if (A1 != -1)
+if( A1 != -1 )
 {
     V0 = w[address + 90];
     V0 = V0 & 00400000;
@@ -782,11 +782,9 @@ if (A1 != -1)
                 800A7D24	nop
 
                 La7d40:	; 800A7D40
-                V0 = bu[S4 + C];
-                if (V0 & 08)
+                if( bu[S4 + c] & 08 )
                 {
-                    V0 = A2 | 00100000;
-                    [address + 90] = w(V0);
+                    [address + 90] = w(A2 | 00100000);
                 }
             }
         }
@@ -860,65 +858,47 @@ else
 }
 
 
-// MP cost
-V0 = w[address + 38];
-if (V0 < 0)
-{
-    V0 = hu[S4 + 4];
-    [address + 38] = w(V0);
-}
 
-V1 = bu[800F692C + 00]; // attack queue
-if (V1 == 3 || (w[address + 90] & 00400000)) // set magic cost 0 if action priority 3 or 00400000 bit is set
+// MP cost
+if( w[address + 38] < 0 )
+{
+    [address + 38] = w(hu[S4 + 4]);
+}
+if( bu[800f692c + 00] == 3 || ( w[address + 90] & 00400000 ) ) // set magic cost 0 if action priority 3 or 00400000 bit is set
 {
     [address + 38] = w(0);
 }
 
+// attack%
+[address + 3c] = w(bu[S4 + 0]);
 
-
-V0 = bu[S4 + 0]; // attack%
-[address + 3C] = w(V0);
-
-
-
-V0 = bu[S4 + E]; // attack formula
-[address + 40] = w(V0);
-
-
+// attack formula
+[address + 40] = w(bu[S4 + e]);
 
 // set element
 V1 = hu[S4 + 18];
-V1 = (V1 == -1) ? 0 : V1;
-[address + 44] = w(V1);
+[address + 44] = w(( V1 == -1 ) ? 0 : V1);
 
-
-
+// power
 [address + 48] = w(bu[S4 + f]);
+
+// hurt action id
 [address + cc] = w(bu[S4 + 2]);
-
-
 
 // set target according to target data
 A0 = bu[S4 + c];
 battle_copy_target_type_data_to_temp;
 
-
-
-V1 = w[address + 28];
-if (V1 == 14)
+// camera
+if( w[address + 28] == 14 )
 {
-    V0 = hu[800F83A4 + 2C];
-    V0 = V0 >>> 2;
-    V0 = V0 & 0002;
-    FP = hu[S4 + 8 + V0]
+    V0 = hu[800f83a4 + 2c];
+    FP = hu[S4 + 8 + ((V0 >>> 2) & 0002)]
 }
-
-if (FP == -1)
+if( FP == -1 )
 {
-    V0 = hu[S4 + 8];
-    [address + 60] = w(V0);
-    V0 = hu[S4 + a];
-    [address + 64] = w(V0);
+    [address + 60] = w(hu[S4 + 8]);
+    [address + 64] = w(hu[S4 + a]);
 }
 else
 {
@@ -926,46 +906,34 @@ else
     [address + 64] = w(FP);
 }
 
-
-
 // set impact effect.
-if (bu[S4 + 1] != -1)
+V1 = bu[S4 + 1];
+if( V1 != -1 )
 {
     [address + 68] = w(V1);
 }
 
-
 // attack effect id
-V0 = bu[S4 + D];
-[address + 24] = w(V0);
+[address + 24] = w(bu[S4 + d]);
 
+// special flags
+[address + 6c] = w(hu[S4 + 1a]);
 
-
-V0 = hu[S4 + 1A]; // special flags
-[address + 6c] = w(V0);
-
-
-
-V0 = h[S4 + 6];
-[address + 54] = w(V0);
-[address + 58] = w(V0);
-[address + 5C] = w(V0);
+// sound
+[address + 54] = w(h[S4 + 6]); // normal
+[address + 58] = w(h[S4 + 6]); // cricical
+[address + 5c] = w(h[S4 + 6]); // miss
 
 
 
 // if this is not magic attack
-V0 = w[address + 6C];
-V0 = V0 & 0004
-if (V0 == 0)
+if( ( w[address + 6c] & 0004 ) == 0 )
 {
     // if in darkness halve attack%
     V1 = w[address + 0];
-    V0 = w[800F83E0 + V1 * 68];
-    if (V0 & 04000000)
+    if( w[800f83e0 + V1 * 68] & 04000000 )
     {
-        V0 = w[address + 3C];
-        V0 = V0 / 2;
-        [address + 3C] = w(V0);
+        [address + 3c] = w(w[address + 3c] / 2);
     }
 }
 
@@ -977,14 +945,11 @@ battle_copy_status_data_to_temp;
 
 
 
-T0 = w[SP + 10];
-if (T0 != 0)
+if( w[SP + 10] != 0 )
 {
     // remove death sentence
     V1 = w[address + 0];
-    V1 = w[800F83E0 + V1 * 68];
-    V1 = V1 & FFDFFFFF;
-    [800F83E0 + V1 * 68] = w(V1);
+    [800f83e0 + V1 * 68] = w(w[800f83e0 + V1 * 68] & ffdfffff);
 }
 
 

@@ -1754,11 +1754,11 @@ address = w[80063014];
 [address + 88] = w(0);
 
 A3 = status% >> 6;
-if (A3 < 3)
+if( A3 < 3 )
 {
     V0 = status% & 3f;
     real_status% = V0 << 2;
-    if (status_mask < 0)
+    if( status_mask < 0 )
     {
         V0 = status_mask & 00000003;
         [address + 80] = w(80000000);
@@ -1779,7 +1779,7 @@ if (A3 < 3)
 address = w[80063014];
 [address + bc] = w(-1);
 
-if (A0 != -1)
+if( A0 != -1 )
 {
     [address + bc] = w(A0);
     [address + c0] = w(A1);
@@ -1787,8 +1787,6 @@ if (A0 != -1)
     A0 = 2;
     funca8e84;
 }
-
-return;
 ////////////////////////////////
 
 
@@ -1796,13 +1794,10 @@ return;
 ////////////////////////////////
 // battle_copy_target_type_data_to_temp
 address = w[80063014];
-V1 = w[address + 50];
-if( V1 == ff )
+if( w[address + 50] == ff )
 {
     [address + 50] = w(A0);
 }
-
-return;
 ////////////////////////////////
 
 

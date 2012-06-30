@@ -1,0 +1,677 @@
+THE FF7 'DATE' MECHANICS v1.20
+======================== =====
+
+by Terence Fergusson <tf_faq@btinternet.com>
+
+Final Fantasy 7 Copyright 1997, 1998 Square Co., Ltd.  Final Fantasy and
+Squaresoft are registered trademarks of Square Co., Ltd.
+
+This document is entirely my work, and was written and is owned by me,
+Terence Fergusson.  All copyrights and trademarks are acknowledged where not
+specifically mentioned.  If you wish to reproduce this document AS IS, you
+may do so without having to ask my permission, providing that the entire
+document including this copyright notice is left intact, preferably in ASCII
+text format, and is done so for non-profit purposes.  I do, however, reserve
+the right to revoke permission and ask for it to be taken down should I feel
+it necessary.
+
+
+
+-----------------------------------------------------------------------------
+VERSION HISTORY
+---------------
+
+v1.00 : 21/04/99 : Original Release
+v1.10 : 05/09/00 : GameShark and GameHack Codes Added, plus additional Guides
+v1.20 : 08/07/09 : Final update to finish things up - all possible Affection
+                     changes should now be documented
+v1.21 : 09/12/09 : Noted some more restrictions regarding one of Barret's
+                     scenes, as well as noting a related exploit
+
+
+
+-----------------------------------------------------------------------------
+FOREWORD
+--------
+
+For a while after FF7's release, the Gold Saucer Date was a mystery.  People
+knew you could date different characters at that part of the plot, but
+weren't exactly sure how.  There were a few guides to get some of the harder
+characters - notably Yuffie and Barret - but some of them included
+unnecessary tasks, or simply failed in execution.
+
+So in early 1999, after a discussion on Usenet, I ran some memory editing
+software and started researching it on the PC version.  It took a few days of
+replaying various scenes over and over, but the original guide was finished
+shortly after, and was submitted to GameFAQs.  And since then, it has
+continued to be one of my most popular guides.
+
+
+Anyways, it's now been almost over ten years since then (and almost nine
+since the last update).  And after having updated the Game Mechanics guides,
+I thought it'd be a good idea to finish this one up, now that we know so much
+more about how FF7 works.
+
+So here it is.  Hope you enjoy it.
+
+
+
+-----------------------------------------------------------------------------
+THE AFFECTION VALUES
+--------------------
+
+There are four values in the game, and I have termed them Affection values
+for the purpose of this document.  At the start of the game, they are set as
+thus:
+  Aeris:  50
+  Tifa:   30
+  Yuffie: 10
+  Barret:  0
+
+As the game proceeds, certain decisions or tasks you undertake will amend
+them.  When you reach the date, whoever has the highest Affection value will
+be the one chosen for the cutscene.  If, however, there is a tie for the
+highest, then the priorities are thus: Aeris, then Tifa, then Yuffie, and
+finally Barret.
+
+
+
+-----------------------------------------------------------------------------
+GAMESHARK/GAMEHACK CODES
+------------------------
+
+This table is for the PSX version, using a GameShark.
+
+                           GameShark (US)    GameShark (UK)   
+ Aeris' Affection Value:   3009D28B 00xx     3009D156 00xx
+ Tifa's Affection Value:   3009D28C 00xx     3009D157 00xx
+ Yuffie's Affection Value: 3009D28D 00xx     3009D158 00xx
+ Barret's Affection Value: 3009D28E 00xx     3009D159 00xx
+
+
+
+This table is for the PC UK version, using the software known as GameHack.
+The Riva column is for those with the latest Riva patch installed (the one
+that adds both Riva 128 and Riva TNT compatibility).  It's possible that
+these codes will also work for the US version, but I cannot vouch for
+them in that respect.
+
+                           GameHack          GameHack (Riva)
+ Aeris' Affection Value:   00DB1EC7          00DC08DF
+ Tifa's Affection Value:   00DB1EC8          00DC08E0
+ Yuffie's Affection Value: 00DB1EC9          00DC08E1
+ Barret's Affection Value: 00DB1ECA          00DC08E2
+
+
+Remember that whoever's Affection Value is *highest* will be the one
+showcased on the 'date' sequence.
+
+Due to the fact that I have little access to any version other than the UK
+PC version, I cannot vouch for the accuracy of the codes listed here, nor
+can I provide codes for other versions.
+
+
+
+-----------------------------------------------------------------------------
+THE DECISIONS
+-------------
+
+Midgar
+------
+Talking to Aeris the first time, no matter what you say (believe it or not),
+has no effect.  If you buy the flower, you will later have the option to
+earn some extra points with either Tifa or Barret.
+
+Talk to Jessie twice on the train home from the first mission:
+    "Thanks anyway"         --
+    "Looking forward to it" (-3 Tifa)
+
+When you enter Seventh Heaven, and you have a flower:
+    "Give it to Tifa"    (+5 Tifa)
+    "Give it to Marlene" (+5 Barret)
+
+If you talk to Tifa while she's behind the bar:
+    "I don't feel like it"   --
+    "Give me something hard" (+5 Tifa)
+
+When Tifa accuses you of leaving your childhood friend:
+    "How can you say that!" (+5 Tifa)
+    "...Sorry"              --
+
+When Tifa asks how you slept:
+    "Barret's snoring kept me up..." (+5 Barret)
+    "Next to you, who wouldn't?"     (+5 Tifa)
+
+Giving Barret a Materia tutorial has no effect.
+
+Getting to the last car of the train without getting
+caught by the Security Lockdown: (+5 Tifa, +5 Barret)
+
+When Barret asks if you're alright:
+    "(Be strong)"                     (+2 Barret)
+    "(I don't know if I can hold on)" (-3 Barret, +1 Tifa)
+
+The conversation with Aeris after you awaken has no effect
+at all.  Treat her anyway you feel like.
+
+When Aeris is fleeing the guards, if you:
+    Push a wrong barrel        (-3 Aeris)
+    Ask her to fight them      (-1 Aeris)
+    Ask her to run             --
+    Ask her to run and she
+      has to fight             (-1 Aeris)
+    Push the right barrel      (+1 Aeris)
+
+When Aeris asks if Tifa is your girlfriend:
+    "No way!"            (+1 Aeris)
+    "Yeah, that's right" (-5 Aeris)
+
+After you get through Sector 6 to the playground:
+    "Take her home."     --
+    "Go on to Sector 7." (+1 Aeris)
+
+If Tifa is chosen as the Don's date:
+    "You all right?"      (+3 Aeris)
+    "We gotta help Tifa!" (-2 Aeris)
+
+If Aeris is chosen as the Don's date:
+    "You all right?"           (-2 Tifa)
+    "We've gotta help Aeris!!" (+3 Tifa)
+    (Yes, it *is* that way
+     around.  Don't ask me
+     why....)
+
+If Cloud is chosen as the Don's date:
+    "Yes, his name's Barret..." (+5 Barret)
+    (No other choice matters,
+     not even almost kissing
+     the Don)
+
+When everyone lands in the sewer:
+    Talk to Aeris first: (+3 Aeris)
+    Talk to Tifa first:  (+3 Tifa)
+
+When Marlene tells you about Aeris:
+    "I don't know"  (-3 Aeris, +3 Tifa)
+    "Let's hope so" (+3 Aeris, -3 Tifa)
+
+When you first meet Red XIII:
+    "Tifa, I'm countin' on you!" (-2 Tifa)
+    "Barret, take care of her!"  (+2 Barret)
+
+If any of the following are in your party after you agree to split up:
+    Barret (+2 Barret)
+    Tifa   (+2 Tifa)
+    Aeris  (+2 Aeris)
+
+When Tifa asks if you can break out:
+    "(Leave it to me)" (+1 Tifa) (as many times as you like)
+    "(Kinda hard)"     (-1 Tifa) (as many times as you like)
+
+When you get the option to think about Barret, Red XIII or Aeris:
+    Whomever you think about first:  (+3 Barret or Aeris) or --
+    Whomever you think about second: (+1 Barret or Aeris) or --
+    Whomever you think about third:  --
+
+When you choose your party after escaping Midgar:
+    If Barret's in it: (+1 Barret)
+    If Aeris is in it: (+1 Aeris)
+    If Tifa is in it:  (+1 Tifa)
+
+
+
+Kalm
+----
+When Barret leaves, and tells you to get a move on:
+    "Wait a sec"                     --
+        "Beautiful, just beautiful!" (+3 Barret)
+        "Is that all?"               (-1 Barret)
+    "Right"                          (+1 Barret)
+
+Talking to a woman in Kalm, who says Mako energy is convenient:
+    "Yeah, maybe"       (-2 Barret) if Barret is in party
+                        (-1 Aeris) if Aeris is in party
+                        (-1 Tifa) if Tifa is in party
+                        (+1 Yuffie) if Yuffie is in party
+    "You're full of it" (+2 Barret) if Barret is in party
+                        (+1 Aeris) if Aeris is in party
+                        (+1 Tifa) if Tifa is in party
+                        (-1 Yuffie) if Yuffie is in party
+
+Talking to a girl upstairs, who thinks the old life is better:
+    "Yeah, maybe" (+2 Barret) if Barret is in party
+                  (+1 Aeris) if Aeris is in party
+                  (+1 Tifa) if Tifa is in party
+                  (-1 Yuffie) if Yuffie is in party
+    "No way"      (-2 Barret) if Barret is in party
+                  (-1 Aeris) if Aeris is in party
+                  (-1 Tifa) if Tifa is in party
+                  (+1 Yuffie) if Yuffie is in party
+
+
+
+Fort Condor
+-----------
+When you first talk to the old guy in Fort Condor:
+    "I guess so"     (+5 Barret, +3 Aeris, +3 Tifa, +2 Yuffie)
+    "Not interested" (-5 Barret, -3 Aeris, -3 Tifa, -1 Yuffie)
+
+After the old guy tells you about his problem:
+    "All right"      (+5 Barret, +3 Aeris, +3 Tifa, +2 Yuffie)
+    "Not interested" (-5 Barret, -3 Aeris, -3 Tifa, -1 Yuffie)
+
+
+
+Meeting Yuffie
+--------------
+You can fail this as many times as you like, and you'll still get the
+points every time you meet Yuffie until you get her in your party.  The
+points will continue to increase until they reach 30 or more, at which point
+any further increases will be ignored.
+    "All right"               --
+    "Not interested"          (+2 Yuffie)
+
+    "Petrified..."            (+2 Yuffie)
+    "You're gonna lose again" --
+
+    "Go ahead"                --
+    "Wait a second!"          (+2 Yuffie)
+
+    "That's right"            (+2 Yuffie)
+    "You kiddin'?"            --
+
+    "What's your name?"       --
+    "Let's hurry"             (+2 Yuffie)
+
+
+
+The Cargo Ship
+--------------
+On the Cargo Ship, if Yuffie asks you for Tranquilizers:
+    "Here, use this" (+4 Yuffie)
+    "Nope"           (-2 Yuffie)
+
+If you don't have any Tranquilizers, then it's simply: (-2 Yuffie)
+
+When Aeris asks you about the Airship:
+    "I'll take you someday" (+2 Aeris)
+    "I dunno..."            (-2 Aeris)
+
+When Tifa asks you about war:
+    "Yeah..."      (+2 Tifa)
+    "I don't know" (-2 Tifa)
+
+
+
+Costa Del Sol
+-------------
+I was *very* disappointed with Costa Del Sol; there are a lot of dialogue
+options that you could choose, but none of them alter Affection values at
+all, not even the ones that seem to *really* annoy the girls.
+
+
+
+Mt Corel
+--------
+Stealing the Phoenix Downs from the Cokatolis nest does nothing to alter
+Affection values.  Neither does finding it but leaving it alone, for that
+matter.  And no, it doesn't even matter who is in your party at the time.
+Another wasted opportunity, in my opinion.
+
+
+
+Gold Saucer
+-----------
+When you first enter the Gold Saucer, you will have the option of talking to
+members of your party and asking them to accompany you:
+    Talking to Aeris:
+        Go together                 (+3 Aeris)
+        Don't go together           (-2 Aeris)
+    Talking to Tifa:
+        Go together                 (+3 Tifa)
+        Don't go together           (-2 Tifa)
+    Talking to Yuffie:
+        Go together                 (+3 Yuffie)
+        Don't go together           (-2 Yuffie)
+    Talking to Red XIII:
+        Go together                 --
+        Don't go together           --
+
+Only the first of the above Affection changes may be made: if you decline
+Aeris first, you'll get -2 Aeris, but you will be unable to get a +3 Tifa as
+well, for example.
+
+You can decline Red XIII for no effect and still get an Affection change by
+talking to one of the others.  If you ask Red XIII to come along though, the
+rest of the Affection changes are locked off.
+
+If you leave the area without choosing a partner, the character with the
+highest Affection will automatically join you, and no changes will be made.
+If Barret has the highest Affection, then Red XIII will join instead.
+
+
+
+Corel Prison
+------------
+Depending on who you choose first to accompany Barret to see Dyne:
+    Aeris:    (+10 Aeris)
+    Tifa:     (+3 Tifa)
+    Yuffie:   (+2 Yuffie)
+    Red XIII: --
+
+
+
+Gongaga
+-------
+After either Aeris or Tifa (or both) meets Zack's parents:
+    Ignoring Aeris                  (-3 Aeris)
+    Talking to Aeris                --
+        "Poor guy"                  (+1 Aeris)
+        "(...jealous...envious...)" (+2 Aeris)
+    Ignoring Tifa                   (-3 Tifa)
+    Talking to Tifa                 (+1 Tifa)
+       (doesn't matter what
+        you say to her)
+
+
+
+Cosmo Canyon
+------------
+When you first enter Cosmo Canyon, the entire party will split up.  If
+Barret was in your party when this occurs, then you will be able to find him
+in the room behind Tiger Lily's weapon shop, where he'll offer to talk more
+about AVALANCHE.
+        "Go on"                     (+3 Barret) 
+        "Not really"                --
+
+        "And then?"                 (+3 Barret)
+        "Yeah, whatever..."         --
+
+Choosing the non-scoring options halts the dialogue, but you can talk to
+Barret again to resume it at that point.  Also, if you leave the room after
+picking "Yeah, whatever...", you can return immediately to start the
+conversation from scratch.  This scripting oversight allows you to get the
+first +3 Barret as many times as you like, so long as you don't get the
+second +3.
+
+
+
+Wutai
+-----
+After Yuffie gives back all your Materia in Wutai: (+10 Yuffie)
+
+Note that you only get this bonus if Cloud is leading the party.  However,
+since this part of the Wutai subquest closes off before you get the
+opportunity to have a different party leader, it'll never really matter.
+
+
+
+-----------------------------------------------------------------------------
+EVENTS BASED ON AFFECTION
+-------------------------
+A few events in the game besides the Date check the various Affection values.
+These have the following effects.
+
+
+Gold Saucer
+-----------
+If you do not choose to go with anyone when you first enter the Gold Saucer,
+then the character with the highest Affection will automatically join you.
+If Barret has the highest Affection, then Red XIII will join you instead.
+
+
+Gongaga
+-------
+If you react to Aeris talking about Zack with jealousy, Aeris will say
+"I was hoping maybe you were..." if she has more than 120 Affection.
+However, it is impossible to get her Affection value this high throughout the
+normal course of the game, so you will never see this without cheating.
+
+No matter how you respond to Tifa when she talks about Zack, if you have
+more than 120 Affection, she'll remark that she's as proud of you joining
+SOLDIER as if it had been her.  Again, it's very difficult to get the value
+this high, but unlike Aeris, you can use repeatable increases in order to see
+this.
+
+
+After the Date
+--------------
+Aeris will automatically join your party when you're preparing to go to the
+Temple of the Ancients.  The other party member will be chosen out of
+whoever has the highest Affection out of Tifa, Yuffie and Barret, with Tifa
+having highest priority in ties and Barret having the lowest.
+
+
+Before the Crater
+-----------------
+Right after the Midgar Raid, there will eventually be a scene when Tifa and
+Cloud are alone, spending a night just outside the Highwind.  If Tifa's
+Affection is 50 or more, the dialogue between them will be slightly different
+and reflect the greater affection.
+
+
+
+-----------------------------------------------------------------------------
+MISC. NOTES AND BUGS
+--------------------
+There were to be some extra dialogue in Sector 7 at the start of the game
+that would affect Barret's and Tifa's values, but various things seem to
+prevent you from triggering these -- the way the events surrounding Tifa
+and Cloud's promise play out seems to have changed during development.
+
+Barret was going to have something to say in Gongaga, but a script error
+way back in the Sector 5 Church prevents this from occurring.
+
+
+
+Events in battle were going to have an effect on the Date: they had a
+secondary system in place that still works fine behind the scenes.  At the
+start of the game, Barret, Aeris, Tifa and Yuffie would have another value
+called Battle Affection, which starts at 100 and has a minimum of 50 and a
+maximum of 200 points.  These would then be adjusted in the following manner
+during each battle:
+
+   * If Cloud uses Cover on a character:  +3 Battle Affection
+   * If Cloud revives a character:        +4 Battle Affection
+   * If Cloud heals a character:          +2 Battle Affection
+
+   * If Cloud hurts but doesn't kill a    -2 Battle Affection
+       character:
+   * If Cloud kills a character:          -4 Battle Affection
+   * If the character has Death status    -5 Battle Affection
+       at the end of the battle:
+
+This was likely going to be used as a multiplier to normal Affection values
+when you finally reached the Date sequence.  However, the script ignores
+these values and just uses the base Affection values.  As such, Battle
+Affection affects absolutely nothing throughout the entire game.
+
+
+
+-----------------------------------------------------------------------------
+GUIDES TO DATING YUFFIE/BARRET
+------------------------------
+So, you picked up this guide to date Yuffie or Barret, and can't be bothered
+trying to go through the above?  Well, I can give a full list of things to
+do to guarantee dating one of the two.  However, you shouldn't feel you have
+to follow them religiously: there is a fair amount of leeway available in
+where and when you get your points.  So don't feel too restricted, and try
+to keep track of what you've already done.
+
+Also note that both Yuffie and Barret have available exploits that allow you
+to get high Affection values through one repeatable scene, so you can always
+abuse that if you have trouble.
+
+Here are two complete guides; the first to date Yuffie, the second to date
+Barret.  They are list of all the tasks you can do to get the highest amount
+of leeway for that character.  Note the differences by the way in what you
+have to do; it's rather interesting at times....
+
+
+Yuffie:
+  1. Don't buy a flower from Aeris when you first see her in Sector 8.
+  2. Talk to Jessie twice on the train home from Sector 8, and tell her
+you're "Looking forward to it".
+  3. Don't talk to Tifa while she's behind the bar.  If you do, decline her
+offer for a drink.
+  4. Say "...Sorry" when she asks you if you've forgotten your promise.
+  5. Ignore Tifa the next morning; don't talk to her, and go straight to
+Barret.
+  6. Get caught by the Security Lockdown; do not reach the end of the train.
+Force Barret and Tifa to jump out early this way.
+  7. After defeating Airbuster, before Cloud falls, tell Barret to "Be
+strong".
+  8. When Aeris is fleeing the guards, climb up to the top level and tell her
+to Wait each time.  Then, push the *wrong* barrel (so that she has to fight
+the guard anyway).  Do this three times.
+  9. When Aeris asks if Tifa is your girlfriend, say "Yeah, that's right."
+  10.  When you get to the playground in Sector 6, tell Aeris that you'll
+"Take her home."
+  11. Get none of the best items so that Tifa is chosen for the Don's
+date.  When you meet Aeris outside the Don's office, tell her "We gotta help
+Tifa!"
+  12. When everyone lands in the sewer, talk to Aeris first.
+  13. When Marlene asks you how you feel about Aeris, tell her "I don't
+know".
+  14. When you first meet Red XIII, tell Tifa to take care of Aeris (keep
+Barret in your party for *this* battle).
+  15. After the battle with HO512, split up into a team of Cloud, Barret and
+Red XIII.
+  16. When Tifa asks if you can break out, tell her "(Kinda hard)"
+  17. Think about Red XIII first, Barret second, and Aeris last while you're
+in the cell.
+  18. When you finally escape Midgar and have to choose your team, pick a
+team with Cloud, Barret and Red XIII.
+  19. In Kalm, after the flashback, tell Barret to "Wait a sec", then
+"Is that all?"
+  20. Make a party immediately afterwards with Cloud, Aeris and Tifa.  In a
+house in Kalm, there's a woman who asks you about whether Mako energy is
+convenient.  Tell her "Yeah, maybe".  Talk to the girl upstairs,
+and when she asks you if the old life is better, say "No way".
+  21. In Fort Condor, disagree twice to the old guy about his plight.  After
+that, you can go into Fort Condor and agree then, but that's up to you.
+  22. Find Yuffie in Junon Forest.  Get her into your party.  (Take as long
+as you like, but this guide will assume you got her first time, and she
+didn't run away....)
+  23. On the Cargo Ship, give Yuffie a tranquilizer.  (Make sure you bought
+one in Junon Town.)
+  24. On the Cargo Ship, tell Aeris "I dunno..." when she asks about the
+Airship.
+  25. On the Cargo Ship, when Tifa asks you about war, say "I don't know".
+  26. At the Gold Saucer, when you split up, talk to Yuffie first, and take
+her with you (do not choose Aeris or Tifa).
+  27. When you see Barret again in the Corel Prison, and you're about to go
+after Dyne, you will be prompted to make a party.  Choose Cloud, Barret, and
+Yuffie.
+  28. Before entering Gongaga Town, make your party into Cloud, Aeris and
+Tifa.  Then, when you meet Zack's parents, and Aeris and Tifa leave, ignore
+*both* of them and leave town.
+  29. Complete the Wutai subquest, and let Yuffie steal your Materia.  After
+you get the Materia back, continue on with the story.  You should end up with
+Yuffie during the date sequence later.
+
+Ending Affection Scores
+  Yuffie: 37
+  Aeris:  21
+  Tifa:   16
+  Barret: 0
+
+
+Barret:
+  1. Buy a flower from Aeris when you see her in Sector 8.
+  2. Talk to Jessie twice on the train home from Sector 8, and tell her
+you're "Looking forward to it".
+  3. Give the flower to Marlene when you get the option.
+  4. Don't talk to Tifa while she's behind the bar.  If you do, decline her
+offer for a drink.
+  5. Say "...Sorry" when she asks you if you've forgotten your promise.
+  6. Say "Barret's snoring kept me up..." when she asks you how you slept the
+next morning.
+  7. Don't get caught by the Security Lockdown; get to the end of the train.
+  8. After defeating Airbuster, before Cloud falls, tell Barret to "Be
+strong".
+  9. When Aeris is fleeing the guards, climb up to the top level and tell her
+to Wait each time.  Then, push the *wrong* barrel (so that she has to fight
+the guard anyway).  Do this three times.
+  10. When Aeris asks if Tifa is your girlfriend, say "Yeah, that's right."
+  11. When you get to the playground in Sector 6, tell Aeris that you'll
+"Take her home."
+  12. Get *all* the best items so that Cloud is chosen for the Don's date
+(not Tifa or Aeris).  Tell the Don that there's someone else, and when he
+asks who, tell him "Yes, his name's Barret..."
+  13. When everyone lands in the sewer, talk to Aeris first.
+  14. When Marlene asks you how you feel about Aeris, tell her "I don't
+know".
+  15. When you first meet Red XIII, tell Barret to take care of Aeris (keep
+Tifa in your party for *this* battle).
+  16. After the battle with HO512, split up into a team of Cloud, Barret and
+Red XIII.
+  17. When Tifa asks if you can break out, tell her "(Kinda hard)"
+  18. Think about Barret first, Red XIII second, and Aeris last while you're
+in the cell.
+  19. When you finally escape Midgar and have to choose your team, pick a
+team with Cloud, Barret and Red XIII.
+  20. In Kalm, after the flashback, tell Barret to "Wait a sec", then
+"Beautiful, just beautiful!"
+  21. Make a party immediately afterwards with Barret, Cloud and Red XIII.
+In a house in Kalm, there's a woman who asks you about whether Mako energy
+is convenient.  Tell her "You're full of it".  Talk to the girl upstairs,
+and when she asks you if the old life is better, say "Yeah, maybe".
+  22. In Fort Condor, agree twice to the old guy about his plight.
+  23. You don't have to meet Yuffie; in fact, it's probably better if you
+don't.  But you can if you want to.  Just make sure you get her the first
+time, and don't make her run away.
+  24. On the Cargo Ship, don't give Yuffie a tranquilizer.
+  25. On the Cargo Ship, tell Aeris "I dunno..." when she asks about the
+Airship.
+  26. On the Cargo Ship, when Tifa asks you about war, say "I don't know".
+  27. At the Gold Saucer, when you split up, talk to Aeris first, then
+decide you won't go with her.  After that, choose to take whoever you want
+(even Aeris).
+  28. When you see Barret again in the Corel Prison, and you're about to go
+after Dyne, you will be prompted to make a party.  Choose Cloud, Barret, and
+either Red XIII or Cait Sith.  *DO NOT CHOOSE AERIS*!  She gets a heck of a
+boost if she gets chosen, and will mess up almost everything you've worked
+for.
+  29. Before entering Gongaga Town, make your party into Cloud, Aeris and
+Tifa.  Then, when you meet Zack's parents, and Aeris and Tifa leave, ignore
+*both* of them and leave town.
+  30. Before entering Cosmo Canyon, add Barret to your party.  When the party
+splits up inside Cosmo Canyon, enter the room behind Tiger Lily's Weapon
+Shop, and encourage Barret to continue talking until he no longer has
+anything new to say.  Alternatively, it's possible to max out your points
+here if you pick the first and then second option, leave the room, and then
+return to talk to Barret again: every time you say "Go on" you gain +3 Barret
+and choosing "Yeah, whatever..." allows you to leave the room and reset the
+conversation.  The scores below will assume you do not abuse this bug though.
+  31. Do not go anywhere near Wutai if you have Yuffie.  Instead, continue
+through the game normally.  When you finally get to the date sequence, you
+should find Barret wanting to talk to you.
+
+Ending Affection Scores
+  Barret: 53
+  Aeris:  35
+  Tifa:   35
+  Yuffie: 14
+
+
+
+-----------------------------------------------------------------------------
+
+There, that's it.  I would like to thank the makers of GameHack, without
+which, I would never have been able to accomplish this task all those years
+ago.  Also, heartfelt thanks to those at alt.games.final-fantasy.rpg, who
+helped test this out when I first researched this.  Most have moved on, of
+course, but I remember it as a fun community while I was there.
+
+More recent thanks go to those at Qhimm's Forums, where much of the script
+translating went on.  It truly is a learning experience when you start
+seeing exactly what's going on under the hood.
+
+Thanks for reading this, and I hope this document has helped you in some
+small way.
+
+
+-----------------------------------------------------------------------------
+
+The FF7 'Date' Mechanics, copyright 1999-2009 Terence Fergusson

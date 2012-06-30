@@ -1,7 +1,7 @@
-THE FF7 PARTY MECHANICS v1.00
+THE FF7 PARTY MECHANICS v1.10
 ======================= =====
 
-by Terence Fergusson <tf_faq@dsl.pipex.com>
+by Terence Fergusson <tf_faq@btinternet.com>
 
 Final Fantasy 7 Copyright 1997, 1998 Square Co., Ltd.  Final Fantasy and
 Squaresoft are registered trademarks of Square Co., Ltd.
@@ -15,22 +15,15 @@ text format, and is done so for non-profit purposes.  I do, however, reserve
 the right to revoke permission and ask for it to be taken down should I feel
 it necessary.
 
+
+
 -----------------------------------------------------------------------------
 VERSION HISTORY
 ---------------
 
 v1.00 : 09/05/05 : Original Release
-
-
-Since two years have passed since the release (and only public update) of the
-Battle Mechanics Guide, expect to see some differences in terms and what
-things mean.  An update to the Battle Mechanics Guide correcting such will
-hopefully follow in the next few months.
-
-I apologise for the layout for some of the tables and associated data, but
-some things are very difficult to both explain adequately and present in a
-concise and understandable manner.  If you have questions about any aspect
-of this guide, please direct them to the FF7 GameFAQs Message Boards.
+v1.10 : 29/06/09 : Expanded and corrected minor things throughout the guide
+                   Synched with sister guides
 
 
 -----------------------------------------------------------------------------
@@ -42,7 +35,7 @@ second in the series, will detail how the basic battle formulas apply to
 Cloud's party, covering limit breaks, materia and items.  The other two
 are:
 
-  The FF7 Battle Mechanics (REQUIRES UPDATE):
+  The FF7 Battle Mechanics:
     Covers the battle mechanics as a whole, and is required reading for
   understanding this current guide.
 
@@ -57,6 +50,13 @@ many terms that will be used in both Party and Enemy Mechanics.
 Note that this guide is based on the PC version.  While most alleged
 gameplay differences between the PC and PSX versions have been proven false,
 more may exist.
+
+
+I apologise for the layout of some of the tables and associated data, but
+some things are very difficult to both explain adequately and present in a
+concise and understandable manner.  If you have questions about any aspect
+of this guide, please direct them to the FF7 GameFAQs Message Boards.
+
 
 -----------------------------------------------------------------------------
 CONTENTS
@@ -81,7 +81,7 @@ CONTENTS
 3.  Limit Breaks
 3.1   Earning Limits
 3.2   The Limit Bar
-3.3   Limit Damage Data
+3.3   Limit Break Data
 3.3.1   Cloud's Limit Breaks
 3.3.2   Barret's Limit Breaks
 3.3.3   Tifa's Limit Breaks
@@ -128,8 +128,9 @@ Yuffie          1  100   5   1   1   1   1   1   1      0
 Cait Sith       1  224  18  10  11  13  11   5  15     14
 Vincent         1  178  18   9  10  11  11   5  14     16
 Cid             1  223  15  12  12  11  10   6  14     18
-Young Cloud     1  140   4  12   6  12  11  10   5     12
-Sephiroth      50 3840 460  85  65  72  68  70  46 320438
+
+Young Cloud     1  140   4  12  12  11  10   6   5     12
+Sephiroth      50 3840 460  85  72  68  70  65  46 320438
 
 
 Starting stats aren't as important as they seem, as we'll see in the upcoming
@@ -182,7 +183,7 @@ formula and a single lookup table.  For simplicity though, I have created a
 second lookup table that will be used in this formula.
 
 The first lookup table, Q(<char>,<level>) below, denotes the modifier for the
-quadratic function.  Example: Q(Yu,25) = 74
+quadratic function.  Example: Q(Re,25) = 74
 
 Level     Cl    Br    Tf    Ae    Re    Yu    Ca    Vi    Ci       YC    Se
  2-11     68    70    68    67    68    69    69    70    69      130    68
@@ -196,7 +197,7 @@ Level     Cl    Br    Tf    Ae    Re    Yu    Ca    Vi    Ci       YC    Se
 
 
 The second lookup table, S(<number>,<level>), uses the quadratic modifier to
-get a starting value.  Example: S(7.4,25) = 24493
+get a starting value.  Example: S(74,25) = 24493
 
 Level   68  69   70   71    72    73     74     75      76      77      78 
  2-11    6   6    7    -     -     -      -      -       -       -       -
@@ -274,7 +275,7 @@ Let us see how much XP Vincent requires to reach L85.  That means that:
 From there, we get:
   Mod   = Q(Vi,85)
         = 76
-  Start = S(7.6,85)
+  Start = S(76,85)
         = 1371319
 
 Since SLv > 0, we must go through the loop.
@@ -614,10 +615,10 @@ is equal to:
    Base MP Gain = [Level * Gradient / 10] - [(Level - 1) * Gradient / 10]
 
 Essentially, it is the difference between the Baseline for your current
-level and the Baseline for the level you're earning, with the important
-difference that they both use the same level bracket.  For example, if you
-were trying to gain L12, the Gradient used would be from the L12-21 bracket,
-*NOT* from the L2-11 bracket.
+level and the Baseline for the level after, with the important difference
+that they both use the same level bracket.  For example, if you were trying
+to gain L12, the Gradient used would be from the L12-21 bracket, *NOT* from
+the L2-11 bracket.
 
 
 This leaves only the HP and MP Gradient/Base tables to list.  First, the
@@ -677,8 +678,8 @@ trying to *EARN*, not the Level you are at currently:
             Cid       94    -66   104   -116    89    -24    69    140
 
 
-Note: HP is capped at 9999 and MP is capped at 999.  Once again, you can't
-achieve more than that.
+Note: HP is capped at 9999 and MP is capped at 999.  You cannot achieve more
+than that.
 
 
 
@@ -714,21 +715,21 @@ Vincent  8211-8779  859-915   74- 81  74- 81  89- 96  93-100  51- 58  23- 30
 
 NOTE: The strategies required to max out HP and MP will be given in the
 Appendix at the end of this document.  Do not assume it is easy.  Most maxing
-can be done in the last 50 levels, however, with the exact margin for error
+can be done in the last 50 levels however, with the exact margin for error
 depending on the character, the stat, and how high above or below the average
 you are when you start.  The reason for this is how FF7 reduces your stat
 gains when you're over the baseline for your level; it's relatively easy to
 catch up again even if you're well below average in a particular stat, simply
 with a few lucky rolls.
 
-However, please remember that achieving max HP requires that you must take
-lower than max gains at some levels, and that achieving max MP requires
-around 50 to 60 levels of max gains, depending on the character and your MP
-when you start maxing.
+But, you should know that achieving max HP requires that you must take lower
+than max gains at some levels, and that achieving max MP requires around 50
+to 60 levels of max gains, depending on the character and your MP when you
+start maxing.
 
 And yes, Barret can max out his HP naturally.  He's the only character that
 can achieve 9999 HP without external modifiers (ie Materia).  No character
-can get 999 MP though.
+can naturally get 999 MP though.
 
 
 So, now we've got a better view of where each character's strengths lie.
@@ -785,7 +786,7 @@ But enough about chracter levels.  Let's move on.
 The first five subsections of this section are devoted to going over each
 Materia in turn.  For Magic, Summon and Command, this will just be a standard
 Materia list; the actual mechanics of each of the spells and commands are in
-the last four subsections, starting from 1.6: Magic Spells.  Independent and
+the last four subsections, starting from 2.6: Magic Spells.  Independent and
 Support Materia will be covered in more detail in their own sections though.
 
 ---  -------------
@@ -1507,8 +1508,8 @@ Notes:
     you Coin, and not Throw.
   Final Attack, Sneak Attack, Counter, Magic Counter and Counter Attack all
     share the same command space, and there are only room for 8 such attacks.
-    Only the first eight Counter Effects placed chronogically onto a characer
-    will be used.
+    Only the first eight Counter Effects placed chronologically onto a
+    character will be used.
   Support abilities (that naturally target party members) will be used on the
     Countering player or the player's group if the ability is naturally area.
     Attack abilities will be used on the enemy that triggered the counter.
@@ -1530,8 +1531,9 @@ Can be paired with:
   All Magic and Summon Materia
 Notes:
   When linked to normal Magic Materia, the ability countered with will be the
-    highest level ability on the linked Materia.  Linking to normal Summon
-    Materia will simply counter with the appropriate summon.
+    highest level ability that the current level of the linked Materia can
+    bestow.  Linking to normal Summon Materia will simply counter with the
+    appropriate summon.
   When linked to Master Magic, any of the 54 possible spells will be picked
     at random to be used to counter attack.
   When linked to Master Summon, any of the 16 possible summons will be picked
@@ -1541,8 +1543,8 @@ Notes:
     Attack abilities will be used on the enemy that triggered the counter.
   Final Attack, Sneak Attack, Counter, Magic Counter and Counter Attack all
     share the same command space, and there are only room for 8 such attacks.
-    Only the first eight Counter Effects placed chronogically onto a characer
-    will be used.
+    Only the first eight Counter Effects placed chronologically onto a
+    character will be used.
 
 
 Materia Name: MP Turbo
@@ -1571,9 +1573,9 @@ Notes:
     affected by MP Turbo, and are multiplied by the same formula damage is
     increased by.
   Multiple MP Turbo Materia can stack on the same spells up to the maximum of
-    50% increase - the strength of a single L5 MP Turbo.  Quadra Magic
-    Materia only give their effect to abilities that the linked materia can
-    give at its *current* level.
+    50% increase - the strength of a single L5 MP Turbo.  MP Turbo Materia
+    only gives its effect to abilities that the linked materia can give at
+    its *current* level.
   
 
 Materia Name: HP Absorb
@@ -1599,14 +1601,16 @@ Notes:
     effect to the highlighted ability on the materia.  The darkened ability
     will only be allowed to get the effect if you have *another* source for
     that particular ability equipped.  For example, if you have Throw L2
-    (which grants Coin), then you would get Added Cut applied to Coin only
+    (which grants Coin), then you would get HP Absorb applied to Coin only
     and not Throw, unless you *also* added a Throw L1 Materia to the
     character (which grants Throw only).
   When linked with Master Command, the Support Materia will apply its effect
-    to *ALL* commands you currently have equipped, including Attack, Magic,
-    Summon and Item.  Note that Throw is exempt unless you have another
-    source for the Throw ability (since Master Command doesn't support Throw
-    as a separate ability), and that Limit is not affected either.
+    to *ALL* commands you currently have equipped, with the exception of
+    Limit, Magic, W-Magic, Summon, W-Sum. and E.Skill.  Note that Throw is
+    exempt unless you have another source for the Throw ability (since Master
+    Command doesn't support Throw as a separate ability), but that Attack,
+    Item, W-Item and all other additional commands are all able to gain the
+    effects of the Support Materia.
 
 
 Materia Name: MP Absorb
@@ -1632,14 +1636,16 @@ Notes:
     effect to the highlighted ability on the materia.  The darkened ability
     will only be allowed to get the effect if you have *another* source for
     that particular ability equipped.  For example, if you have Throw L2
-    (which grants Coin), then you would get Added Cut applied to Coin only
+    (which grants Coin), then you would get MP Absorb applied to Coin only
     and not Throw, unless you *also* added a Throw L1 Materia to the
     character (which grants Throw only).
   When linked with Master Command, the Support Materia will apply its effect
-    to *ALL* commands you currently have equipped, including Attack, Magic,
-    Summon and Item.  Note that Throw is exempt unless you have another
-    source for the Throw ability (since Master Command doesn't support Throw
-    as a separate ability), and that Limit is not affected either.
+    to *ALL* commands you currently have equipped, with the exception of
+    Limit, Magic, W-Magic, Summon, W-Sum. and E.Skill.  Note that Throw is
+    exempt unless you have another source for the Throw ability (since Master
+    Command doesn't support Throw as a separate ability), but that Attack,
+    Item, W-Item and all other additional commands are all able to gain the
+    effects of the Support Materia.
 
 
 Materia Name: Elemental
@@ -1765,8 +1771,8 @@ Notes:
     target for the ability used
   Final Attack, Sneak Attack, Counter, Magic Counter and Counter Attack all
     share the same command space, and there are only room for 8 such attacks.
-    Only the first eight Counter Effects placed chronogically onto a characer
-    will be used
+    Only the first eight Counter Effects placed chronologically onto a
+    character will be used
 
 
 Materia Name: Final Attack
@@ -1797,8 +1803,8 @@ Notes:
     character's group if area)
   Final Attack, Sneak Attack, Counter, Magic Counter and Counter Attack all
     share the same command space, and there are only room for 8 such attacks.
-    Only the first eight Counter Effects placed chronogically onto a characer
-    will be used
+    Only the first eight Counter Effects placed chronologically onto a
+    character will be used
 
 
 Materia Name: Added Cut
@@ -1829,10 +1835,12 @@ Notes:
     and not Throw, unless you *also* added a Throw L1 Materia to the
     character (which grants Throw only).
   When linked with Master Command, the Support Materia will apply its effect
-    to *ALL* commands you currently have equipped, including Attack, Magic,
-    Summon and Item.  Note that Throw is exempt unless you have another
-    source for the Throw ability (since Master Command doesn't support Throw
-    as a separate ability), and that Limit is not affected either.
+    to *ALL* commands you currently have equipped, with the exception of
+    Limit, Magic, W-Magic, Summon, W-Sum. and E.Skill.  Note that Throw is
+    exempt unless you have another source for the Throw ability (since Master
+    Command doesn't support Throw as a separate ability), but that Attack,
+    Item, W-Item and all other additional commands are all able to gain the
+    effects of the Support Materia.
 
 
 Materia Name: Steal As Well
@@ -1858,14 +1866,16 @@ Notes:
     effect to the highlighted ability on the materia.  The darkened ability
     will only be allowed to get the effect if you have *another* source for
     that particular ability equipped.  For example, if you have Throw L2
-    (which grants Coin), then you would get Added Cut applied to Coin only
-    and not Throw, unless you *also* added a Throw L1 Materia to the
+    (which grants Coin), then you would get Steal As Well applied to Coin
+    only and not Throw, unless you *also* added a Throw L1 Materia to the
     character (which grants Throw only).
   When linked with Master Command, the Support Materia will apply its effect
-    to *ALL* commands you currently have equipped, including Attack, Magic,
-    Summon and Item.  Note that Throw is exempt unless you have another
-    source for the Throw ability (since Master Command doesn't support Throw
-    as a separate ability), and that Limit is not affected either.
+    to *ALL* commands you currently have equipped, with the exception of
+    Limit, Magic, W-Magic, Summon, W-Sum. and E.Skill.  Note that Throw is
+    exempt unless you have another source for the Throw ability (since Master
+    Command doesn't support Throw as a separate ability), but that Attack,
+    Item, W-Item and all other additional commands are all able to gain the
+    effects of the Support Materia.
 
 
 ---  -------------------
@@ -1919,8 +1929,7 @@ Lvl  Ability Gained                                      Total AP Req
 
 Notes:
   The maximum additional Dex that can be gained through Materia is +100%
-  This modifier applies to base Dex only, and does not include static
-    modifiers to Dex from other Materia
+  This modifier does not apply to Dex bonuses from other Materia
 
 
 Materia Name: Magic Plus
@@ -1937,8 +1946,7 @@ Lvl  Ability Gained                                      Total AP Req
 
 Notes:
   The maximum additional Mag that can be gained through Materia is +100%
-  This modifier applies to base Mag only, and does not include static
-    modifiers to Mag from other Materia
+  This modifier does not apply to Mag bonuses from other Materia
 
 
 Materia Name: Luck Plus
@@ -1955,8 +1963,7 @@ Lvl  Ability Gained                                      Total AP Req
 
 Notes:
   The maximum additional Lck that can be gained through Materia is +100%
-  This modifier applies to base Lck only, and does not include static
-    modifiers to Lck from other Materia
+  This modifier does not apply to Lck bonuses from other Materia
 
 
 Materia Name: Exp Plus
@@ -2114,8 +2121,8 @@ Notes:
     command, targetting the enemy that triggered the counter
   Final Attack, Sneak Attack, Counter, Magic Counter and Counter Attack all
     share the same command space, and there are only room for 8 such attacks.
-    Only the first eight Counter Effects placed chronogically onto a characer
-    will be used
+    Only the first eight Counter Effects placed chronologically onto a
+    character will be used
   
 
 Materia Name: Cover
@@ -2144,9 +2151,15 @@ Notes:
         following Statuses:  Death, Sleep, Confusion, Stop, Frog, Small,
                              Petrify, Berserk, Paralysed, Darkness or
                              Imprisoned
+    * Enemy attacks that use visible projectile animations (attacks that
+        merely cause hit graphics do not count) are also impossible
+        to Cover - these abilities are listed in Enemy Mechanics as
+        'Can't Cover'
   If all rules are passed and the Cover percentage check passes, then a
     random character out of those who pass all the checks is chosen to cover
     the target.
+  Any PAt%-based ability targetting a character that is Covering another will
+    have its base Hit% increased to 255%.
   Perhaps the strangest ability that is covered by the above rules is Elixir.
     Be careful when giving Elixirs to party members while one of them has the
     Cover Materia equipped.
@@ -2620,7 +2633,7 @@ Remove
   Magical Change Status
   MAt%: 110
   Cost: 99 MP
-  Tar: All Tar
+  Tar: All Tar (NS)
   Attr: 100%  Inflict 'Death'
   Elm: Non-Element
   Notes: No Gil/Items given
@@ -2745,7 +2758,7 @@ Choco/Mog
   Tar: All Op (NS)
   Elm: Non-Element
   Notes: Fat-Chocobo is randomly used 15/256 of the time instead of
-           Deathblow!
+           DeathBlow!!
 
 Shiva
   Attack Name: Diamond Dust
@@ -2972,7 +2985,7 @@ Big Guard
   Magical Change Status
   MAt%: 255
   Cost: 56 MP
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Barrier', 'MBarrier', 'Haste'
 
@@ -3040,7 +3053,7 @@ Bad Breath
   Magical Change Status
   MAt%: 100
   Cost: 58 MP
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Sleep', 'Poison', 'Confusion', 'Silence', 'Frog',
                       'Small'
@@ -3114,7 +3127,7 @@ L5 Death
   Magical Change Status
   Auto Hit
   Cost: 22 MP
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Death'
   Notes: Miss if Target's Lvl not multiple of 5
@@ -3234,14 +3247,21 @@ Slash-All
   Elm: As Weapon
   Notes: Slash-All can hit Back Row targets for full damage without requiring
            a Long Range weapon
+         Status infliction done via Slash-All is considered to be No Split,
+           even though the damage itself is split
 
 Flash
   Physical Change Status
   Formula: Physical
   PAt%: [Weapon At% / 2]
-  Tar: All Op
+  Tar: All Op (NS)
   Elm: As Weapon
   Attr: 100%  Inflict 'Death'
+  Notes: If additional Statuses have been added to the Attacker's Weapon via
+           Added Effect, then Flash will add 'Death' to the list of statuses
+           being inflicted and increase the status chance to 100%.  This can
+           sometimes help to inflict other statuses even if the Target is
+           immune to Death.
 
 2x-Cut
   Physical Attack
@@ -3459,8 +3479,64 @@ often note that you have to lose more than the listed amount of HP above.
 For instance, when maxing out a L4 Limit Bar with Fury status with 9999 Max
 HP, any attack that hits you for 33 or less HP will cause you to gain 0
 Units, since 33 is less than 1/300th of 9999.  In addition, when maxing out
-an L4 Limit Bar with Sadness status with 9999 Max HP, you must be hit for 134
+a L4 Limit Bar with Sadness status with 9999 Max HP, you must be hit for 134
 or more HP to gain even a single Limit Bar 'Unit'.
+
+
+An interesting comparison is to order the characters and their Limit Levels
+by the amount of HP they must lose:
+
+         Approx Base HP Loss     Character's Limit
+                187.9%         **** Lv 4 - Tifa
+                169.0%          *** Lv 3 - Tifa
+                168.0%         **** Lv 4 - Cloud
+                161.4%         **** Lv 4 - Red XIII
+                159.3%         **** Lv 4 - Yuffie
+                159.3%         **** Lv 4 - Cid
+                149.4%         **** Lv 4 - Barret
+                144.8%         **** Lv 4 - Aeris
+                144.4%          *** Lv 3 - Cloud
+                141.4%         **** Lv 4 - Vincent
+                132.8%          *** Lv 3 - Yuffie
+                129.2%          *** Lv 3 - Red XIII
+                126.2%          *** Lv 3 - Cid
+                124.2%          *** Lv 3 - Barret
+                110.9%           ** Lv 2 - Tifa
+                107.6%           ** Lv 2 - Cloud
+                106.9%          *** Lv 3 - Aeris
+                105.9%          *** Lv 3 - Vincent
+                 99.6%           ** Lv 2 - Red XIII
+                 99.6%           ** Lv 2 - Yuffie
+                 94.3%           ** Lv 2 - Aeris
+                 93.0%           ** Lv 2 - Cid
+                 81.0%           ** Lv 2 - Vincent
+                 79.7%           ** Lv 2 - Barret
+                 67.1%            * Lv 1 - Vincent
+                 66.4%            * Lv 1 - Aeris
+                 66.4%            * Lv 1 - Yuffie
+                 66.4%            * Lv 1 - Cid
+                 64.7%            * Lv 1 - Red XIII
+                 59.8%           ** Lv 2 - Cait Sith
+                 53.1%            * Lv 1 - Cait Sith
+                 46.5%            * Lv 1 - Cloud
+                 42.8%            * Lv 1 - Barret
+                 39.8%            * Lv 1 - Tifa
+
+
+Or, ordered by level first and then HP% (highest first):
+
+  Lvl  Character List
+   4    Tifa, Cloud, Red XIII, Yuffie/Cid, Barret, Aeris, Vincent
+   3    Tifa, Cloud, Yuffie, Red XIII, Cid, Barret, Aeris, Vincent
+   2    Tifa, Cloud, Red XIII/Yuffie, Aeris, Cid, Vincent, Barret, Cait Sith
+   1    Vincent, Aeris/Yuffie/Cid, Red XIII, Cait Sith, Cloud, Barret, Tifa
+
+
+So Tifa tends to require the highest amount of HP% lost, while Vincent tends
+to require the lowest - the main exception being at Limit Level 1, where
+they're reversed.  Other conclusions can be drawn from this, and it is
+instructive to compare both these tables to the power of the individual
+abilities a character gains at these levels below.
 
 
 One final note: Limit Bar Units are only accumulated when damage is done to a
@@ -3468,9 +3544,9 @@ character by an enemy.  Damage inflicted by allies will not increase Limit
 Bars.
 
 
----  -----------------
-3.3  Limit Damage Data
----  -----------------
+---  ----------------
+3.3  Limit Break Data
+---  ----------------
 This section will describe the effects of each Limit Break.  Note that
 special damage bonuses from weapons have no effect on these attacks.
 
@@ -3526,6 +3602,11 @@ L3-2: Finishing Touch
   Tar: All Op
   Elm: Non-Element
   Attr: 100%  Inflict 'Death'
+  Notes: Actually two attacks in quick succession - the first does no damage
+           but Inflicts 'Death', while the second does not Inflict 'Death'
+           but deals damage.  Because of the order this is done in, some
+           enemies can be killed with this that would not otherwise be
+           affected
 
 L4-1: Omnislash
   Physical LR Attack
@@ -3679,14 +3760,14 @@ L1-1: Healing Wind
 L1-2: Seal Evil
   Magical Change Status
   MAt%: 255
-  Tar: All Op
+  Tar: All Op (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Stop', 'Silence'
 
 L2-1: Breath of the Earth
   Magical Change Status
   MAt%: 255
-  Tar: All Al
+  Tar: All Al (NS)
   Elm: Non-Element
   Attr: 100%  Cure 'Sleep', 'Poison', 'Sadness', 'Fury', 'Confusion',
                    'Silence', 'Slow', 'Stop', 'Frog', 'Small', 'Slow-numb',
@@ -3702,7 +3783,7 @@ L2-2: Fury Brand
 L3-1: Planet Protector
   Magical Change Status
   MAt%: 255
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Peerless'
 
@@ -3736,7 +3817,7 @@ L1-1: Sled Fang
 L1-2: Lunatic High
   Magical Change Status
   MAt%: 255
-  Tar: All Al
+  Tar: All Al (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Haste'
   Notes: Lunatic High adds 50% to Red XIII's Df% Mod
@@ -3755,6 +3836,13 @@ L2-1: Blood Fang
   PAt%: 255
   Tar: 1 Op
   Elm: Non-Element
+  Notes: The amount absorbed is 100% of the damage dealt added to both
+           Red XIII's HP and MP.  However, the HP gain is capped at the
+           enemy's current HP before the attack, and both HP *and* MP gains
+           are capped at the enemy's current MP (which is not damaged by use
+           of Blood Fang)
+         Red XIII will fail to absorb anything from enemies with 0 MP,
+           although the attack will still deal damage to the enemy's HP
 
 L2-2: Stardust Ray
   Physical LR Attack
@@ -3865,7 +3953,7 @@ Dice
   PAt%: 255
   Tar: 1 Op
   Elm: Non-Element
-  Attr: Two to six dice are thrown depending on the Attacker's Level:
+  Attr: Two to six dice are thrown depending on Cait Sith's Level:
                 L 1-29:   2 Dice             L50-59:   5 Dice
                 L30-39:   3 Dice             L60+  :   6 Dice
                 L40-49:   4 Dice
@@ -3873,7 +3961,7 @@ Dice
           number of repeats dictates the multiplier.  For example, 6 dice
           thrown with the numbers 4, 1, 1, 5, 4, 4 would have a Sum of 19
           (4+1+1+5+4+4 = 19) and a Highest Repeat of 3 (there are three 4s,
-          two 1s and one 5)
+          two 1s and one 5) giving a total damage of 5700
   Notes: Damage with 2 Dice is  300-2400, average of  816.67
             ... with 3 Dice is  600-5400, average of 1545.83
             ... with 4 Dice is 1000-9600, average of 2553.70
@@ -3893,7 +3981,7 @@ following symbols:
    Crown:      A three-pointed regal crown
    Heart:      A pink heart
    Star:       A gold star
-   Moogle:     A picture of the oversized Moogle Cait Sith rides
+   Moogle:     A picture of the oversized Moogle that Cait Sith rides
 
 The reels spin upwards continually, and are laid out as follows:
 
@@ -3960,7 +4048,7 @@ The Evil Flag is turned off depending on the following:
     has been played for is divisible by 4.  Otherwise, the flag is left on.
     
   * If the 1st Reel has the BAR or Moogle symbols, then the Evil Flag is set
-    to off if you try to stop the Reel and the number of seconds the game has
+    to off if you try to stop the reel and the number of seconds the game has
     been played for is divisible by 2.  Otherwise, the flag is kept on.
 
   * If the 1st Reel has the Crown or Star symbols, then the Evil Flag is
@@ -3971,7 +4059,7 @@ Note that this test is done twice - once when you stop the 2nd Reel, and
 again when you try to stop the 3rd Reel.  So even if you have the Evil Flag
 off for stopping the 2nd Reel (giving you a better chance to line up a run of
 2), it may come back on for the 3rd if you press the button at the wrong
-time.  The effects of the Evil Flag on both Reels are as follows:
+time.  The effects of the Evil Flag on both Reels are as follows.
 
 
 With the Evil Flag on, the following effects occur:
@@ -4022,7 +4110,7 @@ Game Over
   Effect of [*CaitS* *CaitS* *CaitS*]
   Magical Change Status
   MAt%: 255
-  Tar: All Op
+  Tar: All Op (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Death'
         Ignores Status Immunity and Elemental Resistance
@@ -4034,7 +4122,7 @@ Death Joker
   Effect of [*CaitS* *CaitS* ==BAR==]
   Magical Change Status
   MAt%: 255
-  Tar: All Al
+  Tar: All Al (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Death'
         Ignores Status Immunity and Elemental Resistance
@@ -4048,8 +4136,8 @@ Summon
      ID   = Rnd(1..10) + Rnd(1..10) + Rnd(1..10) + Rnd(1..10)
      ID   = ID + [Cait Sith's Level / 21]
      ID   = [ID / 2] - 3
-  If ID is then capped between 1 and 16 inclusive.  The ID generated is
-    the Summon that is used:
+  ID is then capped between 1 and 16 inclusive.  The ID generated is the
+    Summon that is used:
            1: Choco/Mog                   9: Kujata
            2: Shiva                      10: Alexander
            3: Ifrit                      11: Phoenix
@@ -4083,7 +4171,7 @@ Lucky Girl
   Effect of [ Heart   Heart   Heart ]
   Magical Change Status
   MAt%: 255
-  Tar: All Al
+  Tar: All Al (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Lucky Girl'
   Notes: The Evil Flag is only turned off once every 4 seconds for this
@@ -4109,11 +4197,11 @@ Transform
          While in this state, Cait Sith can use all the commands he could
            before, but with the following differences:
        * Cait Sith may not use the Limit Command
-       * Cait Sith's eight primary stats - Att, Def, Df%, MAt, MDf, MD%,
-           Dex and Lck - now have a base value equal to the average value of
-           the entire party.  Bonuses from Hero Drinks and the like do not
-           count towards this average value, and for Df%, only the value of
-           armor worn is used - the Dex bonus is not added together
+       * Cait Sith's eight battle stats - Att, Def, Df%, MAt, MDf, MD%, Dex
+           and Lck - now have a base value equal to the average value of the
+           entire party.  Bonuses from Hero Drinks and the like do not count
+           towards this average value, and for Df%, only the value of armor
+           worn is used - the Dex bonus is not added together
        * Cait Sith then has these stats adjusted up or down depending on the
            stat itself:
               Att = Att + [100% * Att]       Def = Def + [ 20% * Def]
@@ -4158,12 +4246,13 @@ Toy Box
 Using one of Vincent's Limit Breaks will heal him of Berserk, Frog and
 Confusion statuses; this is just a sanity check however, since he can't use
 his Limit Break normally under any of those conditions.  He will, however,
-gain immunities to those three statuses as well while he is under the effect.
+gain immunities to those three statuses while he is under the effect.
 
 In addition, Vincent will gain bonuses (or in one case, penalties) to his
 various Stat Modifiers, as well as a Max HP bonus with his first two limits.
-These bonuses last until the end of battle or until Vincent is KO (which ends
-the Limit Break in any case).  In addition, his HP will be healed to full.
+These bonuses last until the end of battle or until Vincent is KOed (which
+ends the Limit Break in any case).  On top of that, his HP will be healed to
+full.
 
 Note that no Stat Modifier can exceed 100% or -100%.  They are additive with
 your current Modifiers however, so Dragon Force and Hero Drinks will stack
@@ -4246,6 +4335,13 @@ Chaos
                           Tar: All Op (NS)
                           Elm: Non-Element
                           Attr: [ 28] Inflict 'Death'
+                          Notes: Actually two attacks in quick succession -
+                                   the first does no damage but Inflicts
+                                   'Death', while the second does not Inflict
+                                   'Death' but deals damage.  Because of the
+                                   order this is done in, some enemies can be
+                                   killed with this that would not otherwise
+                                   be affected
 
 
 3.3.9 Cid's Limit Breaks
@@ -4274,6 +4370,8 @@ L2-1: Hyper Jump
   Tar: All Op
   Elm: Non-Element
   Attr: [ 20] Inflict 'Death'
+        Status infliction done via Hyper Jump is considered to be No Split,
+          even though the damage isn't
 
 L2-2: Dragon
   Physical LR HP/MP Absorb
@@ -4282,6 +4380,12 @@ L2-2: Dragon
   PAt%: 255
   Tar: 1 Op
   Elm: Non-Element
+  Notes: The amount absorbed is 100% of the damage dealt added to both Cid's
+           HP and MP.  However, the HP gain is capped at the enemy's current
+           HP before the attack, and both HP *and* MP gains are capped at the
+           enemy's current MP (which is not damaged by use of Dragon)
+         Cid will fail to absorb anything from enemies with 0 MP, although
+           the attack will still deal damage to the enemy's HP
 
 L3-1: Dragon Dive
   Physical LR Attack
@@ -4327,13 +4431,17 @@ section as a bonus to Critical Hit Rate.  The higher the bonus, the higher
 the chance of a critical hit.  It's worthwhile to note that the Masamune
 (+255% Critical Hit Rate) can never fail to deliver a critical.
 
+Also, please note that the Power value used in the Before Damage Effects of
+the Ultimate Weapons is referring to the integer value that FF7 stores - a
+Power of 16 is a standard 1x Base Physical attack, while a Power of 2 would
+be the starting power of an attack using Morph.
+
 
 4.1.1 Cloud's Weapons
 ----- ---------------
 Name: Buster Sword
 Slots: O=O                      Growth: Normal
-Att:    18   At%:    96
-Mag:     2   Spr:     -   Vit:     -   Dex:     -
+Att:    18   At%:    96   Mag:     2
 Type:    Cut
 Special Notes:
   Can't be sold
@@ -4341,79 +4449,68 @@ Special Notes:
 
 Name: Mythril Saber
 Slots: O=O O                    Growth: Normal
-Att:    23   At%:    98
-Mag:     4   Spr:     -   Vit:     -   Dex:     -
+Att:    23   At%:    98   Mag:     4
 Type:    Cut
 Special Notes:  N/A
 
 Name: Hardedge     
 Slots: O=O O O                  Growth: Normal
-Att:    32   At%:    98
-Mag:     6   Spr:     -   Vit:     -   Dex:     -
+Att:    32   At%:    98   Mag:     6
 Type:    Cut
 Special Notes:  N/A
 
 Name: Butterfly Edge
 Slots: O=O O=O                  Growth: Normal
-Att:    39   At%:   100
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    39   At%:   100   Mag:     8
 Type:    Cut
 Special Notes:  N/A
 
 Name: Enhance Sword
 Slots: O=O O=O O=O O=O          Growth: Normal
-Att:    43   At%:   107
-Mag:    16   Spr:     -   Vit:     -   Dex:     -
+Att:    43   At%:   107   Mag:    16
 Type:    Cut
 Special Notes:  N/A
 
 Name: Organics     
 Slots: O=O O=O O O              Growth: Normal
-Att:    62   At%:   103
-Mag:    15   Spr:     -   Vit:     -   Dex:     -
+Att:    62   At%:   103   Mag:    15
 Type:    Cut
 Special Notes:  N/A
 
 Name: Crystal Sword
 Slots: O=O O=O O=O              Growth: Normal
-Att:    76   At%:   105
-Mag:    19   Spr:     -   Vit:     -   Dex:     -
+Att:    76   At%:   105   Mag:    19
 Type:    Cut
 Special Notes:  N/A
 
 Name: Force Stealer
 Slots: O O O                    Growth: DOUBLE
-Att:    36   At%:   100
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    36   At%:   100   Mag:     7
 Type:    Cut
 Special Notes:  N/A
 
 Name: Rune Blade
 Slots: O O O O                  Growth: DOUBLE
-Att:    40   At%:   108
-Mag:     9   Spr:     -   Vit:     -   Dex:     -
+Att:    40   At%:   108   Mag:     9
 Type:    Cut
 Special Notes:  N/A
 
 Name: Murasame
 Slots: O=O O=O O                Growth: Normal
-Att:    51   At%:   100
-Mag:    12   Spr:     -   Vit:     -   Dex:     -
+Att:    51   At%:   100   Mag:    12
 Type:    Cut
 Special Notes:  N/A
 
 Name: Nail Bat    
 Slots:                          Growth: NOTHING
-Att:    70   At%:   100
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    70   At%:   100   Mag:     0
 Type:    Cut
 Special Notes:
   +4% Critical Hit Rate
 
 Name: Yoshiyuki   
 Slots: O O                      Growth: Normal
-Att:    56   At%:   100
-Mag:     9   Spr:     -   Vit:     -   Dex:     -
+Att:    56   At%:   100   Mag:     9
 Type:    Cut
 Special Notes:
   After Damage Effect
@@ -4421,29 +4518,28 @@ Special Notes:
 
 Name: Apocalypse
 Slots: O O O                    Growth: TRIPLE
-Att:    88   At%:   110
-Mag:    43   Spr:    16   Vit:     -   Dex:     -
+Att:    88   At%:   110   Mag:    43
+Extra Stats:  +16 Spr
 Type:    Cut
 Special Notes:  N/A
 
 Name: Heaven's Cloud
 Slots: O O O O O O              Growth: Normal
-Att:    93   At%:   100
-Mag:    31   Spr:     -   Vit:     -   Dex:     -
+Att:    93   At%:   100   Mag:    31
 Type:    Cut
 Special Notes:  N/A
 
 Name: Ragnarok    
 Slots: O=O O=O O=O              Growth: Normal
-Att:    97   At%:   105
-Mag:    43   Spr:    35   Vit:     -   Dex:     -
+Att:    97   At%:   105   Mag:    43
+Extra Stats:  +35 Spr
 Type:    Cut
 Special Notes:  N/A
 
 Name: Ultima Weapon
 Slots: O=O O=O O=O O=O          Growth: NOTHING
-Att:   100   At%:   110
-Mag:    51   Spr:    24   Vit:     -   Dex:     -
+Att:   100   At%:   110   Mag:    51
+Extra Stats:  +24 Spr
 Type:    Cut
 Special Notes:
   Before Damage Effect
@@ -4454,8 +4550,7 @@ Special Notes:
 ----- ----------------
 Name: Gatling Gun
 Slots: O                        Growth: Normal
-Att:    14   At%:    97
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    14   At%:    97   Mag:     0
 Type:    Shoot
 Special Notes:  Long Range
   Can't be sold
@@ -4463,109 +4558,94 @@ Special Notes:  Long Range
 
 Name: Assault Gun
 Slots: O=O                      Growth: Normal
-Att:    17   At%:    98   
-Mag:     1   Spr:     -   Vit:     -   Dex:     -
+Att:    17   At%:    98   Mag:     1
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Cannon Ball
 Slots: O=O O                    Growth: Normal
-Att:    23   At%:    98   
-Mag:     2   Spr:     -   Vit:     -   Dex:     -
+Att:    23   At%:    98   Mag:     2
 Type:    Hit
 Special Notes:  N/A
 
 Name: Atomic Scissors
 Slots: O=O O O                  Growth: Normal
-Att:    32   At%:    99   
-Mag:     4   Spr:     -   Vit:     -   Dex:     -
+Att:    32   At%:    99   Mag:     4
 Type:    Punch
 Special Notes:  N/A
 
 Name: Heavy Vulcan
 Slots: O=O O=O                  Growth: Normal
-Att:    39   At%:   100   
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    39   At%:   100   Mag:     8
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Chainsaw
 Slots: O=O O=O O                Growth: Normal
-Att:    52   At%:   100   
-Mag:    10   Spr:     -   Vit:     -   Dex:     -
+Att:    52   At%:   100   Mag:    10
 Type:    Cut
 Special Notes:  N/A
 
 Name: Microlaser
 Slots: O=O O=O O O              Growth: Normal
-Att:    63   At%:   101   
-Mag:    13   Spr:     -   Vit:     -   Dex:     -
+Att:    63   At%:   101   Mag:    13
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: A*M Cannon
 Slots: O=O O=O O=O              Growth: Normal
-Att:    77   At%:   103   
-Mag:    16   Spr:     -   Vit:     -   Dex:     -
+Att:    77   At%:   103   Mag:    16
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: W Machine Gun
 Slots: O O O                    Growth: DOUBLE
-Att:    30   At%:   100
-Mag:     3   Spr:     -   Vit:     -   Dex:     -
+Att:    30   At%:   100   Mag:     3
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Drill Arm
 Slots: O O O O                  Growth: DOUBLE
-Att:    37   At%:    97   
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    37   At%:    97   Mag:     0
 Type:    Punch
 Special Notes:
   +3% Critical Hit Rate
 
 Name: Solid Bazooka
 Slots: O=O O=O O=O O=O          Growth: Normal
-Att:    61   At%:   100   
-Mag:    15   Spr:     -   Vit:     -   Dex:     -
+Att:    61   At%:   100   Mag:    15
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Rocket Punch
 Slots:                          Growth: NOTHING
-Att:    62   At%:   100   
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    62   At%:   100   Mag:     0
 Type:    Hit
 Special Notes:
   +4% Critical Hit Rate
 
 Name: Enemy Launcher
 Slots: O=O O O O                Growth: Normal
-Att:    35   At%:   100   
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    35   At%:   100   Mag:     7
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Pile Banger
 Slots: O=O O=O O=O              Growth: NOTHING
-Att:    90   At%:    80   
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    90   At%:    80   Mag:     0
 Type:    Punch
 Special Notes:
   +3% Critical Hit Rate
 
 Name: Max Ray
 Slots: O=O O=O O=O              Growth: Normal
-Att:    97   At%:    98   
-Mag:    30   Spr:     -   Vit:     -   Dex:     -
+Att:    97   At%:    98   Mag:    30
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Missing Score
 Slots: O=O O=O O=O O=O          Growth: NOTHING
-Att:    98   At%:   108   
-Mag:    49   Spr:     -   Vit:     -   Dex:     -
+Att:    98   At%:   108   Mag:    49
 Type:    Shoot
 Special Notes:  Long Range
   Before Damage Effect
@@ -4580,8 +4660,7 @@ Special Notes:  Long Range
 ----- --------------
 Name: Leather Glove
 Slots: O                        Growth: Normal
-Att:    13   At%:    99
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    13   At%:    99   Mag:     0
 Type:    Hit
 Special Notes:
   +2% Critical Hit Rate
@@ -4589,8 +4668,7 @@ Special Notes:
 
 Name: Metal Knuckle
 Slots: O=O                      Growth: Normal
-Att:    18   At%:   102   
-Mag:     1   Spr:     -   Vit:     -   Dex:     -
+Att:    18   At%:   102   Mag:     1
 Type:    Hit
 Special Notes:
   +2% Critical Hit Rate
@@ -4598,8 +4676,7 @@ Special Notes:
 
 Name: Mythril Claw
 Slots: O=O O                    Growth: Normal
-Att:    24   At%:   106   
-Mag:     3   Spr:     -   Vit:     -   Dex:     -
+Att:    24   At%:   106   Mag:     3
 Type:    Hit
 Special Notes:
   +2% Critical Hit Rate
@@ -4607,8 +4684,7 @@ Special Notes:
 
 Name: Grand Glove
 Slots: O=O O O                  Growth: Normal
-Att:    31   At%:   110   
-Mag:     6   Spr:     -   Vit:     -   Dex:     -
+Att:    31   At%:   110   Mag:     6
 Type:    Hit
 Special Notes:
   +2% Critical Hit Rate
@@ -4616,8 +4692,7 @@ Special Notes:
 
 Name: Tiger Fang
 Slots: O=O O=O                  Growth: Normal
-Att:    38   At%:   110   
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    38   At%:   110   Mag:     8
 Type:    Punch
 Special Notes:
   +2% Critical Hit Rate
@@ -4625,8 +4700,7 @@ Special Notes:
 
 Name: Diamond Knuckle
 Slots: O=O O=O O                Growth: Normal
-Att:    51   At%:   112   
-Mag:    10   Spr:     -   Vit:     -   Dex:     -
+Att:    51   At%:   112   Mag:    10
 Type:    Hit
 Special Notes:
   +2% Critical Hit Rate
@@ -4634,8 +4708,7 @@ Special Notes:
 
 Name: Dragon Claw  
 Slots: O=O O=O O O              Growth: Normal
-Att:    62   At%:   114   
-Mag:    13   Spr:     -   Vit:     -   Dex:     -
+Att:    62   At%:   114   Mag:    13
 Type:    Punch
 Special Notes:
   +2% Critical Hit Rate
@@ -4643,8 +4716,7 @@ Special Notes:
 
 Name: Crystal Glove
 Slots: O=O O=O O=O              Growth: Normal
-Att:    75   At%:   115   
-Mag:    16   Spr:     -   Vit:     -   Dex:     -
+Att:    75   At%:   115   Mag:    16
 Type:    Hit
 Special Notes:
   +2% Critical Hit Rate
@@ -4652,24 +4724,21 @@ Special Notes:
 
 Name: Motor Drive  
 Slots: O O O                    Growth: DOUBLE
-Att:    27   At%:   106   
-Mag:     6   Spr:     -   Vit:     -   Dex:     -
+Att:    27   At%:   106   Mag:     6
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Platinum Fist
 Slots: O O O O                  Growth: DOUBLE
-Att:    30   At%:   108   
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    30   At%:   108   Mag:     7
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Kaiser Knuckle
 Slots: O=O O O O O O            Growth: Normal
-Att:    44   At%:   110   
-Mag:    13   Spr:     -   Vit:     -   Dex:     -
+Att:    44   At%:   110   Mag:    13
 Type:    Hit
 Special Notes:
   +1% Critical Hit Rate
@@ -4677,8 +4746,7 @@ Special Notes:
 
 Name: Work Glove  
 Slots:                          Growth: NOTHING
-Att:    68   At%:   114   
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    68   At%:   114   Mag:     0
 Type:    Hit
 Special Notes:
   +4% Critical Hit Rate
@@ -4686,18 +4754,18 @@ Special Notes:
 
 Name: Powersoul   
 Slots: O O O O                  Growth: DOUBLE
-Att:    28   At%:   106   
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    28   At%:   106   Mag:     7
 Type:    Hit
 Special Notes:
   Can't be thrown
   After Damage Effect
-    If Tifa is in Near-death Status: Damage = Damage * 2
+    If Tifa is in Near-death Status:   Damage = Damage * 2
+    If Tifa has Death-sentence Status: Damage = Damage * 4
+    Both multipliers can stack together
 
 Name: Master Fist
 Slots: O O O O O O              Growth: Normal
-Att:    38   At%:   108   
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    38   At%:   108   Mag:     0
 Type:    Hit
 Special Notes:
   Can't be thrown
@@ -4711,8 +4779,7 @@ Special Notes:
 
 Name: God's Hand
 Slots: O=O O=O                  Growth: Normal
-Att:    86   At%:   255   
-Mag:    34   Spr:     -   Vit:     -   Dex:     -
+Att:    86   At%:   255   Mag:    34
 Type:    Hit
 Special Notes:
   +2% Critical Hit Rate
@@ -4720,8 +4787,7 @@ Special Notes:
 
 Name: Premium Heart
 Slots: O=O O=O O=O O=O          Growth: NOTHING
-Att:    99   At%:   112   
-Mag:    32   Spr:     -   Vit:     -   Dex:     -
+Att:    99   At%:   112   Mag:    32
 Type:    Hit
 Special Notes:
   Can't be thrown
@@ -4733,80 +4799,72 @@ Special Notes:
 ----- --------------
 Name: Guard Stick
 Slots: O                        Growth: Normal
-Att:    12   At%:    99
-Mag:     2   Spr:     4   Vit:     1   Dex:     -
+Att:    12   At%:    99   Mag:     2
+Extra Stats:  +1 Vit, +4 Spr
 Type:    Hit
 Special Notes:  N/A
 
 Name: Mythril Rod
 Slots: O=O                      Growth: Normal
-Att:    16   At%:   100   
-Mag:     3   Spr:     -   Vit:     -   Dex:     -
+Att:    16   At%:   100   Mag:     3
 Type:    Hit
 Special Notes:  N/A
 
 Name: Full Metal Staff
 Slots: O=O O                    Growth: Normal
-Att:    22   At%:   100   
-Mag:     4   Spr:     -   Vit:     -   Dex:     -
+Att:    22   At%:   100   Mag:     4
 Type:    Hit
 Special Notes:  N/A
 
 Name: Striking Staff
 Slots: O=O O O                  Growth: Normal
-Att:    32   At%:   100   
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    32   At%:   100   Mag:     7
 Type:    Hit
 Special Notes:
   +2% Critical Hit Rate
 
 Name: Prism Staff
 Slots: O=O O=O                  Growth: Normal
-Att:    40   At%:   105   
-Mag:    10   Spr:     -   Vit:     -   Dex:     -
+Att:    40   At%:   105   Mag:    10
 Type:    Hit
 Special Notes:  N/A
 
 Name: Aurora Rod
 Slots: O=O O=O O                Growth: Normal
-Att:    51   At%:   110   
-Mag:    14   Spr:     -   Vit:     -   Dex:     -
+Att:    51   At%:   110   Mag:    14
 Type:    Hit
 Special Notes:  N/A
 
 Name: Wizard Staff
 Slots: O O O                    Growth: DOUBLE
-Att:    28   At%:   100   
-Mag:     6   Spr:     -   Vit:     -   Dex:     -
+Att:    28   At%:   100   Mag:     6
 Type:    Hit
 Special Notes:  N/A
 
 Name: Wizer Staff
 Slots: O O O O                  Growth: DOUBLE
-Att:    33   At%:   100   
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    33   At%:   100   Mag:     7
 Type:    Hit
 Special Notes:  N/A
 
 Name: Fairy Tale
 Slots: O O O O O O O            Growth: Normal
-Att:    37   At%:   103   
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    37   At%:   103   Mag:     8
 Type:    Hit
 Special Notes:  N/A
 
 Name: Umbrella
 Slots:                          Growth: NOTHING
-Att:    58   At%:   118   
-Mag:    10   Spr:     -   Vit:    20   Dex:     -
+Att:    58   At%:   118   Mag:    10
+Extra Stats:  +20 Vit
 Type:    Hit
 Special Notes:
   +5% Critical Hit Rate
 
 Name: Princess Guard
 Slots: O=O O=O O=O O            Growth: Normal
-Att:    52   At%:   111   
-Mag:    22   Spr:    20   Vit:    12   Dex:     -
+Att:    52   At%:   111   Mag:    22
+Extra Stats:  +12 Vit, +20 Spr
 Type:    Hit
 Special Notes:
   After Damage Effect
@@ -4817,24 +4875,21 @@ Special Notes:
 ----- ------------------
 Name: Mythril Clip
 Slots: O=O O                    Growth: Normal
-Att:    24   At%:   100   
-Mag:     6   Spr:     -   Vit:     -   Dex:     -
+Att:    24   At%:   100   Mag:     6
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Diamond Pin
 Slots: O=O O O                  Growth: Normal
-Att:    33   At%:   102   
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    33   At%:   102   Mag:     8
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Silver Barrette
 Slots: O=O O=O                  Growth: Normal
-Att:    40   At%:   110   
-Mag:    10   Spr:     -   Vit:     -   Dex:     -
+Att:    40   At%:   110   Mag:    10
 Type:    Hit
 Special Notes:
   Can't be sold
@@ -4842,65 +4897,57 @@ Special Notes:
 
 Name: Gold Barrette
 Slots: O=O O=O O                Growth: Normal
-Att:    50   At%:   104   
-Mag:    13   Spr:     -   Vit:     -   Dex:     -
+Att:    50   At%:   104   Mag:    13
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Adaman Clip
 Slots: O=O O=O O O              Growth: Normal
-Att:    60   At%:   106   
-Mag:    15   Spr:     -   Vit:     -   Dex:     -
+Att:    60   At%:   106   Mag:    15
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Crystal Comb
 Slots: O=O O=O O=O              Growth: Normal
-Att:    76   At%:   108   
-Mag:    20   Spr:     -   Vit:     -   Dex:     -
+Att:    76   At%:   108   Mag:    20
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Magic Comb
 Slots: O O O                    Growth: DOUBLE
-Att:    37   At%:   100   
-Mag:     4   Spr:     -   Vit:     -   Dex:     -
+Att:    37   At%:   100   Mag:     4
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Plus Barrette
 Slots: O O O O                  Growth: DOUBLE
-Att:    39   At%:   104   
-Mag:    12   Spr:     -   Vit:     -   Dex:     -
+Att:    39   At%:   104   Mag:    12
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Centclip
 Slots: O O O O O O O O          Growth: Normal
-Att:    58   At%:   108   
-Mag:    22   Spr:     -   Vit:     -   Dex:     -
+Att:    58   At%:   108   Mag:    22
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Hairpin
 Slots:                          Growth: NOTHING
-Att:    57   At%:   120   
-Mag:    15   Spr:     -   Vit:     -   Dex:     -
+Att:    57   At%:   120   Mag:    15
 Type:    Shoot
-Special Notes: Long Range
+Special Notes:  Long Range
   +5% Critical Hit Rate
   Can't be thrown
 
 Name: Seraph Comb
 Slots: O O O O                  Growth: Normal
-Att:    68   At%:   110   
-Mag:    14   Spr:     -   Vit:     -   Dex:     -
+Att:    68   At%:   110   Mag:    14
 Type:    Hit
 Special Notes:
   Can't be sold
@@ -4908,24 +4955,22 @@ Special Notes:
 
 Name: Behemoth Horn
 Slots: O O O O O O              Growth: Normal
-Att:    91   At%:    75   
-Mag:    26   Spr:    18   Vit:    35   Dex:     -
+Att:    91   At%:    75   Mag:    26
+Extra Stats:  +35 Vit, +18 Spr
 Type:    Cut
 Special Notes:
   Can't be thrown
 
 Name: Spring Gun Clip
 Slots: O=O O=O O=O              Growth: Normal
-Att:    87   At%:   100   
-Mag:    55   Spr:     -   Vit:     -   Dex:     -
+Att:    87   At%:   100   Mag:    55
 Type:    Hit
 Special Notes:
   Can't be thrown
 
 Name: Limited Moon
 Slots: O=O O=O O=O O=O          Growth: NOTHING
-Att:    93   At%:   114   
-Mag:    31   Spr:     -   Vit:     -   Dex:     -
+Att:    93   At%:   114   Mag:    31
 Type:    Hit
 Special Notes:
   Can't be thrown
@@ -4937,102 +4982,89 @@ Special Notes:
 ----- ----------------
 Name: 4-point Shuriken
 Slots: O=O O                    Growth: Normal
-Att:    23   At%:   100
-Mag:     6   Spr:     -   Vit:     -   Dex:     -
+Att:    23   At%:   100   Mag:     6
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Boomerang
 Slots: O=O O O                  Growth: Normal
-Att:    30   At%:   101   
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    30   At%:   101   Mag:     7
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Pinwheel
 Slots: O=O O=O                  Growth: Normal
-Att:    37   At%:   104   
-Mag:     9   Spr:     -   Vit:     -   Dex:     -
+Att:    37   At%:   104   Mag:     9
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Razor Ring
 Slots: O=O O=O O                Growth: Normal
-Att:    49   At%:   105   
-Mag:    12   Spr:     -   Vit:     -   Dex:     -
+Att:    49   At%:   105   Mag:    12
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Hawkeye
 Slots: O=O O=O O O              Growth: Normal
-Att:    61   At%:   107   
-Mag:    14   Spr:     -   Vit:     -   Dex:     -
+Att:    61   At%:   107   Mag:    14
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Crystal Cross
 Slots: O=O O=O O=O              Growth: Normal
-Att:    74   At%:   110   
-Mag:    18   Spr:     -   Vit:     -   Dex:     -
+Att:    74   At%:   110   Mag:    18
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Wind Slash
 Slots: O O O                    Growth: DOUBLE
-Att:    30   At%:   103   
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    30   At%:   103   Mag:     7
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Twin Viper
 Slots: O O O O                  Growth: DOUBLE
-Att:    36   At%:   108   
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    36   At%:   108   Mag:     8
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Spiral Shuriken
 Slots: O=O O O O O O O          Growth: Normal
-Att:    68   At%:   110   
-Mag:    18   Spr:     -   Vit:     -   Dex:     -
+Att:    68   At%:   110   Mag:    18
 Type:    Shoot
 Special Notes:  Long Range
   +2% Critical Hit Rate
 
 Name: Superball
 Slots:                          Growth: NOTHING
-Att:    68   At%:   120   
-Mag:    10   Spr:     -   Vit:     -   Dex:     -
+Att:    68   At%:   120   Mag:    10
 Type:    Shoot
 Special Notes:  Long Range
   +4% Critical Hit Rate
 
 Name: Magic Shuriken
 Slots: O O O                    Growth: Normal
-Att:    64   At%:   113   
-Mag:     -   Spr:     -   Vit:     -   Dex:    10
+Att:    64   At%:   113   Mag:     0
+Extra Stats:  +10 Dex
 Type:    Shoot
 Special Notes:  Long Range
   +2% Critical Hit Rate
 
 Name: Rising Sun
 Slots: O=O O=O                  Growth: DOUBLE
-Att:    68   At%:   108   
-Mag:    16   Spr:     -   Vit:     -   Dex:     -
+Att:    68   At%:   108   Mag:    16
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Oritsuru
 Slots: O=O O=O O O O O          Growth: Normal
-Att:    90   At%:   116   
-Mag:    38   Spr:     -   Vit:     -   Dex:     -
+Att:    90   At%:   116   Mag:    38
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Conformer
 Slots: O=O O=O O=O O=O          Growth: NOTHING
-Att:    96   At%:   112   
-Mag:    42   Spr:     -   Vit:     -   Dex:     -
+Att:    96   At%:   112   Mag:    42
 Type:    Shoot
 Special Notes:  Long Range
   Before Damage Effect
@@ -5041,102 +5073,91 @@ Special Notes:  Long Range
     Conformer's Effect, Morph will not reduce damage dealt at all
   If used against only allies, Power will be 0, since only enemies are
     checked in the equation.  In this instance, an attack with the Conformer
-    will be a standard physical hit, but it will cause no damage and not even
-    display a Miss or a 0 (it will remove Confusion or Sleep however)
+    will be a standard physical hit, but no damage will be caused or
+    displayed.  Added Effect statuses will still be applied however, and as
+    a physical hit, the attack can remove Confusion and Sleep as normal
 
 
 4.1.7 Cait Sith's Weapons
 ----- -------------------
 Name: Yellow M-phone
 Slots: O=O O O                  Growth: Normal
-Att:    36   At%:   100   
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    36   At%:   100   Mag:     8
 Type:    Hit
 Special Notes:  N/A
 
 Name: Green M-phone
 Slots: O=O O=O                  Growth: Normal
-Att:    41   At%:   100   
-Mag:     9   Spr:     -   Vit:     -   Dex:     -
+Att:    41   At%:   100   Mag:     9
 Type:    Hit
 Special Notes:  N/A
 
 Name: Blue M-phone
 Slots: O=O O=O O                Growth: Normal
-Att:    48   At%:   100   
-Mag:    10   Spr:     -   Vit:     -   Dex:     -
+Att:    48   At%:   100   Mag:    10
 Type:    Hit
 Special Notes:  N/A
 
 Name: Red M-phone
 Slots: O=O O=O O O              Growth: Normal
-Att:    60   At%:   100   
-Mag:    15   Spr:     -   Vit:     -   Dex:     -
+Att:    60   At%:   100   Mag:    15
 Type:    Hit
 Special Notes:  N/A
 
 Name: Crystal M-phone
 Slots: O=O O=O O=O              Growth: Normal
-Att:    74   At%:   100   
-Mag:    20   Spr:     -   Vit:     -   Dex:     -
+Att:    74   At%:   100   Mag:    20
 Type:    Hit
 Special Notes:  N/A
 
 Name: White M-phone
 Slots: O O O                    Growth: DOUBLE
-Att:    35   At%:   102   
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    35   At%:   102   Mag:     8
 Type:    Hit
 Special Notes:  N/A
 
 Name: Black M-phone
 Slots: O O O O                  Growth: DOUBLE
-Att:    31   At%:   104   
-Mag:    10   Spr:     -   Vit:     -   Dex:     -
+Att:    31   At%:   104   Mag:    10
 Type:    Hit
 Special Notes:  N/A
 
 Name: Silver M-phone
 Slots: O O O O O O O O          Growth: Normal
-Att:    28   At%:   106   
-Mag:    14   Spr:     -   Vit:     -   Dex:     -
+Att:    28   At%:   106   Mag:    14
 Type:    Hit
 Special Notes:  N/A
 
 Name: Trumpet Shell
 Slots:                          Growth: NOTHING
-Att:    68   At%:   118   
-Mag:     2   Spr:     -   Vit:     -   Dex:     -
+Att:    68   At%:   118   Mag:     2
 Type:    Hit
 Special Notes:
   +4% Critical Hit Rate
 
 Name: Gold M-phone
 Slots: O=O O=O O=O O=O          Growth: Normal
-Att:    58   At%:   103   
-Mag:    28   Spr:     -   Vit:     -   Dex:     -
+Att:    58   At%:   103   Mag:    28
 Type:    Hit
 Special Notes:  N/A
 
 Name: Battle Trumpet
 Slots: O=O O=O O=O              Growth: NOTHING
-Att:    95   At%:    95   
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    95   At%:    95   Mag:     0
 Type:    Hit
 Special Notes:
   +2% Critical Hit Rate
 
 Name: Starlight Phone
 Slots: O=O O=O O=O O=O          Growth: Normal
-Att:    88   At%:   102   
-Mag:    31   Spr:     -   Vit:    30   Dex:     -
+Att:    88   At%:   102   Mag:    31
+Extra Stats:  +30 Vit
 Type:    Hit
 Special Notes:  N/A
 
 Name: HP Shout
 Slots: O=O O=O O=O O=O          Growth: NOTHING
-Att:    95   At%:   110   
-Mag:    44   Spr:     -   Vit:     -   Dex:     -
+Att:    95   At%:   110   Mag:    44
 Type:    Hit
 Special Notes:
   Before Damage Effect
@@ -5147,93 +5168,80 @@ Special Notes:
 ----- -----------------
 Name: Quicksilver
 Slots: O=O O O                  Growth: Normal
-Att:    38   At%:   110   
-Mag:    10   Spr:     -   Vit:     -   Dex:     -
+Att:    38   At%:   110   Mag:    10
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Shotgun
 Slots: O=O O=O                  Growth: Normal
-Att:    48   At%:   112   
-Mag:    12   Spr:     -   Vit:     -   Dex:     -
+Att:    48   At%:   112   Mag:    12
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Shortbarrel
 Slots: O=O O=O O                Growth: Normal
-Att:    51   At%:   118   
-Mag:    14   Spr:     -   Vit:     -   Dex:     -
+Att:    51   At%:   118   Mag:    14
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Lariat
 Slots: O=O O=O O O              Growth: Normal
-Att:    64   At%:   120   
-Mag:    16   Spr:     -   Vit:     -   Dex:     -
+Att:    64   At%:   120   Mag:    16
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Winchester
 Slots: O=O O=O O=O              Growth: Normal
-Att:    73   At%:   120   
-Mag:    18   Spr:     -   Vit:     -   Dex:     -
+Att:    73   At%:   120   Mag:    18
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Peacemaker
 Slots: O=O O                    Growth: DOUBLE
-Att:    38   At%:   118   
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    38   At%:   118   Mag:     8
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Buntline
 Slots: O=O O=O                  Growth: DOUBLE
-Att:    48   At%:   124   
-Mag:    18   Spr:     -   Vit:     -   Dex:     -
+Att:    48   At%:   124   Mag:    18
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Long Barrel R
 Slots: O=O O=O O=O O=O          Growth: Normal
-Att:    66   At%:   255   
-Mag:    14   Spr:     -   Vit:     -   Dex:     -
+Att:    66   At%:   255   Mag:    14
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Silver Rifle
 Slots:                          Growth: NOTHING
-Att:    62   At%:   120   
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    62   At%:   120   Mag:     0
 Type:    Shoot
 Special Notes:  Long Range
   +4% Critical Hit Rate
 
 Name: Sniper CR
 Slots: O=O O=O                  Growth: Normal
-Att:    42   At%:   255   
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    42   At%:   255   Mag:     7
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Supershot ST
 Slots: O=O O=O O=O              Growth: NOTHING
-Att:    97   At%:   120   
-Mag:    52   Spr:     -   Vit:     -   Dex:     -
+Att:    97   At%:   120   Mag:    52
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Outsider
 Slots: O=O O=O O O O O          Growth: Normal
-Att:    80   At%:   120   
-Mag:    48   Spr:     -   Vit:     -   Dex:     -
+Att:    80   At%:   120   Mag:    48
 Type:    Shoot
 Special Notes:  Long Range
 
 Name: Death Penalty
 Slots: O=O O=O O=O O=O          Growth: NOTHING
-Att:    99   At%:   115   
-Mag:    34   Spr:     -   Vit:     -   Dex:     -
+Att:    99   At%:   115   Mag:    34
 Type:    Shoot
 Special Notes:  Long Range
   Before Damage Effect
@@ -5244,100 +5252,87 @@ Special Notes:  Long Range
 ----- -------------
 Name: Spear
 Slots: O=O O=O                  Growth: Normal
-Att:    44   At%:    97
-Mag:     8   Spr:     -   Vit:     -   Dex:     -
+Att:    44   At%:    97   Mag:     8
 Type:    Punch
 Special Notes:  N/A
 
 Name: Slash Lance
 Slots: O=O O=O O                Growth: Normal
-Att:    56   At%:    98
-Mag:    10   Spr:     -   Vit:     -   Dex:     -
+Att:    56   At%:    98   Mag:    10
 Type:    Punch
 Special Notes:  N/A
 
 Name: Trident
 Slots: O O O O O O              Growth: Normal
-Att:    60   At%:   105
-Mag:    12   Spr:     -   Vit:     -   Dex:     -
+Att:    60   At%:   105   Mag:    12
 Type:    Punch
 Special Notes:  N/A
 
 Name: Mast Ax
 Slots: O=O O=O O O              Growth: Normal
-Att:    64   At%:    99
-Mag:    15   Spr:     -   Vit:     -   Dex:     -
+Att:    64   At%:    99   Mag:    15
 Type:    Punch
 Special Notes:  N/A
 
 Name: Partisan
 Slots: O=O O=O O=O              Growth: Normal
-Att:    78   At%:   100
-Mag:    17   Spr:     -   Vit:     -   Dex:     -
+Att:    78   At%:   100   Mag:    17
 Type:    Punch
 Special Notes:  N/A
 
 Name: Viper Halberd
 Slots: O O O O                  Growth: DOUBLE
-Att:    58   At%:   102
-Mag:    13   Spr:     -   Vit:     -   Dex:     -
+Att:    58   At%:   102   Mag:    13
 Type:    Punch
 Special Notes:  N/A
 
 Name: Javelin
 Slots: O=O O=O O                Growth: DOUBLE
-Att:    62   At%:   104
-Mag:    12   Spr:     -   Vit:     -   Dex:     -
+Att:    62   At%:   104   Mag:    12
 Type:    Punch
 Special Notes:  N/A
 
 Name: Grow Lance
 Slots: O=O O=O O=O              Growth: Normal
-Att:    78   At%:   102
-Mag:    31   Spr:     -   Vit:     -   Dex:     -
+Att:    78   At%:   102   Mag:    31
 Type:    Punch
 Special Notes:  N/A
 
 Name: Mop
 Slots:                          Growth: NOTHING
-Att:    68   At%:   118
-Mag:     3   Spr:     -   Vit:     -   Dex:     -
+Att:    68   At%:   118   Mag:     3
 Type:    Hit
 Special Notes:
   +5% Critical Hit Rate
 
 Name: Dragoon Lance
 Slots: O O O O O O O O          Growth: Normal
-Att:    66   At%:   100
-Mag:     7   Spr:     -   Vit:     -   Dex:     -
+Att:    66   At%:   100   Mag:     7
 Type:    Punch
 Special Notes:  N/A
 
 Name: Scimitar
 Slots: O=O                      Growth: TRIPLE
-Att:    86   At%:   102
-Mag:    20   Spr:     -   Vit:     -   Dex:     -
+Att:    86   At%:   102   Mag:    20
 Type:    Cut
 Special Notes:  N/A
 
 Name: Flayer
 Slots: O O O O O O              Growth: Normal
-Att:   100   At%:   100
-Mag:    20   Spr:     -   Vit:     -   Dex:     -
+Att:   100   At%:   100   Mag:    20
 Type:    Punch
 Special Notes:  N/A
 
 Name: Spirit Lance
 Slots: O=O O=O                  Growth: Normal
-Att:    92   At%:   112
-Mag:    43   Spr:    20   Vit:     -   Dex:     -
+Att:    92   At%:   112   Mag:    43
+Extra Stats:  +20 Spr
 Type:    Punch
 Special Notes:  N/A
 
 Name: Venus Gospel
 Slots: O=O O=O O=O O=O          Growth: NOTHING
-Att:    97   At%:   103
-Mag:    42   Spr:     -   Vit:     -   Dex:     -
+Att:    97   At%:   103   Mag:    42
 Type:    Punch
 Special Notes:
   Before Damage Effect
@@ -5348,8 +5343,7 @@ Special Notes:
 ------ -------------------
 Name: Masamune
 Slots: O=O O=O O=O              Growth: NOTHING
-Att:    99   At%:   255   
-Mag:     -   Spr:     -   Vit:     -   Dex:     -
+Att:    99   At%:   255   Mag:     0
 Type:    Cut
 Special Notes:
   +255% Critical Hit Rate
@@ -5617,7 +5611,7 @@ Name: White Cape
 Effects: Immune 'Frog', 'Small'
 
 Name: Sprint Shoes
-Effects: Start with 'Haste'
+Effects: Start with 'Haste', Immune 'Haste'
 
 Name: Peace Ring
 Effects: Immune 'Sadness', 'Fury', 'Confusion', 'Berserk'
@@ -5643,21 +5637,21 @@ Name: Safety Bit
 Effects: Immune 'Death', 'Slow-numb', 'Petrify', 'Death-sentence'
 
 Name: Fury Ring
-Effects: Start with 'Berserk'
+Effects: Start with 'Berserk', Immune 'Berserk'
 
 Name: Curse Ring
 Effects: +35 Str, +15 Dex, +15 Vit, +35 Mag, +15 Spr, +10 Lck
-         Start with 'Death-sentence'
+         Start with 'Death-sentence', Immune 'Death-sentence'
 
 Name: Protect Ring
-Effects: Start with 'Barrier', 'MBarrier'
+Effects: Start with 'Barrier', Start with 'MBarrier'
 
 Name: Cat's Bell
 Effects: Every step heals 2 HP, rounded up to the next even HP value
          Example: if you start at 565, it will go up: 568, 570, 572....
 
 Name: Reflect Ring
-Effects: Perma-Reflect
+Effects: Perma-Reflect, Immune 'Reflect'
 
 Name: Water Ring
 Effects: Absorb Water
@@ -5861,42 +5855,42 @@ Name: Right Arm
 Name: Hourglass
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: [ 80] Inflict 'Stop'
   
 Name: Kiss of Death
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: [ 68] Inflict 'Death'
 
 Name: Spider Web
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Slow'
 
 Name: Dream Powder
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: [ 80] Inflict 'Sleep'
 
 Name: Mute Mask
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: [ 80] Inflict 'Silence'
 
 Name: War Gong
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: [ 80] Inflict 'Berserk'
   Notes: When used against a Player Character, the Inflict effect has a 100%
@@ -5905,7 +5899,7 @@ Name: War Gong
 Name: Loco weed
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: [ 80] Inflict 'Confusion'
 
@@ -6025,28 +6019,28 @@ Name: Vagyrisk Claw
 Name: Light Curtain
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Barrier'
 
 Name: Lunar Curtain
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'MBarrier'
 
 Name: Mirror
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: 100%  Inflict 'Reflect'
 
 Name: Holy Torch
   Magical Change Status
   Auto Hit
-  Tar: All Tar
+  Tar: All Tar (NS)
   Elm: Non-Element
   Attr: 100%  Cure 'Haste', 'Slow', 'Stop', 'Regen', 'Barrier', 'MBarrier',
                    'Reflect', 'Shield'
@@ -6254,6 +6248,13 @@ stat.  So here's the list of the maximum safe levels for each character.
          Cid         Max Safety Lvl:  45 (HP), 51 (MP), 45 (Both)
 
 
+
+While a Safety Level is given for Both, please be advised that due to the way
+FF7's RNG works, it is impossible to reach the maximum HP *and* MP on the
+same character, since you cannot get both the highest HP roll and highest
+MP roll at the same time.  Those interested in reaching a compromise for
+maxing both can find tables for that in Absolute Steve's FAQ, among other
+places.
 
 Now.  The following tables will go over each character in turn, going over
 first HP and then MP.  For each level, a list of numbers will be given.
@@ -7354,6 +7355,6 @@ L99  822
 
 -----------------------------------------------------------------------------
 
-The FF7 Party Mechanics, copyright 2001-2005 Terence Fergusson
+The FF7 Party Mechanics, copyright 2001-2009 Terence Fergusson
 
 
