@@ -46,6 +46,7 @@ PlayerFile::~PlayerFile()
 void
 PlayerFile::DumpData()
 {
+/*
     for (int i = 0; i < 12; ++i)
     {
         int ai_offset = GetU16LE(i * 2);
@@ -871,4 +872,5 @@ PlayerFile::DumpData()
 
         LOGGER->Log("\n\n\n");
     }
+*/
 }

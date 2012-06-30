@@ -199,10 +199,6 @@ main( int argc, char *argv[] )
 
 
 
-    LOGGER->Log( "===================== Stop the game!!!" );
-
-
-
     DeinitializeOgreBase();
 
     return 0;

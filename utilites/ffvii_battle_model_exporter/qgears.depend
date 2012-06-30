@@ -7813,3 +7813,156 @@
 	"../../common/TimToVram.h"
 	"../../common/OgreGenUtilites.h"
 
+1306971024 source:m:\q-gears\utilites\common\file.cpp
+	<cassert>
+	<string.h>
+	"File.h"
+	"FileSystem.h"
+	"Logger.h"
+
+1306971024 m:\q-gears\utilites\common\file.h
+	"TypeDefine.h"
+	<OgreString.h>
+
+1306971024 m:\q-gears\utilites\common\typedefine.h
+
+1306971024 m:\q-gears\utilites\common\filesystem.h
+	<OgreString.h>
+
+1333172538 m:\q-gears\utilites\common\logger.h
+	<OgreString.h>
+	<OgreUTFString.h>
+
+1306971024 source:m:\q-gears\utilites\common\filesystem.cpp
+	"FileSystem.h"
+	"Logger.h"
+	<stdio.h>
+
+1333173336 source:m:\q-gears\utilites\common\logger.cpp
+	"Logger.h"
+	"FileSystem.h"
+	<OgreStringConverter.h>
+
+1306971024 source:m:\q-gears\utilites\common\lzsfile.cpp
+	"LzsFile.h"
+	"Logger.h"
+
+1306971024 m:\q-gears\utilites\common\lzsfile.h
+	"File.h"
+
+1330718080 source:m:\q-gears\utilites\common\ogregenutilites.cpp
+	"OgreGenUtilites.h"
+	"Logger.h"
+
+1330718084 m:\q-gears\utilites\common\ogregenutilites.h
+	<Ogre.h>
+	"Logger.h"
+	"Vram.h"
+
+1306971024 m:\q-gears\utilites\common\vram.h
+	"TypeDefine.h"
+	"Surface.h"
+
+1314721446 m:\q-gears\utilites\common\surface.h
+	<Ogre.h>
+
+1314721446 source:m:\q-gears\utilites\common\surface.cpp
+	"Surface.h"
+	<windows.h>
+	<memory.h>
+
+1341054226 source:m:\q-gears\utilites\common\timtovram.cpp
+	"TimToVram.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+
+1314721446 m:\q-gears\utilites\common\timtovram.h
+	"File.h"
+	"Vram.h"
+
+1314721446 source:m:\q-gears\utilites\common\vram.cpp
+	"Vram.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+	<string.h>
+
+1306971026 source:m:\q-gears\utilites\ffvii_battle_model_exporter\src\animationextractor.cpp
+	"AnimationExtractor.h"
+	"../../common/Logger.h"
+
+1306971026 m:\q-gears\utilites\ffvii_battle_model_exporter\src\animationextractor.h
+	<Ogre.h>
+	"EnemyFile.h"
+	"../../common/File.h"
+
+1306971026 m:\q-gears\utilites\ffvii_battle_model_exporter\src\enemyfile.h
+	"MeshExtractor.h"
+	"../../common/LzsFile.h"
+	"../../common/Vram.h"
+	"../../common/OgreGenUtilites.h"
+
+1306971026 m:\q-gears\utilites\ffvii_battle_model_exporter\src\meshextractor.h
+	<Ogre.h>
+	"../../common/File.h"
+	"../../common/OgreGenUtilites.h"
+
+1341054360 source:m:\q-gears\utilites\ffvii_battle_model_exporter\src\animationscriptdumper.cpp
+	"AnimationScriptDumper.h"
+
+1306971026 m:\q-gears\utilites\ffvii_battle_model_exporter\src\animationscriptdumper.h
+	<Ogre.h>
+	"../../common/File.h"
+	"../../common/Logger.h"
+
+1341055028 source:m:\q-gears\utilites\ffvii_battle_model_exporter\src\enemyfile.cpp
+	"EnemyFile.h"
+	<Ogre.h>
+	"AnimationExtractor.h"
+	"AnimationScriptDumper.h"
+	"../../common/Logger.h"
+	"../../common/OgreGenUtilites.h"
+	"../../common/TimToVram.h"
+
+1341054642 source:m:\q-gears\utilites\ffvii_battle_model_exporter\src\main.cpp
+	<Ogre.h>
+	"../../common/OgreBase.h"
+	"../../common/Logger.h"
+	"EnemyFile.h"
+	"RamEffectFile.h"
+	"StageFile.h"
+
+1330777526 m:\q-gears\utilites\common\ogrebase.h
+	<Ogre.h>
+	<OgreTextAreaOverlayElement.h>
+	<OIS.h>
+	"FileSystem.h"
+	"Logger.h"
+
+1306971026 m:\q-gears\utilites\ffvii_battle_model_exporter\src\rameffectfile.h
+	"MeshExtractor.h"
+	"../../common/File.h"
+
+1306971026 m:\q-gears\utilites\ffvii_battle_model_exporter\src\stagefile.h
+	"MeshExtractor.h"
+	"../../common/LzsFile.h"
+	"../../common/Vram.h"
+	"../../common/OgreGenUtilites.h"
+
+1341055042 source:m:\q-gears\utilites\ffvii_battle_model_exporter\src\rameffectfile.cpp
+	<Ogre.h>
+	"RamEffectFile.h"
+	"../../common/Logger.h"
+	"../../common/OgreGenUtilites.h"
+
+1341054800 source:m:\q-gears\utilites\ffvii_battle_model_exporter\src\meshextractor.cpp
+	"MeshExtractor.h"
+	"../../common/Logger.h"
+	"../../common/OgreGenUtilites.h"
+
+1341054986 source:m:\q-gears\utilites\ffvii_battle_model_exporter\src\stagefile.cpp
+	"StageFile.h"
+	<Ogre.h>
+	"../../common/Logger.h"
+	"../../common/TimToVram.h"
+	"../../common/OgreGenUtilites.h"
+

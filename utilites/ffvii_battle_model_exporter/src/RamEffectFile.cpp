@@ -63,7 +63,7 @@ RamEffectFile::GetModel(const EffectInfo info)
     mesh->_setBoundingSphereRadius(999);
 
     Ogre::MeshSerializer ser;
-    ser.exportMesh(mesh.getPointer(), "exported/models/battle/effects/" + info.data.name + ".mesh");
+    ser.exportMesh(mesh.getPointer(), "exported/models/ffvii/battle/effects/" + info.data.name + ".mesh");
 
 
 
@@ -71,18 +71,18 @@ RamEffectFile::GetModel(const EffectInfo info)
     if (textures.size() > 0)
     {
         Vram* vram = new Vram();
-        CreateTexture(vram, info.data, "exported/models/battle/effects/" + info.data.name + ".png", textures);
+        CreateTexture(vram, info.data, "exported/models/ffvii/battle/effects/" + info.data.name + ".png", textures);
         delete vram;
     }
 
 
 
-    CreateMaterial("ffvii/battle_effect/" + info.data.name, "exported/models/battle/effects/" + info.data.name + ".material", (textures.size() > 0) ? "models/battle/effects/" + info.data.name + ".png" : "", "", "");
+    CreateMaterial("ffvii/battle_effect/" + info.data.name, "exported/models/ffvii/battle/effects/" + info.data.name + ".material", (textures.size() > 0) ? "models/ffvii/battle/effects/" + info.data.name + ".png" : "", "", "");
 
 
 
     Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
-    Ogre::Entity* thisEntity = scene_manager->createEntity( info.data.name, "models/battle/effects/" + info.data.name + ".mesh" );
+    Ogre::Entity* thisEntity = scene_manager->createEntity( info.data.name, "models/ffvii/battle/effects/" + info.data.name + ".mesh" );
     thisEntity->setVisible(true);
     Ogre::SceneNode* thisSceneNode = scene_manager->getRootSceneNode()->createChildSceneNode();
     thisSceneNode->setPosition(0, 0, 0);

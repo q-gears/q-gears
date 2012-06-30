@@ -51,7 +51,7 @@ EnemyFile::~EnemyFile()
 Ogre::Entity*
 EnemyFile::GetModel(const EnemyInfo& info)
 {
-    DumpSettings("exported/models/battle/units/" + info.data.name + ".lua");
+    DumpSettings("exported/models/ffvii/battle/units/" + info.data.name + ".lua");
 
     VectorTexForGen textures;
     Ogre::MeshPtr mesh = Ogre::MeshManager::getSingleton().create(info.data.name + "export", "General");
@@ -121,17 +121,17 @@ EnemyFile::GetModel(const EnemyInfo& info)
     // <OGRE> ///////////////////////////////
     skeleton->optimiseAllAnimations();
     Ogre::SkeletonSerializer skeleton_serializer;
-    skeleton_serializer.exportSkeleton(skeleton.getPointer(), "exported/models/battle/units/" + info.data.name + ".skeleton");
+    skeleton_serializer.exportSkeleton(skeleton.getPointer(), "exported/models/ffvii/battle/units/" + info.data.name + ".skeleton");
 
     // Update bounds
     Ogre::AxisAlignedBox aabb(-999, -999, -999, 999, 999, 999);
     mesh->_setBounds(aabb, false);
     mesh->_setBoundingSphereRadius(999);
 
-    mesh->setSkeletonName( "models/battle/units/" + info.data.name + ".skeleton" );
+    mesh->setSkeletonName( "models/ffvii/battle/units/" + info.data.name + ".skeleton" );
 
     Ogre::MeshSerializer ser;
-    ser.exportMesh(mesh.getPointer(), "exported/models/battle/units/" + info.data.name + ".mesh");
+    ser.exportMesh(mesh.getPointer(), "exported/models/ffvii/battle/units/" + info.data.name + ".mesh");
 
 
 
@@ -144,19 +144,19 @@ EnemyFile::GetModel(const EnemyInfo& info)
 
         LoadTimFileToVram(this, offset_to_texture, vram);
 
-        CreateTexture( vram, info.data, "exported/models/battle/units/" + info.data.name + ".png", textures );
+        CreateTexture( vram, info.data, "exported/models/ffvii/battle/units/" + info.data.name + ".png", textures );
         delete vram;
     }
 
 
 
-    //CreateMaterial("ffvii/battle_model/" + info.data.name, "exported/models/battle/units/" + info.data.name + ".material", (textures.size() > 0) ? "models/battle/units/" + info.data.name + ".png" : "", "Test/Fixed", "Test/Red");
-    CreateMaterial("ffvii/battle_model/" + info.data.name, "exported/models/battle/units/" + info.data.name + ".material", (textures.size() > 0) ? "models/battle/units/" + info.data.name + ".png" : "", "", "");
+    //CreateMaterial("ffvii/battle_model/" + info.data.name, "exported/models/ffvii/battle/units/" + info.data.name + ".material", (textures.size() > 0) ? "models/ffvii/battle/units/" + info.data.name + ".png" : "", "Test/Fixed", "Test/Red");
+    CreateMaterial("ffvii/battle_model/" + info.data.name, "exported/models/ffvii/battle/units/" + info.data.name + ".material", (textures.size() > 0) ? "models/ffvii/battle/units/" + info.data.name + ".png" : "", "", "");
 
 
 
     Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
-    Ogre::Entity* thisEntity = scene_manager->createEntity( info.data.name, "models/battle/units/" + info.data.name + ".mesh" );
+    Ogre::Entity* thisEntity = scene_manager->createEntity( info.data.name, "models/ffvii/battle/units/" + info.data.name + ".mesh" );
     //thisEntity->setDisplaySkeleton(true);
     //thisEntity->setDebugDisplayEnabled(true);
     thisEntity->setVisible(false);
@@ -185,16 +185,16 @@ EnemyFile::DumpSettings(const Ogre::String& file)
     LOGGER->Log("Model With Weapon '" + Ogre::StringConverter::toString(m_WithWeapon) + "'\n");
 
     settings->Log("// animation scripts\n");
-    settings->Log("+00 [][]     " + ToHexString(GetU16LE(model_settings_offset + 0), 4, '0') + " - if this is not 0 we add 0x40 bit to 8015190b\n");
-    settings->Log("+02 []       " + ToHexString(GetU8(model_settings_offset + 2), 2, '0') + " - 0x3f - dead type. 0x80 - play secondary animation\n");
-    settings->Log("+03 []       " + ToHexString(GetU8(model_settings_offset + 3), 2, '0') + "\n");
-    settings->Log("+04 [][]     " + ToHexString(GetU16LE(model_settings_offset + 4), 4, '0') + " - collision radius. Set to 801518e4+6\n");
-    settings->Log("+06 [][]     " + ToHexString(GetU16LE(model_settings_offset + 6), 4, '0') + " - to 801518ec\n");
-    settings->Log("+08 [][]     " + ToHexString(GetU16LE(model_settings_offset + 8), 4, '0') + " - to 801518ee\n");
-    settings->Log("+0a [][]     " + ToHexString(GetU16LE(model_settings_offset + 0xa), 4, '0') + " - to 801518f0\n");
-    settings->Log("+0c [][]     " + ToHexString(GetU16LE(model_settings_offset + 0xc), 4, '0') + "\n");
-    settings->Log("+0e [][]     " + ToHexString(GetU16LE(model_settings_offset + 0xe), 4, '0') + "\n");
-    settings->Log("+10 [][]     " + ToHexString(GetU16LE(model_settings_offset + 0x10), 4, '0') + " - filler?\n");
+    settings->Log("+00 [][]     " + HexToString(GetU16LE(model_settings_offset + 0), 4, '0') + " - if this is not 0 we add 0x40 bit to 8015190b\n");
+    settings->Log("+02 []       " + HexToString(GetU8(model_settings_offset + 2), 2, '0') + " - 0x3f - dead type. 0x80 - play secondary animation\n");
+    settings->Log("+03 []       " + HexToString(GetU8(model_settings_offset + 3), 2, '0') + "\n");
+    settings->Log("+04 [][]     " + HexToString(GetU16LE(model_settings_offset + 4), 4, '0') + " - collision radius. Set to 801518e4+6\n");
+    settings->Log("+06 [][]     " + HexToString(GetU16LE(model_settings_offset + 6), 4, '0') + " - to 801518ec\n");
+    settings->Log("+08 [][]     " + HexToString(GetU16LE(model_settings_offset + 8), 4, '0') + " - to 801518ee\n");
+    settings->Log("+0a [][]     " + HexToString(GetU16LE(model_settings_offset + 0xa), 4, '0') + " - to 801518f0\n");
+    settings->Log("+0c [][]     " + HexToString(GetU16LE(model_settings_offset + 0xc), 4, '0') + "\n");
+    settings->Log("+0e [][]     " + HexToString(GetU16LE(model_settings_offset + 0xe), 4, '0') + "\n");
+    settings->Log("+10 [][]     " + HexToString(GetU16LE(model_settings_offset + 0x10), 4, '0') + " - filler?\n");
 
     settings->Log("+12 array of joints (bone indexes)\n    ");
     for (int i = 0; i < 0x10; ++i)
@@ -203,11 +203,11 @@ EnemyFile::DumpSettings(const Ogre::String& file)
         {
             settings->Log(" ");
         }
-        settings->Log(ToHexString(GetU8(model_settings_offset + 0x12 + i), 2, '0'));
+        settings->Log(HexToString(GetU8(model_settings_offset + 0x12 + i), 2, '0'));
     }
     settings->Log("\n");
 
-    settings->Log("+22 [][]     " + ToHexString(GetU16LE(model_settings_offset + 0x22), 4, '0') + " - filler?\n");
+    settings->Log("+22 [][]     " + HexToString(GetU16LE(model_settings_offset + 0x22), 4, '0') + " - filler?\n");
 
     settings->Log("+24 array of 8 offsets to something\n    ");
     for (int i = 0; i < 8; ++i)
@@ -216,7 +216,7 @@ EnemyFile::DumpSettings(const Ogre::String& file)
         {
             settings->Log(" ");
         }
-        settings->Log(ToHexString(GetU32LE(model_settings_offset + 0x24 + i * 4), 8, '0'));
+        settings->Log(HexToString(GetU32LE(model_settings_offset + 0x24 + i * 4), 8, '0'));
     }
     settings->Log("\n");
 
@@ -227,7 +227,7 @@ EnemyFile::DumpSettings(const Ogre::String& file)
         {
             settings->Log(" ");
         }
-        settings->Log(ToHexString(GetU16LE(model_settings_offset + 0x44 + i * 2), 4, '0'));
+        settings->Log(HexToString(GetU16LE(model_settings_offset + 0x44 + i * 2), 4, '0'));
     }
     settings->Log("\n");
 
@@ -238,7 +238,7 @@ EnemyFile::DumpSettings(const Ogre::String& file)
         {
             settings->Log(" ");
         }
-        settings->Log(ToHexString(GetU16LE(model_settings_offset + 0x4c + i * 2), 4, '0'));
+        settings->Log(HexToString(GetU16LE(model_settings_offset + 0x4c + i * 2), 4, '0'));
     }
     settings->Log("\n");
 
@@ -249,12 +249,12 @@ EnemyFile::DumpSettings(const Ogre::String& file)
         {
             settings->Log(" ");
         }
-        settings->Log(ToHexString(GetU16LE(model_settings_offset + 0x58 + i * 2), 4, '0'));
+        settings->Log(HexToString(GetU16LE(model_settings_offset + 0x58 + i * 2), 4, '0'));
     }
     settings->Log("\n");
 
-    settings->Log("+64 [][]     " + ToHexString(GetU16LE(model_settings_offset + 0x64), 4, '0') + "\n");
-    settings->Log("+66 [][]     " + ToHexString(GetU16LE(model_settings_offset + 0x66), 4, '0') + " - filler?\n");
+    settings->Log("+64 [][]     " + HexToString(GetU16LE(model_settings_offset + 0x64), 4, '0') + "\n");
+    settings->Log("+66 [][]     " + HexToString(GetU16LE(model_settings_offset + 0x66), 4, '0') + " - filler?\n");
 
     settings->Log("+68 array of 32 offsets to animation scripts\n    ");
     for (int i = 0; i < 0x20; ++i)
@@ -270,7 +270,7 @@ EnemyFile::DumpSettings(const Ogre::String& file)
                 settings->Log(" ");
             }
         }
-        settings->Log(ToHexString(GetU32LE(model_settings_offset + 0x68 + i * 4), 8, '0'));
+        settings->Log(HexToString(GetU32LE(model_settings_offset + 0x68 + i * 4), 8, '0'));
     }
     settings->Log("\n");
 

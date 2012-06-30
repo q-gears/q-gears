@@ -8,13 +8,13 @@
 
 
 
-typedef std::vector<unsigned char> FFVIIString;
+typedef std::vector< unsigned char > FFVIIString;
 
 
 
 // converter
-FFVIIString  RStringToFFVIIString(const Ogre::String& string);
-Ogre::String FFVIIStringToRString(const FFVIIString& string);
+FFVIIString  StringToFFVIIString( const Ogre::String& string );
+Ogre::String FFVIIStringToString( const FFVIIString& string );
 
 
 

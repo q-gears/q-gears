@@ -19,9 +19,8 @@
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
-					<Add library="zlib" />
 					<Add library="OgreMain" />
-					<Add library="ois" />
+					<Add library="libOIS" />
 					<Add directory="$(OGRE_HOME)\lib\opt\release" />
 				</Linker>
 			</Target>
@@ -35,6 +34,10 @@
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
+		<Unit filename="..\common\File.cpp" />
+		<Unit filename="..\common\File.h" />
+		<Unit filename="..\common\FileSystem.cpp" />
+		<Unit filename="..\common\FileSystem.h" />
 		<Unit filename="..\common\Logger.cpp" />
 		<Unit filename="..\common\Logger.h" />
 		<Unit filename="src\EnemyFile.cpp" />

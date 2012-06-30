@@ -1,12 +1,94 @@
 #include "EnemyFile.h"
 
-#include <libxml/xmlwriter.h>
-
 #include "FFVIIString.h"
 #include "../../common/Logger.h"
 
-xmlTextWriterPtr writer;
 
+
+Ogre::String
+ElementIdToString( const int element_id )
+{
+    switch( element_id )
+    {
+        case 0x00: return "Fire";
+        case 0x03: return "Earth";
+        case 0x07: return "Wind";
+        case 0x0b: return "Hit";
+        case 0x0c: return "Punch";
+        case 0x0d: return "Shoot";
+    }
+
+    return "UnknownElement0x" + HexToString( element_id, 4, '0' );
+}
+
+Ogre::String
+ElementEffectIdToString( const int effect_id )
+{
+    switch( effect_id )
+    {
+        case 0x02: return "DoubleDamage";
+        case 0x05: return "Nullify";
+    }
+
+    return "UnknownElementEffect0x" + HexToString( effect_id, 4, '0' );
+}
+
+Ogre::String
+StatusIdToString( const int status_id )
+{
+    switch( status_id )
+    {
+        case 0x0a: return "Stop";
+        case 0x0b: return "Frog";
+        case 0x19: return "Paralysis";
+    }
+
+    return "UnknownStatusId0x" + HexToString( status_id, 4, '0' );
+}
+
+Ogre::String
+ItemIdToString( const int item_id )
+{
+    switch( item_id )
+    {
+        case 0x00: return "Potion";
+        case 0x03: return "Ether";
+        case 0x14: return "Grenade";
+    }
+
+    return "UnknownItemId0x" + HexToString( item_id, 4, '0' );
+}
+
+Ogre::String
+AttackIdToString( const int attack_id )
+{
+    switch( attack_id )
+    {
+        case 0x001b: return "Fire";
+        case 0x0110: return "MachineGun";
+        case 0x0111: return "Tonfa";
+        case 0x0112: return "Bite";
+        case 0x0113: return "Tentacle";
+        case 0x0114: return "Drilldrive";
+    }
+
+    return "UnknownAttackId0x" + HexToString( attack_id, 4, '0' );
+}
+
+
+
+
+Ogre::String
+StageIdToFileName( const int stage_id )
+{
+    switch( stage_id )
+    {
+        case 0x09: return "sector_1_train_station";
+        case 0x0c: return "reactor_1_entrance";
+    }
+
+    return "UnknownStageId0x" + HexToString( stage_id, 4, '0' );
+}
 
 
 EnemyFile::EnemyFile( const Ogre::String &file ):
@@ -50,101 +132,197 @@ EnemyFile::~EnemyFile()
 void
 EnemyFile::DumpData()
 {
-    writer = xmlNewTextWriterFilename("enemy.xml", 0);
-    xmlTextWriterSetIndent(writer, 1);
-    xmlTextWriterSetIndentString(writer, BAD_CAST "    ");
-    xmlTextWriterStartDocument(writer, NULL, "ISO-8859-1", NULL);
-    xmlTextWriterStartElement(writer, BAD_CAST "enemies");
+    Logger* export_text = new Logger( "enemy.lua" );
+    bool added = false;
 
-    LOGGER->Log("Enemy Id and Data\n");
     int enemy_data_offset = 0x0298;
-    int enemy_ai_offset   = 0x0E80;
-    for (int k = 0 ; k < 3; ++k)
+    int enemy_ai_offset   = 0x0e80;
+
+    for( int k = 0 ; k < 3; ++k )
     {
-        if (GetU16LE(k * 0x02) == 0xffff)
+        if( GetU16LE( k * 0x02 ) == 0xffff )
         {
             continue;
         }
 
         FFVIIString name;
-        name.resize(32);
-        std::copy(mpBuffer + enemy_data_offset + k * 184, mpBuffer + enemy_data_offset + 0x20 + k * 184, name.begin());
-        RString r_name = FFVIIStringToRString(name);
-        LOGGER->Log("%02d) ", k + 1);
-        LOGGER->Log("ID %04d: ", GetU16LE(k * 0x02));
-        LOGGER->Log("%s\n", r_name.c_str());
+        name.resize( 32 );
+        std::copy( m_Buffer + enemy_data_offset + k * 184, m_Buffer + enemy_data_offset + k * 184 + 0x20, name.begin() );
+        Ogre::String r_name = FFVIIStringToString( name );
 
-        LOGGER->Log("level            %02d\n", GetU8(enemy_data_offset + 0x20 + k * 184));
-        LOGGER->Log("speed            %02d\n", GetU8(enemy_data_offset + 0x21 + k * 184));
-        LOGGER->Log("luck             %02d\n", GetU8(enemy_data_offset + 0x22 + k * 184));
-        LOGGER->Log("physical dodge   %02d\n", GetU8(enemy_data_offset + 0x23 + k * 184));
-        LOGGER->Log("strength         %02d\n", GetU8(enemy_data_offset + 0x24 + k * 184));
-        LOGGER->Log("physical defense %02d\n", GetU8(enemy_data_offset + 0x25 + k * 184));
-        LOGGER->Log("magic power      %02d\n", GetU8(enemy_data_offset + 0x26 + k * 184));
-        LOGGER->Log("magic defense    %02d\n", GetU8(enemy_data_offset + 0x27 + k * 184));
-        LOGGER->Log("element id's:");
-        for (int l = 0; l < 8; ++l)
+        export_text->Log( "-- " + Ogre::String( r_name.c_str() ) + "(" + IntToString( GetU16LE( k * 0x02 ) ) + ")\n" );
+        export_text->Log( Ogre::String( r_name.c_str() ) + "= {\n" );
+
+        export_text->Log( "    max_hp = " + IntToString( GetU32LE( enemy_data_offset + k * 184 + 0xa4 ) ) + ",\n" );
+        export_text->Log( "    max_mp = " + IntToString( GetU16LE( enemy_data_offset + k * 184 + 0x9c ) ) + ",\n" );
+        export_text->Log( "\n" );
+        export_text->Log( "    level = " + IntToString( GetU8( enemy_data_offset + k * 184 + 0x20 ) ) + ",\n" );
+        export_text->Log( "    physical_power = " + IntToString( GetU8( enemy_data_offset + k * 184 + 0x24 ) ) + ",\n" );
+        export_text->Log( "    physical_defense = " + IntToString( GetU8( enemy_data_offset + k * 184 + 0x25 ) ) + ",\n" );
+        export_text->Log( "    physical_dodge = " + IntToString( GetU8( enemy_data_offset + k * 184 + 0x23 ) ) + ",\n" );
+        export_text->Log( "    magic_power = " + IntToString( GetU8( enemy_data_offset + k * 184 + 0x26 ) ) + ",\n" );
+        export_text->Log( "    magic_defense = " + IntToString( GetU8( enemy_data_offset + k * 184 + 0x27 ) ) + ",\n" );
+        export_text->Log( "    speed = " + IntToString( GetU8( enemy_data_offset + k * 184 + 0x21 ) ) + ",\n" );
+        export_text->Log( "    luck = " + IntToString( GetU8( enemy_data_offset + k * 184 + 0x22 ) ) + ",\n" );
+        export_text->Log( "\n" );
+        export_text->Log( "    back_damage_multiplier = " + FloatToString( GetU8( enemy_data_offset + k * 184 + 0xa2 ) / 8.0f ) + ",\n" );
+        export_text->Log( "\n" );
+        export_text->Log( "    morph_item = " + ItemIdToString( GetU16LE( enemy_data_offset + k * 184 + 0xa0 ) ) + ",\n" );
+        export_text->Log( "\n" );
+        export_text->Log( "    reward_exp = " + IntToString( GetU32LE( enemy_data_offset + k * 184 + 0xa8 ) ) + ",\n" );
+        export_text->Log( "    reward_ap = " + IntToString( GetU16LE( enemy_data_offset + k * 184 + 0x9e ) ) + ",\n" );
+        export_text->Log( "    reward_gil = " + IntToString( GetU32LE( enemy_data_offset + k * 184 + 0xac ) ) + ",\n" );
+        export_text->Log( "\n" );
+
+        export_text->Log( "    reward_items_drop = {" );
+        added = false;
+        for( int l = 0; l < 4; ++l )
         {
-            LOGGER->Log(" %03d", GetU8(enemy_data_offset + 0x28 + k * 184 + l));
+            u8 rate = GetU8( enemy_data_offset + k * 184 + 0x88 + l );
+            u16 item_id = GetU16LE( enemy_data_offset + k * 184 + 0x8c + l * 0x02 );
+            if( item_id != 65535 && rate < 0x80 )
+            {
+                added = true;
+                export_text->Log( "\n        " + ItemIdToString( item_id ) + " = " + IntToString( rate ) + "," );
+            }
+            if( added == true && l == 3 )
+            {
+                export_text->Log( "\n    " );
+            }
         }
-        LOGGER->Log("\n");
-        LOGGER->Log("effects:     ");
-        for (int l = 0; l < 8; ++l)
+        export_text->Log( "},\n");
+
+        export_text->Log( "\n" );
+
+        export_text->Log( "    elements = {" );
+        bool added = false;
+        for( int l = 0; l < 8; ++l )
         {
-            LOGGER->Log(" %03d", GetU8(enemy_data_offset + 0x30 + k * 184 + l));
+            int element_id = GetU8( enemy_data_offset + k * 184 + 0x28 + l );
+            if( element_id != 255 )
+            {
+                added = true;
+                int effect = GetU8( enemy_data_offset + k * 184 + 0x30 + l );
+                export_text->Log( "\n        " + ElementIdToString( element_id ) + " = \"" + ElementEffectIdToString( effect ) + "\"," );
+            }
+            if( added == true && l == 7 )
+            {
+                export_text->Log( "\n    " );
+            }
         }
-        LOGGER->Log("\n");
-        LOGGER->Log("action id: ");
-        for (int l = 0; l < 16; ++l)
+        export_text->Log( "},\n");
+
+        export_text->Log( "\n" );
+
+        u32 status_immunes = GetU32LE( enemy_data_offset + k * 184 + 0xb0 );
+        export_text->Log( "    status_immunes = {" );
+        added = false;
+        for( int l = 0; l < 32; ++l )
         {
-            LOGGER->Log(" %02x", GetU8(enemy_data_offset + 0x38 + k * 184 + l));
+            if( ( ( status_immunes >> l ) & 1 ) == 0 )
+            {
+                added = true;
+                export_text->Log( "\n        " + StatusIdToString( l ) + "," );
+            }
+            if( added == true && l == 31 )
+            {
+                export_text->Log( "\n    " );
+            }
         }
-        LOGGER->Log("\n");
-        LOGGER->Log("attack id: ");
-        for (int l = 0; l < 16; ++l)
+        export_text->Log( "},\n");
+
+        export_text->Log( "\n" );
+
+        export_text->Log( "    attacks = {" );
+        added = false;
+        for( int l = 0; l < 16; ++l )
         {
-            LOGGER->Log(" %04d", (Sint16)GetU16LE(enemy_data_offset + 0x48 + k * 184 + l * 0x02));
+            int script_id = GetU8( enemy_data_offset + k * 184 + 0x38 + l );
+            int attack_id = GetU16LE( enemy_data_offset + k * 184 + 0x48 + l * 0x02 );
+            int camera_movement = GetU16LE( enemy_data_offset + k * 184 + 0x68 + l * 0x02 );
+            if( attack_id != 65535 )
+            {
+                added = true;
+                if( l != 0 )
+                {
+                    export_text->Log( "," );
+                }
+                export_text->Log( "\n        " + AttackIdToString( attack_id ) + " = {" );
+                bool ext_added = false;
+                if( script_id != 255 )
+                {
+                    ext_added = true;
+                    export_text->Log( "\n            script_id = " + IntToString( script_id ) + "," );
+                }
+                if( camera_movement != 65535 )
+                {
+                    ext_added = true;
+                    export_text->Log( "\n            camera_movement = " + IntToString( camera_movement ) + "," );
+                }
+                if( ext_added == true )
+                {
+                    export_text->Log( "\n        " );
+                }
+                export_text->Log( "}" );
+            }
+            if( added == true && l == 15 )
+            {
+                export_text->Log( "\n    " );
+            }
         }
-        LOGGER->Log("\n");
-        LOGGER->Log("camera movement: ");
-        for (int l = 0; l < 16; ++l)
+        export_text->Log( "},\n");
+
+        export_text->Log( "\n" );
+
+        export_text->Log( "    items_steal = {" );
+        added = false;
+        for( int l = 0; l < 4; ++l )
         {
-            LOGGER->Log(" %04d", (Sint16)GetU16LE(enemy_data_offset + 0x68 + k * 184 + l * 0x02));
+            u8 rate = GetU8( enemy_data_offset + k * 184 + 0x88 + l );
+            u16 item_id = GetU16LE( enemy_data_offset + k * 184 + 0x8c + l * 0x02 );
+            if( item_id != 65535 && rate >= 0x80 )
+            {
+                added = true;
+                export_text->Log( "\n        " + ItemIdToString( item_id ) + " = " + IntToString( rate - 0x80 ) + "," );
+            }
+            if( added == true && l == 3 )
+            {
+                export_text->Log( "\n    " );
+            }
         }
-        LOGGER->Log("\n");
-        LOGGER->Log("drop/stole rates:");
-        for (int l = 0; l < 4; ++l)
+        export_text->Log( "},\n");
+
+        export_text->Log( "\n" );
+
+        int berserk = GetU16LE( enemy_data_offset + k * 184 + 0x94 );
+        if( berserk != 65535 )
         {
-            LOGGER->Log("   %02x", GetU8(enemy_data_offset + 0x88 + k * 184 + l));
+            export_text->Log( "    berserk_attack = " + AttackIdToString( berserk ) + ",\n\n" );
         }
-        LOGGER->Log("\n");
-        LOGGER->Log("drop/stole items:");
-        for (int l = 0; l < 4; ++l)
+
+        export_text->Log( "    manipulate_attacks = {");
+        added = false;
+        for( int l = 0; l < 3; ++l )
         {
-            LOGGER->Log(" %04d", (Sint16)GetU16LE(enemy_data_offset + 0x8C + k * 184 + l * 0x02));
+            int attack_id = GetU16LE( enemy_data_offset + k * 184 + 0x94 + l * 0x02 );
+            if( attack_id != 65535 )
+            {
+                added = true;
+                export_text->Log( "\n        " + AttackIdToString( attack_id ) + "," );
+            }
+            if( added == true && l == 2 )
+            {
+                export_text->Log( "\n    " );
+            }
         }
-        LOGGER->Log("\n");
-        LOGGER->Log("manipulate attacks id: ");
-        for (int l = 0; l < 4; ++l)
-        {
-            LOGGER->Log(" %04d", (Sint16)GetU16LE(enemy_data_offset + 0x94 + k * 184 + l * 0x02));
-        }
-        LOGGER->Log("\n");
-        LOGGER->Log("MP: %04d\n", (Sint16)GetU16LE(enemy_data_offset + 0x9C + k * 184));
-        LOGGER->Log("AP: %04d\n", (Sint16)GetU16LE(enemy_data_offset + 0x9E + k * 184));
-        LOGGER->Log("Morph item id: %04d\n", (Sint16)GetU16LE(enemy_data_offset + 0xA0 + k * 184));
-        LOGGER->Log("Damage From Back multiplied by: %d%/8\n", GetU8(enemy_data_offset + 0xA2 + k * 184));
-        LOGGER->Log("Unknown: %02x\n", GetU8(enemy_data_offset + 0xA3 + k * 184));
-        LOGGER->Log("HP: %05d\n", GetU32LE(enemy_data_offset + 0xA4 + k * 184));
-        LOGGER->Log("EXP: %05d\n", GetU32LE(enemy_data_offset + 0xA8 + k * 184));
-        LOGGER->Log("GIL: %05d\n", GetU32LE(enemy_data_offset + 0xAC + k * 184));
-        LOGGER->Log("Immune mask: %08x\n", GetU32LE(enemy_data_offset + 0xB0 + k * 184));
-        LOGGER->Log("unknown: ");
-        for (int l = 0; l < 4; ++l)
-        {
-            LOGGER->Log(" %02x", GetU8(enemy_data_offset + 0xB4 + k * 184 + l));
-        }
-        LOGGER->Log("\n");
+        export_text->Log( "},\n");
+
+        //export_text->Log( "\n    unknown_0x9a = \"0x" + HexToString( GetU16LE( enemy_data_offset + k * 184 + 0x9a ), 4, '0' ) + ",\n" );
+
+/*
+
+
+
         LOGGER->Log("AI:\n");
         int ai_offset = enemy_ai_offset + GetU16LE(enemy_ai_offset + k * 2);
 
@@ -961,47 +1139,29 @@ EnemyFile::DumpData()
 
             LOGGER->Log("\n", l);
         }
-        LOGGER->Log("\n\n\n");
-
-
-
-        xmlTextWriterStartElement(writer, BAD_CAST "enemy");
-        xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "id", "%d", (Sint16)GetU16LE(k * 0x02));
-        r_name.MakeLower().Replace(" ", "_");
-        xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "file_name", "enemy/%s.lua", r_name.c_str());
-        xmlTextWriterEndElement(writer);
+*/
+        export_text->Log( "},\n\n\n" );
     }
 
-    xmlTextWriterEndElement(writer);
-    xmlTextWriterEndDocument(writer);
-    xmlFreeTextWriter(writer);
 
 
+//    <entity_model name="Background" file_name="models/battle/stages/reactor_1.mesh" position="0 0 0" direction="0" />
 
-    LOGGER->Log("\n\n");
+//    <entity_model name="Mp1" file_name="models/battle/units/mp.mesh" position="-5 2.5 0" direction="0" />
+//    <entity_model name="Mp2" file_name="models/battle/units/mp.mesh" position="-5 2.5 0" direction="0" />
 
-
-
-    writer = xmlNewTextWriterFilename("battle.xml", 0);
-    xmlTextWriterSetIndent(writer, 1);
-    xmlTextWriterSetIndentString(writer, BAD_CAST "    ");
-    xmlTextWriterStartDocument(writer, NULL, "ISO-8859-1", NULL);
-    xmlTextWriterStartElement(writer, BAD_CAST "battles");
-
-    LOGGER->Log("Formation\n");
     int set_up_1_offset  = 0x0008;
     int set_up_2_offset  = 0x0058;
     int formation_offset = 0x0118;
-    for (int k = 0 ; k < 4; ++k)
+
+    for( int k = 0 ; k < 4; ++k )
     {
-        xmlTextWriterStartElement(writer, BAD_CAST "battle");
-        xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "id", "%d", 0);
-        xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "map_id", "%d", (Sint16)GetU16LE(set_up_1_offset + 0x00 + k * 20));
+        delete export_text;
+        export_text = new Logger( "battle_" + IntToString( k ) + ".xml" );
+        export_text->Log( "<map>\n" );
+        export_text->Log( "    <entity_model name=\"Background\" file_name=\"models/ffvii/battle/stages/" + StageIdToFileName( GetU16LE( set_up_1_offset + k * 20 + 0x00 ) ) + ".mesh\" position=\"0 0 0\" direction=\"0\" />\n\n" );
+/*
 
-
-
-        LOGGER->Log("%02d)\n", k + 1);
-        LOGGER->Log("Location ID %04d\n", (Sint16)GetU16LE(set_up_1_offset + 0x00 + k * 20));
         LOGGER->Log("unknown: ");
         for (int l = 0; l < 18; ++l)
         {
@@ -1015,11 +1175,18 @@ EnemyFile::DumpData()
         }
         LOGGER->Log("\n");
         LOGGER->Log("formation:\n");
-        for (int l = 0; l < 6; ++l)
+*/
+        for( int l = 0; l < 6; ++l )
         {
-            xmlTextWriterStartElement(writer, BAD_CAST "formation");
-            xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "enemy_id", "%d", (Sint16)GetU16LE(formation_offset + 0x00 + k * 96 + l * 16));
-            xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "position", "%d %d %d", (Sint16)GetU16LE(formation_offset + 0x02 + k * 96 + l * 16), (Sint16)GetU16LE(formation_offset + 0x04 + k * 96 + l * 16), (Sint16)GetU16LE(formation_offset + 0x06 + k * 96 + l * 16));
+            Ogre::Vector3 position = Ogre::Vector3(
+                ( s16 )GetU16LE( formation_offset + k * 96 + l * 16 + 0x02 ),
+                ( s16 )GetU16LE( formation_offset + k * 96 + l * 16 + 0x06 ),
+                ( s16 )GetU16LE( formation_offset + k * 96 + l * 16 + 0x04 )
+            );
+            position /= 512.0f;
+            export_text->Log( "    <entity_model name=\"" + IntToString( ( s16 )GetU16LE( formation_offset + k * 96 + l * 16 + 0x00 ) ) + "\" file_name=\"models/ffvii/battle/stages/" + StageIdToFileName( GetU16LE( set_up_1_offset + k * 20 + 0x00 ) ) + ".mesh\" position=\"" + Ogre::StringConverter::toString( position ) + "\" direction=\"0\" />\n" );
+
+/*
             xmlTextWriterWriteFormatAttribute(writer, BAD_CAST "row", "%d", GetU16LE(formation_offset + 0x08 + k * 96 + l * 16));
             xmlTextWriterEndElement(writer);
 
@@ -1039,68 +1206,146 @@ EnemyFile::DumpData()
                 }
                 LOGGER->Log("\n");
             }
+*/
         }
-
-        LOGGER->Log("\n");
-
-
-
-        xmlTextWriterEndElement(writer);
-        xmlTextWriterWriteRaw(writer, BAD_CAST "\n");
     }
-
-    xmlTextWriterEndElement(writer);
-    xmlTextWriterEndDocument(writer);
-    xmlFreeTextWriter(writer);
-
-
-
-    LOGGER->Log("\n\n\n");
 
 
 
     // attack names and id
-    LOGGER->Log("Attack Id and Names\n");
-    int attack_data         = 0x04C0;
+    delete export_text;
+    export_text = new Logger( "enemy_attacks.lua" );
+    int attack_data         = 0x04c0;
     int attack_id_offset    = 0x0840;
     int attack_names_offset = 0x0880;
 
-    for (int k = 0; k < 32; ++k)
+    for( int k = 0; k < 32; ++k )
     {
-        FFVIIString name;
-        name.resize(32);
-        std::copy(mpBuffer + attack_names_offset + k * 0x20, mpBuffer + attack_names_offset + 0x20 + k * 0x20, name.begin());
-        LOGGER->Log("%02d) ", k + 1);
-        LOGGER->Log("ID %05d: ", GetU16LE(attack_id_offset + k * 0x02));
-        LOGGER->Log("%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x ",
-                    GetU8(attack_data + k * 0x1C + 0),
-                    GetU8(attack_data + k * 0x1C + 1),
-                    GetU8(attack_data + k * 0x1C + 2),
-                    GetU8(attack_data + k * 0x1C + 3),
-                    GetU8(attack_data + k * 0x1C + 4),
-                    GetU8(attack_data + k * 0x1C + 5),
-                    GetU8(attack_data + k * 0x1C + 6),
-                    GetU8(attack_data + k * 0x1C + 7),
-                    GetU8(attack_data + k * 0x1C + 8),
-                    GetU8(attack_data + k * 0x1C + 9),
-                    GetU8(attack_data + k * 0x1C + 10),
-                    GetU8(attack_data + k * 0x1C + 11),
-                    GetU8(attack_data + k * 0x1C + 12),
-                    GetU8(attack_data + k * 0x1C + 13),
-                    GetU8(attack_data + k * 0x1C + 14),
-                    GetU8(attack_data + k * 0x1C + 15),
-                    GetU8(attack_data + k * 0x1C + 16),
-                    GetU8(attack_data + k * 0x1C + 17),
-                    GetU8(attack_data + k * 0x1C + 18),
-                    GetU8(attack_data + k * 0x1C + 19),
-                    GetU8(attack_data + k * 0x1C + 20),
-                    GetU8(attack_data + k * 0x1C + 21),
-                    GetU8(attack_data + k * 0x1C + 22),
-                    GetU8(attack_data + k * 0x1C + 23),
-                    GetU8(attack_data + k * 0x1C + 24),
-                    GetU8(attack_data + k * 0x1C + 25),
-                    GetU8(attack_data + k * 0x1C + 26),
-                    GetU8(attack_data + k * 0x1C + 27));
-        LOGGER->Log("%s\n", FFVIIStringToRString(name).c_str());
+        int attack_id = GetU16LE( attack_id_offset + k * 0x02 );
+        if( attack_id != 65535 )
+        {
+            FFVIIString name;
+            name.resize(32);
+            std::copy( m_Buffer + attack_names_offset + k * 0x20, m_Buffer + attack_names_offset + 0x20 + k * 0x20, name.begin() );
+
+            export_text->Log( "-- " + Ogre::String( FFVIIStringToString( name ).c_str() ) + " (" + IntToString( GetU16LE( attack_id_offset + k * 0x02 ) ) + ")\n" );
+
+
+            export_text->Log( Ogre::String( AttackIdToString( attack_id ) ) + " = {\n" );
+
+            export_text->Log( "    mp_cost = " + IntToString( GetU16LE( attack_data + k * 0x1c + 0x04 ) ) + ",\n" );
+            export_text->Log( "    power = " + FloatToString( GetU8( attack_data + k * 0x1c + 0x0f ) / 16.0f ) + ",\n" );
+            export_text->Log( "    hit = " + IntToString( GetU8( attack_data + k * 0x1c + 0 ) ) + ",\n" );
+            export_text->Log( "\n");
+            export_text->Log( "    formula = \"0x" + HexToString( GetU8( attack_data + k * 0x1c + 0x0e ), 2, '0' ) + "\",\n" );
+            export_text->Log( "    target = \"0x" + HexToString( GetU8( attack_data + k * 0x1c + 0x0c ), 2, '0' ) + "\",\n" );
+            export_text->Log( "    additional_effect = \"0x" + HexToString( GetU8( attack_data + k * 0x1c + 0x12 ), 2, '0' ) + "\",\n" );
+            export_text->Log( "    additional_effect_modifier = \"0x" + HexToString( GetU8( attack_data + k * 0x1c + 0x13 ), 2, '0' ) + "\",\n" );
+            export_text->Log( "    special = \"0x" + HexToString( GetU16LE( attack_data + k * 0x1c + 0x1a ), 4, '0' ) + "\",\n" );
+            export_text->Log( "\n");
+            int restore_type = GetU8( attack_data + k * 0x1c + 0x10 );
+            if( restore_type == 0 )
+            {
+                export_text->Log( "    restore_type = \"restore_hp\"" );
+            }
+            else if( restore_type == 1 )
+            {
+                export_text->Log( "    restore_type = \"restore_mp\"" );
+            }
+            else if( restore_type == 2 )
+            {
+                export_text->Log( "    restore_type = \"restore_status\"" );
+            }
+            export_text->Log( "\n");
+            u16 elements = GetU16LE( attack_data + k * 0x1c + 0x18 );
+            export_text->Log( "    elements = {" );
+            added = false;
+            if( elements != 65535 )
+            {
+                for( int l = 0; l < 16; ++l )
+                {
+                    if( ( ( elements >> l ) & 1 ) != 0 )
+                    {
+                        added = true;
+                        export_text->Log( "\n        " + ElementIdToString( l ) + "," );
+                    }
+                    if( added == true && l == 15 )
+                    {
+                        export_text->Log( "\n    " );
+                    }
+                }
+            }
+            export_text->Log( "},\n\n");
+
+            u8 status_chance = GetU8( attack_data + k * 0x1c + 0x11 );
+            u8 status_type = status_chance >> 6;
+            status_chance = ( status_chance & 0x3f ) << 2;
+            u32 status = GetU32LE( attack_data + k * 0x1c + 0x14 );
+            if( status != 0xffffffff )
+            {
+                if( status_type == 0 )
+                {
+                    export_text->Log( "    status_add = {" );
+                }
+                else if( status_type == 1 )
+                {
+                    export_text->Log( "    status_remove = {" );
+                }
+                else if( status_type == 2 )
+                {
+                    export_text->Log( "    status_switch = {" );
+                }
+
+                for( int l = 0; l < 32; ++l )
+                {
+                    if( ( ( status >> l ) & 1 ) != 0 )
+                    {
+                        export_text->Log( "\n        " + StatusIdToString( l ) + "," );
+                    }
+                    if( l == 31 )
+                    {
+                        export_text->Log( "\n    " );
+                    }
+                }
+
+                export_text->Log( "},\n\n");
+            }
+
+            export_text->Log( "    target_hurt_script_id = " + IntToString( GetU8( attack_data + k * 0x1c + 0x02 ) ) + ",\n" );
+
+            int sound_id = GetU16LE( attack_data + k * 0x1c + 6 );
+            if( sound_id != 65535 )
+            {
+                export_text->Log( "    sound_id_normal = " + IntToString( sound_id ) + ",\n" );
+                export_text->Log( "    sound_id_cricical = " + IntToString( sound_id ) + ",\n" );
+                export_text->Log( "    sound_id_miss = " + IntToString( sound_id ) + ",\n" );
+            }
+
+            int attack_effect_id = GetU8( attack_data + k * 0x1c + 0x0d );
+            if( attack_effect_id != 255 )
+            {
+                export_text->Log( "    attack_effect_id = " + IntToString( attack_effect_id ) + ",\n" );
+            }
+
+            int impact_effect_id = GetU8( attack_data + k * 0x1c + 0x01 );
+            if( impact_effect_id != 255 )
+            {
+                export_text->Log( "    impact_effect_id = " + IntToString( impact_effect_id ) + ",\n" );
+            }
+
+            int camera_id = GetU16LE( attack_data + k * 0x1c + 0x08 );
+            if( camera_id != 65535 )
+            {
+                export_text->Log( "    camera_id_single = " + IntToString( camera_id ) + ",\n" );
+            }
+
+            camera_id = GetU16LE( attack_data + k * 0x1c + 0x0a );
+            if( camera_id != 65535 )
+            {
+                export_text->Log( "    camera_id_multiple = " + IntToString( camera_id ) + ",\n" );
+            }
+
+            export_text->Log( "},\n\n\n" );
+        }
     }
 }

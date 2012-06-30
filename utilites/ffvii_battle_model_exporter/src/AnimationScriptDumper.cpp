@@ -28,18 +28,18 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             continue;
         }
 
-        dump->Log("\nfunction action_script_" + ToIntString(i) + "()\n");
+        dump->Log("\nfunction action_script_" + IntToString(i) + "()\n");
 
         for (; script <= end;)
         {
-            //dump->Log(ToHexString(script, 4, '0') + " (end " + ToHexString(end, 4, '0') + "): ");
+            //dump->Log(HexToString(script, 4, '0') + " (end " + HexToString(end, 4, '0') + "): ");
             u8 opcode = file->GetU8(script);
 
             dump->Log("    ");
 
             if (opcode < 0x8E)
             {
-                dump->Log("play_animation(" + ToIntString(opcode) + ");\n");
+                dump->Log("play_animation(" + IntToString(opcode) + ");\n");
                 AdvanceScript(1, script, end);
             }
             else if (opcode == 0xA9)
@@ -56,26 +56,26 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             else if (opcode == 0xAD)
             {
                 dump->Log("set_effect(\"machinegun_fire\", " +
-                    ToHexString(file->GetU8(script + 1), 2, '0') +
+                    HexToString(file->GetU8(script + 1), 2, '0') +
                     ", " +
-                    ToHexString(file->GetU16LE(script + 2), 4, '0') +
+                    HexToString(file->GetU16LE(script + 2), 4, '0') +
                     ", " +
-                    ToHexString(file->GetU8(script + 4), 2, '0') +
+                    HexToString(file->GetU8(script + 4), 2, '0') +
                     ", " +
-                    ToHexString(file->GetU8(script + 5), 2, '0') +
+                    HexToString(file->GetU8(script + 5), 2, '0') +
                     "); -- AD\n"
                 );
                 AdvanceScript(6, script, end);
             }
             else if (opcode == 0xB6)
             {
-                dump->Log("pause_camera_finish_animation(" + ToIntString(file->GetU8(script + 1)) + "); -- B6\n");
+                dump->Log("pause_camera_finish_animation(" + IntToString(file->GetU8(script + 1)) + "); -- B6\n");
                 AdvanceScript(2, script, end);
             }
             else if (opcode == 0xB9)
             {
                 dump->Log("set_camera(" +
-                    ToHexString(file->GetU8(script + 1), 2, '0') +
+                    HexToString(file->GetU8(script + 1), 2, '0') +
                     "); -- B9\n"
                 );
                 AdvanceScript(2, script, end);
@@ -83,7 +83,7 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             else if (opcode == 0xBE)
             {
                 dump->Log("execute_hurt(" +
-                    ToHexString(file->GetU8(script + 1), 2, '0') +
+                    HexToString(file->GetU8(script + 1), 2, '0') +
                     "); -- BE\n"
                 );
                 AdvanceScript(2, script, end);
@@ -96,7 +96,7 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             else if (opcode == 0xC2)
             {
                 dump->Log("execute_damage(" +
-                    ToHexString(file->GetU8(script + 1), 2, '0') +
+                    HexToString(file->GetU8(script + 1), 2, '0') +
                     "); -- C2\n"
                 );
                 AdvanceScript(2, script, end);
@@ -109,7 +109,7 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             else if (opcode == 0xC6)
             {
                 dump->Log("set_unit_fade_time(" +
-                    ToHexString(file->GetU8(script + 1), 2, '0') +
+                    HexToString(file->GetU8(script + 1), 2, '0') +
                     "); -- C6\n"
                 );
                 AdvanceScript(2, script, end);
@@ -127,11 +127,11 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             else if (opcode == 0xD1)
             {
                 dump->Log("move_to_target(\"linear_movement\", " +
-                    ToHexString(file->GetU16LE(script + 1), 4, '0') +
+                    HexToString(file->GetU16LE(script + 1), 4, '0') +
                     ", " +
-                    ToHexString(file->GetU16LE(script + 3), 4, '0') +
+                    HexToString(file->GetU16LE(script + 3), 4, '0') +
                     ", " +
-                    ToHexString(file->GetU8(script + 5), 2, '0') +
+                    HexToString(file->GetU8(script + 5), 2, '0') +
                     "); -- D1\n"
                 );
                 AdvanceScript(6, script, end);
@@ -139,9 +139,9 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             else if (opcode == 0xD8)
             {
                 dump->Log("play_sound_for_attacker(" +
-                    ToHexString(file->GetU8(script + 1), 2, '0') +
+                    HexToString(file->GetU8(script + 1), 2, '0') +
                     ", " +
-                    ToHexString(file->GetU16LE(script + 2), 4, '0') +
+                    HexToString(file->GetU16LE(script + 2), 4, '0') +
                     "); -- D8\n"
                 );
                 AdvanceScript(4, script, end);
@@ -184,7 +184,7 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             else if (opcode == 0xF4)
             {
                 dump->Log("set_wait(" +
-                    ToHexString(file->GetU8(script + 1), 2, '0') +
+                    HexToString(file->GetU8(script + 1), 2, '0') +
                     "); -- F4\n"
                 );
                 AdvanceScript(2, script, end);
@@ -197,7 +197,7 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             else if (opcode == 0xF7)
             {
                 dump->Log("execute_attack(" +
-                    ToHexString(file->GetU8(script + 1), 2, '0') +
+                    HexToString(file->GetU8(script + 1), 2, '0') +
                     "); -- F7\n"
                 );
                 AdvanceScript(2, script, end);
@@ -214,7 +214,7 @@ AnimationScriptDumper(File* file, int offset_to_anim_file, Logger* dump)
             }
             else
             {
-                dump->Log("[ACTION_OPCODE " + ToHexString(opcode, 2, '0') + "]\n");
+                dump->Log("[ACTION_OPCODE " + HexToString(opcode, 2, '0') + "]\n");
                 script += 1;
             }
         }

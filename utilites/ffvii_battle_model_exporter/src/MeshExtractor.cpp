@@ -109,7 +109,7 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
         texture.palette_y = clut_y;
         texture.texture_x = vram_x;
         texture.texture_y = vram_y;
-        texture.bpp = bpp;
+        texture.bpp = ( BPP )bpp;
         AddTexture( texture, mesh_data, textures, LOGGER );
 
         Ogre::Vector2 at(0, 0);
@@ -191,7 +191,7 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
         texture.palette_y = clut_y;
         texture.texture_x = vram_x;
         texture.texture_y = vram_y;
-        texture.bpp = bpp;
+        texture.bpp = ( BPP )bpp;
         AddTexture( texture, mesh_data, textures, LOGGER );
 
         Ogre::Vector2 at(0, 0);
@@ -282,7 +282,7 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
         texture.palette_y = 0;
         texture.texture_x = 0;
         texture.texture_y = 0;
-        texture.bpp = -1;
+        texture.bpp = BPP_BLACK;
         AddTexture( texture, mesh_data, textures, LOGGER );
 
         Ogre::Vector2 at(0, 0);
@@ -356,7 +356,7 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
         texture.palette_y = 0;
         texture.texture_x = 0;
         texture.texture_y = 0;
-        texture.bpp = -1;
+        texture.bpp = BPP_BLACK;
         AddTexture( texture, mesh_data, textures, LOGGER );
 
         Ogre::Vector2 at(0, 0);

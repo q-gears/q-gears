@@ -8,8 +8,8 @@
 
 
 
-StageFile::StageFile(const Ogre::String& file):
-    LzsFile(file)
+StageFile::StageFile( const Ogre::String& file ):
+    LzsFile( file )
 {
 }
 
@@ -52,7 +52,7 @@ StageFile::GetModel( const StageInfo& info )
     Ogre::SkeletonPtr skeleton = Ogre::SkeletonManager::getSingleton().create(info.data.name + "export", "General");
 
     u32 number_of_files = GetU32LE(0);
-    LOGGER->Log("Number of file " + ToIntString(number_of_files) + "\n");
+    LOGGER->Log("Number of file " + IntToString(number_of_files) + "\n");
 
 
 
@@ -83,17 +83,17 @@ StageFile::GetModel( const StageInfo& info )
     // <OGRE> ///////////////////////////////
     skeleton->optimiseAllAnimations();
     Ogre::SkeletonSerializer skeleton_serializer;
-    skeleton_serializer.exportSkeleton(skeleton.getPointer(), "exported/models/battle/stages/" + info.data.name + ".skeleton");
+    skeleton_serializer.exportSkeleton(skeleton.getPointer(), "exported/models/ffvii/battle/stages/" + info.data.name + ".skeleton");
 
     // Update bounds
     Ogre::AxisAlignedBox aabb(-999, -999, -999, 999, 999, 999);
     mesh->_setBounds(aabb, false);
     mesh->_setBoundingSphereRadius(999);
 
-    mesh->setSkeletonName( "models/battle/stages/" + info.data.name + ".skeleton" );
+    mesh->setSkeletonName( "models/ffvii/battle/stages/" + info.data.name + ".skeleton" );
 
     Ogre::MeshSerializer ser;
-    ser.exportMesh(mesh.getPointer(), "exported/models/battle/stages/" + info.data.name + ".mesh");
+    ser.exportMesh(mesh.getPointer(), "exported/models/ffvii/battle/stages/" + info.data.name + ".mesh");
 
 
 
@@ -106,18 +106,18 @@ StageFile::GetModel( const StageInfo& info )
 
         LoadTimFileToVram( this, offset_to_texture, vram );
         //vram->Save( "qqq" );
-        CreateTexture( vram, info.data, "exported/models/battle/stages/" + info.data.name + ".png", textures );
+        CreateTexture( vram, info.data, "exported/models/ffvii/battle/stages/" + info.data.name + ".png", textures );
         delete vram;
     }
 
 
 
-    CreateMaterial("ffvii/battle_stage/" + info.data.name, "exported/models/battle/stages/" + info.data.name + ".material", "models/battle/stages/" + info.data.name + ".png", "", "");
+    CreateMaterial("ffvii/battle_stage/" + info.data.name, "exported/models/ffvii/battle/stages/" + info.data.name + ".material", "models/ffvii/battle/stages/" + info.data.name + ".png", "", "");
 
 
 
     Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
-    Ogre::Entity* thisEntity = scene_manager->createEntity( info.data.name, "models/battle/stages/" + info.data.name + ".mesh" );
+    Ogre::Entity* thisEntity = scene_manager->createEntity( info.data.name, "models/ffvii/battle/stages/" + info.data.name + ".mesh" );
     //thisEntity->setDisplaySkeleton(true);
     //thisEntity->setDebugDisplayEnabled(true);
     thisEntity->setVisible(false);

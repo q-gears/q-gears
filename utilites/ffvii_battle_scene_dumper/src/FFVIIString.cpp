@@ -28,7 +28,7 @@ unsigned char ascii[256] = {      // ASCII to FF7 conversion ( NA  = none)
 
 
 FFVIIString
-RStringToFFVIIString( const Ogre::String& string )
+StringToFFVIIString( const Ogre::String& string )
 {
     FFVIIString ret;
 
@@ -43,7 +43,7 @@ RStringToFFVIIString( const Ogre::String& string )
 
 
 Ogre::String
-FFVIIStringToRString( const FFVIIString& string )
+FFVIIStringToString( const FFVIIString& string )
 {
     Ogre::String ret;
 
