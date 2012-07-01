@@ -37,7 +37,7 @@ public:
     void AddInputToHistory();
     void SetInputLineFromHistory();
 
-    virtual void messageLogged( const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug, const Ogre::String& logName );
+    virtual void messageLogged( const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug, const Ogre::String &logName, bool& skipThisMessage );
 
 private:
     int                           m_ConsoleWidth;

@@ -5,7 +5,7 @@
 
 
 
-template<>ConfigCmdManager *Ogre::Singleton< ConfigCmdManager >::ms_Singleton = NULL;
+template<>ConfigCmdManager *Ogre::Singleton< ConfigCmdManager >::msSingleton = NULL;
 
 
 

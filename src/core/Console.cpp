@@ -12,7 +12,7 @@
 
 
 
-template<>Console *Ogre::Singleton< Console >::ms_Singleton = NULL;
+template<>Console *Ogre::Singleton< Console >::msSingleton = NULL;
 
 
 
@@ -784,7 +784,7 @@ Console::SetInputLineFromHistory()
 
 
 void
-Console::messageLogged( const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug, const Ogre::String& logName )
+Console::messageLogged( const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug, const Ogre::String& logName, bool& skipThisMessage )
 {
     Ogre::ColourValue colour = Ogre::ColourValue::White;
     switch( ( int )lml )

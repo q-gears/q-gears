@@ -2,7 +2,7 @@
 
 
 
-template<>ConfigVarManager *Ogre::Singleton< ConfigVarManager >::ms_Singleton = NULL;
+template<>ConfigVarManager *Ogre::Singleton< ConfigVarManager >::msSingleton = NULL;
 
 
 

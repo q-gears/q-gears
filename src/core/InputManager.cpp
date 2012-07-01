@@ -8,7 +8,7 @@
 
 
 
-template<>InputManager *Ogre::Singleton< InputManager >::ms_Singleton = NULL;
+template<>InputManager *Ogre::Singleton< InputManager >::msSingleton = NULL;
 
 
 

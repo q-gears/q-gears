@@ -31,7 +31,7 @@ priority_queue_compare( QueueScript a, QueueScript b )
 
 
 
-template<>ScriptManager *Ogre::Singleton< ScriptManager >::ms_Singleton = NULL;
+template<>ScriptManager *Ogre::Singleton< ScriptManager >::msSingleton = NULL;
 
 
 

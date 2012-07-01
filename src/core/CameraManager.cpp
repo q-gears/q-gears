@@ -15,7 +15,7 @@ ConfigVar cv_cam_speed( "camera_speed", "Camera speed", "0.02" );
 
 
 
-template<>CameraManager* Ogre::Singleton< CameraManager >::ms_Singleton = NULL;
+template<>CameraManager* Ogre::Singleton< CameraManager >::msSingleton = NULL;
 
 
 

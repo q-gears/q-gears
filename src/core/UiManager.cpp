@@ -13,7 +13,7 @@
 
 
 
-template<>UiManager *Ogre::Singleton< UiManager >::ms_Singleton = NULL;
+template<>UiManager *Ogre::Singleton< UiManager >::msSingleton = NULL;
 
 
 

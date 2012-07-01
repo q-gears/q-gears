@@ -23,7 +23,7 @@
 					<Add option="-s" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
-					<Add library="..\output\libboost_thread-mgw45-mt-1_44.dll" />
+					<Add library="boost_thread-mgw46-mt-1_49" />
 				</Linker>
 			</Target>
 			<Target title="Debug">

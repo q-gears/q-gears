@@ -9,7 +9,7 @@
 
 
 
-template<> ParticleSystemManager* Ogre::Singleton<ParticleSystemManager>::ms_Singleton = 0;
+template<> ParticleSystemManager* Ogre::Singleton<ParticleSystemManager>::msSingleton = 0;
 
 
 

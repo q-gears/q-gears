@@ -1,307 +1,313 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="Main.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="2648" topLine="72" />
+	<File name="Main.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2654" topLine="98" />
 	</File>
-	<File name="core\Assert.h" open="0" top="0" tabpos="0">
-		<Cursor position="62" topLine="0" />
+	<File name="core\Assert.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="62" topLine="0" />
 	</File>
-	<File name="core\Background2D.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="19862" topLine="682" />
+	<File name="core\Background2D.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="19862" topLine="682" />
 	</File>
-	<File name="core\Background2D.h" open="0" top="0" tabpos="0">
-		<Cursor position="204" topLine="0" />
+	<File name="core\Background2D.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="204" topLine="0" />
 	</File>
-	<File name="core\Background2DAnimation.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="594" topLine="18" />
+	<File name="core\Background2DAnimation.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="594" topLine="18" />
 	</File>
-	<File name="core\Background2DAnimation.h" open="0" top="0" tabpos="0">
-		<Cursor position="0" topLine="2" />
+	<File name="core\Background2DAnimation.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="0" topLine="2" />
 	</File>
-	<File name="core\CameraManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2968" topLine="75" />
+	<File name="core\CameraManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="352" topLine="3" />
 	</File>
-	<File name="core\CameraManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="475" topLine="2" />
+	<File name="core\CameraManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="475" topLine="2" />
 	</File>
-	<File name="core\ConfigCmd.h" open="0" top="0" tabpos="0">
-		<Cursor position="71" topLine="0" />
+	<File name="core\ConfigCmd.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="71" topLine="0" />
 	</File>
-	<File name="core\ConfigCmdManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1533" topLine="0" />
+	<File name="core\ConfigCmdManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="166" topLine="0" />
 	</File>
-	<File name="core\ConfigCmdManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="961" topLine="7" />
+	<File name="core\ConfigCmdManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="961" topLine="7" />
 	</File>
-	<File name="core\ConfigCmdManagerCommands.h" open="0" top="0" tabpos="0">
-		<Cursor position="601" topLine="20" />
+	<File name="core\ConfigCmdManagerCommands.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="601" topLine="20" />
 	</File>
-	<File name="core\ConfigFile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="416" topLine="53" />
+	<File name="core\ConfigFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="416" topLine="53" />
 	</File>
-	<File name="core\ConfigVar.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="62" topLine="0" />
+	<File name="core\ConfigVar.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="62" topLine="0" />
 	</File>
-	<File name="core\ConfigVarManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="787" topLine="24" />
+	<File name="core\ConfigVarManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="104" topLine="0" />
 	</File>
-	<File name="core\ConfigVarManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="312" topLine="0" />
+	<File name="core\ConfigVarManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="312" topLine="0" />
 	</File>
-	<File name="core\Console.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="14907" topLine="518" />
+	<File name="core\Console.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="289" topLine="0" />
 	</File>
-	<File name="core\Console.h" open="0" top="0" tabpos="0">
-		<Cursor position="748" topLine="6" />
+	<File name="core\Console.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1021" topLine="25" />
 	</File>
-	<File name="core\DebugDraw.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="10756" topLine="303" />
+	<File name="core\DebugDraw.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="240" topLine="0" />
 	</File>
-	<File name="core\DebugDraw.h" open="0" top="0" tabpos="2">
-		<Cursor position="2456" topLine="48" />
+	<File name="core\DebugDraw.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2456" topLine="48" />
 	</File>
-	<File name="core\Entity.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="9506" topLine="368" />
+	<File name="core\Entity.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="9506" topLine="368" />
 	</File>
-	<File name="core\Entity.h" open="0" top="0" tabpos="2">
-		<Cursor position="969" topLine="50" />
+	<File name="core\Entity.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="969" topLine="50" />
 	</File>
-	<File name="core\EntityManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="36403" topLine="1157" />
+	<File name="core\EntityManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="345" topLine="2" />
 	</File>
-	<File name="core\EntityManager.h" open="0" top="0" tabpos="4">
-		<Cursor position="2501" topLine="47" />
+	<File name="core\EntityManager.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2501" topLine="47" />
 	</File>
-	<File name="core\EntityModel.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="1220" topLine="100" />
+	<File name="core\EntityModel.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1220" topLine="100" />
 	</File>
-	<File name="core\EntityModel.h" open="0" top="0" tabpos="0">
-		<Cursor position="476" topLine="0" />
+	<File name="core\EntityModel.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="476" topLine="0" />
 	</File>
-	<File name="core\EntityPoint.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="414" topLine="20" />
+	<File name="core\EntityPoint.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="414" topLine="20" />
 	</File>
-	<File name="core\EntityPoint.h" open="0" top="0" tabpos="0">
-		<Cursor position="207" topLine="0" />
+	<File name="core\EntityPoint.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="207" topLine="0" />
 	</File>
-	<File name="core\EntityTrigger.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="465" topLine="18" />
+	<File name="core\EntityTrigger.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="465" topLine="18" />
 	</File>
-	<File name="core\EntityTrigger.h" open="0" top="0" tabpos="0">
-		<Cursor position="212" topLine="0" />
+	<File name="core\EntityTrigger.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="212" topLine="0" />
 	</File>
-	<File name="core\Event.h" open="0" top="0" tabpos="0">
-		<Cursor position="132" topLine="0" />
+	<File name="core\Event.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="132" topLine="0" />
 	</File>
-	<File name="core\GameFrameListner.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="2960" topLine="86" />
+	<File name="core\GameFrameListner.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2960" topLine="86" />
 	</File>
-	<File name="core\GameFrameListner.h" open="0" top="0" tabpos="0">
-		<Cursor position="1331" topLine="29" />
+	<File name="core\GameFrameListner.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1331" topLine="29" />
 	</File>
-	<File name="core\InputManager.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="4097" topLine="174" />
+	<File name="core\InputManager.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="223" topLine="0" />
 	</File>
-	<File name="core\InputManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="103" topLine="0" />
+	<File name="core\InputManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="103" topLine="0" />
 	</File>
-	<File name="core\InputManagerCommands.h" open="0" top="0" tabpos="0">
-		<Cursor position="557" topLine="0" />
+	<File name="core\InputManagerCommands.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="557" topLine="0" />
 	</File>
-	<File name="core\Logger.h" open="0" top="0" tabpos="0">
-		<Cursor position="572" topLine="0" />
+	<File name="core\Logger.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="572" topLine="0" />
 	</File>
-	<File name="core\Module.h" open="0" top="0" tabpos="0">
-		<Cursor position="408" topLine="20" />
+	<File name="core\Module.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="408" topLine="20" />
 	</File>
-	<File name="core\ScriptManager.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="21166" topLine="568" />
+	<File name="core\ScriptManager.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="816" topLine="19" />
 	</File>
-	<File name="core\ScriptManager.h" open="0" top="0" tabpos="1">
-		<Cursor position="402" topLine="12" />
+	<File name="core\ScriptManager.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="402" topLine="12" />
 	</File>
-	<File name="core\ScriptManagerBinds.h" open="0" top="0" tabpos="5">
-		<Cursor position="10406" topLine="166" />
+	<File name="core\ScriptManagerBinds.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="10406" topLine="166" />
 	</File>
-	<File name="core\Timer.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="227" topLine="6" />
+	<File name="core\Timer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="201" topLine="6" />
 	</File>
-	<File name="core\Timer.h" open="0" top="0" tabpos="0">
-		<Cursor position="143" topLine="0" />
+	<File name="core\Timer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="143" topLine="0" />
 	</File>
-	<File name="core\UiAnimation.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="758" topLine="11" />
+	<File name="core\UiAnimation.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="758" topLine="11" />
 	</File>
-	<File name="core\UiAnimation.h" open="0" top="0" tabpos="0">
-		<Cursor position="622" topLine="34" />
+	<File name="core\UiAnimation.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="622" topLine="34" />
 	</File>
-	<File name="core\UiFont.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="996" topLine="76" />
+	<File name="core\UiFont.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="996" topLine="76" />
 	</File>
-	<File name="core\UiFont.h" open="0" top="0" tabpos="1">
-		<Cursor position="668" topLine="15" />
+	<File name="core\UiFont.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="668" topLine="15" />
 	</File>
-	<File name="core\UiManager.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="1962" topLine="93" />
+	<File name="core\UiManager.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="328" topLine="1" />
 	</File>
-	<File name="core\UiManager.h" open="0" top="0" tabpos="1">
-		<Cursor position="1437" topLine="25" />
+	<File name="core\UiManager.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1437" topLine="25" />
 	</File>
-	<File name="core\UiSprite.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="723" topLine="27" />
+	<File name="core\UiSprite.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="723" topLine="27" />
 	</File>
-	<File name="core\UiSprite.h" open="0" top="0" tabpos="0">
-		<Cursor position="42" topLine="0" />
+	<File name="core\UiSprite.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="42" topLine="0" />
 	</File>
-	<File name="core\UiTextArea.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="3213" topLine="144" />
+	<File name="core\UiTextArea.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="3213" topLine="144" />
 	</File>
-	<File name="core\UiTextArea.h" open="0" top="0" tabpos="0">
-		<Cursor position="1414" topLine="53" />
+	<File name="core\UiTextArea.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1414" topLine="53" />
 	</File>
-	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="6492" topLine="211" />
+	<File name="core\UiWidget.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="6492" topLine="211" />
 	</File>
-	<File name="core\UiWidget.h" open="0" top="0" tabpos="3">
-		<Cursor position="880" topLine="11" />
+	<File name="core\UiWidget.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="880" topLine="11" />
 	</File>
-	<File name="core\Utilites.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2599" topLine="104" />
+	<File name="core\Utilites.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2599" topLine="104" />
 	</File>
-	<File name="core\Utilites.h" open="0" top="0" tabpos="0">
-		<Cursor position="98" topLine="2" />
+	<File name="core\Utilites.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="98" topLine="2" />
 	</File>
-	<File name="core\Walkmesh.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="304" topLine="22" />
+	<File name="core\Walkmesh.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="304" topLine="22" />
 	</File>
-	<File name="core\Walkmesh.h" open="0" top="0" tabpos="0">
-		<Cursor position="587" topLine="24" />
+	<File name="core\Walkmesh.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="587" topLine="24" />
 	</File>
-	<File name="core\XmlBackground2DFile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1333" topLine="29" />
+	<File name="core\XmlBackground2DFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1333" topLine="29" />
 	</File>
-	<File name="core\XmlFile.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="3381" topLine="146" />
+	<File name="core\XmlFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="3381" topLine="146" />
 	</File>
-	<File name="core\XmlFile.h" open="0" top="0" tabpos="4">
-		<Cursor position="1347" topLine="3" />
+	<File name="core\XmlFile.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1347" topLine="3" />
 	</File>
-	<File name="core\XmlFontFile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="876" topLine="21" />
+	<File name="core\XmlFontFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="876" topLine="21" />
 	</File>
-	<File name="core\XmlMapFile.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="1152" topLine="34" />
+	<File name="core\XmlMapFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1152" topLine="34" />
 	</File>
-	<File name="core\XmlMapFile.h" open="0" top="0" tabpos="2">
-		<Cursor position="225" topLine="0" />
+	<File name="core\XmlMapFile.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="225" topLine="0" />
 	</File>
-	<File name="core\XmlScreenFile.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="15017" topLine="382" />
+	<File name="core\XmlScreenFile.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="15017" topLine="382" />
 	</File>
-	<File name="core\XmlScreenFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="427" topLine="0" />
+	<File name="core\XmlScreenFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="427" topLine="0" />
 	</File>
-	<File name="core\XmlScreensFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="240" topLine="0" />
+	<File name="core\XmlScreensFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="240" topLine="0" />
 	</File>
-	<File name="core\XmlTextFile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="573" topLine="16" />
+	<File name="core\XmlTextFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="573" topLine="16" />
 	</File>
-	<File name="core\XmlTextsFile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="531" topLine="31" />
+	<File name="core\XmlTextsFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="531" topLine="31" />
 	</File>
-	<File name="core\XmlTextsFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="225" topLine="0" />
+	<File name="core\XmlTextsFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="225" topLine="0" />
 	</File>
-	<File name="core\XmlWalkmeshFile.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="55" topLine="0" />
+	<File name="core\XmlWalkmeshFile.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="55" topLine="0" />
 	</File>
-	<File name="core\library\lua\ldo.c" open="0" top="0" tabpos="0">
-		<Cursor position="12713" topLine="416" />
+	<File name="core\library\lua\ldo.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="12713" topLine="416" />
 	</File>
-	<File name="core\library\lua\lvm.c" open="0" top="0" tabpos="0">
-		<Cursor position="23123" topLine="723" />
+	<File name="core\library\lua\lvm.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="23123" topLine="723" />
 	</File>
-	<File name="core\library\luabind\class.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="9126" topLine="305" />
+	<File name="core\library\luabind\class.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="9126" topLine="305" />
 	</File>
-	<File name="core\library\luabind\detail\call.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="2952" topLine="78" />
+	<File name="core\library\luabind\detail\call.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2952" topLine="78" />
 	</File>
-	<File name="core\library\luabind\detail\call_function.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="4664" topLine="134" />
+	<File name="core\library\luabind\detail\call_function.hpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="8879" topLine="311" />
 	</File>
-	<File name="core\library\luabind\detail\policy.hpp" open="0" top="0" tabpos="2">
-		<Cursor position="10882" topLine="455" />
+	<File name="core\library\luabind\detail\call_member.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1130" topLine="15" />
 	</File>
-	<File name="core\library\luabind\handle.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="2503" topLine="64" />
+	<File name="core\library\luabind\detail\policy.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="10882" topLine="455" />
 	</File>
-	<File name="core\library\luabind\luabind.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="1200" topLine="15" />
+	<File name="core\library\luabind\handle.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2503" topLine="64" />
 	</File>
-	<File name="core\library\luabind\make_function.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="2301" topLine="66" />
+	<File name="core\library\luabind\luabind.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1200" topLine="15" />
 	</File>
-	<File name="core\library\luabind\object.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="23641" topLine="939" />
+	<File name="core\library\luabind\make_function.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2301" topLine="66" />
 	</File>
-	<File name="core\library\luabind\pcall.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2034" topLine="20" />
+	<File name="core\library\luabind\object.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="23641" topLine="939" />
 	</File>
-	<File name="core\library\tinyxml\tinyxml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="22769" topLine="1071" />
+	<File name="core\library\luabind\pcall.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2034" topLine="20" />
 	</File>
-	<File name="core\library\tinyxml\tinyxml.h" open="0" top="0" tabpos="0">
-		<Cursor position="15217" topLine="493" />
+	<File name="core\library\luabind\wrapper_base.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2708" topLine="77" />
 	</File>
-	<File name="core\library\tinyxml\tinyxmlparser.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="27613" topLine="1186" />
+	<File name="core\library\tinyxml\tinyxml.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="22769" topLine="1071" />
 	</File>
-	<File name="core\particles\ParticleEmitter.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="804" topLine="6" />
+	<File name="core\library\tinyxml\tinyxml.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="15217" topLine="493" />
 	</File>
-	<File name="core\particles\ParticleEmitter.h" open="0" top="0" tabpos="0">
-		<Cursor position="2228" topLine="48" />
+	<File name="core\library\tinyxml\tinyxmlparser.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="27613" topLine="1186" />
 	</File>
-	<File name="core\particles\ParticleEmitterDictionary.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1145" topLine="25" />
+	<File name="core\particles\ParticleEmitter.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="804" topLine="6" />
 	</File>
-	<File name="core\particles\ParticleEmitterTranslator.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="608" topLine="5" />
+	<File name="core\particles\ParticleEmitter.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2228" topLine="48" />
 	</File>
-	<File name="core\particles\ParticleRendererTranslator.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2313" topLine="28" />
+	<File name="core\particles\ParticleEmitterDictionary.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1145" topLine="25" />
 	</File>
-	<File name="core\particles\ParticleSystem.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2522" topLine="85" />
+	<File name="core\particles\ParticleEmitterTranslator.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="608" topLine="5" />
 	</File>
-	<File name="core\particles\ParticleSystem.h" open="0" top="0" tabpos="0">
-		<Cursor position="386" topLine="0" />
+	<File name="core\particles\ParticleRendererTranslator.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2313" topLine="28" />
 	</File>
-	<File name="core\particles\ParticleSystemFactory.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1310" topLine="24" />
+	<File name="core\particles\ParticleSystem.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2522" topLine="85" />
 	</File>
-	<File name="core\particles\ParticleSystemFactory.h" open="0" top="0" tabpos="0">
-		<Cursor position="297" topLine="0" />
+	<File name="core\particles\ParticleSystem.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="386" topLine="0" />
 	</File>
-	<File name="core\particles\ParticleSystemManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3248" topLine="105" />
+	<File name="core\particles\ParticleSystemFactory.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1310" topLine="24" />
 	</File>
-	<File name="core\particles\ParticleSystemManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="858" topLine="15" />
+	<File name="core\particles\ParticleSystemFactory.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="297" topLine="0" />
 	</File>
-	<File name="core\particles\ParticleSystemTranslator.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="649" topLine="8" />
+	<File name="core\particles\ParticleSystemManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="314" topLine="0" />
 	</File>
-	<File name="core\particles\ParticleTechnique.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="13034" topLine="390" />
+	<File name="core\particles\ParticleSystemManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="858" topLine="15" />
 	</File>
-	<File name="core\particles\ParticleTechnique.h" open="0" top="0" tabpos="0">
-		<Cursor position="806" topLine="6" />
+	<File name="core\particles\ParticleSystemTranslator.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="649" topLine="8" />
 	</File>
-	<File name="core\particles\renderer\ParticleEntityRenderer.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="4398" topLine="133" />
+	<File name="core\particles\ParticleTechnique.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="13034" topLine="390" />
+	</File>
+	<File name="core\particles\ParticleTechnique.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="806" topLine="6" />
+	</File>
+	<File name="core\particles\renderer\ParticleEntityRenderer.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="4398" topLine="133" />
 	</File>
 </CodeBlocks_layout_file>

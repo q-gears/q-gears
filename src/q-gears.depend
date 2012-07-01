@@ -26125,7 +26125,7 @@
 	"ParticleEntityRenderer.h"
 	<OgreLogManager.h>
 
-1337256444 source:k:\q-gears\src\main.cpp
+1341084326 source:k:\q-gears\src\main.cpp
 	<OgreRoot.h>
 	<OIS.h>
 	"Main.h"
@@ -26174,7 +26174,7 @@
 1306971022 k:\q-gears\src\core\configvar.h
 	<OgreString.h>
 
-1338806728 k:\q-gears\src\core\console.h
+1341082798 k:\q-gears\src\core\console.h
 	<OgreColourValue.h>
 	<OgreLog.h>
 	<OgreSingleton.h>
@@ -26838,7 +26838,7 @@
 	"Logger.h"
 	"Timer.h"
 
-1338830862 source:k:\q-gears\src\core\cameramanager.cpp
+1341082896 source:k:\q-gears\src\core\cameramanager.cpp
 	"CameraManager.h"
 	"CameraManagerCommands.h"
 	<OgreRenderWindow.h>
@@ -26851,7 +26851,7 @@
 1306971022 source:k:\q-gears\src\core\configcmd.cpp
 	"ConfigCmd.h"
 
-1338405360 source:k:\q-gears\src\core\configcmdmanager.cpp
+1341082922 source:k:\q-gears\src\core\configcmdmanager.cpp
 	"ConfigCmdManager.h"
 	"ConfigCmdManagerCommands.h"
 	"Assert.h"
@@ -26905,10 +26905,10 @@
 	<OgreStringConverter.h>
 	"Assert.h"
 
-1331284096 source:k:\q-gears\src\core\configvarmanager.cpp
+1341082950 source:k:\q-gears\src\core\configvarmanager.cpp
 	"ConfigVarManager.h"
 
-1338806262 source:k:\q-gears\src\core\console.cpp
+1341083014 source:k:\q-gears\src\core\console.cpp
 	"Console.h"
 	<OgreFontManager.h>
 	"ConfigCmdManager.h"
@@ -26919,7 +26919,7 @@
 	"Timer.h"
 	"Utilites.h"
 
-1335984458 source:k:\q-gears\src\core\debugdraw.cpp
+1341083074 source:k:\q-gears\src\core\debugdraw.cpp
 	"DebugDraw.h"
 	<OgreFontManager.h>
 	<OgreHardwareBufferManager.h>
@@ -26960,7 +26960,7 @@
 	"UiManager.h"
 	"../Main.h"
 
-1330878132 source:k:\q-gears\src\core\inputmanager.cpp
+1341083308 source:k:\q-gears\src\core\inputmanager.cpp
 	"InputManager.h"
 	"InputManagerCommands.h"
 	"ConfigCmdManager.h"
@@ -26976,7 +26976,7 @@
 	"Logger.h"
 	"Utilites.h"
 
-1340653916 source:k:\q-gears\src\core\scriptmanager.cpp
+1341083332 source:k:\q-gears\src\core\scriptmanager.cpp
 	"ScriptManager.h"
 	"ScriptManagerBinds.h"
 	"ScriptManagerCommands.h"
@@ -26985,6 +26985,7 @@
 	"Logger.h"
 	"Timer.h"
 	"Utilites.h"
+	"XmlScriptsFile.h"
 	"library/lua/lua.h"
 	"library/lua/lualib.h"
 	"library/lua/lauxlib.h"
@@ -27008,7 +27009,7 @@
 1306971022 k:\q-gears\src\core\library\lua\lualib.h
 	"lua.h"
 
-1306971022 source:k:\q-gears\src\core\timer.cpp
+1341083430 source:k:\q-gears\src\core\timer.cpp
 	"Timer.h"
 	"ConfigVar.h"
 
@@ -27021,7 +27022,7 @@
 	"UiFont.h"
 	"Logger.h"
 
-1340466190 source:k:\q-gears\src\core\uimanager.cpp
+1341083460 source:k:\q-gears\src\core\uimanager.cpp
 	"UiManager.h"
 	<OgreRoot.h>
 	<OgreStringVector.h>
@@ -27773,7 +27774,7 @@
 	"ParticleSystem.h"
 	"ParticleSystemManager.h"
 
-1306971022 source:k:\q-gears\src\core\particles\particlesystemmanager.cpp
+1341083770 source:k:\q-gears\src\core\particles\particlesystemmanager.cpp
 	"ParticleSystemManager.h"
 	<OgreLogManager.h>
 	<OgreRoot.h>
@@ -27855,7 +27856,7 @@
 	"DebugDraw.h"
 	"Logger.h"
 
-1340653988 source:k:\q-gears\src\core\entitymanager.cpp
+1341083152 source:k:\q-gears\src\core\entitymanager.cpp
 	"EntityManager.h"
 	<OgreEntity.h>
 	<OgreRoot.h>
@@ -27969,6 +27970,14 @@
 	"XmlFile.h"
 
 1340698898 source:m:\q-gears\src\core\xmlscriptsfile.cpp
+	"XmlScriptsFile.h"
+	"Logger.h"
+	"ScriptManager.h"
+
+1340690062 k:\q-gears\src\core\xmlscriptsfile.h
+	"XmlFile.h"
+
+1340699660 source:k:\q-gears\src\core\xmlscriptsfile.cpp
 	"XmlScriptsFile.h"
 	"Logger.h"
 	"ScriptManager.h"

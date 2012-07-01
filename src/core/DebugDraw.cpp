@@ -9,7 +9,7 @@
 
 
 
-template<>DebugDraw *Ogre::Singleton< DebugDraw >::ms_Singleton = NULL;
+template<>DebugDraw *Ogre::Singleton< DebugDraw >::msSingleton = NULL;
 
 
 

@@ -14,7 +14,7 @@
 
 
 
-template<>EntityManager *Ogre::Singleton< EntityManager >::ms_Singleton = NULL;
+template<>EntityManager *Ogre::Singleton< EntityManager >::msSingleton = NULL;
 
 
 
