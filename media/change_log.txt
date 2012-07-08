@@ -27,6 +27,12 @@ To Do
 
 
 
+2012-07-09
+----------
+* [Script] Add "add_entity" method to add entity from script mainly to add player entity to battle. [Akari]
+
+
+
 ================================================================================
 Q-Gears v0.21 (3rd run wild) | 2012-06-26
 --------------------------------------------------------------------------------

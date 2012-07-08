@@ -76,7 +76,7 @@ XmlMapFile::LoadMap()
             Ogre::Vector3 position = GetVector3( node, "position", Ogre::Vector3::ZERO );
             Ogre::Degree direction = Ogre::Degree( GetFloat( node, "direction" ) );
 
-            EntityManager::getSingleton().AddEntityModel( name, file_name, position, direction );
+            EntityManager::getSingleton().AddEntity( name, file_name, position, direction );
         }
         else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "entity_trigger" )
         {

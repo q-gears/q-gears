@@ -217,8 +217,7 @@ ScriptManager::Update( const ScriptManager::Type type )
                             }
                             catch( luabind::error& e )
                             {
-                                luabind::object error_msg( luabind::from_stack( e.state(), -1 ) );
-                                LOG_WARNING( Ogre::String( luabind::object_cast< std::string >( error_msg ) ) );
+                                LOG_ERROR( Ogre::String( lua_tostring( m_LuaState, -1 ) ) );
                             }
 
                             if( ret == 0 )
@@ -308,8 +307,7 @@ ScriptManager::RunString( const Ogre::String& lua )
 {
     if( luaL_dostring( m_LuaState, lua.c_str() ) == 1 )
     {
-        luabind::object error_msg( luabind::from_stack( m_LuaState, -1 ) );
-        LOG_WARNING( Ogre::String( luabind::object_cast< std::string >( error_msg ) ) );
+        LOG_ERROR( Ogre::String( lua_tostring( m_LuaState, -1 ) ) );
     }
 }
 
@@ -320,8 +318,7 @@ ScriptManager::RunFile( const Ogre::String& file )
 {
     if( luaL_dofile( m_LuaState, ( "./data/" + file ).c_str() ) == 1 )
     {
-        luabind::object error_msg( luabind::from_stack( m_LuaState, -1 ) );
-        LOG_WARNING( Ogre::String( luabind::object_cast< std::string >( error_msg ) ) );
+        LOG_ERROR( Ogre::String( lua_tostring( m_LuaState, -1 ) ) );
     }
 }
 

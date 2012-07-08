@@ -1,4 +1,6 @@
 <map>
+    <script file_name="maps/ffvii/battle/battle.lua" />
+
     <entity_model name="Background" file_name="models/ffvii/battle/stages/sector_1_train_station.mesh" position="0 0 0" direction="0" />
 
     <entity_model name="Mp1" file_name="models/ffvii/battle/units/mp.mesh" position="-0.976562 -2.92969 0" direction="180" />

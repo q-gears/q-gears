@@ -29,7 +29,8 @@ public:
 
     Walkmesh* GetWalkmesh();
     Background2D* GetBackground2D();
-    void AddEntityModel( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& direction );
+    void AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& direction );
+    void ScriptAddEntity( const char* name, const char* file_name, const float x, const float y, const float z, const float direction );
     void AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& point1, const Ogre::Vector3& point2, const bool enabled );
     void AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& position, const float rotation );
     void AddEntityScript( const Ogre::String& name );
@@ -65,7 +66,7 @@ private:
     Background2D                  m_Background2D;
 
     Ogre::String                  m_EntityTableName;
-    std::vector< Entity* >        m_EntityModels;
+    std::vector< Entity* >        m_Entity;
     Entity*                       m_PlayerEntity;
     Ogre::Vector3                 m_PlayerMove;
     Ogre::Radian                  m_PlayerMoveRotation;
