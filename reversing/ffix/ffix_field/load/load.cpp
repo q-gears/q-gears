@@ -1,4 +1,434 @@
 ////////////////////////////////
+// funca89c4
+S5 = A0;
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+V0 = w[V0 + 8e4];
+V0 = w[V0 + c];
+[80067948] = w(w[V0 + 4]);
+
+funca9350; // set pointers in field structure
+
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+V0 = w[V0 + 8e4];
+V0 = w[V0 + c];
+S4 = w[V0 + 14];
+S1 = 1;
+
+funca939c; // init field structure
+
+func1cfb4; // unknown system thing. probably clearing or prepair of frame buffer
+
+V1 = w[8006794c];
+A1 = w[V1 + 1c];
+[V1] = w(w[V1] & fffffcf0);
+[A1] = w(w[A1] | 00000020);
+V0 = w[V1 + 1c];
+V1 = w[V0 + 8e4];
+[V1] = w(w[V1] & 00000004);
+
+A0 = 0;
+A1 = 0;
+A2 = 0;
+func1ccb4; // reset 8006794c + 10 data (unknown)
+
+
+
+[80073998] = w(w[80073998] & ffff0006);
+
+
+V1 = 800c9ef0;
+loopa8ab4:	; 800A8AB4
+    A1 = 3;
+    V0 = S2 << A1;
+    A0 = V0 + 6;
+
+    loopa8ac0:	; 800A8AC0
+        V0 = A0 + V1;
+        A0 = A0 - 2;
+        A1 = A1 - 1;
+        [V0 + 0] = h(0);
+        [V0 + 10] = h(0);
+    800A8AD0	bgez   a1, loopa8ac0 [$800a8ac0]
+
+    S1 = S1 - 1;
+800A8ADC	bgez   s1, loopa8ab4 [$800a8ab4]
+
+V0 = w[8006794c];
+800A8AEC	lw     v0, $001c(v0)
+800A8AF0	nop
+800A8AF4	lw     v0, $08e4(v0)
+800A8AF8	jal    funcaa4bc [$800aa4bc]
+800A8AFC	sb     zero, $0008(v0)
+
+V0 = w[8006794c];
+
+800A8B08	lw     v0, $001c(v0)
+800A8B0C	nop
+800A8B10	lw     v0, $08e4(v0)
+800A8B14	nop
+800A8B18	sb     zero, $0009(v0)
+V0 = w[8006794c];
+8800A8B24	lw     v0, $001c(v0)
+
+A1 = S5;
+[V0 + c] = h(S5);
+[S4 + a] = h(S5);
+
+A0 = S4;
+funca9bdc; // we read db pointers here
+
+800A8B38	addu   a0, s4, zero
+800A8B3C	jal    funca97d4 [$800a97d4]
+800A8B40	addu   a1, s5, zero
+800A8B44	addu   a0, s4, zero
+A1 = S5;
+800A8B48	jal    funca9814 [$800a9814]
+
+A0 = S4;
+funca9860; // we read tileset db pointer here
+
+
+A0 = S4;
+A1 = S5;
+funca9954;
+
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+V0 = w[V0 + 8e4];
+V0 = w[V0 + c];
+A1 = w[V0 + 14];
+A0 = A1 + 50;
+A1 = A1 + 52;
+800A8B94	jal    funcaa01c [$800aa01c]
+
+800A8B9C	jal    funcb3a80 [$800b3a80]
+
+800A8BA4	jal    funca9998 [$800a9998]
+
+A0 = 0900;
+A1 = -1;
+A2 = 0;
+A3 = 0;
+A4 = 0;
+
+800A8BBC	jal    funcb0124 [$800b0124]
+
+
+A0 = w[S4 + c]; // offset to script
+func49ed8; // we parse init script here
+
+A0 = w[S4 + c];
+system_init_script_system;
+
+
+La8bdc:	; 800A8BDC
+800A8BDC	jal    funcac474 [$800ac474]
+800A8BE0	nop
+800A8BE4	jal    funca9aac [$800a9aac]
+800A8BE8	nop
+
+loopa8bec:	; 800A8BEC
+800A8BEC	sw     zero, $0010(sp)
+800A8BF0	addiu  a0, zero, $0c00
+
+funca8bf4:	; 800A8BF4
+800A8BF4	addiu  a1, zero, $ffff (=-$1)
+800A8BF8	addu   a2, zero, zero
+800A8BFC	jal    funcb0124 [$800b0124]
+800A8C00	addu   a3, a2, zero
+800A8C04	bne    v0, zero, loopa8bec [$800a8bec]
+800A8C08	nop
+800A8C0C	jal    func4bfb0 [$8004bfb0]
+800A8C10	addu   s1, zero, zero
+800A8C14	jal    func4aaf0 [$8004aaf0]
+800A8C18	addu   a0, zero, zero
+800A8C1C	lui    a1, $8006
+800A8C20	lw     v1, $794c(a1)
+800A8C24	nop
+800A8C28	lw     v1, $001c(v1)
+800A8C2C	lui    a3, $8006
+800A8C30	sb     v0, $0038(v1)
+800A8C34	lw     a2, $794c(a1)
+800A8C38	lw     v0, $7948(a3)
+800A8C3C	lw     v1, $001c(a2)
+800A8C40	nop
+800A8C44	sw     v0, $08dc(v1)
+800A8C48	lw     a0, $001c(a2)
+800A8C4C	nop
+800A8C50	lbu    v1, $0038(a0)
+800A8C54	addu   s3, a1, zero
+800A8C58	sll    v0, v1, $02
+800A8C5C	addu   v0, v0, v1
+800A8C60	sll    v0, v0, $02
+800A8C64	subu   v0, v0, v1
+800A8C68	lw     v1, $08dc(a0)
+800A8C6C	sll    v0, v0, $03
+800A8C70	addu   v1, v1, v0
+800A8C74	sw     v1, $08e0(a0)
+800A8C78	lw     a0, $001c(a2)
+800A8C7C	addu   s2, s1, zero
+800A8C80	lbu    v0, $0038(a0)
+800A8C84	addu   s0, s1, zero
+800A8C88	sll    v1, v0, $02
+800A8C8C	addu   v1, v1, v0
+800A8C90	lw     v0, $08e0(a0)
+800A8C94	sll    v1, v1, $02
+800A8C98	addu   v0, v0, v1
+800A8C9C	sw     v0, $7948(a3)
+800A8CA0	sb     zero, $0009(a0)
+
+loopa8ca4:	; 800A8CA4
+800A8CA4	lw     v0, $794c(s3)
+800A8CA8	nop
+800A8CAC	lw     v0, $001c(v0)
+800A8CB0	nop
+800A8CB4	lw     a0, $08d8(v0)
+800A8CB8	jal    func1e3a4 [$8001e3a4]
+800A8CBC	addu   a0, a0, s0
+
+La8cc0:	; 800A8CC0
+800A8CC0	lw     v0, $794c(s3)
+800A8CC4	nop
+800A8CC8	lw     v0, $001c(v0)
+800A8CCC	addiu  s1, s1, $0001
+800A8CD0	lw     v1, $08d4(v0)
+
+funca8cd4:	; 800A8CD4
+800A8CD4	lw     v0, $08d8(v0)
+800A8CD8	addu   v1, v1, s2
+800A8CDC	addiu  s2, s2, $0098
+800A8CE0	addu   v0, s0, v0
+800A8CE4	sw     v1, $0008(v0)
+800A8CE8	slti   v0, s1, $0009
+800A8CEC	bne    v0, zero, loopa8ca4 [$800a8ca4]
+800A8CF0	addiu  s0, s0, $0014
+800A8CF4	lui    v1, $8006
+800A8CF8	lw     v0, $794c(v1)
+800A8CFC	nop
+800A8D00	lw     v0, $001c(v0)
+800A8D04	nop
+800A8D08	sb     zero, $0039(v0)
+800A8D0C	lw     v0, $794c(v1)
+800A8D10	nop
+800A8D14	lw     v0, $001c(v0)
+800A8D18	nop
+800A8D1C	lbu    v0, $0038(v0)
+800A8D20	nop
+800A8D24	beq    v0, zero, La8d94 [$800a8d94]
+800A8D28	addu   s1, zero, zero
+800A8D2C	addu   s3, v1, zero
+800A8D30	addu   s2, s1, zero
+800A8D34	addu   s0, s1, zero
+
+loopa8d38:	; 800A8D38
+800A8D38	lw     v0, $794c(s3)
+800A8D3C	nop
+800A8D40	lw     v0, $001c(v0)
+800A8D44	nop
+800A8D48	lw     a0, $08e0(v0)
+800A8D4C	jal    func1e3a4 [$8001e3a4]
+800A8D50	addu   a0, a0, s0
+800A8D54	lw     a0, $794c(s3)
+800A8D58	nop
+800A8D5C	lw     v0, $001c(a0)
+800A8D60	addiu  s1, s1, $0001
+800A8D64	lw     v1, $08e0(v0)
+800A8D68	lw     v0, $08dc(v0)
+800A8D6C	addu   v1, s0, v1
+800A8D70	addu   v0, v0, s2
+800A8D74	sw     v0, $0008(v1)
+800A8D78	lw     v0, $001c(a0)
+800A8D7C	addiu  s2, s2, $0098
+800A8D80	lbu    v0, $0038(v0)
+800A8D84	nop
+800A8D88	slt    v0, s1, v0
+800A8D8C	bne    v0, zero, loopa8d38 [$800a8d38]
+800A8D90	addiu  s0, s0, $0014
+
+La8d94:	; 800A8D94
+800A8D94	lui    s0, $8006
+800A8D98	lui    s1, $8006
+800A8D9C	lw     a0, $7948(s0)
+800A8DA0	lw     v0, $794c(s1)
+800A8DA4	sw     a0, $002c(s4)
+800A8DA8	lw     v1, $001c(v0)
+800A8DAC	nop
+800A8DB0	lw     v0, $08e4(v1)
+800A8DB4	nop
+800A8DB8	lw     v0, $000c(v0)
+800A8DBC	nop
+800A8DC0	lw     v0, $0014(v0)
+800A8DC4	lbu    a1, $0038(v1)
+800A8DC8	lh     a2, $0050(v0)
+800A8DCC	lh     a3, $0052(v0)
+800A8DD0	jal    funcad44c [$800ad44c]
+800A8DD4	addiu  a1, a1, $0009
+800A8DD8	addu   a0, s4, zero
+800A8DDC	addu   a1, s5, zero
+
+funca8de0:	; 800A8DE0
+800A8DE0	jal    funcb2528 [$800b2528]
+800A8DE4	sw     v0, $7948(s0)
+800A8DE8	jal    funcb1c98 [$800b1c98]
+800A8DEC	nop
+800A8DF0	lw     v0, $7948(s0)
+800A8DF4	nop
+800A8DF8	sw     v0, $0020(s4)
+800A8DFC	jal    func4a8a4 [$8004a8a4]
+800A8E00	sw     v0, $0004(s4)
+800A8E04	lui    a1, $8007
+800A8E08	lui    v1, $0004
+800A8E0C	lw     v0, $3998(a1)
+800A8E10	lw     a0, $794c(s1)
+800A8E14	or     v0, v0, v1
+800A8E18	sw     v0, $3998(a1)
+800A8E1C	lw     a0, $001c(a0)
+800A8E20	nop
+
+funca8e24:	; 800A8E24
+800A8E24	lw     v0, $0000(a0)
+800A8E28	addiu  v1, zero, $ffdf (=-$21)
+800A8E2C	and    v0, v0, v1
+800A8E30	sw     v0, $0000(a0)
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca9350
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+V0 = w[V0 + 8e4];
+A1 = w[V0 + c];
+
+V1 = w[80067948];
+[80067948] = w(V1 + 330);
+[A1 + 14] = w(V1);
+[V1 + 28] = w(V1 + 6c);
+[V1 + 54] = w(V1 + 90);
+[V1 + 58] = w(V1 + 270);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca939c
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+V0 = w[V0 + 8e4];
+V0 = w[V0 + c];
+A0 = w[V0 + 14];
+
+[A0 + 0] = w(0);
+[A0 + 4] = w(0);
+[A0 + 8] = b(0);
+[A0 + 9] = b(0);
+[A0 + a] = h(-1);
+[A0 + c] = w(0);
+[A0 + 10] = w(0);
+[A0 + 14] = w(0);
+[A0 + 18] = w(0);
+[A0 + 1c] = w(0);
+[A0 + 20] = w(0);
+[A0 + 24] = w(0);
+[A0 + 2c] = w(0);
+[A0 + 30] = w(0);
+[A0 + 34] = w(w[80067944] + 106700);
+[A0 + 38] = h(00a0);
+[A0 + 3a] = h(0070);
+[A0 + 3c] = h(ffff);
+[A0 + 3e] = h(ffff);
+[A0 + 40] = b(0);
+[A0 + 41] = b(0);
+[A0 + 42] = b(0);
+[A0 + 43] = b(0);
+[A0 + 44] = w(0);
+[A0 + 48] = b(0);
+[A0 + 49] = b(0);
+[A0 + 4a] = b(1);
+[A0 + 4b] = b(0);
+[A0 + 4c] = w(0);
+[A0 + 50] = h(0);
+[A0 + 52] = h(0);
+[A0 + 5c] = b(7f);
+[A0 + 5d] = b(7f);
+[A0 + 5e] = b(0);
+[A0 + 5f] = b(0);
+[A0 + 60] = b(0);
+[A0 + 61] = b(0);
+[A0 + 62] = h(0);
+[A0 + 64] = w(0);
+
+
+A1 = 17;
+loopa941c:	; 800A941C
+    V0 = w[A0 + 54] + A1 * 14;
+    [V0 + 0] = w(0);
+    [V0 + 4] = b(-1);
+    [V0 + 5] = b(0);
+    [V0 + 6] = b(0);
+    [V0 + 7] = b(0);
+    [V0 + 8] = b(0);
+    [V0 + 9] = b(0);
+    [V0 + a] = b(0);
+    [V0 + b] = b(0);
+    [V0 + c] = b(0);
+    [V0 + d] = b(0);
+    [V0 + e] = b(0);
+    [V0 + f] = b(0);
+    [V0 + 10] = w(0);
+    A1 = A1 - 1;
+800A9468	bgez   a1, loopa941c [$800a941c]
+
+
+
+A1 = 0;
+loopa94b8:	; 800A94B8
+    V1 = w[A0 + 28] + A1 * 4;
+    [V1] = w(0);
+    A1 = A1 + 1;
+    V0 = A1 < 9;
+800A94CC	bne    v0, zero, loopa94b8 [$800a94b8]
+
+
+
+A1 = f;
+loopa9500:	; 800A9500
+    V0 = w[A0 + 58] + A1 * c;
+    [V0 + 0] = b(ff);
+    [V0 + 1] = b(0);
+    [V0 + 2] = h(ffff);
+    [V0 + 4] = h(ffff);
+    [V0 + 6] = h(-1)
+    [V0 + 8] = h(ffff);
+    [V0 + a] = h(ffff);
+    A1 = A1 - 1;
+800A9528	bgez   a1, loopa9500 [$800a9500]
+
+
+
+A1 = 3;
+loopa9558:	; 800A9558
+    [A0 + 68 + A1] = b(0);
+    A1 = A1 - 1;
+800A9560	bgez   a1, loopa9558 [$800a9558]
+////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////
 // funcaa0c8
 // get unique id of tileset file
 A0 = w[A0 + 24];
@@ -596,299 +1026,7 @@ return 0;
 
 
 
-////////////////////////////////
-// funca89c4
-S5 = A0;
-V0 = w[8006794c];
-V0 = w[V0 + 1c];
-V0 = w[V0 + 8e4];
-V0 = w[V0 + c];
-V1 = w[V0 + 4];
-[80067948] = w(V1);
 
-800A8A0C	jal    funca9350 [$800a9350]
-
-V0 = w[8006794c];
-V0 = w[V0 + 1c];
-V0 = w[V0 + 8e4];
-V0 = w[V0 + c];
-S4 = w[V0 + 14];
-S1 = 1;
-800A8A38	jal    funca939c [$800a939c]
-
-800A8A40	jal    func1cfb4 [$8001cfb4]
-
-A0 = -310;
-
-V1 = w[8006794c];
-A1 = w[V1 + 1c];
-[V1] = w(w[V1] & A0);
-[A1] = w(w[A1] | 00000020);
-V0 = w[V1 + 1c];
-V1 = w[V0 + 8e4];
-[V1] = w(w[V1] & 00000004);
-
-A0 = 0;
-A1 = 0;
-A2 = 0;
-800A8A8C	jal    func1ccb4 [$8001ccb4]
-
-[80073998] = w(w[80073998] & ffff0006);
-
-
-V1 = 800c9ef0;
-loopa8ab4:	; 800A8AB4
-    A1 = 3;
-    V0 = S2 << A1;
-    A0 = V0 + 6;
-
-    loopa8ac0:	; 800A8AC0
-        V0 = A0 + V1;
-        A0 = A0 - 2;
-        A1 = A1 - 1;
-        [V0 + 0] = h(0);
-        [V0 + 10] = h(0);
-    800A8AD0	bgez   a1, loopa8ac0 [$800a8ac0]
-
-    S1 = S1 - 1;
-800A8ADC	bgez   s1, loopa8ab4 [$800a8ab4]
-
-V0 = w[8006794c];
-800A8AEC	lw     v0, $001c(v0)
-800A8AF0	nop
-800A8AF4	lw     v0, $08e4(v0)
-800A8AF8	jal    funcaa4bc [$800aa4bc]
-800A8AFC	sb     zero, $0008(v0)
-
-V0 = w[8006794c];
-
-800A8B08	lw     v0, $001c(v0)
-800A8B0C	nop
-800A8B10	lw     v0, $08e4(v0)
-800A8B14	nop
-800A8B18	sb     zero, $0009(v0)
-V0 = w[8006794c];
-8800A8B24	lw     v0, $001c(v0)
-
-A1 = S5;
-[V0 + c] = h(S5);
-[S4 + a] = h(S5);
-
-A0 = S4;
-funca9bdc; // we read db pointers here
-
-800A8B38	addu   a0, s4, zero
-800A8B3C	jal    funca97d4 [$800a97d4]
-800A8B40	addu   a1, s5, zero
-800A8B44	addu   a0, s4, zero
-A1 = S5;
-800A8B48	jal    funca9814 [$800a9814]
-
-A0 = S4;
-funca9860; // we read tileset db pointer here
-
-
-A0 = S4;
-A1 = S5;
-funca9954;
-
-V0 = w[8006794c];
-V0 = w[V0 + 1c];
-V0 = w[V0 + 8e4];
-V0 = w[V0 + c];
-A1 = w[V0 + 14];
-A0 = A1 + 50;
-A1 = A1 + 52;
-800A8B94	jal    funcaa01c [$800aa01c]
-
-800A8B9C	jal    funcb3a80 [$800b3a80]
-
-800A8BA4	jal    funca9998 [$800a9998]
-
-800A8BAC	addiu  a0, zero, $0900
-800A8BB0	addiu  a1, zero, $ffff (=-$1)
-800A8BB4	addu   a2, zero, zero
-800A8BB8	addu   a3, a2, zero
-800A8BBC	jal    funcb0124 [$800b0124]
-800A8BC0	sw     zero, $0010(sp)
-
-A0 = w[S4 + c]; // offset to script
-func49ed8; // we parse init script here
-
-A0 = w[S4 + c];
-system_init_script_system;
-
-
-La8bdc:	; 800A8BDC
-800A8BDC	jal    funcac474 [$800ac474]
-800A8BE0	nop
-800A8BE4	jal    funca9aac [$800a9aac]
-800A8BE8	nop
-
-loopa8bec:	; 800A8BEC
-800A8BEC	sw     zero, $0010(sp)
-800A8BF0	addiu  a0, zero, $0c00
-
-funca8bf4:	; 800A8BF4
-800A8BF4	addiu  a1, zero, $ffff (=-$1)
-800A8BF8	addu   a2, zero, zero
-800A8BFC	jal    funcb0124 [$800b0124]
-800A8C00	addu   a3, a2, zero
-800A8C04	bne    v0, zero, loopa8bec [$800a8bec]
-800A8C08	nop
-800A8C0C	jal    func4bfb0 [$8004bfb0]
-800A8C10	addu   s1, zero, zero
-800A8C14	jal    func4aaf0 [$8004aaf0]
-800A8C18	addu   a0, zero, zero
-800A8C1C	lui    a1, $8006
-800A8C20	lw     v1, $794c(a1)
-800A8C24	nop
-800A8C28	lw     v1, $001c(v1)
-800A8C2C	lui    a3, $8006
-800A8C30	sb     v0, $0038(v1)
-800A8C34	lw     a2, $794c(a1)
-800A8C38	lw     v0, $7948(a3)
-800A8C3C	lw     v1, $001c(a2)
-800A8C40	nop
-800A8C44	sw     v0, $08dc(v1)
-800A8C48	lw     a0, $001c(a2)
-800A8C4C	nop
-800A8C50	lbu    v1, $0038(a0)
-800A8C54	addu   s3, a1, zero
-800A8C58	sll    v0, v1, $02
-800A8C5C	addu   v0, v0, v1
-800A8C60	sll    v0, v0, $02
-800A8C64	subu   v0, v0, v1
-800A8C68	lw     v1, $08dc(a0)
-800A8C6C	sll    v0, v0, $03
-800A8C70	addu   v1, v1, v0
-800A8C74	sw     v1, $08e0(a0)
-800A8C78	lw     a0, $001c(a2)
-800A8C7C	addu   s2, s1, zero
-800A8C80	lbu    v0, $0038(a0)
-800A8C84	addu   s0, s1, zero
-800A8C88	sll    v1, v0, $02
-800A8C8C	addu   v1, v1, v0
-800A8C90	lw     v0, $08e0(a0)
-800A8C94	sll    v1, v1, $02
-800A8C98	addu   v0, v0, v1
-800A8C9C	sw     v0, $7948(a3)
-800A8CA0	sb     zero, $0009(a0)
-
-loopa8ca4:	; 800A8CA4
-800A8CA4	lw     v0, $794c(s3)
-800A8CA8	nop
-800A8CAC	lw     v0, $001c(v0)
-800A8CB0	nop
-800A8CB4	lw     a0, $08d8(v0)
-800A8CB8	jal    func1e3a4 [$8001e3a4]
-800A8CBC	addu   a0, a0, s0
-
-La8cc0:	; 800A8CC0
-800A8CC0	lw     v0, $794c(s3)
-800A8CC4	nop
-800A8CC8	lw     v0, $001c(v0)
-800A8CCC	addiu  s1, s1, $0001
-800A8CD0	lw     v1, $08d4(v0)
-
-funca8cd4:	; 800A8CD4
-800A8CD4	lw     v0, $08d8(v0)
-800A8CD8	addu   v1, v1, s2
-800A8CDC	addiu  s2, s2, $0098
-800A8CE0	addu   v0, s0, v0
-800A8CE4	sw     v1, $0008(v0)
-800A8CE8	slti   v0, s1, $0009
-800A8CEC	bne    v0, zero, loopa8ca4 [$800a8ca4]
-800A8CF0	addiu  s0, s0, $0014
-800A8CF4	lui    v1, $8006
-800A8CF8	lw     v0, $794c(v1)
-800A8CFC	nop
-800A8D00	lw     v0, $001c(v0)
-800A8D04	nop
-800A8D08	sb     zero, $0039(v0)
-800A8D0C	lw     v0, $794c(v1)
-800A8D10	nop
-800A8D14	lw     v0, $001c(v0)
-800A8D18	nop
-800A8D1C	lbu    v0, $0038(v0)
-800A8D20	nop
-800A8D24	beq    v0, zero, La8d94 [$800a8d94]
-800A8D28	addu   s1, zero, zero
-800A8D2C	addu   s3, v1, zero
-800A8D30	addu   s2, s1, zero
-800A8D34	addu   s0, s1, zero
-
-loopa8d38:	; 800A8D38
-800A8D38	lw     v0, $794c(s3)
-800A8D3C	nop
-800A8D40	lw     v0, $001c(v0)
-800A8D44	nop
-800A8D48	lw     a0, $08e0(v0)
-800A8D4C	jal    func1e3a4 [$8001e3a4]
-800A8D50	addu   a0, a0, s0
-800A8D54	lw     a0, $794c(s3)
-800A8D58	nop
-800A8D5C	lw     v0, $001c(a0)
-800A8D60	addiu  s1, s1, $0001
-800A8D64	lw     v1, $08e0(v0)
-800A8D68	lw     v0, $08dc(v0)
-800A8D6C	addu   v1, s0, v1
-800A8D70	addu   v0, v0, s2
-800A8D74	sw     v0, $0008(v1)
-800A8D78	lw     v0, $001c(a0)
-800A8D7C	addiu  s2, s2, $0098
-800A8D80	lbu    v0, $0038(v0)
-800A8D84	nop
-800A8D88	slt    v0, s1, v0
-800A8D8C	bne    v0, zero, loopa8d38 [$800a8d38]
-800A8D90	addiu  s0, s0, $0014
-
-La8d94:	; 800A8D94
-800A8D94	lui    s0, $8006
-800A8D98	lui    s1, $8006
-800A8D9C	lw     a0, $7948(s0)
-800A8DA0	lw     v0, $794c(s1)
-800A8DA4	sw     a0, $002c(s4)
-800A8DA8	lw     v1, $001c(v0)
-800A8DAC	nop
-800A8DB0	lw     v0, $08e4(v1)
-800A8DB4	nop
-800A8DB8	lw     v0, $000c(v0)
-800A8DBC	nop
-800A8DC0	lw     v0, $0014(v0)
-800A8DC4	lbu    a1, $0038(v1)
-800A8DC8	lh     a2, $0050(v0)
-800A8DCC	lh     a3, $0052(v0)
-800A8DD0	jal    funcad44c [$800ad44c]
-800A8DD4	addiu  a1, a1, $0009
-800A8DD8	addu   a0, s4, zero
-800A8DDC	addu   a1, s5, zero
-
-funca8de0:	; 800A8DE0
-800A8DE0	jal    funcb2528 [$800b2528]
-800A8DE4	sw     v0, $7948(s0)
-800A8DE8	jal    funcb1c98 [$800b1c98]
-800A8DEC	nop
-800A8DF0	lw     v0, $7948(s0)
-800A8DF4	nop
-800A8DF8	sw     v0, $0020(s4)
-800A8DFC	jal    func4a8a4 [$8004a8a4]
-800A8E00	sw     v0, $0004(s4)
-800A8E04	lui    a1, $8007
-800A8E08	lui    v1, $0004
-800A8E0C	lw     v0, $3998(a1)
-800A8E10	lw     a0, $794c(s1)
-800A8E14	or     v0, v0, v1
-800A8E18	sw     v0, $3998(a1)
-800A8E1C	lw     a0, $001c(a0)
-800A8E20	nop
-
-funca8e24:	; 800A8E24
-800A8E24	lw     v0, $0000(a0)
-800A8E28	addiu  v1, zero, $ffdf (=-$21)
-800A8E2C	and    v0, v0, v1
-800A8E30	sw     v0, $0000(a0)
-////////////////////////////////
 
 
 

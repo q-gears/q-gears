@@ -1025,160 +1025,19 @@ La9324:	; 800A9324
 800A934C	addiu  sp, sp, $0028
 
 
-funca9350:	; 800A9350
-800A9350	lui    v0, $8006
-800A9354	lui    a0, $8006
-800A9358	lw     v0, $794c(v0)
-800A935C	lw     v1, $7948(a0)
-800A9360	lw     v0, $001c(v0)
-800A9364	addiu  a3, v1, $0090
-800A9368	lw     v0, $08e4(v0)
-800A936C	addiu  a2, v1, $0270
-800A9370	sw     a3, $7948(a0)
-800A9374	sw     a2, $7948(a0)
-800A9378	lw     a1, $000c(v0)
-800A937C	addiu  v0, v1, $0330
-800A9380	sw     v0, $7948(a0)
-800A9384	addiu  v0, v1, $006c
-800A9388	sw     v1, $0014(a1)
-800A938C	sw     v0, $0028(v1)
-800A9390	sw     a3, $0054(v1)
-800A9394	jr     ra 
-800A9398	sw     a2, $0058(v1)
+
+////////////////////////////////
+// funca9350
+800A9350-800A9398
+////////////////////////////////
 
 
-funca939c:	; 800A939C
-800A939C	lui    v0, $8006
-800A93A0	lw     v0, $794c(v0)
-800A93A4	lui    v1, $0010
-800A93A8	lw     v0, $001c(v0)
-800A93AC	ori    v1, v1, $6700
-800A93B0	lw     v0, $08e4(v0)
-800A93B4	addiu  a1, zero, $0017
-800A93B8	lw     v0, $000c(v0)
-800A93BC	addiu  a3, zero, $ffff (=-$1)
-800A93C0	lw     a0, $0014(v0)
-800A93C4	lui    v0, $8006
-800A93C8	sb     zero, $0008(a0)
-800A93CC	lw     v0, $7944(v0)
-800A93D0	addiu  a2, zero, $01cc
-800A93D4	sw     zero, $0000(a0)
-800A93D8	sw     zero, $0004(a0)
-800A93DC	sw     zero, $000c(a0)
-800A93E0	sw     zero, $004c(a0)
-800A93E4	sw     zero, $0014(a0)
-800A93E8	sw     zero, $0018(a0)
-800A93EC	sh     zero, $0030(a0)
-800A93F0	sw     zero, $0010(a0)
-800A93F4	sw     zero, $002c(a0)
-800A93F8	sw     zero, $0020(a0)
-800A93FC	sb     zero, $0042(a0)
-800A9400	sb     zero, $0043(a0)
-800A9404	sw     zero, $0044(a0)
-800A9408	sb     zero, $0048(a0)
-800A940C	sb     zero, $0049(a0)
-800A9410	sw     zero, $001c(a0)
-800A9414	addu   v0, v0, v1
-800A9418	sw     v0, $0034(a0)
 
-loopa941c:	; 800A941C
-800A941C	lw     v0, $0054(a0)
-800A9420	addiu  a1, a1, $ffff (=-$1)
-800A9424	addu   v0, v0, a2
-800A9428	addiu  a2, a2, $ffec (=-$14)
-800A942C	addiu  v1, v0, $0008
-800A9430	sw     zero, $0000(v0)
-800A9434	sb     a3, $0004(v0)
-800A9438	sb     zero, $0005(v0)
-800A943C	sb     zero, $0007(v0)
-800A9440	sb     zero, $0006(v0)
-800A9444	sb     zero, $0002(v1)
-800A9448	sb     zero, $0001(v1)
-800A944C	addiu  v1, v0, $000c
-800A9450	sb     zero, $0008(v0)
-800A9454	sb     zero, $000b(v0)
-800A9458	sb     zero, $0002(v1)
-800A945C	sb     zero, $0001(v1)
-800A9460	sb     zero, $000c(v0)
-800A9464	sb     zero, $000f(v0)
-800A9468	bgez   a1, loopa941c [$800a941c]
-800A946C	sw     zero, $0010(v0)
-800A9470	addu   a1, zero, zero
-800A9474	addiu  v0, zero, $00a0
-800A9478	sh     v0, $0038(a0)
-800A947C	addiu  v0, zero, $0070
-800A9480	sh     v0, $003a(a0)
-800A9484	ori    v0, zero, $ffff
-800A9488	sh     v0, $003c(a0)
+////////////////////////////////
+// funca939c
+800A939C-800A956C
+////////////////////////////////
 
-La948c:	; 800A948C
-800A948C	sh     v0, $003e(a0)
-800A9490	addiu  v0, zero, $007f
-800A9494	sb     zero, $0041(a0)
-800A9498	sb     zero, $0009(a0)
-800A949C	sb     v0, $005c(a0)
-800A94A0	sb     v0, $005d(a0)
-800A94A4	sb     zero, $005f(a0)
-800A94A8	sh     zero, $0052(a0)
-800A94AC	sh     zero, $0050(a0)
-800A94B0	sw     zero, $0024(a0)
-800A94B4	sll    v0, a1, $02
-
-loopa94b8:	; 800A94B8
-800A94B8	lw     v1, $0028(a0)
-800A94BC	addiu  a1, a1, $0001
-800A94C0	addu   v0, v0, v1
-800A94C4	sw     zero, $0000(v0)
-800A94C8	slti   v0, a1, $0009
-800A94CC	bne    v0, zero, loopa94b8 [$800a94b8]
-800A94D0	sll    v0, a1, $02
-800A94D4	addiu  a1, zero, $000f
-800A94D8	addiu  t0, zero, $00ff
-800A94DC	ori    a2, zero, $ffff
-800A94E0	addiu  a3, zero, $ffff (=-$1)
-800A94E4	addiu  v1, zero, $00b4
-800A94E8	addu   v0, a3, zero
-800A94EC	sh     v0, $000a(a0)
-800A94F0	addiu  v0, zero, $0001
-800A94F4	sb     zero, $0040(a0)
-
-funca94f8:	; 800A94F8
-800A94F8	sb     v0, $004a(a0)
-800A94FC	sb     zero, $004b(a0)
-
-loopa9500:	; 800A9500
-800A9500	lw     v0, $0058(a0)
-800A9504	addiu  a1, a1, $ffff (=-$1)
-800A9508	addu   v0, v0, v1
-800A950C	addiu  v1, v1, $fff4 (=-$c)
-800A9510	sb     t0, $0000(v0)
-800A9514	sb     zero, $0001(v0)
-800A9518	sh     a2, $0002(v0)
-800A951C	sh     a2, $0004(v0)
-800A9520	sh     a3, $0006(v0)
-800A9524	sh     a2, $000a(v0)
-800A9528	bgez   a1, loopa9500 [$800a9500]
-800A952C	sh     a2, $0008(v0)
-800A9530	addu   a1, zero, zero
-800A9534	sb     zero, $005e(a0)
-800A9538	sb     zero, $0060(a0)
-800A953C	sh     zero, $0062(a0)
-800A9540	sw     zero, $0064(a0)
-
-loopa9544:	; 800A9544
-800A9544	addu   v0, a0, a1
-800A9548	addiu  a1, a1, $ffff (=-$1)
-800A954C	bgez   a1, loopa9544 [$800a9544]
-800A9550	sb     zero, $0061(v0)
-800A9554	addiu  a1, zero, $0003
-
-loopa9558:	; 800A9558
-800A9558	addu   v0, a0, a1
-800A955C	addiu  a1, a1, $ffff (=-$1)
-800A9560	bgez   a1, loopa9558 [$800a9558]
-800A9564	sb     zero, $0068(v0)
-800A9568	jr     ra 
-800A956C	nop
 
 
 funca9570:	; 800A9570

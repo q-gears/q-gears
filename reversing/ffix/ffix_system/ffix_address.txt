@@ -394,20 +394,79 @@
         +  0 [][][][] some flags.
                         0x00000200 - ???
         +  c [][][][] pointer
-            + 14 [][][][] pointer
-                + 1c [][][][] ???
-                + 20 [][][][] ??? some pointer.
-                + 2c [][][][] ???
+            +  4 [][][][] unknown. Stored to 80067948 at start of fild loading.
+            + 14 [][][][] pointer. We store here pointer from previous 80067948. Then we increase it by 330 and store it back to 80067948.
+                +  0 [][][][] init with 0.
+                +  4 [][][][] init with 0.
+                +  8 []       init with 0.
+                +  0 []       init with 0.
+                +  a [][]     init with -1.
+                +  c [][][][] init with 0.
+                + 10 [][][][] init with 0.
+                + 14 [][][][] init with 0.
+                + 18 [][][][] init with 0.
+                + 1c [][][][] init with 0.
+                + 20 [][][][] init with 0. Some pointer.
+                + 24 [][][][] init with 0.
+                + 28 [][][][] store here pointer to +6c.
+                + 2c [][][][] init with 0.
+                + 30 [][][][] init with 0.
                 + 30 [][]     some depth for depth buffer (shifted by >>2)
-                + 42 []       if this != 0 then we don't update models that exceed data memory limit.
-                + 4b []       some index.
-                + 58 [][][][] pointer to array of 0xc structs where +4b index points.
-                    + 0 []       model id (stored in script +3b).
-                    + 1 []       ??? maybe enable sound or disable
-                    + 4 [][]     ???
-                    + 6 [][]     ???
-                    + 8 [][]     ??? maybe walk sound
-                    + a [][]     ??? maybe run sound
+                + 34 [][][][] init with w[80067944] + 106700. Maybe pointer to some data loaded.
+                + 38 [][]     init with 0x00a0.
+                + 3a [][]     init with 0x0070.
+                + 3c [][]     init with 0xffff.
+                + 3e [][]     init with 0xffff.
+                + 40 []       init with 0.
+                + 41 []       init with 0.
+                + 42 []       init with 0. If this != 0 then we don't update models that exceed data memory limit.
+                + 43 []       init with 0.
+                + 44 [][][][] init with 0.
+                + 48 []       init with 0.
+                + 49 []       init with 0.
+                + 4a []       init with 1.
+                + 4b []       init with 0. Some index.
+                + 4c [][][][] init with 0.
+                + 50 [][]     init with 0.
+                + 52 [][]     init with 0.
+                + 54 [][][][] store here pointer to +90.
+                + 58 [][][][] store here pointer +270.
+                + 5c []       init with 0x7f.
+                + 5d []       init with 0x7f.
+                + 5e []       init with 0.
+                + 5f []       init with 0.
+                + 60 []       init with 0.
+                + 62 [][]     init with 0.
+                + 64 [][][][] init with 0.
+                + 68 []       init with 0.
+                + 69 []       init with 0.
+                + 6a []       init with 0.
+                + 6b []       init with 0.
+                + 6c start of some data (0x9 items 0x4 size).
+                    + 0 [][][][] init with 0.
+                + 90 start of some data (0x17 items 0x14 size).
+                    + 0 [][][][] init with 0.
+                    + 4 []       init with -1.
+                    + 5 []       init with 0.
+                    + 6 []       init with 0.
+                    + 7 []       init with 0.
+                    + 8 []       init with 0.
+                    + 9 []       init with 0.
+                    + a []       init with 0.
+                    + b []       init with 0.
+                    + c []       init with 0.
+                    + d []       init with 0.
+                    + e []       init with 0.
+                    + f []       init with 0.
+                    +10 [][][][] init with 0.
+                +270 array indexed by +4b index. (0xf items 0xc size)
+                    + 0 []       init with 0xff. Model id (stored in script +3b).
+                    + 1 []       init with 0. Maybe enable sound or disable
+                    + 2 [][]     init with 0xffff.
+                    + 4 [][]     init with 0xffff.
+                    + 6 [][]     init with -1.
+                    + 8 [][]     init with 0xffff. Maybe walk sound
+                    + a [][]     init with 0xffff. Maybe run sound
         // battle
         +6f8 [][][][] pointer to some battle struct list.
             +00 [][][][] pointer to next struct in list.

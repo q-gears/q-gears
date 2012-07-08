@@ -1,4 +1,89 @@
 ////////////////////////////////
+// func1ccb4
+V0 = w[8006794c];
+V0 = w[V0 + 10];
+[V0 + 75] = b(A0);
+[V0 + 76] = b(A1);
+[V0 + 77] = b(A2);
+[V0 + 19] = b(A0);
+[V0 + 1a] = b(A1);
+[V0 + 1b] = b(A2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1cfb4
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+if( V0 != 0 )
+{
+    A0 = 0;
+    func15c58;
+
+    V1 = w[8006794c];
+    V0 = w[V1 + 1c];
+    frame_id = bu[V0 + 8]; // frame buffer index
+    A0 = w[V1 + c] + frame_id * 14;
+    8001D00C	jal    func138d4 [$800138d4]
+
+    S1 = 0;
+    A0 = 80073c88;
+    V1 = w[8006794c];
+    A1 = w[V1 + 10] + (frame_id ^ 1) * 5c;
+    A2 = 5c;
+    8001D04C	jal    func1d0f8 [$8001d0f8]
+
+    8001D054	jal    func2f800 [$8002f800]
+
+    8001D05C	andi   v0, v0, $00ff
+    8001D060	bne    v0, zero, L1d07c [$8001d07c]
+    8001D064	nop
+    8001D068	jal    func2f810 [$8002f810]
+    8001D06C	nop
+    8001D070	andi   v0, v0, $00ff
+    8001D074	beq    v0, zero, L1d080 [$8001d080]
+    8001D078	nop
+
+    L1d07c:	; 8001D07C
+    S1 = 1;
+
+    L1d080:	; 8001D080
+    8001D080	jal    func2f864 [$8002f864]
+    8001D084	nop
+    8001D088	addiu  a0, sp, $0010
+    8001D08C	jal    func2f9a8 [$8002f9a8]
+    8001D090	addu   s0, v0, zero
+    8001D094	beq    s1, zero, L1d0cc [$8001d0cc]
+    8001D098	lui    v0, $8007
+    8001D09C	bne    s0, zero, L1d0cc [$8001d0cc]
+    8001D0A0	lui    v1, $8007
+    8001D0A4	addiu  v1, v1, $3c88
+    8001D0A8	lbu    a0, $0010(sp)
+    8001D0AC	lbu    a1, $0011(sp)
+    8001D0B0	lbu    a2, $0012(sp)
+    8001D0B4	addiu  v0, zero, $0001
+    8001D0B8	sb     v0, $0018(v1)
+    8001D0BC	sb     a0, $0019(v1)
+    8001D0C0	sb     a1, $001a(v1)
+    8001D0C4	j      L1d0d0 [$8001d0d0]
+    8001D0C8	sb     a2, $001b(v1)
+
+    L1d0cc:	; 8001D0CC
+    8001D0CC	sb     zero, $3ca0(v0)
+
+    L1d0d0:	; 8001D0D0
+    A0 = 80073c88;
+    8001D0D4	jal    func13708 [$80013708]
+
+    A0 = 0;
+    8001D0DC	jal    func130a4 [$800130a4]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func12ad4
 if( b[80071e32] == 0 )
 {
@@ -1245,30 +1330,32 @@ V0 = w[SP + 10];
 V1 = w[800667bc];
 V0 = V0 - V1;
 S1 = V0 & ffff;
-if (A0 < 0)
+
+if( A0 < 0 )
 {
     return w[800678ec];
 }
 
-if (A0 == 1)
+if( A0 == 1 )
 {
     return S1;
 }
 
-80015CD4	blez   a0, L15cf4 [$80015cf4]
-80015CD8	nop
-80015CDC	lui    v0, $8006
-80015CE0	lw     v0, $67c0(v0)
-80015CE4	nop
-80015CE8	addiu  v0, v0, $ffff (=-$1)
-80015CEC	j      L15cfc [$80015cfc]
-80015CF0	addu   v0, v0, a0
+if( A0 <= 0 )
+{
+    80015CDC	lui    v0, $8006
+    80015CE0	lw     v0, $67c0(v0)
+    80015CE4	nop
+    80015CE8	addiu  v0, v0, $ffff (=-$1)
+    80015CF0	addu   v0, v0, a0
+}
+else
+{
+    80015CF4	lui    v0, $8006
+    80015CF8	lw     v0, $67c0(v0)
+}
 
-L15cf4:	; 80015CF4
-80015CF4	lui    v0, $8006
-80015CF8	lw     v0, $67c0(v0)
 
-L15cfc:	; 80015CFC
 80015CFC	blez   a0, L15d08 [$80015d08]
 80015D00	addu   a1, zero, zero
 80015D04	addiu  a1, a0, $ffff (=-$1)

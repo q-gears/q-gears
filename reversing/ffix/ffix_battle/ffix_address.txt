@@ -3,7 +3,7 @@
 800fe4f8
 
 800fe504 [][][][] store offset to battle location settings structure here + 10
-
+800fe508 [][][][] ???
 800fe50c [][][][] store id? of battle location here from battle location settings structure.
 
 800fe514 [][][][] store offset to battle location settings structure here
