@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="..\common\File.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="62" topLine="15" />
+	<File name="..\common\File.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="62" topLine="15" />
 	</File>
-	<File name="..\common\File.h" open="0" top="0" tabpos="0">
-		<Cursor position="358" topLine="5" />
+	<File name="..\common\File.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="358" topLine="5" />
 	</File>
-	<File name="..\common\FileSystem.cpp" open="0" top="0" tabpos="6">
-		<Cursor position="139" topLine="24" />
+	<File name="..\common\FileSystem.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="139" topLine="24" />
 	</File>
-	<File name="..\common\Logger.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="82" topLine="0" />
+	<File name="..\common\Logger.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="82" topLine="0" />
 	</File>
-	<File name="..\common\Logger.h" open="0" top="0" tabpos="3">
-		<Cursor position="38" topLine="0" />
+	<File name="..\common\Logger.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="38" topLine="0" />
 	</File>
-	<File name="..\common\LzsFile.cpp" open="0" top="0" tabpos="7">
-		<Cursor position="2689" topLine="0" />
+	<File name="..\common\LzsFile.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2689" topLine="0" />
 	</File>
-	<File name="..\common\LzsFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="108" topLine="0" />
+	<File name="..\common\LzsFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="108" topLine="0" />
 	</File>
-	<File name="..\common\OgreGenUtilites.h" open="0" top="0" tabpos="0">
-		<Cursor position="303" topLine="0" />
+	<File name="..\common\OgreGenUtilites.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="303" topLine="0" />
 	</File>
-	<File name="..\common\Surface.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="5235" topLine="197" />
+	<File name="..\common\Surface.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="5235" topLine="197" />
 	</File>
-	<File name="..\common\TimToVram.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1659" topLine="0" />
+	<File name="..\common\TimToVram.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1659" topLine="0" />
 	</File>
-	<File name="..\common\Vram.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1374" topLine="62" />
+	<File name="..\common\Vram.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1374" topLine="62" />
 	</File>
-	<File name="..\common\Vram.h" open="0" top="0" tabpos="0">
-		<Cursor position="69" topLine="0" />
+	<File name="..\common\Vram.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="69" topLine="0" />
 	</File>
-	<File name="src\AnimationExtractor.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="9123" topLine="200" />
+	<File name="src\AnimationExtractor.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="9123" topLine="200" />
 	</File>
-	<File name="src\AnimationExtractor.h" open="0" top="0" tabpos="0">
-		<Cursor position="100" topLine="0" />
+	<File name="src\AnimationExtractor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="100" topLine="0" />
 	</File>
-	<File name="src\AnimationScriptDumper.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1814" topLine="34" />
+	<File name="src\AnimationScriptDumper.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1814" topLine="34" />
 	</File>
-	<File name="src\AnimationScriptDumper.h" open="0" top="0" tabpos="0">
-		<Cursor position="159" topLine="0" />
+	<File name="src\AnimationScriptDumper.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="159" topLine="0" />
 	</File>
-	<File name="src\EnemyFile.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="6530" topLine="187" />
+	<File name="src\EnemyFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="6530" topLine="187" />
 	</File>
-	<File name="src\EnemyFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="871" topLine="21" />
+	<File name="src\EnemyFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="871" topLine="21" />
 	</File>
-	<File name="src\Main.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="4027" topLine="120" />
+	<File name="src\Main.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="4027" topLine="120" />
 	</File>
-	<File name="src\MeshExtractor.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="14277" topLine="270" />
+	<File name="src\MeshExtractor.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="14277" topLine="270" />
 	</File>
-	<File name="src\MeshExtractor.h" open="0" top="0" tabpos="0">
-		<Cursor position="98" topLine="0" />
+	<File name="src\MeshExtractor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="98" topLine="0" />
 	</File>
-	<File name="src\RamEffectFile.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="1891" topLine="65" />
+	<File name="src\RamEffectFile.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1891" topLine="65" />
 	</File>
-	<File name="src\RamEffectFile.h" open="0" top="0" tabpos="1">
-		<Cursor position="82" topLine="0" />
+	<File name="src\RamEffectFile.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="82" topLine="0" />
 	</File>
-	<File name="src\StageFile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1044" topLine="40" />
+	<File name="src\StageFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="1044" topLine="40" />
 	</File>
-	<File name="src\StageFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="665" topLine="5" />
+	<File name="src\StageFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="665" topLine="5" />
 	</File>
 </CodeBlocks_layout_file>

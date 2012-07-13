@@ -10,33 +10,33 @@
 
 
 
-EnemyFile::EnemyFile(const Ogre::String& file):
-    LzsFile(file),
-    m_WithWeapon(false)
+EnemyFile::EnemyFile( const Ogre::String& file ):
+    LzsFile( file ),
+    m_WithWeapon( false )
 {
 }
 
 
 
-EnemyFile::EnemyFile(File* pFile):
-    LzsFile(pFile),
-    m_WithWeapon(false)
+EnemyFile::EnemyFile( File* pFile ):
+    LzsFile( pFile ),
+    m_WithWeapon( false )
 {
 }
 
 
 
-EnemyFile::EnemyFile(File* pFile, u32 offset, u32 length):
-    LzsFile(pFile, offset, length),
-    m_WithWeapon(false)
+EnemyFile::EnemyFile( File* pFile, u32 offset, u32 length ):
+    LzsFile( pFile, offset, length ),
+    m_WithWeapon( false )
 {
 }
 
 
 
-EnemyFile::EnemyFile(u8* pBuffer, u32 offset, u32 length):
-    LzsFile(pBuffer, offset, length),
-    m_WithWeapon(false)
+EnemyFile::EnemyFile( u8* pBuffer, u32 offset, u32 length ):
+    LzsFile( pBuffer, offset, length ),
+    m_WithWeapon( false )
 {
 }
 
@@ -49,9 +49,9 @@ EnemyFile::~EnemyFile()
 
 
 Ogre::Entity*
-EnemyFile::GetModel(const EnemyInfo& info)
+EnemyFile::GetModel( const EnemyInfo& info )
 {
-    DumpSettings("exported/models/ffvii/battle/units/" + info.data.name + ".lua");
+    DumpSettings( "exported/models/ffvii/battle/units/" + info.data.name + ".lua" );
 
     VectorTexForGen textures;
     Ogre::MeshPtr mesh = Ogre::MeshManager::getSingleton().create(info.data.name + "export", "General");
@@ -84,7 +84,7 @@ EnemyFile::GetModel(const EnemyInfo& info)
         bone1->addChild(bone2);
     }
 
-    if (m_WithWeapon == true)
+    if( m_WithWeapon == true )
     {
         Ogre::Bone* weapon1 = skeleton->createBone("weapon_1", number_of_bones * 2 + 2);
         root1->addChild(weapon1);
@@ -177,12 +177,12 @@ EnemyFile::GetModel(const EnemyInfo& info)
 void
 EnemyFile::DumpSettings(const Ogre::String& file)
 {
-    Logger* settings = new Logger(file);
+    Logger* settings = new Logger( file );
 
     int model_settings_offset = GetU32LE(0x08);
 
-    m_WithWeapon = GetU8(model_settings_offset + 2) & 0x80;
-    LOGGER->Log("Model With Weapon '" + Ogre::StringConverter::toString(m_WithWeapon) + "'\n");
+    m_WithWeapon = GetU8( model_settings_offset + 2 ) & 0x80;
+    LOGGER->Log( "Model With Weapon '" + Ogre::StringConverter::toString(m_WithWeapon) + "'\n" );
 
     settings->Log("// animation scripts\n");
     settings->Log("+00 [][]     " + HexToString(GetU16LE(model_settings_offset + 0), 4, '0') + " - if this is not 0 we add 0x40 bit to 8015190b\n");

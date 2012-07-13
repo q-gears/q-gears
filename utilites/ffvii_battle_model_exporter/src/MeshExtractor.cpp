@@ -428,13 +428,13 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
         LOGGER->Log("Assign bones to vertexes\n");
 
         int vertex_number = sub_mesh->vertexData->vertexCount;
-        for (int i = 0; i < vertex_number; ++i)
+        for( int i = 0; i < vertex_number; ++i )
         {
             Ogre::VertexBoneAssignment vba;
             vba.vertexIndex = i;
             vba.boneIndex = bone_id;
             vba.weight = 1.0f;
-            sub_mesh->addBoneAssignment(vba);
+            sub_mesh->addBoneAssignment( vba );
         }
     }
 }
