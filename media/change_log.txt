@@ -27,9 +27,13 @@ To Do
 
 
 
+2012-07-13
+----------
+o [Script] Fix crush when script error was in requested script. [Akari]
+
 2012-07-09
 ----------
-* [Script] Add "add_entity" method to add entity from script mainly to add player entity to battle. [Akari]
++ [Script] Add "add_entity" method to add entity from script mainly to add player entity to battle. [Akari]
 
 
 

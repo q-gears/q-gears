@@ -217,7 +217,7 @@ ScriptManager::Update( const ScriptManager::Type type )
                             }
                             catch( luabind::error& e )
                             {
-                                LOG_ERROR( Ogre::String( lua_tostring( m_LuaState, -1 ) ) );
+                                LOG_ERROR( Ogre::String( lua_tostring( m_ScriptEntity[ i ].queue[ 0 ].state , -1 ) ) );
                             }
 
                             if( ret == 0 )
