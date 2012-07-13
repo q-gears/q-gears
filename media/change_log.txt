@@ -29,6 +29,8 @@ To Do
 
 2012-07-13
 ----------
++ [Content FFVII] Add functions to manipulate party and characters. [Akari]
++ [Content FFVII] Add containers for Items, Characters, Enemies, Materias etc. [Akari]
 o [Script] Fix crush when script error was in requested script. [Akari]
 
 2012-07-09
