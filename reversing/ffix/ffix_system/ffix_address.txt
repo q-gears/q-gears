@@ -1,7 +1,7 @@
 80011a44 [][][][] pointer to something.
 
 80067944 [][][][] looks like start pointer to all models data. Total size of that block 0xf1700.
-80067948 [][][][] store here pointer to w[w[w[w[w[8006794c] + 1c] + 8e4] + c] + 4]. Pointer to field database block?
+80067948 [][][][] store here pointer to w[w[w[w[w[8006794c] + 1c] + 8e4] + c] + 4]. Pointer to field database file.
 8006794c [][][][] pointer to 8008b000.
 
 80068158 [][][][] store here pointer from 80011a44.
@@ -26,6 +26,8 @@
 80071e32 []       something screen settings related.
 80071e34 [][][][] something screen settings related.
 80071e38 []       something screen settings related.
+
+80073998 [][][][] some flags. [80073998] = w(w[80073998] & ffff0006) at start of field loading.
 
 80073c40 looks like array of all loaded files. We can search in this.
 +2 [][]     number of files in array
@@ -303,6 +305,7 @@
 
 
 8008b000 [][][][] 8006794c points here (some struct)
++  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading.
 +  4 [][][][] pointer to 800bb250.
 +  8 []       looks like id of running module (0x01 - field, 0x02 - battle, 0x08 - end battle menu).
 +  c [][][][] pointer to 8008b044.
@@ -310,8 +313,11 @@
 + 14 [][][][] pointer to 8008b124.
 + 18 [][][][] pointer to 8008b214.
 + 1c [][][][] pointer to 8008b250.
+    +  0 [][][][] some flags.
+                    0x00000020 - add it at start of field loading.
     +  8 []       frame buffer index. Index of pointer +10 or +14 to use.
     +  a [][]     Projection plane distance for rasterisation.
+    +  c [][]     store loading field id here.
     + 10 [][][][] 1st frame buffer depth stack. Referenced by +8.
     + 14 [][][][] 2nd frame buffer depth stack. Referenced by +8.
         depth queue: in each 4 bytes (depth) are pointer to first packet in stack. 1st 4 bytes in packet contain part of pointer (without leading 0x80) to next packet with this depth.
@@ -344,11 +350,26 @@
         +00 []         ???
         +01 []         ???
     +774 some array of 0x40 items (0x1 size).
+    +7e4 [][][][] pointer to field file with identificator 0 in resource file type 14
     +80c [][][][] store here script pointer + 2c.
     +810 [][][][] store here script pointer + 4.
     +838 [][][][] pointer to some functions called in func21698 with +34 param from entity script memory in opcode 0x2f. Looks like model init.
     +848 []       set up in 0x2a opcode.
     +851 []       (8008BAA1)
+    +864 [][][][] maybe size of loaded field file.
+    +874 [][][][] end of loaded field file.
+    +8c8 [][][][] maybe pointer to list of loading files.
+        +  2 []       number of records.
+        +  3 []       sone index into next array.
+        +  4 start of some data (0x28 size).
+            + 0 [][]     some flags.
+                            0x0001 - ???
+                            0x0002 - ???
+                            0x0080 - ???
+            + 4 [][][][] index of file. Fox example: 0x00050000 | field_id.
+            + 8 [][][][] address of loading file.
+            + c [][][][] size of loading file.
+            +1c [][][][] ???
     +8d8 [][][][] ??? pointet to start of some on 0x14 sized array.
     +8e0 [][][][] ??? pointer to end of some on 0x14 sized array.
         // field
@@ -392,7 +413,10 @@
     +8e4 [][][][] pointer to 800d1000.
         // field
         +  0 [][][][] some flags.
+                        0x00000004 - remove all flags except this at start of field loading.
                         0x00000200 - ???
+        +  8 []       init with 0.
+        +  9 []       init with 0.
         +  c [][][][] pointer
             +  4 [][][][] unknown. Stored to 80067948 at start of fild loading.
             + 14 [][][][] pointer. We store here pointer from previous 80067948. Then we increase it by 330 and store it back to 80067948.
@@ -400,7 +424,7 @@
                 +  4 [][][][] init with 0.
                 +  8 []       init with 0.
                 +  0 []       init with 0.
-                +  a [][]     init with -1.
+                +  a [][]     field id. Inited with -1.
                 +  c [][][][] init with 0.
                 + 10 [][][][] init with 0.
                 + 14 [][][][] init with 0.

@@ -745,6 +745,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f8cf0 []       set to 0 in 0xf7 action opcode
 
+800f9980 []       number of players units in battle.
+
 800f99e8 []       store target id here (used in animation opcodes).
 
 800f99ec array where we store data for futher use during F7 animation opcode (attack impact). (0xc size)

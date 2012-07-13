@@ -30,6 +30,17 @@
 800c9e04 [][][][] pointer to walkmesh normals data.
 800c9e0c [][][][] pointer to walkmesh groups data.
 
+800c9ef0 some array (size 0x02)
+    +0 [][]     init with 0.
+800c9ef8 some array (size 0x02)
+    +0 [][]     init with 0.
+800c9f00 some array (size 0x02)
+    +0 [][]     init with 0.
+800c9f08 some array (size 0x02)
+    +0 [][]     init with 0.
+800c9f20 some array (items 0x10 size 0x04)
+    +0 [][][][] init with -1.
+
 800ca068 start address of camera related info.
 +0c [][]     x screen offset.
 +0e [][]     y screen offset.

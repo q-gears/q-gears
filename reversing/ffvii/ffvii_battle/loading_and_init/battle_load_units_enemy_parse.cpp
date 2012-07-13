@@ -89,7 +89,7 @@ loopb52e4:	; 800B52E4
 
 
 S0 = 4;
-if (S0 < bu[800f7e04] + 4)
+if( S0 < bu[800f7e04] + 4 )
 {
     loopb5350:	; 800B5350
         [80163784 + S4] = b(bu[801636b8 + S0 * 10 + 1]); // idle action id
@@ -101,7 +101,7 @@ if (S0 < bu[800f7e04] + 4)
         [801518e4 + S0 * b9c + 160] = h(0); // root x rotation
         [801518e4 + S0 * b9c + 164] = h(0); // root z rotation
 
-        switch (bu[800fa6d0]) // formation type
+        switch( bu[800fa6d0] ) // formation type
         {
             case 1: // enemy look from left to left initial, left to right normal
             {

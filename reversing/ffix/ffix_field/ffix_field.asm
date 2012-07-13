@@ -1859,22 +1859,12 @@ Laa4ac:	; 800AA4AC
 800AA4B8	addiu  sp, sp, $0018
 
 
-funcaa4bc:	; 800AA4BC
-800AA4BC	addiu  v1, zero, $000f
-800AA4C0	addiu  a0, zero, $ffff (=-$1)
-800AA4C4	lui    v0, $800d
-800AA4C8	addiu  v0, v0, $9f20 (=-$60e0)
-800AA4CC	addiu  v0, v0, $003c
 
-loopaa4d0:	; 800AA4D0
-800AA4D0	sw     a0, $0000(v0)
-800AA4D4	addiu  v1, v1, $ffff (=-$1)
+////////////////////////////////
+// funcaa4bc
+800AA4BC-800AA4E4
+////////////////////////////////
 
-Laa4d8:	; 800AA4D8
-800AA4D8	bgez   v1, loopaa4d0 [$800aa4d0]
-800AA4DC	addiu  v0, v0, $fffc (=-$4)
-800AA4E0	jr     ra 
-800AA4E4	nop
 
 
 funcaa4e8:	; 800AA4E8
@@ -2789,28 +2779,11 @@ Lac664:	; 800AC664
 800AC678	addiu  sp, sp, $0018
 
 
-funcac67c:	; 800AC67C
-800AC67C	addiu  a1, zero, $0009
-800AC680	lui    v0, $800d
-800AC684	addiu  v0, v0, $9ccc (=-$6334)
-800AC688	addiu  v1, v0, $006c
 
-loopac68c:	; 800AC68C
-800AC68C	lw     v0, $0004(v1)
-800AC690	nop
-800AC694	beq    v0, zero, Lac6ac [$800ac6ac]
-800AC698	sltu   v0, a0, v0
-800AC69C	bne    v0, zero, Lac6ac [$800ac6ac]
-800AC6A0	nop
-800AC6A4	sw     zero, $0008(v1)
-800AC6A8	sw     zero, $0004(v1)
-
-Lac6ac:	; 800AC6AC
-800AC6AC	addiu  a1, a1, $ffff (=-$1)
-800AC6B0	bgez   a1, loopac68c [$800ac68c]
-800AC6B4	addiu  v1, v1, $fff4 (=-$c)
-800AC6B8	jr     ra 
-800AC6BC	nop
+////////////////////////////////
+// funcac67c
+800AC67C-800AC6BC
+////////////////////////////////
 
 
 

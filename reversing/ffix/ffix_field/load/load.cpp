@@ -1,6 +1,10 @@
 ////////////////////////////////
 // funca89c4
-S5 = A0;
+// A0 = 46 at start of new game (before movie)
+// A0 = 32 after start movie
+// A0 = 34 next room - meeting with baku
+// A0 = 64 start of alexandria
+field_id = A0;
 V0 = w[8006794c];
 V0 = w[V0 + 1c];
 V0 = w[V0 + 8e4];
@@ -14,19 +18,20 @@ V0 = w[V0 + 1c];
 V0 = w[V0 + 8e4];
 V0 = w[V0 + c];
 S4 = w[V0 + 14];
-S1 = 1;
 
 funca939c; // init field structure
 
 func1cfb4; // unknown system thing. probably clearing or prepair of frame buffer
 
 V1 = w[8006794c];
+[V1 + 0] = w(w[V1 + 0] & fffffcf0);
+
 A1 = w[V1 + 1c];
-[V1] = w(w[V1] & fffffcf0);
-[A1] = w(w[A1] | 00000020);
+[A1 + 0] = w(w[A1 + 0] | 00000020);
+
 V0 = w[V1 + 1c];
 V1 = w[V0 + 8e4];
-[V1] = w(w[V1] & 00000004);
+[V1 + 0] = w(w[V1 + 0] & 00000004);
 
 A0 = 0;
 A1 = 0;
@@ -38,52 +43,58 @@ func1ccb4; // reset 8006794c + 10 data (unknown)
 [80073998] = w(w[80073998] & ffff0006);
 
 
-V1 = 800c9ef0;
+
+S1 = 1;
 loopa8ab4:	; 800A8AB4
     A1 = 3;
-    V0 = S2 << A1;
-    A0 = V0 + 6;
-
     loopa8ac0:	; 800A8AC0
-        V0 = A0 + V1;
-        A0 = A0 - 2;
+        [800c9ef0 + S1 * 8 + A1 * 2] = h(0);
+        [800c9ef0 + 10 + S1 * 8 + A1 * 2] = h(0);
         A1 = A1 - 1;
-        [V0 + 0] = h(0);
-        [V0 + 10] = h(0);
     800A8AD0	bgez   a1, loopa8ac0 [$800a8ac0]
-
     S1 = S1 - 1;
 800A8ADC	bgez   s1, loopa8ab4 [$800a8ab4]
 
-V0 = w[8006794c];
-800A8AEC	lw     v0, $001c(v0)
-800A8AF0	nop
-800A8AF4	lw     v0, $08e4(v0)
-800A8AF8	jal    funcaa4bc [$800aa4bc]
-800A8AFC	sb     zero, $0008(v0)
+
+
 
 V0 = w[8006794c];
+V0 = w[V0 + 1c];
+V0 = w[V0 + 8e4];
+[V0 + 8] = b(0);
+[V0 + 9] = b(0);
 
-800A8B08	lw     v0, $001c(v0)
-800A8B0C	nop
-800A8B10	lw     v0, $08e4(v0)
-800A8B14	nop
-800A8B18	sb     zero, $0009(v0)
+
+
+funcaa4bc; // init 800c9f20 array with -1
+
+
+
 V0 = w[8006794c];
-8800A8B24	lw     v0, $001c(v0)
+V0 = w[V0 + 1c];
+[V0 + c] = h(field_id);
 
-A1 = S5;
-[V0 + c] = h(S5);
-[S4 + a] = h(S5);
+[S4 + a] = h(field_id);
 
 A0 = S4;
+A1 = field_id;
 funca9bdc; // we read db pointers here
 
+
+
+
+
+
+
+
+
+
 800A8B38	addu   a0, s4, zero
+A1 = field_id;
 800A8B3C	jal    funca97d4 [$800a97d4]
-800A8B40	addu   a1, s5, zero
+
 800A8B44	addu   a0, s4, zero
-A1 = S5;
+A1 = field_id;
 800A8B48	jal    funca9814 [$800a9814]
 
 A0 = S4;
@@ -91,7 +102,7 @@ funca9860; // we read tileset db pointer here
 
 
 A0 = S4;
-A1 = S5;
+A1 = field_id;
 funca9954;
 
 V0 = w[8006794c];
@@ -115,7 +126,7 @@ A4 = 0;
 
 800A8BBC	jal    funcb0124 [$800b0124]
 
-
+S5
 A0 = w[S4 + c]; // offset to script
 func49ed8; // we parse init script here
 
@@ -132,8 +143,6 @@ La8bdc:	; 800A8BDC
 loopa8bec:	; 800A8BEC
 800A8BEC	sw     zero, $0010(sp)
 800A8BF0	addiu  a0, zero, $0c00
-
-funca8bf4:	; 800A8BF4
 800A8BF4	addiu  a1, zero, $ffff (=-$1)
 800A8BF8	addu   a2, zero, zero
 800A8BFC	jal    funcb0124 [$800b0124]
@@ -194,8 +203,6 @@ La8cc0:	; 800A8CC0
 800A8CC8	lw     v0, $001c(v0)
 800A8CCC	addiu  s1, s1, $0001
 800A8CD0	lw     v1, $08d4(v0)
-
-funca8cd4:	; 800A8CD4
 800A8CD4	lw     v0, $08d8(v0)
 800A8CD8	addu   v1, v1, s2
 800A8CDC	addiu  s2, s2, $0098
@@ -266,9 +273,7 @@ La8d94:	; 800A8D94
 800A8DD0	jal    funcad44c [$800ad44c]
 800A8DD4	addiu  a1, a1, $0009
 800A8DD8	addu   a0, s4, zero
-800A8DDC	addu   a1, s5, zero
-
-funca8de0:	; 800A8DE0
+A1 = field_id;
 800A8DE0	jal    funcb2528 [$800b2528]
 800A8DE4	sw     v0, $7948(s0)
 800A8DE8	jal    funcb1c98 [$800b1c98]
@@ -286,8 +291,6 @@ funca8de0:	; 800A8DE0
 800A8E18	sw     v0, $3998(a1)
 800A8E1C	lw     a0, $001c(a0)
 800A8E20	nop
-
-funca8e24:	; 800A8E24
 800A8E24	lw     v0, $0000(a0)
 800A8E28	addiu  v1, zero, $ffdf (=-$21)
 800A8E2C	and    v0, v0, v1
@@ -415,6 +418,331 @@ loopa9558:	; 800A9558
     A1 = A1 - 1;
 800A9560	bgez   a1, loopa9558 [$800a9558]
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// funcaa4bc
+V1 = f;
+V0 = ;
+V0 = V0 + 3c;
+
+loopaa4d0:	; 800AA4D0
+    [800c9f20 + V1 * 4] = w(-1);
+    V1 = V1 - 1;
+    V0 = V0 - 4;
+800AA4D8	bgez   v1, loopaa4d0 [$800aa4d0]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca9bdc
+field_struct = S5 = A0;
+field_id = A1;
+
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+V0 = w[V0 + 808];
+
+V1 = w[80067948];
+S0 = V0 << b;
+V0 = V1 + S0;
+if( 801ddf00 - V0 <= 16fff )
+{
+    S0 = 801d6f00 - V1;
+    V0 = S0;
+
+    if( S0 < 0 )
+    {
+        V0 = S0 + 7ff;
+    }
+
+    S0 = (V0 >> b) << b;
+}
+
+
+
+// a lot of field loading
+S1 = 00050000 | field_id;
+
+A0 = S1;
+func220e8; // maybe field loading.
+
+if( V0 != 0 )
+{
+    A0 = S1;
+    func21e5c;
+
+    A0 = w[8006794c];
+    A1 = w[A0 + 1c];
+    [A1 + 874] = w(w[V0 + 8] + w[V0 + c]);
+    [A1 + 864] = w(w[V0 + c]);
+    [A1 + 858] = w(w[V0 + 1c]);
+
+    A1 = w[V0 + 8];
+    A2 = w[V0 + c];
+    A3 = 0;
+    800A9CD0	jal    func1daa4 [$8001daa4]
+
+    A0 = S1;
+    800A9CD8	jal    func22390 [$80022390]
+
+    A0 = 0;
+    800A9CE0	jal    func130a4 [$800130a4]
+}
+else
+{
+    V0 = w[8006794c];
+    V0 = w[V0 + 1c];
+
+    A0 = V0 + 854;
+    A1 = w[V0 + 800];
+    A2 = w[V0 + 808] << b;
+    A3 = w[80067948];
+    [SP + 10] = w(0);
+    [SP + 14] = w(S0);
+    [SP + 18] = w(0);
+    800A9D1C	jal    func2177c [$8002177c]
+
+    loopa9d24:	; 800A9D24
+        V0 = w[8006794c];
+        A0 = w[V0 + 1c] + 854;
+        800A9D30	jal    func217c4 [$800217c4]
+    800A9D38	bne    v0, zero, loopa9d24 [$800a9d24]
+}
+
+
+
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+A0 = w[V0 + 874];
+funcac67c;
+
+
+
+S4 = w[80067948];
+
+
+
+A0 = S4;
+A1 = 4;
+A2 = 140000;
+A3 = 0;
+func1c8b0; // address of file with identificator 0 in resource file type 14
+V1 = w[8006794c];
+V1 = w[V1 + 1c];
+[V1 + 7e4] = w(V0);
+
+
+
+A0 = S4;
+A1 = 2;
+A2 = 1b0000;
+A3 = 0;
+func1c8b0; // address of file with index 0 in resource file type 1b
+S1 = V0;
+
+
+
+if( S1 != 0 )
+{
+    A0 = S4;
+    A1 = 5;
+    A2 = 1b0000;
+    A3 = 0;
+    func1c8b0; // size of file with identificator 0 in resource file type 1b
+
+    T1 = w[8006794c];
+    A1 = w[T1 + 1c];
+    V1 = w[80067948];
+    T0 = w[A1 + 864];
+
+    S2 = T0;
+
+    if( V1 + T0 < S1 + V0 )
+    {
+        A2 = w[A1 + 808];
+        [SP + 10] = w(S2);
+        V0 = w[T1 + 1c];
+        V0 = w[V0 + 864];
+        A0 = A1 + 854;
+
+        800A9DF0	sw     zero, $0018(sp)
+        800A9DF4	subu   v0, s0, v0
+        800A9DF8	sw     v0, $0014(sp)
+        800A9DFC	lw     a1, $0800(a1)
+        800A9E00	jal    func2177c [$8002177c]
+        800A9E04	sll    a2, a2, $0b
+
+        loopa9e08:	; 800A9E08
+            V0 = w[8006794c];
+            A0 = w[V0 + 1c] + 854;
+            800A9E14	jal    func217c4 [$800217c4]
+        800A9E1C	bne    v0, zero, loopa9e08 [$800a9e08]
+
+        800A9E20	lui    v0, $8006
+        800A9E24	lw     a0, $794c(v0)
+        800A9E28	nop
+        800A9E2C	lw     v1, $001c(a0)
+        800A9E30	nop
+        800A9E34	lw     v0, $0864(v1)
+        800A9E38	nop
+        800A9E3C	addu   v0, v0, s2
+        800A9E40	sw     v0, $0864(v1)
+        800A9E44	lw     v0, $001c(a0)
+        800A9E48	nop
+        800A9E4C	lw     a0, $0874(v0)
+        funcac67c
+    }
+
+    A0 = S1;
+    A1 = 1;
+    A2 = 40000;
+    A3 = 0;
+    func1c8b0;
+
+    S0 = V0 - 1;
+    if (S0 >= 0)
+    {
+        loopa9e80:	; 800A9E80
+            A0 = S1;
+
+            A1 = 2;
+            A2 = 40000 | (S0 & ffff);
+            A3 = 0;
+            func1c8b0; // get addresses of tim files
+
+            if (V0 != -1)
+            {
+                A0 = V0;
+                func1d8a8; // load tim files?
+            }
+
+            S0 = S0 - 1;
+        800A9EA8	bgez   s0, loopa9e80 [$800a9e80]
+    }
+
+    A0 = S1;
+    A1 = 1;
+    A2 = 170000;
+    A3 = 0;
+    func1c8b0; // get number of files of resource type 17
+
+    S0 = V0 - 1;
+    if (S0 >= 0)
+    {
+        loopa9ed4:	; 800A9ED4
+            A0 = S1;
+            A1 = 2;
+            A2 = 170000 | (S0 & ffff);
+            A3 = 0;
+            func1c8b0; // get addresses of 17 type files
+
+            if (V0 != -1)
+            {
+                A0 = V0;
+                800A9EF4	jal    funcc9968 [$800c9968]
+            }
+
+            S0 = S0 - 1;
+        800A9F00	bgez   s0, loopa9ed4 [$800a9ed4]
+    }
+
+    A0 = 0;
+    800A9F08	jal    func130a4 [$800130a4]
+}
+
+A0 = S4;
+A1 = 2;
+A2 = 1b0001;
+A3 = 0;
+func1c8b0; // address of file with index 1 in resource file type 1b
+
+A0 = S1;
+V1 = w[8006794c];
+
+A1 = V0;
+[S5 + 24] = w(A1);
+V0 = w[V1 + 1c];
+V1 = w[V0 + 864];
+
+S0 = V1 - A1 + S4;
+A2 = S0;
+A3 = 0;
+func1daa4;
+
+800A9F58	jal    func130a4 [$800130a4]
+800A9F5C	addu   a0, zero, zero
+800A9F2C	lui    s2, $8006
+800A9F60	lw     v0, $794c(s2)
+800A9F64	sw     s1, $0024(s5)
+800A9F68	lw     v1, $001c(v0)
+800A9F6C	nop
+800A9F70	lw     a1, $0864(v1)
+800A9F74	lw     v0, $0858(v1)
+800A9F78	nop
+800A9F7C	slt    v0, a1, v0
+800A9F80	beq    v0, zero, La9fcc [$800a9fcc]
+800A9F84	addiu  a0, v1, $0854
+800A9F88	addu   a3, s1, s0
+800A9F8C	addu   s0, s2, zero
+800A9F90	lw     a2, $0808(v1)
+800A9F94	addiu  v0, zero, $ffff (=-$1)
+800A9F98	sw     a1, $0010(sp)
+800A9F9C	sw     v0, $0014(sp)
+800A9FA0	sw     zero, $0018(sp)
+800A9FA4	lw     a1, $0800(v1)
+800A9FA8	jal    func2177c [$8002177c]
+800A9FAC	sll    a2, a2, $0b
+
+loopa9fb0:	; 800A9FB0
+    800A9FB0	lw     v0, $794c(s0)
+    800A9FB4	nop
+    800A9FB8	lw     a0, $001c(v0)
+    800A9FBC	jal    func217c4 [$800217c4]
+    800A9FC0	addiu  a0, a0, $0854
+800A9FC4	bne    v0, zero, loopa9fb0 [$800a9fb0]
+
+La9fcc:	; 800A9FCC
+800A9FCC	lw     a0, $0024(s5)
+800A9FD0	jal    func1c750 [$8001c750]
+800A9FD4	addu   a1, zero, zero
+800A9FD8	lw     a0, $0024(s5)
+800A9FDC	jal    func1ca70 [$8001ca70]
+800A9FE0	nop
+800A9FE4	lui    a0, $8006
+800A9FE8	lw     v1, $0024(s5)
+800AA008	addu   v1, v1, v0
+800AA00C	addu   v0, zero, zero
+800AA010	sw     v1, $7948(a0)
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcac67c
+A1 = 9;
+loopac68c:	; 800AC68C
+    if( w[800c9ccc + A1 * c + 4] != 0 && w[800c9ccc + A1 * c + 4] <= A0 )
+    {
+        [800c9ccc + A1 * c + 4] = w(0);
+        [800c9ccc + A1 * c + 8] = w(0);
+    }
+    A1 = A1 - 1;
+800AC6B0	bgez   a1, loopac68c [$800ac68c]
+////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1030,303 +1358,4 @@ return 0;
 
 
 
-////////////////////////////////
-// funca9bdc
-S5 = A0;
-A2 = A1;
-A1 = 801ddf00;
-A0 = 10000;
 
-800A9BF8	lui    v0, $8006
-800A9BFC	lw     v0, $794c(v0)
-800A9C00	ori    a0, a0, $6fff
-800A9C1C	lw     v0, $001c(v0)
-800A9C20	lui    v1, $8006
-800A9C24	lw     v0, $0808(v0)
-800A9C28	lw     v1, $7948(v1)
-800A9C2C	sll    s0, v0, $0b
-800A9C30	addu   v0, v1, s0
-800A9C34	subu   a1, a1, v0
-800A9C38	slt    a0, a0, a1
-800A9C3C	bne    a0, zero, La9c60 [$800a9c60]
-800A9C40	lui    v0, $801d
-800A9C44	ori    v0, v0, $6f00
-800A9C48	subu   s0, v0, v1
-800A9C4C	bgez   s0, La9c58 [$800a9c58]
-800A9C50	addu   v0, s0, zero
-800A9C54	addiu  v0, s0, $07ff
-
-La9c58:	; 800A9C58
-800A9C58	sra    v0, v0, $0b
-800A9C5C	sll    s0, v0, $0b
-
-La9c60:	; 800A9C60
-800A9C60	andi   v1, a2, $ffff
-800A9C64	lui    v0, $0005
-800A9C68	or     s1, v1, v0
-800A9C6C	jal    func220e8 [$800220e8]
-800A9C70	addu   a0, s1, zero
-800A9C74	beq    v0, zero, La9cf0 [$800a9cf0]
-800A9C78	lui    v0, $8006
-800A9C7C	jal    func21e5c [$80021e5c]
-800A9C80	addu   a0, s1, zero
-800A9C84	lui    v1, $8006
-800A9C88	lw     a0, $7948(v1)
-800A9C8C	lui    v1, $8006
-800A9C90	lw     a3, $794c(v1)
-800A9C94	lw     v1, $0008(v0)
-800A9C98	lw     a1, $000c(v0)
-800A9C9C	lw     a2, $001c(a3)
-800A9CA0	addu   v1, v1, a1
-800A9CA4	sw     v1, $0874(a2)
-800A9CA8	lw     a1, $001c(a3)
-800A9CAC	lw     v1, $000c(v0)
-800A9CB0	nop
-800A9CB4	sw     v1, $0864(a1)
-800A9CB8	lw     a1, $001c(a3)
-800A9CBC	lw     v1, $001c(v0)
-800A9CC0	nop
-800A9CC4	sw     v1, $0858(a1)
-800A9CC8	lw     a1, $0008(v0)
-800A9CCC	lw     a2, $000c(v0)
-800A9CD0	jal    func1daa4 [$8001daa4]
-800A9CD4	addu   a3, zero, zero
-800A9CD8	jal    func22390 [$80022390]
-800A9CDC	addu   a0, s1, zero
-800A9CE0	jal    func130a4 [$800130a4]
-800A9CE4	addu   a0, zero, zero
-800A9CE8	j      La9d40 [$800a9d40]
-800A9CEC	lui    s3, $8006
-
-La9cf0:	; 800A9CF0
-800A9CF0	addu   s1, v0, zero
-800A9CF4	lw     v0, $794c(s1)
-800A9CF8	lui    v1, $8006
-800A9CFC	lw     v0, $001c(v0)
-800A9D00	lw     a3, $7948(v1)
-800A9D04	lw     a2, $0808(v0)
-800A9D08	addiu  a0, v0, $0854
-800A9D0C	sw     zero, $0010(sp)
-800A9D10	sw     s0, $0014(sp)
-800A9D14	sw     zero, $0018(sp)
-800A9D18	lw     a1, $0800(v0)
-800A9D1C	jal    func2177c [$8002177c]
-800A9D20	sll    a2, a2, $0b
-
-loopa9d24:	; 800A9D24
-    800A9D24	lw     v0, $794c(s1)
-    800A9D28	nop
-    800A9D2C	lw     a0, $001c(v0)
-    800A9D30	jal    func217c4 [$800217c4]
-    800A9D34	addiu  a0, a0, $0854
-800A9D38	bne    v0, zero, loopa9d24 [$800a9d24]
-
-La9d40:	; 800A9D40
-800A9D3C	lui    s3, $8006
-800A9D40	lw     v0, $794c(s3)
-800A9D44	nop
-800A9D48	lw     v0, $001c(v0)
-800A9D4C	nop
-800A9D50	lw     a0, $0874(v0)
-800A9D54	jal    funcac67c [$800ac67c]
-
-S4 = w[80067948];
-
-
-
-A0 = S4;
-A1 = 4;
-A2 = 140000;
-A3 = 0;
-func1c8b0; // address of file with identificator 0 in resource file type 14
-V1 = w[8006794c];
-V1 = w[V1 + 1c];
-[V1 + 7e4] = w(V0);
-
-
-
-A0 = S4;
-A1 = 2;
-A2 = 1b0000;
-A3 = 0;
-func1c8b0; // address of file with index 0 in resource file type 1b
-
-S1 = V0;
-if (S1 != 0)
-{
-    A0 = S4;
-    A1 = 5;
-    A2 = 1b0000;
-    A3 = 0;
-    func1c8b0;
-
-    T1 = w[8006794c];
-    A1 = w[T1 + 1c];
-    V1 = w[80067948];
-    T0 = w[A1 + 864];
-
-    V0 = S1 + V0;
-    A3 = V1 + T0;
-
-    S2 = T0;
-
-    if (A3 < V0)
-    {
-        800A9DD8	lw     a2, $0808(a1)
-        800A9DDC	sw     s2, $0010(sp)
-        800A9DE0	lw     v0, $001c(t1)
-        800A9DE4	nop
-        800A9DE8	lw     v0, $0864(v0)
-        800A9DEC	addiu  a0, a1, $0854
-        800A9DF0	sw     zero, $0018(sp)
-        800A9DF4	subu   v0, s0, v0
-        800A9DF8	sw     v0, $0014(sp)
-        800A9DFC	lw     a1, $0800(a1)
-        800A9E00	jal    func2177c [$8002177c]
-        800A9E04	sll    a2, a2, $0b
-
-        loopa9e08:	; 800A9E08
-            800A9E08	lw     v0, $794c(s3)
-            800A9E0C	nop
-            800A9E10	lw     a0, $001c(v0)
-            800A9E14	jal    func217c4 [$800217c4]
-            800A9E18	addiu  a0, a0, $0854
-        800A9E1C	bne    v0, zero, loopa9e08 [$800a9e08]
-
-        800A9E20	lui    v0, $8006
-        800A9E24	lw     a0, $794c(v0)
-        800A9E28	nop
-        800A9E2C	lw     v1, $001c(a0)
-        800A9E30	nop
-        800A9E34	lw     v0, $0864(v1)
-        800A9E38	nop
-        800A9E3C	addu   v0, v0, s2
-        800A9E40	sw     v0, $0864(v1)
-        800A9E44	lw     v0, $001c(a0)
-        800A9E48	nop
-        800A9E4C	lw     a0, $0874(v0)
-        800A9E50	jal    funcac67c [$800ac67c]
-        800A9E54	nop
-    }
-
-    A0 = S1;
-    A1 = 1;
-    A2 = 40000;
-    A3 = 0;
-    func1c8b0;
-
-    S0 = V0 - 1;
-    if (S0 >= 0)
-    {
-        loopa9e80:	; 800A9E80
-            A0 = S1;
-
-            A1 = 2;
-            A2 = 40000 | (S0 & ffff);
-            A3 = 0;
-            func1c8b0; // get addresses of tim files
-
-            if (V0 != -1)
-            {
-                A0 = V0;
-                func1d8a8; // load tim files?
-            }
-
-            S0 = S0 - 1;
-        800A9EA8	bgez   s0, loopa9e80 [$800a9e80]
-    }
-
-    A0 = S1;
-    A1 = 1;
-    A2 = 170000;
-    A3 = 0;
-    func1c8b0; // get number of files of resource type 17
-
-    S0 = V0 - 1;
-    if (S0 >= 0)
-    {
-        loopa9ed4:	; 800A9ED4
-            A0 = S1;
-            A1 = 2;
-            A2 = 170000 | (S0 & ffff);
-            A3 = 0;
-            func1c8b0; // get addresses of 17 type files
-
-            if (V0 != -1)
-            {
-                A0 = V0;
-                800A9EF4	jal    funcc9968 [$800c9968]
-            }
-
-            S0 = S0 - 1;
-        800A9F00	bgez   s0, loopa9ed4 [$800a9ed4]
-    }
-
-    A0 = 0;
-    800A9F08	jal    func130a4 [$800130a4]
-}
-
-A0 = S4;
-A1 = 2;
-A2 = 1b0001;
-A3 = 0;
-func1c8b0; // address of file with index 1 in resource file type 1b
-
-A0 = S1;
-V1 = w[8006794c];
-
-A1 = V0;
-[S5 + 24] = w(A1);
-V0 = w[V1 + 1c];
-V1 = w[V0 + 864];
-
-S0 = V1 - A1 + S4;
-A2 = S0;
-A3 = 0;
-func1daa4;
-
-800A9F58	jal    func130a4 [$800130a4]
-800A9F5C	addu   a0, zero, zero
-800A9F2C	lui    s2, $8006
-800A9F60	lw     v0, $794c(s2)
-800A9F64	sw     s1, $0024(s5)
-800A9F68	lw     v1, $001c(v0)
-800A9F6C	nop
-800A9F70	lw     a1, $0864(v1)
-800A9F74	lw     v0, $0858(v1)
-800A9F78	nop
-800A9F7C	slt    v0, a1, v0
-800A9F80	beq    v0, zero, La9fcc [$800a9fcc]
-800A9F84	addiu  a0, v1, $0854
-800A9F88	addu   a3, s1, s0
-800A9F8C	addu   s0, s2, zero
-800A9F90	lw     a2, $0808(v1)
-800A9F94	addiu  v0, zero, $ffff (=-$1)
-800A9F98	sw     a1, $0010(sp)
-800A9F9C	sw     v0, $0014(sp)
-800A9FA0	sw     zero, $0018(sp)
-800A9FA4	lw     a1, $0800(v1)
-800A9FA8	jal    func2177c [$8002177c]
-800A9FAC	sll    a2, a2, $0b
-
-loopa9fb0:	; 800A9FB0
-    800A9FB0	lw     v0, $794c(s0)
-    800A9FB4	nop
-    800A9FB8	lw     a0, $001c(v0)
-    800A9FBC	jal    func217c4 [$800217c4]
-    800A9FC0	addiu  a0, a0, $0854
-800A9FC4	bne    v0, zero, loopa9fb0 [$800a9fb0]
-
-La9fcc:	; 800A9FCC
-800A9FCC	lw     a0, $0024(s5)
-800A9FD0	jal    func1c750 [$8001c750]
-800A9FD4	addu   a1, zero, zero
-800A9FD8	lw     a0, $0024(s5)
-800A9FDC	jal    func1ca70 [$8001ca70]
-800A9FE0	nop
-800A9FE4	lui    a0, $8006
-800A9FE8	lw     v1, $0024(s5)
-800AA008	addu   v1, v1, v0
-800AA00C	addu   v0, zero, zero
-800AA010	sw     v1, $7948(a0)
-////////////////////////////////
