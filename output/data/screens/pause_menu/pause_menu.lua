@@ -23,13 +23,13 @@ UiContainer.PauseMenu = {
                 if self.position == 1 then
                     script:request_end_sync( Script.UI, "BeginMenu", "show", 0 )
                     map( "empty" )
-                    MenuSettings.pause_available = false
+                    FFVII.MenuSettings.pause_available = false
                 else
-                    MenuSettings.available = true
+                    FFVII.MenuSettings.available = true
                 end
             elseif button == "Escape" and event == "Press" then
                 script:request_end_sync( Script.UI, "PauseMenu", "hide", 0 )
-                MenuSettings.available = true
+                FFVII.MenuSettings.available = true
             elseif button == "Right" then
                 self.position = self.position + 1
                 if self.position > self.position_total then
@@ -43,9 +43,9 @@ UiContainer.PauseMenu = {
                 end
                 menu_cursor:set_default_animation( "Position" .. self.position )
             end
-        elseif MenuSettings.pause_available == true then
+        elseif FFVII.MenuSettings.pause_available == true then
             if button == "Enter" and event == "Press" then
-                MenuSettings.available = false
+                FFVII.MenuSettings.available = false
                 script:request_end_sync( Script.UI, "PauseMenu", "show", 0 )
             end
         end

@@ -1,5 +1,7 @@
 load_battle_players = function()
-    entity_manager:add_entity( "Player1", "models/ffvii/battle/units/first_ray.mesh", 0, 2, 0, 0 )
+    EntityContainer.Cloud = FFVII.Characters.Cloud
+
+    entity_manager:add_entity( "Cloud", "models/ffvii/battle/units/first_ray.mesh", 0, 2, 0, 0 )
 end
 
 

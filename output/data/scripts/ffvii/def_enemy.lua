@@ -1,8 +1,8 @@
-Enemies = {}
+FFVII.Enemies = {}
 
 
 
-Enemies.MP = {
+FFVII.Enemies.MP = {
     entity = nil,
 
     max_hp = 30,
@@ -94,4 +94,4 @@ Enemies.MP = {
 
         return 0;
     end;
-},
+}

@@ -5,7 +5,7 @@ EntityContainer = {}
 EntityContainer[ "Director" ] = {
     on_start = function( self )
         background2d:scroll_to_position( 0, 120, Background2D.NONE, 0 )
-        if Savemap.progress_game == 0 then
+        if FFVII.Data.progress_game == 0 then
             player_lock( true )
             --03b2 (end 03d1): fade:black();
             background2d:scroll_to_position( 0, 0, Background2D.NONE, 0 )
@@ -15,21 +15,24 @@ EntityContainer[ "Director" ] = {
 
         --03d6 (end 03d6): [UNREVERSED] BTLMD(20, 00);
 
-        if Savemap.progress_game > 0 then
+        if FFVII.Data.progress_game > 0 then
             --03e1 (end 03e3): music:execute_akao( 10, pointer_to_field_AKAO_0 ); -- play field music
         end
 
         --03e3 (end 03e3): [UNREVERSED] FMUSC(00);
         --03e5 (end 03e5): field:map_name(0);
 
-        if Savemap.progress_game == 0 then
+        if FFVII.Data.progress_game == 0 then
             --03f0 (end 04bd): field:movie_set( 53 );
             --03f2 (end 04bd): music:execute_akao( c8, 00007000, 00000000, 00000000, 00000000, 00000000, 00000301 );
             script:request( Script.ENTITY, "View", "script_3", 6 )
             --0404 (end 04bd): field:play_movie();
             --0405 (end 04bd): music:execute_akao( c8, 00007fff, 00000000, 00000000, 00000000, 00000000, 00002081 );
             --0414 (end 04bd): game:variable_set("menu_appear", 763);
-            --0419 (end 04bd): game:party_set( 0, 254, 254 );
+
+
+            FFVII.set_party( "Cloud", nil, nil );
+
             --041d (end 04bd): [UNREVERSED] MMBLK(00);
             --043f (end 04bd): music:execute_akao( 20, 00000040, 00000035 ); -- play sound
 
@@ -63,21 +66,21 @@ EntityContainer[ "Director" ] = {
             script:request( Script.ENTITY, "Barret", "action2", 2 )
             script:wait( 0.666667 )
 
-            Savemap.progress_game = 1
+            FFVII.Data.progress_game = 1
 
             player_lock( false )
         end
 
         while true do
-            if Savemap.progress_game > 1 then
+            if FFVII.Data.progress_game > 1 then
                 break
             end
 
             if EntityContainer[ "Cloud" ].cloud ~= nil then
                 local triangle_id = EntityContainer[ "Cloud" ].cloud:get_move_triangle_id()
 
-                if ( Savemap.progress_game == 1 ) and ( triangle_id == 12 ) then
-                    Savemap.progress_game = 6
+                if ( FFVII.Data.progress_game == 1 ) and ( triangle_id == 12 ) then
+                    FFVII.Data.progress_game = 6
                     player_lock( true )
                     script:request( Script.ENTITY, "Hei0", "action1", 2 )
                     script:request_end_sync( Script.ENTITY, "Hei1", "action1", 2 )
@@ -101,7 +104,7 @@ EntityContainer[ "Cloud" ] = {
     on_start = function( self )
         set_entity_to_character( "Cloud", "Cloud" );
         self.cloud = entity_manager:get_entity( "Cloud" )
-        if Savemap.progress_game == 0 then
+        if FFVII.Data.progress_game == 0 then
             self.cloud:set_position( 28.5547, 214.312, 2.42188 )
             self.cloud:set_direction( 180 )
             self.cloud:set_solid( false )
@@ -132,7 +135,7 @@ EntityContainer[ "Barret" ] = {
     on_start = function( self )
         set_entity_to_character( "Barret", "Barret" );
         self.barret = entity_manager:get_entity( "Barret" )
-        if Savemap.progress_game <= 1 then
+        if FFVII.Data.progress_game <= 1 then
             self.barret:set_position( 30.6328, 214.758, 2.52344 )
         end
 
@@ -392,7 +395,7 @@ EntityContainer[ "Gu0" ] = {
         self.gu0 = entity_manager:get_entity( "Gu0" )
         self.gu0:set_position( 28.0938, 217.008, 2.42188 )
         self.gu0:set_direction( 90 )
-        if Savemap.progress_game >= 1 then
+        if FFVII.Data.progress_game >= 1 then
             self.gu0:set_position( 29.4297, 216.578, 2.42188 )
             self.gu0:set_direction( 191.25 )
             self.gu0:set_default_animation( "Dead1" )
@@ -463,7 +466,7 @@ EntityContainer[ "Gu1" ] = {
         self.gu1 = entity_manager:get_entity( "Gu1" )
         self.gu1:set_position( 28.875, 224.477, 2.42188 )
         self.gu1:set_direction( 90 )
-        if Savemap.progress_game >= 1 then
+        if FFVII.Data.progress_game >= 1 then
             self.gu1:set_position( 30.625, 227.812, 2.42969 )
             self.gu1:set_direction( 56.25 )
             self.gu1:set_default_animation( "Dead2" )

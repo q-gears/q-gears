@@ -10,7 +10,7 @@ end
 
 
 set_entity_to_character = function( entity_name, character_name )
-    if character_name == "Cloud" and entity_name ~= "" then
+    if character_name == FFVII.Party[ 1 ] and entity_name ~= "" then
         if System.MapChanger.point_name ~= "" then
             local point = entity_manager:get_entity_point( System.MapChanger.point_name )
             if point ~= nil then
@@ -32,7 +32,7 @@ end
 
 player_lock = function( lock )
     entity_manager:player_lock( lock )
-    MenuSettings.available = ( lock == false )
+    FFVII.MenuSettings.available = ( lock == false )
 end
 
 

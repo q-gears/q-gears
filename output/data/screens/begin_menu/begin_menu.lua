@@ -27,25 +27,25 @@ UiContainer.BeginMenu = {
                     console( "camera_free false" )
                     console( "debug_walkmesh false" )
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
-                    MenuSettings.pause_available = true
+                    FFVII.MenuSettings.pause_available = true
                 elseif self.position == 2 then
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
                     console( "camera_free true" )
                     console( "debug_walkmesh true" )
                     map( "test_3" )
-                    MenuSettings.pause_available = true
+                    FFVII.MenuSettings.pause_available = true
                 elseif self.position == 3 then
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
                     console( "camera_free true" )
                     console( "debug_walkmesh true" )
                     map( "test_1" )
-                    MenuSettings.pause_available = true
+                    FFVII.MenuSettings.pause_available = true
                 elseif self.position == 4 then
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
                     console( "camera_free true" )
                     console( "debug_walkmesh true" )
                     map( "test_2" )
-                    MenuSettings.pause_available = true
+                    FFVII.MenuSettings.pause_available = true
                 elseif self.position == 5 then
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
                     script:request_end_sync( Script.UI, "Idol", "show", 0 )

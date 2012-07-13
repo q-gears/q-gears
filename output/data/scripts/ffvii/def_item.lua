@@ -1,0 +1,1 @@
+FFVII.Items = {}

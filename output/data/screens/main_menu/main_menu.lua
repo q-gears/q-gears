@@ -37,7 +37,7 @@ UiContainer.MainMenu = {
                 end
                 menu_cursor:set_default_animation( "Position" .. self.position )
             end
-        elseif MenuSettings.available == true then
+        elseif FFVII.MenuSettings.available == true then
             if button == "Space" and event == "Press" then
                 script:request_end_sync( Script.UI, "MainMenu", "show", 0 )
             end
@@ -50,7 +50,7 @@ UiContainer.MainMenu = {
 
     show = function( self )
         entity_manager:set_paused( true )
-        MenuSettings.pause_available = false
+        FFVII.MenuSettings.pause_available = false
 
         ui_manager:get_widget( "MainMenu" ):set_visible( true )
 
@@ -89,7 +89,7 @@ UiContainer.MainMenu = {
 
         ui_manager:get_widget( "MainMenu" ):set_visible( false )
 
-        MenuSettings.pause_available = true
+        FFVII.MenuSettings.pause_available = true
         entity_manager:set_paused( false )
 
         return 0;

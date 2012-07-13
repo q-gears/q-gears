@@ -14,20 +14,20 @@ EntityContainer[ "Director" ] = {
         --03ab (end 03ab): field:map_name(1);
 
         while true do
-            if Savemap.progress_game >= 7 then
+            if FFVII.Data.progress_game >= 7 then
                 break
             end
 
             if EntityContainer[ "Cloud" ].cloud ~= nil then
                 local triangle_id = EntityContainer[ "Cloud" ].cloud:get_move_triangle_id()
 
-                if ( Savemap.progress_game < 7 ) and ( triangle_id == 62 ) then
+                if ( FFVII.Data.progress_game < 7 ) and ( triangle_id == 62 ) then
                     player_lock( true )
                     background2d:scroll_to_position( -288, 180, Background2D.SMOOTH, 1.06667 )
 
                     script:request( Script.ENTITY, "Cloud", "scene_part_1", 6 )
 
-                    Savemap.progress_game = 7
+                    FFVII.Data.progress_game = 7
 
                     script:request_end_sync( Script.ENTITY, "Biggs", "scene_part_2", 6 )
                     script:wait( 0.2 )
@@ -162,7 +162,7 @@ EntityContainer[ "Barret" ] = {
         set_entity_to_character( "Barret", "Barret" )
         self.barret = entity_manager:get_entity( "Barret" )
 
-        if Savemap.progress_game < 7 then
+        if FFVII.Data.progress_game < 7 then
             self.barret:set_position( 8.84375, 4.82812, 5.07031 )
         end
 
@@ -228,7 +228,7 @@ EntityContainer[ "Biggs" ] = {
         self.biggs:set_position( 3.91406, 6.07812, 5.07031 )
         self.biggs:set_direction( 174.375 )
 
-        if Savemap.progress_game >= 7 then
+        if FFVII.Data.progress_game >= 7 then
             self.biggs:set_solid( false )
             self.biggs:set_visible( false )
         else
@@ -310,7 +310,7 @@ EntityContainer[ "Jessie" ] = {
         self.jessie:set_default_animation( "BreakUp" )
         self.jessie:play_animation( "BreakUp" )
 
-        if Savemap.progress_game >= 7 then
+        if FFVII.Data.progress_game >= 7 then
             self.jessie:set_solid( false )
             self.jessie:set_visible( false )
         else
@@ -361,7 +361,7 @@ EntityContainer[ "Wedge" ] = {
         self.wedge:set_default_animation( "LookAround" )
         self.wedge:play_animation( "LookAround" )
 
-        if Savemap.progress_game >= 7 then
+        if FFVII.Data.progress_game >= 7 then
             self.wedge:set_solid( false )
             self.wedge:set_visible( false )
         else
@@ -395,7 +395,7 @@ EntityContainer[ "DoorLeft" ] = {
         self.door:set_position( 4.25, 7.20703, 5.07031 )
         self.door:set_direction( 354.375 )
 
-        if Savemap.progress_game >= 7 then
+        if FFVII.Data.progress_game >= 7 then
             self.door:set_visible( false )
         else
             self.door:set_visible( true )
@@ -425,7 +425,7 @@ EntityContainer[ "DoorRight" ] = {
         self.door:set_position( 4.93359, 7.125, 5.07031 )
         self.door:set_direction( 174.375 )
 
-        if Savemap.progress_game >= 7 then
+        if FFVII.Data.progress_game >= 7 then
             self.door:set_visible( false )
         else
             self.door:set_visible( true )

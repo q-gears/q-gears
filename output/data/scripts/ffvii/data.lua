@@ -1,5 +1,11 @@
-Savemap = {
+FFVII = {}
+
+
+
+FFVII.Data = {
     progress_game = 0,
+
+    money = 0,
 
     love_point_aeris = 50,
     love_point_tifa = 30,
@@ -13,7 +19,17 @@ Savemap = {
 
 
 
-MenuSettings = {
+FFVII.MenuSettings = {
     available = false,
     pause_available = false,
+}
+
+
+
+FFVII.ItemStorage = {
+}
+
+
+
+FFVII.Party = {
 }

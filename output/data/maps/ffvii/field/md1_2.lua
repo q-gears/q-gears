@@ -39,13 +39,13 @@ EntityContainer[ "Biggs" ] = {
         self.biggs:set_position( 26.8516, 246.281, 5.01562 )
         self.biggs:set_solid( false )
 
-        if Savemap.progress_game < 8 then
+        if FFVII.Data.progress_game < 8 then
             self.biggs:set_visible( true )
             self.biggs:set_move_auto_speed( 3.75 )
             self.biggs:move_to_position( 28.4844, 243.898 )
             self.biggs:move_sync()
             -- this needs to be called after some sync because other entity check this in on_start too.
-            Savemap.progress_game = 8
+            FFVII.Data.progress_game = 8
             self.biggs:play_animation( "LookAround" )
             self.biggs:animation_sync()
             self.biggs:move_to_position( 33.4141, 244.211 )
@@ -79,7 +79,7 @@ EntityContainer[ "Jessie" ] = {
         self.jessie:set_position( 27.9219, 253.773, 4.96875 )
         self.jessie:set_solid( false )
 
-        if Savemap.progress_game < 8 then
+        if FFVII.Data.progress_game < 8 then
             self.jessie:set_visible( true )
             script:wait( 8.5 )
             self.jessie:move_to_position( 26.4141, 252.445 )
@@ -108,7 +108,7 @@ EntityContainer[ "Wedge" ] = {
         self.wedge:set_position( 34.0312, 247.484, 5.09375 )
         self.wedge:set_solid( false )
 
-        if Savemap.progress_game < 8 then
+        if FFVII.Data.progress_game < 8 then
             self.wedge:set_visible( true )
             script:wait( 4.26667 )
             self.wedge:move_to_position( 33.6875, 250.664 )
