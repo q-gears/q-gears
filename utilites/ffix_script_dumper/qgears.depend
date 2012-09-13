@@ -620,3 +620,42 @@
 	"TextFile.h"
 	"../../common/Logger.h"
 
+1306971024 source:s:\q-gears\utilites\common\filesystem.cpp
+	"FileSystem.h"
+	"Logger.h"
+	<stdio.h>
+
+1306971024 s:\q-gears\utilites\common\filesystem.h
+	<OgreString.h>
+
+1333172538 s:\q-gears\utilites\common\logger.h
+	<OgreString.h>
+	<OgreUTFString.h>
+
+1333173336 source:s:\q-gears\utilites\common\logger.cpp
+	"Logger.h"
+	"FileSystem.h"
+	<OgreStringConverter.h>
+
+1306971024 source:s:\q-gears\utilites\ffix_script_dumper\src\main.cpp
+	"../../common/FileSystem.h"
+	"../../common/Logger.h"
+	"ScriptFile.h"
+	"TextFile.h"
+
+1306971024 s:\q-gears\utilites\ffix_script_dumper\src\scriptfile.h
+	"../../common/File.h"
+
+1306971024 s:\q-gears\utilites\common\file.h
+	"TypeDefine.h"
+	<OgreString.h>
+
+1306971024 s:\q-gears\utilites\common\typedefine.h
+
+1306971024 s:\q-gears\utilites\ffix_script_dumper\src\textfile.h
+	"../../common/File.h"
+
+1345434284 source:s:\q-gears\utilites\ffix_script_dumper\src\scriptfile.cpp
+	"ScriptFile.h"
+	"../../common/Logger.h"
+

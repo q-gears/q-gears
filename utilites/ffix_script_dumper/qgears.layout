@@ -2,18 +2,18 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
 	<File name="..\common\Logger.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="495" topLine="0" />
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="src\Main.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="384" topLine="0" />
+	<File name="src\ScriptFile.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="92801" topLine="2085" />
+		</Cursor>
 	</File>
-	<File name="src\ScriptFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="87769" topLine="1952" />
-	</File>
-	<File name="src\ScriptFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="444" topLine="0" />
-	</File>
-	<File name="src\TextFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="541" topLine="28" />
+	<File name="src\TextFile.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="30490" topLine="458" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

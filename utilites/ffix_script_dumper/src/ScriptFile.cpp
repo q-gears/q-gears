@@ -60,7 +60,7 @@ ScriptFile::DumpScripts()
             continue;
         }
 
-        export_script->Log( "ENTITY: entity_id = 0x" + ToHexString( entity, 2, '0' ) + "\n" );
+        export_script->Log( "ENTITY: entity_id = 0x" + HexToString( entity, 2, '0' ) + "\n" );
 
         script_offset = 0x80 + GetU16LE( 0x80 + entity * 0x8 );
 
@@ -73,16 +73,16 @@ ScriptFile::DumpScripts()
             script_pointer = script_offset + 2 + GetU16LE( script_offset + 2 + i * 0x4 + 2 );
             script_pointer_end = script_pointer;
 
-            export_script->Log( "SCRIPT: script_id = 0x" + ToHexString( script_type, 2, '0' ) + "\n" );
+            export_script->Log( "SCRIPT: script_id = 0x" + HexToString( script_type, 2, '0' ) + "\n" );
             //export_script->Log( "script = w[8007aecc];\n" );
             //export_script->Log( "mask = 8007ae10;\n" );
 
             for( ; script_pointer <= script_pointer_end; )
             {
                 u8 opcode = GetU8( script_pointer );
-                raw_script += " " + ToHexString( opcode, 2, '0' );
+                raw_script += " " + HexToString( opcode, 2, '0' );
 
-                //export_script->Log( "0x" + ToHexString( script_pointer, 4, '0' ) + " 0x" + ToHexString( script_pointer_end, 4, '0' ) + "\n" );
+                //export_script->Log( "0x" + HexToString( script_pointer, 4, '0' ) + " 0x" + HexToString( script_pointer_end, 4, '0' ) + "\n" );
 
                 if( opcode != 0x02 && opcode != 0x03 && opcode != 0x06 && opcode != 0x0b )
                 {
@@ -91,38 +91,38 @@ ScriptFile::DumpScripts()
 
                 if( opcode != 0x05 )
                 {
-                    export_script->Log( "0x" + ToHexString( script_stored_pointer, 4, '0' ) );
+                    export_script->Log( "0x" + HexToString( script_stored_pointer, 4, '0' ) );
                 }
 
                 // Jump
                 if( opcode == 0x01 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 2 ), 2, '0' );
                     s16 jump = GetU16LE( script_pointer + 1 ) + script_pointer + 3;
                     AdvanceScript( 0, jump );
                     script_pointer += 3;
 
-                    export_script->Log( "    JumpTo( 0x" + ToHexString( jump, 4, '0' ) + " ); //" + raw_script + "\n" );
+                    export_script->Log( "    JumpTo( 0x" + HexToString( jump, 4, '0' ) + " ); //" + raw_script + "\n" );
                     raw_script = "";
                 }
                 // Jump If False
                 else if( opcode == 0x02 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 2 ), 2, '0' );
                     s16 jump = GetU16LE( script_pointer + 1 ) + script_pointer + 3;
                     AdvanceScript( 3, jump );
 
-                    export_script->Log("    JumpIf( " + GetStringFromStack() + " == false )To( 0x" + ToHexString( jump, 4, '0' ) + " ); //" + raw_script + "\n" );
+                    export_script->Log("    JumpIf( " + GetStringFromStack() + " == false )To( 0x" + HexToString( jump, 4, '0' ) + " ); //" + raw_script + "\n" );
                     raw_script = "";
                 }
                 // Jump If True
                 else if( opcode == 0x03 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 2 ), 2, '0' );
                     s16 jump = GetU16LE( script_pointer + 1 ) + script_pointer + 3;
                     AdvanceScript( 3, jump );
 
-                    export_script->Log("    JumpIf( " + GetStringFromStack() + " == true )To( 0x" + ToHexString( jump, 4, '0' ) + " ); //" + raw_script + "\n" );
+                    export_script->Log("    JumpIf( " + GetStringFromStack() + " == true )To( 0x" + HexToString( jump, 4, '0' ) + " ); //" + raw_script + "\n" );
                     raw_script = "";
                 }
                 // Return
@@ -143,7 +143,7 @@ ScriptFile::DumpScripts()
                     u8 advance_op = GetU8( script_pointer );
                     if ( advance_op != 0x02 && advance_op != 0x03 && advance_op != 0x06 && advance_op != 0x0b )
                     {
-                        export_script->Log( "0x" + ToHexString( script_stored_pointer, 4, '0' ) );
+                        export_script->Log( "0x" + HexToString( script_stored_pointer, 4, '0' ) );
                         export_script->Log( "    " + GetStringFromStack() + "; //" + raw_script + "\n" );
                         raw_script = "";
                     }
@@ -152,31 +152,31 @@ ScriptFile::DumpScripts()
                 {
                     AdvanceScript( 1 );
                     u8 case_option   = GetU8( script_pointer );
-                    raw_script += " " + ToHexString( case_option, 2, '0' );
+                    raw_script += " " + HexToString( case_option, 2, '0' );
                     u16 default_jump = GetU16LE( script_pointer + 1 ) + script_pointer + 3;
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 2 ), 2, '0' );
                     AdvanceScript( 0, default_jump );
 
 
                     export_script->Log("    JumpSwitch( " + GetStringFromStack() + " )" );
                     for ( int i = 0; i < case_option; ++i )
                     {
-                        raw_script += " " + ToHexString( GetU8( script_pointer + 3 + i * 4 + 0 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 3 + i * 4 + 1 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 3 + i * 4 + 2 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 3 + i * 4 + 3 ), 2, '0' );
+                        raw_script += " " + HexToString( GetU8( script_pointer + 3 + i * 4 + 0 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 3 + i * 4 + 1 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 3 + i * 4 + 2 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 3 + i * 4 + 3 ), 2, '0' );
 
                         u16 value  = GetU16LE( script_pointer + 3 + i * 4 + 0);
                         u16 jump  = GetU16LE( script_pointer + 3 + i * 4 + 2) + script_pointer + 3;
                         AdvanceScript( 0, jump );
-                        export_script->Log("( case " + ToHexString( value, 4, '0' ) + ": jump_to:0x" + ToHexString( jump, 4, '0' ) + ")" );
+                        export_script->Log("( case " + HexToString( value, 4, '0' ) + ": jump_to:0x" + HexToString( jump, 4, '0' ) + ")" );
                     }
 
-                    export_script->Log("( default: jump_to:0x" + ToHexString( default_jump, 4, '0' ) + "); //" + raw_script + "\n" );
+                    export_script->Log("( default: jump_to:0x" + HexToString( default_jump, 4, '0' ) + "); //" + raw_script + "\n" );
                     raw_script = "";
                     AdvanceScript( 3 + case_option * 4 );
                 }
                 else if( opcode == 0x07 )
                 {
-                    Ogre::String data1 = ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
-                    Ogre::String data2 = ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
+                    Ogre::String data1 = HexToString( GetU8( script_pointer + 1 ), 2, '0' );
+                    Ogre::String data2 = HexToString( GetU8( script_pointer + 2 ), 2, '0' );
                     raw_script += " " + data1 + " " + data2;
                     AdvanceScript( 3 );
 
@@ -185,8 +185,8 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x08 )
                 {
-                    Ogre::String data1 = ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
-                    Ogre::String data2 = ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
+                    Ogre::String data1 = HexToString( GetU8( script_pointer + 1 ), 2, '0' );
+                    Ogre::String data2 = HexToString( GetU8( script_pointer + 2 ), 2, '0' );
                     raw_script += " " + data1 + " " + data2;
                     AdvanceScript( 3 );
 
@@ -195,8 +195,8 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x09 )
                 {
-                    Ogre::String data1 = ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
-                    Ogre::String data2 = ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
+                    Ogre::String data1 = HexToString( GetU8( script_pointer + 1 ), 2, '0' );
+                    Ogre::String data2 = HexToString( GetU8( script_pointer + 2 ), 2, '0' );
                     raw_script += " " + data1 + " " + data2;
                     AdvanceScript( 3 );
 
@@ -211,21 +211,21 @@ ScriptFile::DumpScripts()
                     u16 default_jump = GetU16LE( script_pointer + 3 ) + script_pointer;
                     AdvanceScript( 0, default_jump );
 
-                    raw_script += " " + ToHexString( case_option, 2, '0' );
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 3 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 4 ), 2, '0' );
+                    raw_script += " " + HexToString( case_option, 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 2 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 3 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 4 ), 2, '0' );
 
                     export_script->Log("    JumpSwitch( " + GetStringFromStack() + " )" );
                     for ( int i = 0; i < case_option; ++i )
                     {
-                        raw_script += " " + ToHexString( GetU8( script_pointer + 5 + i * 2 + 0 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 5 + i * 2 + 1 ), 2, '0' );
+                        raw_script += " " + HexToString( GetU8( script_pointer + 5 + i * 2 + 0 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 5 + i * 2 + 1 ), 2, '0' );
 
                         u16 jump  = GetU16LE( script_pointer + 5 + i * 2) + script_pointer;
                         AdvanceScript( 0, jump );
-                        export_script->Log("( case 0x" + ToHexString( i + range_start, 4, '0' ) + ": jump_to:0x" + ToHexString( jump, 4, '0' ) + ")" );
+                        export_script->Log("( case 0x" + HexToString( i + range_start, 4, '0' ) + ": jump_to:0x" + HexToString( jump, 4, '0' ) + ")" );
                     }
 
-                    export_script->Log("( default: jump_to:0x" + ToHexString( default_jump, 4, '0' ) + "); //" + raw_script + "\n" );
+                    export_script->Log("( default: jump_to:0x" + HexToString( default_jump, 4, '0' ) + "); //" + raw_script + "\n" );
                     raw_script = "";
 
                     AdvanceScript( 5 + case_option * 2 );
@@ -247,36 +247,36 @@ ScriptFile::DumpScripts()
                 }*/
                 else if( opcode == 0x10 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
                     Ogre::String priority = Get8Variable();
                     Ogre::String entity_id = Get8Variable();
-                    raw_script += " " + ToHexString( GetU8( script_pointer ), 2, '0' );
-                    Ogre::String script_id = ToHexString( GetU8( script_pointer ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer ), 2, '0' );
+                    Ogre::String script_id = HexToString( GetU8( script_pointer ), 2, '0' );
                     AdvanceScript( 1 );
                     export_script->Log( "    RunScriptAsync( priority = " + priority + ", entity_id = " + entity_id + ", script_id = 0x" + script_id + " ); //" + raw_script + "\n" );
                     raw_script = "";
                 }
                 else if( opcode == 0x14 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
                     Ogre::String priority = Get8Variable();
                     Ogre::String entity_id = Get8Variable();
-                    raw_script += " " + ToHexString( GetU8( script_pointer ), 2, '0' );
-                    Ogre::String script_id = ToHexString( GetU8( script_pointer ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer ), 2, '0' );
+                    Ogre::String script_id = HexToString( GetU8( script_pointer ), 2, '0' );
                     AdvanceScript( 1 );
                     export_script->Log( "    RunScriptStartSync( priority = " + priority + ", entity_id = " + entity_id + ", script_id = 0x" + script_id + " ); //" + raw_script + "\n" );
                     raw_script = "";
                 }
                 else if( opcode == 0x1c )
                 {
-                    Ogre::String data = ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
-                    Ogre::String entity_id = ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
+                    Ogre::String data = HexToString( GetU8( script_pointer + 1 ), 2, '0' );
+                    Ogre::String entity_id = HexToString( GetU8( script_pointer + 2 ), 2, '0' );
                     raw_script += " " + data + " " + entity_id;
                     AdvanceScript( 3 );
 
@@ -285,7 +285,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x1d )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -296,7 +296,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x1f )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -308,7 +308,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x20 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -320,7 +320,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x21 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -329,7 +329,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x22 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -338,7 +338,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x23 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -355,7 +355,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x26 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -365,7 +365,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x27 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -374,7 +374,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x29)
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -384,11 +384,11 @@ ScriptFile::DumpScripts()
                         break;
                     }
 
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 0 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 0 ), 2, '0' );
                     u8 number = GetU8( script_pointer + 0 );
                     AdvanceScript( 1 );
 
-                    export_script->Log( "    SetDataForType3Entity( number = " + ToHexString( number, 2, '0' ) );
+                    export_script->Log( "    SetDataForType3Entity( number = " + HexToString( number, 2, '0' ) );
                     for ( int i = 0; i < number; ++i )
                     {
                         Ogre::String value1 = Get16Variable();
@@ -401,7 +401,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x2a )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -412,7 +412,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x2b )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -443,7 +443,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x2f )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -454,7 +454,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x33 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -464,7 +464,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x34 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -474,7 +474,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x35 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -484,7 +484,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x36 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -494,7 +494,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x3a )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -505,7 +505,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x3d )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -516,7 +516,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x40 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -532,7 +532,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x43 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -542,7 +542,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x47 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -552,7 +552,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x48 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -563,7 +563,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x4b )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -581,7 +581,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x51 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -592,7 +592,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x52 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -602,7 +602,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x54 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -612,7 +612,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x55 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -622,7 +622,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x56 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -633,7 +633,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x59 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -646,7 +646,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x5b )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -657,7 +657,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x61 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -668,7 +668,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x62 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -679,7 +679,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x65 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -691,7 +691,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x66 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -702,7 +702,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x67 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -713,7 +713,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x68 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -730,7 +730,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x6f )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -743,7 +743,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x75 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -754,7 +754,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x7a )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -764,7 +764,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x7b )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -774,7 +774,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x7e )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -798,7 +798,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x86 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -811,7 +811,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x88 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -824,7 +824,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x8b )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -842,7 +842,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x8f )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -862,7 +862,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x92 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -878,7 +878,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x93 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -888,7 +888,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x94 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -900,7 +900,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x9a )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -925,7 +925,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0x9f )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -938,7 +938,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xa1 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -950,7 +950,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xa8 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -960,7 +960,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xa9 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -984,7 +984,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xb3 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -998,7 +998,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xb4 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1008,7 +1008,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xc5 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1019,7 +1019,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xc6 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1031,7 +1031,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xc7 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1044,7 +1044,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xc8 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1058,7 +1058,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xca )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1069,7 +1069,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xcb )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1080,7 +1080,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xce )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1090,7 +1090,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xd7 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1100,7 +1100,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xd9 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1111,7 +1111,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xda )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1132,7 +1132,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xdd )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1142,7 +1142,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xde )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1153,7 +1153,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xe2 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1166,7 +1166,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xe3 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1175,7 +1175,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xec )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1190,7 +1190,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xef )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1199,7 +1199,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xf1 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1210,7 +1210,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xf2 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1221,7 +1221,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xf7 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1231,7 +1231,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xf8 )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1243,7 +1243,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xfd )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1254,7 +1254,7 @@ ScriptFile::DumpScripts()
                 }
                 else if( opcode == 0xfe )
                 {
-                    raw_script += " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+                    raw_script += " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
                     control = GetU8( script_pointer + 1 );
                     AdvanceScript( 2 );
 
@@ -1268,7 +1268,7 @@ ScriptFile::DumpScripts()
                 }
                 else
                 {
-                    export_script->Log( "    MISSING OPCODE 0x" + ToHexString( opcode, 2, '0' ) + "\n" );
+                    export_script->Log( "    MISSING OPCODE 0x" + HexToString( opcode, 2, '0' ) + "\n" );
                     break;
                 }
             }
@@ -1292,8 +1292,8 @@ ScriptFile::StackOpcodeParse()
     for ( ;; )
     {
         u8 stack_opcode = GetU8( script_pointer );
-        //export_script->Log( "StackOpcodeParse: 0x" + ToHexString( script_pointer, 4, '0' ) + " opcode: 0x" + ToHexString( stack_opcode, 2, '0' ) + "\n" );
-        raw_script += " " + ToHexString( stack_opcode, 2, '0' );
+        //export_script->Log( "StackOpcodeParse: 0x" + HexToString( script_pointer, 4, '0' ) + " opcode: 0x" + HexToString( stack_opcode, 2, '0' ) + "\n" );
+        raw_script += " " + HexToString( stack_opcode, 2, '0' );
         AdvanceScript( 1 );
 
         if( stack_opcode == 0x04 )
@@ -1506,7 +1506,7 @@ ScriptFile::StackOpcodeParse()
         }
         else if( stack_opcode == 0x29 )
         {
-            raw_script += " " + ToHexString( GetU8( script_pointer + 0 ), 2, '0' );
+            raw_script += " " + HexToString( GetU8( script_pointer + 0 ), 2, '0' );
 
             u16 data = GetU8( script_pointer + 0 );
             AdvanceScript( 1 );
@@ -1710,7 +1710,7 @@ ScriptFile::StackOpcodeParse()
         }
         else if( stack_opcode == 0x78 )
         {
-            raw_script += " " + ToHexString( GetU8( script_pointer + 0 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+            raw_script += " " + HexToString( GetU8( script_pointer + 0 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
 
             u16 data = ( GetU8( script_pointer + 0 ) << 8 ) | GetU8( script_pointer + 1 );
             AdvanceScript( 2 );
@@ -1721,7 +1721,7 @@ ScriptFile::StackOpcodeParse()
         }
         else if( stack_opcode == 0x79 )
         {
-            raw_script += " " + ToHexString( GetU8( script_pointer + 0 ), 2, '0' );
+            raw_script += " " + HexToString( GetU8( script_pointer + 0 ), 2, '0' );
 
             u16 data = GetU8( script_pointer + 0 );
             AdvanceScript( 1 );
@@ -1732,7 +1732,7 @@ ScriptFile::StackOpcodeParse()
         }
         else if (stack_opcode == 0x7a)
         {
-            raw_script += " " + ToHexString( GetU8( script_pointer ), 2, '0' );
+            raw_script += " " + HexToString( GetU8( script_pointer ), 2, '0' );
 
             u8 type = GetU8( script_pointer );
             AdvanceScript( 1 );
@@ -1748,13 +1748,13 @@ ScriptFile::StackOpcodeParse()
                 case 0x0c: item.value_string = "w[8007ae2c]"; break;
                 case 0x0d: item.value_string = "w[8007ae30]"; break;
                 case 0x13: item.value_string = "Count80083248()"; break;
-                default: item.value_string = "Unimplemented type 0x" + ToHexString( type , 2, '0' ) + " for stack opcode 0x7a.";
+                default: item.value_string = "Unimplemented type 0x" + HexToString( type , 2, '0' ) + " for stack opcode 0x7a.";
             }
             stack.push_back( item );
         }
         else if( stack_opcode == 0x7d )
         {
-            raw_script += " " + ToHexString( GetU8( script_pointer ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+            raw_script += " " + HexToString( GetU8( script_pointer ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
 
             u16 data = GetU16LE( script_pointer );
             AdvanceScript( 2 );
@@ -1765,7 +1765,7 @@ ScriptFile::StackOpcodeParse()
         }
         else if( stack_opcode == 0x7e )
         {
-            raw_script += " " + ToHexString( GetU8( script_pointer ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 2 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 3 ), 2, '0' );
+            raw_script += " " + HexToString( GetU8( script_pointer ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 2 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 3 ), 2, '0' );
 
             u32 data = GetU32LE( script_pointer ) & 0x03ffffff;
             AdvanceScript( 4 );
@@ -1789,8 +1789,8 @@ ScriptFile::StackOpcodeParse()
         }
         else
         {
-            //export_script->Log( "0x" + ToHexString( script_position, 4, '0' ) );
-            export_script->Log( " MISSING STACK OPCODE 0x" + ToHexString( stack_opcode, 2, '0' ) + "; //" + raw_script + "\n" );
+            //export_script->Log( "0x" + HexToString( script_position, 4, '0' ) );
+            export_script->Log( " MISSING STACK OPCODE 0x" + HexToString( stack_opcode, 2, '0' ) + "; //" + raw_script + "\n" );
             raw_script = "";
             return;
         }
@@ -1808,18 +1808,18 @@ ScriptFile::StackOpcode80Parse( u32 stack_opcode )
     A1 <<= 0x1b;
     command |= A1;
     u8 data = GetU8( script_pointer );
-    raw_script += " " + ToHexString( data, 2, '0' );
+    raw_script += " " + HexToString( data, 2, '0' );
     AdvanceScript( 1 );
     command |= data;
     if (stack_opcode & 0x20)
     {
         data = GetU8( script_pointer );
-        raw_script += " " + ToHexString( data, 2, '0' );
+        raw_script += " " + HexToString( data, 2, '0' );
         AdvanceScript( 1 );
         data <<= 0x8;
         command |= data;
     }
-    //export_script->Log( "StackOpcode80Parse command: " + ToHexString( command, 2, '0') + "\n" );
+    //export_script->Log( "StackOpcode80Parse command: " + HexToString( command, 2, '0') + "\n" );
     return command;
 }
 
@@ -1833,20 +1833,20 @@ ScriptFile::LoadVariable( const StackItem& item )
         return "ERROR: LoadVariable must hanble top calue of stack as int. But value is \"" + stack.back().value_string + "\".";
     }
     u32 command = item.value_int;
-    //export_script->Log( "Load with command: " + ToHexString( command, 2, '0') + "\n" );
+    //export_script->Log( "Load with command: " + HexToString( command, 2, '0') + "\n" );
     if( ( command >> 0x18 ) == 0x10 )
     {
         switch (command & 0xff)
         {
-            case 0x0: return "GetXPositionFromEntity( 0x" + ToHexString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
-            case 0x1: return "GetYPositionFromEntity( 0x" + ToHexString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
-            case 0x2: return "GetZPositionFromEntity( 0x" + ToHexString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
-            case 0x3: return "GetYRotationFromEntity( 0x" + ToHexString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
-            case 0x4: return "GetFlagsFromEntity( 0x" + ToHexString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
-            case 0x5: return "GetMainEntityIdFromEntity( 0x" + ToHexString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
-            case 0x6: return "GetCurrentScriptPriorityFromEntity( 0x" + ToHexString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
-            case 0x7: return "Get[3a]FromEntity( 0x" + ToHexString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
-            default: return "Unimplemented 0x" + ToHexString( ( command >> 0x18 ), 2, '0' ) + " with type 0x" + ToHexString( ( command & 0xff ), 2, '0' ) + " load.";
+            case 0x0: return "GetXPositionFromEntity( 0x" + HexToString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
+            case 0x1: return "GetYPositionFromEntity( 0x" + HexToString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
+            case 0x2: return "GetZPositionFromEntity( 0x" + HexToString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
+            case 0x3: return "GetYRotationFromEntity( 0x" + HexToString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
+            case 0x4: return "GetFlagsFromEntity( 0x" + HexToString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
+            case 0x5: return "GetMainEntityIdFromEntity( 0x" + HexToString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
+            case 0x6: return "GetCurrentScriptPriorityFromEntity( 0x" + HexToString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
+            case 0x7: return "Get[3a]FromEntity( 0x" + HexToString( ( command >> 0x8 ) & 0xff, 2, '0' ) + " )";
+            default: return "Unimplemented 0x" + HexToString( ( command >> 0x18 ), 2, '0' ) + " with type 0x" + HexToString( ( command & 0xff ), 2, '0' ) + " load.";
         }
     }
     else if( ( command >> 0x18 ) == 0x14 )
@@ -1866,7 +1866,7 @@ ScriptFile::LoadVariable( const StackItem& item )
         }
         else
         {
-            ret += "Unknown" + ToHexString( ( command & 0x7 ), 2, '0' );
+            ret += "Unknown" + HexToString( ( command & 0x7 ), 2, '0' );
         }
         ret += "Mask()";
         return ret;
@@ -1883,67 +1883,67 @@ ScriptFile::LoadVariable( const StackItem& item )
             case 0x5: return "GetMainEntityIdFromEntity()";
             case 0x6: return "GetCurrentScriptPriorityFromEntity()";
             case 0x7: return "Get[3a]FromEntity()";
-            default: return "Unimplemented 0x" + ToHexString( ( command >> 0x18 ), 2, '0' ) + " with type 0x" + ToHexString( ( ( command << 6 ) >> 6 ), 2, '0' ) + " load.";
+            default: return "Unimplemented 0x" + HexToString( ( command >> 0x18 ), 2, '0' ) + " with type 0x" + HexToString( ( ( command << 6 ) >> 6 ), 2, '0' ) + " load.";
         }
     }
     else if( ( command >> 0x18 ) == 0x1c )
     {
-        return "0x" + ToHexString( ( command << 0x6 ) >> 0x6, 8, '0' );
+        return "0x" + HexToString( ( command << 0x6 ) >> 0x6, 8, '0' );
     }
     else if( ( command >> 0x18 ) == 0x20 )
     {
-        return "(bu[ 0x8007aef0 + 0x" + ToHexString( ( command & 0xffff ) >> 0x3, 4, '0' ) + " ] >> 0x" + ToHexString( command & 0x7, 2, '0' ) + ") & 1";
+        return "(bu[ 0x8007aef0 + 0x" + HexToString( ( command & 0xffff ) >> 0x3, 4, '0' ) + " ] >> 0x" + HexToString( command & 0x7, 2, '0' ) + ") & 1";
     }
     else if( ( command >> 0x18 ) == 0x24 )
     {
-        return "(bu[ script + 0x" + ToHexString( ( command & 0xffff ) >> 0x3, 4, '0' ) + " ] >> 0x" + ToHexString( command & 0x7, 2, '0' ) + ") & 1";
+        return "(bu[ script + 0x" + HexToString( ( command & 0xffff ) >> 0x3, 4, '0' ) + " ] >> 0x" + HexToString( command & 0x7, 2, '0' ) + ") & 1";
     }
     else if( ( command >> 0x18 ) == 0x48 )
     {
-        return "b3[ w[ 0x8007bcf8 ] + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "b3[ w[ 0x8007bcf8 ] + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0x80 )
     {
-        return "b[ 0x8007aef0 + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "b[ 0x8007aef0 + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0x88 )
     {
-        return "b[ w[ 0x8007bcf8 ] + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "b[ w[ 0x8007bcf8 ] + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0xa0 )
     {
-        return "bu[ 0x8007aef0 + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "bu[ 0x8007aef0 + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0xa4 )
     {
-        return "bu[ script + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "bu[ script + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0xa8 )
     {
-        return "bu[ w[ 0x8007bcf8 ] + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "bu[ w[ 0x8007bcf8 ] + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0xc0 )
     {
-        return "h[ 0x8007aef0 + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "h[ 0x8007aef0 + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0xc4 )
     {
-        return "h[ script + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "h[ script + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0xe0 )
     {
-        return "hu[ 0x8007aef0 + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "hu[ 0x8007aef0 + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0xe4 )
     {
-        return "hu[ script + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "hu[ script + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
     else if( ( command >> 0x18 ) == 0xe8 )
     {
-        return "hu[ w[ 0x8007bcf8 ] + 0x" + ToHexString( ( command & 0xffff ), 4, '0' ) + " ]";
+        return "hu[ w[ 0x8007bcf8 ] + 0x" + HexToString( ( command & 0xffff ), 4, '0' ) + " ]";
     }
 
-    return "Unimplemented 0x" + ToHexString( ( command >> 0x18 ), 2, '0' ) + " load.";
+    return "Unimplemented 0x" + HexToString( ( command >> 0x18 ), 2, '0' ) + " load.";
 }
 
 
@@ -1986,77 +1986,77 @@ ScriptFile::StoreVariableByStack( const Ogre::String& value )
     }
 
     u32 command = stack.back().value_int;
-    //export_script->Log( "Save with command: " + ToHexString( command, 2, '0') + " value: " + value + "\n" );
+    //export_script->Log( "Save with command: " + HexToString( command, 2, '0') + " value: " + value + "\n" );
     stack.pop_back();
 
     if ( ( command >> 0x18 ) == 0x14 )
     {
-        return "[ masks + 0x" + ToHexString( ( command & 0x7 ) * 2, 2, '0' ) + " ] = h( " + value + " )";
+        return "[ masks + 0x" + HexToString( ( command & 0x7 ) * 2, 2, '0' ) + " ] = h( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0x20 )
     {
         if ( value == "0x00000000" )
         {
-            return "[ 0x8007aef0 + 0x" + ToHexString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] = b( b[ 0x8007aef0 + 0x" + ToHexString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] & 0x" + ToHexString( 0xff ^ (1 << (command & 0x7)), 2, '0' ) + " )";
+            return "[ 0x8007aef0 + 0x" + HexToString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] = b( b[ 0x8007aef0 + 0x" + HexToString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] & 0x" + HexToString( 0xff ^ (1 << (command & 0x7)), 2, '0' ) + " )";
         }
         else
         {
-            return "[ 0x8007aef0 + 0x" + ToHexString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] = b( b[ 0x8007aef0 + 0x" + ToHexString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] | 0x" + ToHexString( 1 << (command & 0x7), 2, '0' ) + " )";
+            return "[ 0x8007aef0 + 0x" + HexToString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] = b( b[ 0x8007aef0 + 0x" + HexToString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] | 0x" + HexToString( 1 << (command & 0x7), 2, '0' ) + " )";
         }
     }
     else if ( ( command >> 0x18 ) == 0x24 )
     {
         if ( value == "0x00000000" )
         {
-            return "[ script + 0x" + ToHexString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] = b( b[ script + 0x" + ToHexString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] & 0x" + ToHexString( 0xff ^ (1 << (command & 0x7)), 2, '0' ) + " )";
+            return "[ script + 0x" + HexToString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] = b( b[ script + 0x" + HexToString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] & 0x" + HexToString( 0xff ^ (1 << (command & 0x7)), 2, '0' ) + " )";
         }
         else
         {
-            return "[ script + 0x" + ToHexString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] = b( b[ script + 0x" + ToHexString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] | 0x" + ToHexString( 1 << (command & 0x7), 2, '0' ) + " )";
+            return "[ script + 0x" + HexToString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] = b( b[ script + 0x" + HexToString( (command & 0xffff) >> 0x3, 4, '0' ) + " ] | 0x" + HexToString( 1 << (command & 0x7), 2, '0' ) + " )";
         }
     }
     else if ( ( command >> 0x18 ) == 0x48 )
     {
-        return "[ w[ 0x8007bcf8 ] + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = b3( " + value + " )";
+        return "[ w[ 0x8007bcf8 ] + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = b3( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0x88 )
     {
-        return "[ w[ 0x8007bcf8 ] + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = b( " + value + " )";
+        return "[ w[ 0x8007bcf8 ] + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = b( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0xa0 )
     {
-        return "[ 0x8007aef0 + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = b( " + value + " )";
+        return "[ 0x8007aef0 + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = b( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0xa4 )
     {
-        return "[ script + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = b( " + value + " )";
+        return "[ script + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = b( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0xa8 )
     {
-        return "[ w[ 0x8007bcf8 ] + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = b( " + value + " )";
+        return "[ w[ 0x8007bcf8 ] + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = b( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0xc0 )
     {
-        return "[ 0x8007aef0 + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
+        return "[ 0x8007aef0 + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0xc4 )
     {
-        return "[ script + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
+        return "[ script + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0xe0 )
     {
-        return "[ 0x8007aef0 + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
+        return "[ 0x8007aef0 + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0xe4 )
     {
-        return "[ script + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
+        return "[ script + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
     }
     else if ( ( command >> 0x18 ) == 0xe8 )
     {
-        return "[ w[ 0x8007bcf8 ] + 0x" + ToHexString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
+        return "[ w[ 0x8007bcf8 ] + 0x" + HexToString( (command & 0xffff), 4, '0' ) + " ] = h( " + value + " )";
     }
 
-    return "Unimplemented 0x" + ToHexString( ( command >> 0x18 ), 2, '0' ) + " store.";
+    return "Unimplemented 0x" + HexToString( ( command >> 0x18 ), 2, '0' ) + " store.";
 }
 
 
@@ -2074,9 +2074,9 @@ ScriptFile::Get8Variable()
     {
         control >>= 1;
         u8 data = GetU8( script_pointer );
-        raw_script += " " + ToHexString( data, 2, '0' );
+        raw_script += " " + HexToString( data, 2, '0' );
         AdvanceScript( 1 );
-        return "0x" + ToHexString( data, 2, '0' );
+        return "0x" + HexToString( data, 2, '0' );
     }
 }
 
@@ -2095,9 +2095,9 @@ ScriptFile::Get16Variable()
     {
         control >>= 1;
         u16 data = GetU16LE( script_pointer );
-        raw_script += " " + ToHexString( GetU8( script_pointer + 0 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' );
+        raw_script += " " + HexToString( GetU8( script_pointer + 0 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' );
         AdvanceScript( 2 );
-        return "0x" + ToHexString( data, 4, '0' );
+        return "0x" + HexToString( data, 4, '0' );
     }
 }
 
@@ -2116,9 +2116,9 @@ ScriptFile::Get24Variable()
     {
         control >>= 1;
         u32 data = GetU16LE( script_pointer ) | ( GetU8( script_pointer + 2 ) << 0x10 );
-        raw_script += " " + ToHexString( GetU8( script_pointer + 0 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + ToHexString( GetU8( script_pointer + 2 ), 2, '0' );
+        raw_script += " " + HexToString( GetU8( script_pointer + 0 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 1 ), 2, '0' ) + " " + HexToString( GetU8( script_pointer + 2 ), 2, '0' );
         AdvanceScript( 3 );
-        return "0x" + ToHexString( data, 6, '0' );
+        return "0x" + HexToString( data, 6, '0' );
     }
 }
 

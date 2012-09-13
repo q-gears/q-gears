@@ -11,7 +11,9 @@ ElementIdToString( const int element_id )
     switch( element_id )
     {
         case 0x00: return "Fire";
+        case 0x02: return "Lighting";
         case 0x03: return "Earth";
+        case 0x05: return "Gravity";
         case 0x07: return "Wind";
         case 0x0b: return "Hit";
         case 0x0c: return "Punch";
@@ -38,9 +40,19 @@ StatusIdToString( const int status_id )
 {
     switch( status_id )
     {
+        case 0x00: return "Death";
+        case 0x02: return "Sleep";
+        case 0x03: return "Poison";
+        case 0x04: return "Sadness";
+        case 0x05: return "Fury";
+        case 0x06: return "Confusion";
+        case 0x07: return "Silence";
         case 0x0a: return "Stop";
         case 0x0b: return "Frog";
+        case 0x0c: return "Small";
+        case 0x15: return "DeathSentence";
         case 0x19: return "Paralysis";
+        case 0x1a: return "Darkness";
     }
 
     return "UnknownStatusId0x" + HexToString( status_id, 4, '0' );
@@ -70,6 +82,18 @@ AttackIdToString( const int attack_id )
         case 0x0112: return "Bite";
         case 0x0113: return "Tentacle";
         case 0x0114: return "Drilldrive";
+        case 0x0115: return "Handclaw";
+        case 0x0116: return "BeamGun";
+        case 0x0117: return "LaserCannon";
+        case 0x0118: return "WMachineGun";
+        case 0x0119: return "SmokeShot";
+        case 0x011a: return "Rifle";
+        case 0x011b: return "ScorpionTail";
+        case 0x011c: return "SearchScope";
+        case 0x011d: return "Rifle";
+        case 0x011e: return "TailLaser";
+        case 0x011f: return "Empty0x11f";
+        case 0x0120: return "Empty0x120";
     }
 
     return "UnknownAttackId0x" + HexToString( attack_id, 4, '0' );
@@ -1246,17 +1270,17 @@ EnemyFile::DumpData()
             int restore_type = GetU8( attack_data + k * 0x1c + 0x10 );
             if( restore_type == 0 )
             {
-                export_text->Log( "    restore_type = \"restore_hp\"" );
+                export_text->Log( "    restore_type = \"restore_hp\"\n\n" );
             }
             else if( restore_type == 1 )
             {
-                export_text->Log( "    restore_type = \"restore_mp\"" );
+                export_text->Log( "    restore_type = \"restore_mp\"\n\n" );
             }
             else if( restore_type == 2 )
             {
-                export_text->Log( "    restore_type = \"restore_status\"" );
+                export_text->Log( "    restore_type = \"restore_status\"\n\n" );
             }
-            export_text->Log( "\n");
+
             u16 elements = GetU16LE( attack_data + k * 0x1c + 0x18 );
             export_text->Log( "    elements = {" );
             added = false;

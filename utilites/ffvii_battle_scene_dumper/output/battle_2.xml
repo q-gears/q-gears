@@ -1,9 +1,9 @@
 <map>
-    <entity_model name="Background" file_name="models/ffvii/battle/stages/sector_1_train_station.mesh" position="0 0 0" direction="0" />
+    <entity_model name="Background" file_name="models/ffvii/battle/stages/UnknownStageId0x001d.mesh" position="0 0 0" direction="0" />
 
-    <entity_model name="17" file_name="models/ffvii/battle/stages/sector_1_train_station.mesh" position="0 -3.32031 0" direction="0" />
-    <entity_model name="-1" file_name="models/ffvii/battle/stages/sector_1_train_station.mesh" position="-0.00195312 -0.00195312 -0.00195312" direction="0" />
-    <entity_model name="-1" file_name="models/ffvii/battle/stages/sector_1_train_station.mesh" position="-0.00195312 -0.00195312 -0.00195312" direction="0" />
-    <entity_model name="-1" file_name="models/ffvii/battle/stages/sector_1_train_station.mesh" position="-0.00195312 -0.00195312 -0.00195312" direction="0" />
-    <entity_model name="-1" file_name="models/ffvii/battle/stages/sector_1_train_station.mesh" position="-0.00195312 -0.00195312 -0.00195312" direction="0" />
-    <entity_model name="-1" file_name="models/ffvii/battle/stages/sector_1_train_station.mesh" position="-0.00195312 -0.00195312 -0.00195312" direction="0" />
+    <entity_model name="17" file_name="models/ffvii/battle/stages/UnknownStageId0x001d.mesh" position="-1.36719 -3.32031 0" direction="0" />
+    <entity_model name="17" file_name="models/ffvii/battle/stages/UnknownStageId0x001d.mesh" position="1.36719 -4.29688 0" direction="0" />
+    <entity_model name="-1" file_name="models/ffvii/battle/stages/UnknownStageId0x001d.mesh" position="-0.00195312 -0.00195312 -0.00195312" direction="0" />
+    <entity_model name="-1" file_name="models/ffvii/battle/stages/UnknownStageId0x001d.mesh" position="-0.00195312 -0.00195312 -0.00195312" direction="0" />
+    <entity_model name="-1" file_name="models/ffvii/battle/stages/UnknownStageId0x001d.mesh" position="-0.00195312 -0.00195312 -0.00195312" direction="0" />
+    <entity_model name="-1" file_name="models/ffvii/battle/stages/UnknownStageId0x001d.mesh" position="-0.00195312 -0.00195312 -0.00195312" direction="0" />

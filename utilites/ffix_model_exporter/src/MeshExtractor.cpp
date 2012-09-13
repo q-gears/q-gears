@@ -14,9 +14,9 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
 {
     File* file12 = new File( "./data/field/5/1b/1/12/1" );
     u32 offset_to_clut_tex = 4 + file12->GetU32LE( 4 + 4 ) & 0x00ffffff;
-    LOGGER->Log( "offset_to_clut_tex = \"" + ToHexString( offset_to_clut_tex, 8, '0' ) + "\".\n" );
+    LOGGER->Log( "offset_to_clut_tex = \"" + HexToString( offset_to_clut_tex, 8, '0' ) + "\".\n" );
     u32 offset_to_tx_ty = offset_to_clut_tex + file12->GetU8( 4 + 7 ) * 4;
-    LOGGER->Log( "offset_to_tx_ty = \"" + ToHexString( offset_to_tx_ty, 8, '0' ) + "\".\n" );
+    LOGGER->Log( "offset_to_tx_ty = \"" + HexToString( offset_to_tx_ty, 8, '0' ) + "\".\n" );
 
 
 
@@ -129,7 +129,7 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
         int image_id = file->GetU8( pointer_to_mesh_data + 0x13 );
         u16 blend = file12->GetU16LE( offset_to_clut_tex + image_id * 4 + 0 );
         u16 clut = file12->GetU16LE( offset_to_clut_tex + image_id * 4 + 2 );
-        LOGGER->Log( "image_id = \"" + ToHexString( image_id, 2, '0' ) + "\", clut = \"" + ToHexString( clut, 4, '0' ) + "\", blend = \"" + ToHexString( blend, 4, '0' ) + "\".\n" );
+        LOGGER->Log( "image_id = \"" + HexToString( image_id, 2, '0' ) + "\", clut = \"" + HexToString( clut, 4, '0' ) + "\", blend = \"" + HexToString( blend, 4, '0' ) + "\".\n" );
 /*
         int clut_x = (clut & 0x003f) << 3;
         int clut_y = (clut & 0xffc0) >> 6;
@@ -258,7 +258,7 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
         int image_id = file->GetU8( pointer_to_mesh_data + 0x6 );
         u16 blend = file12->GetU16LE( offset_to_clut_tex + image_id * 4 + 0 );
         u16 clut = file12->GetU16LE( offset_to_clut_tex + image_id * 4 + 2 );
-        LOGGER->Log( "image_id = \"" + ToHexString( image_id, 2, '0' ) + "\", clut = \"" + ToHexString( clut, 4, '0' ) + "\", blend = \"" + ToHexString( blend, 4, '0' ) + "\".\n" );
+        LOGGER->Log( "image_id = \"" + HexToString( image_id, 2, '0' ) + "\", clut = \"" + HexToString( clut, 4, '0' ) + "\", blend = \"" + HexToString( blend, 4, '0' ) + "\".\n" );
 /*
         int clut_x = (clut & 0x003f) << 3;
         int clut_y = (clut & 0xffc0) >> 6;

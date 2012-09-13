@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="src\EnemyFile.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="48548" topLine="1162" />
+	<File name="src\EnemyFile.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2331" topLine="68" />
 	</File>
-	<File name="src\EnemyFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="40" topLine="0" />
+	<File name="src\EnemyFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="40" topLine="0" />
 	</File>
-	<File name="src\FFVIIString.h" open="0" top="0" tabpos="0">
-		<Cursor position="70" topLine="0" />
+	<File name="src\FFVIIString.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="70" topLine="0" />
 	</File>
-	<File name="src\Main.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="303" topLine="0" />
+	<File name="src\Main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="303" topLine="0" />
 	</File>
-	<File name="src\PlayerFile.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="36945" topLine="836" />
+	<File name="src\PlayerFile.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="36945" topLine="836" />
 	</File>
 </CodeBlocks_layout_file>

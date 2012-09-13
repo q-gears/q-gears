@@ -658,3 +658,77 @@
 	"Logger.h"
 	"TypeDefine.h"
 
+1330718080 source:s:\q-gears\utilites\common\ogregenutilites.cpp
+	"OgreGenUtilites.h"
+	"Logger.h"
+
+1330718084 s:\q-gears\utilites\common\ogregenutilites.h
+	<Ogre.h>
+	"Logger.h"
+	"Vram.h"
+
+1333172538 s:\q-gears\utilites\common\logger.h
+	<OgreString.h>
+	<OgreUTFString.h>
+
+1306971024 s:\q-gears\utilites\common\vram.h
+	"TypeDefine.h"
+	"Surface.h"
+
+1306971024 s:\q-gears\utilites\common\typedefine.h
+
+1314721446 s:\q-gears\utilites\common\surface.h
+	<Ogre.h>
+
+1341054226 source:s:\q-gears\utilites\common\timtovram.cpp
+	"TimToVram.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+
+1314721446 s:\q-gears\utilites\common\timtovram.h
+	"File.h"
+	"Vram.h"
+
+1306971024 s:\q-gears\utilites\common\file.h
+	"TypeDefine.h"
+	<OgreString.h>
+
+1314721446 source:s:\q-gears\utilites\common\vram.cpp
+	"Vram.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+	<string.h>
+
+1330721676 source:s:\q-gears\utilites\ffix_model_exporter\src\animationextractor.cpp
+	"AnimationExtractor.h"
+	"../../common/Logger.h"
+
+1329569942 s:\q-gears\utilites\ffix_model_exporter\src\animationextractor.h
+	<Ogre.h>
+	"ModelFile.h"
+	"../../common/File.h"
+
+1330776730 s:\q-gears\utilites\ffix_model_exporter\src\modelfile.h
+	"../../common/File.h"
+	"../../common/OgreGenUtilites.h"
+	"../../common/DrawSkeleton.h"
+
+1330776716 s:\q-gears\utilites\common\drawskeleton.h
+	<Ogre.h>
+
+1330775786 source:s:\q-gears\utilites\ffix_model_exporter\src\main.cpp
+	<Ogre.h>
+	"../../common/OgreBase.h"
+	"../../common/Logger.h"
+	"ModelFile.h"
+
+1330777526 s:\q-gears\utilites\common\ogrebase.h
+	<Ogre.h>
+	<OgreTextAreaOverlayElement.h>
+	<OIS.h>
+	"FileSystem.h"
+	"Logger.h"
+
+1306971024 s:\q-gears\utilites\common\filesystem.h
+	<OgreString.h>
+

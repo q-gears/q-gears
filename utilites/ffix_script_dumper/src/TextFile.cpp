@@ -210,8 +210,8 @@ TextFile::DumpTexts()
         u32 pointer_to_text = 0x04 + GetU16LE( 0x04 +  i * 0x04 );
 
         //export_text->LogW( "<dialog id=\"" + ToIntString( i ) + "\">" );
-        export_text->LogW( "<dialog id=\"0x" + ToHexString( i, 2, '0' ) + "\">" );
-        export_text->LogW( "0x" + ToHexString( pointer_to_text, 4, '0' ) + "" );
+        export_text->LogW( "<dialog id=\"0x" + HexToString( i, 2, '0' ) + "\">" );
+        export_text->LogW( "0x" + HexToString( pointer_to_text, 4, '0' ) + "" );
 /*
         for (unsigned char temp = 0x00; ; ++offset)
         {
@@ -363,7 +363,7 @@ TextFile::DumpTexts()
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFA " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFA " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
                 else if (temp == 0xFB)
@@ -376,7 +376,7 @@ TextFile::DumpTexts()
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFB " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFB " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
                 else if (temp == 0xFC)
@@ -389,7 +389,7 @@ TextFile::DumpTexts()
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFC " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFC " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
                 else if (temp == 0xFD)
@@ -402,7 +402,7 @@ TextFile::DumpTexts()
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFD " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFD " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
             }
@@ -473,7 +473,7 @@ TextFile::DumpTexts()
                     {
                         export_text->Log(dialog);
                         dialog.clear();
-                        export_text->LogW("[MISSING 0xFE " + ToHexString(temp2, 2, '0') + "]");
+                        export_text->LogW("[MISSING 0xFE " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
             }
@@ -491,7 +491,7 @@ TextFile::DumpTexts()
                 {
                     export_text->Log(dialog);
                     dialog.clear();
-                    export_text->LogW("[MISSING CHAR " + ToHexString(temp, 2, '0') + "]");
+                    export_text->LogW("[MISSING CHAR " + HexToString(temp, 2, '0') + "]");
                 }
             }
         }

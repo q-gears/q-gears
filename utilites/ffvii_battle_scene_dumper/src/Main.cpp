@@ -14,7 +14,7 @@ main( int argc, char *argv[] )
 
 
 
-    EnemyFile* enemy = new EnemyFile( "./data/scene76" );
+    EnemyFile* enemy = new EnemyFile( "./data/scene82" );
     delete enemy;
 
     //PlayerFile* player = new PlayerFile( "player_ai" );
