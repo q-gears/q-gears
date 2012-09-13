@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 // system_init_player_weapon_stat
 S3 = A0; // player party index (0-2)
 
@@ -87,7 +87,7 @@ if (A0 != ff)
 
     // if accessory is equipped
     accessory_id = bu[8009c738 + S4 * 84 + 1e];
-    if (accessory_id != ff)
+    if( accessory_id != ff )
     {
         // add stat bonus from accessory
         S0 = 0;
@@ -113,40 +113,40 @@ if (A0 != ff)
         system_add_status_protect;
     }
 
-    A1 = bu[8009c738 + S4 * 84 + 2]; // strength
-    V0 = bu[8009c738 + S4 * 84 + 8]; // strength bonus
+    A1 = bu[8009c6e4 + 54 + S4 * 84 + 2]; // strength
+    V0 = bu[8009c6e4 + 54 + S4 * 84 + 8]; // strength bonus
     A2 = bu[8009d84c + S3 * 440 + 2]; // strength bonus from weapon/armor/accessory
     strength = A1 + A2 + A1; // total strength
 
-    A0 = bu[8009c738 + S4 * 84 + 3]; // vitality
-    A1 = bu[8009c738 + S4 * 84 + 9]; // vitality bonus
+    A0 = bu[8009c6e4 + 54 + S4 * 84 + 3]; // vitality
+    A1 = bu[8009c6e4 + 54 + S4 * 84 + 9]; // vitality bonus
     A2 = bu[8009d84c + S3 * 440 + 3]; // vitality bonus from weapon/armor/accessory
     vitality = A0 + A1 + A2;
 
-    A1 = bu[8009c738 + S4 * 84 + 4]; // magic
-    A0 = bu[8009c738 + S4 * 84 + a]; // magic bonus
+    A1 = bu[8009c6e4 + 54 + S4 * 84 + 4]; // magic
+    A0 = bu[8009c6e4 + 54 + S4 * 84 + a]; // magic bonus
     A2 = bu[8009d84c + S3 * 440 + 4]; // magic bonus from weapon/armor/accessory
     magic = A2 + A1 + A0;
 
-    V0 = bu[8009c738 + S4 * 84 + 5]; // spirit
-    A1 = bu[8009c738 + S4 * 84 + b]; // spirit bonus
+    V0 = bu[8009c6e4 + 54 + S4 * 84 + 5]; // spirit
+    A1 = bu[8009c6e4 + 54 + S4 * 84 + b]; // spirit bonus
     A2 = bu[8009d84c + S3 * 440 + 5]; // spirit bonus from weapon/armor/accessory
     spirit = V0 + A1 + A2;
 
-    V0 = bu[8009c738 + S4 * 84 + 6]; // dexterity
-    A0 = bu[8009c738 + S4 * 84 + c]; // dexterity bonus
+    V0 = bu[8009c6e4 + 54 + S4 * 84 + 6]; // dexterity
+    A0 = bu[8009c6e4 + 54 + S4 * 84 + c]; // dexterity bonus
     A2 = bu[8009d84c + S3 * 440 + 6]; // dexterity bonus from weapon/armor/accessory
     dexterity = V0 + A0 + A2; // total dexterity
 
-
-
-    A0 = bu[8009c738 + S4 * 84 + 7]; // luck
-    V0 = bu[8009c738 + S4 * 84 + d]; // luck bonus
+    A0 = bu[8009c6e4 + 54 + S4 * 84 + 7]; // luck
+    V0 = bu[8009c6e4 + 54 + S4 * 84 + d]; // luck bonus
     A1 = bu[8009d84c + S3 * 440 + 7]; // luck bonus from weapon/armor/accessory
     luck = A0 + V0 + A1;
 
+
+
     // curse ring addition
-    if (accessory_id == 19)
+    if( accessory_id == 19 )
     {
         strength = strength + f;
         vitality = vitality + f;
@@ -156,32 +156,32 @@ if (A0 != ff)
         luck = luck + a;
     }
 
-    if (strength >= 100)
+    if( strength >= 100 )
     {
         strength = ff;
     }
 
-    if (vitality >= 100)
+    if( vitality >= 100 )
     {
         vitality = ff;
     }
 
-    if (magic >= 100)
+    if( magic >= 100 )
     {
         magic = ff;
     }
 
-    if (spirit >= 100)
+    if( spirit >= 100 )
     {
         spirit = ff;
     }
 
-    if (dexterity >= 100)
+    if( dexterity >= 100 )
     {
         dexterity = ff;
     }
 
-    if (luck >= 100)
+    if( luck >= 100 )
     {
         luck = ff;
     }
@@ -193,13 +193,11 @@ if (A0 != ff)
     [8009d84c + S3 * 440 + 6] = b(dexterity);
     [8009d84c + S3 * 440 + 7] = b(luck);
 }
-
-return;
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////
+////////////////////////////////
 // system_add_stats
 // A0 - unit id
 // A1 - id of stat
@@ -214,21 +212,21 @@ switch (A1)
     case 4: [8009d84c + A0 * 440 + 6] = b(bu[8009d84c + A0 * 440 + 6] + A2); break;
     case 5: [8009d84c + A0 * 440 + 7] = b(bu[8009d84c + A0 * 440 + 7] + A2); break;
 }
-////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 // system_add_attack_type
 // A0 - unit id
 // A1 - attack type mask
 
 [8009d84c + A0 * 440 + 3c] = h(hu[8009d84c + A0 * 440 + 3c] | A1);
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 // system_add_status_attack_bit
 // A0 - unit id
 // A1 - status attack bit
@@ -240,20 +238,20 @@ if (A1 < 41)
     A0 = A0 | V1;
     [8009d84c + A0 * 440 + 44] = w(A0);
 }
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 // system_get_armor_address_by_id
 // A0 - armor id
 
 return 80071e44 + A0 * 24;
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////
+////////////////////////////////
 // system_add_elemental_defense
 // set elemental defence
 // A0 - unit id
@@ -272,11 +270,11 @@ else if (A1 == 2)
 {
     [8009d84c + A0 * 440 + 3e] = h(hu[8009d84c + A0 * 440 + 3e] | A2);
 }
-////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 // system_add_status_protect_bit
 // A0 - unit id
 // A1 - protect bit
@@ -288,23 +286,23 @@ if (A1 < 41)
     A0 = A0 | V1;
     [8009d84c + A0 * 440 + 48] = w(A0);
 }
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 // system_get_accessory_address_by_id
 // A0 - accessory id
 
 return 80071c24 + A0 * 10;
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
 // system_add_status_protect
 // A0 - unit id
 // A1 - status protect mask
 
 [8009d84c + A0 * 440 + 48] = w(w[8009d84c + A0 * 440 + 48] | A1);
-///////////////////////////////////////////////////////////////////
+////////////////////////////////

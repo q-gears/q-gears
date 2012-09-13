@@ -64,3 +64,4 @@ camera data (0x34 size)
 +1c [][][][] TZ.
 +2a [][]     some X.
 +2e [][]     some Y.
++30 [][]     ????

@@ -1,12 +1,207 @@
-﻿0x73 PGTDR 800ca254
-0x74 GETPC 800d2f3c
-0x75 PXYZI 800ca77c
-0xC1 AXYZI 800ca5d4
-0x08 JOIN 800cfe78
-0x2A PMOVA 800c7c3c
-0x34 PDIRA 800c81c0
-0x35 PTURA 800c8588
-0x26 BLINK 800d4420
+﻿////////////////////////////////
+// 0x08 JOIN
+800CFEA4	lui    v0, $8007
+800CFEA8	lbu    v0, $22c4(v0)
+800CFEAC	lui    a0, $800a
+800CFEB0	lbu    a0, $d392(a0)
+800CFEB4	lui    at, $800e
+800CFEB8	sb     v0, $48f0(at)
+800CFEBC	ori    v0, zero, $00ff
+800CFEC0	beq    a0, v0, Lcff14 [$800cff14]
+800CFEC4	ori    s0, zero, $0001
+800CFEC8	lui    v0, $8007
+800CFECC	lbu    v0, $22c4(v0)
+800CFED0	nop
+800CFED4	sll    v0, v0, $01
+800CFED8	lui    at, $8008
+800CFEDC	addiu  at, at, $31fc
+800CFEE0	addu   at, at, v0
+800CFEE4	lhu    v1, $0000(at)
+800CFEE8	lui    v0, $800a
+800CFEEC	lw     v0, $c6dc(v0)
+800CFEF0	lui    at, $800a
+800CFEF4	addiu  at, at, $ad30 (=-$52d0)
+800CFEF8	addu   at, at, a0
+800CFEFC	lbu    a0, $0000(at)
+800CFF00	addu   v0, v0, v1
+800CFF04	lbu    a1, $0001(v0)
+800CFF08	jal    funcd0518 [$800d0518]
+800CFF0C	nop
+800CFF10	addu   s0, v0, zero
+
+Lcff14:	; 800CFF14
+800CFF14	lui    a0, $800a
+800CFF18	lbu    a0, $d393(a0)
+800CFF1C	ori    v0, zero, $00ff
+800CFF20	beq    a0, v0, Lcff78 [$800cff78]
+800CFF24	nop
+800CFF28	lui    v0, $8007
+800CFF2C	lbu    v0, $22c4(v0)
+800CFF30	nop
+800CFF34	sll    v0, v0, $01
+800CFF38	lui    at, $8008
+800CFF3C	addiu  at, at, $31fc
+800CFF40	addu   at, at, v0
+800CFF44	lhu    v1, $0000(at)
+800CFF48	lui    v0, $800a
+800CFF4C	lw     v0, $c6dc(v0)
+800CFF50	lui    at, $800a
+800CFF54	addiu  at, at, $ad30 (=-$52d0)
+800CFF58	addu   at, at, a0
+800CFF5C	lbu    a0, $0000(at)
+800CFF60	addu   v0, v0, v1
+800CFF64	lbu    a1, $0001(v0)
+800CFF68	jal    funcd0518 [$800d0518]
+800CFF6C	nop
+800CFF70	j      Lcff7c [$800cff7c]
+800CFF74	addu   v1, v0, zero
+
+Lcff78:	; 800CFF78
+800CFF78	ori    v1, zero, $0001
+
+Lcff7c:	; 800CFF7C
+800CFF7C	sll    v0, s0, $10
+800CFF80	beq    v0, zero, Ld0098 [$800d0098]
+800CFF84	sll    v0, v1, $10
+800CFF88	beq    v0, zero, Ld0098 [$800d0098]
+800CFF8C	addu   a1, zero, zero
+800CFF90	ori    a2, zero, $00ff
+800CFF94	sll    v0, a1, $10
+
+loopcff98:	; 800CFF98
+800CFF98	sra    a0, v0, $10
+800CFF9C	lui    at, $800a
+800CFFA0	addiu  at, at, $d391 (=-$2c6f)
+800CFFA4	addu   at, at, a0
+800CFFA8	lbu    v1, $0000(at)
+800CFFAC	nop
+800CFFB0	beq    v1, a2, Ld0034 [$800d0034]
+800CFFB4	addiu  v0, a1, $0001
+800CFFB8	lui    at, $800a
+800CFFBC	addiu  at, at, $ad30 (=-$52d0)
+800CFFC0	addu   at, at, v1
+800CFFC4	lbu    v0, $0000(at)
+800CFFC8	nop
+800CFFCC	lui    at, $8008
+800CFFD0	addiu  at, at, $1d90
+800CFFD4	addu   at, at, v0
+800CFFD8	sb     zero, $0000(at)
+800CFFDC	bne    a0, zero, Ld0034 [$800d0034]
+800CFFE0	addiu  v0, a1, $0001
+800CFFE4	lui    at, $800a
+800CFFE8	addiu  at, at, $ad30 (=-$52d0)
+800CFFEC	addu   at, at, v1
+800CFFF0	lbu    v0, $0000(at)
+800CFFF4	nop
+800CFFF8	beq    v0, a2, Ld0030 [$800d0030]
+800CFFFC	nop
+800D0000	lui    at, $8008
+800D0004	addiu  at, at, $eb98 (=-$1468)
+800D0008	addu   at, at, v0
+800D000C	lbu    v0, $0000(at)
+800D0010	nop
+800D0014	sll    v1, v0, $05
+800D0018	addu   v1, v1, v0
+800D001C	lui    v0, $800a
+800D0020	lw     v0, $c544(v0)
+800D0024	sll    v1, v1, $02
+800D0028	addu   v1, v1, v0
+800D002C	sb     zero, $0059(v1)
+
+Ld0030:	; 800D0030
+800D0030	addiu  v0, a1, $0001
+
+Ld0034:	; 800D0034
+800D0034	addu   a1, v0, zero
+800D0038	sll    v0, v0, $10
+800D003C	sra    v0, v0, $10
+800D0040	slti   v0, v0, $0003
+800D0044	bne    v0, zero, loopcff98 [$800cff98]
+800D0048	sll    v0, a1, $10
+800D004C	lui    a0, $800a
+800D0050	lw     a0, $c6e0(a0)
+800D0054	lui    v1, $8008
+800D0058	lbu    v1, $1dc4(v1)
+800D005C	addu   v0, zero, zero
+800D0060	sb     v1, $0032(a0)
+800D0064	lui    a1, $8007
+800D0068	lbu    a1, $22c4(a1)
+800D006C	lui    v1, $8008
+800D0070	addiu  v1, v1, $31fc
+800D0074	sll    a1, a1, $01
+800D0078	addu   a1, a1, v1
+800D007C	lhu    v1, $0000(a1)
+800D0080	ori    a0, zero, $00ff
+800D0084	lui    at, $800e
+800D0088	sb     a0, $48f0(at)
+800D008C	addiu  v1, v1, $0002
+800D0090	j      Ld016c [$800d016c]
+800D0094	sh     v1, $0000(a1)
+
+Ld0098:	; 800D0098
+800D0098	lui    v0, $800a
+800D009C	lw     v0, $c6e0(v0)
+800D00A0	ori    a2, zero, $0001
+800D00A4	sb     a2, $0032(v0)
+800D00A8	lui    v0, $800a
+800D00AC	lbu    v0, $d391(v0)
+800D00B0	ori    v1, zero, $00ff
+800D00B4	beq    v0, v1, Ld0168 [$800d0168]
+800D00B8	nop
+800D00BC	lui    at, $800a
+800D00C0	addiu  at, at, $ad30 (=-$52d0)
+800D00C4	addu   at, at, v0
+800D00C8	lbu    a1, $0000(at)
+800D00CC	nop
+800D00D0	beq    a1, v1, Ld016c [$800d016c]
+800D00D4	ori    v0, zero, $0001
+800D00D8	lui    at, $8008
+800D00DC	addiu  at, at, $eb98 (=-$1468)
+800D00E0	addu   at, at, a1
+800D00E4	lbu    v1, $0000(at)
+800D00E8	lui    at, $8008
+800D00EC	addiu  at, at, $1d90
+800D00F0	addu   at, at, a1
+800D00F4	sb     a2, $0000(at)
+800D00F8	sll    v0, v1, $05
+800D00FC	addu   v0, v0, v1
+800D0100	lui    v1, $800a
+800D0104	lw     v1, $c544(v1)
+800D0108	sll    v0, v0, $02
+800D010C	addu   v0, v0, v1
+800D0110	sb     zero, $005d(v0)
+800D0114	lui    at, $8008
+800D0118	addiu  at, at, $eb98 (=-$1468)
+800D011C	addu   at, at, a1
+800D0120	lbu    v1, $0000(at)
+800D0124	lui    a0, $800a
+800D0128	lw     a0, $c544(a0)
+800D012C	sll    v0, v1, $05
+800D0130	addu   v0, v0, v1
+800D0134	sll    v0, v0, $02
+800D0138	addu   v0, v0, a0
+800D013C	sh     zero, $006a(v0)
+800D0140	lui    at, $8008
+800D0144	addiu  at, at, $eb98 (=-$1468)
+800D0148	addu   at, at, a1
+800D014C	lbu    v1, $0000(at)
+800D0150	nop
+800D0154	sll    v0, v1, $05
+800D0158	addu   v0, v0, v1
+800D015C	sll    v0, v0, $02
+800D0160	addu   v0, v0, a0
+800D0164	sb     a2, $0059(v0)
+
+Ld0168:	; 800D0168
+800D0168	ori    v0, zero, $0001
+
+Ld016c:	; 800D016C
+800D016C	lw     ra, $0014(sp)
+800D0170	lw     s0, $0010(sp)
+800D0174	addiu  sp, sp, $0018
+800D0178	jr     ra 
+800D017C	nop
+////////////////////////////////
 
 
 
@@ -155,6 +350,109 @@ return 1;
 
 
 ////////////////////////////////
+// 0x26 BLINK
+800D4448	lui    v1, $8007
+800D444C	lbu    v1, $22c4(v1)
+800D4450	nop
+800D4454	lui    at, $8008
+800D4458	addiu  at, at, $eb98 (=-$1468)
+800D445C	addu   at, at, v1
+800D4460	lbu    a0, $0000(at)
+800D4464	ori    v0, zero, $00ff
+800D4468	beq    a0, v0, Ld44ac [$800d44ac]
+800D446C	sll    v0, a0, $05
+800D4470	addu   v0, v0, a0
+800D4474	sll    v1, v1, $01
+800D4478	lui    at, $8008
+800D447C	addiu  at, at, $31fc
+800D4480	addu   at, at, v1
+800D4484	lhu    a0, $0000(at)
+800D4488	lui    v1, $800a
+800D448C	lw     v1, $c6dc(v1)
+800D4490	sll    v0, v0, $02
+800D4494	addu   v1, v1, a0
+800D4498	lui    a0, $800a
+800D449C	lw     a0, $c544(a0)
+800D44A0	lbu    v1, $0001(v1)
+800D44A4	addu   v0, v0, a0
+800D44A8	sb     v1, $0008(v0)
+
+Ld44ac:	; 800D44AC
+800D44AC	lui    v0, $8007
+800D44B0	lbu    v0, $22c4(v0)
+800D44B4	lui    v1, $8008
+800D44B8	addiu  v1, v1, $31fc
+800D44BC	sll    v0, v0, $01
+800D44C0	addu   v0, v0, v1
+800D44C4	lhu    v1, $0000(v0)
+800D44C8	nop
+800D44CC	addiu  v1, v1, $0002
+800D44D0	sh     v1, $0000(v0)
+800D44D4	addu   v0, zero, zero
+800D44D8	lw     ra, $0010(sp)
+800D44DC	addiu  sp, sp, $0018
+800D44E0	jr     ra 
+800D44E4	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0x2A PMOVA
+800C7C3C	lui    v0, $800a
+800C7C40	lbu    v0, $d820(v0)
+800C7C44	addiu  sp, sp, $ffe8 (=-$18)
+800C7C48	andi   v0, v0, $0003
+800C7C4C	beq    v0, zero, Lc7c64 [$800c7c64]
+800C7C50	sw     ra, $0010(sp)
+800C7C54	lui    a0, $800a
+800C7C58	addiu  a0, a0, $099c
+800C7C5C	jal    funcbead4 [$800bead4]
+800C7C60	ori    a1, zero, $0001
+
+Lc7c64:	; 800C7C64
+800C7C64	lui    v0, $8007
+800C7C68	lbu    v0, $22c4(v0)
+800C7C6C	nop
+800C7C70	sll    v0, v0, $01
+800C7C74	lui    at, $8008
+800C7C78	addiu  at, at, $31fc
+800C7C7C	addu   at, at, v0
+800C7C80	lhu    v1, $0000(at)
+800C7C84	lui    v0, $800a
+800C7C88	lw     v0, $c6dc(v0)
+800C7C8C	nop
+800C7C90	addu   v0, v0, v1
+800C7C94	lbu    v0, $0001(v0)
+800C7C98	nop
+800C7C9C	lui    at, $800a
+800C7CA0	addiu  at, at, $d391 (=-$2c6f)
+800C7CA4	addu   at, at, v0
+800C7CA8	lbu    a0, $0000(at)
+800C7CAC	ori    v0, zero, $00ff
+800C7CB0	bne    a0, v0, Lc7cc0 [$800c7cc0]
+800C7CB4	nop
+800C7CB8	j      Lc7cd0 [$800c7cd0]
+800C7CBC	ori    a0, zero, $00ff
+
+Lc7cc0:	; 800C7CC0
+800C7CC0	lui    at, $800a
+800C7CC4	addiu  at, at, $ad30 (=-$52d0)
+800C7CC8	addu   at, at, a0
+800C7CCC	lbu    a0, $0000(at)
+
+Lc7cd0:	; 800C7CD0
+800C7CD0	jal    funcc7d5c [$800c7d5c]
+800C7CD4	nop
+800C7CD8	lw     ra, $0010(sp)
+800C7CDC	addiu  sp, sp, $0018
+800C7CE0	jr     ra 
+800C7CE4	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
 // 0x33 UC
 V0 = bu[800722C4];
 V1 = hu[800831FC + V0 * 2];
@@ -180,6 +478,92 @@ V0 = V0 + 2;
 [800831FC + V1 * 2] = h(V0);
 
 return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0x34 PDIRA
+800C81E8	lui    v0, $8007
+800C81EC	lbu    v0, $22c4(v0)
+800C81F0	nop
+800C81F4	sll    v0, v0, $01
+800C81F8	lui    at, $8008
+800C81FC	addiu  at, at, $31fc
+800C8200	addu   at, at, v0
+800C8204	lhu    v1, $0000(at)
+800C8208	lui    v0, $800a
+800C820C	lw     v0, $c6dc(v0)
+800C8210	nop
+800C8214	addu   v0, v0, v1
+800C8218	lbu    v0, $0001(v0)
+800C821C	nop
+800C8220	lui    at, $800a
+800C8224	addiu  at, at, $d391 (=-$2c6f)
+800C8228	addu   at, at, v0
+800C822C	lbu    a0, $0000(at)
+800C8230	ori    v0, zero, $00ff
+800C8234	bne    a0, v0, Lc8244 [$800c8244]
+800C8238	nop
+800C823C	j      Lc8254 [$800c8254]
+800C8240	ori    a0, zero, $00ff
+
+Lc8244:	; 800C8244
+800C8244	lui    at, $800a
+800C8248	addiu  at, at, $ad30 (=-$52d0)
+800C824C	addu   at, at, a0
+800C8250	lbu    a0, $0000(at)
+
+Lc8254:	; 800C8254
+800C8254	jal    set_direction_to_current_entity_by_entity_id [$800c826c]
+800C8258	nop
+800C825C	lw     ra, $0010(sp)
+800C8260	addiu  sp, sp, $0018
+800C8264	jr     ra 
+800C8268	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0x35 PTURA
+800C85B0	lui    v0, $8007
+800C85B4	lbu    v0, $22c4(v0)
+800C85B8	nop
+800C85BC	sll    v0, v0, $01
+800C85C0	lui    at, $8008
+800C85C4	addiu  at, at, $31fc
+800C85C8	addu   at, at, v0
+800C85CC	lhu    v1, $0000(at)
+800C85D0	lui    v0, $800a
+800C85D4	lw     v0, $c6dc(v0)
+800C85D8	nop
+800C85DC	addu   v0, v0, v1
+800C85E0	lbu    v0, $0001(v0)
+800C85E4	nop
+800C85E8	lui    at, $800a
+800C85EC	addiu  at, at, $d391 (=-$2c6f)
+800C85F0	addu   at, at, v0
+800C85F4	lbu    a0, $0000(at)
+800C85F8	ori    v0, zero, $00ff
+800C85FC	bne    a0, v0, Lc860c [$800c860c]
+800C8600	nop
+800C8604	j      Lc861c [$800c861c]
+800C8608	ori    a0, zero, $00ff
+
+Lc860c:	; 800C860C
+800C860C	lui    at, $800a
+800C8610	addiu  at, at, $ad30 (=-$52d0)
+800C8614	addu   at, at, a0
+800C8618	lbu    a0, $0000(at)
+
+Lc861c:	; 800C861C
+800C861C	jal    funcc8634 [$800c8634]
+800C8620	nop
+800C8624	lw     ra, $0010(sp)
+800C8628	addiu  sp, sp, $0018
+800C862C	jr     ra 
+800C8630	nop
 ////////////////////////////////
 
 
@@ -226,6 +610,286 @@ V1 = bu[800722C4];
 V0 = hu[800831FC + V1 * 2];
 V0 = V0 + 4;
 [800831FC + V1 * 2] = h(V0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0x73 PGTDR
+800CA254	lui    v0, $8007
+800CA258	lbu    v0, $22c4(v0)
+800CA25C	addiu  sp, sp, $ffe8 (=-$18)
+800CA260	sw     ra, $0014(sp)
+800CA264	sw     s0, $0010(sp)
+800CA268	sll    v0, v0, $01
+800CA26C	lui    at, $8008
+800CA270	addiu  at, at, $31fc
+800CA274	addu   at, at, v0
+800CA278	lhu    v1, $0000(at)
+800CA27C	lui    v0, $800a
+800CA280	lw     v0, $c6dc(v0)
+800CA284	nop
+800CA288	addu   v0, v0, v1
+800CA28C	lbu    v1, $0002(v0)
+800CA290	nop
+800CA294	sltiu  v0, v1, $0003
+800CA298	beq    v0, zero, Lca354 [$800ca354]
+800CA29C	nop
+800CA2A0	lui    at, $800a
+800CA2A4	addiu  at, at, $d391 (=-$2c6f)
+800CA2A8	addu   at, at, v1
+800CA2AC	lbu    v0, $0000(at)
+800CA2B0	ori    v1, zero, $00ff
+800CA2B4	beq    v0, v1, Lca354 [$800ca354]
+800CA2B8	nop
+800CA2BC	lui    at, $800a
+800CA2C0	addiu  at, at, $ad30 (=-$52d0)
+800CA2C4	addu   at, at, v0
+800CA2C8	lbu    s0, $0000(at)
+800CA2CC	nop
+800CA2D0	beq    s0, v1, Lca354 [$800ca354]
+800CA2D4	nop
+800CA2D8	lui    at, $8008
+800CA2DC	addiu  at, at, $eb98 (=-$1468)
+800CA2E0	addu   at, at, s0
+800CA2E4	lbu    v0, $0000(at)
+800CA2E8	nop
+800CA2EC	beq    v0, v1, Lca354 [$800ca354]
+800CA2F0	nop
+800CA2F4	lui    v0, $800a
+800CA2F8	lbu    v0, $d820(v0)
+800CA2FC	nop
+800CA300	andi   v0, v0, $0003
+800CA304	beq    v0, zero, Lca31c [$800ca31c]
+800CA308	nop
+800CA30C	lui    a0, $800a
+800CA310	addiu  a0, a0, $0a60
+800CA314	jal    funcbead4 [$800bead4]
+800CA318	ori    a1, zero, $0003
+
+Lca31c:	; 800CA31C
+800CA31C	lui    at, $8008
+800CA320	addiu  at, at, $eb98 (=-$1468)
+800CA324	addu   at, at, s0
+800CA328	lbu    v0, $0000(at)
+800CA32C	ori    a0, zero, $0002
+800CA330	sll    v1, v0, $05
+800CA334	addu   v1, v1, v0
+800CA338	lui    v0, $800a
+800CA33C	lw     v0, $c544(v0)
+800CA340	sll    v1, v1, $02
+800CA344	addu   v1, v1, v0
+800CA348	lbu    a2, $0038(v1)
+800CA34C	jal    store_memory_block_one_byte [$800bf3ac]
+800CA350	ori    a1, zero, $0003
+
+Lca354:	; 800CA354
+800CA354	lui    v0, $8007
+800CA358	lbu    v0, $22c4(v0)
+800CA35C	lui    v1, $8008
+800CA360	addiu  v1, v1, $31fc
+800CA364	sll    v0, v0, $01
+800CA368	addu   v0, v0, v1
+800CA36C	lhu    v1, $0000(v0)
+800CA370	nop
+800CA374	addiu  v1, v1, $0004
+800CA378	sh     v1, $0000(v0)
+800CA37C	addu   v0, zero, zero
+800CA380	lw     ra, $0014(sp)
+800CA384	lw     s0, $0010(sp)
+800CA388	addiu  sp, sp, $0018
+800CA38C	jr     ra 
+800CA390	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0x74 GETPC
+800D2F3C	lui    v0, $800a
+800D2F40	lbu    v0, $d820(v0)
+800D2F44	addiu  sp, sp, $ffe0 (=-$20)
+800D2F48	sw     ra, $001c(sp)
+800D2F4C	andi   v0, v0, $0003
+800D2F50	beq    v0, zero, Ld2f68 [$800d2f68]
+800D2F54	sw     s0, $0018(sp)
+800D2F58	lui    a0, $800a
+800D2F5C	addiu  a0, a0, $0f40
+800D2F60	jal    funcbead4 [$800bead4]
+800D2F64	ori    a1, zero, $0003
+
+Ld2f68:	; 800D2F68
+800D2F68	lui    v0, $8007
+800D2F6C	lbu    v0, $22c4(v0)
+800D2F70	nop
+800D2F74	sll    v0, v0, $01
+800D2F78	lui    at, $8008
+800D2F7C	addiu  at, at, $31fc
+800D2F80	addu   at, at, v0
+800D2F84	lhu    v1, $0000(at)
+800D2F88	lui    v0, $800a
+800D2F8C	lw     v0, $c6dc(v0)
+800D2F90	nop
+800D2F94	addu   v0, v0, v1
+800D2F98	lbu    v1, $0002(v0)
+800D2F9C	lui    s0, $8008
+800D2FA0	addiu  s0, s0, $31fc
+800D2FA4	slti   v0, v1, $0003
+800D2FA8	beq    v0, zero, Ld2fc8 [$800d2fc8]
+800D2FAC	ori    a0, zero, $0002
+800D2FB0	lui    at, $800a
+800D2FB4	addiu  at, at, $cbdc (=-$3424)
+800D2FB8	addu   at, at, v1
+800D2FBC	lbu    a2, $0000(at)
+800D2FC0	jal    store_memory_block_one_byte [$800bf3ac]
+800D2FC4	ori    a1, zero, $0003
+
+Ld2fc8:	; 800D2FC8
+800D2FC8	lui    v1, $8007
+800D2FCC	lbu    v1, $22c4(v1)
+800D2FD0	nop
+800D2FD4	sll    v1, v1, $01
+800D2FD8	addu   v1, v1, s0
+800D2FDC	lhu    v0, $0000(v1)
+800D2FE0	nop
+800D2FE4	addiu  v0, v0, $0004
+800D2FE8	sh     v0, $0000(v1)
+800D2FEC	addu   v0, zero, zero
+800D2FF0	lw     ra, $001c(sp)
+800D2FF4	lw     s0, $0018(sp)
+800D2FF8	addiu  sp, sp, $0020
+800D2FFC	jr     ra 
+800D3000	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0x75 PXYZI
+800CA77C	lui    v0, $8007
+800CA780	lbu    v0, $22c4(v0)
+800CA784	lui    v1, $800a
+800CA788	lbu    v1, $d820(v1)
+800CA78C	addiu  sp, sp, $ffe8 (=-$18)
+800CA790	sw     ra, $0014(sp)
+800CA794	sw     s0, $0010(sp)
+800CA798	sll    v0, v0, $01
+800CA79C	lui    at, $8008
+800CA7A0	addiu  at, at, $31fc
+800CA7A4	addu   at, at, v0
+800CA7A8	lhu    a0, $0000(at)
+800CA7AC	lui    v0, $800a
+800CA7B0	lw     v0, $c6dc(v0)
+800CA7B4	andi   v1, v1, $0003
+800CA7B8	addu   v0, v0, a0
+800CA7BC	lbu    s0, $0003(v0)
+800CA7C0	beq    v1, zero, Lca7dc [$800ca7dc]
+800CA7C4	andi   v1, s0, $00ff
+800CA7C8	lui    a0, $800a
+800CA7CC	addiu  a0, a0, $0a80
+800CA7D0	jal    funcbead4 [$800bead4]
+800CA7D4	ori    a1, zero, $0007
+800CA7D8	andi   v1, s0, $00ff
+
+Lca7dc:	; 800CA7DC
+800CA7DC	sltiu  v0, v1, $0003
+800CA7E0	beq    v0, zero, Lca91c [$800ca91c]
+800CA7E4	nop
+800CA7E8	lui    at, $800a
+800CA7EC	addiu  at, at, $d391 (=-$2c6f)
+800CA7F0	addu   at, at, v1
+800CA7F4	lbu    v1, $0000(at)
+800CA7F8	nop
+800CA7FC	sltiu  v0, v1, $0009
+800CA800	beq    v0, zero, Lca91c [$800ca91c]
+800CA804	ori    v0, zero, $00ff
+800CA808	lui    at, $800a
+800CA80C	addiu  at, at, $ad30 (=-$52d0)
+800CA810	addu   at, at, v1
+800CA814	lbu    s0, $0000(at)
+800CA818	nop
+800CA81C	lui    at, $8008
+800CA820	addiu  at, at, $eb98 (=-$1468)
+800CA824	addu   at, at, s0
+800CA828	lbu    v1, $0000(at)
+800CA82C	nop
+800CA830	beq    v1, v0, Lca91c [$800ca91c]
+800CA834	ori    a0, zero, $0001
+800CA838	sll    v0, v1, $05
+800CA83C	addu   v0, v0, v1
+800CA840	lui    v1, $800a
+800CA844	lw     v1, $c544(v1)
+800CA848	sll    v0, v0, $02
+800CA84C	addu   v0, v0, v1
+800CA850	lw     a2, $000c(v0)
+800CA854	ori    a1, zero, $0004
+800CA858	sll    a2, a2, $04
+800CA85C	jal    store_memory_block_two_bytes [$800c0248]
+800CA860	sra    a2, a2, $10
+800CA864	lui    at, $8008
+800CA868	addiu  at, at, $eb98 (=-$1468)
+800CA86C	addu   at, at, s0
+800CA870	lbu    v1, $0000(at)
+800CA874	ori    a0, zero, $0002
+800CA878	sll    v0, v1, $05
+800CA87C	addu   v0, v0, v1
+800CA880	lui    v1, $800a
+800CA884	lw     v1, $c544(v1)
+800CA888	sll    v0, v0, $02
+800CA88C	addu   v0, v0, v1
+800CA890	lw     a2, $0010(v0)
+800CA894	ori    a1, zero, $0005
+800CA898	sll    a2, a2, $04
+800CA89C	jal    store_memory_block_two_bytes [$800c0248]
+800CA8A0	sra    a2, a2, $10
+800CA8A4	lui    at, $8008
+800CA8A8	addiu  at, at, $eb98 (=-$1468)
+800CA8AC	addu   at, at, s0
+800CA8B0	lbu    v1, $0000(at)
+800CA8B4	ori    a0, zero, $0003
+800CA8B8	sll    v0, v1, $05
+800CA8BC	addu   v0, v0, v1
+800CA8C0	lui    v1, $800a
+800CA8C4	lw     v1, $c544(v1)
+800CA8C8	sll    v0, v0, $02
+800CA8CC	addu   v0, v0, v1
+800CA8D0	lw     a2, $0014(v0)
+800CA8D4	ori    a1, zero, $0006
+800CA8D8	sll    a2, a2, $04
+800CA8DC	jal    store_memory_block_two_bytes [$800c0248]
+800CA8E0	sra    a2, a2, $10
+800CA8E4	lui    at, $8008
+800CA8E8	addiu  at, at, $eb98 (=-$1468)
+800CA8EC	addu   at, at, s0
+800CA8F0	lbu    v1, $0000(at)
+800CA8F4	ori    a0, zero, $0004
+800CA8F8	sll    v0, v1, $05
+800CA8FC	addu   v0, v0, v1
+800CA900	lui    v1, $800a
+800CA904	lw     v1, $c544(v1)
+800CA908	sll    v0, v0, $02
+800CA90C	addu   v0, v0, v1
+800CA910	lh     a2, $0072(v0)
+800CA914	jal    store_memory_block_two_bytes [$800c0248]
+800CA918	ori    a1, zero, $0007
+
+Lca91c:	; 800CA91C
+800CA91C	lui    v0, $8007
+800CA920	lbu    v0, $22c4(v0)
+800CA924	lui    v1, $8008
+800CA928	addiu  v1, v1, $31fc
+800CA92C	sll    v0, v0, $01
+800CA930	addu   v0, v0, v1
+800CA934	lhu    v1, $0000(v0)
+800CA938	nop
+800CA93C	addiu  v1, v1, $0008
+800CA940	sh     v1, $0000(v0)
+800CA944	addu   v0, zero, zero
+800CA948	lw     ra, $0014(sp)
+800CA94C	lw     s0, $0010(sp)
+800CA950	addiu  sp, sp, $0018
+800CA954	jr     ra 
+800CA958	nop
 ////////////////////////////////
 
 
@@ -430,9 +1094,7 @@ if (current_model != FF)
 }
 
 // move pointer by 9
-V0 = hu[800831FC + current_entity * 2];
-V0 = V0 + 9;
-[800831FC + current_entity * 2] = h(V0);
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 9);
 
 return 1;
 ////////////////////////////////
@@ -1251,6 +1913,122 @@ read_memory_block_two_bytes;
 [model_data_offset + 30] = h(V0);
 
 return 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0xC1 AXYZI
+800CA5D4	lui    v0, $8007
+800CA5D8	lbu    v0, $22c4(v0)
+800CA5DC	lui    v1, $800a
+800CA5E0	lbu    v1, $d820(v1)
+800CA5E4	addiu  sp, sp, $ffd8 (=-$28)
+800CA5E8	sw     s1, $001c(sp)
+800CA5EC	lui    s1, $8008
+800CA5F0	addiu  s1, s1, $31fc
+800CA5F4	sw     ra, $0020(sp)
+800CA5F8	sw     s0, $0018(sp)
+800CA5FC	sll    v0, v0, $01
+800CA600	lui    at, $8008
+800CA604	addiu  at, at, $31fc
+800CA608	addu   at, at, v0
+800CA60C	lhu    a0, $0000(at)
+800CA610	lui    v0, $800a
+800CA614	lw     v0, $c6dc(v0)
+800CA618	andi   v1, v1, $0003
+800CA61C	addu   v0, v0, a0
+800CA620	lbu    s0, $0003(v0)
+800CA624	beq    v1, zero, Lca63c [$800ca63c]
+800CA628	andi   s0, s0, $00ff
+800CA62C	lui    a0, $800a
+800CA630	addiu  a0, a0, $0a78
+800CA634	jal    funcbead4 [$800bead4]
+800CA638	ori    a1, zero, $0007
+
+Lca63c:	; 800CA63C
+800CA63C	lui    at, $8008
+800CA640	addiu  at, at, $eb98 (=-$1468)
+800CA644	addu   at, at, s0
+800CA648	lbu    v1, $0000(at)
+800CA64C	ori    v0, zero, $00ff
+800CA650	beq    v1, v0, Lca73c [$800ca73c]
+800CA654	ori    a0, zero, $0001
+800CA658	sll    v0, v1, $05
+800CA65C	addu   v0, v0, v1
+800CA660	lui    v1, $800a
+800CA664	lw     v1, $c544(v1)
+800CA668	sll    v0, v0, $02
+800CA66C	addu   v0, v0, v1
+800CA670	lw     a2, $000c(v0)
+800CA674	ori    a1, zero, $0004
+800CA678	sll    a2, a2, $04
+800CA67C	jal    store_memory_block_two_bytes [$800c0248]
+800CA680	sra    a2, a2, $10
+800CA684	lui    at, $8008
+800CA688	addiu  at, at, $eb98 (=-$1468)
+800CA68C	addu   at, at, s0
+800CA690	lbu    v1, $0000(at)
+800CA694	ori    a0, zero, $0002
+800CA698	sll    v0, v1, $05
+800CA69C	addu   v0, v0, v1
+800CA6A0	lui    v1, $800a
+800CA6A4	lw     v1, $c544(v1)
+800CA6A8	sll    v0, v0, $02
+800CA6AC	addu   v0, v0, v1
+800CA6B0	lw     a2, $0010(v0)
+800CA6B4	ori    a1, zero, $0005
+800CA6B8	sll    a2, a2, $04
+800CA6BC	jal    store_memory_block_two_bytes [$800c0248]
+800CA6C0	sra    a2, a2, $10
+800CA6C4	lui    at, $8008
+800CA6C8	addiu  at, at, $eb98 (=-$1468)
+800CA6CC	addu   at, at, s0
+800CA6D0	lbu    v1, $0000(at)
+800CA6D4	ori    a0, zero, $0003
+800CA6D8	sll    v0, v1, $05
+800CA6DC	addu   v0, v0, v1
+800CA6E0	lui    v1, $800a
+800CA6E4	lw     v1, $c544(v1)
+800CA6E8	sll    v0, v0, $02
+800CA6EC	addu   v0, v0, v1
+800CA6F0	lw     a2, $0014(v0)
+800CA6F4	ori    a1, zero, $0006
+800CA6F8	sll    a2, a2, $04
+800CA6FC	jal    store_memory_block_two_bytes [$800c0248]
+800CA700	sra    a2, a2, $10
+800CA704	lui    at, $8008
+800CA708	addiu  at, at, $eb98 (=-$1468)
+800CA70C	addu   at, at, s0
+800CA710	lbu    v1, $0000(at)
+800CA714	ori    a0, zero, $0004
+800CA718	sll    v0, v1, $05
+800CA71C	addu   v0, v0, v1
+800CA720	lui    v1, $800a
+800CA724	lw     v1, $c544(v1)
+800CA728	sll    v0, v0, $02
+800CA72C	addu   v0, v0, v1
+800CA730	lh     a2, $0072(v0)
+800CA734	jal    store_memory_block_two_bytes [$800c0248]
+800CA738	ori    a1, zero, $0007
+
+Lca73c:	; 800CA73C
+800CA73C	lui    v1, $8007
+800CA740	lbu    v1, $22c4(v1)
+800CA744	nop
+800CA748	sll    v1, v1, $01
+800CA74C	addu   v1, v1, s1
+800CA750	lhu    v0, $0000(v1)
+800CA754	nop
+800CA758	addiu  v0, v0, $0008
+800CA75C	sh     v0, $0000(v1)
+800CA760	addu   v0, zero, zero
+800CA764	lw     ra, $0020(sp)
+800CA768	lw     s1, $001c(sp)
+800CA76C	lw     s0, $0018(sp)
+800CA770	addiu  sp, sp, $0028
+800CA774	jr     ra 
+800CA778	nop
 ////////////////////////////////
 
 

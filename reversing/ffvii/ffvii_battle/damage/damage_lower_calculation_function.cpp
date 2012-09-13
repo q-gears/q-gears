@@ -23,16 +23,14 @@ if ((V0 & 2000) == 0)
 }
 
 
-BaseDamage = Attack + ((Level + Attack) / 20) * ((Level * Attack) / 20);
-A0 = BaseDamage * (200 - DefNum) / 200;
-A0 = A0 * PowerModifier / 10;
+Damage = (Attack + ((Level + Attack) / 20) * ((Level * Attack) / 20)) * ((200 - DefNum) / 200) * (PowerModifier / 10);
 
 
 
 // if critical
 if (w[address + 220] & 0002)
 {
-    A0 = A0 * 2;
+    Damage = Damage * 2;
 }
 
 
@@ -40,7 +38,7 @@ if (w[address + 220] & 0002)
 // if attacker is in berserk
 if (Status & 00800000)
 {
-    A0 = A0 * 6;
+    Damage = Damage * 6;
 }
 
 
@@ -68,7 +66,7 @@ else
 
 if (A2 != 0)
 {
-    A0 = A0 / 2;
+    Damage = Damage / 2;
 }
 
 
@@ -77,7 +75,7 @@ target_id = w[address + 208];
 V1 = w[800f83e0 + target_id * 68 + 4];
 if (V1 & 00000020)
 {
-    A0 = A0 / 2;
+    Damage = Damage / 2;
 }
 
 
@@ -86,7 +84,7 @@ V0 = w[address + 234];
 if (V0 & 0001)
 {
     V0 = bu[800f83e0 + target_id * 68 + 12];
-    A0 = A0 * V0 / 8;
+    Damage = Damage * V0 / 8;
 }
 
 
@@ -94,11 +92,10 @@ if (V0 & 0001)
 // if caster is frog
 if (Status & 00000800)
 {
-    A0 = A0 / 4;
+    Damage = Damage / 4;
 }
 
-
-
+A0 = Damage;
 battle_add_sadness_modifier;
 A0 = V0;
 
@@ -126,7 +123,7 @@ battle_add_random_modifier_and_zero_check;
 
 ////////////////////////////////////////////////////
 // lower_function_02
-address = A1 = w[80063014];
+address = w[80063014];
 
 Attack        = w[address + 4c];
 Level         = w[address + 4];
@@ -134,10 +131,9 @@ DefNum        = w[address + 210];
 PowerModifier = w[address + 48];
 TargetType    = w[address + 50];
 
-BaseDamage = (Attack + Level) * 6;
-A0 = BaseDamage * (200 - DefNum) * PowerModifier;
-A0 = A0 >> D; /2000
+Damage = ((Attack + Level) * 6) * ((200 - DefNum) / 200) * (PowerModifier / 10);
 
+A0 = Damage;
 battle_add_sadness_modifier;
 A0 = V0;
 

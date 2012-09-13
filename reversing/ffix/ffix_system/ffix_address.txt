@@ -356,8 +356,10 @@
     +838 [][][][] pointer to some functions called in func21698 with +34 param from entity script memory in opcode 0x2f. Looks like model init.
     +848 []       set up in 0x2a opcode.
     +851 []       (8008BAA1)
-    +864 [][][][] maybe size of loaded field file.
-    +874 [][][][] end of loaded field file.
+    +854
+        + 4 [][][][] some pointer. ??
+        +10 [][][][] maybe size of loaded field file.
+        +20 [][][][] end of loaded field file.
     +8c8 [][][][] maybe pointer to list of loading files.
         +  2 []       number of records.
         +  3 []       sone index into next array.
@@ -425,17 +427,17 @@
                 +  8 []       init with 0.
                 +  0 []       init with 0.
                 +  a [][]     field id. Inited with -1.
-                +  c [][][][] init with 0.
+                +  c [][][][] init with 0. Maybe pointer to script.
                 + 10 [][][][] init with 0.
-                + 14 [][][][] init with 0.
+                + 14 [][][][] pointer to tileset file 0xa.
                 + 18 [][][][] init with 0.
                 + 1c [][][][] init with 0.
                 + 20 [][][][] init with 0. Some pointer.
-                + 24 [][][][] init with 0.
+                + 24 [][][][] pointer to field file with index 1 in resource file type 1b.
                 + 28 [][][][] store here pointer to +6c.
                 + 2c [][][][] init with 0.
                 + 30 [][][][] init with 0.
-                + 30 [][]     some depth for depth buffer (shifted by >>2)
+                + 30 [][]     some depth for depth buffer (shifted by >>2). 2 bytes from tileset_file + camera_offset + camera_id * 34 + 30.
                 + 34 [][][][] init with w[80067944] + 106700. Maybe pointer to some data loaded.
                 + 38 [][]     init with 0x00a0.
                 + 3a [][]     init with 0x0070.
@@ -450,7 +452,7 @@
                 + 49 []       init with 0.
                 + 4a []       init with 1.
                 + 4b []       init with 0. Some index.
-                + 4c [][][][] init with 0.
+                + 4c [][][][] init with 0. Pointer to field file with type 0x1e if exist.
                 + 50 [][]     init with 0.
                 + 52 [][]     init with 0.
                 + 54 [][][][] store here pointer to +90.

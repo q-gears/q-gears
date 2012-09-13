@@ -1,4 +1,21 @@
 ////////////////////////////////
+// 0x69 MPDSP
+struct = w[8009c6e0];
+current_entity            = bu[800722c4];
+current_script_pointer    = 800831fc + current_entity * 2;
+field_file_offset         = w[8009c6dc];
+
+argument1 = hu[current_script_pointer + 0];
+
+[struct + 38] = b(bu[current_entity + argument1 + 1]);
+
+// move pointer by 9
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 2);
+////////////////////////////////
+
+
+
+////////////////////////////////
 // 0x6B FADE
 
 v0 = [param + 07];
@@ -84,9 +101,8 @@ move script pointer by 0x9
 
 ////////////////////////////////
 // 0x6C FADEW
-
-V0 = w[8009c6e0];
-V0 = hu[V0 + 4c];
+struct = w[8009c6e0];
+V0 = hu[struct + 4c];
 
 if (V0 == 1 || V0 == 5 || V0 == 7 || V0 == 9)
 {

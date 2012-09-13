@@ -1,0 +1,26 @@
++00 [][][][] offset to sprites.
++04 [][][][] offset to something2.
++08 [][][][] number to something2.
+
+
+
+// sprites
+// header
++00 [][][][] offset to pixel data?
++04 [][][][] number of sprites.
+// data (size 0x08)
++00 [][]     x?
++02 [][]     y?
++04 [][]     width
++06 [][]     height
+
+
+
+// something2. number of records about texture one after another. (size 0x08 + [+4] * [+6] * 2)
++00 [][]     x?
++02 [][]     y?
++04 [][]     width
++06 [][]     height
++08 start of pixel data.
+
+

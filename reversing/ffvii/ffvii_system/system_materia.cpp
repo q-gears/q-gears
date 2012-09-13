@@ -5,7 +5,7 @@ S4 = A0;
 S0 = A0;
 
 character_id = bu[8009cbdc + S0];
-if (character_id != ff)
+if( character_id != ff )
 {
     A0 = S0;
     system_get_armor_address_equipped_by_party_id;

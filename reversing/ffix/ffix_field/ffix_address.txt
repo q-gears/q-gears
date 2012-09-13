@@ -2,18 +2,24 @@
                     0x0040 - checked in funcab3cc. Look like is screen offset inited or not.
 
 800c9da4 start address of tileset related info.
-+00 [][][][] ???
++00 [][][][] frame buffer index.
++04 [][][][] pointer to projection plane distance for rasterisation (8008b000 + 1c + a)
++08 [][][][] 1st frame buffer depth stack.
++0c [][][][] 2nd frame buffer depth stack.
 +10 [][][][] pointer to tileset file 0xa.
-+1c [][][][] ???
-+20 [][][][] ???
++14 [][][][] pointer to main transformation matrix. (8008b000 + 1c + 18)
++18 [][][][] w[80067948] + 400.
++1c [][][][] w[80067948] + 400.
++20 [][][][] w[80067948] + 400.
 +24 []       init with 0. Number of specific tileset blocks.
 +28 [][][][] init with data from +2c. Pointer to struct with specific tileset blocks data.
     +00 []       init with 0x10.
     +01 []       init with block id.
     +04 [][][][] init with 0.
     +08 [][][][] init with 0.
-+2c [][][][] some data. We init +28 with it.
-+34 [][][][] increment by 0xc ebery added special block.
++2c [][][][] init with w[80067948]. Some data. We init +28 with it.
++30 [][][][] init with 0x400.
++34 [][][][] init with 0. Increment by 0xc every added special block.
 
 
 800c9ddc [][]     number of collisions with triangles sides.
@@ -42,24 +48,30 @@
     +0 [][][][] init with -1.
 
 800ca068 start address of camera related info.
++00 [][][][] init with 0x60.
++04 [][][][] init with 0.
++08 [][][][] init with 0.
++0c [][][][] init with 0.
 +0c [][]     x screen offset.
 +0e [][]     y screen offset.
-+1c [][][][] pointer to where we copy camera data.
-    +00 [][]     R11.
-    +02 [][]     R12.
-    +04 [][]     R13.
-    +06 [][]     R21.
-    +08 [][]     R22.
-    +0a [][]     R23.
-    +0c [][]     R31.
-    +0e [][]     R32.
-    +10 [][]     R33.
-    +14 [][][][] TX.
-    +18 [][][][] TY.
-    +1c [][][][] TZ.
-+20 [][][][] pointer to something.
-    +00 [][]     H (projection plane distance).
-+75 []       id of camera to use in field. Used when selecting background camera.
++10 [][][][] init with 0.
++14 [][][][] init with 0.
++18 [][][][] init with 0.
++1c [][][][] pointer to main transformation matrix. (8008b000 + 1c + 18)
++20 [][][][] pointer to projection plane distance for rasterisation (8008b000 + 1c + a)
++24 [][][][] init with 0.
++28 [][][][] init with 0.
++2c [][][][] init with 0.
++74 []       init with 0x40.
++75 []       id of camera to use in field (0 by default). Used when selecting background camera.
++76 [][]     init with 0x144.
++78 [][][][] init with 0xe10.
++9c [][]     init with 0.
++a0 []       init with 0.
++a1 []       init with 0xff.
++a2 []       init with 0xff.
++a3 []       init with 0xff.
++a4 [][][][] init with 0.
 
 800ca14c some array of 0xdc size elements.
 

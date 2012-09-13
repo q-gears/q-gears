@@ -2105,8 +2105,7 @@ if (upper == a)
 
 
 // if this is magic attack
-V0 = w[address + 6c];
-if (V0 & 0004)
+if( w[address + 6c] & 0004 )
 {
     A0 = w[address + 0];
     A1 = bu[800f83e0 + A0 * 68 + e];
@@ -2115,7 +2114,7 @@ if (V0 & 0004)
 else
 {
     A0 = w[address + 0];
-    A1 = bu[800F83E0 + A0 * 68 + d];
+    A1 = bu[800f83e0 + A0 * 68 + d];
     A2 = 0;
 }
 

@@ -1,7 +1,8 @@
 ////////////////////////////////
 // funca99ac
+// start of load of battle formation data
 //a0=8010AEAC a1=00000150 a2=00000000 a3=00000007 ra=800A92EC // start of battle
-// A1 - unique file identificator of file type 11.
+// A1 - unique file identificator of file type 11 (formation).
 
 S1 = A0;
 S0 = 110000 | (A1 & ffff);

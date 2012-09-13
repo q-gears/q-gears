@@ -201,18 +201,16 @@ L1b0928:	; 801B0928
                 V0 = bu[savemap_player + 20]; // row of character in savemap
                 if (V0 & 01 == 0) // if back row
                 {
-                    V0 = w[structure_68 + 4];
-                    V0 = V0 | 00000040;
-                    [structure_68 + 4] = w(V0);
+                    [structure_68 + 4] = w(w[structure_68 + 4] | 00000040);
                 }
 
 
 
                 // set hp/mp
-                [structure_68 + 2C] = w(h[structure_440 + 10]);
+                [structure_68 + 2c] = w(h[structure_440 + 10]);
                 [structure_68 + 28] = h(h[structure_440 + 14]);
-                [ui_structure + 0E] = h(w[structure_68 + 2C]);
-                [ui_structure + 0C] = h(h[structure_68 + 28]);
+                [ui_structure + 0e] = h(w[structure_68 + 2c]);
+                [ui_structure + 0c] = h(h[structure_68 + 28]);
 
 
 
@@ -358,19 +356,14 @@ L1b0928:	; 801B0928
 
 
                 // add activate flag
-                V0 = w[structure_68 + 4];
-                V0 = V0 | 00000008;
-                [structure_68 + 4] = w(V0);
+                [structure_68 + 4] = w(w[structure_68 + 4] | 00000008);
 
 
 
                 // if hp == 0 set death
-                V1 = w[structure_68 + 2c]; // current hp
-                if (V1 == 0)
+                if( w[structure_68 + 2c] == 0 ) // current hp
                 {
-                    V0 = w[structure_68 + 0];
-                    V0 = V0 | 00000001;
-                    [structure_68 + 0] = w(V0);
+                    [structure_68 + 0] = w(w[structure_68 + 0] | 00000001);
                 }
 
 
@@ -387,22 +380,18 @@ L1b0928:	; 801B0928
 
 
                 // if currently limit break
-                V0 = hu[ui_structure + 8];
-                if (V0 == ff)
+                if( hu[ui_structure + 8] == ff )
                 {
                     A0 = party_id;
                     funca4e80;
 
-                    V0 = hu[800f5bc0 + party_id * 44];
-                    V0 = V0 & fffe;
-                    [800f5bc0 + party_id * 44] = h(V0);
+                    [800f5bc0 + party_id * 44] = h(hu[800f5bc0 + party_id * 44] & fffe);
                 }
 
 
 
                 // if we have some status write something to 80163798 stack
-                V0 = w[structure_68 + 0];
-                if (V0 != 0)
+                if( w[structure_68 + 0] != 0 )
                 {
                     A0 = party_id;
                     funcb108c;

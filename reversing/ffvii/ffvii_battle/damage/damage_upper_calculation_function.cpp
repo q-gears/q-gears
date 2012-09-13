@@ -86,7 +86,7 @@ func14ba8;
 A2 = V0;
 
 luck = bu[800f83e0 + attacker_id * 68 + 15]; // luck
-if (A2 < luck / 4)
+if( A2 < luck / 4 )
 {
     S0 = ff;
 }
@@ -100,7 +100,7 @@ else if (attacker_id >= 4 && target_id < 3)
 
 battle_get_random_0x1-0x64;
 
-if (V0 < S0)
+if( V0 < S0 )
 {
     funcb0df8;
 }
