@@ -90,7 +90,7 @@ EntityContainer[ "Cloud" ] = {
         self.cloud:set_move_auto_speed( 1.875 )
         self.cloud:move_to_position( 4.48438, 5.30469 )
         self.cloud:move_sync()
-        self.cloud:set_direction( 174.375 )
+        self.cloud:set_rotation( 174.375 )
 
         return 0
     end,
@@ -179,7 +179,7 @@ EntityContainer[ "Barret" ] = {
         script:request( Script.ENTITY, "Cloud", "scene_part_9", 6 )
         self.barret:move_to_position( 5.96094, 5.08594 )
         self.barret:move_sync()
-        self.barret:set_direction( 241.875 )
+        self.barret:set_rotation( 241.875 )
         --04ee (end 04ee): -- set window parameters (id = 3, x = 25, y = 140, width = 228, height = 57);
         --04f8 (end 04f8): message:show_text_wait(3, 39, x, y);
         --04fb (end 04fb): -- set window parameters (id = 3, x = 8, y = 150, width = 260, height = 41);
@@ -226,7 +226,7 @@ EntityContainer[ "Biggs" ] = {
     on_start = function( self )
         self.biggs = entity_manager:get_entity( "Biggs" )
         self.biggs:set_position( 3.91406, 6.07812, 5.07031 )
-        self.biggs:set_direction( 174.375 )
+        self.biggs:set_rotation( 174.375 )
 
         if FFVII.Data.progress_game >= 7 then
             self.biggs:set_solid( false )
@@ -305,7 +305,7 @@ EntityContainer[ "Jessie" ] = {
     on_start = function( self )
         self.jessie = entity_manager:get_entity( "Jessie" )
         self.jessie:set_position( 4.51953, 6.32422, 5.07031 )
-        self.jessie:set_direction( 174.375 )
+        self.jessie:set_rotation( 174.375 )
 
         self.jessie:set_default_animation( "BreakUp" )
         self.jessie:play_animation( "BreakUp" )
@@ -357,7 +357,7 @@ EntityContainer[ "Wedge" ] = {
     on_start = function( self )
         self.wedge = entity_manager:get_entity( "Wedge" )
         self.wedge:set_position( 5.94141, 5.875, 5.07031 )
-        self.wedge:set_direction( 16.875 )
+        self.wedge:set_rotation( 16.875 )
         self.wedge:set_default_animation( "LookAround" )
         self.wedge:play_animation( "LookAround" )
 
@@ -393,7 +393,7 @@ EntityContainer[ "DoorLeft" ] = {
     on_start = function( self )
         self.door = entity_manager:get_entity( "DoorLeft" )
         self.door:set_position( 4.25, 7.20703, 5.07031 )
-        self.door:set_direction( 354.375 )
+        self.door:set_rotation( 354.375 )
 
         if FFVII.Data.progress_game >= 7 then
             self.door:set_visible( false )
@@ -423,7 +423,7 @@ EntityContainer[ "DoorRight" ] = {
     on_start = function( self )
         self.door = entity_manager:get_entity( "DoorRight" )
         self.door:set_position( 4.93359, 7.125, 5.07031 )
-        self.door:set_direction( 174.375 )
+        self.door:set_rotation( 174.375 )
 
         if FFVII.Data.progress_game >= 7 then
             self.door:set_visible( false )

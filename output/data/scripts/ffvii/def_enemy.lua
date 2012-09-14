@@ -3,8 +3,6 @@ FFVII.Enemies = {}
 
 
 FFVII.Enemies.MP = {
-    entity = nil,
-
     max_hp = 30,
     max_mp = 0,
 
@@ -32,13 +30,18 @@ FFVII.Enemies.MP = {
 
 
 
-    on_start = function(self)
-        self.entity = entity_manager:get_entity( "MP" )
+    on_start = function( self )
+        while true do
+            local dir = self.entity:get_rotation()
+            dir = dir + 1
+            self.entity:set_rotation( dir )
+            script:wait( 0 )
+        end
 
         return 0;
     end;
 
-    on_action = function(self)
+    on_action = function( self )
         local attack_id;
 
         if is_self_in_front_row() == true then
@@ -63,7 +66,7 @@ FFVII.Enemies.MP = {
 
 
 
-    action_idle = function(self)
+    action_idle = function( self )
         fighter_self:play_animation("0");
 
         return 0;

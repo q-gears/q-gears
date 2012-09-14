@@ -451,24 +451,24 @@ EntityManager::GetBackground2D()
 
 
 void
-EntityManager::AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& direction )
+EntityManager::AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& rotation )
 {
     Ogre::SceneNode* node = m_SceneNode->createChildSceneNode( "Model_" + name );
     EntityModel* entity = new EntityModel( name, file_name, node );
     entity->SetPosition( position );
-    entity->SetDirection( direction );
+    entity->SetRotation( rotation );
 
     m_Entity.push_back( entity );
 
-    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, entity->GetName() );
+    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, entity->GetName(), entity );
 }
 
 
 
 void
-EntityManager::ScriptAddEntity( const char* name, const char* file_name, const float x, const float y, const float z, const float direction )
+EntityManager::ScriptAddEntity( const char* name, const char* file_name, const float x, const float y, const float z, const float rotation )
 {
-    AddEntity( name, file_name, Ogre::Vector3( x, y, z ), Ogre::Degree( direction ) );
+    AddEntity( name, file_name, Ogre::Vector3( x, y, z ), Ogre::Degree( rotation ) );
 }
 
 
@@ -481,7 +481,7 @@ EntityManager::AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& 
     trigger->SetEnabled( enabled );
     m_EntityTriggers.push_back( trigger );
 
-    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, trigger->GetName() );
+    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, trigger->GetName(), NULL );
 }
 
 
@@ -501,7 +501,7 @@ void
 EntityManager::AddEntityScript( const Ogre::String& name )
 {
     m_EntityScripts.push_back( name );
-    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, name );
+    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, name, NULL );
 }
 
 
@@ -741,7 +741,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity, const float speed )
         Ogre::Degree angle( Ogre::Radian( acosf( direction.dotProduct( up ) / ( direction.length() * up.length() ) ) ) );
         angle = ( direction.x < 0 ) ? Ogre::Degree( 360 ) - angle : angle;
 
-        entity->SetDirection( Ogre::Degree( angle ) );
+        entity->SetRotation( Ogre::Degree( angle ) );
     }
 
 
@@ -1228,9 +1228,9 @@ EntityManager::SetNextTurnStep( Entity* entity )
 
     float x = current / total;
     float smooth_modifier = ( type == AT_SMOOTH ) ? -2 * x * x * x + 3 * x * x : x;
-    Ogre::Degree direction = start + ( end - start ) * smooth_modifier;
+    Ogre::Degree rotation = start + ( end - start ) * smooth_modifier;
 
-    entity->SetDirection( direction );
+    entity->SetRotation( rotation );
 
     if( current == total )
     {

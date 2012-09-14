@@ -7,7 +7,7 @@ end
 
 
 System[ "Battle" ] = {
-    cycle = function( self )
+    on_update = function( self, time )
         return 0
     end,
 }

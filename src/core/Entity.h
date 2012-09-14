@@ -72,13 +72,15 @@ public:
     void                 SetPosition( const Ogre::Vector3& position );
     void                 ScriptSetPosition( const float x, const float y, const float z );
     const Ogre::Vector3  GetPosition() const;
+    void                 ScriptGetPosition() const;
 
     void                 SetOffset( const Ogre::Vector3& position );
     const Ogre::Vector3  GetOffset() const;
 
-    void                 SetDirection( const Ogre::Degree& direction );
-    void                 ScriptSetDirection( const float direction );
-    Ogre::Degree         GetDirection() const;
+    void                 SetRotation( const Ogre::Degree& rotation );
+    void                 ScriptSetRotation( const float rotation );
+    Ogre::Degree         GetRotation() const;
+    float                ScriptGetRotation() const;
 
     // height related
     float                GetHeight() const;

@@ -11,7 +11,7 @@ extern "C"
 }
 #include "library/luabind/luabind.hpp"
 
-class GameModule;
+class Entity;
 
 
 
@@ -80,7 +80,7 @@ public:
     void InitBinds();
     void InitCmd();
 
-    void AddEntity( const Type type, const Ogre::String& entity_name );
+    void AddEntity( const Type type, const Ogre::String& entity_name, Entity* entity );
     void RemoveEntity( const Type type, const Ogre::String& entity_name );
     void AddEntityScript( const Ogre::String& entity_name, const Ogre::String& function_name, int priority );
     void RemoveEntityTopScript( ScriptEntity& entity );

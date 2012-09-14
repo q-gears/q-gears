@@ -99,7 +99,7 @@ UiWidget::Initialise()
     m_Colour3 = Ogre::ColourValue( 1, 1, 1, 1 );
     m_Colour4 = Ogre::ColourValue( 1, 1, 1, 1 );
 
-    ScriptManager::getSingleton().AddEntity( ScriptManager::UI, m_PathName );
+    ScriptManager::getSingleton().AddEntity( ScriptManager::UI, m_PathName, NULL );
 }
 
 

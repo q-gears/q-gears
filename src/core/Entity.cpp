@@ -239,6 +239,17 @@ Entity::GetPosition() const
 
 
 void
+Entity::ScriptGetPosition() const
+{
+    Ogre::Vector3 position = m_SceneNode->getPosition();
+    ScriptManager::getSingleton().AddValueToStack( position.x );
+    ScriptManager::getSingleton().AddValueToStack( position.y );
+    ScriptManager::getSingleton().AddValueToStack( position.z );
+}
+
+
+
+void
 Entity::SetOffset( const Ogre::Vector3& position )
 {
     m_ModelNode->setPosition( position );
@@ -255,9 +266,9 @@ Entity::GetOffset() const
 
 
 void
-Entity::SetDirection( const Ogre::Degree& direction )
+Entity::SetRotation( const Ogre::Degree& rotation )
 {
-    float angle = direction.valueDegrees() - Ogre::Math::Floor( direction.valueDegrees() / 360.0f ) * 360.0f;
+    float angle = rotation.valueDegrees() - Ogre::Math::Floor( rotation.valueDegrees() / 360.0f ) * 360.0f;
 
     if( angle < 0 )
     {
@@ -274,15 +285,15 @@ Entity::SetDirection( const Ogre::Degree& direction )
 
 
 void
-Entity::ScriptSetDirection( const float direction )
+Entity::ScriptSetRotation( const float rotation )
 {
-    SetDirection( Ogre::Degree( direction ) );
+    SetRotation( Ogre::Degree( rotation ) );
 }
 
 
 
 Ogre::Degree
-Entity::GetDirection() const
+Entity::GetRotation() const
 {
     Ogre::Quaternion q = m_ModelNode->getOrientation();
     Ogre::Degree temp;
@@ -290,6 +301,14 @@ Entity::GetDirection() const
     q.ToAngleAxis( temp, vec );
 
     return temp;
+}
+
+
+
+float
+Entity::ScriptGetRotation() const
+{
+    return GetRotation().valueDegrees();
 }
 
 
@@ -891,13 +910,13 @@ Entity::SetTurn( const Ogre::Degree& direction_to, Entity* entity, const TurnDir
 {
     if( turn_type == AT_NONE )
     {
-        SetDirection( direction_to );
+        SetRotation( direction_to );
         return;
     }
 
     m_TurnDirection = turn_direction;
 
-    Ogre::Degree angle_start = GetDirection();
+    Ogre::Degree angle_start = GetRotation();
     Ogre::Degree angle_end = CalculateTurnAngle( angle_start, direction_to );
 
     m_TurnEntity = entity;

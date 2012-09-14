@@ -18,7 +18,7 @@ set_entity_to_character = function( entity_name, character_name )
                 local rotation = point:get_rotation()
                 local player = entity_manager:get_entity( entity_name )
                 player:set_position( x, y, z )
-                player:set_direction( rotation )
+                player:set_rotation( rotation )
                 player:set_solid( true )
                 player:set_visible( true )
             end

@@ -325,7 +325,7 @@ ScriptManager::RunFile( const Ogre::String& file )
 
 
 void
-ScriptManager::AddEntity( const ScriptManager::Type type, const Ogre::String& entity_name )
+ScriptManager::AddEntity( const ScriptManager::Type type, const Ogre::String& entity_name, Entity* entity )
 {
     for( unsigned int i = 0; i < m_ScriptEntity.size(); ++i )
     {
@@ -343,6 +343,12 @@ ScriptManager::AddEntity( const ScriptManager::Type type, const Ogre::String& en
         ScriptEntity script_entity;
         script_entity.name = entity_name;
         script_entity.type = type;
+
+        // init entity field for model entity
+        if( entity != NULL )
+        {
+            table[ "entity" ] = boost::ref( *entity );
+        }
 
         // check "on_start" script
         if( luabind::type( table[ "on_start" ] ) == LUA_TFUNCTION )

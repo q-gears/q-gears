@@ -45,7 +45,7 @@ XmlScriptsFile::LoadScripts()
                 continue;
             }
 
-            ScriptManager::getSingleton().AddEntity( ScriptManager::SYSTEM, name );
+            ScriptManager::getSingleton().AddEntity( ScriptManager::SYSTEM, name, NULL );
         }
 
         node = node->NextSibling();

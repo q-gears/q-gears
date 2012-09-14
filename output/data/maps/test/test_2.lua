@@ -23,7 +23,7 @@ EntityContainer[ "Player" ] = {
                 player:move_sync()
 
                 -- move to up platform 1
-                player:set_direction( 180 )
+                player:set_rotation( 180 )
                 player:linear_to_position( -2, 3.5, 3, Entity.DOWN_TO_UP, "Climb" )
                 player:linear_sync()
 
@@ -37,7 +37,7 @@ EntityContainer[ "Player" ] = {
                 player:move_sync()
 
                 -- jump to platform 2
-                player:set_direction( 90 )
+                player:set_rotation( 90 )
                 player:move_auto_animation( false )
                 player:play_animation_stop( "Jump" )
                 script:wait( 0.5 ) -- wait to start of jump in animation
@@ -56,7 +56,7 @@ EntityContainer[ "Player" ] = {
 --                message:hide(1)
 
                 -- ladder down
-                player:set_direction( 180 )
+                player:set_rotation( 180 )
                 player:linear_to_position( 1, 0, 0, Entity.DOWN_TO_UP, "Climb" )
                 player:linear_sync()
 

@@ -55,7 +55,9 @@ ScriptManager::InitBinds()
     [
         luabind::class_< Entity >( "Entity" )
             .def( "set_position", ( void( Entity::* )( const float, const float, const float ) ) &Entity::ScriptSetPosition )
-            .def( "set_direction", ( void( Entity::* )( const float ) ) &Entity::ScriptSetDirection )
+            .def( "get_position", ( void( Entity::* )() ) &Entity::ScriptGetPosition ) // return 3 values internaly
+            .def( "set_rotation", ( void( Entity::* )( const float ) ) &Entity::ScriptSetRotation )
+            .def( "get_rotation", ( float( Entity::* )() ) &Entity::ScriptGetRotation )
             .def( "set_solid_radius", ( void( Entity::* )( const float ) ) &Entity::SetSolidRadius )
             .def( "get_solid_radius", ( float( Entity::* )() ) &Entity::GetSolidRadius )
             .def( "set_solid", ( void( Entity::* )( const bool ) ) &Entity::SetSolid )
