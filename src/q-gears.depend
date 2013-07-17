@@ -29769,3 +29769,1791 @@
 	<luabind/lua_include.hpp>
 	<luabind/luabind.hpp>
 
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\ldebug.c
+	<stdarg.h>
+	<stddef.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lua.h
+	<stdarg.h>
+	<stddef.h>
+	"luaconf.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\luaconf.h
+	<limits.h>
+	<stddef.h>
+	<unistd.h>
+	<io.h>
+	<stdio.h>
+	<stdio.h>
+	<readline/readline.h>
+	<readline/history.h>
+	<assert.h>
+	<math.h>
+	<unistd.h>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lapi.h
+	"lobject.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lobject.h
+	<stdarg.h>
+	"llimits.h"
+	"lua.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\llimits.h
+	<limits.h>
+	<stddef.h>
+	"lua.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lcode.h
+	"llex.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\llex.h
+	"lobject.h"
+	"lzio.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lzio.h
+	"lua.h"
+	"lmem.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lmem.h
+	<stddef.h>
+	"llimits.h"
+	"lua.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lopcodes.h
+	"llimits.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lparser.h
+	"llimits.h"
+	"lobject.h"
+	"lzio.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\ldebug.h
+	"lstate.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lstate.h
+	"lua.h"
+	"lobject.h"
+	"ltm.h"
+	"lzio.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\ltm.h
+	"lobject.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\ldo.h
+	"lobject.h"
+	"lstate.h"
+	"lzio.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lfunc.h
+	"lobject.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lstring.h
+	"lgc.h"
+	"lobject.h"
+	"lstate.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lgc.h
+	"lobject.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\ltable.h
+	"lobject.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lvm.h
+	"ldo.h"
+	"lobject.h"
+	"ltm.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particlesystemtranslator.cpp
+	"ParticleSystemTranslator.h"
+	<OgreLogManager.h>
+	"ParticleSystemManager.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlesystemtranslator.h
+	<OgreScriptTranslator.h>
+	<OgreSingleton.h>
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlesystemmanager.h
+	<OgreSingleton.h>
+	"ParticleEmitter.h"
+	"ParticleEmitterFactory.h"
+	"ParticleRendererFactory.h"
+	"ParticleSystem.h"
+	"ParticleSystemFactory.h"
+	"ParticleTechnique.h"
+	"ParticleSystemTranslatorManager.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particleemitter.h
+	<OgreStringInterface.h>
+	"Particle.h"
+	"ParticleEmitterDictionary.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particle.h
+	<OgrePrerequisites.h>
+	<OgreVector3.h>
+	"ParticleAdditionalData.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particleadditionaldata.h
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particleemitterdictionary.h
+	<OgreStringInterface.h>
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particleemitterfactory.h
+	"ParticleEmitter.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlerendererfactory.h
+	"ParticleRenderer.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlerenderer.h
+	<OgreString.h>
+	<OgreStringInterface.h>
+	"ParticlePool.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlepool.h
+	<list>
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlesystem.h
+	<OgreMovableObject.h>
+	"ParticleTechnique.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particletechnique.h
+	"ParticleEmitter.h"
+	"ParticleRenderer.h"
+	"ParticlePool.h"
+	"ParticlePoolMap.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlepoolmap.h
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlesystemfactory.h
+	<OgreMovableObject.h>
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlesystemtranslatormanager.h
+	<OgreScriptTranslator.h>
+	<OgreSingleton.h>
+	"ParticleEmitterTranslator.h"
+	"ParticleRendererTranslator.h"
+	"ParticleSystemTranslator.h"
+	"ParticleTechniqueTranslator.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particleemittertranslator.h
+	<OgreScriptTranslator.h>
+	<OgreSingleton.h>
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlerenderertranslator.h
+	<OgreScriptTranslator.h>
+	<OgreSingleton.h>
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particletechniquetranslator.h
+	<OgreScriptTranslator.h>
+	<OgreSingleton.h>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\ldo.c
+	<setjmp.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+	"lzio.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lundump.h
+	"lobject.h"
+	"lzio.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\scope.cpp
+	<luabind/lua_include.hpp>
+	<luabind/scope.hpp>
+	<luabind/detail/debug.hpp>
+	<luabind/detail/stack_utils.hpp>
+	<cassert>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\lua_include.hpp
+	"../lua/lua.h"
+	"../lua/lauxlib.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lauxlib.h
+	<stddef.h>
+	<stdio.h>
+	"lua.h"
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\scope.hpp
+	<luabind/prefix.hpp>
+	<luabind/config.hpp>
+	<luabind/lua_include.hpp>
+	<memory>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\prefix.hpp
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\config.hpp
+	<boost/config.hpp>
+	<cstring>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\debug.hpp
+	<luabind/lua_include.hpp>
+	<cassert>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\stack_utils.hpp
+	<cassert>
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particlesystemtranslatormanager.cpp
+	"ParticleSystemTranslatorManager.h"
+	<OgreLogManager.h>
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particletechnique.cpp
+	"ParticleTechnique.h"
+	<OgreLogManager.h>
+	<OgreStringConverter.h>
+	"ParticleSystemManager.h"
+	"ParticleVisual.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\particlevisual.h
+	"Particle.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\ltable.c
+	<math.h>
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"ltable.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particletechniquetranslator.cpp
+	"ParticleTechniqueTranslator.h"
+	<OgreLogManager.h>
+	"ParticleSystemManager.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\ltablib.c
+	<stddef.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\lua\lualib.h
+	"lua.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\gameframelistner.cpp
+	"GameFrameListner.h"
+	<OgreStringConverter.h>
+	"CameraManager.h"
+	"ConfigVar.h"
+	"Console.h"
+	"DebugDraw.h"
+	"EntityManager.h"
+	"InputManager.h"
+	"Logger.h"
+	"ScriptManager.h"
+	"Timer.h"
+	"UiManager.h"
+	"../Main.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\gameframelistner.h
+	<OgreFrameListener.h>
+	<OgreRenderWindow.h>
+	<OgreWindowEventUtilities.h>
+	<OIS.h>
+
+1373287202 c:\akari\my\svn\q-gears\src\core\cameramanager.h
+	<OgreCamera.h>
+	<OgreSingleton.h>
+	"Event.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\event.h
+	<OIS.h>
+
+1373287202 c:\akari\my\svn\q-gears\src\core\configvar.h
+	<OgreString.h>
+
+1373287202 c:\akari\my\svn\q-gears\src\core\console.h
+	<OgreColourValue.h>
+	<OgreLog.h>
+	<OgreSingleton.h>
+	<OgreStringVector.h>
+	<OIS.h>
+	<list>
+	<vector>
+	"Event.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\debugdraw.h
+	<OgreFont.h>
+	<OgreHardwareVertexBuffer.h>
+	<OgreRenderQueueListener.h>
+	<OgreRoot.h>
+	<OgreSingleton.h>
+
+1373287202 c:\akari\my\svn\q-gears\src\core\entitymanager.h
+	<OgreSingleton.h>
+	"Background2D.h"
+	"Entity.h"
+	"EntityPoint.h"
+	"EntityTrigger.h"
+	"Event.h"
+	"Walkmesh.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\background2d.h
+	<OgreHardwareVertexBuffer.h>
+	<OgreRenderQueueListener.h>
+	<OgreRoot.h>
+	"Background2DAnimation.h"
+	"Entity.h"
+	"ScriptManager.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\background2danimation.h
+	<OgreString.h>
+	<OgreVector2.h>
+	<vector>
+
+1373287202 c:\akari\my\svn\q-gears\src\core\entity.h
+	<OgreString.h>
+	"EntityCollision.h"
+	"EntityDirection.h"
+	"ScriptManager.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\entitycollision.h
+	<OgreCamera.h>
+	<OgreSimpleRenderable.h>
+
+1373287202 c:\akari\my\svn\q-gears\src\core\entitydirection.h
+	<OgreCamera.h>
+	<OgreSimpleRenderable.h>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\scriptmanager.h
+	<OgreSingleton.h>
+	<OgreString.h>
+	"Event.h"
+	"library/lua/lua.h"
+	"library/luabind/luabind.hpp"
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\luabind.hpp
+	<luabind/config.hpp>
+	<luabind/class.hpp>
+	<luabind/function.hpp>
+	<luabind/open.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\class.hpp
+	<luabind/prefix.hpp>
+	<luabind/config.hpp>
+	<string>
+	<map>
+	<vector>
+	<cassert>
+	<boost/bind.hpp>
+	<boost/preprocessor/repetition/enum_params.hpp>
+	<boost/preprocessor/repetition/enum_params_with_a_default.hpp>
+	<boost/preprocessor/repetition/repeat.hpp>
+	<boost/type_traits/is_same.hpp>
+	<boost/type_traits/is_member_object_pointer.hpp>
+	<boost/mpl/apply.hpp>
+	<boost/mpl/lambda.hpp>
+	<boost/mpl/logical.hpp>
+	<boost/mpl/find_if.hpp>
+	<boost/mpl/eval_if.hpp>
+	<boost/mpl/logical.hpp>
+	<luabind/config.hpp>
+	<luabind/scope.hpp>
+	<luabind/back_reference.hpp>
+	<luabind/function.hpp>
+	<luabind/dependency_policy.hpp>
+	<luabind/detail/constructor.hpp>
+	<luabind/detail/call.hpp>
+	<luabind/detail/deduce_signature.hpp>
+	<luabind/detail/compute_score.hpp>
+	<luabind/detail/primitives.hpp>
+	<luabind/detail/property.hpp>
+	<luabind/detail/typetraits.hpp>
+	<luabind/detail/class_rep.hpp>
+	<luabind/detail/call.hpp>
+	<luabind/detail/object_rep.hpp>
+	<luabind/detail/calc_arity.hpp>
+	<luabind/detail/call_member.hpp>
+	<luabind/detail/enum_maker.hpp>
+	<luabind/detail/operator_id.hpp>
+	<luabind/detail/pointee_typeid.hpp>
+	<luabind/detail/link_compatibility.hpp>
+	<luabind/detail/inheritance.hpp>
+	<luabind/typeid.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\back_reference.hpp
+	<luabind/lua_include.hpp>
+	<luabind/wrapper_base.hpp>
+	<luabind/detail/has_get_pointer.hpp>
+	<luabind/get_pointer.hpp>
+	<boost/type_traits/is_polymorphic.hpp>
+	<boost/type_traits/is_const.hpp>
+	<boost/mpl/if.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\wrapper_base.hpp
+	<luabind/config.hpp>
+	<luabind/weak_ref.hpp>
+	<luabind/detail/ref.hpp>
+	<luabind/detail/call_member.hpp>
+	<boost/preprocessor/repetition/enum_trailing_params.hpp>
+	<boost/preprocessor/repetition/enum_trailing_binary_params.hpp>
+	<stdexcept>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\weak_ref.hpp
+	<luabind/config.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\ref.hpp
+	<cassert>
+	<algorithm>
+	<luabind/config.hpp>
+	<luabind/lua_include.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\call_member.hpp
+	<luabind/config.hpp>
+	<luabind/detail/convert_to_lua.hpp>
+	<luabind/detail/pcall.hpp>
+	<luabind/error.hpp>
+	<luabind/detail/stack_utils.hpp>
+	<luabind/object.hpp>
+	<boost/tuple/tuple.hpp>
+	<boost/preprocessor/control/if.hpp>
+	<boost/preprocessor/facilities/expand.hpp>
+	<boost/preprocessor/repetition/enum.hpp>
+	<boost/mpl/apply_wrap.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\convert_to_lua.hpp
+	<luabind/config.hpp>
+	<luabind/detail/policy.hpp>
+	<boost/ref.hpp>
+	<boost/mpl/apply_wrap.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\policy.hpp
+	<luabind/config.hpp>
+	<typeinfo>
+	<string>
+	<memory>
+	<boost/type_traits/is_enum.hpp>
+	<boost/type_traits/is_array.hpp>
+	<boost/mpl/bool.hpp>
+	<boost/mpl/integral_c.hpp>
+	<boost/mpl/equal_to.hpp>
+	<boost/mpl/eval_if.hpp>
+	<boost/mpl/or.hpp>
+	<boost/type_traits/add_reference.hpp>
+	<boost/type_traits/remove_reference.hpp>
+	<boost/type_traits/is_pointer.hpp>
+	<boost/type_traits/is_base_and_derived.hpp>
+	<boost/bind/arg.hpp>
+	<boost/limits.hpp>
+	<boost/tuple/tuple.hpp>
+	<boost/version.hpp>
+	<luabind/detail/class_registry.hpp>
+	<luabind/detail/primitives.hpp>
+	<luabind/detail/object_rep.hpp>
+	<luabind/detail/typetraits.hpp>
+	<luabind/detail/class_cache.hpp>
+	<luabind/detail/debug.hpp>
+	<luabind/detail/class_rep.hpp>
+	<luabind/detail/has_get_pointer.hpp>
+	<luabind/detail/make_instance.hpp>
+	<boost/type_traits/add_reference.hpp>
+	<luabind/detail/decorate_type.hpp>
+	<luabind/weak_ref.hpp>
+	<luabind/back_reference_fwd.hpp>
+	<luabind/value_wrapper.hpp>
+	<luabind/from_stack.hpp>
+	<luabind/typeid.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\class_registry.hpp
+	<map>
+	<luabind/config.hpp>
+	<luabind/open.hpp>
+	<luabind/typeid.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\open.hpp
+	<luabind/config.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\typeid.hpp
+	<boost/operators.hpp>
+	<typeinfo>
+	<luabind/detail/primitives.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\primitives.hpp
+	<algorithm>
+	<cstring>
+	<luabind/config.hpp>
+	<luabind/detail/yes_no.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\yes_no.hpp
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\object_rep.hpp
+	<boost/aligned_storage.hpp>
+	<luabind/config.hpp>
+	<luabind/detail/instance_holder.hpp>
+	<luabind/detail/ref.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\instance_holder.hpp
+	<luabind/detail/inheritance.hpp>
+	<luabind/detail/class_rep.hpp>
+	<luabind/get_pointer.hpp>
+	<luabind/typeid.hpp>
+	<boost/type_traits/is_polymorphic.hpp>
+	<stdexcept>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\inheritance.hpp
+	<cassert>
+	<limits>
+	<map>
+	<memory>
+	<vector>
+	<luabind/typeid.hpp>
+	<boost/scoped_ptr.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\class_rep.hpp
+	<boost/limits.hpp>
+	<boost/preprocessor/repetition/enum_params_with_a_default.hpp>
+	<string>
+	<utility>
+	<vector>
+	<luabind/config.hpp>
+	<luabind/lua_include.hpp>
+	<luabind/detail/object_rep.hpp>
+	<luabind/detail/garbage_collector.hpp>
+	<luabind/detail/operator_id.hpp>
+	<luabind/detail/class_registry.hpp>
+	<luabind/error.hpp>
+	<luabind/handle.hpp>
+	<luabind/detail/primitives.hpp>
+	<luabind/typeid.hpp>
+	<luabind/detail/ref.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\garbage_collector.hpp
+	<luabind/config.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\operator_id.hpp
+	<luabind/config.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\error.hpp
+	<luabind/prefix.hpp>
+	<exception>
+	<luabind/config.hpp>
+	<luabind/typeid.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\handle.hpp
+	<luabind/lua_include.hpp>
+	<luabind/value_wrapper.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\value_wrapper.hpp
+	<boost/mpl/integral_c.hpp>
+	<boost/mpl/bool.hpp>
+	<boost/mpl/aux_/msvc_eti_base.hpp>
+	<boost/mpl/identity.hpp>
+	<boost/mpl/eval_if.hpp>
+	<boost/mpl/has_xxx.hpp>
+	<boost/mpl/not.hpp>
+	<boost/mpl/and.hpp>
+	<boost/mpl/or.hpp>
+	<boost/type_traits/is_reference.hpp>
+	<boost/type_traits/is_pointer.hpp>
+	<boost/type_traits/is_array.hpp>
+	<boost/type_traits/remove_const.hpp>
+	<boost/type_traits/remove_reference.hpp>
+	<luabind/detail/yes_no.hpp>
+	<boost/type_traits/add_reference.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\get_pointer.hpp
+	<boost/get_pointer.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\typetraits.hpp
+	<luabind/config.hpp>
+	<boost/mpl/if.hpp>
+	<boost/type_traits/is_reference.hpp>
+	<boost/type_traits/is_const.hpp>
+	<luabind/detail/primitives.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\class_cache.hpp
+	<luabind/prefix.hpp>
+	<boost/type_traits/add_reference.hpp>
+	<boost/type_traits/add_const.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\has_get_pointer.hpp
+	<boost/type_traits/add_reference.hpp>
+	<memory>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\make_instance.hpp
+	<boost/type_traits/is_polymorphic.hpp>
+	<luabind/detail/inheritance.hpp>
+	<luabind/detail/object_rep.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\decorate_type.hpp
+	<luabind/config.hpp>
+	<luabind/detail/primitives.hpp>
+	<boost/type_traits/is_array.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\back_reference_fwd.hpp
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\from_stack.hpp
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\pcall.hpp
+	<luabind/config.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\object.hpp
+	<boost/implicit_cast.hpp>
+	<boost/ref.hpp>
+	<boost/mpl/bool.hpp>
+	<boost/mpl/apply_wrap.hpp>
+	<boost/tuple/tuple.hpp>
+	<boost/optional.hpp>
+	<luabind/nil.hpp>
+	<luabind/value_wrapper.hpp>
+	<luabind/detail/pcall.hpp>
+	<luabind/handle.hpp>
+	<luabind/from_stack.hpp>
+	<luabind/detail/policy.hpp>
+	<luabind/detail/stack_utils.hpp>
+	<luabind/detail/convert_to_lua.hpp>
+	<luabind/typeid.hpp>
+	<boost/iterator/iterator_facade.hpp>
+	<boost/preprocessor/iteration/iterate.hpp>
+	<boost/utility/enable_if.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\nil.hpp
+	<luabind/config.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\function.hpp
+	<luabind/make_function.hpp>
+	<luabind/scope.hpp>
+	<luabind/detail/call_function.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\make_function.hpp
+	<luabind/config.hpp>
+	<luabind/object.hpp>
+	<luabind/detail/call.hpp>
+	<luabind/detail/compute_score.hpp>
+	<luabind/detail/deduce_signature.hpp>
+	<luabind/detail/format_signature.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\call.hpp
+	<boost/mpl/apply_wrap.hpp>
+	<boost/mpl/begin_end.hpp>
+	<boost/mpl/deref.hpp>
+	<boost/mpl/front.hpp>
+	<boost/mpl/long.hpp>
+	<boost/mpl/size.hpp>
+	<boost/preprocessor/control/if.hpp>
+	<boost/preprocessor/iteration/iterate.hpp>
+	<boost/preprocessor/iteration/local.hpp>
+	<boost/preprocessor/repetition/enum.hpp>
+	<boost/preprocessor/repetition/enum_trailing_params.hpp>
+	<boost/type_traits/is_void.hpp>
+	<luabind/config.hpp>
+	<luabind/detail/policy.hpp>
+	<luabind/yield_policy.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\yield_policy.hpp
+	<luabind/config.hpp>
+	<luabind/detail/policy.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\compute_score.hpp
+	<luabind/config.hpp>
+	<luabind/detail/policy.hpp>
+	<boost/mpl/apply_wrap.hpp>
+	<boost/mpl/begin_end.hpp>
+	<boost/mpl/int.hpp>
+	<boost/mpl/next.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\deduce_signature.hpp
+	<luabind/detail/most_derived.hpp>
+	<boost/mpl/vector/vector10.hpp>
+	<boost/mpl/vector/vector50.hpp>
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/iteration/iterate.hpp>
+	<boost/preprocessor/repetition/enum_params.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\most_derived.hpp
+	<boost/mpl/if.hpp>
+	<boost/type_traits/is_base_and_derived.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\format_signature.hpp
+	<luabind/config.hpp>
+	<luabind/lua_include.hpp>
+	<luabind/typeid.hpp>
+	<boost/mpl/begin_end.hpp>
+	<boost/mpl/next.hpp>
+	<boost/mpl/size.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\call_function.hpp
+	<luabind/config.hpp>
+	<boost/mpl/if.hpp>
+	<boost/tuple/tuple.hpp>
+	<boost/mpl/or.hpp>
+	<boost/preprocessor/repeat.hpp>
+	<boost/preprocessor/iteration/iterate.hpp>
+	<boost/preprocessor/repetition/enum.hpp>
+	<boost/preprocessor/repetition/enum_params.hpp>
+	<boost/preprocessor/repetition/enum_binary_params.hpp>
+	<boost/preprocessor/punctuation/comma_if.hpp>
+	<luabind/error.hpp>
+	<luabind/detail/convert_to_lua.hpp>
+	<luabind/detail/pcall.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\dependency_policy.hpp
+	<luabind/config.hpp>
+	<luabind/detail/policy.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\constructor.hpp
+	<luabind/get_main_thread.hpp>
+	<luabind/object.hpp>
+	<luabind/wrapper_base.hpp>
+	<luabind/detail/inheritance.hpp>
+	<boost/preprocessor/iteration/iterate.hpp>
+	<boost/preprocessor/iteration/local.hpp>
+	<boost/preprocessor/repetition/enum_params.hpp>
+	<boost/preprocessor/repetition/enum_binary_params.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\get_main_thread.hpp
+	<luabind/config.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\property.hpp
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\calc_arity.hpp
+	<luabind/detail/signature_match.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\signature_match.hpp
+	<luabind/config.hpp>
+	<boost/config.hpp>
+	<boost/preprocessor/repetition/enum_params.hpp>
+	<boost/preprocessor/repetition/enum_params_with_a_default.hpp>
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/arithmetic/inc.hpp>
+	<boost/mpl/vector.hpp>
+	<boost/mpl/size.hpp>
+	<boost/mpl/remove.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\enum_maker.hpp
+	<vector>
+	<string>
+	<luabind/config.hpp>
+	<luabind/detail/class_rep.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\pointee_typeid.hpp
+	<luabind/config.hpp>
+	<luabind/typeid.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\link_compatibility.hpp
+	<luabind/config.hpp>
+
+1373287202 c:\akari\my\svn\q-gears\src\core\entitypoint.h
+	<OgreRoot.h>
+
+1373287202 c:\akari\my\svn\q-gears\src\core\entitytrigger.h
+	<OgreRoot.h>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\walkmesh.h
+	<OgreVector3.h>
+	<vector>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\inputmanager.h
+	<OgreSingleton.h>
+	<OgreString.h>
+	<OIS.h>
+	<vector>
+	"Event.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\logger.h
+	<OgreLogManager.h>
+	<OgreString.h>
+	<OgreStringConverter.h>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\timer.h
+	<OgreSingleton.h>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\uimanager.h
+	<OgreRenderQueueListener.h>
+	<OgreSingleton.h>
+	<OgreUTFString.h>
+	"UiFont.h"
+	"UiWidget.h"
+	"library/tinyxml/tinyxml.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\uifont.h
+	<OgreString.h>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\uiwidget.h
+	<OgreColourValue.h>
+	<OgreString.h>
+	<OgreVector2.h>
+	<vector>
+	"ScriptManager.h"
+	"UiAnimation.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\uianimation.h
+	<OgreString.h>
+	<OgreVector2.h>
+	<vector>
+
+1373287205 c:\akari\my\svn\q-gears\src\core\library\tinyxml\tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\tinyxml\tinystr.h
+	<assert.h>
+	<string.h>
+
+1373287202 c:\akari\my\svn\q-gears\src\main.h
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particlevisual.cpp
+	"ParticleVisual.h"
+	"ParticleVisual.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\inputmanager.cpp
+	"InputManager.h"
+	"InputManagerCommands.h"
+	"ConfigCmdManager.h"
+	"Console.h"
+	"Logger.h"
+	"Timer.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\inputmanagercommands.h
+	<OgreStringConverter.h>
+	"Console.h"
+	"ConfigCmdManager.h"
+	"ConfigVarManager.h"
+	"Logger.h"
+	"Utilites.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\configcmdmanager.h
+	<OgreSingleton.h>
+	<vector>
+	"ConfigCmd.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\configcmd.h
+	<OgreString.h>
+	<OgreStringVector.h>
+
+1373287202 c:\akari\my\svn\q-gears\src\core\configvarmanager.h
+	<OgreSingleton.h>
+	<vector>
+	"ConfigVar.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\utilites.h
+	<OgreString.h>
+	<OgreStringVector.h>
+	<OIS.h>
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\weak_ref.cpp
+	<algorithm>
+	<luabind/lua_include.hpp>
+	<luabind/config.hpp>
+	<luabind/weak_ref.hpp>
+	<cassert>
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\emitters\particlepointemitter.cpp
+	"ParticlePointEmitter.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\emitters\particlepointemitter.h
+	"../ParticleEmitter.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\function.cpp
+	<luabind/make_function.hpp>
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\wrapper_base.cpp
+	<luabind/config.hpp>
+	<luabind/lua_include.hpp>
+	<luabind/function.hpp>
+	<luabind/detail/object_rep.hpp>
+	<luabind/detail/class_rep.hpp>
+	<luabind/detail/stack_utils.hpp>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lundump.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstring.h"
+	"lundump.h"
+	"lzio.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\renderer\particleentityrenderer.cpp
+	"ParticleEntityRenderer.h"
+	<OgreEntity.h>
+	<OgreRoot.h>
+	"../ParticleSystem.h"
+	"../ParticleTechnique.h"
+	"../ParticleVisual.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\renderer\particleentityrenderer.h
+	<OgreSceneNode.h>
+	"ParticleEntityAdditionalData.h"
+	"ParticleEntityRendererDictionary.h"
+	"../ParticleRenderer.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\renderer\particleentityadditionaldata.h
+	"../ParticleAdditionalData.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\renderer\particleentityrendererdictionary.h
+	<OgreStringInterface.h>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lvm.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lfunc.c
+	<stddef.h>
+	"lua.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\renderer\particleentityrendererdictionary.cpp
+	"ParticleEntityRendererDictionary.h"
+	"ParticleEntityRenderer.h"
+	<OgreLogManager.h>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lzio.c
+	<string.h>
+	"lua.h"
+	"llimits.h"
+	"lmem.h"
+	"lstate.h"
+	"lzio.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lgc.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\linit.c
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\configfile.cpp
+	"ConfigFile.h"
+	"ConfigCmdManager.h"
+	"Logger.h"
+	"Utilites.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\configfile.h
+	<OgreString.h>
+
+1373287205 source:c:\akari\my\svn\q-gears\src\core\library\tinyxml\tinyxmlparser.cpp
+	<ctype.h>
+	<stddef.h>
+	"tinyxml.h"
+	<windows.h>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\llex.c
+	<ctype.h>
+	<locale.h>
+	<string.h>
+	"lua.h"
+	"ldo.h"
+	"llex.h"
+	"lobject.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"lzio.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\configvar.cpp
+	"ConfigVar.h"
+	<OgreStringConverter.h>
+	"Assert.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\assert.h
+	<cassert>
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\configvarmanager.cpp
+	"ConfigVarManager.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particleemitter.cpp
+	"ParticleEmitter.h"
+	<OgreLogManager.h>
+	<OgreString.h>
+	<OgreStringConverter.h>
+	"ParticleTechnique.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lmem.c
+	<stddef.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\open.cpp
+	<luabind/lua_include.hpp>
+	<luabind/luabind.hpp>
+	<luabind/function.hpp>
+	<luabind/get_main_thread.hpp>
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\console.cpp
+	"Console.h"
+	<OgreFontManager.h>
+	"ConfigCmdManager.h"
+	"ConfigVarManager.h"
+	"DebugDraw.h"
+	"Logger.h"
+	"ScriptManager.h"
+	"Timer.h"
+	"Utilites.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particleemitterdictionary.cpp
+	"ParticleEmitterDictionary.h"
+	<OgreStringConverter.h>
+	"ParticleEmitter.h"
+	"../Logger.h"
+	"../Utilites.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\loadlib.c
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<dlfcn.h>
+	<windows.h>
+	<mach-o/dyld.h>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\luabind\class_rep.cpp
+	<luabind/lua_include.hpp>
+	<luabind/detail/stack_utils.hpp>
+	<luabind/detail/conversion_storage.hpp>
+	<luabind/luabind.hpp>
+	<luabind/exception_handler.hpp>
+	<luabind/get_main_thread.hpp>
+	<utility>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\detail\conversion_storage.hpp
+	<luabind/config.hpp>
+	<boost/aligned_storage.hpp>
+
+1373287204 c:\akari\my\svn\q-gears\src\core\library\luabind\exception_handler.hpp
+	<luabind/lua_include.hpp>
+	<luabind/config.hpp>
+	<boost/optional.hpp>
+	<boost/type.hpp>
+	<boost/mpl/if.hpp>
+	<boost/type_traits/is_pointer.hpp>
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\debugdraw.cpp
+	"DebugDraw.h"
+	<OgreFontManager.h>
+	<OgreHardwareBufferManager.h>
+	<OgreMaterialManager.h>
+	"CameraManager.h"
+	"Logger.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\entity.cpp
+	"Entity.h"
+	<OgreSceneNode.h>
+	"ConfigVar.h"
+	"DebugDraw.h"
+	"Logger.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\entitycollision.cpp
+	"EntityCollision.h"
+	<OgreHardwareBufferManager.h>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lcode.c
+	<stdlib.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"ltable.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\luabind\create_class.cpp
+	<luabind/lua_include.hpp>
+	<luabind/luabind.hpp>
+
+1373287202 source:c:\akari\my\svn\q-gears\src\main.cpp
+	<OgreRoot.h>
+	<OIS.h>
+	"Main.h"
+	"core/CameraManager.h"
+	"core/ConfigCmdManager.h"
+	"core/ConfigFile.h"
+	"core/ConfigVarManager.h"
+	"core/Console.h"
+	"core/DebugDraw.h"
+	"core/EntityManager.h"
+	"core/GameFrameListner.h"
+	"core/InputManager.h"
+	"core/Logger.h"
+	"core/ScriptManager.h"
+	"core/Timer.h"
+	"core/UiManager.h"
+	"core/particles/ParticleSystemManager.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\entitydirection.cpp
+	"EntityDirection.h"
+	<OgreHardwareBufferManager.h>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lparser.c
+	<string.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\ldblib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\entitymanager.cpp
+	"EntityManager.h"
+	<OgreEntity.h>
+	<OgreRoot.h>
+	"CameraManager.h"
+	"ConfigVar.h"
+	"DebugDraw.h"
+	"EntityModel.h"
+	"InputManager.h"
+	"Logger.h"
+	"ScriptManager.h"
+	"Timer.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\entitymodel.h
+	"Entity.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\walkmesh.cpp
+	"Walkmesh.h"
+	"ConfigVar.h"
+	"DebugDraw.h"
+	"Logger.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lstate.c
+	<stddef.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\entitymodel.cpp
+	"EntityModel.h"
+	<OgreEntity.h>
+	<OgreRoot.h>
+	"../core/Logger.h"
+	"../core/Timer.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlbackground2dfile.cpp
+	"XmlBackground2DFile.h"
+	"Background2D.h"
+	"Background2DAnimation.h"
+	"CameraManager.h"
+	"EntityManager.h"
+	"Logger.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlbackground2dfile.h
+	"XmlFile.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlfile.h
+	<OgreColourValue.h>
+	<OgreMatrix4.h>
+	<OgreString.h>
+	<OgreVector2.h>
+	<OgreVector3.h>
+	<OgreVector4.h>
+	<OgreUTFString.h>
+	"library/tinyxml/tinyxml.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lstring.c
+	<string.h>
+	"lua.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\entitypoint.cpp
+	"EntityPoint.h"
+	"ConfigVar.h"
+	"DebugDraw.h"
+	"ScriptManager.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlfile.cpp
+	"XmlFile.h"
+	<OgreStringConverter.h>
+	"Logger.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lstrlib.c
+	<ctype.h>
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\entitytrigger.cpp
+	"EntityTrigger.h"
+	"DebugDraw.h"
+	"Entity.h"
+	"ConfigVar.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlfontfile.cpp
+	"XmlFontFile.h"
+	"Logger.h"
+	"UiManager.h"
+	"UiFont.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlfontfile.h
+	"UiWidget.h"
+	"XmlFile.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\stack_content_by_name.cpp
+	<luabind/lua_include.hpp>
+	<luabind/luabind.hpp>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlfontsfile.cpp
+	"XmlFontsFile.h"
+	"Logger.h"
+	"XmlFontFile.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlfontsfile.h
+	"XmlFile.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\error.cpp
+	<luabind/error.hpp>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\ltm.c
+	<string.h>
+	"lua.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlmapfile.cpp
+	"XmlMapFile.h"
+	"EntityManager.h"
+	"Logger.h"
+	"ScriptManager.h"
+	"XmlBackground2DFile.h"
+	"XmlWalkmeshFile.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlmapfile.h
+	"XmlFile.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlwalkmeshfile.h
+	"XmlFile.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\exception_handler.cpp
+	<luabind/config.hpp>
+	<luabind/exception_handler.hpp>
+	<luabind/error.hpp>
+	<stdexcept>
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\background2d.cpp
+	"Background2D.h"
+	<OgreHardwareBufferManager.h>
+	<OgreMaterialManager.h>
+	"CameraManager.h"
+	"ConfigVar.h"
+	"DebugDraw.h"
+	"Logger.h"
+	"Timer.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlmapsfile.cpp
+	"XmlMapsFile.h"
+	"Logger.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlmapsfile.h
+	<OgreStringVector.h>
+	"XmlFile.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\background2danimation.cpp
+	"Background2DAnimation.h"
+	<OgreVector2.h>
+	"Background2D.h"
+	"Logger.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlprototypesfile.cpp
+	"XmlPrototypesFile.h"
+	"Logger.h"
+	"UiManager.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlprototypesfile.h
+	"XmlFile.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\cameramanager.cpp
+	"CameraManager.h"
+	"CameraManagerCommands.h"
+	<OgreRenderWindow.h>
+	<OgreRoot.h>
+	<OIS.h>
+	"ConfigVar.h"
+	"InputManager.h"
+	"Logger.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\cameramanagercommands.h
+	<OgreStringConverter.h>
+	"CameraManager.h"
+	"ConfigCmdManager.h"
+	"Console.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\ldump.c
+	<stddef.h>
+	"lua.h"
+	"lobject.h"
+	"lstate.h"
+	"lundump.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\scriptmanager.cpp
+	"ScriptManager.h"
+	"ScriptManagerBinds.h"
+	"ScriptManagerCommands.h"
+	"ConfigVar.h"
+	"DebugDraw.h"
+	"Logger.h"
+	"Timer.h"
+	"Utilites.h"
+	"XmlScriptsFile.h"
+	"library/lua/lua.h"
+	"library/lua/lualib.h"
+	"library/lua/lauxlib.h"
+	"library/luabind/luabind.hpp"
+	"library/luabind/yield_policy.hpp"
+
+1374071196 c:\akari\my\svn\q-gears\src\core\scriptmanagerbinds.h
+	"Console.h"
+	"Logger.h"
+	"Entity.h"
+	"EntityManager.h"
+	"Timer.h"
+	"UiManager.h"
+	"UiWidget.h"
+	"XmlMapFile.h"
+	"XmlMapsFile.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\scriptmanagercommands.h
+	"ConfigCmdManager.h"
+	"Console.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlscriptsfile.h
+	"XmlFile.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlscreenfile.cpp
+	"XmlScreenFile.h"
+	"Logger.h"
+	"ScriptManager.h"
+	"UiManager.h"
+	"UiSprite.h"
+	"UiTextArea.h"
+	"UiWidget.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlscreenfile.h
+	"UiWidget.h"
+	"XmlFile.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\uisprite.h
+	<OgreHardwareVertexBuffer.h>
+	<OgreRenderQueueListener.h>
+	<OgreRoot.h>
+	"UiWidget.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\uitextarea.h
+	<OgreHardwareVertexBuffer.h>
+	<OgreRenderQueueListener.h>
+	<OgreRoot.h>
+	<OgreUTFString.h>
+	"UiFont.h"
+	"UiWidget.h"
+	"library/tinyxml/tinyxml.h"
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\configcmd.cpp
+	"ConfigCmd.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\tinyxml\tinystr.cpp
+	"tinystr.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlscreensfile.cpp
+	"XmlScreensFile.h"
+	"Logger.h"
+	"XmlScreenFile.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmlscreensfile.h
+	"XmlFile.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\inheritance.cpp
+	<limits>
+	<map>
+	<vector>
+	<queue>
+	<boost/dynamic_bitset.hpp>
+	<boost/foreach.hpp>
+	<boost/tuple/tuple.hpp>
+	<boost/tuple/tuple_comparison.hpp>
+	<luabind/typeid.hpp>
+	<luabind/detail/inheritance.hpp>
+
+1373287202 source:c:\akari\my\svn\q-gears\src\core\configcmdmanager.cpp
+	"ConfigCmdManager.h"
+	"ConfigCmdManagerCommands.h"
+	"Assert.h"
+
+1373287202 c:\akari\my\svn\q-gears\src\core\configcmdmanagercommands.h
+	<OgreRenderWindow.h>
+	<OgreRoot.h>
+	<OgreStringConverter.h>
+	"Console.h"
+	"ConfigCmdManager.h"
+	"ConfigVarManager.h"
+	"EntityManager.h"
+	"Logger.h"
+	"XmlMapFile.h"
+	"XmlMapsFile.h"
+	"../Main.h"
+
+1373287205 source:c:\akari\my\svn\q-gears\src\core\library\tinyxml\tinyxml.cpp
+	<ctype.h>
+	<sstream>
+	<iostream>
+	"tinyxml.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\timer.cpp
+	"Timer.h"
+	"ConfigVar.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\print.c
+	<ctype.h>
+	<stdio.h>
+	"ldebug.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lundump.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlscriptsfile.cpp
+	"XmlScriptsFile.h"
+	"Logger.h"
+	"ScriptManager.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\link_compatibility.cpp
+	<luabind/detail/link_compatibility.hpp>
+
+1373287205 source:c:\akari\my\svn\q-gears\src\core\library\tinyxml\tinyxmlerror.cpp
+	"tinyxml.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\liolib.c
+	<errno.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\uianimation.cpp
+	"UiAnimation.h"
+	<OgreVector2.h>
+	"UiWidget.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmltextfile.cpp
+	"XmlTextFile.h"
+	"Logger.h"
+	"UiManager.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmltextfile.h
+	"XmlFile.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particle.cpp
+	"Particle.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\uifont.cpp
+	"UiFont.h"
+	"Logger.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\luabind\class.cpp
+	<boost/foreach.hpp>
+	<luabind/lua_include.hpp>
+	<luabind/config.hpp>
+	<luabind/class.hpp>
+	<luabind/nil.hpp>
+	<cstring>
+	<iostream>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmltextsfile.cpp
+	"XmlTextsFile.h"
+	"Logger.h"
+	"XmlTextFile.h"
+
+1373287203 c:\akari\my\svn\q-gears\src\core\xmltextsfile.h
+	"XmlFile.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lmathlib.c
+	<stdlib.h>
+	<math.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\uimanager.cpp
+	"UiManager.h"
+	<OgreRoot.h>
+	<OgreStringVector.h>
+	"Logger.h"
+	"ScriptManager.h"
+	"Utilites.h"
+	"XmlFontsFile.h"
+	"XmlPrototypesFile.h"
+	"XmlScreensFile.h"
+	"XmlTextsFile.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\luabind\class_info.cpp
+	<luabind/lua_include.hpp>
+	<luabind/luabind.hpp>
+	<luabind/class_info.hpp>
+	<luabind/detail/class_registry.hpp>
+
+1373287203 c:\akari\my\svn\q-gears\src\core\library\luabind\class_info.hpp
+	<luabind/prefix.hpp>
+	<luabind/lua_include.hpp>
+	<luabind/luabind.hpp>
+	<luabind/object.hpp>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\xmlwalkmeshfile.cpp
+	"XmlWalkmeshFile.h"
+	"EntityManager.h"
+	"Logger.h"
+	"Walkmesh.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\object_rep.cpp
+	<luabind/detail/object_rep.hpp>
+	<luabind/detail/class_rep.hpp>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\uisprite.cpp
+	"UiSprite.h"
+	<OgreHardwareBufferManager.h>
+	<OgreMaterialManager.h>
+	"Logger.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\luabind\class_registry.cpp
+	<luabind/lua_include.hpp>
+	<luabind/luabind.hpp>
+	<luabind/detail/class_registry.hpp>
+	<luabind/detail/class_rep.hpp>
+	<luabind/detail/operator_id.hpp>
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lapi.c
+	<assert.h>
+	<math.h>
+	<stdarg.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particlerenderertranslator.cpp
+	"ParticleRendererTranslator.h"
+	<OgreLogManager.h>
+	"ParticleSystemManager.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lobject.c
+	<ctype.h>
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"ldo.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"lvm.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\uitextarea.cpp
+	"UiTextArea.h"
+	<OgreFontManager.h>
+	<OgreHardwareBufferManager.h>
+	<OgreMaterialManager.h>
+	"Logger.h"
+	"UiManager.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lauxlib.c
+	<ctype.h>
+	<errno.h>
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particleemittertranslator.cpp
+	"ParticleEmitterTranslator.h"
+	<OgreLogManager.h>
+	"ParticleSystemManager.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particlesystem.cpp
+	"ParticleSystem.h"
+	<OgreLogManager.h>
+	<OgreSceneNode.h>
+	"ParticleSystemManager.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lopcodes.c
+	"lopcodes.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\uiwidget.cpp
+	"UiWidget.h"
+	<OgreMath.h>
+	<OgreRoot.h>
+	"ConfigVar.h"
+	"DebugDraw.h"
+	"Logger.h"
+	"ScriptManager.h"
+	"Timer.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\lbaselib.c
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particlesystemfactory.cpp
+	"ParticleSystemFactory.h"
+	"ParticleSystem.h"
+	"ParticleSystemManager.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\library\lua\loslib.c
+	<errno.h>
+	<locale.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1373287203 source:c:\akari\my\svn\q-gears\src\core\utilites.cpp
+	"Utilites.h"
+	<OgreStringConverter.h>
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particlerenderer.cpp
+	"ParticleRenderer.h"
+
+1373287204 source:c:\akari\my\svn\q-gears\src\core\library\luabind\pcall.cpp
+	<luabind/detail/pcall.hpp>
+	<luabind/error.hpp>
+	<luabind/lua_include.hpp>
+
+1373287206 source:c:\akari\my\svn\q-gears\src\core\particles\particlesystemmanager.cpp
+	"ParticleSystemManager.h"
+	<OgreLogManager.h>
+	<OgreRoot.h>
+	"ParticleSystemFactory.h"
+	"emitters/ParticlePointEmitterFactory.h"
+	"renderer/ParticleEntityRendererFactory.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\emitters\particlepointemitterfactory.h
+	"../ParticleEmitterFactory.h"
+	"ParticlePointEmitter.h"
+
+1373287206 c:\akari\my\svn\q-gears\src\core\particles\renderer\particleentityrendererfactory.h
+	"../ParticleRendererFactory.h"
+	"ParticleEntityRenderer.h"
+

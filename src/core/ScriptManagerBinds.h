@@ -2,6 +2,7 @@
 #include "Logger.h"
 #include "Entity.h"
 #include "EntityManager.h"
+#include "Timer.h"
 #include "UiManager.h"
 #include "UiWidget.h"
 #include "XmlMapFile.h"
@@ -174,6 +175,13 @@ ScriptManager::InitBinds()
             .def( "get_widget", ( UiWidget*( UiManager::* )( const char* ) ) &UiManager::ScriptGetWidget )
     ];
 
+    // timer access
+    luabind::module( m_LuaState )
+    [
+        luabind::class_< Timer >( "Timer" )
+            .def( "get_game_time_total", ( float( Timer::* )() ) &Timer::GetGameTimeTotal )
+    ];
+
     // script access
     luabind::module( m_LuaState )
     [
@@ -193,5 +201,6 @@ ScriptManager::InitBinds()
     luabind::globals( m_LuaState )[ "entity_manager" ] = boost::ref( *( EntityManager::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "background2d" ] = boost::ref( *( EntityManager::getSingletonPtr()->GetBackground2D() ) );
     luabind::globals( m_LuaState )[ "ui_manager" ] = boost::ref( *( UiManager::getSingletonPtr() ) );
+    luabind::globals( m_LuaState )[ "timer" ] = boost::ref( *( Timer::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "script" ] = boost::ref( *this );
 }
