@@ -1,13 +1,33 @@
-load_battle_players = function()
-    EntityContainer.Cloud = FFVII.Characters.Cloud
+init_battle = function()
+    EntityContainer.BattleLogic = battle_logic_script
+    entity_manager:add_entity_script( "BattleLogic" )
 
+    -- load players
+    EntityContainer.Cloud = FFVII.Characters.Cloud
     entity_manager:add_entity( "Cloud", "models/ffvii/battle/units/first_ray.mesh", 0, 2, 0, 0 )
 end
 
 
 
-System[ "Battle" ] = {
-    on_update = function( self, time )
+battle_logic_script = {
+    game_timer = 0,
+
+
+
+    on_start = function( self )
+        -- init timer with start value
+        self.timer = timer:get_game_time_total()
+
+        return 0;
+    end;
+
+
+
+    on_update = function( self )
+
+        --for key, value in EntityContainer do
+        --end
+
         return 0
     end,
 }

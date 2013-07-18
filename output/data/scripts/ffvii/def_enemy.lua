@@ -28,6 +28,8 @@ FFVII.Enemies.MP = {
         }
     },
 
+    timer = 0,
+
 
 
     on_start = function( self )

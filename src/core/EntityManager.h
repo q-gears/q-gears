@@ -34,6 +34,7 @@ public:
     void AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& point1, const Ogre::Vector3& point2, const bool enabled );
     void AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& position, const float rotation );
     void AddEntityScript( const Ogre::String& name );
+    void ScriptAddEntityScript( const char* name );
 
     Entity* GetEntity( const Ogre::String& name ) const;
     Entity* ScriptGetEntity( const char* name ) const;

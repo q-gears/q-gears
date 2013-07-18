@@ -506,6 +506,14 @@ EntityManager::AddEntityScript( const Ogre::String& name )
 
 
 
+void
+EntityManager::ScriptAddEntityScript( const char* name )
+{
+    AddEntityScript( name );
+}
+
+
+
 Entity*
 EntityManager::GetEntity( const Ogre::String& name ) const
 {

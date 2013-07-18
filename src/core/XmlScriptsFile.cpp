@@ -36,12 +36,12 @@ XmlScriptsFile::LoadScripts()
         {
             ScriptManager::getSingleton().RunFile( GetString( node, "file" ) );
         }
-        else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "entity_script" )
+        else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "system_script" )
         {
             Ogre::String name = GetString( node, "name" );
             if( name == "" )
             {
-                LOG_ERROR( "There is no name specified for <entity_script> tag." );
+                LOG_ERROR( "There is no name specified for <system_script> tag." );
                 continue;
             }
 
