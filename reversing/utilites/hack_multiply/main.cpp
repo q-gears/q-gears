@@ -15,15 +15,13 @@ int main()
         printf(" - %d\n", x);
     }
 */
-    for( __int64 A0 = 0; A0 <= 100; ++A0 )
+    for( __int64 A0 = 0; A0 <= 1000; A0 += 10 )
     {
         printf( "%d", (int)A0 );
-        __int64 A3 = A0 << 9;
+        __int64 A3 = A0;
         __int64 T0 = A3 * 0x51eb851f;
         T0 = T0 >> 0x20;
-        printf( " %d", (int)T0 );
         A3 = A3 >> 0x1f;
-        printf( " %d", (int)(T0 >> 5) );
         A3 = (T0 >> 5) - A3;
         printf(" - %d\n", (int)A3);
     }

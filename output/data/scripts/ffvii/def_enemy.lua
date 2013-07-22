@@ -3,6 +3,8 @@ FFVII.Enemies = {}
 
 
 FFVII.Enemies.MP = {
+    unit_type = FFVII.Battle.Type.ENEMY,
+
     max_hp = 30,
     max_mp = 0,
 
@@ -28,43 +30,41 @@ FFVII.Enemies.MP = {
         }
     },
 
+    row = FFVII.Battle.Row.FRONT,
+
+    battle_speed = 0,
     timer = 0,
 
 
 
     on_start = function( self )
-        while true do
-            local dir = self.entity:get_rotation()
-            dir = dir + 1
-            self.entity:set_rotation( dir )
-            script:wait( 0 )
-        end
-
-        return 0;
-    end;
+        return 0
+    end,
 
     on_action = function( self )
-        local attack_id;
+        local attack
 
-        if is_self_in_front_row() == true then
-            if (math.random(2)) == 1 then
-                attack_id = 272; -- Mashingun
+        if FFVII.Battle.in_front_row( self ) == true then
+            if math.random( 2 ) == 1 then
+                attack = FFVII.Attacks.MachineGun
             else
-                attack_id = 273; -- Tonfa
-            end;
+                attack = FFVII.Attacks.Tonfa
+            end
         else
-            if (math.random(6)) == 1 then
-                attack_id = 273; -- Tonfa
+            if math.random( 6 ) == 1 then
+                attack = FFVII.Attacks.Tonfa
             else
-                attack_id = 272; -- Mashingun
-            end;
-        end;
+                attack = FFVII.Attacks.MachineGun
+            end
+        end
 
-        set_random_enemy_as_target();
-        battle:run_command(Battle.MONSTER_ACTION, attack_id);
+        print( "Use \"" .. tostring( attack ) .. "\"." )
 
-        return 0;
-    end;
+        FFVII.Battle.set_random_enemy_as_target()
+        --battle:run_command(Battle.MONSTER_ACTION, attack_id)
+
+        return 0
+    end,
 
 
 

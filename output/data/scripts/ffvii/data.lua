@@ -2,6 +2,13 @@ FFVII = {}
 
 
 
+FFVII.BattleType = {
+    ATB = 0,
+    WAIT = 1,
+}
+
+
+
 FFVII.Data = {
     progress_game = 0,
 
@@ -22,6 +29,9 @@ FFVII.Data = {
 FFVII.MenuSettings = {
     available = false,
     pause_available = false,
+
+    battle_type = FFVII.BattleType.ATB,
+    battle_speed = 100,
 }
 
 

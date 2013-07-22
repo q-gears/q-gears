@@ -3,6 +3,7 @@
     <script file="scripts/ffvii/system.lua" />
     <script file="scripts/ffvii/field.lua" />
     <script file="scripts/ffvii/battle.lua" />
+    <script file="scripts/ffvii/battle_ai.lua" />
     <script file="scripts/ffvii/def_attacks.lua" />
     <script file="scripts/ffvii/def_characters.lua" />
     <script file="scripts/ffvii/def_enemy.lua" />

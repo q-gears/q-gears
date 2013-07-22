@@ -6,6 +6,16 @@ end
 
 
 
+FFVII.is_character = function( character )
+    if FFVII.Characters[ character ] == nil then
+        return false
+    end
+
+    return true
+end
+
+
+
 FFVII.add_party_character = function( character )
     if FFVII.Characters[ character ] == nil then
         print( "Tried add to party invalid character \"" .. character .. "\"." );
