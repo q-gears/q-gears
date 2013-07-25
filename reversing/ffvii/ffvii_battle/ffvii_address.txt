@@ -470,7 +470,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f6b94      []       array of executed order number for priority. Readed during main battle queue function. Must be different from 800F6B9B to anything happens.
 
-800f6b9b      []       array of current order number for priority. It copied to 800F692C + 01 and incremented by 1. Must be different from 800F6B94 to anything happens.
+800f6b9b      []       array of current order number for priority. It copied to 800f692c + 01 and incremented by 1. Must be different from 800f6b94 to anything happens.
 
 800f6ba4               FF padding from scene file (0x200 size)
 800f6da4               start of scripts (first offsets to specific enemy ai) (0x1000 size total).

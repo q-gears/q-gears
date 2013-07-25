@@ -4,6 +4,8 @@ FFVII.Attacks = {}
 
 -- Machine Gun (272)
 FFVII.Attacks.MachineGun = {
+    name = "Machine Gun (272)",
+
     mp_cost = 0,
     power = 1,
     hit = 100,
@@ -30,6 +32,8 @@ FFVII.Attacks.MachineGun = {
 
 -- Tonfa (273)
 FFVII.Attacks.Tonfa = {
+    name = "Tonfa (273)",
+
     mp_cost = 0,
     power = 1.5,
     hit = 85,
@@ -51,4 +55,3 @@ FFVII.Attacks.Tonfa = {
     sound_id_miss = 35,
     impact_effect_id = 36,
 }
-

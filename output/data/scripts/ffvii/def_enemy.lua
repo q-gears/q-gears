@@ -58,10 +58,10 @@ FFVII.Enemies.MP = {
             end
         end
 
-        print( "Use \"" .. tostring( attack ) .. "\"." )
+        --print( "Use \"" .. attack.name .. "\"." )
 
-        FFVII.Battle.set_random_enemy_as_target()
-        --battle:run_command(Battle.MONSTER_ACTION, attack_id)
+        local target = FFVII.Battle.get_random_enemy_as_target( self )
+        FFVII.Battle.add_command( self, target, FFVII.Battle.Action.MONSTER_ACTION, attack )
 
         return 0
     end,

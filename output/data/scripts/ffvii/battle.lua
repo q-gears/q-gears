@@ -1,9 +1,7 @@
 FFVII.Battle = {}
 
-FFVII.Battle.Type = {
-    ENEMY = 0,
-    ALLY = 1,
-    LOGIC = 2,
+FFVII.Battle.Action = {
+    MONSTER_ACTION = 32,
 }
 
 FFVII.Battle.Row = {
@@ -11,60 +9,15 @@ FFVII.Battle.Row = {
     FRONT = 1,
 }
 
-
-
-FFVII.init_battle = function()
-    EntityContainer.BattleLogic = FFVII.battle_logic_script
-    entity_manager:add_entity_script( "BattleLogic" )
-
-
-
-    -- load players
-    EntityContainer.Cloud = FFVII.Characters.Cloud
-    entity_manager:add_entity( "Cloud", "models/ffvii/battle/units/first_ray.mesh", 0, 2, 0, 0 )
+FFVII.Battle.Type = {
+    ENEMY = 0,
+    ALLY = 1,
+    LOGIC = 2,
+}
 
 
 
-    -- init timer with start value
-    EntityContainer.BattleLogic.game_timer = timer:get_game_time_total()
-
-
-
-    -- init battle speed calculated from menu settings
-    EntityContainer.BattleLogic.battle_speed = 65536 / ( ( ( FFVII.MenuSettings.battle_speed * 480 / 256 ) + 120 ) * 2 )
-
-
-
-    local party_speed = 0
-    for key, value in pairs( EntityContainer ) do
-        print( tostring( key ) )
-        if value.unit_type == FFVII.Battle.Type.ALLY then
-            EntityContainer.BattleLogic.ally_number = EntityContainer.BattleLogic.ally_number + 1
-
-            party_speed = party_speed + value.dexterity
-            value.speed = value.dexterity + 50
-        elseif value.unit_type == FFVII.Battle.Type.ENEMY then
-            EntityContainer.BattleLogic.enemy_number = EntityContainer.BattleLogic.enemy_number + 1
-        end
-    end
-
-
-
-    if EntityContainer.BattleLogic.ally_number > 0 then
-        party_speed = ( party_speed - 1 + EntityContainer.BattleLogic.ally_number ) / EntityContainer.BattleLogic.ally_number + 50;
-
-        for key, value in pairs( EntityContainer ) do
-            if value.unit_type ~= FFVII.Battle.Type.LOGIC then
-                value.battle_speed = EntityContainer.BattleLogic.battle_speed * value.speed / party_speed
-                value.battle_speed = value.battle_speed * 2 -- normal speed (initial value calculated for slow)
-            end
-        end
-    end
-end
-
-
-
-FFVII.battle_logic_script = {
+FFVII.Battle.logic_script = {
     unit_type = FFVII.Battle.Type.LOGIC,
 
     battle_speed = 0,
@@ -73,7 +26,7 @@ FFVII.battle_logic_script = {
     enemy_number = 0,
     ally_number = 0,
 
-    target = {},
+    command_queue = {},
 
 
 
@@ -98,9 +51,80 @@ FFVII.battle_logic_script = {
 
         self.game_timer = timer
 
+
+
+        -- update command queue
+        for key_p, value_p in pairs( self.command_queue ) do
+            for key_c, value_c in pairs( value_p ) do
+                FFVII.Battle.run_command( self, value_c )
+
+                table.remove( value_p, key_c )
+            end
+        end
+
+
+
         return 0
     end,
 }
+
+
+
+FFVII.Battle.init = function()
+    EntityContainer.BattleLogic = FFVII.Battle.logic_script
+    entity_manager:add_entity_script( "BattleLogic" )
+
+
+
+    -- load players
+    EntityContainer.Cloud = FFVII.Characters.Cloud
+    entity_manager:add_entity( "Cloud", "models/ffvii/battle/units/first_ray.mesh", 0, 2, 0, 0 )
+
+
+
+    -- init timer with start value
+    EntityContainer.BattleLogic.game_timer = timer:get_game_time_total()
+
+
+
+    -- init battle speed calculated from menu settings
+    EntityContainer.BattleLogic.battle_speed = 65536 / ( ( ( FFVII.MenuSettings.battle_speed * 480 / 256 ) + 120 ) * 2 )
+
+
+
+    local party_speed = 0
+    for key, value in pairs( EntityContainer ) do
+        if value.unit_type == FFVII.Battle.Type.ALLY then
+            EntityContainer.BattleLogic.ally_number = EntityContainer.BattleLogic.ally_number + 1
+
+            party_speed = party_speed + value.dexterity
+            value.speed = value.dexterity + 50
+        elseif value.unit_type == FFVII.Battle.Type.ENEMY then
+            EntityContainer.BattleLogic.enemy_number = EntityContainer.BattleLogic.enemy_number + 1
+        end
+    end
+
+    print( "ally_number = " .. tostring( EntityContainer.BattleLogic.ally_number ) )
+    print( "enemy_number = " .. tostring( EntityContainer.BattleLogic.enemy_number ) )
+
+    if EntityContainer.BattleLogic.ally_number > 0 then
+        party_speed = ( party_speed - 1 + EntityContainer.BattleLogic.ally_number ) / EntityContainer.BattleLogic.ally_number + 50;
+
+        for key, value in pairs( EntityContainer ) do
+            if value.unit_type ~= FFVII.Battle.Type.LOGIC then
+                value.battle_speed = EntityContainer.BattleLogic.battle_speed * value.speed / party_speed
+                value.battle_speed = value.battle_speed * 2 -- normal speed (initial value calculated for slow)
+            end
+        end
+    end
+end
+
+
+
+FFVII.Battle.run_command = function( self, command )
+    print( "Command: attack = \"" .. command.attack.name .. "\", target = \"" .. tostring( command.target[ 1 ] ) .. "\"" )
+end
+
 
 
 
