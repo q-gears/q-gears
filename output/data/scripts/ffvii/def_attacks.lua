@@ -1,16 +1,17 @@
-FFVII.Attacks = {}
+FFVII.Battle.Attacks = {}
 
 
 
 -- Machine Gun (272)
-FFVII.Attacks.MachineGun = {
+FFVII.Battle.Attacks.MachineGun = {
     name = "Machine Gun (272)",
 
     mp_cost = 0,
     power = 1,
     hit = 100,
 
-    formula = "0x11",
+    hit_chance_formula = FFVII.Battle.AttackHitChance.PhysicalCritical,
+    damage_formula = FFVII.Battle.Damage.Physical,
     target = "0x03",
     additional_effect = "0xff",
     additional_effect_modifier = "0xff",
@@ -31,14 +32,15 @@ FFVII.Attacks.MachineGun = {
 
 
 -- Tonfa (273)
-FFVII.Attacks.Tonfa = {
+FFVII.Battle.Attacks.Tonfa = {
     name = "Tonfa (273)",
 
     mp_cost = 0,
     power = 1.5,
     hit = 85,
 
-    formula = "0x11",
+    hit_chance_formula = FFVII.Battle.AttackHitChance.PhysicalCritical,
+    damage_formula = FFVII.Battle.Damage.Physical,
     target = "0x03",
     additional_effect = "0xff",
     additional_effect_modifier = "0xff",

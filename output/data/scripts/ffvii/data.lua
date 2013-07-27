@@ -31,7 +31,7 @@ FFVII.MenuSettings = {
     pause_available = false,
 
     battle_type = FFVII.BattleType.ATB,
-    battle_speed = 100,
+    battle_speed = 10,
 }
 
 

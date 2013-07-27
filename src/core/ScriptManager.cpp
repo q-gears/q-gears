@@ -276,7 +276,7 @@ ScriptManager::Update( const ScriptManager::Type type )
                         }
                         else if( ret == 1 )
                         {
-                            LOG_TRIVIAL( "[SCRIPT] Script \"" + m_CurrentScriptId.function + "\"for entity \"" + m_CurrentScriptId.entity + "\" not paused and will be continued next cycle." );
+                            LOG_TRIVIAL( "[SCRIPT] Script \"" + m_CurrentScriptId.function + "\" for entity \"" + m_CurrentScriptId.entity + "\" not paused and will be continued next cycle." );
                         }
                         else
                         {

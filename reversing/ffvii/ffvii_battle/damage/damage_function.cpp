@@ -1,7 +1,7 @@
 ﻿////////////////////////////////
+// battle_main_damage_calculation
+//
 // formula function called from here
-// main damage calculation
-// funcabb0c
 address = w[80063014];
 
 S3 = A0; // attacker id
@@ -24,7 +24,7 @@ funcaa950;
 
 
 A0 = b[S1 + 0];
-funcac73c;
+battle_calculate_target_stats;
 
 
 
@@ -88,7 +88,7 @@ if( w[address + 48] == 0 )
 
 A0 = S0;
 funcacd88;
-if( V0 != 0 ) // iff target immune to magical or physical attack and this is the attack type
+if( V0 != 0 ) // if target immune to magical or physical attack and this is the attack type
 {
     [address + 230] = w(00000020); // nullify
 }
@@ -2266,7 +2266,7 @@ if ((target_id < 3) && (w[address + 48] != 0) && (target_id != w[address + 0]) &
 
 
 ////////////////////////////////
-// funcac73c
+// battle_calculate_target_stats
 S0 = A0; // target_id
 
 address = w[80063014];

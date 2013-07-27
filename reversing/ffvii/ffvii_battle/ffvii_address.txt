@@ -683,7 +683,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 14 []       dexterity.
 15 []       luck.
 16 []       init with 0 in case of player.
-17 []       store 0xff here at start of funcabb0c. Index of character that we cover.
+17 []       store 0xff here at start of battle_main_damage_calculation. Index of character that we cover.
 18 [][]     attack mask set during run command.
 1a [][]     - some mask (maybe mask of those who attack this unit)
 1c [][]     -

@@ -15,6 +15,18 @@ FFVII.Battle.Type = {
     LOGIC = 2,
 }
 
+FFVII.Battle.ActionDefaults = {
+    [ FFVII.Battle.Action.MONSTER_ACTION ] = { animation_script = "0" }
+}
+
+FFVII.Battle.AttackHitChance = {
+    PhysicalCritical = 1, -- 0x01 upper 4 bits of formula
+}
+
+FFVII.Battle.Damage = {
+    Physical = 1, -- 0x01 lower 4 bits of formula
+}
+
 
 
 FFVII.Battle.logic_script = {
@@ -28,6 +40,20 @@ FFVII.Battle.logic_script = {
 
     command_queue = {},
 
+    temp_data = {
+        attacker = nil,             -- 0x00
+                                    -- 0x04 attacker level. We don't this. Instead we use direct data from copied attacker (0x00)
+                                    -- 0x10 attack index. We don't this. Instead we use direct data from copied attack (0x2c)
+        target = nil,               -- 0x18
+        attack = nil,               -- 0x2c
+                                    -- 0x40 formula. We don't this. Instead we use direct data from copied attack (0x2c)
+                                    -- 0x48 power modifier. We don't this. Instead we use direct data from copied attack (0x2c)
+        base_damage = 0,            -- 0x4c
+                                    -- 0xa0 upper formula. We don't this. Instead we use direct data from copied attack (0x2c)
+                                    -- 0xa4 lower formula. We don't this. Instead we use direct data from copied attack (0x2c)
+        calculated_defense = 0,     -- 0x210
+        calculated_damage = 0,      -- 0x214
+    },
 
 
     on_update = function( self )
@@ -57,6 +83,8 @@ FFVII.Battle.logic_script = {
         for key_p, value_p in pairs( self.command_queue ) do
             for key_c, value_c in pairs( value_p ) do
                 FFVII.Battle.run_command( self, value_c )
+
+                value_c.self.timer = 0
 
                 table.remove( value_p, key_c )
             end
@@ -123,131 +151,209 @@ end
 
 FFVII.Battle.run_command = function( self, command )
     print( "Command: attack = \"" .. command.attack.name .. "\", target = \"" .. tostring( command.target[ 1 ] ) .. "\"" )
+
+
+
+    -- todo a lot of preparation
+
+
+
+    EntityContainer.BattleLogic.temp_data.attacker = command.self
+    EntityContainer.BattleLogic.temp_data.attack = command.attack
+    EntityContainer.BattleLogic.temp_data.target = command.target
+
+
+
+    -- todo a lot of preparation
+
+
+
+    if command.action == FFVII.Battle.Action.MONSTER_ACTION then
+        -- todo action_type_07
+        -- todo action_type_0C
+        FFVII.Battle.calculate_and_apply_damage()   -- action_type_09
+    end
 end
 
 
 
-
---[[
-    calculate_damage = function(attacker, target, attack)
-        local damage = 0;
-
-        -- x1 type
-        if attack.formula == "physical" then
-            damage = attacker.data.attack;
-            -- calculate base damage
-            damage = damage + ((attacker.data.level + damage) / 32) * ((attacker.data.level * damage) / 32);
-            -- apply attack data power
-            damage = damage * attack.power;
-            -- apply defense
-            damage = damage * (512 - target.data.defense) / 512;
-            -- random
-            damage = damage * (15 + math.random()) / 16;
-        -- x2 type
-        elseif attack.formula == "magical" then
-            damage = attacker.data.magic_attack;
-            -- calculate base damage
-            damage = (attacker.data.level + damage) * 6;
-            -- apply attack data power
-            damage = damage * attack.power;
-            -- apply defense
-            damage = damage * (512 - target.data.magic_defense) / 512;
-            -- random
-            damage = damage * (15 + math.random()) / 16;
-        -- x3 type
-        elseif attack.formula == "target_current%" then
-            -- calculate damage as percent from current hp
-            damage = target.data.current_hp * attack.power / 100;
-        -- x4 type
-        elseif attack.formula == "target_max%" then
-            -- calculate damage as percent from current hp
-            damage = target.data.max_hp * attack.power / 100;
-        end;
-
-        return damage;
-    end;
+-- action_type_09
+FFVII.Battle.calculate_and_apply_damage = function()
+    -- todo mp check
+    -- todo a lot of fuctions
 
 
 
-
-function is_all_enemy_in_front_row()
-    if table.getn(fighters_enemy) ~= 0 then
-        for i, fighter in pairs(fighters_enemy) do
-            if fighter.data.row > 0 then
-                return false;
-            end;
-        end;
-
-        return true;
-    end;
-
-    return false;
-end;
+    FFVII.Battle.set_base_damage()
 
 
 
-function is_all_enemy_in_back_row()
-    if table.getn(fighters_enemy) ~= 0 then
-        for i, fighter in pairs(fighters_enemy) do
-            if fighter.data.row == 0 then
-                return false;
-            end;
-        end;
-
-        return true;
-    end;
-
-    return false;
-end;
+    -- todo a lot of fuctions
 
 
 
-function is_all_ally_in_front_row()
-    if table.getn(fighters_ally) ~= 0 then
-        for i, fighter in pairs(fighters_ally) do
-            if fighter.data.row > 0 then
-                return false;
-            end;
-        end;
-
-        return true;
-    end;
-
-    return false;
-end;
+    -- attack every unit in target
+    for key, value in pairs( EntityContainer.BattleLogic.temp_data.target ) do
+        FFVII.Battle.main_damage_calculation( value )
+    end
 
 
 
-function is_all_ally_in_back_row()
-    if table.getn(fighters_ally) ~= 0 then
-        for i, fighter in pairs(fighters_ally) do
-            if fighter.data.row == 0 then
-                return false;
-            end;
-        end;
-
-        return true;
-    end;
-
-    return false;
-end;
+    -- todo a lot of functions
+end
 
 
 
-function set_self_as_target()
-    -- clear targer
-    fighters_target = {};
-    fighters_target[1] = fighter_self;
-end;
+FFVII.Battle.set_base_damage = function()
+    -- todo force physical attack settings in physical formula
+    -- todo use special settings for special attacks
+    -- todo use another base damage for magic attack
 
 
 
-function set_random_ally_as_target()
-    -- clear targer
-    fighters_target = {};
-    if table.getn(fighters_ally) ~= 0 then
-        fighters_target[1] = fighters_ally[math.random(1, table.getn(fighters_ally))];
-    end;
-end;
+    EntityContainer.BattleLogic.temp_data.base_damage = EntityContainer.BattleLogic.temp_data.attacker.physical_power
 
-]]
+
+
+    -- todo apply damage modifier
+end
+
+
+
+FFVII.Battle.main_damage_calculation = function( target )
+    -- todo a lot of fuctions
+
+
+
+    FFVII.Battle.calculate_target_stats( target )
+
+
+
+    -- todo a lot of fuctions
+
+
+
+    FFVII.Battle.damage_formula_run()
+
+
+
+    -- todo a lot of fuctions
+end
+
+
+
+FFVII.Battle.calculate_target_stats = function( target )
+    -- todo a lot of initialization
+    -- todo a lot of initialization
+    -- todo defense check and modification
+
+
+
+    EntityContainer.BattleLogic.temp_data.calculated_defense = target.physical_defense
+
+
+
+    -- todo a lot of initialization
+
+
+
+    if EntityContainer.BattleLogic.temp_data.calculated_defense > 512 then
+        EntityContainer.BattleLogic.temp_data.calculated_defense = 512
+    end
+
+
+
+    -- todo sadness check
+end
+
+
+
+FFVII.Battle.damage_formula_run = function()
+    -- run high formula
+    if EntityContainer.BattleLogic.temp_data.attack.hit_chance_formula == FFVII.Battle.AttackHitChance.PhysicalCritical then
+        FFVII.Battle.HighFormula.Physical()
+        FFVII.Battle.HighFormula.Critical()
+    end
+
+
+
+    -- run low formula
+    if EntityContainer.BattleLogic.temp_data.attack.power_modifier ~= 0 then
+
+
+
+        -- todo add additional conditions for special attacks (A0 = 0;funca8e84;)
+
+
+
+        if EntityContainer.BattleLogic.temp_data.attack.damage_formula == FFVII.Battle.Damage.Physical then
+            FFVII.Battle.LowFormula.Physical()
+        end
+
+
+
+        -- todo add additional conditions for special attacks (A0 = 1;funca8e84;)
+    end
+end
+
+
+
+FFVII.Battle.HighFormula = {}
+
+
+
+FFVII.Battle.HighFormula.Physical = function()
+    -- todo add physical hit
+end
+
+
+
+FFVII.Battle.HighFormula.Critical = function()
+    -- todo add critical hit
+end
+
+
+
+FFVII.Battle.LowFormula = {}
+
+
+
+FFVII.Battle.LowFormula.Physical = function()
+    local damage = EntityContainer.BattleLogic.temp_data.base_damage
+    -- calculate base damage
+    damage = damage + ( ( EntityContainer.BattleLogic.temp_data.attacker.level + damage ) / 32 ) * ( ( EntityContainer.BattleLogic.temp_data.attacker.level * damage ) / 32 )
+    -- apply attack data power
+    damage = damage * EntityContainer.BattleLogic.temp_data.attack.power
+    -- apply defense
+    damage = damage * ( 512 - EntityContainer.BattleLogic.temp_data.calculated_defense ) / 512
+
+
+
+    -- todo add always critical check
+    -- todo critical damage
+    -- todo berserk modificator
+    -- todo back row modificator
+    -- todo target defend
+    -- todo attack from back
+    -- todo a lot of status modifiers
+
+
+
+    damage = FFVII.Battle.add_random_modifier_and_zero_check( damage )
+
+    EntityContainer.BattleLogic.temp_data.calculated_damage = damage
+
+    print( "Command: damage = \"" .. damage .. "\"." )
+end
+
+
+
+FFVII.Battle.add_random_modifier_and_zero_check = function( damage )
+    local random_damage = damage * ( 15 + math.random() ) / 16;
+
+    if random_damage == 0 then
+        random_damage = 1
+    end
+
+    return random_damage
+end

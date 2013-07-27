@@ -13,7 +13,9 @@ FFVII.Characters.Cloud = {
     unit_type = FFVII.Battle.Type.ALLY,
 
     max_hp = 318,
+    current_hp = 318,
     max_mp = 57,
+    current_mp = 57,
     level = 7,
     -- primary stats
     strength = 19,

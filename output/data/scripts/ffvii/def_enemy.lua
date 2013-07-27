@@ -6,7 +6,9 @@ FFVII.Enemies.MP = {
     unit_type = FFVII.Battle.Type.ENEMY,
 
     max_hp = 30,
+    current_hp = 30,
     max_mp = 0,
+    current_mp = 0,
 
     level = 2,
     physical_power = 6,
@@ -46,15 +48,15 @@ FFVII.Enemies.MP = {
 
         if FFVII.Battle.in_front_row( self ) == true then
             if math.random( 2 ) == 1 then
-                attack = FFVII.Attacks.MachineGun
+                attack = FFVII.Battle.Attacks.MachineGun
             else
-                attack = FFVII.Attacks.Tonfa
+                attack = FFVII.Battle.Attacks.Tonfa
             end
         else
             if math.random( 6 ) == 1 then
-                attack = FFVII.Attacks.Tonfa
+                attack = FFVII.Battle.Attacks.Tonfa
             else
-                attack = FFVII.Attacks.MachineGun
+                attack = FFVII.Battle.Attacks.MachineGun
             end
         end
 

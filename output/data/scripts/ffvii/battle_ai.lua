@@ -21,8 +21,7 @@ FFVII.Battle.get_random_enemy_as_target = function( self )
     for key, value in pairs( EntityContainer ) do
         if value.unit_type == enemy then
             if random_id == current_id then
-                target[ 1 ] = key
-                --print( "Set \"" .. tostring( key ) .. "\" as target." )
+                target[ 1 ] = value
             end
 
             current_id = current_id + 1
@@ -51,3 +50,89 @@ FFVII.Battle.add_command = function( self, target, action, attack )
 
     table.insert( EntityContainer.BattleLogic.command_queue[ priority ], command )
 end;
+
+
+
+
+--[[
+function is_all_enemy_in_front_row()
+    if table.getn(fighters_enemy) ~= 0 then
+        for i, fighter in pairs(fighters_enemy) do
+            if fighter.data.row > 0 then
+                return false;
+            end;
+        end;
+
+        return true;
+    end;
+
+    return false;
+end;
+
+
+
+function is_all_enemy_in_back_row()
+    if table.getn(fighters_enemy) ~= 0 then
+        for i, fighter in pairs(fighters_enemy) do
+            if fighter.data.row == 0 then
+                return false;
+            end;
+        end;
+
+        return true;
+    end;
+
+    return false;
+end;
+
+
+
+function is_all_ally_in_front_row()
+    if table.getn(fighters_ally) ~= 0 then
+        for i, fighter in pairs(fighters_ally) do
+            if fighter.data.row > 0 then
+                return false;
+            end;
+        end;
+
+        return true;
+    end;
+
+    return false;
+end;
+
+
+
+function is_all_ally_in_back_row()
+    if table.getn(fighters_ally) ~= 0 then
+        for i, fighter in pairs(fighters_ally) do
+            if fighter.data.row == 0 then
+                return false;
+            end;
+        end;
+
+        return true;
+    end;
+
+    return false;
+end;
+
+
+
+function set_self_as_target()
+    -- clear targer
+    fighters_target = {};
+    fighters_target[1] = fighter_self;
+end;
+
+
+
+function set_random_ally_as_target()
+    -- clear targer
+    fighters_target = {};
+    if table.getn(fighters_ally) ~= 0 then
+        fighters_target[1] = fighters_ally[math.random(1, table.getn(fighters_ally))];
+    end;
+end;
+
+]]

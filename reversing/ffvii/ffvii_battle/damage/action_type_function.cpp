@@ -153,7 +153,7 @@ return;
 
 ////////////////////////////////
 // action_type_09
-// apply damage
+// calculate and apply damage
 
 [800f4920] = w(0);
 
@@ -281,7 +281,7 @@ if (V0 != -1)
 
 
                 // we set upper and lower formula bits here and calculate base damage.
-                funcad5e8;
+                battle_set_formula_and_base_damage;
 
 
 
@@ -376,7 +376,7 @@ if (V0 != -1)
                                         // we call function that calculate and apply damage here.
                                         A0 = S1;
                                         A1 = S0;
-                                        funcabb0c;
+                                        battle_main_damage_calculation;
                                     }
                                     S0 = S0 + 1;
                                     V0 = S0 < a;
@@ -590,7 +590,7 @@ S4 = 0;
 V1 = w[address + 28];
 if( V1 == 20 )
 {
-    A0 = w[address + 2C];
+    A0 = w[address + 2c];
     battle_get_attack_index_by_attack_id;
     [address + 98] = w(V0);
 
@@ -2067,7 +2067,7 @@ if ((w[address + 90] & 0010) == 0)
 
 
 ////////////////////////////////
-// funcad5e8
+// battle_set_formula_and_base_damage
 address = w[80063014];
 
 

@@ -42,9 +42,8 @@ La241c:	; 800A241C
         V0 = T0 < 40;
     800A2498	bne    v0, zero, loopa2458 [$800a2458]
 
-    V0 = bu[T1];
-    V0 = V0 + 1;
-    [T1] = b(V0);
+    // move to next priority number to execute
+    [T1] = b(bu[T1] + 1);
 
     if (T0 != 40)
     {
@@ -278,15 +277,13 @@ La241c:	; 800A241C
                 800A2498	bne    v0, zero, loopa2458 [$800a2458]
 
                 // move to next priority number to execute
-                V1 = bu[800f6b94 + priority];
-                V0 = V0 + 1;
-                [800f6b94 + priority] = b(V0);
+                [800f6b94 + priority] = b(bu[800f6b94 + priority] + 1);
 
                 // if we found attack to execute
                 if (A3 != 200)
                 {
                     // if unit_id is set
-                    S1 = b[800f692C + 2];
+                    S1 = b[800f692c + 2];
                     if (S1 != -1)
                     {
                         if (S1 != 3)
@@ -395,7 +392,7 @@ La241c:	; 800A241C
                         }
                         else
                         {
-                            if (hu[800f83a4 + 2C] & 0008)
+                            if (hu[800f83a4 + 2c] & 0008)
                             {
                                 S0 = 0;
 
