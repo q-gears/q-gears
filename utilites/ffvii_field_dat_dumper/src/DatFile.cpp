@@ -3113,7 +3113,10 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
         for( u32 x = 0; x < width; ++x )
         {
-            u32 clut = full_image->pixels[ y * width * 4 + x * 4 + 3 ] | ( full_image->pixels[ y * width * 4 + x * 4 + 2 ] << 8 ) | ( full_image->pixels[ y * width * 4 + x * 4 + 1 ] << 16 ) | ( full_image->pixels[ y * width * 4 + x * 4 + 0 ] << 24 );
+            u32 clut = full_image->pixels[ y * width * 4 + x * 4 + 3 ]
+                   | ( full_image->pixels[ y * width * 4 + x * 4 + 2 ] << 8 )
+                   | ( full_image->pixels[ y * width * 4 + x * 4 + 1 ] << 16 )
+                   | ( full_image->pixels[ y * width * 4 + x * 4 + 0 ] << 24 );
             data[ x ] = clut;
         }
     }
