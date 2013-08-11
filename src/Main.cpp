@@ -1,4 +1,5 @@
 #include <OgreRoot.h>
+#include <OgreConfigFile.h>
 #include <OIS.h>
 
 #include "Main.h"
@@ -35,22 +36,62 @@ main(int argc, char *argv[])
     log_manager->createLog( "q-gears.log", true, true );
     log_manager->getDefaultLog()->setLogDetail( ( Ogre::LoggingLevel )3 );
 
-    // init root early
-    root = new Ogre::Root( "", "" );
-#ifndef _DEBUG
-    #ifdef __WIN32__
-        root->loadPlugin( "./RenderSystem_GL.dll" );
-    #else // Assume Linux for now
-        root->loadPlugin( "./RenderSystem_GL.so" );
-    #endif
-#else
-    #ifdef __WIN32__
-        root->loadPlugin( "./RenderSystem_GL_d.dll" );
-    #else // Assume Linux for now
-        root->loadPlugin( "./RenderSystem_GL_d.so" );
-    #endif
+    Ogre::String ressource_cfg("");
+    Ogre::String plugins_cfg("");
+    Ogre::String dyn_lib_ext("");
+    Ogre::String render_system("");
+
+#ifdef __WIN32__
+    dyn_lib_ext = ".dll";
+#else // Assume Linux for now
+    dyn_lib_ext = ".so";
 #endif
-    root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
+
+#ifdef _DEBUG
+    ressource_cfg = "resources_d.cfg";
+    plugins_cfg = "plugins_d.cfg";
+    render_system = "./RenderSystem_GL_d" + dyn_lib_ext;
+#else
+    ressource_cfg = "resources.cfg";
+    plugins_cfg = "plugins.cfg";
+    render_system = "./RenderSystem_GL" + dyn_lib_ext;
+#endif
+
+    // init root early
+    root = new Ogre::Root( plugins_cfg );
+
+    // set up resources
+    // Load resource paths from config file
+    Ogre::ConfigFile cf;
+    cf.load( ressource_cfg );
+
+    // Go through all sections & settings in the file
+    Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+
+    Ogre::String secName, typeName, archName;
+    Ogre::ResourceGroupManager &res_gm( Ogre::ResourceGroupManager::getSingleton() );
+    while (seci.hasMoreElements())
+    {
+        secName = seci.peekNextKey();
+        Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
+        Ogre::ConfigFile::SettingsMultiMap::iterator i;
+        for (i = settings->begin(); i != settings->end(); ++i)
+        {
+            typeName = i->first;
+            archName = i->second;
+            res_gm.addResourceLocation( archName, typeName, secName, true );
+        }
+    }
+
+//-------------------------------------------------------------------------------------
+    // configure
+    // Show the configuration dialog and initialise the system
+    // You can skip this and use root.restoreConfig() to load configuration
+    // settings if you were sure there are valid ones saved in ogre.cfg
+    if( !root->restoreConfig() && !root->showConfigDialog() )
+    {
+        root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
+    }
     root->initialise( false );
     Ogre::NameValuePairList misc;
     misc[ "title" ] = QG_VERSION_NAME;
@@ -71,10 +112,8 @@ main(int argc, char *argv[])
     scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
     scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
 
-
-
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./data", "FileSystem", "Game", true );
-    Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup( "Game" );
+    res_gm.addResourceLocation( "./data", "FileSystem", "Game", true );
+    res_gm.initialiseResourceGroup( "Game" );
 
 
 
