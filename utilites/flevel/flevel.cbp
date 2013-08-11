@@ -60,9 +60,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add option="-DBOOST_ALL_DYN_LINK" />
-			<Add directory="D:/app/dev/boost" />
-			<Add directory="D:/work/ogre/build/sdk/include/OGRE" />
-			<Add directory="../common" />
+			<Add directory="$(BOOST_HOME)" />
+			<Add directory="$(OGRE_HOME)/include/OGRE" />
+			<Add directory="../" />
 		</Compiler>
 		<Linker>
 			<Add directory="D:/app/dev/boost/stage/lib" />

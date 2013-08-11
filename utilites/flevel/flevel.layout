@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
+	<File name="..\common\TypeDefine.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="471" topLine="5" />
+		</Cursor>
+	</File>
 	<File name="flevel.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2524" topLine="90" />
+			<Cursor1 position="1445" topLine="11" />
 		</Cursor>
 	</File>
 	<File name="test\test_QGearsBackgroundFile.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -49,11 +54,6 @@
 	<File name="..\common\QGearsPaletteFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="627" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\common\TypeDefine.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="471" topLine="5" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

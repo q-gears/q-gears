@@ -28,9 +28,9 @@ THE SOFTWARE.
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 
-#include "FileSystem.h"
-#include "Logger.h"
-#include "QGearsFLevelFile.h"
+#include "common/FileSystem.h"
+#include "common/Logger.h"
+#include "common/QGearsFLevelFile.h"
 
 using std::cout;
 using std::endl;

@@ -108,31 +108,31 @@
 	"OgreShadowCameraSetupPlaneOptimal.h"
 	"OgreShadowCameraSetupPSSM.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreprerequisites.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreprerequisites.h
 	"OgrePlatform.h"
 	<string>
 	"Threading/OgreThreadDefines.h"
 	"OgreStdHeaders.h"
 	"OgreMemoryAllocatorConfig.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreplatform.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreplatform.h
 	"OgreConfig.h"
 	<_mingw.h>
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreconfig.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreconfig.h
 	"OgreBuildSettings.h"
 
-1375104368 d:\work\ogre\build\sdk\include\ogre\ogrebuildsettings.h
+1376069353 d:\work\ogre\build\sdk\include\ogre\ogrebuildsettings.h
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreaddefines.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreaddefines.h
 	"OgreThreadDefinesNone.h"
 	"OgreThreadDefinesBoost.h"
 	"OgreThreadDefinesPoco.h"
 	"OgreThreadDefinesTBB.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreaddefinesboost.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreaddefinesboost.h
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrestdheaders.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrestdheaders.h
 	<cassert>
 	<cstdio>
 	<cstdlib>
@@ -177,12 +177,12 @@
 	<CoreFoundation/CoreFoundation.h>
 	"Threading/OgreThreadHeaders.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreadheaders.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreadheaders.h
 	"OgreThreadHeadersBoost.h"
 	"OgreThreadHeadersPoco.h"
 	"OgreThreadHeadersTBB.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreadheadersboost.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreadheadersboost.h
 	<boost/thread/tss.hpp>
 	<boost/thread/recursive_mutex.hpp>
 	<boost/thread/condition.hpp>
@@ -4683,7 +4683,7 @@
 	<boost/config/abi_prefix.hpp>
 	<boost/config/abi_suffix.hpp>
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrememoryallocatorconfig.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrememoryallocatorconfig.h
 	"OgreMemoryAllocatedObject.h"
 	"OgreMemoryAllocatedObject.h"
 	"OgreMemorySTLAllocator.h"
@@ -4691,33 +4691,31 @@
 	"OgreMemoryNedAlloc.h"
 	"OgreMemoryStdAlloc.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrememoryallocatedobject.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrememoryallocatedobject.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrememorystlallocator.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrememorystlallocator.h
 	"OgrePrerequisites.h"
 	"OgreHeaderPrefix.h"
 	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreheaderprefix.h
-	"OgrePrerequisites.h"
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreheaderprefix.h
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreheadersuffix.h
-	"OgrePrerequisites.h"
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreheadersuffix.h
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrememorynedpooling.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrememorynedpooling.h
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrememorynedalloc.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrememorynedalloc.h
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrememorystdalloc.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrememorystdalloc.h
 	<memory>
 	<limits>
 	"OgreAlignedAllocator.h"
 	"OgreMemoryTracker.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrealignedallocator.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrealignedallocator.h
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrememorytracker.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrememorytracker.h
 	<tr1/unordered_map>
 	<ext/hash_map>
 
@@ -4729,10 +4727,12 @@
 	"OgreAnimationTrack.h"
 	"OgreAnimationState.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrestring.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrestring.h
 	"OgrePrerequisites.h"
+	"OgreHeaderPrefix.h"
 	<tr1/unordered_map>
 	<ext/hash_map>
+	"OgreHeaderSuffix.h"
 
 1375081340 d:\work\ogre\build\sdk\include\ogre\ogreiteratorwrappers.h
 	"OgrePrerequisites.h"
@@ -5373,33 +5373,33 @@
 	"OgreException.h"
 	"OgreAny.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrevector2.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrevector2.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogremath.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogremath.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrevector3.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrevector3.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 	"OgreQuaternion.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrequaternion.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrequaternion.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrevector4.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrevector4.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrecolourvalue.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrecolourvalue.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogresharedptr.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogresharedptr.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrestringvector.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrestringvector.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSharedPtr.h"
@@ -5431,18 +5431,18 @@
 	"OgreVector3.h"
 	"OgreMatrix4.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrematrix4.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrematrix4.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreMatrix3.h"
 	"OgreVector4.h"
 	"OgrePlane.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrematrix3.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrematrix3.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreplane.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreplane.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
@@ -5986,7 +5986,7 @@
 	"OgreColourValue.h"
 	"OgreRectangle.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreutfstring.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreutfstring.h
 	"OgrePrerequisites.h"
 	<iterator>
 	<string>
@@ -6105,7 +6105,7 @@
 	"OgreResource.h"
 	"OgreLogManager.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrestringconverter.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrestringconverter.h
 	"OgrePrerequisites.h"
 	"OgreStringVector.h"
 	"OgreColourValue.h"
@@ -6429,16 +6429,18 @@
 	<OgreString.h>
 	<OgreUTFString.h>
 
-1374947673 d:\work\q-gears\utilites\common\typedefine.h
+1376198004 d:\work\q-gears\utilites\common\typedefine.h
+	<OgrePlatform.h>
+	<OgreString.h>
 
-1375535113 source:d:\work\q-gears\utilites\common\file.cpp
+1375622730 source:d:\work\q-gears\utilites\common\file.cpp
 	<cassert>
 	<string.h>
 	"File.h"
 	"FileSystem.h"
 	"Logger.h"
 
-1375535103 d:\work\q-gears\utilites\common\file.h
+1375620235 d:\work\q-gears\utilites\common\file.h
 	"TypeDefine.h"
 	<OgreString.h>
 
@@ -6478,13 +6480,13 @@
 1374947673 d:\work\q-gears\utilites\common\surface.h
 	<Ogre.h>
 
-1375534449 source:d:\work\q-gears\utilites\lzs\lzs.cpp
+1376254962 source:d:\work\q-gears\utilites\lzs\lzs.cpp
 	<cstdio>
 	<boost/filesystem.hpp>
 	<boost/program_options.hpp>
-	"FileSystem.h"
-	"Logger.h"
-	"LzsFile.h"
+	"common/FileSystem.h"
+	"common/Logger.h"
+	"common/LzsFile.h"
 
 1362837304 d:\app\dev\boost\boost\filesystem.hpp
 	<boost/filesystem/config.hpp>
@@ -7250,4 +7252,45 @@
 	<set>
 
 1089699146 d:\app\dev\boost\boost\program_options\version.hpp
+
+1376067361 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreaddefinesnone.h
+
+1376059991 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreaddefinespoco.h
+
+1376059991 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreaddefinestbb.h
+
+1376059991 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreadheaderspoco.h
+	<Poco/ThreadLocal.h>
+	<Poco/Mutex.h>
+	<Poco/Condition.h>
+	<Poco/Thread.h>
+	<Poco/Runnable.h>
+	<Poco/RWLock.h>
+	<Poco/Environment.h>
+
+1376059991 d:\work\ogre\build\sdk\include\ogre\threading\ogrethreadheaderstbb.h
+	<tbb/recursive_mutex.h>
+	<tbb/task_group.h>
+	<tbb/task_scheduler_init.h>
+	<tbb/queuing_rw_mutex.h>
+	<tbb/enumerable_thread_specific.h>
+	<tbb/tbb_thread.h>
+
+1374947673 d:\work\q-gears\utilites\\common\filesystem.h
+	<OgreString.h>
+
+1374947673 d:\work\q-gears\utilites\\common\logger.h
+	<OgreString.h>
+	<OgreUTFString.h>
+
+1374947673 d:\work\q-gears\utilites\\common\lzsfile.h
+	"File.h"
+
+1375620235 d:\work\q-gears\utilites\\common\file.h
+	"TypeDefine.h"
+	<OgreString.h>
+
+1376198004 d:\work\q-gears\utilites\\common\typedefine.h
+	<OgrePlatform.h>
+	<OgreString.h>
 

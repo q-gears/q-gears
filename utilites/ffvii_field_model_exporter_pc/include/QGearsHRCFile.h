@@ -1,0 +1,70 @@
+/*
+-----------------------------------------------------------------------------
+The MIT License (MIT)
+
+Copyright (c) 2013-08-11 Tobias Peters <tobias.peters@kreativeffekt.at>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-----------------------------------------------------------------------------
+*/
+#ifndef __QGearsHRCFile_H__
+#define __QGearsHRCFile_H__
+
+#include "OgreSkeleton.h"
+
+#include "common/TypeDefine.h"
+
+namespace QGears
+{
+    // TODO implemented ressource interface
+    class HRCFile //: public Ogre::Resource
+    {
+    public:
+
+        HRCFile();
+        virtual ~HRCFile();
+
+        virtual Ogre::SkeletonPtr   createSkeleton( const String &name
+                                                   ,const String &group );
+
+        //---------------------------------------------------------------------
+        typedef std::vector<String> RSDNameList;
+
+        struct Bone
+        {
+            String      name;
+            String      parent;
+            Ogre::Real  length;
+            RSDNameList rsd_names;
+        };
+
+        typedef std::vector<Bone> BoneList;
+
+        virtual String&     getName ( void ){ return m_name; }
+        virtual BoneList&   getBones( void ){ return m_bones; }
+    protected:
+
+        static const String ROOT_BONE_NAME;
+    private:
+        String      m_name;
+        BoneList    m_bones;
+    };
+}
+
+#endif // __QGearsHRCFile_H__
