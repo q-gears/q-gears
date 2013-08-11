@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Test" />
+	<File name="include\QGearsTexCodec.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1614" topLine="36" />
+		</Cursor>
+	</File>
+	<File name="include\QGearsTexFile.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4905" topLine="141" />
+		</Cursor>
+	</File>
+	<File name="include\QGearsTexPlugin.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1310" topLine="18" />
+		</Cursor>
+	</File>
+	<File name="include\QGearsTexPlugin_Prerequisites.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1324" topLine="3" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsTexCodec.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4045" topLine="90" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsTexCodecDll.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1359" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsTexFile.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1872" topLine="29" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsTexPlugin.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1266" topLine="34" />
+		</Cursor>
+	</File>
+	<File name="test\tex_file_info.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4580" topLine="129" />
+		</Cursor>
+	</File>
+	<File name="test\tex_file_test.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6448" topLine="108" />
+		</Cursor>
+	</File>
+</CodeBlocks_layout_file>
