@@ -1,6 +1,6 @@
 #include <Ogre.h>
-#include "../../common/OgreBase.h"
-#include "../../common/Logger.h"
+#include "common/OgreBase.h"
+#include "common/Logger.h"
 
 #include "BsxFile.h"
 #include "DatFile.h"
