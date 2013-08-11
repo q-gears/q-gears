@@ -30,11 +30,12 @@ XmlScriptsFile::LoadScripts()
     }
 
     node = node->FirstChild();
+    ScriptManager &script_manager(ScriptManager::getSingleton());
     while( node != NULL )
     {
         if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "script" )
         {
-            ScriptManager::getSingleton().RunFile( GetString( node, "file" ) );
+            script_manager.RunFile( GetString( node, "file" ) );
         }
         else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "system_script" )
         {
@@ -45,7 +46,7 @@ XmlScriptsFile::LoadScripts()
                 continue;
             }
 
-            ScriptManager::getSingleton().AddEntity( ScriptManager::SYSTEM, name, NULL );
+            script_manager.AddEntity( ScriptManager::SYSTEM, name, NULL );
         }
 
         node = node->NextSibling();
