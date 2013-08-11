@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="flevel" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../../output/tools/flevel_d" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_filesystem-mgw47-mt-d-1_54" />
+					<Add library="boost_program_options-mgw47-mt-d-1_54" />
+					<Add library="OgreMain_d" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../../output/tools/flevel" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="boost_system-mgw47-mt-1_54" />
+					<Add library="boost_filesystem-mgw47-mt-1_54" />
+					<Add library="boost_program_options-mgw47-mt-1_54" />
+					<Add library="OgreMain" />
+				</Linker>
+			</Target>
+			<Target title="Test">
+				<Option output="../../output/test/test_flevel_file" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_filesystem-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="OgreMain_d" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-DBOOST_ALL_DYN_LINK" />
+			<Add directory="D:/app/dev/boost" />
+			<Add directory="D:/work/ogre/build/sdk/include/OGRE" />
+			<Add directory="../common" />
+		</Compiler>
+		<Linker>
+			<Add directory="D:/app/dev/boost/stage/lib" />
+			<Add directory="D:/work/ogre/build/sdk/lib" />
+		</Linker>
+		<Unit filename="../common/File.cpp" />
+		<Unit filename="../common/File.h" />
+		<Unit filename="../common/FileSystem.cpp" />
+		<Unit filename="../common/FileSystem.h" />
+		<Unit filename="../common/Logger.cpp" />
+		<Unit filename="../common/Logger.h" />
+		<Unit filename="../common/QGearsBackgroundFile.cpp" />
+		<Unit filename="../common/QGearsBackgroundFile.h" />
+		<Unit filename="../common/QGearsFLevelFile.cpp" />
+		<Unit filename="../common/QGearsFLevelFile.h" />
+		<Unit filename="../common/QGearsPaletteFile.cpp" />
+		<Unit filename="../common/QGearsPaletteFile.h" />
+		<Unit filename="../common/TypeDefine.h" />
+		<Unit filename="flevel.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="test/test_QGearsBackgroundFile.cpp">
+			<Option target="Test" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
