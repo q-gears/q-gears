@@ -1,3 +1,6 @@
+#ifndef __OGRE_BASE_H__
+#define __OGRE_BASE_H__
+
 #include <Ogre.h>
 #include <OgreTextAreaOverlayElement.h>
 #include <OIS.h>
@@ -7,11 +10,14 @@
 
 
 
-Ogre::Root*                     root;
-Ogre::RenderWindow*             window;
-std::vector< Ogre::Entity* >    entitys;
-Ogre::Camera*                   camera;
+extern Ogre::Root*                     root;
+extern Ogre::RenderWindow*             window;
+extern std::vector< Ogre::Entity* >    entitys;
+extern Ogre::Camera*                   camera;
 
+class DisplayFrameListener;
+
+extern DisplayFrameListener* frame_listener;
 
 
 class DisplayFrameListener : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener
@@ -316,70 +322,10 @@ private:
     bool                m_Exit;
 };
 
-
-
-DisplayFrameListener* frame_listener;
-
-
+void
+InitializeOgreBase( const Ogre::String& name );
 
 void
-InitializeOgreBase( const Ogre::String& name )
-{
-    root = new Ogre::Root( "", "" );
-#ifndef _DEBUG
-    root->loadPlugin( "RenderSystem_GL.dll" );
-#else
-    root->loadPlugin( "RenderSystem_GL_d.dll" );
-#endif
-    root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
-    root->initialise( false );
-    Ogre::NameValuePairList misc;
-    misc[ "title" ] = name;
-    window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
+DeinitializeOgreBase();
 
-
-
-    // initialize resource
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./", "FileSystem", "General" );
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./exported", "FileSystem", "General" );
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./data/OgreCore.zip", "Zip", "Bootstrap" );
-    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-
-
-    Ogre::SceneManager* scene_manager;
-    Ogre::Viewport*     viewport;
-
-    frame_listener = new DisplayFrameListener( window );
-    root->addFrameListener( frame_listener );
-
-    scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
-    scene_manager->clearScene();
-    scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
-
-    camera = scene_manager->createCamera( "Camera" );
-    camera->setNearClipDistance( 0.01f );
-    camera->setPosition( 10, 5, 10 );
-    camera->lookAt( 0, 0, 0 );
-
-    viewport = window->addViewport( camera );
-    viewport->setBackgroundColour( Ogre::ColourValue( 0, 0.4, 0 ) );
-    camera->setAspectRatio( Ogre::Real( viewport->getActualWidth() ) / Ogre::Real( viewport->getActualHeight() ) );
-
-
-
-    FILESYSTEM = new FileSystem();
-    LOGGER = new Logger( "game.log" );
-};
-
-
-
-void
-DeinitializeOgreBase()
-{
-    delete LOGGER;
-    delete FILESYSTEM;
-
-    delete root;
-    delete frame_listener;
-};
+#endif // __OGRE_BASE_H__

@@ -7,6 +7,7 @@
 
 
 
+//-------------------------------------------------------------------------
 File::File(const Ogre::String& file):
   m_FileName(file),
   m_Buffer(NULL),
@@ -23,9 +24,8 @@ File::File(const Ogre::String& file):
     }
 }
 
-
-
-File::File(File* pFile, u32 offset, u32 length):
+//-------------------------------------------------------------------------
+File::File( const File* pFile, u32 offset, u32 length):
   m_Buffer(NULL),
   m_BufferSize(length)
 {
@@ -37,9 +37,8 @@ File::File(File* pFile, u32 offset, u32 length):
     pFile->GetFileBuffer(m_Buffer, offset, m_BufferSize);
 }
 
-
-
-File::File(u8* pBuffer, u32 offset, u32 length):
+//-------------------------------------------------------------------------
+File::File(const u8* pBuffer, u32 offset, u32 length):
   m_FileName("BUFFER"),
   m_Buffer(NULL),
   m_BufferSize(length)
@@ -50,9 +49,8 @@ File::File(u8* pBuffer, u32 offset, u32 length):
     memcpy(m_Buffer, pBuffer + offset, m_BufferSize);
 }
 
-
-
-File::File(File* pFile)
+//-------------------------------------------------------------------------
+File::File( const File* pFile )
 {
     assert(pFile != NULL);
 
@@ -63,65 +61,84 @@ File::File(File* pFile)
     pFile->GetFileBuffer(m_Buffer, 0, m_BufferSize);
 }
 
-
-
+//-------------------------------------------------------------------------
 File::~File()
 {
     free(m_Buffer);
 }
 
-
-
+//-------------------------------------------------------------------------
 void
 File::WriteFile(const Ogre::String& file) const
 {
   FILESYSTEM->WriteNewFile(file, m_Buffer, m_BufferSize);
 }
 
-
-
+//-------------------------------------------------------------------------
 const Ogre::String&
 File::GetFileName() const
 {
     return m_FileName;
 }
 
-
-
+//-------------------------------------------------------------------------
 u32
 File::GetFileSize() const
 {
     return m_BufferSize;
 }
 
-
-
+//-------------------------------------------------------------------------
 void
-File::GetFileBuffer(u8* pBuffer, u32 start, u32 length) const
+File::GetFileBuffer(u8* pBuffer, const u32 &start, const u32 &length) const
 {
     memcpy(pBuffer, m_Buffer + start, length);
 }
 
-
-
+//-------------------------------------------------------------------------
 u8
 File::GetU8(u32 offset) const
 {
-    return static_cast<u8>(*(m_Buffer + offset));
+    return *(m_Buffer + offset);
 }
 
-
-
+//-------------------------------------------------------------------------
 u16
 File::GetU16LE(u32 offset) const
 {
-    return ((u8*)m_Buffer + offset)[0] | (((u8*)m_Buffer + offset)[1] << 8);
+    return (m_Buffer + offset)[0] | ((m_Buffer + offset)[1] << 8);
 }
 
-
-
+//-------------------------------------------------------------------------
 u32
 File::GetU32LE(u32 offset) const
 {
-    return ((u8*)m_Buffer + offset)[0] | (((u8*)m_Buffer + offset)[1] << 8) | (((u8*)m_Buffer + offset)[2] << 16) | (((u8*)m_Buffer + offset)[3] << 24);
+    return (m_Buffer + offset)[0] | ((m_Buffer + offset)[1] << 8) | ((m_Buffer + offset)[2] << 16) | ((m_Buffer + offset)[3] << 24);
 }
+
+//-------------------------------------------------------------------------
+u8
+File::readU8()
+{
+    return GetU8( m_offset++ );
+}
+
+//-------------------------------------------------------------------------
+u16
+File::readU16LE()
+{
+    u16 data( GetU16LE(m_offset) );
+    m_offset += 2;
+    return data;
+}
+
+//-------------------------------------------------------------------------
+u32
+File::readU32LE()
+{
+    u32 data( GetU32LE(m_offset) );
+    m_offset += 4;
+    return data;
+}
+
+//-------------------------------------------------------------------------
