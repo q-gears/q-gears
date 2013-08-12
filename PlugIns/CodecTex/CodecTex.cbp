@@ -61,18 +61,16 @@
 					<Add library="boost_filesystem-mgw47-mt-1_54" />
 				</Linker>
 			</Target>
-			<Environment>
-				<Variable name="QGEARS_INSTALL_PATH" value="..\output" />
-			</Environment>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add option="-DBOOST_ALL_DYN_LINK" />
-			<Add directory="D:/work/ogre/build/sdk/include/OGRE" />
-			<Add directory="D:/app/dev/boost" />
-			<Add directory="include" />
+			<Add directory="$(BOOST_HOME)" />
+			<Add directory="$(OGRE_HOME)/include/OGRE" />
+			<Add directory="$(OGRE_HOME)/include/OIS" />
 			<Add directory="../../utilites" />
+			<Add directory="include" />
 		</Compiler>
 		<Linker>
 			<Add directory="D:/app/dev/boost/stage/lib" />

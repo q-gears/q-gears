@@ -4627,7 +4627,7 @@
 	<OgreRoot.h>
 	"QGearsTexPlugin.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreroot.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreroot.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreString.h"
@@ -4637,7 +4637,7 @@
 	"OgreWorkQueue.h"
 	<exception>
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogresingleton.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogresingleton.h
 	"OgrePrerequisites.h"
 	"OgreHeaderPrefix.h"
 	"OgreHeaderSuffix.h"
@@ -4649,13 +4649,13 @@
 	<ext/hash_map>
 	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrescenemanagerenumerator.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrescenemanagerenumerator.h
 	"OgrePrerequisites.h"
 	"OgreSceneManager.h"
 	"OgreSingleton.h"
 	"OgreIteratorWrappers.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrescenemanager.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrescenemanager.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSceneNode.h"
@@ -4680,13 +4680,15 @@
 	"OgreInstanceManager.h"
 	"OgreRenderSystem.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrescenenode.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrescenenode.h
 	"OgrePrerequisites.h"
 	"OgreNode.h"
 	"OgreIteratorWrappers.h"
 	"OgreAxisAlignedBox.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrenode.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrenode.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreMatrix3.h"
@@ -4697,6 +4699,8 @@
 	"OgreIteratorWrappers.h"
 	"OgreMesh.h"
 	"OgreUserObjectBindings.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
 1376067361 d:\work\ogre\build\sdk\include\ogre\ogrecommon.h
 	"OgreString.h"
@@ -4705,38 +4709,38 @@
 	"OgreHeaderPrefix.h"
 	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrematrix3.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrematrix3.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrevector3.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrevector3.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 	"OgreQuaternion.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogremath.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogremath.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrequaternion.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrequaternion.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrematrix4.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrematrix4.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreMatrix3.h"
 	"OgreVector4.h"
 	"OgrePlane.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrevector4.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrevector4.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreplane.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreplane.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerenderable.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerenderable.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreRenderOperation.h"
@@ -4747,23 +4751,29 @@
 	"OgreVector4.h"
 	"OgreException.h"
 	"OgreUserObjectBindings.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerenderoperation.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerenderoperation.h
 	"OgrePrerequisites.h"
 	"OgreVertexIndexData.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrevertexindexdata.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrevertexindexdata.h
 	"OgrePrerequisites.h"
 	"OgreHardwareVertexBuffer.h"
 	"OgreHardwareIndexBuffer.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrehardwarevertexbuffer.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrehardwarevertexbuffer.h
 	"OgrePrerequisites.h"
 	"OgreHardwareBuffer.h"
 	"OgreSharedPtr.h"
 	"OgreColourValue.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrehardwarebuffer.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrehardwarebuffer.h
 	"OgrePrerequisites.h"
 	"OgreException.h"
 
@@ -4777,35 +4787,41 @@
 1376067361 d:\work\ogre\build\sdk\include\ogre\ogresharedptr.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrecolourvalue.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrecolourvalue.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrehardwareindexbuffer.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrehardwareindexbuffer.h
 	"OgrePrerequisites.h"
 	"OgreHardwareBuffer.h"
 	"OgreSharedPtr.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrematerial.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrematerial.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreIteratorWrappers.h"
 	"OgreCommon.h"
 	"OgreColourValue.h"
 	"OgreBlendMode.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreresource.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreresource.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSharedPtr.h"
 	"OgreStringInterface.h"
 	"OgreAtomicWrappers.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrestringinterface.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrestringinterface.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreCommon.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreatomicwrappers.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreatomicwrappers.h
 	<signal.h>
 	"OgrePrerequisites.h"
 	"OgreException.h"
@@ -5439,11 +5455,11 @@
 	<boost/range/iterator.hpp>
 	<boost/iterator/iterator_traits.hpp>
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreblendmode.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreblendmode.h
 	"OgrePrerequisites.h"
 	"OgreColourValue.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogregpuprogram.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogregpuprogram.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreSharedPtr.h"
@@ -5451,11 +5467,15 @@
 	"OgreSerializer.h"
 	"OgreRenderOperation.h"
 	"OgreGpuProgramParams.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreserializer.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreserializer.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreDataStream.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
 1376067361 d:\work\ogre\build\sdk\include\ogre\ogredatastream.h
 	"OgrePrerequisites.h"
@@ -5465,26 +5485,30 @@
 	"OgreHeaderPrefix.h"
 	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogregpuprogramparams.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogregpuprogramparams.h
 	"OgrePrerequisites.h"
 	"OgreSharedPtr.h"
 	"OgreIteratorWrappers.h"
 	"OgreSerializer.h"
 	"OgreRenderOperation.h"
 	"OgreAny.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreany.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreany.h
 	"OgrePrerequisites.h"
 	"OgreException.h"
 	"OgreString.h"
 	<algorithm>
 	<typeinfo>
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreuserobjectbindings.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreuserobjectbindings.h
 	"OgrePrerequisites.h"
 	"OgreAny.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogremesh.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogremesh.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreVertexIndexData.h"
@@ -5497,16 +5521,18 @@
 	"OgreAnimationTrack.h"
 	"OgrePose.h"
 	"OgreDataStream.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreaxisalignedbox.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreaxisalignedbox.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreMatrix4.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrevertexboneassignment.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrevertexboneassignment.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreskeleton.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreskeleton.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreQuaternion.h"
@@ -5514,21 +5540,25 @@
 	"OgreIteratorWrappers.h"
 	"OgreStringVector.h"
 	"OgreAnimation.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
 1376067361 d:\work\ogre\build\sdk\include\ogre\ogrestringvector.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSharedPtr.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreanimation.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreanimation.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreIteratorWrappers.h"
 	"OgreAnimable.h"
 	"OgreAnimationTrack.h"
 	"OgreAnimationState.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreanimable.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreanimable.h
 	"OgrePrerequisites.h"
 	"OgreVector2.h"
 	"OgreVector3.h"
@@ -5539,78 +5569,96 @@
 	"OgreStringVector.h"
 	"OgreException.h"
 	"OgreAny.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrevector2.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrevector2.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreanimationtrack.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreanimationtrack.h
 	"OgrePrerequisites.h"
 	"OgreSimpleSpline.h"
 	"OgreRotationalSpline.h"
 	"OgreKeyFrame.h"
 	"OgreAnimable.h"
 	"OgrePose.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogresimplespline.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogresimplespline.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreMatrix4.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerotationalspline.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerotationalspline.h
 	"OgrePrerequisites.h"
 	"OgreQuaternion.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrekeyframe.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrekeyframe.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreQuaternion.h"
 	"OgreAny.h"
 	"OgreHardwareVertexBuffer.h"
 	"OgreIteratorWrappers.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrepose.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrepose.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreHardwareVertexBuffer.h"
 	"OgreVector3.h"
 	"OgreIteratorWrappers.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreanimationstate.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreanimationstate.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreController.h"
 	"OgreIteratorWrappers.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrecontroller.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrecontroller.h
 	"OgrePrerequisites.h"
 	"OgreSharedPtr.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrescenequery.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrescenequery.h
 	"OgrePrerequisites.h"
 	"OgreAxisAlignedBox.h"
 	"OgreSphere.h"
 	"OgreRay.h"
 	"OgreRenderOperation.h"
 	"OgrePlaneBoundedVolume.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogresphere.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogresphere.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreray.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreray.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgrePlaneBoundedVolume.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreplaneboundedvolume.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreplaneboundedvolume.h
 	"OgrePrerequisites.h"
 	"OgreAxisAlignedBox.h"
 	"OgreSphere.h"
 	"OgreMath.h"
 	"OgrePlane.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreautoparamdatasource.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreautoparamdatasource.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreMatrix4.h"
@@ -5618,7 +5666,7 @@
 	"OgreLight.h"
 	"OgreColourValue.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrelight.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrelight.h
 	"OgrePrerequisites.h"
 	"OgreColourValue.h"
 	"OgreVector3.h"
@@ -5627,8 +5675,10 @@
 	"OgreMovableObject.h"
 	"OgrePlaneBoundedVolume.h"
 	"OgreShadowCameraSetup.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderPrefix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogremovableobject.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogremovableobject.h
 	"OgrePrerequisites.h"
 	"OgreRenderQueue.h"
 	"OgreAxisAlignedBox.h"
@@ -5638,31 +5688,37 @@
 	"OgreAnimable.h"
 	"OgreAny.h"
 	"OgreUserObjectBindings.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerenderqueue.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerenderqueue.h
 	"OgreHeaderPrefix.h"
 	"OgrePrerequisites.h"
 	"OgreIteratorWrappers.h"
 	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreshadowcaster.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreshadowcaster.h
 	"OgrePrerequisites.h"
 	"OgreRenderable.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrefactoryobj.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrefactoryobj.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreshadowcamerasetup.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreshadowcamerasetup.h
 	"OgrePrerequisites.h"
 	"OgreMovablePlane.h"
 	"OgreSharedPtr.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogremovableplane.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogremovableplane.h
 	"OgrePrerequisites.h"
 	"OgrePlane.h"
 	"OgreMovableObject.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerenderqueuesortinggrouping.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerenderqueuesortinggrouping.h
 	"OgrePrerequisites.h"
 	"OgreIteratorWrappers.h"
 	"OgreMaterial.h"
@@ -5670,7 +5726,7 @@
 	"OgrePass.h"
 	"OgreRadixSort.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogretechnique.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogretechnique.h
 	"OgrePrerequisites.h"
 	"OgreIteratorWrappers.h"
 	"OgreBlendMode.h"
@@ -5680,7 +5736,7 @@
 	"OgreRenderSystemCapabilities.h"
 	"OgreUserObjectBindings.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrepass.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrepass.h
 	"OgrePrerequisites.h"
 	"OgreGpuProgram.h"
 	"OgreColourValue.h"
@@ -5690,7 +5746,7 @@
 	"OgreTextureUnitState.h"
 	"OgreUserObjectBindings.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogretextureunitstate.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogretextureunitstate.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreBlendMode.h"
@@ -5698,14 +5754,18 @@
 	"OgreIteratorWrappers.h"
 	"OgreString.h"
 	"OgreTexture.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogretexture.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogretexture.h
 	"OgrePrerequisites.h"
 	"OgreHardwareBuffer.h"
 	"OgreResource.h"
 	"OgreImage.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreimage.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreimage.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgrePixelFormat.h"
@@ -5717,7 +5777,7 @@
 	"OgreHeaderPrefix.h"
 	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerendersystemcapabilities.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerendersystemcapabilities.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreStringConverter.h"
@@ -5725,7 +5785,7 @@
 	"OgreResource.h"
 	"OgreLogManager.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrestringconverter.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrestringconverter.h
 	"OgrePrerequisites.h"
 	"OgreStringVector.h"
 	"OgreColourValue.h"
@@ -5737,31 +5797,37 @@
 	"OgreVector3.h"
 	"OgreVector4.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrelogmanager.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrelogmanager.h
 	"OgrePrerequisites.h"
 	"OgreLog.h"
 	"OgreSingleton.h"
 	"OgreString.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrelog.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrelog.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreradixsort.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreradixsort.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerectangle2d.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerectangle2d.h
 	"OgrePrerequisites.h"
 	"OgreSimpleRenderable.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogresimplerenderable.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogresimplerenderable.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreRenderable.h"
 	"OgreAxisAlignedBox.h"
 	"OgreMaterial.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreresourcegroupmanager.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreresourcegroupmanager.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreCommon.h"
@@ -5770,8 +5836,10 @@
 	"OgreArchive.h"
 	"OgreIteratorWrappers.h"
 	<ctime>
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrearchive.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrearchive.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreDataStream.h"
@@ -5779,15 +5847,17 @@
 	"OgreStringVector.h"
 	"OgreException.h"
 	<ctime>
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreshadowtexturemanager.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreshadowtexturemanager.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgrePixelFormat.h"
 	"OgreTexture.h"
 	"OgreIteratorWrappers.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrecamera.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrecamera.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreMovableObject.h"
@@ -5799,16 +5869,20 @@
 	"OgreFrustum.h"
 	"OgreRay.h"
 	"OgrePlaneBoundedVolume.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrefrustum.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrefrustum.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreRenderable.h"
 	"OgreAxisAlignedBox.h"
 	"OgreVertexIndexData.h"
 	"OgreMovablePlane.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreinstancedgeometry.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreinstancedgeometry.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreSimpleRenderable.h"
@@ -5819,23 +5893,23 @@
 	"OgreIteratorWrappers.h"
 	"OgreMesh.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreskeletoninstance.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreskeletoninstance.h
 	"OgrePrerequisites.h"
 	"OgreSkeleton.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrebone.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrebone.h
 	"OgrePrerequisites.h"
 	"OgreNode.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrelodlistener.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrelodlistener.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreinstancemanager.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreinstancemanager.h
 	"OgrePrerequisites.h"
 	"OgreMesh.h"
 	"OgreRenderOperation.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerendersystem.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerendersystem.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreTextureUnitState.h"
@@ -5851,15 +5925,17 @@
 	"OgrePlane.h"
 	"OgreIteratorWrappers.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrematerialmanager.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrematerialmanager.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreResourceManager.h"
 	"OgreMaterial.h"
 	"OgreStringVector.h"
 	"OgreMaterialSerializer.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreresourcemanager.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreresourcemanager.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreResourceGroupManager.h"
@@ -5868,40 +5944,44 @@
 	"OgreDataStream.h"
 	"OgreStringVector.h"
 	"OgreScriptLoader.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrescriptloader.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrescriptloader.h
 	"OgrePrerequisites.h"
 	"OgreDataStream.h"
 	"OgreStringVector.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrematerialserializer.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrematerialserializer.h
 	"OgrePrerequisites.h"
 	"OgreMaterial.h"
 	"OgreBlendMode.h"
 	"OgreTextureUnitState.h"
 	"OgreGpuProgram.h"
 	"OgreStringVector.h"
+	"OgreHeaderPrefix.h"
+	"OgreHeaderSuffix.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerendertarget.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerendertarget.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreTextureManager.h"
 	"OgreViewport.h"
 	"OgreTimer.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogretexturemanager.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogretexturemanager.h
 	"OgrePrerequisites.h"
 	"OgreResourceManager.h"
 	"OgreTexture.h"
 	"OgreSingleton.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreviewport.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreviewport.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreColourValue.h"
 	"OgreFrustum.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogretimer.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogretimer.h
 	"OgrePrerequisites.h"
 	"OgrePlatform.h"
 	"WIN32/OgreTimerImp.h"
@@ -5911,34 +5991,34 @@
 	"iOS/OgreTimerImp.h"
 	"Android/OgreTimerImp.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\win32\ogretimerimp.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\win32\ogretimerimp.h
 	"windows.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrerendertexture.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrerendertexture.h
 	"OgrePrerequisites.h"
 	"OgreRenderTarget.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreframelistener.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreframelistener.h
 	"OgrePrerequisites.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreconfigoptionmap.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreconfigoptionmap.h
 	"OgrePrerequisites.h"
 	"OgreStringVector.h"
 	"OgreString.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrelodstrategymanager.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrelodstrategymanager.h
 	"OgrePrerequisites.h"
 	"OgreLodStrategy.h"
 	"OgreSingleton.h"
 	"OgreIteratorWrappers.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogrelodstrategy.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogrelodstrategy.h
 	"OgrePrerequisites.h"
 	"OgreMesh.h"
 	"OgreMovableObject.h"
 	"OgreCamera.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreworkqueue.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreworkqueue.h
 	"OgrePrerequisites.h"
 	"OgreAtomicWrappers.h"
 	"OgreAny.h"
@@ -6444,7 +6524,7 @@
 	"OgrePrerequisites.h"
 	"OgreShadowCameraSetupLiSPSM.h"
 
-1375081340 d:\work\ogre\build\sdk\include\ogre\ogreplugin.h
+1376067361 d:\work\ogre\build\sdk\include\ogre\ogreplugin.h
 	"OgrePrerequisites.h"
 
 1375210918 source:d:\work\q-gears\plugins\codectex\src\qgearstexplugin.cpp
@@ -7732,6 +7812,7 @@
 	<tbb/enumerable_thread_specific.h>
 	<tbb/tbb_thread.h>
 
-1376153383 d:\work\q-gears\utilites\common\typedefine.h
+1376198004 d:\work\q-gears\utilites\common\typedefine.h
 	<OgrePlatform.h>
+	<OgreString.h>
 
