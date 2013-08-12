@@ -60,6 +60,7 @@ namespace QGears
             Ogre::Bone* parent( skeleton->getBone( it_bone->parent ) );
             parent->addChild( child );
         }
+        return skeleton;
     }
 
     //---------------------------------------------------------------------

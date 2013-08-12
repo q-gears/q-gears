@@ -70,13 +70,11 @@ namespace QGears
 
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector2 &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector3 &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::ColourValue &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::AxisAlignedBox &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Edge &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, PolygonDefinition &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Group &pDest );
+        using Serializer::readObject;
+
         template<typename ValueType>
                 void    readVector( Ogre::DataStreamPtr &stream
                                    ,std::vector<ValueType> &pDest

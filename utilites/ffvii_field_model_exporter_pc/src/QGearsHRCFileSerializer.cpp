@@ -144,10 +144,10 @@ namespace QGears
                  << "Warning: rsd_names should have " << rsd_count
                  << " entries but got " << pDest.rsd_names.size()
                  << " instead"
-                 << "\nname     : " << pDest.name
-                 << "\nparent   : " << pDest.parent
-                 << "\nlength   : " << pDest.length
-                 << "\nrsd_count: " << rsd_names
+                 << "\n name     : " << pDest.name
+                 << "\n parent   : " << pDest.parent
+                 << "\n length   : " << pDest.length
+                 << "\n rsd_count: " << rsd_names
                  << "\n";
         }
     }

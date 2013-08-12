@@ -103,20 +103,20 @@ namespace QGears
         for( size_t g(0); g < m_groups.size(); ++g )
         {
             const Group& group( m_groups[g] );
-            log << "\nprimitive_type                : " << group.primitive_type
-                << "\npolygon_start_index           : " << group.polygon_start_index
-                << "\nnum_polygons                  : " << group.num_polygons
-                << "\nvertex_start_index            : " << group.vertex_start_index
-                << "\nnum_vertices                  : " << group.num_vertices
-                << "\nedge_start_index              : " << group.edge_start_index
-                << "\nnum_edges                     : " << group.num_edges
-                << "\nunknown_1C                    : " << group.unknown_1C
-                << "\nunknown_20                    : " << group.unknown_20
-                << "\nunknown_24                    : " << group.unknown_24
-                << "\nunknown_28                    : " << group.unknown_28
-                << "\ntexture_coordinate_start_index: " << group.texture_coordinate_start_index
-                << "\nhas_textures                  : " << group.has_texture
-                << "\ntexture_index                 : " << group.texture_index
+            log << "\n primitive_type                : " << group.primitive_type
+                << "\n polygon_start_index           : " << group.polygon_start_index
+                << "\n num_polygons                  : " << group.num_polygons
+                << "\n vertex_start_index            : " << group.vertex_start_index
+                << "\n num_vertices                  : " << group.num_vertices
+                << "\n edge_start_index              : " << group.edge_start_index
+                << "\n num_edges                     : " << group.num_edges
+                << "\n unknown_1C                    : " << group.unknown_1C
+                << "\n unknown_20                    : " << group.unknown_20
+                << "\n unknown_24                    : " << group.unknown_24
+                << "\n unknown_28                    : " << group.unknown_28
+                << "\n texture_coordinate_start_index: " << group.texture_coordinate_start_index
+                << "\n has_textures                  : " << group.has_texture
+                << "\n texture_index                 : " << group.texture_index
                 << "\n";
 
             String material_name( "test/" + Ogre::StringConverter::toString(g) );

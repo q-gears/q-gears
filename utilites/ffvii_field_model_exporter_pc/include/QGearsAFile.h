@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-10 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-12 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,49 +23,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsHRCFileSerializer_H__
-#define __QGearsHRCFileSerializer_H__
+#ifndef __QGearsAFile_H__
+#define __QGearsAFile_H__
 
-#include "QGearsHRCFile.h"
-#include "QGearsSerializer.h"
+#include <OgreSkeleton.h>
+#include <OgreVector3.h>
+
+#include "common/TypeDefine.h"
 
 namespace QGears
 {
-    class HRCFileSerializer : public Serializer
+    class AFile
     {
     public:
-                        HRCFileSerializer();
-        virtual        ~HRCFileSerializer();
+        AFile();
+        virtual ~AFile();
 
-        virtual void 	importHRCFile( Ogre::DataStreamPtr &stream, HRCFile* pDest );
+        static const Ogre::Real ANIMATION_FRAME_RATE;
 
-    protected:
-        static const String TAG_VERSION;
-        static const String TAG_NAME;
-        static const String TAG_BONE_COUNT;
+        virtual void add( Ogre::SkeletonPtr skeleton, const String& name ) const;
 
-        typedef std::vector<String> Block;
-        typedef HRCFile::Bone       Bone;
+        typedef std::vector<Ogre::Vector3>  BoneRotationList;
 
-        virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
-        virtual void 	readBlock( Ogre::DataStreamPtr &stream, Block& pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Bone &pDest );
-
-        template<typename ValueType>
-                void    readVector( Ogre::DataStreamPtr &stream
-                                   ,std::vector<ValueType> &pDest
-                                   ,size_t count );
-
-        struct Header
+        struct Frame
         {
-            long    version;
-            long    bone_count;
-            String  name;
+            Ogre::Vector3       root_rotation;
+            Ogre::Vector3       root_translation;
+            BoneRotationList    bone_rotations;
         };
 
+        typedef std::vector<Ogre::Vector3>  FrameList;
+        virtual FrameList&  getFrames() { return m_frames; };
+    protected:
     private:
-        Header  m_header;
+        FrameList m_frames;
     };
 }
 
-#endif // __QGearsHRCFileSerializer_H__
+#endif // __QGearsAFile_H__

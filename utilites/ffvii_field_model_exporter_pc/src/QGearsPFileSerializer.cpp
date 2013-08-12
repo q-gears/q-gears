@@ -64,59 +64,13 @@ namespace QGears
         size_t header_size( sizeof( m_header ) );
         stream->read( &m_header, header_size );
         flipFromLittleEndian( &m_header, 4, header_size / 4 );
-        Ogre::Log::Stream log( Ogre::LogManager::getSingleton().stream() );
 
-        log  << "\nversion:      " << m_header.version
-             << "\nvertex_type:  " << m_header.vertex_type
-             << "\nnum_vertices: " << m_header.num_vertices
-             << "\nnum_normals:  " << m_header.num_normals
-             << "\n";
-    }
-
-    //---------------------------------------------------------------------
-    void
-    PFileSerializer::readObject( Ogre::DataStreamPtr &stream
-                                ,Ogre::Vector2 &pDest )
-    {
-        float v[2];
-        readFloats( stream, v, 2 );
-        pDest.x = v[0];
-        pDest.y = v[1];
-    }
-
-    //---------------------------------------------------------------------
-    void
-    PFileSerializer::readObject( Ogre::DataStreamPtr &stream
-                                ,Ogre::Vector3 &pDest )
-    {
-        float tmp[3];
-        readFloats( stream, tmp, 3 );
-        pDest.x = tmp[0];
-        pDest.y = tmp[1];
-        pDest.z = tmp[2];
-    }
-
-    //---------------------------------------------------------------------
-    void
-    PFileSerializer::readObject( Ogre::DataStreamPtr &stream
-                                ,Ogre::ColourValue &pDest )
-    {
-        Ogre::uint32 tmp;
-        readInts( stream, &tmp, 1 );
-        pDest.setAsARGB( tmp );
-    }
-
-    //---------------------------------------------------------------------
-    void
-    PFileSerializer::readObject( Ogre::DataStreamPtr &stream
-                                ,Ogre::AxisAlignedBox &pDest )
-    {
-        Ogre::Vector3 tmp;
-        readObject( stream, tmp );
-        pDest.setMaximum( tmp );
-
-        readObject( stream, tmp );
-        pDest.setMinimum( tmp );
+        Ogre::LogManager::getSingleton().stream()
+            << "\n version     : " << m_header.version
+            << "\n vertex_type : " << m_header.vertex_type
+            << "\n num_vertices: " << m_header.num_vertices
+            << "\n num_normals : " << m_header.num_normals
+            << "\n";
     }
 
     //---------------------------------------------------------------------

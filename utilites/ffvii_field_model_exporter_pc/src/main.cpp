@@ -30,12 +30,12 @@ THE SOFTWARE.
 #include "common/OgreBase.h"
 #include "common/Logger.h"
 
+#include "QGearsAFileSerializer.h"
 #include "QGearsHRCFileSerializer.h"
 #include "QGearsPFileSerializer.h"
 
-void attachManualObject( Ogre::ManualObject* mo, const Ogre::String &name )
+void attachMesh( Ogre::MeshPtr mesh, const Ogre::String &name )
 {
-    Ogre::MeshPtr mesh( mo->convertToMesh( name ) );
     Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
     Ogre::Entity* entity = scene_manager->createEntity( mesh );
     entity->setDisplaySkeleton(true);
@@ -63,18 +63,51 @@ main( int argc, char *argv[] )
     InitializeOgreBase( "FFVII Field Model Exporter" );
 
     Ogre::DataStreamPtr         stream;
+    QGears::AFile               a;
+    QGears::AFileSerializer     a_ser;
     QGears::HRCFile             hrc;
     QGears::HRCFileSerializer   hrc_ser;
+    QGears::PFile               p;
+    QGears::PFileSerializer     p_ser;
 
     stream = getStream( "../../../output/data_orig/field/char/aaaa.hrc" );
     hrc_ser.importHRCFile( stream, &hrc );
 
-    QGears::PFile               p;
-    QGears::PFileSerializer     p_ser;
-
     stream = getStream( "../../../output/data_orig/field/char/aaba.p" );
     p_ser.importPFile( stream, &p );
-    attachManualObject( p.getManualObject(), "test" );
+
+    stream = getStream( "../../../output/data_orig/field/char/acfe.a" );
+    a_ser.importAFile( stream, &a );
+
+    Ogre::SkeletonPtr skeleton( hrc.createSkeleton( hrc.getName(), "General" ) );
+    Ogre::ManualObject* mo( p.getManualObject() );
+    Ogre::MeshPtr mesh( mo->convertToMesh( "n_cloud" ) );
+    //Ogre::VertexDeclaration * decl = mesh->getSubMesh(0)->vertexData->vertexDeclaration;
+    //mesh->getSubMesh(0)->vertexData->reorganiseBuffers(decl->getAutoOrganisedDeclaration(true,false));
+    mesh->_notifySkeleton( skeleton );
+    Ogre::Mesh::SubMeshIterator it( mesh->getSubMeshIterator() );
+    Ogre::Bone* head( skeleton->getBone( "head" ) );
+    u16 bone_index( head->getHandle() );
+    while( it.hasMoreElements() )
+    {
+        Ogre::SubMesh* sub_mesh( it.getNext() );
+        int vertex_number = sub_mesh->vertexData->vertexCount;
+        for (int i = 0; i < vertex_number; ++i)
+        {
+            Ogre::VertexBoneAssignment vba;
+            vba.vertexIndex = i;
+            vba.boneIndex = bone_index;
+            vba.weight = 1.0;
+            sub_mesh->addBoneAssignment( vba );
+        }
+    }
+    attachMesh( mesh, "test" );
+
+    // cloud animations
+    // acfe
+    // aaff
+    // aaga
+    // bvjf
 
     Ogre::Root::getSingleton().startRendering();
     DeinitializeOgreBase();

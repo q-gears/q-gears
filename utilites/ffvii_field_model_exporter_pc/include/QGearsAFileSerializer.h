@@ -23,49 +23,44 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsHRCFileSerializer_H__
-#define __QGearsHRCFileSerializer_H__
+#ifndef __QGearsAFileSerializer_H__
+#define __QGearsAFileSerializer_H__
 
-#include "QGearsHRCFile.h"
+#include "common/TypeDefine.h"
+#include "QGearsAFile.h"
 #include "QGearsSerializer.h"
 
 namespace QGears
 {
-    class HRCFileSerializer : public Serializer
+    class AFileSerializer : public Serializer
     {
     public:
-                        HRCFileSerializer();
-        virtual        ~HRCFileSerializer();
+                        AFileSerializer();
+        virtual        ~AFileSerializer();
 
-        virtual void 	importHRCFile( Ogre::DataStreamPtr &stream, HRCFile* pDest );
-
-    protected:
-        static const String TAG_VERSION;
-        static const String TAG_NAME;
-        static const String TAG_BONE_COUNT;
-
-        typedef std::vector<String> Block;
-        typedef HRCFile::Bone       Bone;
-
-        virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
-        virtual void 	readBlock( Ogre::DataStreamPtr &stream, Block& pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Bone &pDest );
-
-        template<typename ValueType>
-                void    readVector( Ogre::DataStreamPtr &stream
-                                   ,std::vector<ValueType> &pDest
-                                   ,size_t count );
+        virtual void 	importAFile( Ogre::DataStreamPtr &stream, AFile* pDest );
 
         struct Header
         {
-            long    version;
-            long    bone_count;
-            String  name;
+            uint32 version;
+            uint32 frame_count;
+            uint32 bone_count;
+            uint32 rotation_order;
+            uint32 runtime_data[5];
         };
+
+    protected:
+        virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
+        virtual void 	readObject( Ogre::DataStreamPtr &stream, AFile::Frame &pDest );
+        using Serializer::readObject;
+
+        template<typename ValueType>
+        void readVector( Ogre::DataStreamPtr &stream
+                        ,std::vector<ValueType> &pDest, size_t count );
 
     private:
         Header  m_header;
     };
 }
 
-#endif // __QGearsHRCFileSerializer_H__
+#endif // __QGearsAFileSerializer_H__

@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-10 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-12 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,35 +23,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsSerializer_H__
-#define __QGearsSerializer_H__
+#include "QGearsAFile.h"
 
-#include <OgreAxisAlignedBox.h>
-#include <OgreColourValue.h>
-#include <OgreSerializer.h>
-#include <OgreVector2.h>
-#include <OgreVector3.h>
+#include <OgreBone.h>
 
 namespace QGears
 {
-    class Serializer : public Ogre::Serializer
+   //-------------------------------------------------------------------------
+   const Ogre::Real AFile::ANIMATION_FRAME_RATE( 30 );
+
+   //-------------------------------------------------------------------------
+    AFile::AFile()
     {
-    public:
-                        Serializer();
-        virtual        ~Serializer();
+    }
 
-        // TODO implement some more serialization!?
-        // ISerializeable  readObject( serializer )
-        // virtual void readObject( ISerializable o ) { o.readObject( this ); }
-        // template<T> readObject( T )
-    protected:
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector2 &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector3 &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::ColourValue &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::AxisAlignedBox &pDest );
+    //-------------------------------------------------------------------------
+    AFile::~AFile()
+    {
+    }
 
-    private:
-    };
+    //-------------------------------------------------------------------------
+    void
+    AFile::add( Ogre::SkeletonPtr skeleton, const String& name ) const
+    {
+        Ogre::Real length( m_frames.size() / ANIMATION_FRAME_RATE );
+        Ogre::Animation* anim( skeleton->createAnimation(name, length ));
+        uint16 track_handle( 0 );
+        Ogre::Bone* bone( skeleton->getBone( "root" ) );
+        Ogre::NodeAnimationTrack* track;
+        track = anim->createNodeTrack( track_handle, bone );
+    }
+
+    //-------------------------------------------------------------------------
 }
-
-#endif // __QGearsSerializer_H__

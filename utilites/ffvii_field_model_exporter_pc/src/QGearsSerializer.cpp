@@ -41,4 +41,50 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    void
+    Serializer::readObject( Ogre::DataStreamPtr &stream
+                           ,Ogre::Vector2 &pDest )
+    {
+        float v[2];
+        readFloats( stream, v, 2 );
+        pDest.x = v[0];
+        pDest.y = v[1];
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Serializer::readObject( Ogre::DataStreamPtr &stream
+                           ,Ogre::Vector3 &pDest )
+    {
+        float tmp[3];
+        readFloats( stream, tmp, 3 );
+        pDest.x = tmp[0];
+        pDest.y = tmp[1];
+        pDest.z = tmp[2];
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Serializer::readObject( Ogre::DataStreamPtr &stream
+                           ,Ogre::ColourValue &pDest )
+    {
+        Ogre::uint32 tmp;
+        readInts( stream, &tmp, 1 );
+        pDest.setAsARGB( tmp );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Serializer::readObject( Ogre::DataStreamPtr &stream
+                           ,Ogre::AxisAlignedBox &pDest )
+    {
+        Ogre::Vector3 tmp;
+        readObject( stream, tmp );
+        pDest.setMaximum( tmp );
+
+        readObject( stream, tmp );
+        pDest.setMinimum( tmp );
+    }
+
+    //---------------------------------------------------------------------
 }
