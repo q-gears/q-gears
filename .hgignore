@@ -13,3 +13,5 @@ utilites/ffvii_field_model_exporter/compile/
 utilites/xeno_sound_dumper/compile/
 utilites/ffix_model_exporter/compile/
 utilites/xeno_model_exporter/compile/
+**/bin/**
+**/obj/**
