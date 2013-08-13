@@ -49,8 +49,7 @@ namespace QGears
         virtual bool    isValid( void );
         virtual bool    isPolygonDefinitionListValid( void );
 
-        // TOTO for debugging only, remove if completed
-        Ogre::ManualObject*  getManualObject( void ) const;
+        virtual void    addGroups( Ogre::ManualObject* object, const String& name ) const;
 
         //-----------------------------------------------------------------
         struct Edge

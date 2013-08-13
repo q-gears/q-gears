@@ -56,8 +56,9 @@ namespace QGears
 
         typedef std::vector<Bone> BoneList;
 
-        virtual String&     getName ( void ){ return m_name; }
-        virtual BoneList&   getBones( void ){ return m_bones; }
+        virtual void        setName ( const String& name );
+        virtual String&     getName ( void ) { return m_name; }
+        virtual BoneList&   getBones( void ) { return m_bones; }
     protected:
 
         static const String ROOT_BONE_NAME;

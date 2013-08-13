@@ -44,6 +44,13 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    void
+    HRCFile::setName( const String &name )
+    {
+        m_name = name;
+    }
+
+    //---------------------------------------------------------------------
     Ogre::SkeletonPtr
     HRCFile::createSkeleton( const String &name, const String &group )
     {
@@ -58,6 +65,7 @@ namespace QGears
         {
             Ogre::Bone* child( skeleton->createBone( it_bone->name ) );
             Ogre::Bone* parent( skeleton->getBone( it_bone->parent ) );
+            child->setPosition( 0, it_bone->length, 0 );
             parent->addChild( child );
         }
         return skeleton;

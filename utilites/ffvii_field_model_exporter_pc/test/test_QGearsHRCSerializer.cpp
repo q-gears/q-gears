@@ -41,7 +41,10 @@ BOOST_AUTO_TEST_CASE( read_file )
 
     QGears::HRCFile             file;
     QGears::HRCFileSerializer   ser;
-    ser.inportHRCFile( stream, &file );
+    ser.importHRCFile( stream, &file );
+
+    BOOST_CHECK_EQUAL( "n_cloud_sk", file.getName() );
+    BOOST_CHECK_EQUAL( 21, file.getBones().size() );
 
     ifs->close();
 }

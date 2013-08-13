@@ -64,13 +64,6 @@ namespace QGears
         size_t header_size( sizeof( m_header ) );
         stream->read( &m_header, header_size );
         flipFromLittleEndian( &m_header, 4, header_size / 4 );
-
-        Ogre::LogManager::getSingleton().stream()
-            << "\n version     : " << m_header.version
-            << "\n vertex_type : " << m_header.vertex_type
-            << "\n num_vertices: " << m_header.num_vertices
-            << "\n num_normals : " << m_header.num_normals
-            << "\n";
     }
 
     //---------------------------------------------------------------------
@@ -106,50 +99,25 @@ namespace QGears
     void
     PFileSerializer::importPFile( Ogre::DataStreamPtr &stream, PFile* pDest )
     {
-        Ogre::Log::Stream log( Ogre::LogManager::getSingleton().stream() );
-        log << "Info: reading header\n";
         readFileHeader( stream );
-
-        log << "Info: reading m_vertices " << m_header.num_vertices << " @" << stream->tell() << "\n";
         readVector( stream, pDest->getVertices(), m_header.num_vertices );
-
-        log << "Info: reading m_normals " << m_header.num_normals << " @" << stream->tell() << "\n";
         readVector( stream, pDest->getNormals(), m_header.num_normals );
-
-        log << "Info: reading m_unknown1 " << m_header.num_unknown1 << " @" << stream->tell() << "\n";
         readVector( stream, pDest->getUnknown1(), m_header.num_unknown1 );
-
-        log << "Info: reading m_texture_coordinates " << m_header.num_texture_coordinates << " @" << stream->tell() << "\n";
         readVector( stream, pDest->getTextureCoordinates()
                    ,m_header.num_texture_coordinates );
-
-        log << "Info: reading m_vertex_colors " << m_header.num_vertex_colors << " @" << stream->tell() << "\n";
         readVector( stream, pDest->getVertexColors()
                    ,m_header.num_vertex_colors );
-
-        log << "Info: reading m_polygon_colors " << m_header.num_polygons << " @" << stream->tell() << "\n";
         readVector( stream, pDest->getPolygonColors(), m_header.num_polygons );
-
-        log << "Info: reading m_edges " << m_header.num_edges << " @" << stream->tell() << "\n";
         readVector( stream, pDest->getEdges(), m_header.num_edges );
-
-        log << "Info: reading m_polygon_definitions " << m_header.num_polygons << " @" << stream->tell() << "\n";
         readVector( stream, pDest->getPolygonDefinitions()
                    ,m_header.num_polygons );
 
         stream->skip( m_header.num_hundreds * sizeof( RenderInformation ) );
 
-        log << "Info: reading m_groups " << m_header.num_groups << " @" << stream->tell() << "\n";
         readVector( stream, pDest->getGroups(), m_header.num_groups );
 
         stream->skip( 4 );
-        log << "Info: reading m_bboxes " << m_header.num_bboxes << " @" << stream->tell() << "\n";
         readVector( stream,pDest->getBBoxes(), m_header.num_bboxes );
-
-        if( !pDest->isValid() )
-        {
-            // TODO throw invalid params exception
-        }
     }
 
     //---------------------------------------------------------------------

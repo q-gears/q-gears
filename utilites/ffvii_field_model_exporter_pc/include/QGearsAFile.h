@@ -39,9 +39,9 @@ namespace QGears
         AFile();
         virtual ~AFile();
 
-        static const Ogre::Real ANIMATION_FRAME_RATE;
+        static const Ogre::Real FRAME_DURATION;
 
-        virtual void add( Ogre::SkeletonPtr skeleton, const String& name ) const;
+        virtual void addTo( Ogre::SkeletonPtr skeleton, const String& name ) const;
 
         typedef std::vector<Ogre::Vector3>  BoneRotationList;
 
@@ -52,11 +52,18 @@ namespace QGears
             BoneRotationList    bone_rotations;
         };
 
-        typedef std::vector<Ogre::Vector3>  FrameList;
+        typedef std::vector<Frame>  FrameList;
         virtual FrameList&  getFrames() { return m_frames; };
+
+        virtual void    setBoneCount( const uint32 bone_count );
     protected:
+
+        virtual void    setFrameRotation( Ogre::TransformKeyFrame* key_frame
+                                         ,const Ogre::Vector3& rotation ) const;
+
     private:
-        FrameList m_frames;
+        uint32      m_bone_count;
+        FrameList   m_frames;
     };
 }
 

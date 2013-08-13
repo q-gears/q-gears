@@ -65,13 +65,6 @@ namespace QGears
         size_t header_size( sizeof( m_header ) );
         stream->read( &m_header, header_size );
         flipFromLittleEndian( &m_header, 4, header_size / 4 );
-
-        Ogre::LogManager::getSingleton().stream()
-            << "\n version       : " << m_header.version
-            << "\n frame_count   : " << m_header.frame_count
-            << "\n bone_count    : " << m_header.bone_count
-            << "\n rotation_order: " << m_header.rotation_order
-            << "\n";
     }
 
     //-------------------------------------------------------------------------
@@ -87,8 +80,6 @@ namespace QGears
     void
     AFileSerializer::importAFile( Ogre::DataStreamPtr &stream, AFile* pDest )
     {
-        Ogre::Log::Stream log( Ogre::LogManager::getSingleton().stream() );
-        log << "Info: reading header\n";
         readFileHeader( stream );
 
         if( m_header.version != 1 )
@@ -98,6 +89,7 @@ namespace QGears
                 ,"AFileSerializer::importAFile" );
         }
 
+        pDest->setBoneCount( m_header.bone_count );
         readVector( stream, pDest->getFrames(), m_header.frame_count );
     }
 

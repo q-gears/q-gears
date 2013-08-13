@@ -93,16 +93,15 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    Ogre::ManualObject*
-    PFile::getManualObject( void ) const
+    void
+    PFile::addGroups( Ogre::ManualObject* mo, const String& name ) const
     {
         Ogre::Log::Stream log( Ogre::LogManager::getSingleton().stream() );
-        Ogre::SceneManager* scene_manager( Ogre::Root::getSingleton().getSceneManager( "Scene" ) );
-        Ogre::ManualObject* mo( scene_manager->createManualObject() );
 
         for( size_t g(0); g < m_groups.size(); ++g )
         {
             const Group& group( m_groups[g] );
+            /*
             log << "\n primitive_type                : " << group.primitive_type
                 << "\n polygon_start_index           : " << group.polygon_start_index
                 << "\n num_polygons                  : " << group.num_polygons
@@ -118,8 +117,8 @@ namespace QGears
                 << "\n has_textures                  : " << group.has_texture
                 << "\n texture_index                 : " << group.texture_index
                 << "\n";
-
-            String material_name( "test/" + Ogre::StringConverter::toString(g) );
+            */
+            String material_name( name + "/" + Ogre::StringConverter::toString(g) );
 
             mo->begin( material_name, Ogre::RenderOperation::OT_TRIANGLE_LIST );
 
@@ -145,8 +144,6 @@ namespace QGears
             }
             mo->end();
         }
-
-        return mo;
     }
     //---------------------------------------------------------------------
 }
