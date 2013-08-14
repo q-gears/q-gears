@@ -70,25 +70,26 @@ main( int argc, char *argv[] )
     QGears::HRCFileSerializer   hrc_ser;
     QGears::PFile               p;
     QGears::PFileSerializer     p_ser;
-    std::vector<size_t>         group_count;
     Ogre::String                unit( "n_cloud");
 
     stream = getStream( "../../../output/data_orig/field/char/aaaa.hrc" );
     hrc_ser.importHRCFile( stream, &hrc );
     Ogre::SkeletonPtr skeleton( hrc.createSkeleton( unit, "General" ) );
+    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit, "General" ) );
+    mesh->_notifySkeleton( skeleton );
+    mesh->setSkeletonName( skeleton->getName() + ".skeleton" );
 
     stream = getStream( "../../../output/data_orig/field/char/aaac.p" );
     p_ser.importPFile( stream, &p );
-    p.addGroups( mo, unit + "/" + "hip" );
-    group_count.push_back( p.getGroups().size() );
+    p.addGroups( mesh.getPointer(), "hip", "aaab" );
+
     stream = getStream( "../../../output/data_orig/field/char/aaae.p" );
     p_ser.importPFile( stream, &p );
-    p.addGroups( mo, unit + "/" + "chest" );
-    group_count.push_back( p.getGroups().size() );
+    p.addGroups( mesh.getPointer(), "chest", "aaad" );
+
     stream = getStream( "../../../output/data_orig/field/char/aaba.p" );
     p_ser.importPFile( stream, &p );
-    p.addGroups( mo, unit + "/" + "head" );
-    group_count.push_back( p.getGroups().size() );
+    p.addGroups( mesh.getPointer(), "head", "aaaf" );
 
     stream = getStream( "../../../output/data_orig/field/char/acfe.a" );
     a_ser.importAFile( stream, &a );
@@ -104,68 +105,6 @@ main( int argc, char *argv[] )
     a.addTo( skeleton, "JumpFromTrain" );
 
     sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() + ".skeleton" );
-
-    Ogre::MeshPtr mesh;
-    mesh = mo->convertToMesh( unit );
-    mesh->_notifySkeleton( skeleton );
-    mesh->setSkeletonName( skeleton->getName() + ".skeleton" );
-    Ogre::Mesh::SubMeshIterator it( mesh->getSubMeshIterator() );
-    Ogre::Bone* bone( skeleton->getBone( "hip" ) );
-    u16 bone_index( bone->getHandle() );
-    for( size_t i( group_count[0] ); i--; )
-    {
-        Ogre::SubMesh* sub_mesh( it.getNext() );
-        Ogre::VertexDeclaration * decl = sub_mesh->vertexData->vertexDeclaration;
-        sub_mesh->vertexData->reorganiseBuffers( decl->getAutoOrganisedDeclaration( true, false, false ) );
-        size_t vertex_number = sub_mesh->vertexData->vertexCount;
-        for (size_t i = 0; i < vertex_number; ++i)
-        {
-            Ogre::VertexBoneAssignment vba;
-            vba.vertexIndex = i;
-            vba.boneIndex = bone_index;
-            vba.weight = 1.0f;
-            sub_mesh->addBoneAssignment( vba );
-        }
-        sub_mesh->_compileBoneAssignments();
-    }
-
-    bone = skeleton->getBone( "chest" );
-    bone_index = bone->getHandle();
-    for( size_t i( group_count[1] ); i--; )
-    {
-        Ogre::SubMesh* sub_mesh( it.getNext() );
-        Ogre::VertexDeclaration * decl = sub_mesh->vertexData->vertexDeclaration;
-        sub_mesh->vertexData->reorganiseBuffers( decl->getAutoOrganisedDeclaration( true, false, false ) );
-        size_t vertex_number = sub_mesh->vertexData->vertexCount;
-        for (size_t i = 0; i < vertex_number; ++i)
-        {
-            Ogre::VertexBoneAssignment vba;
-            vba.vertexIndex = i;
-            vba.boneIndex = bone_index;
-            vba.weight = 1.0f;
-            sub_mesh->addBoneAssignment( vba );
-        }
-        sub_mesh->_compileBoneAssignments();
-    }
-
-    bone = skeleton->getBone( "head" );
-    bone_index = bone->getHandle();
-    for( size_t i( group_count[2] ); i--; )
-    {
-        Ogre::SubMesh* sub_mesh( it.getNext() );
-        Ogre::VertexDeclaration * decl = sub_mesh->vertexData->vertexDeclaration;
-        sub_mesh->vertexData->reorganiseBuffers( decl->getAutoOrganisedDeclaration( true, false, false ) );
-        size_t vertex_number = sub_mesh->vertexData->vertexCount;
-        for (size_t i = 0; i < vertex_number; ++i)
-        {
-            Ogre::VertexBoneAssignment vba;
-            vba.vertexIndex = i;
-            vba.boneIndex = bone_index;
-            vba.weight = 1.0f;
-            sub_mesh->addBoneAssignment( vba );
-        }
-        sub_mesh->_compileBoneAssignments();
-    }
 
     mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() + ".mesh" );
     attachMesh( mesh->getName() + ".mesh" );

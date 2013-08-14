@@ -94,13 +94,14 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    PFile::addGroups( Ogre::ManualObject* mo, const String& name ) const
+    PFile::addGroups( Ogre::Mesh *mesh, const String &bone_name
+                     ,const String &rsd_name ) const
     {
         Ogre::Log::Stream log( Ogre::LogManager::getSingleton().stream() );
 
+        ManualObject mo( mesh );
         for( size_t g(0); g < m_groups.size(); ++g )
         {
-            const Group& group( m_groups[g] );
             /*
             log << "\n primitive_type                : " << group.primitive_type
                 << "\n polygon_start_index           : " << group.polygon_start_index
@@ -118,32 +119,39 @@ namespace QGears
                 << "\n texture_index                 : " << group.texture_index
                 << "\n";
             */
-            String material_name( name + "/" + Ogre::StringConverter::toString(g) );
-
-            mo->begin( material_name, Ogre::RenderOperation::OT_TRIANGLE_LIST );
-
-            size_t end_index( group.polygon_start_index + group.num_polygons );
-            for( size_t p( group.polygon_start_index ); p < end_index; ++p )
-            {
-                for( int i(3); i--; )
-                {
-                    const PolygonDefinition& polygon( m_polygon_definitions[p] );
-                    uint32 v( group.vertex_start_index
-                             +polygon.vertex[i] )
-                          ,n( 0 + polygon.normal[i] )
-                          ,t( group.texture_coordinate_start_index
-                             +polygon.vertex[i] );
-                    mo->position( m_vertices[ v ] );
-                    mo->colour( m_vertex_colors[ v ] );
-                    mo->normal( m_normals[ n ] );
-                    if( group.has_texture )
-                    {
-                        mo->textureCoord( m_texture_coordinates[t] );
-                    }
-                }
-            }
-            mo->end();
+            String sub_name( bone_name + "/" + rsd_name + "/" + Ogre::StringConverter::toString(g) );
+            String material_name( mesh->getName() + "/" + sub_name );
+            addGroup( mo, sub_name, material_name, m_groups[g] );
         }
     }
+    //---------------------------------------------------------------------
+    void
+    PFile::addGroup( ManualObject &mo, const String &sub_name
+                    ,const String &material_name, const Group &group) const
+    {
+        mo.begin( sub_name, material_name, group.num_polygons * 3 );
+        size_t end_index( group.polygon_start_index + group.num_polygons );
+        for( size_t p( group.polygon_start_index ); p < end_index; ++p )
+        {
+            for( int i(3); i--; )
+            {
+                const PolygonDefinition& polygon( m_polygon_definitions[p] );
+                uint32 v( group.vertex_start_index
+                         +polygon.vertex[i] )
+                      ,n( 0 + polygon.normal[i] )
+                      ,t( group.texture_coordinate_start_index
+                         +polygon.vertex[i] );
+                mo.position( m_vertices[ v ] );
+                //mo->colour( m_vertex_colors[ v ] );
+                //mo->normal( m_normals[ n ] );
+                if( group.has_texture )
+                {
+                    //mo->textureCoord( m_texture_coordinates[t] );
+                }
+            }
+        }
+        mo.end();
+    }
+
     //---------------------------------------------------------------------
 }

@@ -28,18 +28,18 @@ THE SOFTWARE.
 
 #include <OgreAxisAlignedBox.h>
 #include <OgreColourValue.h>
+#include <OgreMesh.h>
 #include <OgreResource.h>
 #include <OgreVector2.h>
 #include <OgreVector3.h>
 
-#include <OgreManualObject.h>
-
 #include "common/TypeDefine.h"
+
+#include "QGearsManualObject.h"
 
 namespace QGears
 {
-    // TODO implemented ressource interface
-    class PFile //: public Ogre::Resource
+    class PFile
     {
     public:
 
@@ -48,8 +48,8 @@ namespace QGears
 
         virtual bool    isValid( void );
         virtual bool    isPolygonDefinitionListValid( void );
-
-        virtual void    addGroups( Ogre::ManualObject* object, const String& name ) const;
+        virtual void    addGroups( Ogre::Mesh *mesh, const String &bone_name
+                                  ,const String &rsd_name) const;
 
         //-----------------------------------------------------------------
         struct Edge
@@ -116,6 +116,10 @@ namespace QGears
         //virtual void loadImpl();
         //virtual void unloadImpl();
         //irtual size_t calculateSize() const;
+
+        virtual void    addGroup( ManualObject &mo, const String &sub_name
+                                 ,const String &material_name
+                                 ,const Group &group) const;
 
     private:
         VertexList              m_vertices;
