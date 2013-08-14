@@ -51,28 +51,42 @@ namespace QGears
               , BINDING_COUNT
             };
 
-            virtual void begin( const String &name
-                               ,const String &material_name
-                               ,size_t vertex_count );
+            virtual void begin( const String &name, const String &material_name
+                               ,size_t vertex_count, size_t index_count );
 
             virtual void position( const Ogre::Vector3 &position );
+            virtual void normal( const Ogre::Vector3 &normal );
+            virtual void colour( const Ogre::ColourValue &colour );
+            virtual void textureCoord( const Ogre::Vector2 &texture_coordinate );
 
             virtual void end();
 
         protected:
-            virtual void createBuffer( const BufferBinding binding, Ogre::VertexElementType type, Ogre::VertexElementSemantic semantic);
-            virtual void createPositionBuffer();
-            virtual void createNormalBuffer();
-            virtual void createColourBuffer();
-            virtual void createTextureCoordinateBuffer();
-            virtual void createIndexBuffer();
+            template<typename BufferType>
+            BufferType*     createBuffer( const BufferBinding binding, Ogre::VertexElementType type, Ogre::VertexElementSemantic semantic);
+            virtual void    createPositionBuffer();
+            virtual void    createNormalBuffer();
+            virtual void    createColourBuffer();
+            virtual void    createTextureCoordinateBuffer();
+            virtual void    createIndexBuffer();
+            virtual void    resetBuffers();
 
         private:
             Ogre::Mesh     *m_mesh;
             Ogre::SubMesh  *m_section;
 
-            typedef Ogre::HardwareVertexBufferSharedPtr Buffer;
-            Buffer          m_buffer[BINDING_COUNT];
+            Ogre::AxisAlignedBox    m_bbox;
+            Ogre::Real              m_radius;
+
+            typedef Ogre::HardwareVertexBufferSharedPtr VertexBuffer;
+            typedef Ogre::HardwareIndexBufferSharedPtr  IndexBuffer;
+            VertexBuffer    m_vertex_buffers[BINDING_COUNT];
+            IndexBuffer     m_index_buffer;
+            Ogre::Vector3  *m_position;
+            Ogre::Vector3  *m_normal;
+            uint32         *m_colour;
+            Ogre::Vector2  *m_texture_coordinate;
+            uint16         *m_index;
     };
 }
 

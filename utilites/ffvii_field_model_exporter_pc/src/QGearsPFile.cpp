@@ -129,8 +129,11 @@ namespace QGears
     PFile::addGroup( ManualObject &mo, const String &sub_name
                     ,const String &material_name, const Group &group) const
     {
-        mo.begin( sub_name, material_name, group.num_polygons * 3 );
+        size_t vertex_count( group.num_polygons * 3 );
+        size_t index_count( vertex_count );
+        mo.begin( sub_name, material_name, vertex_count, index_count );
         size_t end_index( group.polygon_start_index + group.num_polygons );
+        uint16 index( 0 );
         for( size_t p( group.polygon_start_index ); p < end_index; ++p )
         {
             for( int i(3); i--; )
@@ -142,11 +145,12 @@ namespace QGears
                       ,t( group.texture_coordinate_start_index
                          +polygon.vertex[i] );
                 mo.position( m_vertices[ v ] );
-                //mo->colour( m_vertex_colors[ v ] );
-                //mo->normal( m_normals[ n ] );
+                mo.colour( m_vertex_colors[ v ] );
+                mo.normal( m_normals[ n ] );
+                //mo.triangle( index, index + 1, index + 2 );
                 if( group.has_texture )
                 {
-                    //mo->textureCoord( m_texture_coordinates[t] );
+                    mo.textureCoord( m_texture_coordinates[t] );
                 }
             }
         }

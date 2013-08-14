@@ -3,6 +3,8 @@
 #include <cstring>
 
 #include <OgreException.h>
+#include <OgreHardwareBufferManager.h>
+#include <OgreRoot.h>
 
 namespace QGears
 {
@@ -10,6 +12,8 @@ namespace QGears
     ManualObject::ManualObject( Ogre::Mesh *mesh ) :
         m_mesh( mesh )
        ,m_section( NULL )
+       ,m_bbox( mesh->getBounds() )
+       ,m_radius( mesh->getBoundingSphereRadius() )
     {
     }
 
@@ -19,7 +23,8 @@ namespace QGears
     }
 
     //-------------------------------------------------------------------------
-    void
+    template<typename BufferType>
+    BufferType*
     ManualObject::createBuffer( const BufferBinding binding
                                ,Ogre::VertexElementType type
                                ,Ogre::VertexElementSemantic semantic )
@@ -30,47 +35,86 @@ namespace QGears
         decl->addElement( binding, 0, type, semantic );
         size_t vertex_size( decl->getVertexSize( binding ) );
 
-        Buffer buffer = Ogre::HardwareBufferManager::getSingleton()
+        VertexBuffer buffer = Ogre::HardwareBufferManager::getSingleton()
             .createVertexBuffer( vertex_size
                                 ,m_section->vertexData->vertexCount
                                 ,Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
         bind->setBinding( binding, buffer );
-        buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
-        m_buffer[binding] = buffer;
+        m_vertex_buffers[binding] = buffer;
+        return static_cast<BufferType*>( buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD ) );
     }
 
     //-------------------------------------------------------------------------
     void
     ManualObject::createPositionBuffer()
     {
-        createBuffer( BB_POSITION, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
+        m_position = createBuffer<Ogre::Vector3>( BB_POSITION, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
     }
 
     //-------------------------------------------------------------------------
     void
     ManualObject::createNormalBuffer()
     {
-        createBuffer( BB_POSITION, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
+        m_normal = createBuffer<Ogre::Vector3>( BB_NORMAL, Ogre::VET_FLOAT3, Ogre::VES_NORMAL );
     }
 
     //-------------------------------------------------------------------------
     void
     ManualObject::createColourBuffer()
     {
-        createBuffer( BB_POSITION, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
+        m_colour = createBuffer<uint32>( BB_COLOUR, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE  );
     }
 
     //-------------------------------------------------------------------------
     void
     ManualObject::createTextureCoordinateBuffer()
     {
-        createBuffer( BB_POSITION, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
+        m_texture_coordinate = createBuffer<Ogre::Vector2>( BB_TEXTURE, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES );
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    ManualObject::createIndexBuffer()
+    {
+        m_index_buffer = Ogre::HardwareBufferManager::getSingleton()
+            .createIndexBuffer( Ogre::HardwareIndexBuffer::IT_16BIT
+                               ,m_section->indexData->indexCount
+                               ,Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY );
+
+        void *data( m_index_buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD ) );
+        m_index = static_cast< uint16* >( data );
+        m_section->indexData->indexBuffer = m_index_buffer;
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    ManualObject::resetBuffers()
+    {
+        for( int i(BINDING_COUNT); i--; )
+        {
+            if( m_vertex_buffers[i]->isLocked() )
+            {
+                m_vertex_buffers[i]->unlock();
+            }
+            m_vertex_buffers[i].setNull();
+        }
+
+        if( m_index_buffer->isLocked() )
+        {
+            m_index_buffer->unlock();
+        }
+        m_index_buffer.setNull();
+        m_position = NULL;
+        m_normal = NULL;
+        m_colour = NULL;
+        m_texture_coordinate = NULL;
+        m_index = NULL;
     }
 
     //-------------------------------------------------------------------------
     void
     ManualObject::begin( const String &name, const String &material_name
-                        ,size_t vertex_count )
+                        ,size_t vertex_count, size_t index_count )
     {
         if( m_mesh == NULL )
         {
@@ -100,18 +144,60 @@ namespace QGears
         m_section->vertexData = new Ogre::VertexData();
         m_section->vertexData->vertexStart = 0;
         m_section->vertexData->vertexCount = vertex_count;
-        for( int i(BINDING_COUNT); i--; )
-        {
-            m_buffer[i].setNull();
-        }
+        m_section->indexData = new Ogre::IndexData();
+        m_section->indexData->indexStart = 0;
+        m_section->indexData->indexCount = index_count;
+        m_mesh->_setBounds( m_bbox );
+        m_mesh->_setBoundingSphereRadius( m_radius );
+        resetBuffers();
     }
 
     //-------------------------------------------------------------------------
     void
     ManualObject::position( const Ogre::Vector3 &position )
     {
+        if( m_position == NULL )
+        {
+            createPositionBuffer();
+        }
+        *(m_position++) = position;
 
-        m_first_vertex = false;
+		m_bbox.merge( position );
+		m_radius = std::max( m_radius, position.length() );
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    ManualObject::normal( const Ogre::Vector3 &normal )
+    {
+        if( m_normal == NULL )
+        {
+            createNormalBuffer();
+        }
+        *(m_normal++) = normal;
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    ManualObject::colour( const Ogre::ColourValue &colour )
+    {
+        if( m_colour == NULL )
+        {
+            createColourBuffer();
+        }
+        Ogre::RenderSystem* rs( Ogre::Root::getSingleton().getRenderSystem() );
+        rs->convertColourValue( colour, m_colour++  );
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    ManualObject::textureCoord( const Ogre::Vector2 &texture_coordinate )
+    {
+        if( m_texture_coordinate == NULL )
+        {
+            createTextureCoordinateBuffer();
+        }
+        *(m_texture_coordinate++) = texture_coordinate;
     }
 
     //-------------------------------------------------------------------------
@@ -126,6 +212,7 @@ namespace QGears
         }
 
         m_section = NULL;
+        resetBuffers();
     }
 
     //-------------------------------------------------------------------------
