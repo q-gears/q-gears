@@ -63,22 +63,6 @@ namespace QGears
         {
             Ogre::Bone* child( skeleton->createBone( it_bone->name ) );
             Ogre::Bone* parent( skeleton->getBone( it_bone->parent ) );
-            parent->addChild( child );
-        }
-        return skeleton;
-    }
-
-    //---------------------------------------------------------------------
-    void
-    HRCFile::setBoneLengths( Ogre::SkeletonPtr &skeleton ) const
-    {
-        Ogre::Bone *bone;
-
-        for( BoneList::const_iterator it_bone( m_bones.begin() )
-            ;it_bone != m_bones.end()
-            ;++it_bone )
-        {
-            Ogre::Bone* bone( skeleton->getBone( it_bone->name ) );
             child->setPosition( 0, it_bone->length, 0 );
             parent->addChild( child );
         }

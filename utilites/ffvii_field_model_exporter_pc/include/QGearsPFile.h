@@ -120,7 +120,7 @@ namespace QGears
         virtual void    addGroup( const Group &group, ManualObject &mo
                                  ,const String &sub_name
                                  ,const String &material_name
-                                 ,const uint16 bone_handle ) const;
+                                 ,const Ogre::Bone *bone ) const;
 
     private:
         VertexList              m_vertices;

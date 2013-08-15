@@ -41,7 +41,7 @@ namespace QGears
 
         static const Ogre::Real FRAME_DURATION;
 
-        virtual void addTo( Ogre::SkeletonPtr skeleton, const String& name ) const;
+        virtual void addTo( Ogre::SkeletonPtr skeleton, const String &name ) const;
 
         typedef std::vector<Ogre::Vector3>  BoneRotationList;
 
@@ -58,8 +58,8 @@ namespace QGears
         virtual void    setBoneCount( const uint32 bone_count );
     protected:
 
-        virtual void    setFrameRotation( Ogre::TransformKeyFrame* key_frame
-                                         ,const Ogre::Vector3& rotation ) const;
+        virtual void    setFrameRotation( Ogre::TransformKeyFrame *key_frame
+                                         ,const Ogre::Vector3 &rotation ) const;
 
     private:
         uint32      m_bone_count;

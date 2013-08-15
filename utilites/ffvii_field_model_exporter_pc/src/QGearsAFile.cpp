@@ -58,7 +58,7 @@ namespace QGears
     {
         Ogre::Quaternion rot;
         Ogre::Matrix3 mat;
-        mat.FromEulerAnglesZXY( Ogre::Radian(Ogre::Degree( -v.y )), Ogre::Radian(Ogre::Degree( -v.x )), Ogre::Radian(Ogre::Degree( -v.z )) );
+        mat.FromEulerAnglesZXY( Ogre::Radian(Ogre::Degree( -v.y )), Ogre::Radian(Ogre::Degree( -v.x )), Ogre::Radian(Ogre::Degree( v.z )) );
         rot.FromRotationMatrix( mat );
         key_frame->setRotation( rot );
     }
