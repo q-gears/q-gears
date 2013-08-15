@@ -14,6 +14,12 @@ namespace QGears
        ,m_section( NULL )
        ,m_bbox( mesh->getBounds() )
        ,m_radius( mesh->getBoundingSphereRadius() )
+       ,m_position( NULL )
+       ,m_normal( NULL )
+       ,m_colour( NULL )
+       ,m_texture_coordinate( NULL )
+       ,m_index( NULL )
+
     {
     }
 
@@ -87,23 +93,30 @@ namespace QGears
     }
 
     //-------------------------------------------------------------------------
+    template<typename BufferSharedPtr>
+    void
+    ManualObject::resetBuffer( BufferSharedPtr &buffer ) const
+    {
+        if( buffer.isNull() ) return;
+
+        if( buffer->isLocked() )
+        {
+            buffer->unlock();
+        }
+
+        buffer.setNull();
+    }
+
+    //-------------------------------------------------------------------------
     void
     ManualObject::resetBuffers()
     {
         for( int i(BINDING_COUNT); i--; )
         {
-            if( m_vertex_buffers[i]->isLocked() )
-            {
-                m_vertex_buffers[i]->unlock();
-            }
-            m_vertex_buffers[i].setNull();
+            resetBuffer( m_vertex_buffers[i] );
         }
 
-        if( m_index_buffer->isLocked() )
-        {
-            m_index_buffer->unlock();
-        }
-        m_index_buffer.setNull();
+        resetBuffer( m_index_buffer );
         m_position = NULL;
         m_normal = NULL;
         m_colour = NULL;
@@ -149,7 +162,6 @@ namespace QGears
         m_section->indexData->indexCount = index_count;
         m_mesh->_setBounds( m_bbox );
         m_mesh->_setBoundingSphereRadius( m_radius );
-        resetBuffers();
     }
 
     //-------------------------------------------------------------------------
@@ -198,6 +210,29 @@ namespace QGears
             createTextureCoordinateBuffer();
         }
         *(m_texture_coordinate++) = texture_coordinate;
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    ManualObject::index( const uint32 idx )
+    {
+        if( m_index == NULL )
+        {
+            createIndexBuffer();
+        }
+        *(m_index++) = idx;
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    ManualObject::bone( const uint32 idx, const uint16 bone_handle
+                       ,const Ogre::Real weight )
+    {
+        Ogre::VertexBoneAssignment vba;
+        vba.vertexIndex = idx;
+        vba.boneIndex = bone_handle;
+        vba.weight = weight;
+        m_section->addBoneAssignment( vba );
     }
 
     //-------------------------------------------------------------------------

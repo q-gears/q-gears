@@ -58,6 +58,9 @@ namespace QGears
             virtual void normal( const Ogre::Vector3 &normal );
             virtual void colour( const Ogre::ColourValue &colour );
             virtual void textureCoord( const Ogre::Vector2 &texture_coordinate );
+            virtual void index( const uint32 idx );
+            virtual void bone( const uint32 idx, const uint16 bone_handle
+                              ,const Ogre::Real weight = 1 );
 
             virtual void end();
 
@@ -70,6 +73,9 @@ namespace QGears
             virtual void    createTextureCoordinateBuffer();
             virtual void    createIndexBuffer();
             virtual void    resetBuffers();
+
+            template<typename BufferSharedPtr>
+                    void    resetBuffer( BufferSharedPtr &buffer ) const;
 
         private:
             Ogre::Mesh     *m_mesh;

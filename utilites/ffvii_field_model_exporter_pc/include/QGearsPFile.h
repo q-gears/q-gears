@@ -117,9 +117,10 @@ namespace QGears
         //virtual void unloadImpl();
         //irtual size_t calculateSize() const;
 
-        virtual void    addGroup( ManualObject &mo, const String &sub_name
+        virtual void    addGroup( const Group &group, ManualObject &mo
+                                 ,const String &sub_name
                                  ,const String &material_name
-                                 ,const Group &group) const;
+                                 ,const uint16 bone_handle ) const;
 
     private:
         VertexList              m_vertices;

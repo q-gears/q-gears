@@ -98,7 +98,7 @@ namespace QGears
                      ,const String &rsd_name ) const
     {
         Ogre::Log::Stream log( Ogre::LogManager::getSingleton().stream() );
-
+        const Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
         ManualObject mo( mesh );
         for( size_t g(0); g < m_groups.size(); ++g )
         {
@@ -121,13 +121,15 @@ namespace QGears
             */
             String sub_name( bone_name + "/" + rsd_name + "/" + Ogre::StringConverter::toString(g) );
             String material_name( mesh->getName() + "/" + sub_name );
-            addGroup( mo, sub_name, material_name, m_groups[g] );
+            Ogre::Bone *bone( skeleton->getBone( bone_name ) );
+            addGroup( m_groups[g], mo, sub_name, material_name, bone->getHandle() );
         }
     }
     //---------------------------------------------------------------------
     void
-    PFile::addGroup( ManualObject &mo, const String &sub_name
-                    ,const String &material_name, const Group &group) const
+    PFile::addGroup( const Group &group, ManualObject &mo
+                    ,const String &sub_name, const String &material_name
+                    ,const uint16 bone_handle ) const
     {
         size_t vertex_count( group.num_polygons * 3 );
         size_t index_count( vertex_count );
@@ -147,7 +149,9 @@ namespace QGears
                 mo.position( m_vertices[ v ] );
                 mo.colour( m_vertex_colors[ v ] );
                 mo.normal( m_normals[ n ] );
-                //mo.triangle( index, index + 1, index + 2 );
+                mo.bone( index, bone_handle ); mo.index( index++ );
+                mo.bone( index, bone_handle ); mo.index( index++ );
+                mo.bone( index, bone_handle ); mo.index( index++ );
                 if( group.has_texture )
                 {
                     mo.textureCoord( m_texture_coordinates[t] );
