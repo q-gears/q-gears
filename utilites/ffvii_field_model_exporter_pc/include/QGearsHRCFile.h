@@ -41,7 +41,7 @@ namespace QGears
         virtual ~HRCFile();
 
         virtual Ogre::SkeletonPtr   createSkeleton( const String &name
-                                                   ,const String &group );
+                                                   ,const String &group ) const;
 
         //---------------------------------------------------------------------
         typedef std::vector<String> RSDNameList;

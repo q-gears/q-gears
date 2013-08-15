@@ -34,6 +34,8 @@ THE SOFTWARE.
 #include "QGearsHRCFileSerializer.h"
 #include "QGearsPFileSerializer.h"
 
+#include "QGearsManualObject.h"
+
 void attachMesh( const Ogre::String &mesh_name )
 {
     Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );

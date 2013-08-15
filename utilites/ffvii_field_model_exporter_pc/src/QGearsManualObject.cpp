@@ -68,7 +68,7 @@ namespace QGears
     void
     ManualObject::createColourBuffer()
     {
-        m_colour = createBuffer<uint32>( BB_COLOUR, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE  );
+        m_colour = createBuffer<uint32>( BB_COLOUR, Ogre::VET_COLOUR_ABGR, Ogre::VES_DIFFUSE  );
     }
 
     //-------------------------------------------------------------------------
@@ -160,8 +160,6 @@ namespace QGears
         m_section->indexData = new Ogre::IndexData();
         m_section->indexData->indexStart = 0;
         m_section->indexData->indexCount = index_count;
-        m_mesh->_setBounds( m_bbox );
-        m_mesh->_setBoundingSphereRadius( m_radius );
     }
 
     //-------------------------------------------------------------------------
@@ -197,8 +195,7 @@ namespace QGears
         {
             createColourBuffer();
         }
-        Ogre::RenderSystem* rs( Ogre::Root::getSingleton().getRenderSystem() );
-        rs->convertColourValue( colour, m_colour++  );
+        *(m_colour++) = Ogre::VertexElement::convertColourValue( colour, Ogre::VET_COLOUR_ABGR );
     }
 
     //-------------------------------------------------------------------------
@@ -246,6 +243,8 @@ namespace QGears
 				"ManualObject::end");
         }
 
+        m_mesh->_setBounds( m_bbox );
+        m_mesh->_setBoundingSphereRadius( m_radius );
         m_section = NULL;
         resetBuffers();
     }

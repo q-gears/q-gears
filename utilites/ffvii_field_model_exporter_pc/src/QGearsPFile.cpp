@@ -138,9 +138,9 @@ namespace QGears
         uint16 index( 0 );
         for( size_t p( group.polygon_start_index ); p < end_index; ++p )
         {
+            const PolygonDefinition& polygon( m_polygon_definitions[p] );
             for( int i(3); i--; )
             {
-                const PolygonDefinition& polygon( m_polygon_definitions[p] );
                 uint32 v( group.vertex_start_index
                          +polygon.vertex[i] )
                       ,n( 0 + polygon.normal[i] )
@@ -149,13 +149,11 @@ namespace QGears
                 mo.position( m_vertices[ v ] );
                 mo.colour( m_vertex_colors[ v ] );
                 mo.normal( m_normals[ n ] );
-                mo.bone( index, bone_handle ); mo.index( index++ );
-                mo.bone( index, bone_handle ); mo.index( index++ );
-                mo.bone( index, bone_handle ); mo.index( index++ );
                 if( group.has_texture )
                 {
                     mo.textureCoord( m_texture_coordinates[t] );
                 }
+                mo.bone( index, bone_handle ); mo.index( index++ );
             }
         }
         mo.end();
