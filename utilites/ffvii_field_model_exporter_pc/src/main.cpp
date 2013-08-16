@@ -73,7 +73,7 @@ main( int argc, char *argv[] )
     Ogre::String                unit( "n_cloud");
 
     hrc_manager = new QGears::HRCFileManager();
-    hrc = hrc_manager->load( "field/char/aaaa.hrc" );
+    hrc = hrc_manager->load( "field/char/aaaa.hrc", "Game" );
 
     Ogre::LogManager::getSingleton().stream()
       << "\n " << " hrc Ressource: " << hrc->getName();

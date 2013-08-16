@@ -38,7 +38,7 @@ namespace QGears
         HRCFileManager();
         virtual ~HRCFileManager();
 
-        virtual HRCFilePtr load( const Ogre::String &name, const Ogre::String &group = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME );
+        virtual HRCFilePtr load( const Ogre::String &name, const Ogre::String &group );
         static HRCFileManager &getSingleton();
         static HRCFileManager *getSingletonPtr();
 
