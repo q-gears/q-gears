@@ -102,6 +102,8 @@ namespace QGears
     {
         Ogre::Log::Stream log( Ogre::LogManager::getSingleton().stream() );
         const Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
+        String mesh_name, ext;
+        Ogre::StringUtil::splitBaseFilename( mesh->getName(), mesh_name, ext );
         ManualObject mo( mesh );
         for( size_t g(0); g < m_groups.size(); ++g )
         {
@@ -123,7 +125,7 @@ namespace QGears
                 << "\n";
             */
             String sub_name( bone_name + "/" + rsd_name + "/" + Ogre::StringConverter::toString(g) );
-            String material_name( mesh->getName() + "/" + sub_name );
+            String material_name( mesh_name + "/" + sub_name );
             addGroup( m_groups[g], mo, sub_name, material_name, skeleton->getBone( bone_name ) );
         }
     }

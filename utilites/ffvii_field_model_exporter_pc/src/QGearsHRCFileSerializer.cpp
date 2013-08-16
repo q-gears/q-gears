@@ -158,7 +158,7 @@ namespace QGears
                                      ,HRCFile* pDest )
     {
         readFileHeader( stream );
-        pDest->setName( m_header.name );
+        pDest->setSkeletonName( m_header.name );
         readVector( stream, pDest->getBones(), m_header.bone_count );
     }
 

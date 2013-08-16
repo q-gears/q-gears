@@ -34,12 +34,10 @@ THE SOFTWARE.
 #include "QGearsHRCFileManager.h"
 #include "QGearsPFileSerializer.h"
 
-#include "QGearsManualObject.h"
-
-void attachMesh( const Ogre::String &mesh_name )
+void attachMesh( Ogre::MeshPtr &mesh )
 {
     Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
-    Ogre::Entity* entity = scene_manager->createEntity( mesh_name );
+    Ogre::Entity* entity = scene_manager->createEntity( mesh );
     entity->setDisplaySkeleton( true );
     entity->setDebugDisplayEnabled( true );
     entity->getAnimationState( "Idle" )->setEnabled( true );
@@ -75,12 +73,15 @@ main( int argc, char *argv[] )
     Ogre::String                unit( "n_cloud");
 
     hrc_manager = new QGears::HRCFileManager();
-    hrc = hrc_manager->load( "field/char/aaaa.hrc", "Game" );
+    hrc = hrc_manager->load( "field/char/aaaa.hrc" );
 
-    Ogre::SkeletonPtr skeleton( hrc->createSkeleton( unit, "General" ) );
-    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit, "General" ) );
+    Ogre::LogManager::getSingleton().stream()
+      << "\n " << " hrc Ressource: " << hrc->getName();
+
+    Ogre::SkeletonPtr skeleton( hrc->createSkeleton( unit + ".skeleton", "General" ) );
+    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit + ".mesh", "General" ) );
     mesh->_notifySkeleton( skeleton );
-    mesh->setSkeletonName( skeleton->getName() + ".skeleton" );
+    mesh->setSkeletonName( skeleton->getName() );
 
     stream = getStream( "field/char/aaac.p" );
     p_ser.importPFile( stream, &p );
@@ -111,10 +112,10 @@ main( int argc, char *argv[] )
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "JumpFromTrain" );
 
-    sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() + ".skeleton" );
+    sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() );
 
-    mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() + ".mesh" );
-    attachMesh( mesh->getName() + ".mesh" );
+    mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );
+    attachMesh( mesh );
 
     mesh.setNull();
     entitys[0]->setVisible( true );

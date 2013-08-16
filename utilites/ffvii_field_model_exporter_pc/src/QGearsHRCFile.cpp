@@ -66,7 +66,7 @@ namespace QGears
     void
     HRCFile::unloadImpl()
     {
-        m_name.clear();
+        m_skeleton_name.clear();
         m_bones.clear();
     }
 
@@ -99,14 +99,14 @@ namespace QGears
             size_bones += calculateSize( *it );
         }
 
-        return m_name.size() + size_bones;
+        return m_skeleton_name.size() + size_bones;
     }
 
     //---------------------------------------------------------------------
     void
-    HRCFile::setName( const String &name )
+    HRCFile::setSkeletonName( const String &name )
     {
-        m_name = name;
+        m_skeleton_name = name;
     }
 
     //---------------------------------------------------------------------

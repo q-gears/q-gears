@@ -58,8 +58,8 @@ namespace QGears
 
         typedef std::vector<Bone> BoneList;
 
-        virtual void        setName ( const String& name );
-        virtual String&     getName ( void ) { return m_name; }
+        virtual void        setSkeletonName( const String& name );
+        virtual String&     getSkeletonName( void ) { return m_skeleton_name; }
         virtual BoneList&   getBones( void ) { return m_bones; }
 
         static const Ogre::String RESOURCE_TYPE;
@@ -75,7 +75,7 @@ namespace QGears
         static Ogre::Quaternion createRootOrientation();
 
     private:
-        String      m_name;
+        String      m_skeleton_name;
         BoneList    m_bones;
     };
 
