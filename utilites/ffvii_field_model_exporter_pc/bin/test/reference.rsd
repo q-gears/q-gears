@@ -1,0 +1,24 @@
+# comment before the header might not be standard, but we allow it
+@RSD940102
+# comment, sould be ignored
+# 11 bytes
+PLY=Polygon.PLY
+# 12 bytes
+MAT=Material.MAT
+# 9 bytes
+GRP=Group.GRP
+# some textures
+NTEX=3
+# 17 bytes
+TEX[0]=First Texture.TIM
+# 17 bytes
+TEX[1]=SecondTexture.TIM
+#TEX[1]=unused texture.TIM
+# 17 bytes
+TEX[2]=Third Texture.TIM
+# calculated size shoud be
+# 11 + 12 + 9 + 17 + 17 + 17 = 83
+
+# blank lines are ok :)
+
+

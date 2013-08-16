@@ -25,24 +25,33 @@ THE SOFTWARE.
 */
 #include <fstream>
 
-#define BOOST_TEST_MODULE QGearsHRCSerializer
+#define BOOST_TEST_MODULE QGearsPFileSerializer
 #include <boost/test/unit_test.hpp>
 #include <OgreRoot.h>
 
-#include "QGearsHRCFileSerializer.h"
+#include "QGearsPFileSerializer.h"
 
 BOOST_AUTO_TEST_CASE( read_hrc_file )
 {
-    Ogre::Root root( "", "" );
-    const char* file_name( "../../../../output/data_orig/field/char/aaaa.hrc" );
+	Ogre::LogManager                    logMgr;
+    Ogre::ResourceGroupManager          rgm;
+    Ogre::Math                          mth;
+    Ogre::LodStrategyManager            lodMgr;
+    Ogre::MeshManager                   meshMgr;
+    Ogre::MaterialManager               matMgr;
+    Ogre::SkeletonManager               skelMgr;
+    logMgr.createLog( "Default Log", true, true, true );
+    matMgr.initialise();
+
+    const char* file_name( "reference.p" );
     std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
     BOOST_REQUIRE( ifs->is_open() );
     Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
     BOOST_REQUIRE( stream->isReadable() );
 
-    QGears::HRCFileSerializer   ser;
-    QGears::HRCFile             f;
-    ser.importHRCFile( stream, &f );
+    QGears::PFileSerializer   ser;
+    QGears::PFile             file;
+    ser.importPFile( stream, &file );
 
     ifs->close();
 }

@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "QGearsHRCFile.h"
 
 #include <OgreBone.h>
+#include <OgreMaterialManager.h>
 #include <OgreSkeletonManager.h>
 
 #include "QGearsHRCFileSerializer.h"
@@ -101,6 +102,15 @@ namespace QGears
         }
 
         return m_skeleton_name.size() + size_bones;
+    }
+
+    //---------------------------------------------------------------------
+    String
+    HRCFile::getBaseName( void ) const
+    {
+        String base, ext;
+        Ogre::StringUtil::splitBaseFilename( getName(), base, ext );
+        return base;
     }
 
     //---------------------------------------------------------------------

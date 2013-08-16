@@ -97,19 +97,19 @@ namespace QGears
                 ,"RSDFileSerializer::parseLine" );
         }
 
-        if( parts.front() == TAG_POLYGON )
+        if( parts[0] == TAG_POLYGON )
         {
-            pDest->setPolygonName( parts.back() );
+            pDest->setPolygonName( parts[1] );
         }
-        else if ( parts.front() == TAG_MATERIAL )
+        else if ( parts[0] == TAG_MATERIAL )
         {
-            pDest->setMaterialName( parts.back() );
+            pDest->setMaterialName( parts[1] );
         }
-        else if ( parts.front() == TAG_GROUP )
+        else if ( parts[0] == TAG_GROUP )
         {
-            pDest->setGroupName( parts.back() );
+            pDest->setGroupName( parts[1] );
         }
-        else if ( parts.front() == TAG_TEXTURE_COUNT )
+        else if ( parts[0] == TAG_TEXTURE_COUNT )
         {
             if( m_has_texture_count )
             {
@@ -122,7 +122,7 @@ namespace QGears
             pDest->getTextureNames().resize( m_texture_count, "" );
             m_has_texture_count = true;
         }
-        else if ( parts.front() == TAG_TEXTURE_NAME )
+        else if ( parts[0] == TAG_TEXTURE_NAME )
         {
             if( !m_has_texture_count )
             {
@@ -139,9 +139,8 @@ namespace QGears
                      "should look like " + TAG_TEXTURE_NAME + "[0]=filename.ext"
                     ,"RSDFileSerializer::parseLine" );
             }
-            String texture_name( parts.back() );
-            parts.pop_back();
-            size_t texture_index( StringConverter::parseSizeT( parts.back() ) );
+            size_t texture_index( StringConverter::parseSizeT( parts[1] ) );
+            String texture_name( parts[2] );
             if( texture_index >= m_texture_count )
             {
                 Ogre::LogManager::getSingleton().stream()

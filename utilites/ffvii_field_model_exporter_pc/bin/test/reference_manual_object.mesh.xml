@@ -1,0 +1,99 @@
+<mesh>
+    <submeshes>
+        <submesh material="material1" usesharedvertices="false" use32bitindexes="false" operationtype="triangle_list">
+            <faces count="1">
+                <face v1="0" v2="1" v3="2" />
+            </faces>
+            <geometry vertexcount="3">
+                <vertexbuffer positions="true">
+                    <vertex>
+                        <position x="0" y="0" z="0" />
+                    </vertex>
+                    <vertex>
+                        <position x="1" y="0" z="0" />
+                    </vertex>
+                    <vertex>
+                        <position x="0" y="1" z="0" />
+                    </vertex>
+                </vertexbuffer>
+                <vertexbuffer normals="true">
+                    <vertex>
+                        <normal x="0" y="0" z="1" />
+                    </vertex>
+                    <vertex>
+                        <normal x="0" y="0" z="1" />
+                    </vertex>
+                    <vertex>
+                        <normal x="0" y="0" z="1" />
+                    </vertex>
+                </vertexbuffer>
+                <vertexbuffer colours_diffuse="true">
+                    <vertex>
+                        <colour_diffuse value="1 0 0 1" />
+                    </vertex>
+                    <vertex>
+                        <colour_diffuse value="0 1 0 1" />
+                    </vertex>
+                    <vertex>
+                        <colour_diffuse value="0 0 1 1" />
+                    </vertex>
+                </vertexbuffer>
+            </geometry>
+            <boneassignments>
+                <vertexboneassignment vertexindex="0" boneindex="1" weight="1" />
+                <vertexboneassignment vertexindex="1" boneindex="2" weight="3" />
+                <vertexboneassignment vertexindex="2" boneindex="2" weight="2" />
+            </boneassignments>
+        </submesh>
+        <submesh material="material2" usesharedvertices="false" use32bitindexes="false" operationtype="triangle_list">
+            <faces count="1">
+                <face v1="0" v2="1" v3="2" />
+            </faces>
+            <geometry vertexcount="3">
+                <vertexbuffer positions="true">
+                    <vertex>
+                        <position x="0" y="0" z="0" />
+                    </vertex>
+                    <vertex>
+                        <position x="1" y="0" z="0" />
+                    </vertex>
+                    <vertex>
+                        <position x="0" y="1" z="0" />
+                    </vertex>
+                </vertexbuffer>
+                <vertexbuffer normals="true">
+                    <vertex>
+                        <normal x="0" y="0" z="1" />
+                    </vertex>
+                    <vertex>
+                        <normal x="0" y="0" z="1" />
+                    </vertex>
+                    <vertex>
+                        <normal x="0" y="0" z="1" />
+                    </vertex>
+                </vertexbuffer>
+                <vertexbuffer colours_diffuse="true">
+                    <vertex>
+                        <colour_diffuse value="1 0 0 1" />
+                    </vertex>
+                    <vertex>
+                        <colour_diffuse value="0 1 0 1" />
+                    </vertex>
+                    <vertex>
+                        <colour_diffuse value="0 0 1 1" />
+                    </vertex>
+                </vertexbuffer>
+            </geometry>
+            <boneassignments>
+                <vertexboneassignment vertexindex="0" boneindex="1" weight="1" />
+                <vertexboneassignment vertexindex="1" boneindex="2" weight="3" />
+                <vertexboneassignment vertexindex="2" boneindex="2" weight="2" />
+            </boneassignments>
+        </submesh>
+    </submeshes>
+    <skeletonlink name="test.skeleton" />
+    <submeshnames>
+        <submeshname name="sub_name1" index="0" />
+        <submeshname name="sub_name2" index="1" />
+    </submeshnames>
+</mesh>

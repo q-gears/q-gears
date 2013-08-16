@@ -58,9 +58,9 @@ namespace QGears
 
         typedef std::vector<Bone> BoneList;
 
-        virtual void        setSkeletonName( const String& name );
-        virtual String&     getSkeletonName( void ) { return m_skeleton_name; }
-        virtual BoneList&   getBones( void ) { return m_bones; }
+        virtual void            setSkeletonName( const String& name );
+        virtual const String&   getSkeletonName( void ) const { return m_skeleton_name; }
+        virtual BoneList&       getBones( void ) { return m_bones; }
 
         static const String RESOURCE_TYPE;
 
@@ -69,6 +69,8 @@ namespace QGears
         virtual void unloadImpl();
         virtual size_t calculateSize() const;
         virtual size_t calculateSize( const Bone &bone ) const;
+
+        virtual String  getBaseName( void ) const;
 
         static const String ROOT_BONE_NAME;
         static const Ogre::Quaternion ROOT_ORIENTATION;

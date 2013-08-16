@@ -34,6 +34,13 @@ THE SOFTWARE.
 
 BOOST_AUTO_TEST_CASE( read_file )
 {
+    class TestRSDFile : public QGears::RSDFile
+    {
+    public:
+        TestRSDFile() : QGears::RSDFile( NULL, "", 0, "" ) {}
+        size_t getCalculatedSize() const { return calculateSize(); }
+    };
+
 	Ogre::LogManager                    logMgr;
     Ogre::ResourceGroupManager          rgm;
     Ogre::Math                          mth;
@@ -45,7 +52,7 @@ BOOST_AUTO_TEST_CASE( read_file )
     matMgr.initialise();
 
     const char*                 file_name( "reference.rsd" );
-    QGears::RSDFile             file( NULL, file_name, 0, "General" );
+    TestRSDFile                 file;
     QGears::RSDFileSerializer   ser;
     std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
     BOOST_REQUIRE( ifs->is_open() );
@@ -61,6 +68,8 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_CHECK_EQUAL( "First Texture.TIM"  , file.getTextureNames()[0] );
     BOOST_CHECK_EQUAL( "SecondTexture.TIM"  , file.getTextureNames()[1] );
     BOOST_CHECK_EQUAL( "Third Texture.TIM"  , file.getTextureNames()[2] );
+    BOOST_CHECK_EQUAL( 83                   , file.getCalculatedSize() );
 
     logMgr.destroyLog( "Default Log" );
+    ifs->close();
 }

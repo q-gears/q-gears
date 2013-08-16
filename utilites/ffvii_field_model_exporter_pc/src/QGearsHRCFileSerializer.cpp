@@ -91,7 +91,7 @@ namespace QGears
             ;++it )
         {
             Ogre::StringVector parts( Ogre::StringUtil::split( *it ) );
-            if( parts.size() < 2 )
+            if( parts.size() != 2 )
             {
                 Ogre::LogManager::getSingleton().stream() << *it;
                 OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
@@ -99,17 +99,17 @@ namespace QGears
                     ,"HRCFileSerializer::readFileHeader" );
             }
 
-            if( parts.front() == TAG_VERSION )
+            if( parts[0] == TAG_VERSION )
             {
-                m_header.version = Ogre::StringConverter::parseLong( parts.back() );
+                m_header.version = Ogre::StringConverter::parseLong( parts[1] );
             }
-            else if( parts.front() == TAG_NAME )
+            else if( parts[0] == TAG_NAME )
             {
-                m_header.name = parts.back();
+                m_header.name = parts[1];
             }
-            else if( parts.front() == TAG_BONE_COUNT )
+            else if( parts[0] == TAG_BONE_COUNT )
             {
-                m_header.bone_count = Ogre::StringConverter::parseLong( parts.back() );
+                m_header.bone_count = Ogre::StringConverter::parseLong( parts[1] );
             }
         }
     }

@@ -74,8 +74,18 @@ namespace QGears
     size_t
     RSDFile::calculateSize() const
     {
-        // TODO: implement
-        return 0;
+        size_t size_texture_names( 0 );
+        for( TextureNameList::const_iterator it( m_texture_names.begin() )
+            ;it != m_texture_names.end()
+            ;++it )
+        {
+            size_texture_names += it->size();
+        }
+
+        return m_polygon_name.size()
+              +m_material_name.size()
+              +m_group_name.size()
+              +size_texture_names;
     }
 
     //---------------------------------------------------------------------
