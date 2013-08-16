@@ -23,27 +23,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include <fstream>
+#ifndef __QGearsRSDFileSerializer_H__
+#define __QGearsRSDFileSerializer_H__
 
-#define BOOST_TEST_MODULE QGearsHRCFileSerializer
-#include <boost/test/unit_test.hpp>
+#include "QGearsRSDFile.h"
+#include "QGearsSerializer.h"
 
-#include "QGearsHRCFileSerializer.h"
+#include "common/TypeDefine.h"
 
-BOOST_AUTO_TEST_CASE( read_file )
+namespace QGears
 {
-    const char* file_name( "../../../../output/data_orig/field/char/aaaa.hrc" );
-    std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
-    BOOST_REQUIRE( ifs->is_open() );
-    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
-    BOOST_REQUIRE( stream->isReadable() );
+    class RSDFileSerializer : public Serializer
+    {
+    public:
+                        RSDFileSerializer();
+        virtual        ~RSDFileSerializer();
 
-    QGears::HRCFile             file;
-    QGears::HRCFileSerializer   ser;
-    ser.importHRCFile( stream, &file );
+        virtual void 	importRSDFile( Ogre::DataStreamPtr &stream, RSDFile* pDest );
 
-    BOOST_CHECK_EQUAL( "n_cloud_sk", file.getName() );
-    BOOST_CHECK_EQUAL( 21, file.getBones().size() );
+    protected:
+        virtual String  readLine( Ogre::DataStreamPtr &stream ) const;
+        virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
+        virtual void    parseLine( const String &line, RSDFile* pDest );
 
-    ifs->close();
+        static const String TAG_COMMENT;
+        static const String TAG_HEADER;
+        static const String TAG_POLYGON;
+        static const String TAG_MATERIAL;
+        static const String TAG_GROUP;
+        static const String TAG_TEXTURE_COUNT;
+        static const String TAG_TEXTURE_NAME;
+        static const String PARSE_DELIMITER;
+    private:
+        bool    m_has_texture_count;
+        size_t  m_texture_count;
+    };
 }
+
+#endif // __QGearsRSDFileSerializer_H__

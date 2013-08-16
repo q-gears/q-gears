@@ -23,29 +23,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "QGearsHRCFileManager.h"
+#include "QGearsRSDFileManager.h"
 
 namespace QGears
 {
     //-------------------------------------------------------------------------
-    template<> HRCFileManager *Ogre::Singleton<HRCFileManager>::msSingleton = NULL;
+    template<> RSDFileManager *Ogre::Singleton<RSDFileManager>::msSingleton = NULL;
 
     //-------------------------------------------------------------------------
-    HRCFileManager *HRCFileManager::getSingletonPtr()
+    RSDFileManager *RSDFileManager::getSingletonPtr()
     {
         return msSingleton;
     }
 
     //-------------------------------------------------------------------------
-    HRCFileManager &HRCFileManager::getSingleton()
+    RSDFileManager &RSDFileManager::getSingleton()
     {
         assert( msSingleton );
         return(*msSingleton );
     }
      //-------------------------------------------------------------------------
-    HRCFileManager::HRCFileManager()
+    RSDFileManager::RSDFileManager()
     {
-        mResourceType = HRCFile::RESOURCE_TYPE;
+        mResourceType = RSDFile::RESOURCE_TYPE;
 
         // low, because it will likely reference other resources
         mLoadOrder = 30.0f;
@@ -55,15 +55,15 @@ namespace QGears
     }
 
     //-------------------------------------------------------------------------
-    HRCFileManager::~HRCFileManager()
+    RSDFileManager::~RSDFileManager()
     {
         Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager( mResourceType );
     }
 
     //-------------------------------------------------------------------------
-    HRCFilePtr HRCFileManager::load( const String &name, const String &group )
+    RSDFilePtr RSDFileManager::load( const Ogre::String &name, const Ogre::String &group )
     {
-        HRCFilePtr file( getByName( name ) );
+        RSDFilePtr file( getByName( name ) );
 
         if ( file.isNull() )
             file = create( name, group );
@@ -73,12 +73,12 @@ namespace QGears
     }
 
     //-------------------------------------------------------------------------
-    Ogre::Resource *HRCFileManager::createImpl( const String &name
-      , Ogre::ResourceHandle handle, const String &group, bool isManual
+    Ogre::Resource *RSDFileManager::createImpl( const Ogre::String &name
+      , Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual
       , Ogre::ManualResourceLoader *loader
       , const Ogre::NameValuePairList *createParams )
     {
-        return new HRCFile( this, name, handle, group, isManual, loader );
+        return new RSDFile( this, name, handle, group, isManual, loader );
     }
 
     //-------------------------------------------------------------------------

@@ -33,14 +33,14 @@ THE SOFTWARE.
 namespace QGears
 {
     //---------------------------------------------------------------------
-    const String            HRCFile::ROOT_BONE_NAME( "root" );
+    const String    HRCFile::ROOT_BONE_NAME( "root" );
+    const String    HRCFile::RESOURCE_TYPE( "QGearsHRCFile" );
     const Ogre::Quaternion  HRCFile::ROOT_ORIENTATION( HRCFile::createRootOrientation() );
-    const Ogre::String      HRCFile::RESOURCE_TYPE( "QGearsHRCFile" );
 
     //---------------------------------------------------------------------
     HRCFile::HRCFile( Ogre::ResourceManager *creator
-                     ,const Ogre::String &name, Ogre::ResourceHandle handle
-                     ,const Ogre::String &group, bool isManual
+                     ,const String &name, Ogre::ResourceHandle handle
+                     ,const String &group, bool isManual
                      ,Ogre::ManualResourceLoader *loader ) :
         Ogre::Resource( creator, name, handle, group, isManual, loader )
     {
@@ -87,6 +87,7 @@ namespace QGears
               +sizeof( bone.length )
               +size_rsd_names;
     }
+
     //---------------------------------------------------------------------
     size_t
     HRCFile::calculateSize() const

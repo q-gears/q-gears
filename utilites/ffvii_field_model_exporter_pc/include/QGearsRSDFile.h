@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-11 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-16 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +26,90 @@ THE SOFTWARE.
 #ifndef __QGearsRSDFile_H__
 #define __QGearsRSDFile_H__
 
+#include <OgreResource.h>
+
+#include "common/TypeDefine.h"
+
 namespace QGears
 {
-    class RSDFile
+    class RSDFile : public Ogre::Resource
     {
     public:
-        RSDFile();
+        RSDFile( Ogre::ResourceManager *creator, const String &name
+                ,Ogre::ResourceHandle handle, const String &group
+                ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
+
         virtual ~RSDFile();
+
+        static const String RESOURCE_TYPE;
+
+        typedef std::vector<String> TextureNameList;
+
+        virtual void setPolygonName ( const String &polygon_name );
+        virtual void setMaterialName( const String &material_name );
+        virtual void setGroupName   ( const String &group_name );
+
+        virtual const String& getPolygonName ( void ) const;
+        virtual const String& getMaterialName( void ) const;
+        virtual const String& getGroupName   ( void ) const;
+        virtual size_t getTextureNameCount   ( void ) const;
+        virtual TextureNameList& getTextureNames( void );
+
     protected:
+        virtual void loadImpl();
+        virtual void unloadImpl();
+        virtual size_t calculateSize() const;
+
     private:
+        String          m_polygon_name;
+        String          m_material_name;
+        String          m_group_name;
+        TextureNameList m_texture_names;
+    };
+
+    //-------------------------------------------------------------------------
+    class RSDFilePtr : public Ogre::SharedPtr<RSDFile>
+    {
+    public:
+        RSDFilePtr() : Ogre::SharedPtr<RSDFile>() {}
+        explicit RSDFilePtr(RSDFile *rep) : Ogre::SharedPtr<RSDFile>(rep) {}
+        RSDFilePtr(const RSDFilePtr &r) : Ogre::SharedPtr<RSDFile>(r) {}
+        RSDFilePtr(const Ogre::ResourcePtr &r) : Ogre::SharedPtr<RSDFile>()
+        {
+            if( r.isNull() )
+                return;
+            // lock & copy other mutex pointer
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            pRep = static_cast<RSDFile*>(r.getPointer());
+            pUseCount = r.useCountPointer();
+            useFreeMethod = r.freeMethod();
+            if (pUseCount)
+            {
+                ++(*pUseCount);
+            }
+        }
+
+        /// Operator used to convert a ResourcePtr to a RSDFilePtr
+        RSDFilePtr& operator=(const Ogre::ResourcePtr& r)
+        {
+            if(pRep == static_cast<RSDFile*>(r.getPointer()))
+                return *this;
+            release();
+            if( r.isNull() )
+                return *this; // resource ptr is null, so the call to release above has done all we need to do.
+            // lock & copy other mutex pointer
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            pRep = static_cast<RSDFile*>(r.getPointer());
+            pUseCount = r.useCountPointer();
+            useFreeMethod = r.freeMethod();
+            if (pUseCount)
+            {
+                ++(*pUseCount);
+            }
+            return *this;
+        }
     };
 }
 

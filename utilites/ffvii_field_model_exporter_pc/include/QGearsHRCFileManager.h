@@ -23,10 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsHRCFileManage_H__
-#define __QGearsHRCFileManage_H__
+#ifndef __QGearsHRCFileManager_H__
+#define __QGearsHRCFileManager_H__
 
 #include <OgreResourceManager.h>
+
+#include "common/TypeDefine.h"
 
 #include "QGearsHRCFile.h"
 
@@ -38,17 +40,17 @@ namespace QGears
         HRCFileManager();
         virtual ~HRCFileManager();
 
-        virtual HRCFilePtr load( const Ogre::String &name, const Ogre::String &group );
+        virtual HRCFilePtr load( const String &name, const String &group );
         static HRCFileManager &getSingleton();
         static HRCFileManager *getSingletonPtr();
 
     protected:
-        Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
-          , const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader
+        Ogre::Resource *createImpl( const String &name, Ogre::ResourceHandle handle
+          , const String &group, bool isManual, Ogre::ManualResourceLoader *loader
           , const Ogre::NameValuePairList *createParams );
 
     private:
     };
 }
 
-#endif // __QGearsHRCFileManage_H__
+#endif // __QGearsHRCFileManager_H__

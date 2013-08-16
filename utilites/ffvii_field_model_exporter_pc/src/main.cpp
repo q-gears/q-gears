@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "QGearsAFileSerializer.h"
 #include "QGearsHRCFileManager.h"
 #include "QGearsPFileSerializer.h"
+#include "QGearsRSDFileManager.h"
 
 void attachMesh( Ogre::MeshPtr &mesh )
 {
@@ -65,18 +66,20 @@ main( int argc, char *argv[] )
     Ogre::MeshSerializer        mesh_ser;
     Ogre::SkeletonSerializer    sk_ser;
     QGears::HRCFileManager      *hrc_manager;
-    QGears::AFile               a;
-    QGears::AFileSerializer     a_ser;
+    QGears::RSDFileManager      *rsd_manager;
     QGears::HRCFilePtr          hrc;
-    QGears::PFile               p;
+    QGears::RSDFilePtr          rsd;
+    QGears::AFileSerializer     a_ser;
     QGears::PFileSerializer     p_ser;
+    QGears::AFile               a;
+    QGears::PFile               p;
     Ogre::String                unit( "n_cloud");
 
     hrc_manager = new QGears::HRCFileManager();
-    hrc = hrc_manager->load( "field/char/aaaa.hrc", "Game" );
+    rsd_manager = new QGears::RSDFileManager();
 
-    Ogre::LogManager::getSingleton().stream()
-      << "\n " << " hrc Ressource: " << hrc->getName();
+    hrc = hrc_manager->load( "field/char/aaaa.hrc", "Game" );
+    rsd = rsd_manager->load( "field/char/aaab.rsd", "Game" );
 
     Ogre::SkeletonPtr skeleton( hrc->createSkeleton( unit + ".skeleton", "General" ) );
     Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit + ".mesh", "General" ) );
@@ -117,11 +120,13 @@ main( int argc, char *argv[] )
     mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );
     attachMesh( mesh );
 
-    mesh.setNull();
     entitys[0]->setVisible( true );
 
     Ogre::Root::getSingleton().startRendering();
+    mesh.setNull();
+    rsd.setNull();
     hrc.setNull();
+    delete rsd_manager;
     delete hrc_manager;
     DeinitializeOgreBase();
 

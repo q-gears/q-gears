@@ -37,8 +37,8 @@ namespace QGears
     {
     public:
 
-        HRCFile( Ogre::ResourceManager *creator, const Ogre::String &name
-                ,Ogre::ResourceHandle handle, const Ogre::String &group
+        HRCFile( Ogre::ResourceManager *creator, const String &name
+                ,Ogre::ResourceHandle handle, const String &group
                 ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
 
         virtual ~HRCFile();
@@ -62,7 +62,7 @@ namespace QGears
         virtual String&     getSkeletonName( void ) { return m_skeleton_name; }
         virtual BoneList&   getBones( void ) { return m_bones; }
 
-        static const Ogre::String RESOURCE_TYPE;
+        static const String RESOURCE_TYPE;
 
     protected:
         virtual void loadImpl();

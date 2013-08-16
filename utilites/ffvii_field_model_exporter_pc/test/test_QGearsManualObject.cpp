@@ -36,9 +36,6 @@ THE SOFTWARE.
 BOOST_AUTO_TEST_CASE( mesh_export )
 {
 	Ogre::LogManager  logMgr;
-    // this log catches output from the parseArgs call and routes it to stdout only
-    logMgr.createLog("Temporary log", false, true, true);
-    logMgr.destroyLog("Temporary log");
     Ogre::ResourceGroupManager rgm;
     Ogre::Math mth;
     Ogre::LodStrategyManager lodMgr;
@@ -89,6 +86,8 @@ BOOST_AUTO_TEST_CASE( mesh_export )
     mo.bone( 2, 2, 2 );
     mo.index( 2 );
     mo.end();
+    // TODO use XMLMeshSerializer from converter, binary mesh can change
+    // without data actually differing
     Ogre::MeshSerializer m_ser;
     m_ser.exportMesh( mesh.getPointer(), filename_mesh );
 

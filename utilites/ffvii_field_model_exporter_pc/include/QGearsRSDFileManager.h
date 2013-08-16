@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-10 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-16 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,27 +23,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include <fstream>
+#ifndef __QGearsRSDFileManager_H__
+#define __QGearsRSDFileManager_H__
 
-#define BOOST_TEST_MODULE QGearsHRCFileSerializer
-#include <boost/test/unit_test.hpp>
+#include <OgreResourceManager.h>
 
-#include "QGearsHRCFileSerializer.h"
+#include "QGearsRSDFile.h"
 
-BOOST_AUTO_TEST_CASE( read_file )
+namespace QGears
 {
-    const char* file_name( "../../../../output/data_orig/field/char/aaaa.hrc" );
-    std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
-    BOOST_REQUIRE( ifs->is_open() );
-    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
-    BOOST_REQUIRE( stream->isReadable() );
+    class RSDFileManager : public Ogre::ResourceManager, public Ogre::Singleton<RSDFileManager>
+    {
+    public:
+        RSDFileManager();
+        virtual ~RSDFileManager();
 
-    QGears::HRCFile             file;
-    QGears::HRCFileSerializer   ser;
-    ser.importHRCFile( stream, &file );
+        virtual RSDFilePtr load( const Ogre::String &name, const Ogre::String &group );
+        static RSDFileManager &getSingleton();
+        static RSDFileManager *getSingletonPtr();
 
-    BOOST_CHECK_EQUAL( "n_cloud_sk", file.getName() );
-    BOOST_CHECK_EQUAL( 21, file.getBones().size() );
+    protected:
+        Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
+          , const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader
+          , const Ogre::NameValuePairList *createParams );
 
-    ifs->close();
+    private:
+    };
 }
+
+#endif // __QGearsRSDFileManager_H__
