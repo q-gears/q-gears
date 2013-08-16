@@ -121,7 +121,10 @@ namespace QGears
                                  ,const String &sub_name
                                  ,const String &material_name
                                  ,const Ogre::Bone *bone ) const;
+        virtual Ogre::Vector3   getPosition( const Ogre::Bone *bone ) const;
 
+        static const Ogre::Quaternion STATIC_ROTATION;
+        static Ogre::Quaternion createStaticRotation();
     private:
         VertexList              m_vertices;
         NormalList              m_normals;

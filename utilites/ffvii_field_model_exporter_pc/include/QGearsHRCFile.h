@@ -26,24 +26,26 @@ THE SOFTWARE.
 #ifndef __QGearsHRCFile_H__
 #define __QGearsHRCFile_H__
 
-#include "OgreSkeleton.h"
+#include <OgreResource.h>
+#include <OgreSkeleton.h>
 
 #include "common/TypeDefine.h"
 
 namespace QGears
 {
-    // TODO implemented ressource interface
-    class HRCFile //: public Ogre::Resource
+    class HRCFile : public Ogre::Resource
     {
     public:
 
-        HRCFile();
+        HRCFile( Ogre::ResourceManager *creator, const Ogre::String &name
+                ,Ogre::ResourceHandle handle, const Ogre::String &group
+                ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
+
         virtual ~HRCFile();
 
         virtual Ogre::SkeletonPtr   createSkeleton( const String &name
                                                    ,const String &group ) const;
 
-        //---------------------------------------------------------------------
         typedef std::vector<String> RSDNameList;
 
         struct Bone
@@ -59,12 +61,67 @@ namespace QGears
         virtual void        setName ( const String& name );
         virtual String&     getName ( void ) { return m_name; }
         virtual BoneList&   getBones( void ) { return m_bones; }
+
+        static const Ogre::String RESOURCE_TYPE;
+
     protected:
+        virtual void loadImpl();
+        virtual void unloadImpl();
+        virtual size_t calculateSize() const;
+        virtual size_t calculateSize( const Bone &bone ) const;
 
         static const String ROOT_BONE_NAME;
+        static const Ogre::Quaternion ROOT_ORIENTATION;
+        static Ogre::Quaternion createRootOrientation();
+
     private:
         String      m_name;
         BoneList    m_bones;
+    };
+
+    //-------------------------------------------------------------------------
+    class HRCFilePtr : public Ogre::SharedPtr<HRCFile>
+    {
+    public:
+        HRCFilePtr() : Ogre::SharedPtr<HRCFile>() {}
+        explicit HRCFilePtr(HRCFile *rep) : Ogre::SharedPtr<HRCFile>(rep) {}
+        HRCFilePtr(const HRCFilePtr &r) : Ogre::SharedPtr<HRCFile>(r) {}
+        HRCFilePtr(const Ogre::ResourcePtr &r) : Ogre::SharedPtr<HRCFile>()
+        {
+            if( r.isNull() )
+                return;
+            // lock & copy other mutex pointer
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            pRep = static_cast<HRCFile*>(r.getPointer());
+            pUseCount = r.useCountPointer();
+            useFreeMethod = r.freeMethod();
+            if (pUseCount)
+            {
+                ++(*pUseCount);
+            }
+        }
+
+        /// Operator used to convert a ResourcePtr to a HRCFilePtr
+        HRCFilePtr& operator=(const Ogre::ResourcePtr& r)
+        {
+            if(pRep == static_cast<HRCFile*>(r.getPointer()))
+                return *this;
+            release();
+            if( r.isNull() )
+                return *this; // resource ptr is null, so the call to release above has done all we need to do.
+            // lock & copy other mutex pointer
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            pRep = static_cast<HRCFile*>(r.getPointer());
+            pUseCount = r.useCountPointer();
+            useFreeMethod = r.freeMethod();
+            if (pUseCount)
+            {
+                ++(*pUseCount);
+            }
+            return *this;
+        }
     };
 }
 

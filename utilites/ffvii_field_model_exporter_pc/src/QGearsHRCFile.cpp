@@ -28,19 +28,78 @@ THE SOFTWARE.
 #include <OgreBone.h>
 #include <OgreSkeletonManager.h>
 
+#include "QGearsHRCFileSerializer.h"
+
 namespace QGears
 {
     //---------------------------------------------------------------------
-    const String HRCFile::ROOT_BONE_NAME( "root" );
+    const String            HRCFile::ROOT_BONE_NAME( "root" );
+    const Ogre::Quaternion  HRCFile::ROOT_ORIENTATION( HRCFile::createRootOrientation() );
+    const Ogre::String      HRCFile::RESOURCE_TYPE( "QGearsHRCFile" );
 
     //---------------------------------------------------------------------
-    HRCFile::HRCFile()
+    HRCFile::HRCFile( Ogre::ResourceManager *creator
+                     ,const Ogre::String &name, Ogre::ResourceHandle handle
+                     ,const Ogre::String &group, bool isManual
+                     ,Ogre::ManualResourceLoader *loader ) :
+        Ogre::Resource( creator, name, handle, group, isManual, loader )
     {
+        createParamDictionary( RESOURCE_TYPE );
     }
 
     //---------------------------------------------------------------------
     HRCFile::~HRCFile()
     {
+        unload();
+    }
+
+    //---------------------------------------------------------------------
+    void
+    HRCFile::loadImpl()
+    {
+        HRCFileSerializer serializer;
+        Ogre::DataStreamPtr stream( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
+        serializer.importHRCFile( stream, this );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    HRCFile::unloadImpl()
+    {
+        m_name.clear();
+        m_bones.clear();
+    }
+
+    //---------------------------------------------------------------------
+    size_t
+    HRCFile::calculateSize( const Bone &bone ) const
+    {
+        size_t size_rsd_names( 0 );
+        for( RSDNameList::const_iterator it( bone.rsd_names.begin() )
+            ;it != bone.rsd_names.end()
+            ;++it )
+        {
+            size_rsd_names += it->size();
+        }
+
+        return bone.name.size()
+              +bone.parent.size()
+              +sizeof( bone.length )
+              +size_rsd_names;
+    }
+    //---------------------------------------------------------------------
+    size_t
+    HRCFile::calculateSize() const
+    {
+        size_t size_bones( 0 );
+        for( BoneList::const_iterator it( m_bones.begin() )
+            ;it != m_bones.end()
+            ;++it )
+        {
+            size_bones += calculateSize( *it );
+        }
+
+        return m_name.size() + size_bones;
     }
 
     //---------------------------------------------------------------------
@@ -55,8 +114,8 @@ namespace QGears
     HRCFile::createSkeleton( const String &name, const String &group ) const
     {
         Ogre::SkeletonPtr skeleton( Ogre::SkeletonManager::getSingleton().create( name, group ) );
-        skeleton->createBone( ROOT_BONE_NAME );
-
+        Ogre::Bone *root( skeleton->createBone( ROOT_BONE_NAME ) );
+        root->setOrientation( ROOT_ORIENTATION );
         for( BoneList::const_iterator it_bone( m_bones.begin() )
             ;it_bone != m_bones.end()
             ;++it_bone )
@@ -67,6 +126,15 @@ namespace QGears
             parent->addChild( child );
         }
         return skeleton;
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Quaternion
+    HRCFile::createRootOrientation()
+    {
+        Ogre::Radian angle( Ogre::Degree( 180 ) );
+        Ogre::Vector3 axis( 0, 1, 1 );
+        return Ogre::Quaternion( angle, axis );
     }
 
     //---------------------------------------------------------------------

@@ -32,6 +32,9 @@ THE SOFTWARE.
 namespace QGears
 {
     //---------------------------------------------------------------------
+    const Ogre::Quaternion PFile::STATIC_ROTATION( PFile::createStaticRotation() );
+
+    //---------------------------------------------------------------------
     PFile::PFile()
     {
         //ctor
@@ -124,12 +127,29 @@ namespace QGears
             addGroup( m_groups[g], mo, sub_name, material_name, skeleton->getBone( bone_name ) );
         }
     }
+
+    //---------------------------------------------------------------------
+    Ogre::Vector3
+    PFile::getPosition( const Ogre::Bone *bone ) const
+    {
+        Ogre::Vector3 pos( 0, 0, 0 );
+        const Ogre::Node* node( bone );
+        while( node )
+        {
+            pos.z += node->getPosition().y;
+            node = node->getParent();
+        }
+        return pos;
+    }
+
     //---------------------------------------------------------------------
     void
     PFile::addGroup( const Group &group, ManualObject &mo
                     ,const String &sub_name, const String &material_name
                     ,const Ogre::Bone *bone ) const
     {
+        Ogre::Radian angle( Ogre::Degree( 180 ) );
+        Ogre::Quaternion rot( angle, Ogre::Vector3::UNIT_X );
         size_t vertex_count( group.num_polygons * 3 );
         size_t index_count( vertex_count );
         mo.begin( sub_name, material_name, vertex_count, index_count );
@@ -145,9 +165,10 @@ namespace QGears
                       ,n( 0 + polygon.normal[i] )
                       ,t( group.texture_coordinate_start_index
                          +polygon.vertex[i] );
-                mo.position( m_vertices[ v ] );
+                mo.position( ( STATIC_ROTATION *  m_vertices[ v ] )
+                            + getPosition( bone ) );
                 mo.colour( m_vertex_colors[ v ] );
-                mo.normal( m_normals[ n ] );
+                mo.normal( STATIC_ROTATION * m_normals[ n ] );
                 if( group.has_texture )
                 {
                     mo.textureCoord( m_texture_coordinates[t] );
@@ -156,6 +177,14 @@ namespace QGears
             }
         }
         mo.end();
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Quaternion
+    PFile::createStaticRotation()
+    {
+        Ogre::Radian angle( Ogre::Degree( 180 ) );
+        return Ogre::Quaternion( angle, Ogre::Vector3::UNIT_X );
     }
 
     //---------------------------------------------------------------------

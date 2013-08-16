@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "common/OgreBase.h"
 
 #include "QGearsAFileSerializer.h"
-#include "QGearsHRCFileSerializer.h"
+#include "QGearsHRCFileManager.h"
 #include "QGearsPFileSerializer.h"
 
 #include "QGearsManualObject.h"
@@ -47,14 +47,13 @@ void attachMesh( const Ogre::String &mesh_name )
     Ogre::SceneNode* root_node = scene_manager->getRootSceneNode();
     root_node->showBoundingBox( true );
     root_node->attachObject( entity );
+
     entitys.push_back( entity );
 }
 
 Ogre::DataStreamPtr getStream( const Ogre::String& file_name )
 {
-    std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name.c_str(), std::ifstream::binary ) );
-    Ogre::FileStreamDataStream *stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
-    return Ogre::DataStreamPtr( stream );
+    return Ogre::ResourceGroupManager::getSingleton().openResource( file_name );
 }
 
 int
@@ -67,67 +66,52 @@ main( int argc, char *argv[] )
     Ogre::DataStreamPtr         stream;
     Ogre::MeshSerializer        mesh_ser;
     Ogre::SkeletonSerializer    sk_ser;
+    QGears::HRCFileManager      *hrc_manager;
     QGears::AFile               a;
     QGears::AFileSerializer     a_ser;
-    QGears::HRCFile             hrc;
-    QGears::HRCFileSerializer   hrc_ser;
+    QGears::HRCFilePtr          hrc;
     QGears::PFile               p;
     QGears::PFileSerializer     p_ser;
     Ogre::String                unit( "n_cloud");
 
-    stream = getStream( "../../../output/data_orig/field/char/aaaa.hrc" );
-    hrc_ser.importHRCFile( stream, &hrc );
-    Ogre::SkeletonPtr skeleton( hrc.createSkeleton( unit, "General" ) );
+    hrc_manager = new QGears::HRCFileManager();
+    hrc = hrc_manager->load( "field/char/aaaa.hrc", "Game" );
+
+    Ogre::SkeletonPtr skeleton( hrc->createSkeleton( unit, "General" ) );
     Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit, "General" ) );
     mesh->_notifySkeleton( skeleton );
     mesh->setSkeletonName( skeleton->getName() + ".skeleton" );
 
-    stream = getStream( "../../../output/data_orig/field/char/aaac.p" );
+    stream = getStream( "field/char/aaac.p" );
     p_ser.importPFile( stream, &p );
     p.addGroups( mesh.getPointer(), "hip", "aaab" );
 
-    stream = getStream( "../../../output/data_orig/field/char/aaae.p" );
+    stream = getStream( "field/char/aaae.p" );
     p_ser.importPFile( stream, &p );
     p.addGroups( mesh.getPointer(), "chest", "aaad" );
 
-    stream = getStream( "../../../output/data_orig/field/char/aaba.p" );
+    stream = getStream( "field/char/aaba.p" );
     p_ser.importPFile( stream, &p );
     p.addGroups( mesh.getPointer(), "head", "aaaf" );
 
-    stream = getStream( "../../../output/data_orig/field/char/acfe.a" );
+    stream = getStream( "field/char/aafd.p" );
+    p_ser.importPFile( stream, &p );
+    p.addGroups( mesh.getPointer(), "r_foot", "aafc" );
+
+    stream = getStream( "field/char/acfe.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Idle" );
-    stream = getStream( "../../../output/data_orig/field/char/aaff.a" );
+    stream = getStream( "field/char/aaff.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Walk" );
-    stream = getStream( "../../../output/data_orig/field/char/aaga.a" );
+    stream = getStream( "field/char/aaga.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Run" );
-    stream = getStream( "../../../output/data_orig/field/char/bvjf.a" );
+    stream = getStream( "field/char/bvjf.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "JumpFromTrain" );
 
     sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() + ".skeleton" );
-
-    /*
-    Ogre::Mesh::SubMeshIterator it( mesh->getSubMeshIterator() );
-    Ogre::Bone* head( skeleton->getBone( "head" ) );
-    u16 bone_index( head->getHandle() );
-    while( it.hasMoreElements() )
-    {
-        Ogre::SubMesh* sub_mesh( it.getNext() );
-        size_t vertex_count = sub_mesh->vertexData->vertexCount;
-        for (size_t i = 0; i < vertex_count; ++i)
-        {
-            Ogre::VertexBoneAssignment vba;
-            vba.vertexIndex = i;
-            vba.boneIndex = bone_index;
-            vba.weight = 1;
-            sub_mesh->addBoneAssignment( vba );
-        }
-        sub_mesh->_compileBoneAssignments();
-    }
-    */
 
     mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() + ".mesh" );
     attachMesh( mesh->getName() + ".mesh" );
@@ -136,6 +120,8 @@ main( int argc, char *argv[] )
     entitys[0]->setVisible( true );
 
     Ogre::Root::getSingleton().startRendering();
+    hrc.setNull();
+    delete hrc_manager;
     DeinitializeOgreBase();
 
     return 0;
