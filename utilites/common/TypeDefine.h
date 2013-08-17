@@ -23,11 +23,6 @@ namespace QGears
     typedef Ogre::int32 sint32;
 
     typedef Ogre::String String;
-#if OGRE_COMPILER == OGRE_COMPILER_MSVC
-#pragma pack (push, 1)
-#else
-#pragma pack (1)
-#endif
 
     struct ColorComponents
     {
@@ -43,12 +38,10 @@ namespace QGears
         u32 all;
     };
 
-#if OGRE_COMPILER == OGRE_COMPILER_MSVC
-#pragma pack (pop)
-#else
-#pragma pack ()
-#endif
-
+    extern const String    EXT_SKELETON;
+    extern const String    EXT_MATERIAL;
+    extern const String    EXT_TIM;
+    extern const String    EXT_TEX;
 }
 
 #endif // TYPE_DEFINE_H
