@@ -60,7 +60,6 @@ main( int argc, char *argv[] )
 {
     InitializeOgreBase( "FFVII Field Model Exporter" );
 
-    QGears::HRCFileManager     &hrc_manager( QGears::HRCFileManager::getSingleton() );
     QGears::RSDFileManager     &rsd_manager( QGears::RSDFileManager::getSingleton() );
     Ogre::SceneManager*         scene_manager( Ogre::Root::getSingleton().getSceneManager( "Scene" ) );
     Ogre::ManualObject*         mo( scene_manager->createManualObject() );
@@ -75,10 +74,9 @@ main( int argc, char *argv[] )
     QGears::PFile               p;
     Ogre::String                unit( "n_cloud");
 
-    //hrc = hrc_manager.load( "field/char/aaaa.hrc", "Game" );
     rsd = rsd_manager.load( "field/char/aaab.rsd", "Game" );
 
-    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit + ".mesh", "General" ) );
+    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit + ".mesh", "Game" ) );
     mesh->setSkeletonName( "field/char/n_cloud_sk.skeleton" );
     Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
 

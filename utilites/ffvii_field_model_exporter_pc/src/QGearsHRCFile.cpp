@@ -52,6 +52,12 @@ namespace QGears
     //---------------------------------------------------------------------
     HRCFile::~HRCFile()
     {
+        if( m_skeleton_loader )
+        {
+            Ogre::SkeletonManager::getSingleton().remove( m_skeleton->getHandle() );
+            delete m_skeleton_loader;
+            m_skeleton_loader = NULL;
+        }
         unload();
     }
 
@@ -82,12 +88,6 @@ namespace QGears
     {
         m_skeleton_name.clear();
         m_bones.clear();
-        if( m_skeleton_loader )
-        {
-            Ogre::SkeletonManager::getSingleton().remove( m_skeleton->getHandle() );
-            delete m_skeleton_loader;
-            m_skeleton_loader = NULL;
-        }
         m_skeleton.setNull();
         m_mesh.setNull();
     }
