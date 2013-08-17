@@ -38,8 +38,13 @@ namespace QGears
         u32 all;
     };
 
-    extern const String    EXT_SKELETON;
     extern const String    EXT_MATERIAL;
+    extern const String    EXT_MESH;
+    extern const String    EXT_SKELETON;
+
+    extern const String    EXT_P;
+    extern const String    EXT_PLY;
+    extern const String    EXT_RSD;
     extern const String    EXT_TIM;
     extern const String    EXT_TEX;
 }

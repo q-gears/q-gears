@@ -27,8 +27,13 @@ THE SOFTWARE.
 
 namespace QGears
 {
-    const String    EXT_SKELETON( ".skeleton" );
-    const String    EXT_MATERIAL( ".material" );
-    const String    EXT_TIM( ".tim" );
-    const String    EXT_TEX( ".tex" );
+    const String    EXT_MATERIAL( ".material"   );
+    const String    EXT_MESH    ( ".mesh"       );
+    const String    EXT_SKELETON( ".skeleton"   );
+
+    const String    EXT_P       ( ".p"          );
+    const String    EXT_PLY     ( ".ply"        );
+    const String    EXT_RSD     ( ".rsd"        );
+    const String    EXT_TEX     ( ".tex"        );
+    const String    EXT_TIM     ( ".tim"        );
 }
