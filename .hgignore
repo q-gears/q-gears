@@ -17,3 +17,4 @@ utilites/xeno_model_exporter/compile/
 **/obj/**
 **.cbTemp
 **.depends
+**/ogre.cfg
