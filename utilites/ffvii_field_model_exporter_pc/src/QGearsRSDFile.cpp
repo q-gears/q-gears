@@ -75,12 +75,10 @@ namespace QGears
             material = material_manager.getByName( material_name, mGroup );
             if( material.isNull() )
             {
-                Ogre::LogManager::getSingleton().stream()
-                    << "\n creating Material '" << material_name << "'";
                 material = material_manager.create( material_name, mGroup );
                 material->_notifyOrigin( getName() );
                 m_materials.push_back( material );
-                Ogre::Pass *pass( material->createTechnique()->createPass() );
+                Ogre::Pass *pass( material->getTechnique( 0 )->getPass( 0 ) );
                 pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
                 if( i > 0 )
                 {
@@ -131,6 +129,8 @@ namespace QGears
             pass->setAlphaRejectValue( 0 );
             Ogre::TextureUnitState *texture_unit( pass->createTextureUnitState() );
             texture_unit->setTextureName( texture_name );
+            texture_unit->setNumMipmaps( 0 );
+            texture_unit->setTextureFiltering( Ogre::TFO_NONE );
         }
     }
 

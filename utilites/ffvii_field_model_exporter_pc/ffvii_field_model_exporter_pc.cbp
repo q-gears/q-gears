@@ -175,6 +175,7 @@
 		<Unit filename="include/QGearsRSDFileManager.h" />
 		<Unit filename="include/QGearsRSDFileSerializer.h" />
 		<Unit filename="include/QGearsSerializer.h" />
+		<Unit filename="include/QGearsStringUtil.h" />
 		<Unit filename="src/FFVIICharacter.cpp" />
 		<Unit filename="src/QGearsAFile.cpp" />
 		<Unit filename="src/QGearsAFileSerializer.cpp" />
@@ -189,6 +190,7 @@
 		<Unit filename="src/QGearsRSDFileManager.cpp" />
 		<Unit filename="src/QGearsRSDFileSerializer.cpp" />
 		<Unit filename="src/QGearsSerializer.cpp" />
+		<Unit filename="src/QGearsStringUtil.cpp" />
 		<Unit filename="src/main.cpp">
 			<Option target="Release" />
 		</Unit>

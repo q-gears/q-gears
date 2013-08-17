@@ -65,6 +65,7 @@ main( int argc, char *argv[] )
     Ogre::ManualObject*         mo( scene_manager->createManualObject() );
     Ogre::DataStreamPtr         stream;
     Ogre::MeshSerializer        mesh_ser;
+    Ogre::MaterialSerializer    mat_ser;
     Ogre::SkeletonSerializer    sk_ser;
     QGears::AFileSerializer     a_ser;
     QGears::PFileSerializer     p_ser;
@@ -108,6 +109,8 @@ main( int argc, char *argv[] )
     sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() );
 
     mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );
+    Ogre::MaterialPtr material( Ogre::MaterialManager::getSingleton().getByName( "field/char/aaba/1" ) );
+    mat_ser.exportMaterial( material, "n_cloud.material" );
     attachMesh( mesh );
 
     entitys[0]->setVisible( true );
@@ -115,6 +118,7 @@ main( int argc, char *argv[] )
     Ogre::Root::getSingleton().startRendering();
     skeleton.setNull();
     mesh.setNull();
+    material.setNull();
     DeinitializeOgreBase();
 
     return 0;
