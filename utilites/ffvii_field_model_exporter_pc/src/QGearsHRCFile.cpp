@@ -137,7 +137,18 @@ namespace QGears
     String
     HRCFile::getSkeletonFileName() const
     {
-        return m_skeleton_name + EXT_SKELETON;
+        String path;
+        StringUtil::splitPath( getName(), path );
+        return path + m_skeleton_name + EXT_SKELETON;
+    }
+
+    //---------------------------------------------------------------------
+    String
+    HRCFile::getMeshFileName() const
+    {
+        String path;
+        StringUtil::splitPath( getName(), path );
+        return path + m_skeleton_name + EXT_MESH;
     }
 
     //---------------------------------------------------------------------

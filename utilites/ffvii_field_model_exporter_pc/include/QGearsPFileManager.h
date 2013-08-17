@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-13 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-16 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,29 +23,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsHRCMeshLoader_H__
-#define __QGearsHRCMeshLoader_H__
+#ifndef __QGearsRSDFileManager_H__
+#define __QGearsRSDFileManager_H__
 
-#include <OgreResource.h>
+#include <OgreResourceManager.h>
 
-#include "QGearsHRCFile.h"
+#include "QGearsRSDFile.h"
 
 namespace QGears
 {
-    class HRCMeshLoader : public Ogre::ManualResourceLoader
+    class RSDFileManager : public Ogre::ResourceManager, public Ogre::Singleton<RSDFileManager>
     {
     public:
-        explicit HRCMeshLoader( HRCFile &hrc_file );
-        virtual ~HRCMeshLoader();
+        RSDFileManager();
+        virtual ~RSDFileManager();
 
-        virtual void    loadResource( Ogre::Resource *resource );
+        static RSDFileManager& getSingleton();
+        static RSDFileManager* getSingletonPtr();
+
+        virtual void parseScript( Ogre::DataStreamPtr &stream, const String &groupName );
 
     protected:
-        virtual void    loadBone( Ogre::Mesh *mesh, const HRCFile::Bone &bone, const String &path );
+        Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
+          , const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader
+          , const Ogre::NameValuePairList *createParams );
 
     private:
-        HRCFile  &m_hrc_file;
     };
 }
 
-#endif // __QGearsHRCMeshLoader_H__
+#endif // __QGearsRSDFileManager_H__

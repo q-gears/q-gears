@@ -32,10 +32,10 @@ THE SOFTWARE.
 
 #include "common/TypeDefine.h"
 
-#include "QGearsHRCSkeletonLoader.h"
-
 namespace QGears
 {
+    class HRCSkeletonLoader;
+
     class HRCFile : public Ogre::Resource
     {
     public:
@@ -73,10 +73,6 @@ namespace QGears
         virtual void unloadImpl();
         virtual size_t calculateSize() const;
         virtual size_t calculateSize( const Bone &bone ) const;
-
-        static const String ROOT_BONE_NAME;
-        static const Ogre::Quaternion ROOT_ORIENTATION;
-        static Ogre::Quaternion createRootOrientation();
 
     private:
         String      m_skeleton_name;

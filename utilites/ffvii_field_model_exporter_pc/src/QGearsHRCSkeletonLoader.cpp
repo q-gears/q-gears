@@ -65,6 +65,8 @@ namespace QGears
         assert( skeleton );
 
         m_hrc_file.load();
+        skeleton->_notifyOrigin( m_hrc_file.getName() );
+
         Ogre::Bone *root( skeleton->createBone( ROOT_BONE_NAME ) );
         root->setOrientation( ROOT_ORIENTATION );
 

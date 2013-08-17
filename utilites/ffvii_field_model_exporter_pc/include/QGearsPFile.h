@@ -39,11 +39,14 @@ THE SOFTWARE.
 
 namespace QGears
 {
-    class PFile
+    class PFile : public Ogre::Resource
     {
     public:
 
-        PFile();
+        PFile( Ogre::ResourceManager *creator, const String &name
+              ,Ogre::ResourceHandle handle, const String &group
+              ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
+
         virtual ~PFile();
 
         virtual bool    isValid( void );
@@ -51,7 +54,6 @@ namespace QGears
         virtual void    addGroups( Ogre::Mesh *mesh, const String &bone_name
                                   ,const String &rsd_name) const;
 
-        //-----------------------------------------------------------------
         struct Edge
         {
             uint16 index[2];
@@ -112,10 +114,12 @@ namespace QGears
         virtual GroupList&              getGroups()             { return m_groups; };
         virtual BBoxList&               getBBoxes()             { return m_bboxes; };
 
+        static const String RESOURCE_TYPE;
+
     protected:
-        //virtual void loadImpl();
-        //virtual void unloadImpl();
-        //irtual size_t calculateSize() const;
+        virtual void loadImpl();
+        virtual void unloadImpl();
+        virtual size_t calculateSize() const;
 
         virtual void    addGroup( const Group &group, ManualObject &mo
                                  ,const String &sub_name
@@ -136,6 +140,51 @@ namespace QGears
         PolygonDefinitionList   m_polygon_definitions;
         GroupList               m_groups;
         BBoxList                m_bboxes;
+    };
+
+    //-------------------------------------------------------------------------
+    class PFilePtr : public Ogre::SharedPtr<PFile>
+    {
+    public:
+        PFilePtr() : Ogre::SharedPtr<PFile>() {}
+        explicit PFilePtr( PFile *rep ) : Ogre::SharedPtr<PFile>(rep) {}
+        PFilePtr( const PFilePtr &r ) : Ogre::SharedPtr<PFile>(r) {}
+        PFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<PFile>()
+        {
+            if( r.isNull() )
+                return;
+            // lock & copy other mutex pointer
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            pRep = static_cast<PFile*>(r.getPointer());
+            pUseCount = r.useCountPointer();
+            useFreeMethod = r.freeMethod();
+            if (pUseCount)
+            {
+                ++(*pUseCount);
+            }
+        }
+
+        /// Operator used to convert a ResourcePtr to a PFilePtr
+        PFilePtr& operator=( const Ogre::ResourcePtr& r )
+        {
+            if(pRep == static_cast<PFile*>(r.getPointer()))
+                return *this;
+            release();
+            if( r.isNull() )
+                return *this; // resource ptr is null, so the call to release above has done all we need to do.
+            // lock & copy other mutex pointer
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            pRep = static_cast<PFile*>(r.getPointer());
+            pUseCount = r.useCountPointer();
+            useFreeMethod = r.freeMethod();
+            if (pUseCount)
+            {
+                ++(*pUseCount);
+            }
+            return *this;
+        }
     };
 }
 

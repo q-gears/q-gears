@@ -107,6 +107,24 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    size_t
+    RSDFile::calculateSize() const
+    {
+        size_t size_texture_names( 0 );
+        for( TextureNameList::const_iterator it( m_texture_names.begin() )
+            ;it != m_texture_names.end()
+            ;++it )
+        {
+            size_texture_names += it->size();
+        }
+
+        return m_polygon_name.size()
+              +m_material_name.size()
+              +m_group_name.size()
+              +size_texture_names;
+    }
+
+    //---------------------------------------------------------------------
     void
     RSDFile::addTexture( Ogre::Pass *pass, const size_t index ) const
     {
@@ -132,24 +150,6 @@ namespace QGears
             texture_unit->setNumMipmaps( 0 );
             texture_unit->setTextureFiltering( Ogre::TFO_NONE );
         }
-    }
-
-    //---------------------------------------------------------------------
-    size_t
-    RSDFile::calculateSize() const
-    {
-        size_t size_texture_names( 0 );
-        for( TextureNameList::const_iterator it( m_texture_names.begin() )
-            ;it != m_texture_names.end()
-            ;++it )
-        {
-            size_texture_names += it->size();
-        }
-
-        return m_polygon_name.size()
-              +m_material_name.size()
-              +m_group_name.size()
-              +size_texture_names;
     }
 
     //---------------------------------------------------------------------

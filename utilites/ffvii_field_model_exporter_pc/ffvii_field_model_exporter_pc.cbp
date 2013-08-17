@@ -167,9 +167,11 @@
 		<Unit filename="include/QGearsHRCFile.h" />
 		<Unit filename="include/QGearsHRCFileManager.h" />
 		<Unit filename="include/QGearsHRCFileSerializer.h" />
+		<Unit filename="include/QGearsHRCMeshLoader.h" />
 		<Unit filename="include/QGearsHRCSkeletonLoader.h" />
 		<Unit filename="include/QGearsManualObject.h" />
 		<Unit filename="include/QGearsPFile.h" />
+		<Unit filename="include/QGearsPFileManager.h" />
 		<Unit filename="include/QGearsPFileSerializer.h" />
 		<Unit filename="include/QGearsRSDFile.h" />
 		<Unit filename="include/QGearsRSDFileManager.h" />
@@ -182,9 +184,11 @@
 		<Unit filename="src/QGearsHRCFile.cpp" />
 		<Unit filename="src/QGearsHRCFileManager.cpp" />
 		<Unit filename="src/QGearsHRCFileSerializer.cpp" />
+		<Unit filename="src/QGearsHRCMeshLoader.cpp" />
 		<Unit filename="src/QGearsHRCSkeletonLoader.cpp" />
 		<Unit filename="src/QGearsManualObject.cpp" />
 		<Unit filename="src/QGearsPFile.cpp" />
+		<Unit filename="src/QGearsPFileManager.cpp" />
 		<Unit filename="src/QGearsPFileSerializer.cpp" />
 		<Unit filename="src/QGearsRSDFile.cpp" />
 		<Unit filename="src/QGearsRSDFileManager.cpp" />

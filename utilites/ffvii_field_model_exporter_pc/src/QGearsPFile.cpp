@@ -26,24 +26,72 @@ THE SOFTWARE.
 #include "QGearsPFile.h"
 
 #include <OgreLog.h>
-#include <OgreRoot.h>
-#include <OgreSceneManager.h>
+
+#include "QGearsPFileSerializer.h"
 
 namespace QGears
 {
     //---------------------------------------------------------------------
-    const Ogre::Quaternion PFile::STATIC_ROTATION( PFile::createStaticRotation() );
+    const String            PFile::RESOURCE_TYPE( "QGearsPFile" );
+    const Ogre::Quaternion  PFile::STATIC_ROTATION( PFile::createStaticRotation() );
 
     //---------------------------------------------------------------------
-    PFile::PFile()
+    PFile::PFile( Ogre::ResourceManager *creator
+                 ,const String &name, Ogre::ResourceHandle handle
+                 ,const String &group, bool isManual
+                 ,Ogre::ManualResourceLoader *loader ) :
+        Ogre::Resource( creator, name, handle, group, isManual, loader )
     {
-        //ctor
+        createParamDictionary( RESOURCE_TYPE );
     }
 
     //---------------------------------------------------------------------
     PFile::~PFile()
     {
-        //dtor
+        unload();
+    }
+
+    //---------------------------------------------------------------------
+    void
+    PFile::loadImpl()
+    {
+        PFileSerializer serializer;
+        Ogre::DataStreamPtr stream( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
+        serializer.importPFile( stream, this );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    PFile::unloadImpl()
+    {
+        m_vertices.clear();
+        m_normals.clear();
+        m_unknown1.clear();
+        m_texture_coordinates.clear();
+        m_vertex_colors.clear();
+        m_polygon_colors.clear();
+        m_edges.clear();
+        m_polygon_definitions.clear();
+        m_groups.clear();
+        m_bboxes.clear();
+    }
+
+    //---------------------------------------------------------------------
+    size_t
+    PFile::calculateSize() const
+    {
+        // TODO implement
+        // m_vertices.size();
+        // m_normals.size();
+        // m_unknown1.size();
+        // m_texture_coordinates.size();
+        // m_vertex_colors.size();
+        // m_polygon_colors.size();
+        // m_edges.size();
+        // m_polygon_definitions.size();
+        // m_groups.size();
+        // m_bboxes.size();
+        return 0;
     }
 
     //---------------------------------------------------------------------

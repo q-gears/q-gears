@@ -25,14 +25,20 @@ THE SOFTWARE.
 */
 #include "QGearsHRCMeshLoader.h"
 
-#include "OgreMesh.h"
+#include <OgreMesh.h>
 
 #include "QGearsHRCFile.h"
+#include "QGearsRSDFileManager.h"
 
 namespace QGears
 {
+    typedef HRCFile::Bone           Bone;
+    typedef HRCFile::BoneList       BoneList;
+    typedef HRCFile::RSDNameList    RSDNameList;
+
     //-------------------------------------------------------------------------
-    HRCMeshLoader::HRCMeshLoader()
+    HRCMeshLoader::HRCMeshLoader( HRCFile &hrc_file ) :
+        m_hrc_file( hrc_file )
     {
     }
 
@@ -43,11 +49,47 @@ namespace QGears
 
     //-------------------------------------------------------------------------
     void
-    HRCMeshLoader::loadResource ( Ogre::Resource *resource )
+    HRCMeshLoader::loadResource( Ogre::Resource *resource )
     {
         Ogre::Mesh *mesh( static_cast<Ogre::Mesh *>( resource ) );
-        //HRCFile hrc;
-        //Ogre::SkeletonPtr skeleton( hrc.createSkeleton() );
+        assert( mesh );
+
+        m_hrc_file.load();
+        mesh->_notifyOrigin( m_hrc_file.getName() );
+
+        String path;
+        StringUtil::splitPath( m_hrc_file.getName() )
+
+        BoneList::const_iterator it( m_hrc_file.getBones().begin() );
+        BoneList::const_iterator end( m_hrc_file.getBones().end() );
+        while( it != end )
+        {
+            loadBone( mesh, *(it++), path );
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    HRCMeshLoader::loadBone( Ogre::Mesh *mesh, const Bone &bone, const String &path )
+    {
+        const String &bone_name( bone.name );
+        RSDNameList::const_iterator it( bone.rsd_names.begin() );
+        RSDNameList::const_iterator end( bone.rsd_names.end() );
+        String rsd_file_name, p_file_name;
+        while( it != end )
+        {
+            rsd_file_name = path + *it + EXT_RSD;
+            StringUtil::toLowerCase( rsd_file_name );
+            RSDFilePtr rsd_file( RSDFileManager::getSingleton().load( rsd_file_name, m_hrc_file.getGroup() ) );
+            assert( !rsd_file.isNull() );
+
+            p_file_name = path + rsd_file->getPolygonName();
+            p_file_name = StringUtil::replaceAll( p_file_name, EXT_PLY, EXT_P );
+            StringUtil::toLowerCase( p_file_name );
+            PFilePtr p_file( PFileManager::getSingleton().load( p_file_name, m_hrc_file.getGroup() ) );
+
+            ++it;
+        }
     }
 
     //-------------------------------------------------------------------------
