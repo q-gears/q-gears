@@ -75,11 +75,11 @@ main( int argc, char *argv[] )
     QGears::PFile               p;
     Ogre::String                unit( "n_cloud");
 
-    hrc = hrc_manager.load( "field/char/aaaa.hrc", "Game" );
+    //hrc = hrc_manager.load( "field/char/aaaa.hrc", "Game" );
     rsd = rsd_manager.load( "field/char/aaab.rsd", "Game" );
 
     Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit + ".mesh", "General" ) );
-    mesh->setSkeletonName( hrc->getSkeletonFileName() );
+    mesh->setSkeletonName( "field/char/n_cloud_sk.skeleton" );
     Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
 
     stream = getStream( "field/char/aaac.p" );

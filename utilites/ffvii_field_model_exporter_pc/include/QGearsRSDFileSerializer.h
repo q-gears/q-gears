@@ -42,11 +42,9 @@ namespace QGears
         virtual void 	importRSDFile( Ogre::DataStreamPtr &stream, RSDFile* pDest );
 
     protected:
-        virtual String  readLine( Ogre::DataStreamPtr &stream ) const;
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
         virtual void    parseLine( const String &line, RSDFile* pDest );
 
-        static const String TAG_COMMENT;
         static const String TAG_HEADER;
         static const String TAG_POLYGON;
         static const String TAG_MATERIAL;

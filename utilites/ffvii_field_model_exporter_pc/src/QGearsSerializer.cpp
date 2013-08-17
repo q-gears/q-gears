@@ -29,6 +29,11 @@ THE SOFTWARE.
 
 namespace QGears
 {
+    typedef Ogre::StringUtil        StringUtil;
+
+    //---------------------------------------------------------------------
+    const String Serializer::TAG_COMMENT( "#" );
+
     //---------------------------------------------------------------------
     Serializer::Serializer()
     {
@@ -84,6 +89,20 @@ namespace QGears
 
         readObject( stream, tmp );
         pDest.setMinimum( tmp );
+    }
+
+    //---------------------------------------------------------------------
+    String
+    Serializer::getLine( Ogre::DataStreamPtr &stream ) const
+    {
+        String line("");
+        do
+        {
+            line = stream->getLine();
+
+        } while( StringUtil::startsWith( line, TAG_COMMENT ) );
+
+        return line;
     }
 
     //---------------------------------------------------------------------

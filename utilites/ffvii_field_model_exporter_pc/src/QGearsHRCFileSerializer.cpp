@@ -69,7 +69,7 @@ namespace QGears
                                  ,Block& pDest )
     {
         String line;
-        while( !stream->eof() && !(line = stream->getLine() ).empty() )
+        while( !stream->eof() && !(line = getLine( stream ) ).empty() )
         {
             pDest.push_back( line );
         }

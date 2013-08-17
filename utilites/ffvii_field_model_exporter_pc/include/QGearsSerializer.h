@@ -32,6 +32,8 @@ THE SOFTWARE.
 #include <OgreVector2.h>
 #include <OgreVector3.h>
 
+#include "common/TypeDefine.h"
+
 namespace QGears
 {
     class Serializer : public Ogre::Serializer
@@ -49,6 +51,10 @@ namespace QGears
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector3 &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::ColourValue &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::AxisAlignedBox &pDest );
+
+        virtual String  getLine( Ogre::DataStreamPtr &stream ) const;
+
+        static const String TAG_COMMENT;
 
     private:
     };

@@ -73,6 +73,7 @@ namespace QGears
     HRCFileManager::parseScript( Ogre::DataStreamPtr &stream, const String &groupName )
     {
         HRCFilePtr  hrc( create( stream->getName(), groupName ) );
+        hrc->load();
     }
 
     //-------------------------------------------------------------------------

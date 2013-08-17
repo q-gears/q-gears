@@ -40,6 +40,7 @@ namespace QGears
         virtual void 	importHRCFile( Ogre::DataStreamPtr &stream, HRCFile* pDest );
 
     protected:
+        static const String TAG_COMMENT;
         static const String TAG_VERSION;
         static const String TAG_NAME;
         static const String TAG_BONE_COUNT;

@@ -35,7 +35,6 @@ namespace QGears
     typedef Ogre::StringConverter   StringConverter;
 
     //---------------------------------------------------------------------
-    const String RSDFileSerializer::TAG_COMMENT         ("#"   );
     const String RSDFileSerializer::TAG_HEADER          ("@RSD");
     const String RSDFileSerializer::TAG_POLYGON         ("PLY" );
     const String RSDFileSerializer::TAG_MATERIAL        ("MAT" );
@@ -55,24 +54,10 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    String
-    RSDFileSerializer::readLine( Ogre::DataStreamPtr &stream ) const
-    {
-        String line("");
-        do
-        {
-            line = stream->getLine();
-
-        } while( StringUtil::startsWith( line, TAG_COMMENT ) );
-
-        return line;
-    }
-
-    //---------------------------------------------------------------------
     void
     RSDFileSerializer::readFileHeader( Ogre::DataStreamPtr &stream )
     {
-        String line( readLine( stream ) );
+        String line( getLine( stream ) );
         if( !StringUtil::startsWith( line, TAG_HEADER, false ) )
         {
             Ogre::LogManager::getSingleton().stream() << line;
@@ -161,7 +146,7 @@ namespace QGears
         readFileHeader( stream );
         while( !stream->eof() )
         {
-            parseLine( readLine( stream ), pDest );
+            parseLine( getLine( stream ), pDest );
         }
         if( !m_has_texture_count )
         {

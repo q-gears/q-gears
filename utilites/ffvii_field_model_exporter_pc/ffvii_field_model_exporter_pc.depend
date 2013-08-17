@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1376721908 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\main.cpp
+1376724789 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\main.cpp
 	<fstream>
 	<OgreLogManager.h>
 	<OgreSceneManager.h>
@@ -7199,11 +7199,11 @@
 	"QGearsPsyPSerializer.h"
 	<OgreLogManager.h>
 
-1376209138 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\test\test_qgearspfileserializer.cpp
+1376723966 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\test\test_qgearspfileserializer.cpp
 	<fstream>
 	<boost/test/unit_test.hpp>
-	<OgreRoot.h>
-	"QGearsHRCFileSerializer.h"
+	<Ogre.h>
+	"QGearsPFileSerializer.h"
 
 1376722956 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearspfileserializer.h
 	"common/TypeDefine.h"
@@ -7252,22 +7252,23 @@
 	<boost/test/unit_test.hpp>
 	"QGearsPFileSerializer.h"
 
-1376687033 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\qgearshrcfileserializer.cpp
+1376725143 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\qgearshrcfileserializer.cpp
 	"QGearsHRCFileSerializer.h"
 	<OgreException.h>
 	<OgreLogManager.h>
 	<OgreStringConverter.h>
 
-1376333610 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearshrcfileserializer.h
+1376724978 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearshrcfileserializer.h
 	"QGearsHRCFile.h"
 	"QGearsSerializer.h"
 
-1376337458 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearsserializer.h
+1376725322 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearsserializer.h
 	<OgreAxisAlignedBox.h>
 	<OgreColourValue.h>
 	<OgreSerializer.h>
 	<OgreVector2.h>
 	<OgreVector3.h>
+	"common/TypeDefine.h"
 
 1376556736 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\qgearsserializer.cpp
 	"QGearsSerializer.h"
@@ -7350,7 +7351,7 @@
 	"OgreHardwareVertexBuffer.h"
 	"OgreHardwareIndexBuffer.h"
 
-1376695271 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\qgearshrcfilemanager.cpp
+1376724677 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\qgearshrcfilemanager.cpp
 	"QGearsHRCFileManager.h"
 	<OgreLogManager.h>
 
@@ -7359,12 +7360,12 @@
 	"common/TypeDefine.h"
 	"QGearsHRCFile.h"
 
-1376678894 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearsrsdfileserializer.h
+1376725163 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearsrsdfileserializer.h
 	"QGearsRSDFile.h"
 	"QGearsSerializer.h"
 	"common/TypeDefine.h"
 
-1376687115 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\qgearsrsdfileserializer.cpp
+1376725267 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\qgearsrsdfileserializer.cpp
 	"QGearsRSDFileSerializer.h"
 	<OgreException.h>
 	<OgreLogManager.h>
