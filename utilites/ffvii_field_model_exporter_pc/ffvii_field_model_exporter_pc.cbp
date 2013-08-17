@@ -159,6 +159,7 @@
 		<Unit filename="../common/Logger.h" />
 		<Unit filename="../common/OgreBase.cpp" />
 		<Unit filename="../common/OgreBase.h" />
+		<Unit filename="../common/TypeDefine.cpp" />
 		<Unit filename="../common/TypeDefine.h" />
 		<Unit filename="include/FFVIICharacter.h" />
 		<Unit filename="include/QGearsAFile.h" />
@@ -166,7 +167,7 @@
 		<Unit filename="include/QGearsHRCFile.h" />
 		<Unit filename="include/QGearsHRCFileManager.h" />
 		<Unit filename="include/QGearsHRCFileSerializer.h" />
-		<Unit filename="include/QGearsHRCMeshLoader.h" />
+		<Unit filename="include/QGearsHRCSkeletonLoader.h" />
 		<Unit filename="include/QGearsManualObject.h" />
 		<Unit filename="include/QGearsPFile.h" />
 		<Unit filename="include/QGearsPFileSerializer.h" />
@@ -180,7 +181,7 @@
 		<Unit filename="src/QGearsHRCFile.cpp" />
 		<Unit filename="src/QGearsHRCFileManager.cpp" />
 		<Unit filename="src/QGearsHRCFileSerializer.cpp" />
-		<Unit filename="src/QGearsHRCMeshLoader.cpp" />
+		<Unit filename="src/QGearsHRCSkeletonLoader.cpp" />
 		<Unit filename="src/QGearsManualObject.cpp" />
 		<Unit filename="src/QGearsPFile.cpp" />
 		<Unit filename="src/QGearsPFileSerializer.cpp" />
