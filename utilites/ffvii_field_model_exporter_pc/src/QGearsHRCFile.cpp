@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #include "QGearsHRCFileSerializer.h"
 #include "QGearsHRCSkeletonLoader.h"
+#include "QGearsStringUtil.h"
 
 namespace QGears
 {

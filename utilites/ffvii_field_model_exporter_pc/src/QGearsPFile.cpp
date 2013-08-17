@@ -26,6 +26,9 @@ THE SOFTWARE.
 #include "QGearsPFile.h"
 
 #include <OgreLog.h>
+#include <OgreLogManager.h>
+#include <OgreStringConverter.h>
+#include <OgreBone.h>
 
 #include "QGearsPFileSerializer.h"
 
@@ -91,7 +94,7 @@ namespace QGears
         // m_polygon_definitions.size();
         // m_groups.size();
         // m_bboxes.size();
-        return 0;
+        return m_vertices.size() * sizeof( m_vertices.front() );
     }
 
     //---------------------------------------------------------------------

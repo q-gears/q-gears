@@ -27,8 +27,11 @@ THE SOFTWARE.
 
 #include <OgreMesh.h>
 
+#include "QGearsPFile.h"
+#include "QGearsPFileManager.h"
 #include "QGearsHRCFile.h"
 #include "QGearsRSDFileManager.h"
+#include "QGearsStringUtil.h"
 
 namespace QGears
 {
@@ -58,7 +61,7 @@ namespace QGears
         mesh->_notifyOrigin( m_hrc_file.getName() );
 
         String path;
-        StringUtil::splitPath( m_hrc_file.getName() )
+        StringUtil::splitPath( m_hrc_file.getName(), path );
 
         BoneList::const_iterator it( m_hrc_file.getBones().begin() );
         BoneList::const_iterator end( m_hrc_file.getBones().end() );

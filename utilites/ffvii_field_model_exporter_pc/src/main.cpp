@@ -31,8 +31,8 @@ THE SOFTWARE.
 #include "common/OgreBase.h"
 
 #include "QGearsAFileSerializer.h"
+#include "QGearsPFileManager.h"
 #include "QGearsHRCFileManager.h"
-#include "QGearsPFileSerializer.h"
 #include "QGearsRSDFileManager.h"
 
 void attachMesh( Ogre::MeshPtr &mesh )
@@ -60,7 +60,6 @@ main( int argc, char *argv[] )
 {
     InitializeOgreBase( "FFVII Field Model Exporter" );
 
-    QGears::RSDFileManager     &rsd_manager( QGears::RSDFileManager::getSingleton() );
     Ogre::SceneManager*         scene_manager( Ogre::Root::getSingleton().getSceneManager( "Scene" ) );
     Ogre::ManualObject*         mo( scene_manager->createManualObject() );
     Ogre::DataStreamPtr         stream;
@@ -68,31 +67,27 @@ main( int argc, char *argv[] )
     Ogre::MaterialSerializer    mat_ser;
     Ogre::SkeletonSerializer    sk_ser;
     QGears::AFileSerializer     a_ser;
-    QGears::PFileSerializer     p_ser;
     QGears::AFile               a;
-    QGears::PFile               p;
+    QGears::PFilePtr            p;
     Ogre::String                unit( "n_cloud");
 
     Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit + ".mesh", "Game" ) );
     mesh->setSkeletonName( "n_cloud_sk.skeleton" );
     Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
 
-    stream = getStream( "field/char/aaac.p" );
-    p_ser.importPFile( stream, &p );
-    p.addGroups( mesh.getPointer(), "hip", "field/char/aaac" );
+    p = QGears::PFileManager::getSingleton().load( "field/char/aaac.p", "Game" );
+    p->addGroups( mesh.getPointer(), "hip", "field/char/aaac" );
 
-    stream = getStream( "field/char/aaae.p" );
-    p_ser.importPFile( stream, &p );
-    p.addGroups( mesh.getPointer(), "chest", "field/char/aaae" );
+    p = QGears::PFileManager::getSingleton().load( "field/char/aaae.p", "Game" );
+    p->addGroups( mesh.getPointer(), "chest", "field/char/aaae" );
 
-    stream = getStream( "field/char/aaba.p" );
-    p_ser.importPFile( stream, &p );
-    p.addGroups( mesh.getPointer(), "head", "field/char/aaba" );
+    p = QGears::PFileManager::getSingleton().load( "field/char/aaba.p", "Game" );
+    p->addGroups( mesh.getPointer(), "head", "field/char/aaba" );
 
-    stream = getStream( "field/char/aafd.p" );
-    p_ser.importPFile( stream, &p );
-    p.addGroups( mesh.getPointer(), "r_foot", "field/char/aafd" );
+    p = QGears::PFileManager::getSingleton().load( "field/char/aafd.p", "Game" );
+    p->addGroups( mesh.getPointer(), "r_foot", "field/char/aafd" );
 
+    /*
     stream = getStream( "field/char/acfe.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Idle" );
@@ -105,12 +100,11 @@ main( int argc, char *argv[] )
     stream = getStream( "field/char/bvjf.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "JumpFromTrain" );
+    */
 
-    sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() );
+    //sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() );
+    //mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );
 
-    mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );
-    Ogre::MaterialPtr material( Ogre::MaterialManager::getSingleton().getByName( "field/char/aaba/1" ) );
-    mat_ser.exportMaterial( material, "n_cloud.material" );
     attachMesh( mesh );
 
     entitys[0]->setVisible( true );
@@ -119,6 +113,7 @@ main( int argc, char *argv[] )
     skeleton.setNull();
     mesh.setNull();
     material.setNull();
+    p.setNull();
     DeinitializeOgreBase();
 
     return 0;

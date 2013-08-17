@@ -61,6 +61,7 @@ namespace QGears
         virtual void            setSkeletonName( const String& name );
         virtual const String&   getSkeletonName( void )     const { return m_skeleton_name; }
         virtual       String    getSkeletonFileName( void ) const;
+        virtual       String    getMeshFileName( void )     const;
         virtual       BoneList& getBones( void )       { return m_bones; }
         virtual const BoneList& getBones( void ) const { return m_bones; }
 

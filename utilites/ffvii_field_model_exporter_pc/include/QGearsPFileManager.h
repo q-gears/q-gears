@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-16 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-17 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,25 +23,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsRSDFileManager_H__
-#define __QGearsRSDFileManager_H__
+#ifndef __QGearsPFileManager_H__
+#define __QGearsPFileManager_H__
 
 #include <OgreResourceManager.h>
 
-#include "QGearsRSDFile.h"
+#include "QGearsPFile.h"
 
 namespace QGears
 {
-    class RSDFileManager : public Ogre::ResourceManager, public Ogre::Singleton<RSDFileManager>
+    class PFileManager : public Ogre::ResourceManager, public Ogre::Singleton<PFileManager>
     {
     public:
-        RSDFileManager();
-        virtual ~RSDFileManager();
+        PFileManager();
+        virtual ~PFileManager();
 
-        static RSDFileManager& getSingleton();
-        static RSDFileManager* getSingletonPtr();
-
-        virtual void parseScript( Ogre::DataStreamPtr &stream, const String &groupName );
+        static PFileManager& getSingleton();
+        static PFileManager* getSingletonPtr();
 
     protected:
         Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
@@ -52,4 +50,4 @@ namespace QGears
     };
 }
 
-#endif // __QGearsRSDFileManager_H__
+#endif // __QGearsPFileManager_H__
