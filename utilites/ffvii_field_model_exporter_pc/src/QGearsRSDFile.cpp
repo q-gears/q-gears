@@ -25,12 +25,16 @@ THE SOFTWARE.
 */
 #include "QGearsRSDFile.h"
 
-#include <OgreResourceGroupManager.h>
+#include <OgreMaterialManager.h>
+#include <OgrePass.h>
+#include <OgreTechnique.h>
 
 #include "QGearsRSDFileSerializer.h"
 
 namespace QGears
 {
+    typedef Ogre::StringUtil StringUtil;
+
     //---------------------------------------------------------------------
     const Ogre::String  RSDFile::RESOURCE_TYPE( "QGearsRSDFile" );
 
@@ -58,15 +62,27 @@ namespace QGears
         Ogre::DataStreamPtr stream( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
         serializer.importRSDFile( stream, this );
 
-        Ogre::SkeletonManager &skeleton_manager( Ogre::SkeletonManager::getSingleton() );
-        String skeleton( getSkeletonFileName() );
+        Ogre::MaterialManager &material_manager( Ogre::MaterialManager::getSingleton() );
 
-        m_skeleton = skeleton_manager.getByName( skeleton, mGroup );
-        if( m_skeleton.isNull() )
+        String base_name, ext;
+        StringUtil::splitBaseFilename( m_material_name, base_name, ext );
+        StringUtil::toLowerCase( base_name );
+        Ogre::MaterialPtr material;
+        for( size_t i(0); i <= getTextureNameCount(); ++i )
         {
-            assert( m_skeleton_loader == NULL );
-            m_skeleton_loader = new HRCSkeletonLoader( *this );
-            m_skeleton = skeleton_manager.create( skeleton, mGroup, true, m_skeleton_loader );
+            Ogre::String material_name( base_name + Ogre::StringConverter::toString( i ) );
+            material = material_manager.getByName( material_name, mGroup );
+            if( material.isNull() )
+            {
+                material = material_manager.create( material_name, mGroup );
+                m_materials.push_back( material );
+                Ogre::Pass *pass( material->createTechnique()->createPass() );
+                pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
+                if( i > 0 )
+                {
+                    addTexture( pass, i - 1 );
+                }
+            }
         }
     }
 
@@ -79,6 +95,36 @@ namespace QGears
         m_material_name.clear();
         m_group_name.clear();
         m_texture_names.clear();
+        for( MaterialList::iterator it( m_materials.begin() )
+            ;it != m_materials.end()
+            ;++it )
+        {
+			Ogre::MaterialManager::getSingleton().remove( (*it)->getHandle() );
+        }
+        m_materials.clear();
+    }
+
+    //---------------------------------------------------------------------
+    void
+    RSDFile::addTexture( Ogre::Pass *pass, const size_t index ) const
+    {
+        String texture_name( m_texture_names[ index ] );
+        if ( StringUtil::endsWith( texture_name, EXT_TIM ) )
+        {
+            StringUtil::toLowerCase( texture_name );
+            if( !Ogre::ResourceGroupManager::getSingleton().resourceExists( mGroup, texture_name ) )
+            {
+                texture_name = StringUtil::replaceAll( texture_name, EXT_TIM, EXT_TEX );
+            }
+        }
+
+        if( !texture_name.empty() )
+        {
+            pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
+            pass->setAlphaRejectValue( 0 );
+            Ogre::TextureUnitState *texture_unit( pass->createTextureUnitState() );
+            texture_unit->setTextureName( texture_name );
+        }
     }
 
     //---------------------------------------------------------------------

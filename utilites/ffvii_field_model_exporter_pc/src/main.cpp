@@ -66,15 +66,11 @@ main( int argc, char *argv[] )
     Ogre::DataStreamPtr         stream;
     Ogre::MeshSerializer        mesh_ser;
     Ogre::SkeletonSerializer    sk_ser;
-    QGears::HRCFilePtr          hrc;
-    QGears::RSDFilePtr          rsd;
     QGears::AFileSerializer     a_ser;
     QGears::PFileSerializer     p_ser;
     QGears::AFile               a;
     QGears::PFile               p;
     Ogre::String                unit( "n_cloud");
-
-    rsd = rsd_manager.load( "field/char/aaab.rsd", "Game" );
 
     Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit + ".mesh", "Game" ) );
     mesh->setSkeletonName( "n_cloud_sk.skeleton" );
@@ -119,8 +115,6 @@ main( int argc, char *argv[] )
     Ogre::Root::getSingleton().startRendering();
     skeleton.setNull();
     mesh.setNull();
-    rsd.setNull();
-    hrc.setNull();
     DeinitializeOgreBase();
 
     return 0;

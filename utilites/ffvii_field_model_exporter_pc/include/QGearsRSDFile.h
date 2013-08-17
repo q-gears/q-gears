@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __QGearsRSDFile_H__
 
 #include <OgreResource.h>
+#include <OgreMaterial.h>
 
 #include "common/TypeDefine.h"
 
@@ -43,7 +44,8 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
-        typedef std::vector<String> TextureNameList;
+        typedef std::vector<String>             TextureNameList;
+        typedef std::vector<Ogre::MaterialPtr>  MaterialList;
 
         virtual void setPolygonName ( const String &polygon_name );
         virtual void setMaterialName( const String &material_name );
@@ -56,15 +58,17 @@ namespace QGears
         virtual TextureNameList& getTextureNames( void );
 
     protected:
-        virtual void loadImpl();
-        virtual void unloadImpl();
-        virtual size_t calculateSize() const;
+        virtual void    loadImpl();
+        virtual void    unloadImpl();
+        virtual size_t  calculateSize() const;
+        virtual void    addTexture( Ogre::Pass *pass, const size_t index ) const;
 
     private:
         String          m_polygon_name;
         String          m_material_name;
         String          m_group_name;
         TextureNameList m_texture_names;
+        MaterialList    m_materials;
     };
 
     //-------------------------------------------------------------------------
