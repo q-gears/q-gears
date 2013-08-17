@@ -68,24 +68,19 @@ main( int argc, char *argv[] )
     Ogre::SkeletonSerializer    sk_ser;
     QGears::AFileSerializer     a_ser;
     QGears::AFile               a;
-    QGears::PFilePtr            p;
-    Ogre::String                unit( "n_cloud");
 
-    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().load( "field/char/n_cloud_sk.mesh", "Game" ) );
+    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().load( "field/char/sd_red_sk.mesh", "Game" ) );
     Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
 
-    stream = getStream( "field/char/acfe.a" );
+    stream = getStream( "field/char/aeae.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Idle" );
-    stream = getStream( "field/char/aaff.a" );
+    stream = getStream( "field/char/aeaf.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Walk" );
-    stream = getStream( "field/char/aaga.a" );
+    stream = getStream( "field/char/aeba.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Run" );
-    stream = getStream( "field/char/bvjf.a" );
-    a_ser.importAFile( stream, &a );
-    a.addTo( skeleton, "JumpFromTrain" );
 
     //sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() );
     //mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );
@@ -97,7 +92,6 @@ main( int argc, char *argv[] )
     Ogre::Root::getSingleton().startRendering();
     skeleton.setNull();
     mesh.setNull();
-    p.setNull();
     DeinitializeOgreBase();
 
     return 0;
