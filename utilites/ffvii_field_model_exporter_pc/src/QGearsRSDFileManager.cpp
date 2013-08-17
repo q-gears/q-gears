@@ -50,6 +50,9 @@ namespace QGears
         // low, because it will likely reference other resources
         mLoadOrder = 30.0f;
 
+		mScriptPatterns.push_back("*.rsd");
+		Ogre::ResourceGroupManager::getSingleton()._registerScriptLoader( this );
+
         // this is how we register the ResourceManager with OGRE
         Ogre::ResourceGroupManager::getSingleton()._registerResourceManager( mResourceType, this );
     }
@@ -58,6 +61,15 @@ namespace QGears
     RSDFileManager::~RSDFileManager()
     {
         Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager( mResourceType );
+        Ogre::ResourceGroupManager::getSingleton()._unregisterScriptLoader( this );
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    RSDFileManager::parseScript( Ogre::DataStreamPtr &stream, const String &groupName )
+    {
+        RSDFilePtr  rsd( create( stream->getName(), groupName ) );
+        rsd->load();
     }
 
     //-------------------------------------------------------------------------

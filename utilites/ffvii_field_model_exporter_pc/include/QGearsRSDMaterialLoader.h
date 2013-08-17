@@ -32,20 +32,18 @@ THE SOFTWARE.
 
 namespace QGears
 {
-    class RSDFile;
-
-    class QGearsRSDMaterialLoader : public Ogre::ManualResourceLoader
+    class RSDMaterialLoader : public Ogre::ManualResourceLoader
     {
     public:
-        explicit QGearsRSDMaterialLoader( RSDFile &rsd_file );
-        virtual ~QGearsRSDMaterialLoader();
+        explicit RSDMaterialLoader( const String &texture_name );
+        virtual ~RSDMaterialLoader();
 
         virtual void loadResource( Ogre::Resource *resource );
 
     protected:
 
     private:
-        RSDFile  &m_rsd_file;
+        const String    m_texture_name;
     };
 }
 

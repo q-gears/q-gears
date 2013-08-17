@@ -74,8 +74,6 @@ namespace QGears
         virtual size_t calculateSize() const;
         virtual size_t calculateSize( const Bone &bone ) const;
 
-        virtual String  getPathName( void ) const;
-
         static const String ROOT_BONE_NAME;
         static const Ogre::Quaternion ROOT_ORIENTATION;
         static Ogre::Quaternion createRootOrientation();

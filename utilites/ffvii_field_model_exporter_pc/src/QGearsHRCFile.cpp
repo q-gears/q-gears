@@ -65,13 +65,12 @@ namespace QGears
     void
     HRCFile::loadImpl()
     {
-        Ogre::SkeletonManager      &skeleton_manager( Ogre::SkeletonManager::getSingleton() );
-
         HRCFileSerializer serializer;
         Ogre::DataStreamPtr stream( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
         serializer.importHRCFile( stream, this );
 
-        String skeleton( getPathName() + m_skeleton_name + ".skeleton" );
+        Ogre::SkeletonManager &skeleton_manager( Ogre::SkeletonManager::getSingleton() );
+        String skeleton( getSkeletonFileName() );
 
         m_skeleton = skeleton_manager.getByName( skeleton, mGroup );
         if( m_skeleton.isNull() )
@@ -80,6 +79,8 @@ namespace QGears
             m_skeleton_loader = new HRCSkeletonLoader( *this );
             m_skeleton = skeleton_manager.create( skeleton, mGroup, true, m_skeleton_loader );
         }
+
+        // TODO create RSD Files and set their bone assignment here?
     }
 
     //---------------------------------------------------------------------
@@ -126,15 +127,6 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    String
-    HRCFile::getPathName( void ) const
-    {
-        String base, ext, path;
-        Ogre::StringUtil::splitFullFilename( getName(), base, ext, path );
-        return path;
-    }
-
-    //---------------------------------------------------------------------
     void
     HRCFile::setSkeletonName( const String &name )
     {
@@ -145,7 +137,7 @@ namespace QGears
     String
     HRCFile::getSkeletonFileName() const
     {
-        return getPathName() + m_skeleton_name + ".skeleton";
+        return m_skeleton_name + EXT_SKELETON;
     }
 
     //---------------------------------------------------------------------

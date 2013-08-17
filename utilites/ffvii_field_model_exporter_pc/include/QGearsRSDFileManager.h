@@ -41,6 +41,8 @@ namespace QGears
         static RSDFileManager& getSingleton();
         static RSDFileManager* getSingletonPtr();
 
+        virtual void parseScript( Ogre::DataStreamPtr &stream, const String &groupName );
+
     protected:
         Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
           , const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader

@@ -25,58 +25,35 @@ THE SOFTWARE.
 */
 #include "QGearsRSDMaterialLoader.h"
 
-#include <OgreBone.h>
+#include <OgreMaterial.h>
+#include <OgreTechnique.h>
 
-#include "QGearsHRCFile.h"
+#include "QGearsRSDFile.h"
 
 namespace QGears
 {
     //-------------------------------------------------------------------------
-    const String            HRCSkeletonLoader::ROOT_BONE_NAME( "root" );
-    const Ogre::Quaternion  HRCSkeletonLoader::ROOT_ORIENTATION( HRCSkeletonLoader::createRootOrientation() );
-
-    typedef HRCFile::BoneList BoneList;
-
-    //-------------------------------------------------------------------------
-    HRCSkeletonLoader::HRCSkeletonLoader( HRCFile &hrc_file ) :
-        m_hrc_file( hrc_file )
+    RSDMaterialLoader::RSDMaterialLoader( const String &texture_name ) :
+        m_texture_name( texture_name )
     {
     }
 
     //-------------------------------------------------------------------------
-    HRCSkeletonLoader::~HRCSkeletonLoader()
+    RSDMaterialLoader::~RSDMaterialLoader()
     {
-    }
-
-    //---------------------------------------------------------------------
-    Ogre::Quaternion
-    HRCSkeletonLoader::createRootOrientation()
-    {
-        Ogre::Radian angle( Ogre::Degree( 180 ) );
-        Ogre::Vector3 axis( 0, 1, 1 );
-        return Ogre::Quaternion( angle, axis );
     }
 
     //-------------------------------------------------------------------------
     void
-    HRCSkeletonLoader::loadResource( Ogre::Resource *resource )
+    RSDMaterialLoader::loadResource( Ogre::Resource *resource )
     {
-        Ogre::Skeleton *skeleton( static_cast<Ogre::Skeleton *>(resource) );
-        assert( skeleton );
+        Ogre::Material *material( static_cast<Ogre::Material *>(resource) );
+        assert( material );
 
-        m_hrc_file.load();
-        Ogre::Bone *root( skeleton->createBone( ROOT_BONE_NAME ) );
-        root->setOrientation( ROOT_ORIENTATION );
-
-        BoneList &bones( m_hrc_file.getBones() );
-        for( BoneList::const_iterator it_bone( bones.begin() )
-            ;it_bone != bones.end()
-            ;++it_bone )
+        Ogre::Pass* pass( material->createTechnique()->createPass() );
+        pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
+        if( !m_texture_name.empty() )
         {
-            Ogre::Bone* child( skeleton->createBone( it_bone->name ) );
-            Ogre::Bone* parent( skeleton->getBone( it_bone->parent ) );
-            child->setPosition( 0, it_bone->length, 0 );
-            parent->addChild( child );
         }
     }
 

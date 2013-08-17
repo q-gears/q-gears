@@ -57,6 +57,17 @@ namespace QGears
         RSDFileSerializer serializer;
         Ogre::DataStreamPtr stream( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
         serializer.importRSDFile( stream, this );
+
+        Ogre::SkeletonManager &skeleton_manager( Ogre::SkeletonManager::getSingleton() );
+        String skeleton( getSkeletonFileName() );
+
+        m_skeleton = skeleton_manager.getByName( skeleton, mGroup );
+        if( m_skeleton.isNull() )
+        {
+            assert( m_skeleton_loader == NULL );
+            m_skeleton_loader = new HRCSkeletonLoader( *this );
+            m_skeleton = skeleton_manager.create( skeleton, mGroup, true, m_skeleton_loader );
+        }
     }
 
     //---------------------------------------------------------------------
