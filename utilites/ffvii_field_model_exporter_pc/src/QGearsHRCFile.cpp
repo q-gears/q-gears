@@ -44,7 +44,7 @@ namespace QGears
                      ,const String &group, bool isManual
                      ,Ogre::ManualResourceLoader *loader ) :
         Ogre::Resource( creator, name, handle, group, isManual, loader )
-       ,m_skeleton_loader( *this )
+       ,m_skeleton_loader( NULL )
     {
         createParamDictionary( RESOURCE_TYPE );
     }
@@ -70,7 +70,9 @@ namespace QGears
         m_skeleton = skeleton_manager.getByName( skeleton, mGroup );
         if( m_skeleton.isNull() )
         {
-            m_skeleton = skeleton_manager.create( skeleton, mGroup, true, &m_skeleton_loader );
+            assert( m_skeleton_loader == NULL );
+            m_skeleton_loader = new HRCSkeletonLoader( *this );
+            m_skeleton = skeleton_manager.create( skeleton, mGroup, true, m_skeleton_loader );
         }
     }
 
@@ -80,6 +82,12 @@ namespace QGears
     {
         m_skeleton_name.clear();
         m_bones.clear();
+        if( m_skeleton_loader )
+        {
+            Ogre::SkeletonManager::getSingleton().remove( m_skeleton->getHandle() );
+            delete m_skeleton_loader;
+            m_skeleton_loader = NULL;
+        }
         m_skeleton.setNull();
         m_mesh.setNull();
     }

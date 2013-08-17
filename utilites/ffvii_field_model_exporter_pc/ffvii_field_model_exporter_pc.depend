@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1376721326 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\main.cpp
+1376721908 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\main.cpp
 	<fstream>
 	<OgreLogManager.h>
 	<OgreSceneManager.h>
@@ -7205,7 +7205,7 @@
 	<OgreRoot.h>
 	"QGearsHRCFileSerializer.h"
 
-1376337467 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearspfileserializer.h
+1376722956 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearspfileserializer.h
 	"common/TypeDefine.h"
 	"QGearsPFile.h"
 	"QGearsSerializer.h"
@@ -7230,7 +7230,7 @@
 	<OgreRoot.h>
 	<OgreSceneManager.h>
 
-1376721820 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\qgearshrcfile.cpp
+1376722694 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\src\qgearshrcfile.cpp
 	"QGearsHRCFile.h"
 	<OgreBone.h>
 	<OgreLogManager.h>
@@ -7239,7 +7239,7 @@
 	"QGearsHRCFileSerializer.h"
 	"QGearsHRCSkeletonLoader.h"
 
-1376721870 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearshrcfile.h
+1376722466 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearshrcfile.h
 	<OgreResource.h>
 	<OgreMesh.h>
 	<OgreSkeleton.h>
@@ -7308,10 +7308,10 @@
 	"QGearsAFile.h"
 	"QGearsSerializer.h"
 
-1376332995 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\test\test_qgearsafileserializer.cpp
+1376722286 source:d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\test\test_qgearsafileserializer.cpp
 	<fstream>
 	<boost/test/unit_test.hpp>
-	<OgreRoot.h>
+	<Ogre.h>
 	"QGearsAFileSerializer.h"
 
 1376545579 d:\work\q-gears\utilites\ffvii_field_model_exporter_pc\include\qgearsmanualobject.h

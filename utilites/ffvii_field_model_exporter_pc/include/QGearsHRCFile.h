@@ -84,7 +84,7 @@ namespace QGears
         String      m_skeleton_name;
         BoneList    m_bones;
 
-        HRCSkeletonLoader   m_skeleton_loader;
+        HRCSkeletonLoader   *m_skeleton_loader;
         Ogre::SkeletonPtr   m_skeleton;
         Ogre::MeshPtr       m_mesh;
     };

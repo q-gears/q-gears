@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __QGearsPFileSerializer_H__
 
 #include "common/TypeDefine.h"
+
 #include "QGearsPFile.h"
 #include "QGearsSerializer.h"
 
@@ -42,23 +43,23 @@ namespace QGears
 
         struct Header
         {
-            Ogre::uint32 version;
-            Ogre::uint32 unknown_04;
-            Ogre::uint32 vertex_type;
-            Ogre::uint32 num_vertices;
-            Ogre::uint32 num_normals;
-            Ogre::uint32 num_unknown1;
-            Ogre::uint32 num_texture_coordinates;
-            Ogre::uint32 num_vertex_colors;
-            Ogre::uint32 num_edges;
-            Ogre::uint32 num_polygons;
-            Ogre::uint32 num_unknown2;
-            Ogre::uint32 num_unknown3;
-            Ogre::uint32 num_hundreds;
-            Ogre::uint32 num_groups;
-            Ogre::uint32 num_bboxes;
-            Ogre::uint32 norm_index_table_flag;
-            Ogre::uint32 runtime_data[0x10];
+            uint32 version;
+            uint32 unknown_04;
+            uint32 vertex_type;
+            uint32 num_vertices;
+            uint32 num_normals;
+            uint32 num_unknown1;
+            uint32 num_texture_coordinates;
+            uint32 num_vertex_colors;
+            uint32 num_edges;
+            uint32 num_polygons;
+            uint32 num_unknown2;
+            uint32 num_unknown3;
+            uint32 num_hundreds;
+            uint32 num_groups;
+            uint32 num_bboxes;
+            uint32 norm_index_table_flag;
+            uint32 runtime_data[0x10];
         };
 
         typedef PFile::Edge Edge;
