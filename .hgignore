@@ -15,3 +15,5 @@ utilites/ffix_model_exporter/compile/
 utilites/xeno_model_exporter/compile/
 **/bin/**
 **/obj/**
+**.cbTemp
+**.depends
