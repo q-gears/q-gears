@@ -78,19 +78,19 @@ main( int argc, char *argv[] )
 
     stream = getStream( "field/char/aaac.p" );
     p_ser.importPFile( stream, &p );
-    p.addGroups( mesh.getPointer(), "hip", "aaab" );
+    p.addGroups( mesh.getPointer(), "hip", "field/char/aaac" );
 
     stream = getStream( "field/char/aaae.p" );
     p_ser.importPFile( stream, &p );
-    p.addGroups( mesh.getPointer(), "chest", "aaad" );
+    p.addGroups( mesh.getPointer(), "chest", "field/char/aaae" );
 
     stream = getStream( "field/char/aaba.p" );
     p_ser.importPFile( stream, &p );
-    p.addGroups( mesh.getPointer(), "head", "aaaf" );
+    p.addGroups( mesh.getPointer(), "head", "field/char/aaba" );
 
     stream = getStream( "field/char/aafd.p" );
     p_ser.importPFile( stream, &p );
-    p.addGroups( mesh.getPointer(), "r_foot", "aafc" );
+    p.addGroups( mesh.getPointer(), "r_foot", "field/char/aafd" );
 
     stream = getStream( "field/char/acfe.a" );
     a_ser.importAFile( stream, &a );

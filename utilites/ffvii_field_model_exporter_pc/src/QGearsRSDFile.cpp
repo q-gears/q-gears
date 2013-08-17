@@ -30,10 +30,10 @@ THE SOFTWARE.
 #include <OgreTechnique.h>
 
 #include "QGearsRSDFileSerializer.h"
+#include "QGearsStringUtil.h"
 
 namespace QGears
 {
-    typedef Ogre::StringUtil StringUtil;
 
     //---------------------------------------------------------------------
     const Ogre::String  RSDFile::RESOURCE_TYPE( "QGearsRSDFile" );
@@ -64,17 +64,21 @@ namespace QGears
 
         Ogre::MaterialManager &material_manager( Ogre::MaterialManager::getSingleton() );
 
-        String base_name, ext;
+        String base_name, ext, path;
+        StringUtil::splitPath( getName(), path );
         StringUtil::splitBaseFilename( m_material_name, base_name, ext );
         StringUtil::toLowerCase( base_name );
         Ogre::MaterialPtr material;
         for( size_t i(0); i <= getTextureNameCount(); ++i )
         {
-            Ogre::String material_name( base_name + Ogre::StringConverter::toString( i ) );
+            Ogre::String material_name( path + base_name + "/" + Ogre::StringConverter::toString( i ) );
             material = material_manager.getByName( material_name, mGroup );
             if( material.isNull() )
             {
+                Ogre::LogManager::getSingleton().stream()
+                    << "\n creating Material '" << material_name << "'";
                 material = material_manager.create( material_name, mGroup );
+                material->_notifyOrigin( getName() );
                 m_materials.push_back( material );
                 Ogre::Pass *pass( material->createTechnique()->createPass() );
                 pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
@@ -108,7 +112,10 @@ namespace QGears
     void
     RSDFile::addTexture( Ogre::Pass *pass, const size_t index ) const
     {
-        String texture_name( m_texture_names[ index ] );
+        String texture_name;
+        StringUtil::splitPath( getName(), texture_name );
+        texture_name += m_texture_names[ index ];
+
         if ( StringUtil::endsWith( texture_name, EXT_TIM ) )
         {
             StringUtil::toLowerCase( texture_name );

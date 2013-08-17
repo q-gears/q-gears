@@ -125,8 +125,7 @@ namespace QGears
                 << "\n";
             */
             String sub_name( bone_name + "/" + rsd_name + "/" + Ogre::StringConverter::toString(g) );
-            String material_name( mesh_name + "/" + sub_name );
-            addGroup( m_groups[g], mo, sub_name, material_name, skeleton->getBone( bone_name ) );
+            addGroup( m_groups[g], mo, sub_name, rsd_name, skeleton->getBone( bone_name ) );
         }
     }
 
@@ -147,16 +146,22 @@ namespace QGears
     //---------------------------------------------------------------------
     void
     PFile::addGroup( const Group &group, ManualObject &mo
-                    ,const String &sub_name, const String &material_name
+                    ,const String &sub_name, const String &rsd_name
                     ,const Ogre::Bone *bone ) const
     {
-        Ogre::Radian angle( Ogre::Degree( 180 ) );
-        Ogre::Quaternion rot( angle, Ogre::Vector3::UNIT_X );
+        size_t material_index( 0 );
+        if( group.has_texture )
+        {
+            material_index = group.texture_index + 1;
+        }
+        String material_name( rsd_name + "/" + Ogre::StringConverter::toString( material_index ) );
+
         size_t vertex_count( group.num_polygons * 3 );
         size_t index_count( vertex_count );
-        mo.begin( sub_name, material_name, vertex_count, index_count );
         size_t end_index( group.polygon_start_index + group.num_polygons );
         uint16 bone_handle( bone->getHandle() ), index( 0 );
+
+        mo.begin( sub_name, material_name, vertex_count, index_count );
         for( size_t p( group.polygon_start_index ); p < end_index; ++p )
         {
             const PolygonDefinition& polygon( m_polygon_definitions[p] );

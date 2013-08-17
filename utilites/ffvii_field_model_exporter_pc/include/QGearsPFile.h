@@ -119,7 +119,7 @@ namespace QGears
 
         virtual void    addGroup( const Group &group, ManualObject &mo
                                  ,const String &sub_name
-                                 ,const String &material_name
+                                 ,const String &rsd_name
                                  ,const Ogre::Bone *bone ) const;
         virtual Ogre::Vector3   getPosition( const Ogre::Bone *bone ) const;
 
