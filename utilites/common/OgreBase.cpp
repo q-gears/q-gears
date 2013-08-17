@@ -1,10 +1,18 @@
 #include "OgreBase.h"
 
+#include "QGearsPFileManager.h"
+#include "QGearsHRCFileManager.h"
+#include "QGearsRSDFileManager.h"
+
 Ogre::Root*                     root;
 Ogre::RenderWindow*             window;
 std::vector< Ogre::Entity* >    entitys;
-Ogre::Camera*                   camera;
-DisplayFrameListener* frame_listener;
+Ogre::Camera                   *camera;
+DisplayFrameListener           *frame_listener;
+
+QGears::PFileManager       *p_manager;
+QGears::HRCFileManager     *hrc_manager;
+QGears::RSDFileManager     *rsd_manager;
 
 void
 InitializeOgreBase( const Ogre::String& name )
@@ -74,14 +82,16 @@ InitializeOgreBase( const Ogre::String& name )
     misc[ "title" ] = name;
     window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
 
-
+    // create resource managers, move to plugin later on
+    p_manager   = new QGears::PFileManager();
+    hrc_manager = new QGears::HRCFileManager();
+    rsd_manager = new QGears::RSDFileManager();
 
     // initialize resource
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./", "FileSystem", "General" );
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./exported", "FileSystem", "General" );
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "../../OgreCore.zip", "Zip", "Bootstrap" );
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
 
 
     Ogre::SceneManager* scene_manager;
@@ -101,7 +111,7 @@ InitializeOgreBase( const Ogre::String& name )
 
     camera = scene_manager->createCamera( "Camera" );
     camera->setNearClipDistance( 0.01f );
-    camera->setPosition( 0, 5, 10 );
+    camera->setPosition( 0, 5, 50 );
     camera->lookAt( 0, 0, 0 );
 
     viewport = window->addViewport( camera );
@@ -119,6 +129,10 @@ DeinitializeOgreBase()
 {
     delete LOGGER;
     delete FILESYSTEM;
+
+    delete p_manager;
+    delete hrc_manager;
+    delete rsd_manager;
 
     delete root;
     delete frame_listener;

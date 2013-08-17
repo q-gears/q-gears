@@ -120,7 +120,7 @@ public:
 
                     if( state->getEnabled() == true )
                     {
-                        state->addTime( evt.timeSinceLastFrame );
+                        state->addTime( evt.timeSinceLastFrame / 5 );
 
                         info_text->setCaption( entitys[ i ]->getName() + ": " + state->getAnimationName() );
                     }
@@ -148,7 +148,7 @@ public:
         }
         if( m_MouseRotate == true )
         {
-            camera->rotate( Ogre::Vector3::UNIT_Y, Ogre::Radian( Ogre::Degree( -m_MouseMoveX * 0.13 ) ) );
+            camera->yaw( Ogre::Degree( -m_MouseMoveX * 0.13 ) );
             camera->pitch( Ogre::Degree( -m_MouseMoveY * 0.13 ) );
             m_MouseMoveX = 0;
             m_MouseMoveY = 0;
