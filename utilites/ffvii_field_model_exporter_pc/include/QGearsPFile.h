@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "common/TypeDefine.h"
 
 #include "QGearsManualObject.h"
+#include "QGearsRSDFile.h"
 
 namespace QGears
 {
@@ -52,7 +53,7 @@ namespace QGears
         virtual bool    isValid( void );
         virtual bool    isPolygonDefinitionListValid( void );
         virtual void    addGroups( Ogre::Mesh *mesh, const String &bone_name
-                                  ,const String &rsd_name) const;
+                                  ,const RSDFilePtr &rsd ) const;
 
         struct Edge
         {
@@ -123,7 +124,7 @@ namespace QGears
 
         virtual void    addGroup( const Group &group, ManualObject &mo
                                  ,const String &sub_name
-                                 ,const String &rsd_name
+                                 ,const String &material_base_name
                                  ,const Ogre::Bone *bone ) const;
         virtual Ogre::Vector3   getPosition( const Ogre::Bone *bone ) const;
 

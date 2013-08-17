@@ -36,4 +36,12 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    void
+    StringUtil::splitBase(  const String &qualifiedName, String &outBasename )
+    {
+        String path, ext;
+        splitFullFilename( qualifiedName, outBasename, ext, path );
+    }
+
+    //---------------------------------------------------------------------
 }

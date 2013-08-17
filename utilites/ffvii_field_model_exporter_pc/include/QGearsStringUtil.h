@@ -34,6 +34,7 @@ namespace QGears
     {
     public:
         static void  splitPath( const String &qualifiedName, String &outPath );
+        static void  splitBase( const String &qualifiedName, String &outBasename );
     };
 }
 

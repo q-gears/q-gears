@@ -71,23 +71,9 @@ main( int argc, char *argv[] )
     QGears::PFilePtr            p;
     Ogre::String                unit( "n_cloud");
 
-    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit + ".mesh", "Game" ) );
-    mesh->setSkeletonName( "n_cloud_sk.skeleton" );
+    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().load( "field/char/n_cloud_sk.mesh", "Game" ) );
     Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
 
-    p = QGears::PFileManager::getSingleton().load( "field/char/aaac.p", "Game" );
-    p->addGroups( mesh.getPointer(), "hip", "field/char/aaac" );
-
-    p = QGears::PFileManager::getSingleton().load( "field/char/aaae.p", "Game" );
-    p->addGroups( mesh.getPointer(), "chest", "field/char/aaae" );
-
-    p = QGears::PFileManager::getSingleton().load( "field/char/aaba.p", "Game" );
-    p->addGroups( mesh.getPointer(), "head", "field/char/aaba" );
-
-    p = QGears::PFileManager::getSingleton().load( "field/char/aafd.p", "Game" );
-    p->addGroups( mesh.getPointer(), "r_foot", "field/char/aafd" );
-
-    /*
     stream = getStream( "field/char/acfe.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Idle" );
@@ -100,7 +86,6 @@ main( int argc, char *argv[] )
     stream = getStream( "field/char/bvjf.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "JumpFromTrain" );
-    */
 
     //sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() );
     //mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );
@@ -112,7 +97,6 @@ main( int argc, char *argv[] )
     Ogre::Root::getSingleton().startRendering();
     skeleton.setNull();
     mesh.setNull();
-    material.setNull();
     p.setNull();
     DeinitializeOgreBase();
 

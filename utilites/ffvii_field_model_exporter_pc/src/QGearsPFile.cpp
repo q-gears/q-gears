@@ -25,12 +25,12 @@ THE SOFTWARE.
 */
 #include "QGearsPFile.h"
 
-#include <OgreLog.h>
 #include <OgreLogManager.h>
 #include <OgreStringConverter.h>
 #include <OgreBone.h>
 
 #include "QGearsPFileSerializer.h"
+#include "QGearsStringUtil.h"
 
 namespace QGears
 {
@@ -83,18 +83,17 @@ namespace QGears
     size_t
     PFile::calculateSize() const
     {
-        // TODO implement
-        // m_vertices.size();
-        // m_normals.size();
-        // m_unknown1.size();
-        // m_texture_coordinates.size();
-        // m_vertex_colors.size();
-        // m_polygon_colors.size();
-        // m_edges.size();
-        // m_polygon_definitions.size();
-        // m_groups.size();
-        // m_bboxes.size();
-        return m_vertices.size() * sizeof( m_vertices.front() );
+        return m_vertices.size()            * sizeof( m_vertices.front() )
+              +m_normals.size()             * sizeof( m_normals.front() )
+              +m_unknown1.size()            * sizeof( m_unknown1.front() )
+              +m_texture_coordinates.size() * sizeof( m_texture_coordinates.front() )
+              +m_vertex_colors.size()       * sizeof( m_vertex_colors.front() )
+              +m_polygon_colors.size()      * sizeof( m_polygon_colors.front() )
+              +m_edges.size()               * sizeof( m_edges.front() )
+              +m_polygon_definitions.size() * sizeof( m_polygon_definitions.front() )
+              +m_groups.size()              * sizeof( m_groups.front() )
+              +m_bboxes.size()              * sizeof( m_bboxes.front() )
+            ;
     }
 
     //---------------------------------------------------------------------
@@ -149,18 +148,19 @@ namespace QGears
     //---------------------------------------------------------------------
     void
     PFile::addGroups( Ogre::Mesh *mesh, const String &bone_name
-                     ,const String &rsd_name ) const
+                     ,const RSDFilePtr &rsd ) const
     {
-        Ogre::Log::Stream log( Ogre::LogManager::getSingleton().stream() );
         const Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
-        String mesh_name, rsd_base, ext, path;
-        Ogre::StringUtil::splitBaseFilename( mesh->getName(), mesh_name, ext );
-        Ogre::StringUtil::splitFullFilename( rsd_name, rsd_base, ext, path );
+        const String material_base_name( rsd->getMaterialBaseName() );
+        String rsd_base;
+        StringUtil::splitBase( rsd->getName(), rsd_base );
+
         ManualObject mo( mesh );
         for( size_t g(0); g < m_groups.size(); ++g )
         {
             /*
-            log << "\n primitive_type                : " << group.primitive_type
+            Ogre::LogManager::getSingleton().stream()
+                << "\n primitive_type                : " << group.primitive_type
                 << "\n polygon_start_index           : " << group.polygon_start_index
                 << "\n num_polygons                  : " << group.num_polygons
                 << "\n vertex_start_index            : " << group.vertex_start_index
@@ -177,8 +177,8 @@ namespace QGears
                 << "\n";
             */
 
-            String sub_name( bone_name + "/" + rsd_base + "/" + Ogre::StringConverter::toString(g) );
-            addGroup( m_groups[g], mo, sub_name, rsd_name, skeleton->getBone( bone_name ) );
+            const String sub_name( bone_name + "/" + rsd_base + "/" + Ogre::StringConverter::toString(g) );
+            addGroup( m_groups[g], mo, sub_name, material_base_name, skeleton->getBone( bone_name ) );
         }
     }
 
@@ -199,7 +199,7 @@ namespace QGears
     //---------------------------------------------------------------------
     void
     PFile::addGroup( const Group &group, ManualObject &mo
-                    ,const String &sub_name, const String &rsd_name
+                    ,const String &sub_name, const String &material_base_name
                     ,const Ogre::Bone *bone ) const
     {
         size_t material_index( 0 );
@@ -207,7 +207,7 @@ namespace QGears
         {
             material_index = group.texture_index + 1;
         }
-        String material_name( rsd_name + "/" + Ogre::StringConverter::toString( material_index ) );
+        String material_name( material_base_name + "/" + Ogre::StringConverter::toString( material_index ) );
 
         size_t vertex_count( group.num_polygons * 3 );
         size_t index_count( vertex_count );

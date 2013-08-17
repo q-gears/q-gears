@@ -25,12 +25,11 @@ THE SOFTWARE.
 */
 #include "QGearsHRCFile.h"
 
-#include <OgreBone.h>
-#include <OgreLogManager.h>
-#include <OgreMaterialManager.h>
+#include <OgreMeshManager.h>
 #include <OgreSkeletonManager.h>
 
 #include "QGearsHRCFileSerializer.h"
+#include "QGearsHRCMeshLoader.h"
 #include "QGearsHRCSkeletonLoader.h"
 #include "QGearsStringUtil.h"
 
@@ -45,6 +44,7 @@ namespace QGears
                      ,const String &group, bool isManual
                      ,Ogre::ManualResourceLoader *loader ) :
         Ogre::Resource( creator, name, handle, group, isManual, loader )
+       ,m_mesh_loader( NULL )
        ,m_skeleton_loader( NULL )
     {
         createParamDictionary( RESOURCE_TYPE );
@@ -59,6 +59,15 @@ namespace QGears
             delete m_skeleton_loader;
             m_skeleton_loader = NULL;
         }
+        if( m_mesh_loader )
+        {
+            Ogre::MeshManager::getSingleton().remove( m_mesh->getHandle() );
+            delete m_mesh_loader;
+            m_mesh_loader = NULL;
+        }
+
+        m_skeleton.setNull();
+        m_mesh.setNull();
         unload();
     }
 
@@ -70,18 +79,25 @@ namespace QGears
         Ogre::DataStreamPtr stream( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
         serializer.importHRCFile( stream, this );
 
+        const String skeleton_file_name( getSkeletonFileName() );
         Ogre::SkeletonManager &skeleton_manager( Ogre::SkeletonManager::getSingleton() );
-        String skeleton( getSkeletonFileName() );
-
-        m_skeleton = skeleton_manager.getByName( skeleton, mGroup );
+        m_skeleton = skeleton_manager.getByName( skeleton_file_name, mGroup );
         if( m_skeleton.isNull() )
         {
             assert( m_skeleton_loader == NULL );
             m_skeleton_loader = new HRCSkeletonLoader( *this );
-            m_skeleton = skeleton_manager.create( skeleton, mGroup, true, m_skeleton_loader );
+            m_skeleton = skeleton_manager.create( skeleton_file_name, mGroup, true, m_skeleton_loader );
         }
 
-        // TODO create RSD Files and set their bone assignment here?
+        const String mesh_file_name( getMeshFileName() );
+        Ogre::MeshManager &mesh_manager( Ogre::MeshManager::getSingleton() );
+        m_mesh = mesh_manager.getByName( mesh_file_name, mGroup );
+        if( m_mesh.isNull() )
+        {
+            assert( m_mesh_loader == NULL );
+            m_mesh_loader = new HRCMeshLoader( *this );
+            m_mesh = mesh_manager.create( mesh_file_name, mGroup, true, m_mesh_loader );
+        }
     }
 
     //---------------------------------------------------------------------
@@ -90,8 +106,6 @@ namespace QGears
     {
         m_skeleton_name.clear();
         m_bones.clear();
-        m_skeleton.setNull();
-        m_mesh.setNull();
     }
 
     //---------------------------------------------------------------------

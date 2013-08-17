@@ -64,14 +64,11 @@ namespace QGears
 
         Ogre::MaterialManager &material_manager( Ogre::MaterialManager::getSingleton() );
 
-        String base_name, ext, path;
-        StringUtil::splitPath( getName(), path );
-        StringUtil::splitBaseFilename( m_material_name, base_name, ext );
-        StringUtil::toLowerCase( base_name );
+        const String material_base_name( getMaterialBaseName() );
         Ogre::MaterialPtr material;
         for( size_t i(0); i <= getTextureNameCount(); ++i )
         {
-            Ogre::String material_name( path + base_name + "/" + Ogre::StringConverter::toString( i ) );
+            Ogre::String material_name( material_base_name + "/" + Ogre::StringConverter::toString( i ) );
             material = material_manager.getByName( material_name, mGroup );
             if( material.isNull() )
             {
@@ -122,6 +119,17 @@ namespace QGears
               +m_material_name.size()
               +m_group_name.size()
               +size_texture_names;
+    }
+
+    //---------------------------------------------------------------------
+    String
+    RSDFile::getMaterialBaseName( void ) const
+    {
+        String base_name, ext, path;
+        StringUtil::splitPath( getName(), path );
+        StringUtil::splitBaseFilename( m_material_name, base_name, ext );
+        StringUtil::toLowerCase( base_name );
+        return path + base_name;
     }
 
     //---------------------------------------------------------------------

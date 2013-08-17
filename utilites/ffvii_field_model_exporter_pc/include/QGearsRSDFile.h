@@ -56,6 +56,7 @@ namespace QGears
         virtual const String& getGroupName   ( void ) const;
         virtual size_t getTextureNameCount   ( void ) const;
         virtual TextureNameList& getTextureNames( void );
+        virtual String getMaterialBaseName( void ) const;
 
     protected:
         virtual void    loadImpl();
