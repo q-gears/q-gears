@@ -40,9 +40,10 @@ namespace QGears
         HRCFileManager();
         virtual ~HRCFileManager();
 
-        virtual HRCFilePtr load( const String &name, const String &group );
-        static HRCFileManager &getSingleton();
-        static HRCFileManager *getSingletonPtr();
+        virtual void parseScript( Ogre::DataStreamPtr &stream, const String &groupName );
+
+        static HRCFileManager& getSingleton();
+        static HRCFileManager* getSingletonPtr();
 
     protected:
         Ogre::Resource *createImpl( const String &name, Ogre::ResourceHandle handle

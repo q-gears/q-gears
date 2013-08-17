@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-16 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-17 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,31 +23,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsRSDFileManager_H__
-#define __QGearsRSDFileManager_H__
+#ifndef __QGearsHRCSkeletonLoader_H__
+#define __QGearsHRCSkeletonLoader_H__
 
-#include <OgreResourceManager.h>
+#include <OgreResource.h>
 
-#include "QGearsRSDFile.h"
+#include "common/TypeDefine.h"
 
 namespace QGears
 {
-    class RSDFileManager : public Ogre::ResourceManager, public Ogre::Singleton<RSDFileManager>
+    class HRCFile;
+
+    class HRCSkeletonLoader : public Ogre::ManualResourceLoader
     {
     public:
-        RSDFileManager();
-        virtual ~RSDFileManager();
+        explicit HRCSkeletonLoader( HRCFile &hrc_file );
+        virtual ~HRCSkeletonLoader();
 
-        static RSDFileManager& getSingleton();
-        static RSDFileManager* getSingletonPtr();
+        virtual void loadResource( Ogre::Resource *resource );
 
     protected:
-        Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
-          , const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader
-          , const Ogre::NameValuePairList *createParams );
+        static const String             ROOT_BONE_NAME;
+        static const Ogre::Quaternion   ROOT_ORIENTATION;
+        static       Ogre::Quaternion   createRootOrientation();
 
     private:
+        HRCFile  &m_hrc_file;
     };
 }
 
-#endif // __QGearsRSDFileManager_H__
+#endif // __QGearsHRCSkeletonLoader_H__

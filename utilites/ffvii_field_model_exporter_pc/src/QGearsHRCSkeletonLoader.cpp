@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-16 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-17 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,50 +23,61 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "QGearsRSDFileManager.h"
+#include "QGearsHRCSkeletonLoader.h"
+
+#include <OgreBone.h>
+
+#include "QGearsHRCFile.h"
 
 namespace QGears
 {
     //-------------------------------------------------------------------------
-    template<> RSDFileManager *Ogre::Singleton<RSDFileManager>::msSingleton = NULL;
+    const String            HRCSkeletonLoader::ROOT_BONE_NAME( "root" );
+    const Ogre::Quaternion  HRCSkeletonLoader::ROOT_ORIENTATION( HRCSkeletonLoader::createRootOrientation() );
+
+    typedef HRCFile::BoneList BoneList;
 
     //-------------------------------------------------------------------------
-    RSDFileManager *RSDFileManager::getSingletonPtr()
+    HRCSkeletonLoader::HRCSkeletonLoader( HRCFile &hrc_file ) :
+        m_hrc_file( hrc_file )
     {
-        return msSingleton;
     }
 
     //-------------------------------------------------------------------------
-    RSDFileManager &RSDFileManager::getSingleton()
+    HRCSkeletonLoader::~HRCSkeletonLoader()
     {
-        assert( msSingleton );
-        return(*msSingleton );
     }
-     //-------------------------------------------------------------------------
-    RSDFileManager::RSDFileManager()
+
+    //---------------------------------------------------------------------
+    Ogre::Quaternion
+    HRCSkeletonLoader::createRootOrientation()
     {
-        mResourceType = RSDFile::RESOURCE_TYPE;
-
-        // low, because it will likely reference other resources
-        mLoadOrder = 30.0f;
-
-        // this is how we register the ResourceManager with OGRE
-        Ogre::ResourceGroupManager::getSingleton()._registerResourceManager( mResourceType, this );
+        Ogre::Radian angle( Ogre::Degree( 180 ) );
+        Ogre::Vector3 axis( 0, 1, 1 );
+        return Ogre::Quaternion( angle, axis );
     }
 
     //-------------------------------------------------------------------------
-    RSDFileManager::~RSDFileManager()
+    void
+    HRCSkeletonLoader::loadResource( Ogre::Resource *resource )
     {
-        Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager( mResourceType );
-    }
+        Ogre::Skeleton *skeleton( static_cast<Ogre::Skeleton *>(resource) );
+        assert( skeleton );
 
-    //-------------------------------------------------------------------------
-    Ogre::Resource *RSDFileManager::createImpl( const Ogre::String &name
-      , Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual
-      , Ogre::ManualResourceLoader *loader
-      , const Ogre::NameValuePairList *createParams )
-    {
-        return new RSDFile( this, name, handle, group, isManual, loader );
+        m_hrc_file.load();
+        Ogre::Bone *root( skeleton->createBone( ROOT_BONE_NAME ) );
+        root->setOrientation( ROOT_ORIENTATION );
+
+        BoneList &bones( m_hrc_file.getBones() );
+        for( BoneList::const_iterator it_bone( bones.begin() )
+            ;it_bone != bones.end()
+            ;++it_bone )
+        {
+            Ogre::Bone* child( skeleton->createBone( it_bone->name ) );
+            Ogre::Bone* parent( skeleton->getBone( it_bone->parent ) );
+            child->setPosition( 0, it_bone->length, 0 );
+            parent->addChild( child );
+        }
     }
 
     //-------------------------------------------------------------------------

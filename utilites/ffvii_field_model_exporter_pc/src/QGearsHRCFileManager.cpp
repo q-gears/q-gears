@@ -25,19 +25,23 @@ THE SOFTWARE.
 */
 #include "QGearsHRCFileManager.h"
 
+#include <OgreLogManager.h>
+
 namespace QGears
 {
     //-------------------------------------------------------------------------
     template<> HRCFileManager *Ogre::Singleton<HRCFileManager>::msSingleton = NULL;
 
     //-------------------------------------------------------------------------
-    HRCFileManager *HRCFileManager::getSingletonPtr()
+    HRCFileManager*
+    HRCFileManager::getSingletonPtr()
     {
         return msSingleton;
     }
 
     //-------------------------------------------------------------------------
-    HRCFileManager &HRCFileManager::getSingleton()
+    HRCFileManager&
+    HRCFileManager::getSingleton()
     {
         assert( msSingleton );
         return(*msSingleton );
@@ -50,6 +54,9 @@ namespace QGears
         // low, because it will likely reference other resources
         mLoadOrder = 30.0f;
 
+		mScriptPatterns.push_back("*.hrc");
+		Ogre::ResourceGroupManager::getSingleton()._registerScriptLoader( this );
+
         // this is how we register the ResourceManager with OGRE
         Ogre::ResourceGroupManager::getSingleton()._registerResourceManager( mResourceType, this );
     }
@@ -58,22 +65,19 @@ namespace QGears
     HRCFileManager::~HRCFileManager()
     {
         Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager( mResourceType );
+        Ogre::ResourceGroupManager::getSingleton()._unregisterScriptLoader( this );
     }
 
     //-------------------------------------------------------------------------
-    HRCFilePtr HRCFileManager::load( const String &name, const String &group )
+    void
+    HRCFileManager::parseScript( Ogre::DataStreamPtr &stream, const String &groupName )
     {
-        HRCFilePtr file( getByName( name ) );
-
-        if ( file.isNull() )
-            file = create( name, group );
-
-        file->load();
-        return file;
+        HRCFilePtr  hrc( create( stream->getName(), groupName ) );
     }
 
     //-------------------------------------------------------------------------
-    Ogre::Resource *HRCFileManager::createImpl( const String &name
+    Ogre::Resource*
+    HRCFileManager::createImpl( const String &name
       , Ogre::ResourceHandle handle, const String &group, bool isManual
       , Ogre::ManualResourceLoader *loader
       , const Ogre::NameValuePairList *createParams )

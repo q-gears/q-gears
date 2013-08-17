@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #define BOOST_TEST_MODULE QGearsASerializer
 #include <boost/test/unit_test.hpp>
-#include <OgreRoot.h>
+#include <Ogre.h>
 
 #include "QGearsAFileSerializer.h"
 
@@ -52,11 +52,15 @@ BOOST_AUTO_TEST_CASE( read_file )
     Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
     BOOST_REQUIRE( stream->isReadable() );
 
-    Ogre::Root root("","");
+	Ogre::LogManager            logMgr;
+    QGears::AFileSerializer     ser;
+    QGears::AFile               f;
 
-    QGears::AFileSerializer   ser;
-    QGears::AFile             f;
+    logMgr.createLog( "Default Log", true, true, true );
+
     ser.importAFile( stream, &f );
+
+    logMgr.destroyLog( "Default Log" );
 
     ifs->close();
 }

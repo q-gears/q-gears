@@ -27,9 +27,12 @@ THE SOFTWARE.
 #define __QGearsHRCFile_H__
 
 #include <OgreResource.h>
+#include <OgreMesh.h>
 #include <OgreSkeleton.h>
 
 #include "common/TypeDefine.h"
+
+#include "QGearsHRCSkeletonLoader.h"
 
 namespace QGears
 {
@@ -42,9 +45,6 @@ namespace QGears
                 ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
 
         virtual ~HRCFile();
-
-        virtual Ogre::SkeletonPtr   createSkeleton( const String &name
-                                                   ,const String &group ) const;
 
         typedef std::vector<String> RSDNameList;
 
@@ -59,8 +59,12 @@ namespace QGears
         typedef std::vector<Bone> BoneList;
 
         virtual void            setSkeletonName( const String& name );
-        virtual const String&   getSkeletonName( void ) const { return m_skeleton_name; }
-        virtual BoneList&       getBones( void ) { return m_bones; }
+        virtual const String&   getSkeletonName( void )     const { return m_skeleton_name; }
+        virtual       String    getSkeletonFileName( void ) const;
+        virtual       BoneList& getBones( void )       { return m_bones; }
+        virtual const BoneList& getBones( void ) const { return m_bones; }
+
+        virtual Ogre::SkeletonPtr   getSkeleton( void ) const;
 
         static const String RESOURCE_TYPE;
 
@@ -70,7 +74,7 @@ namespace QGears
         virtual size_t calculateSize() const;
         virtual size_t calculateSize( const Bone &bone ) const;
 
-        virtual String  getBaseName( void ) const;
+        virtual String  getPathName( void ) const;
 
         static const String ROOT_BONE_NAME;
         static const Ogre::Quaternion ROOT_ORIENTATION;
@@ -79,6 +83,10 @@ namespace QGears
     private:
         String      m_skeleton_name;
         BoneList    m_bones;
+
+        HRCSkeletonLoader   m_skeleton_loader;
+        Ogre::SkeletonPtr   m_skeleton;
+        Ogre::MeshPtr       m_mesh;
     };
 
     //-------------------------------------------------------------------------

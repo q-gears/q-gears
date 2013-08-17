@@ -26,17 +26,17 @@ THE SOFTWARE.
 #include "QGearsHRCFile.h"
 
 #include <OgreBone.h>
+#include <OgreLogManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreSkeletonManager.h>
 
 #include "QGearsHRCFileSerializer.h"
+#include "QGearsHRCSkeletonLoader.h"
 
 namespace QGears
 {
     //---------------------------------------------------------------------
-    const String    HRCFile::ROOT_BONE_NAME( "root" );
     const String    HRCFile::RESOURCE_TYPE( "QGearsHRCFile" );
-    const Ogre::Quaternion  HRCFile::ROOT_ORIENTATION( HRCFile::createRootOrientation() );
 
     //---------------------------------------------------------------------
     HRCFile::HRCFile( Ogre::ResourceManager *creator
@@ -44,6 +44,7 @@ namespace QGears
                      ,const String &group, bool isManual
                      ,Ogre::ManualResourceLoader *loader ) :
         Ogre::Resource( creator, name, handle, group, isManual, loader )
+       ,m_skeleton_loader( *this )
     {
         createParamDictionary( RESOURCE_TYPE );
     }
@@ -58,9 +59,19 @@ namespace QGears
     void
     HRCFile::loadImpl()
     {
+        Ogre::SkeletonManager      &skeleton_manager( Ogre::SkeletonManager::getSingleton() );
+
         HRCFileSerializer serializer;
         Ogre::DataStreamPtr stream( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
         serializer.importHRCFile( stream, this );
+
+        String skeleton( getPathName() + m_skeleton_name + ".skeleton" );
+
+        m_skeleton = skeleton_manager.getByName( skeleton, mGroup );
+        if( m_skeleton.isNull() )
+        {
+            m_skeleton = skeleton_manager.create( skeleton, mGroup, true, &m_skeleton_loader );
+        }
     }
 
     //---------------------------------------------------------------------
@@ -69,6 +80,8 @@ namespace QGears
     {
         m_skeleton_name.clear();
         m_bones.clear();
+        m_skeleton.setNull();
+        m_mesh.setNull();
     }
 
     //---------------------------------------------------------------------
@@ -106,11 +119,11 @@ namespace QGears
 
     //---------------------------------------------------------------------
     String
-    HRCFile::getBaseName( void ) const
+    HRCFile::getPathName( void ) const
     {
-        String base, ext;
-        Ogre::StringUtil::splitBaseFilename( getName(), base, ext );
-        return base;
+        String base, ext, path;
+        Ogre::StringUtil::splitFullFilename( getName(), base, ext, path );
+        return path;
     }
 
     //---------------------------------------------------------------------
@@ -121,31 +134,18 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    Ogre::SkeletonPtr
-    HRCFile::createSkeleton( const String &name, const String &group ) const
+    String
+    HRCFile::getSkeletonFileName() const
     {
-        Ogre::SkeletonPtr skeleton( Ogre::SkeletonManager::getSingleton().create( name, group ) );
-        Ogre::Bone *root( skeleton->createBone( ROOT_BONE_NAME ) );
-        root->setOrientation( ROOT_ORIENTATION );
-        for( BoneList::const_iterator it_bone( m_bones.begin() )
-            ;it_bone != m_bones.end()
-            ;++it_bone )
-        {
-            Ogre::Bone* child( skeleton->createBone( it_bone->name ) );
-            Ogre::Bone* parent( skeleton->getBone( it_bone->parent ) );
-            child->setPosition( 0, it_bone->length, 0 );
-            parent->addChild( child );
-        }
-        return skeleton;
+        return getPathName() + m_skeleton_name + ".skeleton";
     }
 
     //---------------------------------------------------------------------
-    Ogre::Quaternion
-    HRCFile::createRootOrientation()
+    Ogre::SkeletonPtr
+    HRCFile::getSkeleton( void ) const
     {
-        Ogre::Radian angle( Ogre::Degree( 180 ) );
-        Ogre::Vector3 axis( 0, 1, 1 );
-        return Ogre::Quaternion( angle, axis );
+        m_skeleton->load();
+        return m_skeleton;
     }
 
     //---------------------------------------------------------------------

@@ -60,13 +60,13 @@ main( int argc, char *argv[] )
 {
     InitializeOgreBase( "FFVII Field Model Exporter" );
 
+    QGears::HRCFileManager     &hrc_manager( QGears::HRCFileManager::getSingleton() );
+    QGears::RSDFileManager     &rsd_manager( QGears::RSDFileManager::getSingleton() );
     Ogre::SceneManager*         scene_manager( Ogre::Root::getSingleton().getSceneManager( "Scene" ) );
     Ogre::ManualObject*         mo( scene_manager->createManualObject() );
     Ogre::DataStreamPtr         stream;
     Ogre::MeshSerializer        mesh_ser;
     Ogre::SkeletonSerializer    sk_ser;
-    QGears::HRCFileManager      *hrc_manager;
-    QGears::RSDFileManager      *rsd_manager;
     QGears::HRCFilePtr          hrc;
     QGears::RSDFilePtr          rsd;
     QGears::AFileSerializer     a_ser;
@@ -75,16 +75,12 @@ main( int argc, char *argv[] )
     QGears::PFile               p;
     Ogre::String                unit( "n_cloud");
 
-    hrc_manager = new QGears::HRCFileManager();
-    rsd_manager = new QGears::RSDFileManager();
+    hrc = hrc_manager.load( "field/char/aaaa.hrc", "Game" );
+    rsd = rsd_manager.load( "field/char/aaab.rsd", "Game" );
 
-    hrc = hrc_manager->load( "field/char/aaaa.hrc", "Game" );
-    rsd = rsd_manager->load( "field/char/aaab.rsd", "Game" );
-
-    Ogre::SkeletonPtr skeleton( hrc->createSkeleton( unit + ".skeleton", "General" ) );
     Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().create( unit + ".mesh", "General" ) );
-    mesh->_notifySkeleton( skeleton );
-    mesh->setSkeletonName( skeleton->getName() );
+    mesh->setSkeletonName( hrc->getSkeletonFileName() );
+    Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
 
     stream = getStream( "field/char/aaac.p" );
     p_ser.importPFile( stream, &p );
@@ -123,11 +119,10 @@ main( int argc, char *argv[] )
     entitys[0]->setVisible( true );
 
     Ogre::Root::getSingleton().startRendering();
+    skeleton.setNull();
     mesh.setNull();
     rsd.setNull();
     hrc.setNull();
-    delete rsd_manager;
-    delete hrc_manager;
     DeinitializeOgreBase();
 
     return 0;
