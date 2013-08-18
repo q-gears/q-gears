@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Test_LZSDataStream" />
+	<File name="src\QGearsSerializer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3309" topLine="64" />
+		</Cursor>
+	</File>
+	<File name="test\test_QGearsPFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1619" topLine="17" />
+		</Cursor>
+	</File>
+	<File name="include\QGearsLZSDataStream.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2066" topLine="43" />
+		</Cursor>
+	</File>
+	<File name="test\test_QGearsPFileSerializer.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3665" topLine="36" />
+		</Cursor>
+	</File>
+	<File name="src\main.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1527" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="include\QGearsManualObject.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2426" topLine="49" />
+		</Cursor>
+	</File>
+	<File name="test\test_QGearsRSDSerializer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1386" topLine="36" />
+		</Cursor>
+	</File>
+	<File name="include\QGearsPFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4723" topLine="93" />
+		</Cursor>
+	</File>
+	<File name="include\QGearsPFileSerializer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3022" topLine="41" />
+		</Cursor>
+	</File>
+	<File name="include\QGearsRSDFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="175" topLine="2" />
+		</Cursor>
+	</File>
+	<File name="include\QGearsSerializer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1917" topLine="12" />
+		</Cursor>
+	</File>
 	<File name="src\FFVIICharacter.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1309" topLine="30" />
@@ -11,14 +66,14 @@
 			<Cursor1 position="3359" topLine="63" />
 		</Cursor>
 	</File>
-	<File name="src\QGearsAFileSerializer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3215" topLine="28" />
-		</Cursor>
-	</File>
 	<File name="..\common\FileSystem.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="183" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsAFileSerializer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3215" topLine="28" />
 		</Cursor>
 	</File>
 	<File name="src\QGearsHRCFile.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -31,19 +86,39 @@
 			<Cursor1 position="5873" topLine="126" />
 		</Cursor>
 	</File>
-	<File name="src\QGearsHRCMeshLoader.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1875" topLine="13" />
-		</Cursor>
-	</File>
 	<File name="..\common\OgreBase.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1751" topLine="35" />
 		</Cursor>
 	</File>
+	<File name="src\QGearsHRCMeshLoader.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1875" topLine="13" />
+		</Cursor>
+	</File>
 	<File name="..\common\OgreBase.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="216" topLine="292" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsHRCSkeletonLoader.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3312" topLine="55" />
+		</Cursor>
+	</File>
+	<File name="test\test_QGearsRingBuffer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2623" topLine="34" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsLZSDataStream.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3616" topLine="92" />
+		</Cursor>
+	</File>
+	<File name="..\common\TypeDefine.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="91" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\QGearsManualObject.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -53,17 +128,7 @@
 	</File>
 	<File name="src\QGearsPFile.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5633" topLine="125" />
-		</Cursor>
-	</File>
-	<File name="..\common\TypeDefine.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="91" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\QGearsPFileSerializer.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4723" topLine="85" />
+			<Cursor1 position="8761" topLine="184" />
 		</Cursor>
 	</File>
 	<File name="include\QGearsAFile.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -71,9 +136,9 @@
 			<Cursor1 position="1458" topLine="31" />
 		</Cursor>
 	</File>
-	<File name="src\QGearsRSDFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="test\test_QGearsLZSDataStream.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1280" topLine="2" />
+			<Cursor1 position="5766" topLine="96" />
 		</Cursor>
 	</File>
 	<File name="include\QGearsAFileSerializer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -81,14 +146,24 @@
 			<Cursor1 position="1751" topLine="24" />
 		</Cursor>
 	</File>
-	<File name="include\QGearsHRCFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\QGearsPFileSerializer.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1724" topLine="31" />
+			<Cursor1 position="4958" topLine="92" />
 		</Cursor>
 	</File>
-	<File name="src\QGearsSerializer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include\QGearsHRCFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2577" topLine="51" />
+			<Cursor1 position="1724" topLine="40" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsRSDFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1280" topLine="2" />
+		</Cursor>
+	</File>
+	<File name="test\test_QGearsAFileSerializer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2340" topLine="23" />
 		</Cursor>
 	</File>
 	<File name="include\QGearsHRCFileSerializer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -96,64 +171,19 @@
 			<Cursor1 position="1627" topLine="16" />
 		</Cursor>
 	</File>
+	<File name="test\test_QGearsHRCSerializer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1935" topLine="10" />
+		</Cursor>
+	</File>
 	<File name="include\QGearsHRCMeshLoader.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1435" topLine="6" />
 		</Cursor>
 	</File>
-	<File name="src\main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3487" topLine="57" />
-		</Cursor>
-	</File>
-	<File name="test\test_QGearsAFileSerializer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1857" topLine="23" />
-		</Cursor>
-	</File>
-	<File name="include\QGearsManualObject.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2426" topLine="49" />
-		</Cursor>
-	</File>
-	<File name="test\test_QGearsHRCSerializer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1936" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="include\QGearsPFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4948" topLine="100" />
-		</Cursor>
-	</File>
 	<File name="test\test_QGearsManualObject.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2959" topLine="52" />
-		</Cursor>
-	</File>
-	<File name="test\test_QGearsPFile.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1619" topLine="17" />
-		</Cursor>
-	</File>
-	<File name="include\QGearsPFileSerializer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3021" topLine="44" />
-		</Cursor>
-	</File>
-	<File name="test\test_QGearsPFileSerializer.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="include\QGearsRSDFile.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="175" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="include\QGearsSerializer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1917" topLine="18" />
+			<Cursor1 position="1669" topLine="14" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

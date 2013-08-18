@@ -137,6 +137,44 @@
 					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
 				</Linker>
 			</Target>
+			<Target title="Test_RingBuffer">
+				<Option output="bin/test/test_RingBuffer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_LZSDataStream">
+				<Option output="bin/test/test_LZSDataStream" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
@@ -206,6 +244,9 @@
 		<Unit filename="test/test_QGearsHRCSerializer.cpp">
 			<Option target="Test_HRCFileSerializer" />
 		</Unit>
+		<Unit filename="test/test_QGearsLZSDataStream.cpp">
+			<Option target="Test_LZSDataStream" />
+		</Unit>
 		<Unit filename="test/test_QGearsManualObject.cpp">
 			<Option target="Test_ManualObject" />
 		</Unit>
@@ -217,6 +258,9 @@
 		</Unit>
 		<Unit filename="test/test_QGearsRSDSerializer.cpp">
 			<Option target="Test_RSDFileSerializer" />
+		</Unit>
+		<Unit filename="test/test_QGearsRingBuffer.cpp">
+			<Option target="Test_RingBuffer" />
 		</Unit>
 		<Extensions>
 			<code_completion />

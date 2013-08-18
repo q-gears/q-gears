@@ -25,16 +25,151 @@ THE SOFTWARE.
 */
 #include "QGearsLZSDataStream.h"
 
+#include <OgreException.h>
+
 namespace QGears
 {
     //---------------------------------------------------------------------
-    LZSDataStream::LZSDataStream()
+    LZSDataStream::LZSDataStream( const Ogre::DataStreamPtr &compressed_stream ) :
+        Ogre::DataStream( compressed_stream->getAccessMode() )
+       ,m_compressed_stream( compressed_stream )
+       ,m_available_compressed( 0 )
+       ,m_pos( 0 )
     {
+        init();
+    }
+
+    //---------------------------------------------------------------------
+    LZSDataStream::LZSDataStream( const String &name, const Ogre::DataStreamPtr &compressed_stream ) :
+        Ogre::DataStream( name, compressed_stream->getAccessMode() )
+       ,m_compressed_stream( compressed_stream )
+       ,m_available_compressed( 0 )
+       ,m_pos( 0 )
+    {
+        init();
     }
 
     //---------------------------------------------------------------------
     LZSDataStream::~LZSDataStream()
     {
+        close();
+    }
+
+    //---------------------------------------------------------------------
+    void
+    LZSDataStream::init()
+    {
+        if ( m_compressed_stream->read( &m_available_compressed, 4 ) < 4 )
+        {
+			OGRE_EXCEPT( Ogre::Exception::ERR_INVALIDPARAMS,
+				"Can't read LZS Header from stream",
+				"LZSDataStream::init");
+        }
+    }
+
+    //---------------------------------------------------------------------
+    size_t
+    LZSDataStream::read( void *buf, size_t count )
+    {
+        assert( buf && "NullPointer" );
+        size_t  read_total( 0 );
+        while( count && !eof() )
+        {
+            if( !m_buffer.avail() )
+            {
+                decompressChunk();
+            }
+            size_t read( m_buffer.read( buf + read_total, count ) );
+            count -= read;
+            read_total += read;
+        }
+
+        m_pos += read_total;
+
+        return read_total;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    LZSDataStream::decompressChunk()
+    {
+        if( m_compressed_stream->eof() )
+        {
+            OGRE_EXCEPT( Ogre::Exception::ERR_INVALIDPARAMS,
+                "not enough data in Stream to read control byte",
+                "LZSDataStream::decompressChunk");
+        }
+
+        uint8   data, control_byte, ref[2];
+        uint16  ref_offset;
+        m_available_compressed -= m_compressed_stream->read( &control_byte, sizeof( control_byte ) );
+
+        for( uint8 control_bit( 8 )
+            ;control_bit-- && !m_compressed_stream->eof() && m_available_compressed
+            ;control_byte >>= 1 )
+        {
+            if( control_byte & 1 )
+            {
+                m_available_compressed -= m_compressed_stream->read( &data, sizeof( data ) );
+                m_buffer.write( &data );
+            }
+            else if( m_available_compressed < 2 )
+            {
+                OGRE_EXCEPT( Ogre::Exception::ERR_INVALIDPARAMS,
+                    "not enough data in Stream to read reference bytes",
+                    "LZSDataStream::decompressChunk");
+            }
+            else
+            {
+                m_available_compressed -= m_compressed_stream->read( &ref, sizeof( ref ) );
+                ref_offset = 18 + ( ((ref[1] & 0xF0) << 4) | ref[0] );
+                for( uint8 ref_length( (ref[1] & 0xF ) + 3 ); ref_length--; )
+                {
+                    data = m_buffer.get( ref_offset++ );
+                    m_buffer.write( &data );
+                }
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------
+    void
+    LZSDataStream::skip( long count )
+    {
+        OGRE_EXCEPT( Ogre::Exception::ERR_NOT_IMPLEMENTED,
+            "not yet implemented",
+            "LZSDataStream::skip");
+    }
+
+    //---------------------------------------------------------------------
+    void
+    LZSDataStream::seek( size_t pos )
+    {
+        OGRE_EXCEPT( Ogre::Exception::ERR_NOT_IMPLEMENTED,
+            "not yet implemented",
+            "LZSDataStream::seek");
+    }
+
+    //---------------------------------------------------------------------
+    bool
+    LZSDataStream::eof( void ) const
+    {
+        return !m_available_compressed
+            && !m_buffer.avail();
+    }
+
+    //---------------------------------------------------------------------
+    size_t
+    LZSDataStream::tell( void ) const
+    {
+        return m_pos;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    LZSDataStream::close( void )
+    {
+        m_compressed_stream.setNull();
     }
 
     //---------------------------------------------------------------------
