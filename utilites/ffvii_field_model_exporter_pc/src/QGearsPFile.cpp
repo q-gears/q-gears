@@ -208,14 +208,15 @@ namespace QGears
             material_index = group.texture_index + 1;
         }
         String material_name( material_base_name + "/" + Ogre::StringConverter::toString( material_index ) );
+        const uint16 bone_handle( bone->getHandle() );
+        const Ogre::Vector3 bone_position( getPosition( bone ) );
 
+        size_t index( 0 );
         size_t vertex_count( group.num_polygons * 3 );
         size_t index_count( vertex_count );
-        size_t end_index( group.polygon_start_index + group.num_polygons );
-        uint16 bone_handle( bone->getHandle() ), index( 0 );
-
+        size_t polygon_end_index( group.polygon_start_index + group.num_polygons );
         mo.begin( sub_name, material_name, vertex_count, index_count );
-        for( size_t p( group.polygon_start_index ); p < end_index; ++p )
+        for( size_t p( group.polygon_start_index ); p < polygon_end_index; ++p )
         {
             const PolygonDefinition& polygon( m_polygon_definitions[p] );
             for( int i(3); i--; )
@@ -225,8 +226,8 @@ namespace QGears
                       ,n( 0 + polygon.normal[i] )
                       ,t( group.texture_coordinate_start_index
                          +polygon.vertex[i] );
-                mo.position( ( STATIC_ROTATION *  m_vertices[ v ] )
-                            + getPosition( bone ) );
+                Ogre::Vector3 pos( m_vertices[ v ] );
+                mo.position( ( STATIC_ROTATION *  pos ) + bone_position );
                 mo.colour( m_vertex_colors[ v ] );
                 mo.normal( STATIC_ROTATION * m_normals[ n ] );
                 if( group.has_texture )

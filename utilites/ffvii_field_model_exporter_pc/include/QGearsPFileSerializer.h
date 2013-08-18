@@ -55,25 +55,25 @@ namespace QGears
             uint32 num_polygons;
             uint32 num_unknown2;
             uint32 num_unknown3;
-            uint32 num_hundreds;
+            uint32 num_materials;
             uint32 num_groups;
             uint32 num_bboxes;
             uint32 norm_index_table_flag;
             uint32 runtime_data[0x10];
         };
 
-        typedef PFile::Edge Edge;
-
-        typedef PFile::PolygonDefinition PolygonDefinition;
-        typedef PFile::RenderInformation RenderInformation;
-
-        typedef PFile::Group Group;
+        typedef PFile::BBoxEntry            BBoxEntry;
+        typedef PFile::Edge                 Edge;
+        typedef PFile::Group                Group;
+        typedef PFile::MaterialInformation  MaterialInformation;
+        typedef PFile::PolygonDefinition    PolygonDefinition;
 
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Edge &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, PolygonDefinition &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Group &pDest );
+        virtual void    readObject( Ogre::DataStreamPtr &stream, BBoxEntry &pDest );
         using Serializer::readObject;
 
         template<typename ValueType>

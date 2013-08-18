@@ -70,14 +70,24 @@ namespace QGears
         Ogre::Bone *root( skeleton->createBone( ROOT_BONE_NAME ) );
         root->setOrientation( ROOT_ORIENTATION );
 
+
+        typedef std::map< String, Ogre::Real> LengthMap;
+        LengthMap length_map;
+        LengthMap::const_iterator length;
+
         BoneList &bones( m_hrc_file.getBones() );
-        for( BoneList::const_iterator it_bone( bones.begin() )
-            ;it_bone != bones.end()
-            ;++it_bone )
+        for( BoneList::const_iterator bone( bones.begin() )
+            ;bone != bones.end()
+            ;++bone )
         {
-            Ogre::Bone* child( skeleton->createBone( it_bone->name ) );
-            Ogre::Bone* parent( skeleton->getBone( it_bone->parent ) );
-            child->setPosition( 0, it_bone->length, 0 );
+            Ogre::Bone* child( skeleton->createBone( bone->name ) );
+            Ogre::Bone* parent( skeleton->getBone( bone->parent ) );
+            length_map[ bone->name ] = bone->length;
+            length = length_map.find( bone->parent );
+            if( length != length_map.end() )
+            {
+                child->setPosition( 0, length->second, 0 );
+            }
             parent->addChild( child );
         }
     }

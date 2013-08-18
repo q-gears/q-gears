@@ -97,6 +97,15 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
+    PFileSerializer::readObject( Ogre::DataStreamPtr &stream
+                                ,BBoxEntry &pDest )
+    {
+        readInts( stream, &(pDest.unknown), 1 );
+        readObject( stream, pDest.bbox );
+    }
+
+    //---------------------------------------------------------------------
+    void
     PFileSerializer::importPFile( Ogre::DataStreamPtr &stream, PFile* pDest )
     {
         readFileHeader( stream );
@@ -112,12 +121,10 @@ namespace QGears
         readVector( stream, pDest->getPolygonDefinitions()
                    ,m_header.num_polygons );
 
-        stream->skip( m_header.num_hundreds * sizeof( RenderInformation ) );
+        stream->skip( m_header.num_materials * sizeof( MaterialInformation ) );
 
         readVector( stream, pDest->getGroups(), m_header.num_groups );
-
-        stream->skip( 4 );
-        readVector( stream,pDest->getBBoxes(), m_header.num_bboxes );
+        readVector( stream, pDest->getBBoxes(), m_header.num_bboxes );
     }
 
     //---------------------------------------------------------------------

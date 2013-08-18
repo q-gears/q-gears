@@ -70,7 +70,7 @@ namespace QGears
             uint16 unknown_16;
         };
 
-        struct RenderInformation
+        struct MaterialInformation
         {
             uint8 unknown[100];
         };
@@ -93,16 +93,22 @@ namespace QGears
             uint32 texture_index;
         };
 
-        typedef std::vector<Ogre::Vector3>          VertexList;
-        typedef std::vector<Ogre::Vector3>          NormalList;
-        typedef std::vector<Ogre::Vector3>          Unkown1List;
-        typedef std::vector<Ogre::Vector2>          TextureCoordinateList;
-        typedef std::vector<Ogre::ColourValue>      VertexColorList;
-        typedef std::vector<Ogre::ColourValue>      PolygonColorList;
-        typedef std::vector<Edge>                   EdgeList;
-        typedef std::vector<PolygonDefinition>      PolygonDefinitionList;
-        typedef std::vector<Group>                  GroupList;
-        typedef std::vector<Ogre::AxisAlignedBox>   BBoxList;
+        struct BBoxEntry
+        {
+            uint32 unknown;
+            Ogre::AxisAlignedBox bbox;
+        };
+
+        typedef std::vector<Ogre::Vector3>      VertexList;
+        typedef std::vector<Ogre::Vector3>      NormalList;
+        typedef std::vector<Ogre::Vector3>      Unkown1List;
+        typedef std::vector<Ogre::Vector2>      TextureCoordinateList;
+        typedef std::vector<Ogre::ColourValue>  VertexColorList;
+        typedef std::vector<Ogre::ColourValue>  PolygonColorList;
+        typedef std::vector<Edge>               EdgeList;
+        typedef std::vector<PolygonDefinition>  PolygonDefinitionList;
+        typedef std::vector<Group>              GroupList;
+        typedef std::vector<BBoxEntry>          BBoxList;
 
         virtual VertexList&             getVertices()           { return m_vertices; };
         virtual NormalList&             getNormals()            { return m_normals; };
