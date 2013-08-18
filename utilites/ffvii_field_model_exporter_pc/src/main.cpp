@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "QGearsHRCFileManager.h"
 #include "QGearsRSDFileManager.h"
 
+
 void attachMesh( Ogre::MeshPtr &mesh )
 {
     Ogre::SceneManager* scene_manager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
