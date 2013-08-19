@@ -1,8 +1,8 @@
 #include "OgreBase.h"
 
-#include "QGearsPFileManager.h"
-#include "QGearsHRCFileManager.h"
-#include "QGearsRSDFileManager.h"
+#include "data/QGearsPFileManager.h"
+#include "data/QGearsHRCFileManager.h"
+#include "data/QGearsRSDFileManager.h"
 
 Ogre::Root*                     root;
 Ogre::RenderWindow*             window;
@@ -90,7 +90,6 @@ InitializeOgreBase( const Ogre::String& name )
     // initialize resource
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./", "FileSystem", "General" );
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./exported", "FileSystem", "General" );
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "../../OgreCore.zip", "Zip", "Bootstrap" );
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 

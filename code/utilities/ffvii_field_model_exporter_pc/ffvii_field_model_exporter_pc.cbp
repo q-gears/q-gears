@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ffvii_field_model_exporter_pc" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release">
+				<Option output="bin/ffvii_field_model_exporter_pc" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain" />
+					<Add library="OIS" />
+					<Add library="boost_system-mgw47-mt-1_54" />
+					<Add library="boost_thread-mgw47-mt-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_PFileSerializer">
+				<Option output="bin/test/test_PFileSerializer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_PFile">
+				<Option output="bin/test/test_PFile" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_HRCFileSerializer">
+				<Option output="bin/test/test_HRCFileSerializer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_AFileSerializer">
+				<Option output="bin/test/test_AFileSerializer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_ManualObject">
+				<Option output="bin/test/test_ManualObject" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_RSDFileSerializer">
+				<Option output="bin/test/test_RSDFileSerializer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_RingBuffer">
+				<Option output="bin/test/test_RingBuffer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_LZSDataStream">
+				<Option output="bin/test/test_LZSDataStream" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+			<Target title="Test_BackgroundFile">
+				<Option output="bin/test/test_BackgroundFile" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_thread-mgw47-mt-d-1_54" />
+					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-DBOOST_ALL_DYN_LINK" />
+			<Add directory="$(BOOST_HOME)" />
+			<Add directory="$(OGRE_HOME)/include/OGRE" />
+			<Add directory="$(OGRE_HOME)/include/OIS" />
+			<Add directory="../../main/include" />
+			<Add directory="../../../utilites" />
+			<Add directory="include" />
+		</Compiler>
+		<Linker>
+			<Add directory="$(BOOST_HOME)/stage/lib" />
+			<Add directory="$(OGRE_HOME)/lib" />
+			<Add directory="$(OGRE_HOME)/lib/opt" />
+		</Linker>
+		<Unit filename="../../../utilites/common/FileSystem.cpp" />
+		<Unit filename="../../../utilites/common/FileSystem.h" />
+		<Unit filename="../../../utilites/common/Logger.cpp" />
+		<Unit filename="../../../utilites/common/Logger.h" />
+		<Unit filename="../../../utilites/common/OgreBase.cpp" />
+		<Unit filename="../../../utilites/common/OgreBase.h" />
+		<Unit filename="../../../utilites/common/TypeDefine.cpp" />
+		<Unit filename="../../../utilites/common/TypeDefine.h" />
+		<Unit filename="../../main/include/common/QGearsManualObject.h" />
+		<Unit filename="../../main/include/common/QGearsStringUtil.h" />
+		<Unit filename="../../main/include/data/QGearsAFile.h" />
+		<Unit filename="../../main/include/data/QGearsAFileSerializer.h" />
+		<Unit filename="../../main/include/data/QGearsBackgroundFile.h" />
+		<Unit filename="../../main/include/data/QGearsBackgroundFileManager.h" />
+		<Unit filename="../../main/include/data/QGearsBackgroundFileSerializer.h" />
+		<Unit filename="../../main/include/data/QGearsHRCFile.h" />
+		<Unit filename="../../main/include/data/QGearsHRCFileManager.h" />
+		<Unit filename="../../main/include/data/QGearsHRCFileSerializer.h" />
+		<Unit filename="../../main/include/data/QGearsHRCMeshLoader.h" />
+		<Unit filename="../../main/include/data/QGearsHRCSkeletonLoader.h" />
+		<Unit filename="../../main/include/data/QGearsLZSDataStream.h" />
+		<Unit filename="../../main/include/data/QGearsPFile.h" />
+		<Unit filename="../../main/include/data/QGearsPFileManager.h" />
+		<Unit filename="../../main/include/data/QGearsPFileSerializer.h" />
+		<Unit filename="../../main/include/data/QGearsRSDFile.h" />
+		<Unit filename="../../main/include/data/QGearsRSDFileManager.h" />
+		<Unit filename="../../main/include/data/QGearsRSDFileSerializer.h" />
+		<Unit filename="../../main/include/data/QGearsSerializer.h" />
+		<Unit filename="../../main/src/Data/QGearsAFile.cpp" />
+		<Unit filename="../../main/src/Data/QGearsAFileSerializer.cpp" />
+		<Unit filename="../../main/src/Data/QGearsBackgroundFile.cpp" />
+		<Unit filename="../../main/src/Data/QGearsBackgroundFileManager.cpp" />
+		<Unit filename="../../main/src/Data/QGearsBackgroundFileSerializer.cpp" />
+		<Unit filename="../../main/src/Data/QGearsHRCFile.cpp" />
+		<Unit filename="../../main/src/Data/QGearsHRCFileManager.cpp" />
+		<Unit filename="../../main/src/Data/QGearsHRCFileSerializer.cpp" />
+		<Unit filename="../../main/src/Data/QGearsHRCMeshLoader.cpp" />
+		<Unit filename="../../main/src/Data/QGearsHRCSkeletonLoader.cpp" />
+		<Unit filename="../../main/src/Data/QGearsLZSDataStream.cpp" />
+		<Unit filename="../../main/src/Data/QGearsPFile.cpp" />
+		<Unit filename="../../main/src/Data/QGearsPFileManager.cpp" />
+		<Unit filename="../../main/src/Data/QGearsPFileSerializer.cpp" />
+		<Unit filename="../../main/src/Data/QGearsRSDFile.cpp" />
+		<Unit filename="../../main/src/Data/QGearsRSDFileManager.cpp" />
+		<Unit filename="../../main/src/Data/QGearsRSDFileSerializer.cpp" />
+		<Unit filename="../../main/src/Data/QGearsSerializer.cpp" />
+		<Unit filename="../../main/src/common/QGearsManualObject.cpp" />
+		<Unit filename="../../main/src/common/QGearsStringUtil.cpp" />
+		<Unit filename="../../main/test/test_QGearsAFileSerializer.cpp">
+			<Option target="Test_AFileSerializer" />
+		</Unit>
+		<Unit filename="../../main/test/test_QGearsBackgroundFile.cpp">
+			<Option target="Test_BackgroundFile" />
+		</Unit>
+		<Unit filename="../../main/test/test_QGearsHRCSerializer.cpp">
+			<Option target="Test_HRCFileSerializer" />
+		</Unit>
+		<Unit filename="../../main/test/test_QGearsLZSDataStream.cpp">
+			<Option target="Test_LZSDataStream" />
+		</Unit>
+		<Unit filename="../../main/test/test_QGearsManualObject.cpp">
+			<Option target="Test_ManualObject" />
+		</Unit>
+		<Unit filename="../../main/test/test_QGearsPFile.cpp">
+			<Option target="Test_PFile" />
+		</Unit>
+		<Unit filename="../../main/test/test_QGearsPFileSerializer.cpp">
+			<Option target="Test_PFileSerializer" />
+		</Unit>
+		<Unit filename="../../main/test/test_QGearsRSDSerializer.cpp">
+			<Option target="Test_RSDFileSerializer" />
+		</Unit>
+		<Unit filename="../../main/test/test_QGearsRingBuffer.cpp">
+			<Option target="Test_RingBuffer" />
+		</Unit>
+		<Unit filename="src/main.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

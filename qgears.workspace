@@ -6,6 +6,8 @@
 		<Project filename="utilites/lzs/lzs.cbp" />
 		<Project filename="utilites/flevel/flevel.cbp" />
 		<Project filename="utilites/ffvii_field_model_exporter/qgears.cbp" />
-		<Project filename="utilites/ffvii_field_model_exporter_pc/ffvii_field_model_exporter_pc.cbp" />
+		<!--Project filename="../ogre/build/OGRE.cbp" /-->
+		<!--Project filename="../ogredeps/build/OGREDEPS.cbp" /-->
+		<Project filename="code/utilities/ffvii_field_model_exporter_pc/ffvii_field_model_exporter_pc.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

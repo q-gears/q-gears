@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
+	<File name="src\QGearsTexCodec.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4045" topLine="90" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsTexCodecDll.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1359" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\QGearsTexFile.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1872" topLine="29" />
+		</Cursor>
+	</File>
 	<File name="src\QGearsTexPlugin.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1266" topLine="34" />
@@ -34,21 +49,6 @@
 	<File name="include\QGearsTexPlugin_Prerequisites.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1324" topLine="3" />
-		</Cursor>
-	</File>
-	<File name="src\QGearsTexCodec.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4045" topLine="90" />
-		</Cursor>
-	</File>
-	<File name="src\QGearsTexCodecDll.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1359" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\QGearsTexFile.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1872" topLine="29" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
