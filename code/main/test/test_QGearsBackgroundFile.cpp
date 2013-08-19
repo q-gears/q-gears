@@ -23,13 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-
-#include <cstddef>
-
 #define BOOST_TEST_MODULE QGearsBackgroundFile
 #include <boost/test/unit_test.hpp>
 
-#include "QGearsBackgroundFile.h"
+#include "common/QGearsBackgroundFile.h"
 
 BOOST_AUTO_TEST_CASE( header_size )
 {
@@ -42,14 +39,10 @@ BOOST_AUTO_TEST_CASE( header_size )
 
 BOOST_AUTO_TEST_CASE( sprite_data_offset )
 {
-    BOOST_CHECK_EQUAL( 0x02, offsetof( QGears::BackgroundFile::SpriteData, dst_x ) );
-    BOOST_CHECK_EQUAL( 0x04, offsetof( QGears::BackgroundFile::SpriteData, dst_y ) );
-    BOOST_CHECK_EQUAL( 0x0A, offsetof( QGears::BackgroundFile::SpriteData, src_x ) );
-    BOOST_CHECK_EQUAL( 0x0C, offsetof( QGears::BackgroundFile::SpriteData, src_y ) );
-    BOOST_CHECK_EQUAL( 0x16, offsetof( QGears::BackgroundFile::SpriteData, palette_page ) );
-    //BOOST_CHECK_EQUAL( 0x18, offsetof( QGears::BackgroundFile::SpriteData, flags ) );
-    BOOST_CHECK_EQUAL( 0x20, offsetof( QGears::BackgroundFile::SpriteData, data_page ) );
-    //BOOST_CHECK_EQUAL( 0x22, offsetof( QGears::BackgroundFile::SpriteData, sfx ) );
-    //BOOST_CHECK_EQUAL( 0x2A, offsetof( QGears::BackgroundFile::SpriteData, off_x ) );
-    //BOOST_CHECK_EQUAL( 0x2E, offsetof( QGears::BackgroundFile::SpriteData, off_y ) );
+    BOOST_CHECK_EQUAL( 0x00, offsetof( QGears::BackgroundFile::SpriteData, dst_x ) );
+    BOOST_CHECK_EQUAL( 0x02, offsetof( QGears::BackgroundFile::SpriteData, dst_y ) );
+    BOOST_CHECK_EQUAL( 0x08, offsetof( QGears::BackgroundFile::SpriteData, src_x ) );
+    BOOST_CHECK_EQUAL( 0x0A, offsetof( QGears::BackgroundFile::SpriteData, src_y ) );
+    BOOST_CHECK_EQUAL( 0x14, offsetof( QGears::BackgroundFile::SpriteData, palette_page ) );
+    BOOST_CHECK_EQUAL( 0x1E, offsetof( QGears::BackgroundFile::SpriteData, data_page ) );
 }

@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../output/tools/flevel_d" prefix_auto="1" extension_auto="1" />
+				<Option output="../../../output/tools/flevel_d" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
@@ -23,7 +23,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="../../output/tools/flevel" prefix_auto="1" extension_auto="1" />
+				<Option output="../../../output/tools/flevel" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
@@ -40,7 +40,7 @@
 				</Linker>
 			</Target>
 			<Target title="Test">
-				<Option output="../../output/test/test_flevel_file" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/test/test_flevel_file" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
@@ -62,31 +62,32 @@
 			<Add option="-DBOOST_ALL_DYN_LINK" />
 			<Add directory="$(BOOST_HOME)" />
 			<Add directory="$(OGRE_HOME)/include/OGRE" />
-			<Add directory="../" />
+			<Add directory="../../../utilites" />
 		</Compiler>
 		<Linker>
 			<Add directory="D:/app/dev/boost/stage/lib" />
 			<Add directory="D:/work/ogre/build/sdk/lib" />
 		</Linker>
-		<Unit filename="../common/File.cpp" />
-		<Unit filename="../common/File.h" />
-		<Unit filename="../common/FileSystem.cpp" />
-		<Unit filename="../common/FileSystem.h" />
-		<Unit filename="../common/Logger.cpp" />
-		<Unit filename="../common/Logger.h" />
-		<Unit filename="../common/QGearsBackgroundFile.cpp" />
-		<Unit filename="../common/QGearsBackgroundFile.h" />
-		<Unit filename="../common/QGearsFLevelFile.cpp" />
-		<Unit filename="../common/QGearsFLevelFile.h" />
-		<Unit filename="../common/QGearsPaletteFile.cpp" />
-		<Unit filename="../common/QGearsPaletteFile.h" />
-		<Unit filename="../common/TypeDefine.h" />
+		<Unit filename="../../../utilites/common/File.cpp" />
+		<Unit filename="../../../utilites/common/File.h" />
+		<Unit filename="../../../utilites/common/FileSystem.cpp" />
+		<Unit filename="../../../utilites/common/FileSystem.h" />
+		<Unit filename="../../../utilites/common/Logger.cpp" />
+		<Unit filename="../../../utilites/common/Logger.h" />
+		<Unit filename="../../../utilites/common/QGearsBackgroundFile.cpp" />
+		<Unit filename="../../../utilites/common/QGearsBackgroundFile.h" />
+		<Unit filename="../../../utilites/common/QGearsFLevelFile.cpp" />
+		<Unit filename="../../../utilites/common/QGearsFLevelFile.h" />
+		<Unit filename="../../../utilites/common/QGearsPaletteFile.cpp" />
+		<Unit filename="../../../utilites/common/QGearsPaletteFile.h" />
+		<Unit filename="../../../utilites/common/TypeDefine.cpp" />
+		<Unit filename="../../../utilites/common/TypeDefine.h" />
+		<Unit filename="../../main/test/test_QGearsBackgroundFile.cpp">
+			<Option target="Test" />
+		</Unit>
 		<Unit filename="flevel.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />
-		</Unit>
-		<Unit filename="test/test_QGearsBackgroundFile.cpp">
-			<Option target="Test" />
 		</Unit>
 		<Extensions>
 			<code_completion />

@@ -18,3 +18,4 @@ utilites/xeno_model_exporter/compile/
 **.cbTemp
 **/ogre.cfg
 **.depend
+**.layout

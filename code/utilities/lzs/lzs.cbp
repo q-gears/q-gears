@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../output/tools/lzs_d" prefix_auto="1" extension_auto="1" />
+				<Option output="../../../output/tools/lzs_d" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
@@ -23,7 +23,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="../../output/tools/lzs" prefix_auto="1" extension_auto="1" />
+				<Option output="../../../output/tools/lzs" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
@@ -45,21 +45,21 @@
 			<Add option="-fexceptions" />
 			<Add directory="$(BOOST_HOME)" />
 			<Add directory="$(OGRE_HOME)/include/Ogre" />
-			<Add directory="../" />
+			<Add directory="../../../utilites" />
 		</Compiler>
 		<Linker>
-			<Add directory="D:/app/dev/boost/stage/lib" />
-			<Add directory="D:/work/ogre/build/sdk/lib" />
+			<Add directory="$(BOOST_HOME)/stage/lib" />
+			<Add directory="$(OGRE_HOME)/lib" />
 		</Linker>
-		<Unit filename="../common/File.cpp" />
-		<Unit filename="../common/File.h" />
-		<Unit filename="../common/FileSystem.cpp" />
-		<Unit filename="../common/FileSystem.h" />
-		<Unit filename="../common/Logger.cpp" />
-		<Unit filename="../common/Logger.h" />
-		<Unit filename="../common/LzsFile.cpp" />
-		<Unit filename="../common/LzsFile.h" />
-		<Unit filename="../common/TypeDefine.h" />
+		<Unit filename="../../../utilites/common/File.cpp" />
+		<Unit filename="../../../utilites/common/File.h" />
+		<Unit filename="../../../utilites/common/FileSystem.cpp" />
+		<Unit filename="../../../utilites/common/FileSystem.h" />
+		<Unit filename="../../../utilites/common/Logger.cpp" />
+		<Unit filename="../../../utilites/common/Logger.h" />
+		<Unit filename="../../../utilites/common/LzsFile.cpp" />
+		<Unit filename="../../../utilites/common/LzsFile.h" />
+		<Unit filename="../../../utilites/common/TypeDefine.h" />
 		<Unit filename="lzs.cpp" />
 		<Extensions>
 			<code_completion />
