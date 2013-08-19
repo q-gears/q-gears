@@ -133,10 +133,13 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_CHECK( lzs_stream->eof() );
     BOOST_CHECK_EQUAL( 0, lzs_stream->read( data, 1 ) );
 
+    QGears::uint32 flip( 0x12345678 );
+    lzs_stream->flipEndian( flip );
+    BOOST_CHECK_EQUAL( 0x78563412, flip );
+
     lzs_stream.setNull();
     file_stream.setNull();
     ofs.close();
-
 
     std::ifstream actual( out_file_name );
     std::ifstream expected( "reference_lzs.decompressed" );

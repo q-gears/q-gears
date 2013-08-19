@@ -106,6 +106,8 @@ namespace QGears
         virtual size_t availableCompressed( void ) const { return m_available_compressed; };
         virtual size_t availableUncompressed( void ) const { return m_buffer.avail(); };
 
+        virtual void flipEndian( uint32 &inout_data );
+
     protected:
         virtual void init();
         virtual void decompressChunk();

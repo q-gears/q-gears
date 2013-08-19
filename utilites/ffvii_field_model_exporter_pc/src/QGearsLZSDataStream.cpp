@@ -65,6 +65,19 @@ namespace QGears
 				"Can't read LZS Header from stream",
 				"LZSDataStream::init");
         }
+        #if OGRE_ENDIAN == OGRE_ENDIAN_BIG
+            flipEndian( m_available_compressed );
+        #endif
+    }
+
+    //---------------------------------------------------------------------
+    void
+    LZSDataStream::flipEndian( uint32 &inout_data )
+    {
+        inout_data = ( ( inout_data & 0x000000FF ) << 24 )
+                    |( ( inout_data & 0x0000FF00 ) <<  8 )
+                    |( ( inout_data & 0x00FF0000 ) >>  8 )
+                    |( ( inout_data & 0xFF000000 ) >> 24 );
     }
 
     //---------------------------------------------------------------------
