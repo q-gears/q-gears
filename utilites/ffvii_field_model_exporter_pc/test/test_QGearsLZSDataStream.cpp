@@ -136,7 +136,7 @@ BOOST_AUTO_TEST_CASE( read_file )
     lzs_stream.setNull();
     file_stream.setNull();
     ofs.close();
-    /*
+
 
     std::ifstream actual( out_file_name );
     std::ifstream expected( "reference_lzs.decompressed" );
@@ -144,6 +144,5 @@ BOOST_AUTO_TEST_CASE( read_file )
     std::istream_iterator<char> it_actual  ( actual   ), end_actual;
     std::istream_iterator<char> it_expected( expected ), end_expected;
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(it_expected, end_actual, it_actual, end_expected);
-    */
+    BOOST_REQUIRE_EQUAL_COLLECTIONS(it_expected, end_actual, it_actual, end_expected);
 }
