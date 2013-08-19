@@ -65,8 +65,8 @@
 			<Add directory="../../../utilites" />
 		</Compiler>
 		<Linker>
-			<Add directory="D:/app/dev/boost/stage/lib" />
-			<Add directory="D:/work/ogre/build/sdk/lib" />
+			<Add directory="$(BOOST_HOME)/stage/lib" />
+			<Add directory="$(OGRE_HOME)/lib" />
 		</Linker>
 		<Unit filename="../../../utilites/common/File.cpp" />
 		<Unit filename="../../../utilites/common/File.h" />
