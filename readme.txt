@@ -18,3 +18,7 @@ OGRE_HOME/lib
 OGRE_HOME/lib/libOgreMain.dll.a
 OGRE_HOME/lib/libOgreMain_d.dll.a
 ...
+
+afterwars I did add the paths to the binaries (.dll files) to the PATH environment variable
+for easier usage, so you don't have to copy the dlls to every sub folder where you want to use
+em
