@@ -26,6 +26,8 @@ THE SOFTWARE.
 #define BOOST_TEST_MODULE QGearsBackgroundFileSerializer
 #include <boost/test/unit_test.hpp>
 
+#include <Ogre.h>
+
 #include "data/QGearsBackgroundFileSerializer.h"
 
 BOOST_AUTO_TEST_CASE( header_size )
@@ -45,4 +47,39 @@ BOOST_AUTO_TEST_CASE( sprite_data_offset )
     BOOST_CHECK_EQUAL( 0x0A, offsetof( QGears::BackgroundFile::SpriteData, src_y ) );
     BOOST_CHECK_EQUAL( 0x14, offsetof( QGears::BackgroundFile::SpriteData, palette_page ) );
     BOOST_CHECK_EQUAL( 0x1E, offsetof( QGears::BackgroundFile::SpriteData, data_page ) );
+}
+
+BOOST_AUTO_TEST_CASE( read_file )
+{
+    class TestFile : public QGears::BackgroundFile
+    {
+    public:
+        TestFile() : QGears::BackgroundFile( NULL, "", 0, "" ) {}
+        size_t getCalculatedSize() const { return calculateSize(); }
+    };
+
+	Ogre::LogManager                    logMgr;
+
+    const char*                         file_name( "reference.background" );
+    TestFile                            file;
+    QGears::BackgroundFileSerializer    ser;
+    std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
+    BOOST_REQUIRE( ifs->is_open() );
+    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
+    BOOST_REQUIRE( stream->isReadable() );
+
+    logMgr.createLog( "Default Log", true, true, true );
+
+    ser.importBackgroundFile( stream, &file );
+
+    logMgr.destroyLog( "Default Log" );
+
+    BOOST_CHECK( file.getLayers()[0].enabled );
+
+    QGears::uint8 palatte_expected[] = { 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00 };
+    BOOST_CHECK_EQUAL( sizeof( palatte_expected ), QGears::BackgroundFile::PALETTE_ENTRY_COUNT );
+    BOOST_CHECK_EQUAL_COLLECTIONS( palatte_expected        , palatte_expected + sizeof( palatte_expected )
+                                  ,file.getPaletteIndices(), file.getPaletteIndices() + QGears::BackgroundFile::PALETTE_ENTRY_COUNT );
+
+    ifs->close();
 }

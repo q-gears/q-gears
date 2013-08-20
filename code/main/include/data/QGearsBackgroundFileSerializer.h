@@ -39,17 +39,26 @@ namespace QGears
                         BackgroundFileSerializer();
         virtual        ~BackgroundFileSerializer();
 
-        virtual void 	importBackgroundFile( Ogre::DataStreamPtr &stream, BackgroundFile* pDest );
+        virtual void 	importBackgroundFile( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
 
         struct Header
         {
-            uint32 version;
+            uint16 unused;
+            uint16 unknown;
         };
 
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
+        virtual void    readSectionHeader( Ogre::DataStreamPtr &stream, const String &section_name );
+
+        virtual void    readPallete( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
+        virtual void    readBackground( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
         //virtual void    readObject( Ogre::DataStreamPtr &stream, BBoxEntry &pDest );
         //using Serializer::readObject;
+
+        static const String SECTION_NAME_PALETTE;
+        static const String SECTION_NAME_BACK;
+        static const String SECTION_NAME_TEXTURE;
 
     private:
         Header  m_header;

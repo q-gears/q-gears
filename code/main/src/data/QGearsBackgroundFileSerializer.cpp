@@ -30,6 +30,11 @@ THE SOFTWARE.
 namespace QGears
 {
     //---------------------------------------------------------------------
+    const String BackgroundFileSerializer::SECTION_NAME_PALETTE("PALETTE");
+    const String BackgroundFileSerializer::SECTION_NAME_BACK   ("BACK");
+    const String BackgroundFileSerializer::SECTION_NAME_TEXTURE("TEXTURE");
+
+    //---------------------------------------------------------------------
     BackgroundFileSerializer::BackgroundFileSerializer() :
         Serializer()
     {
@@ -44,14 +49,60 @@ namespace QGears
     void
     BackgroundFileSerializer::readFileHeader( Ogre::DataStreamPtr &stream )
     {
+        uint16 data[2];
+        readShorts( stream, data, 2 );
+        m_header.unused = data[0];
+        m_header.unknown = data[1];
+    }
+
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::readSectionHeader( Ogre::DataStreamPtr &stream
+                                                ,const String &section_name )
+    {
+        String actual_name( readString( stream, section_name.size() ) );
+        if( actual_name != section_name )
+        {
+            Ogre::LogManager::getSingleton().stream()
+                << "Warming: Section didn't start with"
+                << "expected String '" << section_name << "'"
+                << " actual was '" << actual_name << "'";
+        }
+
+    }
+
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::readPallete( Ogre::DataStreamPtr &stream
+                                          ,BackgroundFile *pDest )
+    {
+        readSectionHeader( stream, SECTION_NAME_PALETTE );
+        stream->read( pDest->getPaletteIndices(), BackgroundFile::PALETTE_ENTRY_COUNT );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::readBackground( Ogre::DataStreamPtr &stream
+                                             ,BackgroundFile *pDest )
+    {
+        readSectionHeader( stream, SECTION_NAME_BACK );
     }
 
     //---------------------------------------------------------------------
     void
     BackgroundFileSerializer::importBackgroundFile( Ogre::DataStreamPtr &stream
-                                                   ,BackgroundFile* pDest )
+                                                   ,BackgroundFile *pDest )
     {
         readFileHeader( stream );
+
+        uint8 layer_0_enabled;
+        stream->read( &layer_0_enabled, 1 );
+
+        readPallete( stream, pDest );
+
+        stream->skip( 2 * 2 ); // 2 *  uint16 unused;
+
+        readBackground( stream, pDest );
     }
 
     //---------------------------------------------------------------------

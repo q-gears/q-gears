@@ -48,11 +48,13 @@ namespace QGears
         typedef PaletteFile::Color_BGR Color_BGR;
 
         enum {
-            PAGE_DATA_WIDTH  = 0x100
-           ,PAGE_DATA_HEIGHT = PAGE_DATA_WIDTH
-           ,PAGE_DATA_SIZE   = PAGE_DATA_WIDTH * PAGE_DATA_HEIGHT
-           ,SPRITE_WIDTH     = 0x10
-           ,SPRITE_HEIGHT    = SPRITE_WIDTH
+            PAGE_DATA_WIDTH     = 0x100
+           ,PAGE_DATA_HEIGHT    = PAGE_DATA_WIDTH
+           ,PAGE_DATA_SIZE      = PAGE_DATA_WIDTH * PAGE_DATA_HEIGHT
+           ,SPRITE_WIDTH        = 0x10
+           ,SPRITE_HEIGHT       = SPRITE_WIDTH
+           ,LAYER_COUNT         = 4
+           ,PALETTE_ENTRY_COUNT = 20
         };
 
         struct SpriteData
@@ -104,6 +106,9 @@ namespace QGears
             SpriteData* sprites;
         };
 
+        virtual Layer* getLayers( void ) { return m_layers; };
+        virtual uint8* getPaletteIndices( void ) { return m_palette_indicies; };
+
     protected:
         virtual void loadImpl();
         virtual void unloadImpl();
@@ -116,7 +121,8 @@ namespace QGears
 
         size_t m_row_pitch;
         size_t m_raw_data_offset;
-        Layer m_layers[4];
+        Layer m_layers[LAYER_COUNT];
+        uint8 m_palette_indicies[PALETTE_ENTRY_COUNT];
         Page* m_pages; // 42 items
     };
 
