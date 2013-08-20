@@ -24,7 +24,7 @@ THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
 #ifndef __QGearsBackgroundFileSerializer_H__
-#define __QGearsPFileSerializer_H__
+#define __QGearsBackgroundFileSerializer_H__
 
 #include "common/TypeDefine.h"
 
@@ -56,4 +56,4 @@ namespace QGears
     };
 }
 
-#endif // __QGearsPFileSerializer_H__
+#endif // __QGearsBackgroundFileSerializer_H__

@@ -17,9 +17,9 @@
 				</Compiler>
 				<Linker>
 					<Add library="OgreMain_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_filesystem-mgw47-mt-d-1_54" />
-					<Add library="boost_program_options-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_filesystem-mt-d" />
+					<Add library="boost_program_options-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -34,9 +34,9 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="OgreMain" />
-					<Add library="boost_system-mgw47-mt-1_54" />
-					<Add library="boost_filesystem-mgw47-mt-1_54" />
-					<Add library="boost_program_options-mgw47-mt-1_54" />
+					<Add library="boost_system-mt" />
+					<Add library="boost_filesystem-mt" />
+					<Add library="boost_program_options-mt" />
 				</Linker>
 			</Target>
 		</Build>

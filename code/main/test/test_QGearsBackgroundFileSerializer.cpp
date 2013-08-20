@@ -23,10 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#define BOOST_TEST_MODULE QGearsBackgroundFile
+#define BOOST_TEST_MODULE QGearsBackgroundFileSerializer
 #include <boost/test/unit_test.hpp>
 
-#include "common/QGearsBackgroundFile.h"
+#include "data/QGearsBackgroundFileSerializer.h"
 
 BOOST_AUTO_TEST_CASE( header_size )
 {

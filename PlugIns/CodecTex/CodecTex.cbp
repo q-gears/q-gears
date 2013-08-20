@@ -16,7 +16,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="OgreMain_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -30,7 +30,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="OgreMain" />
-					<Add library="boost_system-mgw47-mt-1_54" />
+					<Add library="boost_system-mt" />
 				</Linker>
 			</Target>
 			<Target title="Test">
@@ -44,8 +44,8 @@
 				</Compiler>
 				<Linker>
 					<Add library="OgreMain_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="TexInfo">
@@ -56,9 +56,9 @@
 				<Option compiler="gcc" />
 				<Linker>
 					<Add library="OgreMain" />
-					<Add library="boost_system-mgw47-mt-1_54" />
-					<Add library="boost_program_options-mgw47-mt-1_54" />
-					<Add library="boost_filesystem-mgw47-mt-1_54" />
+					<Add library="boost_system-mt" />
+					<Add library="boost_program_options-mt" />
+					<Add library="boost_filesystem-mt" />
 				</Linker>
 			</Target>
 		</Build>
@@ -73,8 +73,8 @@
 			<Add directory="include" />
 		</Compiler>
 		<Linker>
-			<Add directory="D:/app/dev/boost/stage/lib" />
-			<Add directory="D:/work/ogre/build/sdk/lib" />
+			<Add directory="$(BOOST_HOME)/stage/lib" />
+			<Add directory="$(OGRE_HOME)/lib" />
 		</Linker>
 		<Unit filename="include/QGearsTexCodec.h">
 			<Option target="Debug" />

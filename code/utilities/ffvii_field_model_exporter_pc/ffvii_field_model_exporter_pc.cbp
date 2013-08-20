@@ -19,8 +19,8 @@
 					<Add option="-s" />
 					<Add library="OgreMain" />
 					<Add library="OIS" />
-					<Add library="boost_system-mgw47-mt-1_54" />
-					<Add library="boost_thread-mgw47-mt-1_54" />
+					<Add library="boost_system-mt" />
+					<Add library="boost_thread-mt" />
 				</Linker>
 			</Target>
 			<Target title="Test_PFileSerializer">
@@ -37,9 +37,9 @@
 					<Add option="-s" />
 					<Add library="OgreMain_d" />
 					<Add library="OIS_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_thread-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="Test_PFile">
@@ -56,9 +56,9 @@
 					<Add option="-s" />
 					<Add library="OgreMain_d" />
 					<Add library="OIS_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_thread-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="Test_HRCFileSerializer">
@@ -75,9 +75,9 @@
 					<Add option="-s" />
 					<Add library="OgreMain_d" />
 					<Add library="OIS_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_thread-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="Test_AFileSerializer">
@@ -94,9 +94,9 @@
 					<Add option="-s" />
 					<Add library="OgreMain_d" />
 					<Add library="OIS_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_thread-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="Test_ManualObject">
@@ -113,9 +113,9 @@
 					<Add option="-s" />
 					<Add library="OgreMain_d" />
 					<Add library="OIS_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_thread-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="Test_RSDFileSerializer">
@@ -132,9 +132,9 @@
 					<Add option="-s" />
 					<Add library="OgreMain_d" />
 					<Add library="OIS_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_thread-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="Test_RingBuffer">
@@ -151,9 +151,9 @@
 					<Add option="-s" />
 					<Add library="OgreMain_d" />
 					<Add library="OIS_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_thread-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
 			<Target title="Test_LZSDataStream">
@@ -170,13 +170,13 @@
 					<Add option="-s" />
 					<Add library="OgreMain_d" />
 					<Add library="OIS_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_thread-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
-			<Target title="Test_BackgroundFile">
-				<Option output="bin/test/test_BackgroundFile" prefix_auto="1" extension_auto="1" />
+			<Target title="Test_BackgroundFileSerializer">
+				<Option output="bin/test/test_BackgroundFileSerializer" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
 				<Option object_output="obj/Test/" />
 				<Option type="1" />
@@ -189,9 +189,9 @@
 					<Add option="-s" />
 					<Add library="OgreMain_d" />
 					<Add library="OIS_d" />
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_thread-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
 		</Build>
@@ -262,8 +262,8 @@
 		<Unit filename="../../main/test/test_QGearsAFileSerializer.cpp">
 			<Option target="Test_AFileSerializer" />
 		</Unit>
-		<Unit filename="../../main/test/test_QGearsBackgroundFile.cpp">
-			<Option target="Test_BackgroundFile" />
+		<Unit filename="../../main/test/test_QGearsBackgroundFileSerializer.cpp">
+			<Option target="Test_BackgroundFileSerializer" />
 		</Unit>
 		<Unit filename="../../main/test/test_QGearsHRCSerializer.cpp">
 			<Option target="Test_HRCFileSerializer" />

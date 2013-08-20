@@ -83,6 +83,7 @@ InitializeOgreBase( const Ogre::String& name )
     window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
 
     // create resource managers, move to plugin later on
+
     p_manager   = new QGears::PFileManager();
     hrc_manager = new QGears::HRCFileManager();
     rsd_manager = new QGears::RSDFileManager();
@@ -110,7 +111,7 @@ InitializeOgreBase( const Ogre::String& name )
 
     camera = scene_manager->createCamera( "Camera" );
     camera->setNearClipDistance( 0.01f );
-    camera->setPosition( 0, 5, 50 );
+    camera->setPosition( 0, 5, 10 );
     camera->lookAt( 0, 0, 0 );
 
     viewport = window->addViewport( camera );

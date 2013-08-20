@@ -21,8 +21,8 @@
 					<Add option="-static-libgcc" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
-					<Add library="boost_system-mgw47-mt-1_54" />
-					<Add library="boost_thread-mgw47-mt-1_54" />
+					<Add library="boost_system-mt" />
+					<Add library="boost_thread-mt" />
 				</Linker>
 			</Target>
 		</Build>

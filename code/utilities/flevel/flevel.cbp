@@ -16,9 +16,9 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_filesystem-mgw47-mt-d-1_54" />
-					<Add library="boost_program_options-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_filesystem-mt-d" />
+					<Add library="boost_program_options-mt-d" />
 					<Add library="OgreMain_d" />
 				</Linker>
 			</Target>
@@ -33,9 +33,9 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="boost_system-mgw47-mt-1_54" />
-					<Add library="boost_filesystem-mgw47-mt-1_54" />
-					<Add library="boost_program_options-mgw47-mt-1_54" />
+					<Add library="boost_system-mt" />
+					<Add library="boost_filesystem-mt" />
+					<Add library="boost_program_options-mt" />
 					<Add library="OgreMain" />
 				</Linker>
 			</Target>
@@ -49,9 +49,9 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="boost_system-mgw47-mt-d-1_54" />
-					<Add library="boost_filesystem-mgw47-mt-d-1_54" />
-					<Add library="boost_unit_test_framework-mgw47-mt-d-1_54" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_filesystem-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
 					<Add library="OgreMain_d" />
 				</Linker>
 			</Target>

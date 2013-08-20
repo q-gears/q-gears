@@ -120,7 +120,7 @@ public:
 
                     if( state->getEnabled() == true )
                     {
-                        state->addTime( evt.timeSinceLastFrame / 5 );
+                        state->addTime( evt.timeSinceLastFrame );
 
                         info_text->setCaption( entitys[ i ]->getName() + ": " + state->getAnimationName() );
                     }
