@@ -34,18 +34,24 @@ BOOST_AUTO_TEST_CASE( header_size )
 {
     BOOST_CHECK_EQUAL( 0x34, sizeof( QGears::BackgroundFile::SpriteData ) );
     BOOST_CHECK_EQUAL( 0x03, sizeof( QGears::BackgroundFile::Color_BGR) );
+    BOOST_CHECK_EQUAL( 0x04, sizeof( QGears::BackgroundFile::Pixel) );
 
     QGears::BackgroundFile::SpriteData* sd( NULL );
     BOOST_CHECK_EQUAL( sizeof( *sd ), sizeof( QGears::BackgroundFile::SpriteData ) );
 }
 
+BOOST_AUTO_TEST_CASE( pixel_offset )
+{
+    BOOST_CHECK_EQUAL( 0x00, offsetof( QGears::BackgroundFile::Pixel, x ) );
+    BOOST_CHECK_EQUAL( 0x02, offsetof( QGears::BackgroundFile::Pixel, y ) );
+}
+
 BOOST_AUTO_TEST_CASE( sprite_data_offset )
 {
-    BOOST_CHECK_EQUAL( 0x00, offsetof( QGears::BackgroundFile::SpriteData, dst_x ) );
-    BOOST_CHECK_EQUAL( 0x02, offsetof( QGears::BackgroundFile::SpriteData, dst_y ) );
-    BOOST_CHECK_EQUAL( 0x08, offsetof( QGears::BackgroundFile::SpriteData, src_x ) );
-    BOOST_CHECK_EQUAL( 0x0A, offsetof( QGears::BackgroundFile::SpriteData, src_y ) );
+    BOOST_CHECK_EQUAL( 0x00, offsetof( QGears::BackgroundFile::SpriteData, dst ) );
+    BOOST_CHECK_EQUAL( 0x08, offsetof( QGears::BackgroundFile::SpriteData, src ) );
     BOOST_CHECK_EQUAL( 0x14, offsetof( QGears::BackgroundFile::SpriteData, palette_page ) );
+    BOOST_CHECK_EQUAL( 0x18, offsetof( QGears::BackgroundFile::SpriteData, flags ) );
     BOOST_CHECK_EQUAL( 0x1E, offsetof( QGears::BackgroundFile::SpriteData, data_page ) );
 }
 
@@ -74,12 +80,43 @@ BOOST_AUTO_TEST_CASE( read_file )
 
     logMgr.destroyLog( "Default Log" );
 
-    BOOST_CHECK( file.getLayers()[0].enabled );
+    QGears::BackgroundFile::Layer *layer( file.getLayers() );
+    BOOST_CHECK( layer[0].enabled );
+    BOOST_CHECK_EQUAL( 400, layer[0].width );
+    BOOST_CHECK_EQUAL( 736, layer[0].height );
+    BOOST_CHECK_EQUAL(1019, layer[0].sprites.size() );
+    BOOST_CHECK_EQUAL(-192, layer[0].sprites[0].dst.x );
+    BOOST_CHECK_EQUAL(-168, layer[0].sprites[0].dst.y );
+    BOOST_CHECK_EQUAL(   0, layer[0].sprites[0].src.x );
+    BOOST_CHECK_EQUAL(   0, layer[0].sprites[0].src.y );
+
+    BOOST_CHECK( layer[1].enabled );
+    BOOST_CHECK_EQUAL( 640, layer[1].width );
+    BOOST_CHECK_EQUAL( 480, layer[1].height );
+    BOOST_CHECK_EQUAL(  64, layer[1].sprites.size() );
+    BOOST_CHECK_EQUAL(  48, layer[1].sprites[0].dst.x );
+    BOOST_CHECK_EQUAL(-312, layer[1].sprites[0].dst.y );
+    BOOST_CHECK_EQUAL( 176, layer[1].sprites[0].src.x );
+    BOOST_CHECK_EQUAL( 240, layer[1].sprites[0].src.y );
+
+    BOOST_CHECK( layer[2].enabled );
+    BOOST_CHECK_EQUAL( 640, layer[2].width );
+    BOOST_CHECK_EQUAL( 480, layer[2].height );
+    BOOST_CHECK_EQUAL(   0, layer[2].sprites.size() );
+
+    BOOST_CHECK( layer[3].enabled );
+    BOOST_CHECK_EQUAL( 640, layer[3].width );
+    BOOST_CHECK_EQUAL( 480, layer[3].height );
+    BOOST_CHECK_EQUAL( 280, layer[3].sprites.size() );
+    BOOST_CHECK_EQUAL(-160, layer[3].sprites[0].dst.x );
+    BOOST_CHECK_EQUAL(-120, layer[3].sprites[0].dst.y );
+    BOOST_CHECK_EQUAL(   0, layer[3].sprites[0].src.x );
+    BOOST_CHECK_EQUAL(   0, layer[3].sprites[0].src.y );
 
     QGears::uint8 palatte_expected[] = { 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00 };
     BOOST_CHECK_EQUAL( sizeof( palatte_expected ), QGears::BackgroundFile::PALETTE_ENTRY_COUNT );
-    BOOST_CHECK_EQUAL_COLLECTIONS( palatte_expected        , palatte_expected + sizeof( palatte_expected )
-                                  ,file.getPaletteIndices(), file.getPaletteIndices() + QGears::BackgroundFile::PALETTE_ENTRY_COUNT );
+    BOOST_CHECK_EQUAL_COLLECTIONS( palatte_expected , palatte_expected  + sizeof( palatte_expected )
+                                  ,file.getPalette(), file.getPalette() + QGears::BackgroundFile::PALETTE_ENTRY_COUNT );
 
     ifs->close();
 }

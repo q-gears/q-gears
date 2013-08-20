@@ -73,4 +73,12 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    void
+    BackgroundFile::clear()
+    {
+        memset( m_layers , 0, sizeof( m_layers  ) );
+        memset( m_palette, 0, sizeof( m_palette ) );
+    }
+
+    //---------------------------------------------------------------------
 }

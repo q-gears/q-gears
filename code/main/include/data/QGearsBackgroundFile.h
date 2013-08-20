@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __QGearsBackgroundFile_H__
 
 #include <OgreResource.h>
+#include <OgreVector3.h>
 
 #include "common/TypeDefine.h"
 #include "common/QGearsPaletteFile.h"
@@ -57,34 +58,28 @@ namespace QGears
            ,PALETTE_ENTRY_COUNT = 20
         };
 
+        struct Pixel
+        {
+            sint16 x;
+            sint16 y;
+        };
+
         struct SpriteData
         {
-            sint16 dst_x;
-            sint16 dst_y;
-            uint16 unknown_03;
-            uint16 unknown_04;
-            sint16 src_x;
-            sint16 src_y;
-            uint16 unknown_07;
-            uint16 unknown_08;
-            uint16 unknown_09;
-            uint16 unknown_0A;
+            Pixel dst;
+            uint16 unknown_04[2];
+            Pixel src;
+            uint16 unknown_0C[4];
 
             uint16 palette_page;
-            uint16 unknown_00;
-            uint8  flags_0A;
-            uint8  flags_0B;
-            uint8  flags_0C; // boolean
-            uint8  flags_0D;
-            uint16 unknown_0E;
+            uint16 unknown_16;
+            uint8  flags[4];
+            uint16 unknown_1C;
             uint16 data_page;
-            uint16 unknown_0F;
-            uint16 unknown_38;
-            float  unknown_u;
-            float  unknown_v;
-            float  unknown_w;
-            uint16 unused_30;
-            uint16 unused_32;
+            uint16 unknown_20;
+            uint16 unknown_22;
+            Ogre::Vector3 unknown_24;
+            uint16 unused_30[2];
         };
 
 
@@ -97,17 +92,23 @@ namespace QGears
             u8 data[ PAGE_DATA_WIDTH ][ PAGE_DATA_HEIGHT ];
         };
 
+        typedef std::vector<SpriteData> SpriteList;
+
         struct Layer
         {
             bool enabled;
             uint16 width;
             uint16 height;
-            uint16 count;
-            SpriteData* sprites;
+            uint16 unknown_06;
+            uint16 unknown_08[3];
+            uint16 unknown_0E[4];
+            SpriteList sprites;
         };
 
-        virtual Layer* getLayers( void ) { return m_layers; };
-        virtual uint8* getPaletteIndices( void ) { return m_palette_indicies; };
+        virtual Layer* getLayers ( void ) { return m_layers;  };
+        virtual uint8* getPalette( void ) { return m_palette; };
+
+        virtual void clear();
 
     protected:
         virtual void loadImpl();
@@ -121,8 +122,10 @@ namespace QGears
 
         size_t m_row_pitch;
         size_t m_raw_data_offset;
-        Layer m_layers[LAYER_COUNT];
-        uint8 m_palette_indicies[PALETTE_ENTRY_COUNT];
+
+        Layer m_layers [ LAYER_COUNT ];
+        uint8 m_palette[ PALETTE_ENTRY_COUNT ];
+
         Page* m_pages; // 42 items
     };
 

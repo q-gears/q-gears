@@ -77,7 +77,7 @@ namespace QGears
                                           ,BackgroundFile *pDest )
     {
         readSectionHeader( stream, SECTION_NAME_PALETTE );
-        stream->read( pDest->getPaletteIndices(), BackgroundFile::PALETTE_ENTRY_COUNT );
+        stream->read( pDest->getPalette(), BackgroundFile::PALETTE_ENTRY_COUNT );
     }
 
     //---------------------------------------------------------------------
@@ -86,6 +86,84 @@ namespace QGears
                                              ,BackgroundFile *pDest )
     {
         readSectionHeader( stream, SECTION_NAME_BACK );
+        Layer *layer( pDest->getLayers() );
+        for( size_t i( 0 ); i < BackgroundFile::LAYER_COUNT; ++i, ++layer )
+        {
+            if( i != 0 )
+            {
+                readLayerEnabled( stream, layer );
+            }
+
+            readLayer( stream, layer, i );
+        }
+    }
+
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::readLayerEnabled( Ogre::DataStreamPtr &stream, Layer *pDest )
+    {
+        uint8 enabled;
+        stream->read( &enabled, 1 );
+        pDest->enabled = enabled;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::readLayer( Ogre::DataStreamPtr &stream
+                                        ,Layer *pDest, size_t layer_index )
+    {
+        if( !pDest->enabled ) return;
+
+        uint16 tmp[4], sprite_count;
+        readShorts( stream, tmp, 4 );
+        pDest->width        = tmp[0];
+        pDest->height       = tmp[1];
+        sprite_count        = tmp[2];
+        pDest->unknown_06   = tmp[3];
+
+        switch( layer_index )
+        {
+          case 1:
+            readShorts( stream, pDest->unknown_08, 3 );
+          case 2:
+          case 3:
+            readShorts( stream, pDest->unknown_0E, 4 );
+        }
+        stream->skip( 2 * 2 ); // 2 *  uint16 unused;
+        readVector( stream, pDest->sprites, sprite_count );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::readObject( Ogre::DataStreamPtr &stream, SpriteData &pDest )
+    {
+        readObject( stream, pDest.dst );
+        readShorts( stream, pDest.unknown_04, 2 );
+        readObject( stream, pDest.src );
+        readShorts( stream, pDest.unknown_0C, 4 );
+
+        uint16 tmp[4];
+        readShorts( stream, tmp, 2 );
+        pDest.palette_page = tmp[0];
+        pDest.unknown_16   = tmp[1];
+
+        stream->read( pDest.flags, sizeof( pDest.flags ) );
+
+        readShorts( stream, tmp, 4 );
+        pDest.unknown_1C = tmp[0];
+        pDest.data_page  = tmp[1];
+        pDest.unknown_20 = tmp[2];
+        pDest.unknown_22 = tmp[3];
+        readObject( stream, pDest.unknown_24 );
+        readShorts( stream, pDest.unused_30, 2 );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::readObject( Ogre::DataStreamPtr &stream, Pixel &pDest )
+    {
+        stream->read( &pDest, sizeof( pDest ) );
+        flipFromLittleEndian( &pDest, 2, 2 );
     }
 
     //---------------------------------------------------------------------
@@ -93,11 +171,10 @@ namespace QGears
     BackgroundFileSerializer::importBackgroundFile( Ogre::DataStreamPtr &stream
                                                    ,BackgroundFile *pDest )
     {
+        pDest->clear();
         readFileHeader( stream );
 
-        uint8 layer_0_enabled;
-        stream->read( &layer_0_enabled, 1 );
-
+        readLayerEnabled( stream, pDest->getLayers() );
         readPallete( stream, pDest );
 
         stream->skip( 2 * 2 ); // 2 *  uint16 unused;

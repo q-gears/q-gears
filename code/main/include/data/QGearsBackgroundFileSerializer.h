@@ -47,14 +47,38 @@ namespace QGears
             uint16 unknown;
         };
 
+        typedef BackgroundFile::Layer       Layer;
+        typedef BackgroundFile::Pixel       Pixel;
+        typedef BackgroundFile::SpriteData  SpriteData;
+        typedef BackgroundFile::SpriteList  SpriteList;
+
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
         virtual void    readSectionHeader( Ogre::DataStreamPtr &stream, const String &section_name );
 
         virtual void    readPallete( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
         virtual void    readBackground( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
-        //virtual void    readObject( Ogre::DataStreamPtr &stream, BBoxEntry &pDest );
-        //using Serializer::readObject;
+
+        virtual void    readLayerEnabled( Ogre::DataStreamPtr &stream, Layer *pDest );
+        virtual void    readLayer( Ogre::DataStreamPtr &stream, Layer *pDest, size_t layer_index  );
+
+        virtual void    readObject( Ogre::DataStreamPtr &stream, Pixel &pDest  );
+        virtual void    readObject( Ogre::DataStreamPtr &stream, SpriteData &pDest  );
+        using Serializer::readObject;
+
+        template<typename ValueType> void
+        readVector( Ogre::DataStreamPtr &stream, std::vector<ValueType> &pDest, size_t count )
+        {
+            pDest.clear();
+            pDest.reserve( count );
+            for( size_t i( count ); i--; )
+            {
+                ValueType in_tmp;
+                readObject( stream, in_tmp );
+                pDest.push_back( in_tmp );
+            }
+        }
+
 
         static const String SECTION_NAME_PALETTE;
         static const String SECTION_NAME_BACK;
