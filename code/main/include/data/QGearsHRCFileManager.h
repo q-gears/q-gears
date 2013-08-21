@@ -28,13 +28,14 @@ THE SOFTWARE.
 
 #include <OgreResourceManager.h>
 
+#include "QGearsPrerequisites.h"
 #include "common/TypeDefine.h"
 
 #include "QGearsHRCFile.h"
 
 namespace QGears
 {
-    class HRCFileManager : public Ogre::ResourceManager, public Ogre::Singleton<HRCFileManager>
+    class _QGearsExport HRCFileManager : public Ogre::ResourceManager, public Ogre::Singleton<HRCFileManager>
     {
     public:
         HRCFileManager();

@@ -28,11 +28,13 @@ THE SOFTWARE.
 
 #include <OgreResourceManager.h>
 
+#include "QGearsPrerequisites.h"
+
 #include "QGearsPFile.h"
 
 namespace QGears
 {
-    class PFileManager : public Ogre::ResourceManager, public Ogre::Singleton<PFileManager>
+    class _QGearsExport PFileManager : public Ogre::ResourceManager, public Ogre::Singleton<PFileManager>
     {
     public:
         PFileManager();

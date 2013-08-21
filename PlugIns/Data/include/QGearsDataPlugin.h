@@ -28,6 +28,9 @@ THE SOFTWARE.
 
 #include <OgrePlugin.h>
 
+#include "data/QGearsPFileManager.h"
+#include "data/QGearsHRCFileManager.h"
+#include "data/QGearsRSDFileManager.h"
 #include "data/QGearsTexCodec.h"
 
 namespace QGears {
@@ -35,7 +38,7 @@ namespace QGears {
 	/** Plugin instance for various FFVII Data Formats */
     class DataPlugin : public Ogre::Plugin
     {
-      public:
+    public:
         DataPlugin();
 
         /// @copydoc Ogre::Plugin::getName
@@ -54,6 +57,12 @@ namespace QGears {
         void uninstall();
 
         static const Ogre::String ms_plugin_name;
+
+    private:
+        PFileManager   *p_manager;
+        HRCFileManager *hrc_manager;
+        RSDFileManager *rsd_manager;
+
     };
 }
 #endif // __QGearsTexPlugin_H__

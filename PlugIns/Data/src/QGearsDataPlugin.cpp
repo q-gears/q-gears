@@ -55,6 +55,9 @@ namespace QGears {
     {
         //intialise called - register stuff here
         TexCodec::initialise();
+        p_manager   = new PFileManager();
+        hrc_manager = new HRCFileManager();
+        rsd_manager = new RSDFileManager();
     }
 
     //---------------------------------------------------------------------
@@ -62,6 +65,9 @@ namespace QGears {
     {
         //shutdown called - unregister stuff here
         TexCodec::shutdown();
+        delete p_manager;
+        delete hrc_manager;
+        delete rsd_manager;
     }
 
     //---------------------------------------------------------------------

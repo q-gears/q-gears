@@ -28,11 +28,13 @@ THE SOFTWARE.
 
 #include <OgreResourceManager.h>
 
+#include "QGearsPrerequisites.h"
+
 #include "QGearsRSDFile.h"
 
 namespace QGears
 {
-    class RSDFileManager : public Ogre::ResourceManager, public Ogre::Singleton<RSDFileManager>
+    class _QGearsExport RSDFileManager : public Ogre::ResourceManager, public Ogre::Singleton<RSDFileManager>
     {
     public:
         RSDFileManager();

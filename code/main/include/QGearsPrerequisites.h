@@ -35,7 +35,7 @@ THE SOFTWARE.
 #       define _QGearsExport __declspec(dllimport)
 #   endif
 #elif defined ( OGRE_GCC_VISIBILITY )
-#   define _QGearsTexPluginExport  __attribute__ ((visibility("default")))
+#   define _QGearsExport  __attribute__ ((visibility("default")))
 #else
 #   define _QGearsExport
 #endif
