@@ -118,15 +118,10 @@ namespace QGears
         virtual void loadImpl();
         virtual void unloadImpl();
         virtual size_t calculateSize() const;
+        virtual size_t calculateSize( const Layer &layer ) const;
+        virtual size_t calculateSize( const Page  &page  ) const;
 
     private:
-        uint16 m_width;
-        uint16 m_height;
-        uint16 m_min_y;
-
-        size_t m_row_pitch;
-        size_t m_raw_data_offset;
-
         Layer m_layers [ LAYER_COUNT ];
         uint8 m_palette[ PALETTE_ENTRY_COUNT ];
 

@@ -78,7 +78,41 @@ namespace QGears
     size_t
     BackgroundFile::calculateSize() const
     {
-        return 0;
+        size_t data_size( 0 );
+        for( size_t i(LAYER_COUNT); i--; )
+        {
+            data_size += calculateSize( m_layers[i] );
+        }
+
+        for( size_t i(PAGE_COUNT); i--; )
+        {
+            data_size += calculateSize( m_pages[i] );
+        }
+
+        return data_size;
+    }
+
+    //---------------------------------------------------------------------
+    size_t
+    BackgroundFile::calculateSize( const Layer &layer ) const
+    {
+        return sizeof( layer.enabled )
+              +sizeof( layer.width )
+              +sizeof( layer.height )
+              +sizeof( layer.unknown_06 )
+              +sizeof( layer.unknown_08 )
+              +sizeof( layer.unknown_0E )
+              +layer.sprites.size() * sizeof( layer.sprites[0] );
+    }
+
+    //---------------------------------------------------------------------
+    size_t
+    BackgroundFile::calculateSize( const Page &page ) const
+    {
+        return sizeof( page.enabled )
+              +sizeof( page.unknown_02 )
+              +sizeof( page.value_size )
+              +page.data.size();
     }
 
     //---------------------------------------------------------------------

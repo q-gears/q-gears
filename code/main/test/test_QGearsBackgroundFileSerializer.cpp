@@ -67,6 +67,7 @@ BOOST_AUTO_TEST_CASE( read_file )
 
     ser.importBackgroundFile( stream, &file );
     BOOST_CHECK_EQUAL( 726491, stream->tell() );
+    BOOST_CHECK_EQUAL( 721078, file.getCalculatedSize() );
 
     logMgr.destroyLog( "Default Log" );
 
@@ -108,5 +109,12 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_CHECK_EQUAL_COLLECTIONS( palatte_expected , palatte_expected  + sizeof( palatte_expected )
                                   ,file.getPalette(), file.getPalette() + QGears::BackgroundFile::PALETTE_ENTRY_COUNT );
 
+    QGears::BackgroundFile::Page *page( file.getPages() );
+    bool enabled[] = { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    BOOST_CHECK_EQUAL( sizeof(enabled), QGears::BackgroundFile::PAGE_COUNT );
+    for( size_t i( QGears::BackgroundFile::PAGE_COUNT ); i--; )
+    {
+        BOOST_CHECK_EQUAL( enabled[i], page[i].enabled );
+    }
     ifs->close();
 }
