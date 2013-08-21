@@ -219,6 +219,7 @@
 		<Unit filename="../../../utilites/common/OgreBase.h" />
 		<Unit filename="../../../utilites/common/TypeDefine.cpp" />
 		<Unit filename="../../../utilites/common/TypeDefine.h" />
+		<Unit filename="../../main/include/QGearsPrerequisites.h" />
 		<Unit filename="../../main/include/common/QGearsManualObject.h" />
 		<Unit filename="../../main/include/common/QGearsStringUtil.h" />
 		<Unit filename="../../main/include/data/QGearsAFile.h" />
