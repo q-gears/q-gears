@@ -28,11 +28,11 @@ THE SOFTWARE.
 
 #include <OgreImageCodec.h>
 
-#include "QGearsTexPlugin_Prerequisites.h"
+#include "QGearsPrerequisites.h"
 
 namespace QGears
 {
-    class _QGearsTexPluginExport TexCodec : public Ogre::ImageCodec
+    class _QGearsExport TexCodec : public Ogre::ImageCodec
     {
     public:
         TexCodec();

@@ -23,37 +23,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsTexPlugin_H__
-#define __QGearsTexPlugin_H__
+#include <OgreRoot.h>
 
-#include <OgrePlugin.h>
+#include "QGearsDataPlugin.h"
 
-#include "QGearsTexCodec.h"
+#ifndef QGEARS_STATIC_LIB
 
-namespace QGears {
+namespace QGears
+{
+    DataPlugin* data_plugin( NULL );
 
-	/** Plugin instance for TEX Image Codec */
-    class TexPlugin : public Ogre::Plugin
+    extern "C" void _QGearsExport dllStartPlugin( void )
     {
-      public:
-        TexPlugin();
+        // Create new scene manager
+        data_plugin = new DataPlugin();
 
-        /// @copydoc Ogre::Plugin::getName
-        const Ogre::String& getName() const;
+        // Register
+        Ogre::Root::getSingleton().installPlugin( data_plugin );
 
-        /// @copydoc Ogre::Plugin::install
-        void install();
-
-        /// @copydoc Ogre::Plugin::initialise
-        void initialise();
-
-        /// @copydoc Ogre::Plugin::shutdown
-        void shutdown();
-
-        /// @copydoc Ogre::Plugin::uninstall
-        void uninstall();
-
-        static const Ogre::String ms_plugin_name;
-    };
+    }
+    extern "C" void _QGearsExport dllStopPlugin( void )
+    {
+	    Ogre::Root::getSingleton().uninstallPlugin( data_plugin );
+	    delete data_plugin;
+	    data_plugin = NULL;
+    }
 }
-#endif // __QGearsTexPlugin_H__
+
+#endif

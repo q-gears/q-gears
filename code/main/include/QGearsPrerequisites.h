@@ -23,51 +23,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "QGearsTexPlugin.h"
+#ifndef __QGearsPrerequisites_H__
+#define __QGearsPrerequisites_H__
 
-#include "QGearsTexCodec.h"
+#include <OgrePrerequisites.h>
 
-using Ogre::String;
+#if (OGRE_PLATFORM == OGRE_PLATFORM_WIN32 ) && !defined(__MINGW32__) && !defined(QGEARS_STATIC_LIB)
+#   ifdef QGEARS_EXPORTS
+#       define _QGearsExport __declspec(dllexport)
+#   else
+#       define _QGearsExport __declspec(dllimport)
+#   endif
+#elif defined ( OGRE_GCC_VISIBILITY )
+#   define _QGearsTexPluginExport  __attribute__ ((visibility("default")))
+#else
+#   define _QGearsExport
+#endif
 
-namespace QGears {
-    const String TexPlugin::ms_plugin_name( "Codec for TEX Image Files" );
 
-    //---------------------------------------------------------------------
-    TexPlugin::TexPlugin()
-    {
-    }
-
-    //---------------------------------------------------------------------
-    const String& TexPlugin::getName() const
-    {
-        return ms_plugin_name;
-    }
-
-    //---------------------------------------------------------------------
-    void TexPlugin::install()
-    {
-        //install called - create stuff here
-        TexCodec::install();
-    }
-
-    //---------------------------------------------------------------------
-    void TexPlugin::initialise()
-    {
-        //intialise called - register stuff here
-        TexCodec::initialise();
-    }
-
-    //---------------------------------------------------------------------
-    void TexPlugin::shutdown()
-    {
-        //shutdown called - unregister stuff here
-        TexCodec::shutdown();
-    }
-
-    //---------------------------------------------------------------------
-    void TexPlugin::uninstall()
-    {
-        //uninstall called - delete stuff here
-        TexCodec::uninstall();
-    }
-}
+#endif // __QGearsPrerequisites_H__

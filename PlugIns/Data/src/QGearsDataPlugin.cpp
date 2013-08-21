@@ -23,31 +23,51 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include <OgreRoot.h>
+#include "QGearsDataPlugin.h"
 
-#include "QGearsTexPlugin.h"
+#include "data/QGearsTexCodec.h"
 
-#ifndef QGEARS_STATIC_LIB
+using Ogre::String;
 
-namespace QGears
-{
-    TexPlugin* tex_plugin( NULL );
+namespace QGears {
+    const String DataPlugin::ms_plugin_name( "Plugin for Various FFVII File Formats" );
 
-    extern "C" void _QGearsTexPluginExport dllStartPlugin( void )
+    //---------------------------------------------------------------------
+    DataPlugin::DataPlugin()
     {
-        // Create new scene manager
-        tex_plugin = new TexPlugin();
-
-        // Register
-        Ogre::Root::getSingleton().installPlugin(tex_plugin);
-
     }
-    extern "C" void _QGearsTexPluginExport dllStopPlugin( void )
+
+    //---------------------------------------------------------------------
+    const String& DataPlugin::getName() const
     {
-	    Ogre::Root::getSingleton().uninstallPlugin(tex_plugin);
-	    delete tex_plugin;
-	    tex_plugin = NULL;
+        return ms_plugin_name;
+    }
+
+    //---------------------------------------------------------------------
+    void DataPlugin::install()
+    {
+        //install called - create stuff here
+        TexCodec::install();
+    }
+
+    //---------------------------------------------------------------------
+    void DataPlugin::initialise()
+    {
+        //intialise called - register stuff here
+        TexCodec::initialise();
+    }
+
+    //---------------------------------------------------------------------
+    void DataPlugin::shutdown()
+    {
+        //shutdown called - unregister stuff here
+        TexCodec::shutdown();
+    }
+
+    //---------------------------------------------------------------------
+    void DataPlugin::uninstall()
+    {
+        //uninstall called - delete stuff here
+        TexCodec::uninstall();
     }
 }
-
-#endif

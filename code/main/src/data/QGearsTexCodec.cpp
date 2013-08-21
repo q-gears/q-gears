@@ -23,12 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "QGearsTexCodec.h"
+#include "data/QGearsTexCodec.h"
 
 #include <OgreLogManager.h>
 #include <OgreException.h>
 
-#include "QGearsTexFile.h"
+#include "data/QGearsTexFile.h"
 
 using Ogre::Codec;
 using Ogre::DataStreamPtr;

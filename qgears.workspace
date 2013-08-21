@@ -2,10 +2,8 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="QGears">
 		<Project filename="src/q-gears.cbp" />
-		<Project filename="PlugIns/CodecTex/CodecTex.cbp" />
+		<Project filename="PlugIns/Data/DataPlugin.cbp" />
 		<Project filename="utilites/ffvii_field_model_exporter/qgears.cbp" />
-		<!--Project filename="../ogre/build/OGRE.cbp" /-->
-		<!--Project filename="../ogredeps/build/OGREDEPS.cbp" /-->
 		<Project filename="code/utilities/lzs/lzs.cbp" />
 		<Project filename="code/utilities/flevel/flevel.cbp" />
 		<Project filename="code/utilities/ffvii_field_model_exporter_pc/ffvii_field_model_exporter_pc.cbp" />

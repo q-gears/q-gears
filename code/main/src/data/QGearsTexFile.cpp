@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "QGearsTexFile.h"
+#include "data/QGearsTexFile.h"
 
 #include <OgreException.h>
 #include <OgreImageCodec.h>

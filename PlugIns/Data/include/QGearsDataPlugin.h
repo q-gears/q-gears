@@ -23,22 +23,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsTexPlugin_Prerequisites_H__
-#define __QGearsTexPlugin_Prerequisites_H__
+#ifndef __QGearsTexPlugin_H__
+#define __QGearsTexPlugin_H__
 
-#include <OgrePrerequisites.h>
+#include <OgrePlugin.h>
 
-#if (OGRE_PLATFORM == OGRE_PLATFORM_WIN32 ) && !defined(__MINGW32__) && !defined(QGEARS_STATIC_LIB)
-#   ifdef QGEARS_TEXPLUGIN_EXPORTS
-#       define _QGearsTexPluginExport __declspec(dllexport)
-#   else
-#       define _QGearsTexPluginExport __declspec(dllimport)
-#   endif
-#elif defined ( OGRE_GCC_VISIBILITY )
-#   define _QGearsTexPluginExport  __attribute__ ((visibility("default")))
-#else
-#   define _QGearsTexPluginExport
-#endif
+#include "data/QGearsTexCodec.h"
 
+namespace QGears {
 
-#endif // __QGearsTexPlugin_Prerequisites_H__
+	/** Plugin instance for various FFVII Data Formats */
+    class DataPlugin : public Ogre::Plugin
+    {
+      public:
+        DataPlugin();
+
+        /// @copydoc Ogre::Plugin::getName
+        const Ogre::String& getName() const;
+
+        /// @copydoc Ogre::Plugin::install
+        void install();
+
+        /// @copydoc Ogre::Plugin::initialise
+        void initialise();
+
+        /// @copydoc Ogre::Plugin::shutdown
+        void shutdown();
+
+        /// @copydoc Ogre::Plugin::uninstall
+        void uninstall();
+
+        static const Ogre::String ms_plugin_name;
+    };
+}
+#endif // __QGearsTexPlugin_H__

@@ -1,4 +1,4 @@
-LIBRARY Plugin_TexCodec
+LIBRARY Plugin_Data
 EXPORTS	
 	dllStartPlugin
 	dllStopPlugin
