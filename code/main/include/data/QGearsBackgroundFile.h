@@ -56,6 +56,7 @@ namespace QGears
            ,SPRITE_HEIGHT       = SPRITE_WIDTH
            ,LAYER_COUNT         = 4
            ,PALETTE_ENTRY_COUNT = 20
+           ,PAGE_COUNT          = 42
         };
 
         struct Pixel
@@ -73,24 +74,15 @@ namespace QGears
 
             uint16 palette_page;
             uint16 unknown_16;
-            uint8  flags[4];
+            uint8  flags_18[2];
+            bool   flags_20[2];
             uint16 unknown_1C;
             uint16 data_page;
             uint16 unknown_20;
             uint16 unknown_22;
             Ogre::Vector3 unknown_24;
-            uint16 unused_30[2];
         };
 
-
-        struct Page
-        {
-            uint16 unknown_00; // only read further if this is > 0
-            uint16 unknown_02;
-            uint16 value_size;
-            // u8 i value_size == 1, u16 if value_size == 2
-            u8 data[ PAGE_DATA_WIDTH ][ PAGE_DATA_HEIGHT ];
-        };
 
         typedef std::vector<SpriteData> SpriteList;
 
@@ -105,10 +97,22 @@ namespace QGears
             SpriteList sprites;
         };
 
+
+        typedef std::vector<uint8>  Buffer;
+
+        struct Page
+        {
+            bool enabled; // only read further if this is > 0
+            uint16 unknown_02;
+            uint16 value_size;
+            // uint8 if value_size == 1, uint16 if value_size == 2
+            //uint8 data[PAGE_DATA_WIDTH][PAGE_DATA_HEIGHT];
+            Buffer data;
+        };
+
         virtual Layer* getLayers ( void ) { return m_layers;  };
         virtual uint8* getPalette( void ) { return m_palette; };
-
-        virtual void clear();
+        virtual Page*  getPages  ( void ) { return m_pages;   };
 
     protected:
         virtual void loadImpl();
@@ -126,7 +130,7 @@ namespace QGears
         Layer m_layers [ LAYER_COUNT ];
         uint8 m_palette[ PALETTE_ENTRY_COUNT ];
 
-        Page* m_pages; // 42 items
+        Page m_pages[ PAGE_COUNT ];
     };
 
     //-------------------------------------------------------------------------

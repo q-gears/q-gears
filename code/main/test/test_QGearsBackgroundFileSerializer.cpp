@@ -32,27 +32,14 @@ THE SOFTWARE.
 
 BOOST_AUTO_TEST_CASE( header_size )
 {
-    BOOST_CHECK_EQUAL( 0x34, sizeof( QGears::BackgroundFile::SpriteData ) );
     BOOST_CHECK_EQUAL( 0x03, sizeof( QGears::BackgroundFile::Color_BGR) );
     BOOST_CHECK_EQUAL( 0x04, sizeof( QGears::BackgroundFile::Pixel) );
-
-    QGears::BackgroundFile::SpriteData* sd( NULL );
-    BOOST_CHECK_EQUAL( sizeof( *sd ), sizeof( QGears::BackgroundFile::SpriteData ) );
 }
 
 BOOST_AUTO_TEST_CASE( pixel_offset )
 {
     BOOST_CHECK_EQUAL( 0x00, offsetof( QGears::BackgroundFile::Pixel, x ) );
     BOOST_CHECK_EQUAL( 0x02, offsetof( QGears::BackgroundFile::Pixel, y ) );
-}
-
-BOOST_AUTO_TEST_CASE( sprite_data_offset )
-{
-    BOOST_CHECK_EQUAL( 0x00, offsetof( QGears::BackgroundFile::SpriteData, dst ) );
-    BOOST_CHECK_EQUAL( 0x08, offsetof( QGears::BackgroundFile::SpriteData, src ) );
-    BOOST_CHECK_EQUAL( 0x14, offsetof( QGears::BackgroundFile::SpriteData, palette_page ) );
-    BOOST_CHECK_EQUAL( 0x18, offsetof( QGears::BackgroundFile::SpriteData, flags ) );
-    BOOST_CHECK_EQUAL( 0x1E, offsetof( QGears::BackgroundFile::SpriteData, data_page ) );
 }
 
 BOOST_AUTO_TEST_CASE( read_file )
@@ -62,21 +49,24 @@ BOOST_AUTO_TEST_CASE( read_file )
     public:
         TestFile() : QGears::BackgroundFile( NULL, "", 0, "" ) {}
         size_t getCalculatedSize() const { return calculateSize(); }
+
+        virtual void unload( void ) {};
     };
 
 	Ogre::LogManager                    logMgr;
+    logMgr.createLog( "Default Log", true, true, true );
 
     const char*                         file_name( "reference.background" );
     TestFile                            file;
     QGears::BackgroundFileSerializer    ser;
     std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
     BOOST_REQUIRE( ifs->is_open() );
+
     Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
     BOOST_REQUIRE( stream->isReadable() );
 
-    logMgr.createLog( "Default Log", true, true, true );
-
     ser.importBackgroundFile( stream, &file );
+    BOOST_CHECK_EQUAL( 726491, stream->tell() );
 
     logMgr.destroyLog( "Default Log" );
 

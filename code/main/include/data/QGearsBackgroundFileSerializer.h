@@ -44,13 +44,14 @@ namespace QGears
         struct Header
         {
             uint16 unused;
-            uint16 unknown;
+            uint16 sort_sprites_by_palette;
         };
 
         typedef BackgroundFile::Layer       Layer;
         typedef BackgroundFile::Pixel       Pixel;
         typedef BackgroundFile::SpriteData  SpriteData;
         typedef BackgroundFile::SpriteList  SpriteList;
+        typedef BackgroundFile::Page        Page;
 
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
@@ -58,12 +59,14 @@ namespace QGears
 
         virtual void    readPallete( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
         virtual void    readBackground( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
+        virtual void    readTexture( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
+        virtual void    readEnd( Ogre::DataStreamPtr &stream );
 
-        virtual void    readLayerEnabled( Ogre::DataStreamPtr &stream, Layer *pDest );
         virtual void    readLayer( Ogre::DataStreamPtr &stream, Layer *pDest, size_t layer_index  );
 
         virtual void    readObject( Ogre::DataStreamPtr &stream, Pixel &pDest  );
         virtual void    readObject( Ogre::DataStreamPtr &stream, SpriteData &pDest  );
+        virtual void    readObject( Ogre::DataStreamPtr &stream, Page &pDest  );
         using Serializer::readObject;
 
         template<typename ValueType> void
@@ -80,9 +83,11 @@ namespace QGears
         }
 
 
-        static const String SECTION_NAME_PALETTE;
-        static const String SECTION_NAME_BACK;
-        static const String SECTION_NAME_TEXTURE;
+        static const String     SECTION_NAME_PALETTE;
+        static const String     SECTION_NAME_BACK;
+        static const String     SECTION_NAME_TEXTURE;
+        static const String     TAG_FILE_END;
+        static const Ogre::Real unknown_24_SCALE;
 
     private:
         Header  m_header;

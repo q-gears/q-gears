@@ -26,13 +26,16 @@ THE SOFTWARE.
 #include "data/QGearsBackgroundFileSerializer.h"
 
 #include <OgreLogManager.h>
+#include <OgreException.h>
 
 namespace QGears
 {
     //---------------------------------------------------------------------
-    const String BackgroundFileSerializer::SECTION_NAME_PALETTE("PALETTE");
-    const String BackgroundFileSerializer::SECTION_NAME_BACK   ("BACK");
-    const String BackgroundFileSerializer::SECTION_NAME_TEXTURE("TEXTURE");
+    const String        BackgroundFileSerializer::SECTION_NAME_PALETTE("PALETTE");
+    const String        BackgroundFileSerializer::SECTION_NAME_BACK   ("BACK");
+    const String        BackgroundFileSerializer::SECTION_NAME_TEXTURE("TEXTURE");
+    const String        BackgroundFileSerializer::TAG_FILE_END        ("END");
+    const Ogre::Real    BackgroundFileSerializer::unknown_24_SCALE( 10000000.0 );
 
     //---------------------------------------------------------------------
     BackgroundFileSerializer::BackgroundFileSerializer() :
@@ -47,12 +50,29 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
+    BackgroundFileSerializer::importBackgroundFile( Ogre::DataStreamPtr &stream
+                                                   ,BackgroundFile *pDest )
+    {
+        readFileHeader( stream );
+
+        read1ByteBool( stream, pDest->getLayers()[0].enabled );
+        readPallete( stream, pDest );
+
+        stream->skip( 2 * 2 ); // 2 *  uint16 unused;
+
+        readBackground( stream, pDest );
+        readTexture( stream, pDest );
+        readEnd( stream );
+    }
+
+    //---------------------------------------------------------------------
+    void
     BackgroundFileSerializer::readFileHeader( Ogre::DataStreamPtr &stream )
     {
         uint16 data[2];
         readShorts( stream, data, 2 );
         m_header.unused = data[0];
-        m_header.unknown = data[1];
+        m_header.sort_sprites_by_palette = data[1];
     }
 
     //---------------------------------------------------------------------
@@ -60,15 +80,29 @@ namespace QGears
     BackgroundFileSerializer::readSectionHeader( Ogre::DataStreamPtr &stream
                                                 ,const String &section_name )
     {
-        String actual_name( readString( stream, section_name.size() ) );
-        if( actual_name != section_name )
+        String actual( readString( stream, section_name.size() ) );
+        if( actual != section_name )
         {
             Ogre::LogManager::getSingleton().stream()
                 << "Warming: Section didn't start with"
-                << "expected String '" << section_name << "'"
-                << " actual was '" << actual_name << "'";
+                << " expected String '" << section_name << "'"
+                << " actual was '" << actual << "'";
         }
 
+    }
+
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::readEnd( Ogre::DataStreamPtr &stream )
+    {
+        String actual( readString( stream, TAG_FILE_END.size() ) );
+        if( actual != TAG_FILE_END )
+        {
+            Ogre::LogManager::getSingleton().stream()
+                << "Warning: File didn't end with"
+                << " expected String '" << TAG_FILE_END << "'"
+                << " actual was '" << actual << "'";
+        }
     }
 
     //---------------------------------------------------------------------
@@ -91,20 +125,11 @@ namespace QGears
         {
             if( i != 0 )
             {
-                readLayerEnabled( stream, layer );
+                read1ByteBool( stream, layer->enabled );
             }
 
             readLayer( stream, layer, i );
         }
-    }
-
-    //---------------------------------------------------------------------
-    void
-    BackgroundFileSerializer::readLayerEnabled( Ogre::DataStreamPtr &stream, Layer *pDest )
-    {
-        uint8 enabled;
-        stream->read( &enabled, 1 );
-        pDest->enabled = enabled;
     }
 
     //---------------------------------------------------------------------
@@ -129,7 +154,7 @@ namespace QGears
           case 3:
             readShorts( stream, pDest->unknown_0E, 4 );
         }
-        stream->skip( 2 * 2 ); // 2 *  uint16 unused;
+        stream->skip( 2 * 2 ); // 2 * uint16 unused;
         readVector( stream, pDest->sprites, sprite_count );
     }
 
@@ -142,20 +167,22 @@ namespace QGears
         readObject( stream, pDest.src );
         readShorts( stream, pDest.unknown_0C, 4 );
 
-        uint16 tmp[4];
-        readShorts( stream, tmp, 2 );
-        pDest.palette_page = tmp[0];
-        pDest.unknown_16   = tmp[1];
+        readShort( stream, pDest.palette_page );
+        readShort( stream, pDest.unknown_16 );
 
-        stream->read( pDest.flags, sizeof( pDest.flags ) );
+        stream->read( pDest.flags_18, sizeof( pDest.flags_18 ) );
+        uint8 flags[2];
+        stream->read( flags, sizeof( flags ) );
+        pDest.flags_20[0] = flags[0];
+        pDest.flags_20[1] = flags[1];
 
-        readShorts( stream, tmp, 4 );
-        pDest.unknown_1C = tmp[0];
-        pDest.data_page  = tmp[1];
-        pDest.unknown_20 = tmp[2];
-        pDest.unknown_22 = tmp[3];
+        readShort( stream, pDest.unknown_1C );
+        readShort( stream, pDest.data_page );
+        readShort( stream, pDest.unknown_20 );
+        readShort( stream, pDest.unknown_22 );
         readObject( stream, pDest.unknown_24 );
-        readShorts( stream, pDest.unused_30, 2 );
+        pDest.unknown_24 /= unknown_24_SCALE;
+        stream->skip( 2 * 2 ); // 2 * uint16 unused
     }
 
     //---------------------------------------------------------------------
@@ -168,18 +195,43 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    BackgroundFileSerializer::importBackgroundFile( Ogre::DataStreamPtr &stream
-                                                   ,BackgroundFile *pDest )
+    BackgroundFileSerializer::readTexture( Ogre::DataStreamPtr &stream
+                                          ,BackgroundFile *pDest )
     {
-        pDest->clear();
-        readFileHeader( stream );
+        readSectionHeader( stream, SECTION_NAME_TEXTURE );
+        Page *pages( pDest->getPages() );
+        for( size_t i(0); i < BackgroundFile::PAGE_COUNT; ++i )
+        {
+            readObject( stream, pages[i] );
+        }
+    }
 
-        readLayerEnabled( stream, pDest->getLayers() );
-        readPallete( stream, pDest );
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::readObject( Ogre::DataStreamPtr &stream, Page &pDest )
+    {
+        read2ByteBool( stream, pDest.enabled );
+        if( !pDest.enabled ) return;
 
-        stream->skip( 2 * 2 ); // 2 *  uint16 unused;
+        readShort( stream, pDest.unknown_02 );
+        readShort( stream, pDest.value_size );
+        if( pDest.value_size != 1 && pDest.value_size != 2 )
+        {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
+                ,"Page value_size other then 1 and 2 is not supported"
+                ,"BackgroundFileSerializer::readObject" );
+        }
 
-        readBackground( stream, pDest );
+        if( pDest.value_size == 2 )
+        {
+            Ogre::LogManager::getSingleton().stream()
+                << "Warning: Page value_size == 2 @" << stream->tell();
+        }
+
+        size_t data_size( pDest.value_size * BackgroundFile::PAGE_DATA_SIZE );
+        pDest.data.clear();
+        pDest.data.resize( data_size );
+        stream->read( &pDest.data[0], data_size );
     }
 
     //---------------------------------------------------------------------

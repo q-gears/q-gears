@@ -63,6 +63,15 @@ namespace QGears
     void
     BackgroundFile::unloadImpl()
     {
+        memset( m_layers , 0, sizeof( m_layers  ) );
+        memset( m_palette, 0, sizeof( m_palette ) );
+        for( size_t i(PAGE_COUNT); i--; )
+        {
+            m_pages[i].enabled = false;
+            m_pages[i].unknown_02 = 0;
+            m_pages[i].value_size = 0;
+            m_pages[i].data.clear();
+        }
     }
 
     //---------------------------------------------------------------------
@@ -70,14 +79,6 @@ namespace QGears
     BackgroundFile::calculateSize() const
     {
         return 0;
-    }
-
-    //---------------------------------------------------------------------
-    void
-    BackgroundFile::clear()
-    {
-        memset( m_layers , 0, sizeof( m_layers  ) );
-        memset( m_palette, 0, sizeof( m_palette ) );
     }
 
     //---------------------------------------------------------------------

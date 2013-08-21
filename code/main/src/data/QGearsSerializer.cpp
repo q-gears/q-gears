@@ -92,6 +92,31 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    void
+    Serializer::read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest )
+    {
+        uint8 enabled;
+        stream->read( &enabled, 1 );
+        pDest = enabled;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Serializer::read2ByteBool( Ogre::DataStreamPtr &stream, bool &pDest )
+    {
+        uint16 enabled;
+        readShort( stream, enabled );
+        pDest = enabled;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Serializer::readShort( Ogre::DataStreamPtr &stream, uint16 &pDest )
+    {
+        readShorts( stream, &pDest, 1 );
+    }
+
+    //---------------------------------------------------------------------
     String
     Serializer::getLine( Ogre::DataStreamPtr &stream ) const
     {

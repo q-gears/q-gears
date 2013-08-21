@@ -52,6 +52,10 @@ namespace QGears
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::ColourValue &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::AxisAlignedBox &pDest );
 
+        virtual void    read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
+        virtual void    read2ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
+        virtual void    readShort( Ogre::DataStreamPtr &stream, uint16 &pDest );
+
         virtual String  getLine( Ogre::DataStreamPtr &stream ) const;
 
         static const String TAG_COMMENT;
