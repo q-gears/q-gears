@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 #include <OgreDataStream.h>
 
-#include "QGearsTexFile.h"
+#include "data/QGearsTexFile.h"
 
 using std::back_inserter;
 using std::copy;
@@ -65,14 +65,14 @@ void pintFileInfo( const bfs::path &tex_path )
          << endl << " pitch: " << tex.m_header.image_data.pitch
          << endl << " color_key_flag: " << tex.m_header.color_key_flag
          << endl << "Palette:"
-         << endl << " type       : " << tex.m_header.palette_type
-         << endl << " count      : " << tex.m_header.palette_count
-         << endl << " index_bits : " << tex.m_header.palette_data.index_bits
-         << endl << " flag       : " << tex.m_header.palette_data.flag
-         << endl << " color_count: " << tex.m_header.palette_color_count
-         << endl << " color_count: " << tex.m_header.palette_data.color_count
-         << endl << " entry_count: " << tex.m_header.palette_data.entry_count
-         << endl << " unknown_CC : " << tex.m_header.unknown_0xCC
+         << endl << " type              : " << tex.m_header.palette_type
+         << endl << " count             : " << tex.m_header.palette_count
+         << endl << " index_bits        : " << tex.m_header.palette_data.index_bits
+         << endl << " flag              : " << tex.m_header.palette_data.flag
+         << endl << " total_color_count : " << tex.m_header.palette_total_color_count
+         << endl << " total_color_count : " << tex.m_header.palette_data.total_color_count
+         << endl << " colors_per_palette: " << tex.m_header.palette_data.colors_per_palette
+         << endl << " unknown_CC        : " << tex.m_header.unknown_0xCC
          ;
     if ( tex.m_header.palette_data.flag )
     {

@@ -24,12 +24,11 @@ THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
 
-#include <cstddef>
 #include <fstream>
 
 #include <OgreDataStream.h>
 
-#include "QGearsTexFile.h"
+#include "data/QGearsTexFile.h"
 
 #define BOOST_TEST_MODULE QGearsTexFile
 #include <boost/test/unit_test.hpp>
