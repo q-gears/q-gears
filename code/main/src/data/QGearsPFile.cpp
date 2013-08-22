@@ -158,25 +158,6 @@ namespace QGears
         ManualObject mo( mesh );
         for( size_t g(0); g < m_groups.size(); ++g )
         {
-            /*
-            Ogre::LogManager::getSingleton().stream()
-                << "\n primitive_type                : " << group.primitive_type
-                << "\n polygon_start_index           : " << group.polygon_start_index
-                << "\n num_polygons                  : " << group.num_polygons
-                << "\n vertex_start_index            : " << group.vertex_start_index
-                << "\n num_vertices                  : " << group.num_vertices
-                << "\n edge_start_index              : " << group.edge_start_index
-                << "\n num_edges                     : " << group.num_edges
-                << "\n unknown_1C                    : " << group.unknown_1C
-                << "\n unknown_20                    : " << group.unknown_20
-                << "\n unknown_24                    : " << group.unknown_24
-                << "\n unknown_28                    : " << group.unknown_28
-                << "\n texture_coordinate_start_index: " << group.texture_coordinate_start_index
-                << "\n has_textures                  : " << group.has_texture
-                << "\n texture_index                 : " << group.texture_index
-                << "\n";
-            */
-
             const String sub_name( bone_name + "/" + rsd_base + "/" + Ogre::StringConverter::toString(g) );
             addGroup( m_groups[g], mo, sub_name, material_base_name, skeleton->getBone( bone_name ) );
         }

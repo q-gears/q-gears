@@ -31,9 +31,6 @@ THE SOFTWARE.
 #include "common/OgreBase.h"
 
 #include "data/QGearsAFileSerializer.h"
-#include "data/QGearsPFileManager.h"
-#include "data/QGearsHRCFileManager.h"
-#include "data/QGearsRSDFileManager.h"
 
 
 void attachMesh( Ogre::MeshPtr &mesh )

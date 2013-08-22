@@ -69,8 +69,6 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_CHECK_EQUAL( 726491, stream->tell() );
     BOOST_CHECK_EQUAL( 721078, file.getCalculatedSize() );
 
-    logMgr.destroyLog( "Default Log" );
-
     QGears::BackgroundFile::Layer *layer( file.getLayers() );
     BOOST_CHECK( layer[0].enabled );
     BOOST_CHECK_EQUAL( 400, layer[0].width );
@@ -116,5 +114,33 @@ BOOST_AUTO_TEST_CASE( read_file )
     {
         BOOST_CHECK_EQUAL( enabled[i], page[i].enabled );
     }
+
+    logMgr.stream()
+        << "\n layer[0].unknown_06: " << layer[0].unknown_06
+
+        << "\n layer[1].unknown_06: " << layer[1].unknown_06
+        << "\n layer[1].unknown_08: " << layer[1].unknown_08[0]
+        << "\n layer[1].unknown_08: " << layer[1].unknown_08[1]
+        << "\n layer[1].unknown_08: " << layer[1].unknown_08[2]
+        << "\n layer[1].unknown_0E: " << layer[1].unknown_0E[0]
+        << "\n layer[1].unknown_0E: " << layer[1].unknown_0E[1]
+        << "\n layer[1].unknown_0E: " << layer[1].unknown_0E[2]
+        << "\n layer[1].unknown_0E: " << layer[1].unknown_0E[3]
+
+        << "\n layer[2].unknown_06: " << layer[2].unknown_06
+        << "\n layer[2].unknown_0E: " << layer[2].unknown_0E[0]
+        << "\n layer[2].unknown_0E: " << layer[2].unknown_0E[1]
+        << "\n layer[2].unknown_0E: " << layer[2].unknown_0E[2]
+        << "\n layer[2].unknown_0E: " << layer[2].unknown_0E[3]
+
+        << "\n layer[3].unknown_06: " << layer[3].unknown_06
+        << "\n layer[3].unknown_0E: " << layer[3].unknown_0E[0]
+        << "\n layer[3].unknown_0E: " << layer[3].unknown_0E[1]
+        << "\n layer[3].unknown_0E: " << layer[3].unknown_0E[2]
+        << "\n layer[3].unknown_0E: " << layer[3].unknown_0E[3]
+        << "\n";
+
+
+    logMgr.destroyLog( "Default Log" );
     ifs->close();
 }

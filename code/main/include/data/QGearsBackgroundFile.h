@@ -91,9 +91,10 @@ namespace QGears
             bool enabled;
             uint16 width;
             uint16 height;
-            uint16 unknown_06;
-            uint16 unknown_08[3];
-            uint16 unknown_0E[4];
+            // uint16 sprite_count only read in serializer
+            uint16 unknown_06; // unused in layer0
+            uint16 unknown_08[3]; // layer 1,2,3
+            uint16 unknown_0E[4]; // layer   2,3
             SpriteList sprites;
         };
 

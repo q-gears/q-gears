@@ -92,7 +92,7 @@ namespace QGears
             {
                 decompressChunk();
             }
-            size_t read( m_buffer.read( buf + read_total, count ) );
+            size_t read( m_buffer.read( static_cast<uint8*>( buf ) + read_total, count ) );
             count -= read;
             read_total += read;
         }
