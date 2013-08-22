@@ -74,7 +74,7 @@ namespace QGears
                            ,Ogre::ColourValue &pDest )
     {
         Ogre::uint32 tmp;
-        readInts( stream, &tmp, 1 );
+        readInt( stream, tmp );
         pDest.setAsARGB( tmp );
     }
 
@@ -114,6 +114,13 @@ namespace QGears
     Serializer::readShort( Ogre::DataStreamPtr &stream, uint16 &pDest )
     {
         readShorts( stream, &pDest, 1 );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Serializer::readInt( Ogre::DataStreamPtr &stream, uint32 &pDest )
+    {
+        readInts( stream, &pDest, 1 );
     }
 
     //---------------------------------------------------------------------

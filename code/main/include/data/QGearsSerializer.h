@@ -55,6 +55,7 @@ namespace QGears
         virtual void    read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
         virtual void    read2ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
         virtual void    readShort( Ogre::DataStreamPtr &stream, uint16 &pDest );
+        virtual void    readInt( Ogre::DataStreamPtr &stream, uint32 &pDest );
 
         virtual String  getLine( Ogre::DataStreamPtr &stream ) const;
 

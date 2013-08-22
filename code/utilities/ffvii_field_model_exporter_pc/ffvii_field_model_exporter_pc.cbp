@@ -194,6 +194,25 @@
 					<Add library="boost_unit_test_framework-mt-d" />
 				</Linker>
 			</Target>
+			<Target title="Test_PaletteFileSerializer">
+				<Option output="bin/test/test_PaletteFileSerializer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain_d" />
+					<Add library="OIS_d" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
@@ -236,10 +255,15 @@
 		<Unit filename="../../main/include/data/QGearsPFile.h" />
 		<Unit filename="../../main/include/data/QGearsPFileManager.h" />
 		<Unit filename="../../main/include/data/QGearsPFileSerializer.h" />
+		<Unit filename="../../main/include/data/QGearsPaletteFile.h" />
+		<Unit filename="../../main/include/data/QGearsPaletteFileManager.h" />
+		<Unit filename="../../main/include/data/QGearsPaletteFileSerializer.h" />
 		<Unit filename="../../main/include/data/QGearsRSDFile.h" />
 		<Unit filename="../../main/include/data/QGearsRSDFileManager.h" />
 		<Unit filename="../../main/include/data/QGearsRSDFileSerializer.h" />
 		<Unit filename="../../main/include/data/QGearsSerializer.h" />
+		<Unit filename="../../main/include/data/QGearsTexCodec.h" />
+		<Unit filename="../../main/include/data/QGearsTexFile.h" />
 		<Unit filename="../../main/src/common/QGearsManualObject.cpp" />
 		<Unit filename="../../main/src/common/QGearsStringUtil.cpp" />
 		<Unit filename="../../main/src/data/QGearsAFile.cpp" />
@@ -256,10 +280,15 @@
 		<Unit filename="../../main/src/data/QGearsPFile.cpp" />
 		<Unit filename="../../main/src/data/QGearsPFileManager.cpp" />
 		<Unit filename="../../main/src/data/QGearsPFileSerializer.cpp" />
+		<Unit filename="../../main/src/data/QGearsPaletteFile.cpp" />
+		<Unit filename="../../main/src/data/QGearsPaletteFileManager.cpp" />
+		<Unit filename="../../main/src/data/QGearsPaletteFileSerializer.cpp" />
 		<Unit filename="../../main/src/data/QGearsRSDFile.cpp" />
 		<Unit filename="../../main/src/data/QGearsRSDFileManager.cpp" />
 		<Unit filename="../../main/src/data/QGearsRSDFileSerializer.cpp" />
 		<Unit filename="../../main/src/data/QGearsSerializer.cpp" />
+		<Unit filename="../../main/src/data/QGearsTexCodec.cpp" />
+		<Unit filename="../../main/src/data/QGearsTexFile.cpp" />
 		<Unit filename="../../main/test/test_QGearsAFileSerializer.cpp">
 			<Option target="Test_AFileSerializer" />
 		</Unit>
@@ -280,6 +309,9 @@
 		</Unit>
 		<Unit filename="../../main/test/test_QGearsPFileSerializer.cpp">
 			<Option target="Test_PFileSerializer" />
+		</Unit>
+		<Unit filename="../../main/test/test_QGearsPaletteFileSerializer.cpp">
+			<Option target="Test_PaletteFileSerializer" />
 		</Unit>
 		<Unit filename="../../main/test/test_QGearsRSDSerializer.cpp">
 			<Option target="Test_RSDFileSerializer" />
