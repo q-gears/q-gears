@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include <OgrePlugin.h>
 
+#include "data/QGearsBackgroundFileManager.h"
 #include "data/QGearsPFileManager.h"
 #include "data/QGearsHRCFileManager.h"
 #include "data/QGearsRSDFileManager.h"
@@ -59,9 +60,10 @@ namespace QGears {
         static const Ogre::String ms_plugin_name;
 
     private:
-        PFileManager   *p_manager;
-        HRCFileManager *hrc_manager;
-        RSDFileManager *rsd_manager;
+        PFileManager           *p_manager;
+        HRCFileManager         *hrc_manager;
+        RSDFileManager         *rsd_manager;
+        BackgroundFileManager  *background_manager;
 
     };
 }
