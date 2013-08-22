@@ -44,10 +44,13 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
-        typedef std::vector<Ogre::ColourValue>  ColorList;
-        typedef std::vector<ColorList>          PageList;
+        typedef uint16              Color;
+        typedef std::vector<Color>  Page;
+        typedef std::vector<Page>   PageList;
 
-        virtual PageList& getPages( void ) { return m_pages; }
+        virtual PageList&  getPages( void ) { return m_pages; }
+
+        virtual const Page& getPage( size_t index ) const { return m_pages[index]; }
 
     protected:
         virtual void loadImpl();

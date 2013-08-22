@@ -42,8 +42,11 @@ namespace QGears
         virtual void 	importPaletteFile( Ogre::DataStreamPtr &stream, PaletteFile* pDest );
 
         enum {
-            MAX_COLOR_VALUE = 0x1F
-           ,COLOR_BIT_MASK  = MAX_COLOR_VALUE
+            MAX_COLOR_VALUE = 0x001F
+           ,BIT_MASK_RED    = 0x001F
+           ,BIT_MASK_GREEN  = 0x03E0
+           ,BIT_MASK_BLUE   = 0x7C00
+           ,BIT_MASK_ALPHA  = 0x8000
         };
 
         struct Header
@@ -55,12 +58,13 @@ namespace QGears
             uint16 page_count;
         };
 
-        typedef PaletteFile::ColorList ColorList;
+        typedef PaletteFile::Color  Color;
+        typedef PaletteFile::Page   Page;
 
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::ColourValue &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, ColorList &pDest );
+        virtual void    readObject( Ogre::DataStreamPtr &stream, Color &pDest );
+        virtual void    readObject( Ogre::DataStreamPtr &stream, Page &pDest );
         using Serializer::readObject;
 
         template<typename ValueType> void

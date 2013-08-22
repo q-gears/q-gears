@@ -61,22 +61,20 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    PaletteFileSerializer::readObject( Ogre::DataStreamPtr &stream
-                                      ,Ogre::ColourValue &pDest )
+    PaletteFileSerializer::readObject( Ogre::DataStreamPtr &stream, Color &pDest )
     {
         Ogre::uint16 tmp;
         readShort( stream, tmp );
-        pDest.r =   tmp        & COLOR_BIT_MASK;
-        pDest.g = ( tmp >>  5 )& COLOR_BIT_MASK;
-        pDest.b = ( tmp >> 10 )& COLOR_BIT_MASK;
-        pDest /= MAX_COLOR_VALUE;
-        pDest.a =   tmp >> 15;
+        // Ogre only supports PF_A1R5G5B5 so we switch red and blue
+        pDest = ( ( tmp & BIT_MASK_RED   ) << 10 )
+               |  ( tmp & BIT_MASK_GREEN )
+               |( ( tmp & BIT_MASK_BLUE  ) >> 10 )
+               |  ( tmp & BIT_MASK_ALPHA );
     }
 
     //---------------------------------------------------------------------
     void
-    PaletteFileSerializer::readObject( Ogre::DataStreamPtr &stream
-                                      ,ColorList &pDest )
+    PaletteFileSerializer::readObject( Ogre::DataStreamPtr &stream, Page &pDest )
     {
         readVector( stream, pDest, m_header.colors_per_page );
     }

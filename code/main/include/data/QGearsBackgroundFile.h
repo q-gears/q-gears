@@ -27,10 +27,11 @@ THE SOFTWARE.
 #define __QGearsBackgroundFile_H__
 
 #include <OgreResource.h>
+#include <OgreImage.h>
 #include <OgreVector3.h>
 
 #include "common/TypeDefine.h"
-#include "common/QGearsPaletteFile.h"
+#include "data/QGearsPaletteFile.h"
 
 namespace QGears
 {
@@ -46,14 +47,13 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
-        typedef PaletteFile::Color_BGR Color_BGR;
-
         enum {
             PAGE_DATA_WIDTH     = 0x100
            ,PAGE_DATA_HEIGHT    = PAGE_DATA_WIDTH
            ,PAGE_DATA_SIZE      = PAGE_DATA_WIDTH * PAGE_DATA_HEIGHT
            ,SPRITE_WIDTH        = 0x10
            ,SPRITE_HEIGHT       = SPRITE_WIDTH
+           ,SPRITE_PIXEL_COUNT  = SPRITE_WIDTH * SPRITE_HEIGHT
            ,LAYER_COUNT         = 4
            ,PALETTE_ENTRY_COUNT = 20
            ,PAGE_COUNT          = 42
@@ -111,9 +111,13 @@ namespace QGears
             Buffer data;
         };
 
+        typedef PaletteFile::Color Color;
+
         virtual Layer* getLayers ( void ) { return m_layers;  };
         virtual uint8* getPalette( void ) { return m_palette; };
         virtual Page*  getPages  ( void ) { return m_pages;   };
+
+        virtual Ogre::Image* createImage( const PaletteFile &palette ) const;
 
     protected:
         virtual void loadImpl();

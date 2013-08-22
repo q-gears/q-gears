@@ -68,6 +68,9 @@ BOOST_AUTO_TEST_CASE( read_file )
     ser.importBackgroundFile( stream, &file );
     BOOST_CHECK_EQUAL( 726491, stream->tell() );
     BOOST_CHECK_EQUAL( 721078, file.getCalculatedSize() );
+    Ogre::Image *image( file.createImage() );
+    image.save( file_name + ".png" );
+    delete image;
 
     QGears::BackgroundFile::Layer *layer( file.getLayers() );
     BOOST_CHECK( layer[0].enabled );

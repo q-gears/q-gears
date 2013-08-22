@@ -70,13 +70,9 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_CHECK_EQUAL(  256, file.getPages()[11].size() );
     BOOST_CHECK_EQUAL(  256, file.getPages()[12].size() );
     BOOST_CHECK_EQUAL(  256, file.getPages()[13].size() );
-    BOOST_CHECK_EQUAL( 3584 * sizeof( Ogre::ColourValue ), file.getCalculatedSize() );
+    BOOST_CHECK_EQUAL( 3584 * sizeof( QGears::PaletteFile::Color ), file.getCalculatedSize() );
 
-    Ogre::ColourValue color( file.getPages()[0][0] );
-    BOOST_CHECK_CLOSE(  0.322580636, color.r, 0.000001 );
-    BOOST_CHECK_CLOSE(  0.516129017, color.g, 0.000001 );
-    BOOST_CHECK_CLOSE(  0.580645144, color.b, 0.000001 );
-    BOOST_CHECK_CLOSE(  0          , color.a, 0.000001 );
+    BOOST_CHECK_EQUAL( 0x2A12, file.getPages()[0][0] );
 
 
     logMgr.destroyLog( "Default Log" );

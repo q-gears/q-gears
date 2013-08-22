@@ -116,4 +116,48 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    Ogre::Image*
+    BackgroundFile::createImage( const PaletteFile &palette ) const
+    {
+        Ogre::Image *image( new Ogre::Image() );
+
+        const SpriteList &sprites( m_layers[0].sprites );
+        size_t sprite_count( sprites.size() );
+        size_t pixel_count( sprite_count * SPRITE_PIXEL_COUNT );
+        size_t width( 4096 );
+        size_t row_pitch( width / SPRITE_WIDTH );
+        size_t height( ( ( sprite_count / row_pitch ) + 1 ) * SPRITE_HEIGHT );
+
+        row_pitch *= SPRITE_WIDTH;
+
+        Color *data( new Color[ pixel_count ] );
+
+        for( SpriteList::const_iterator it( sprites.begin() )
+            ;it != sprites.end()
+            ;++it)
+        {
+            const Page &data_page( m_pages[it->data_page] );
+            const PaletteFile::Page &palette_page( palette.getPage( it->palette_page ) );
+            const Pixel &src( it->src ), &dst( it->dst );
+            for( uint16 y( SPRITE_HEIGHT ); y--; )
+            {
+                for( u16 x( SPRITE_WIDTH ); x--; )
+                {
+                    uint8 index( data_page.data[ src.y + y ][ src.x + x ] );
+                    Color color( palette_page[ index ] );
+                    Color *color_out( data );
+                    color_out += ( dst.y + y ) * m_row_pitch;
+                    color_out += dst.x + x;
+                    color_out += layer_index * m_row_pitch * m_height;
+                    *color_out = color;
+                }
+            }
+        }
+
+        image->loadDynamicImage( data, width, height, 1, Ogre::PF_A1R5G5B5  format, true );
+
+        return image;
+    }
+
+    //---------------------------------------------------------------------
 }
