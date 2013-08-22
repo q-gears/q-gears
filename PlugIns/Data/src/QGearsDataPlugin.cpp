@@ -58,6 +58,7 @@ namespace QGears {
         p_manager           = new PFileManager();
         hrc_manager         = new HRCFileManager();
         rsd_manager         = new RSDFileManager();
+        palette_manager     = new PaletteFileManager();
         background_manager  = new BackgroundFileManager();
     }
 
@@ -69,6 +70,7 @@ namespace QGears {
         delete p_manager;
         delete hrc_manager;
         delete rsd_manager;
+        delete palette_manager;
         delete background_manager;
     }
 

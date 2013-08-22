@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <OgrePlugin.h>
 
 #include "data/QGearsBackgroundFileManager.h"
+#include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsPFileManager.h"
 #include "data/QGearsHRCFileManager.h"
 #include "data/QGearsRSDFileManager.h"
@@ -63,6 +64,7 @@ namespace QGears {
         PFileManager           *p_manager;
         HRCFileManager         *hrc_manager;
         RSDFileManager         *rsd_manager;
+        PaletteFileManager     *palette_manager;
         BackgroundFileManager  *background_manager;
 
     };
