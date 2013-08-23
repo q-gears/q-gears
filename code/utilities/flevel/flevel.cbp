@@ -82,9 +82,6 @@
 		<Unit filename="../../../utilites/common/QGearsPaletteFile.h" />
 		<Unit filename="../../../utilites/common/TypeDefine.cpp" />
 		<Unit filename="../../../utilites/common/TypeDefine.h" />
-		<Unit filename="../../main/test/test_QGearsBackgroundFile.cpp">
-			<Option target="Test" />
-		</Unit>
 		<Unit filename="flevel.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />

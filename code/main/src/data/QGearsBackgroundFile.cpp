@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "data/QGearsBackgroundFile.h"
 
 #include <OgreResourceGroupManager.h>
+#include <OgreLogManager.h>
 
 #include "data/QGearsBackgroundFileSerializer.h"
 
@@ -117,44 +118,74 @@ namespace QGears
 
     //---------------------------------------------------------------------
     Ogre::Image*
-    BackgroundFile::createImage( const PaletteFile &palette ) const
+    BackgroundFile::createImage( const PaletteFilePtr &palette ) const
     {
         Ogre::Image *image( new Ogre::Image() );
 
         const SpriteList &sprites( m_layers[0].sprites );
         size_t sprite_count( sprites.size() );
-        size_t pixel_count( sprite_count * SPRITE_PIXEL_COUNT );
-        size_t width( 4096 );
+        size_t width( 1024 );
         size_t row_pitch( width / SPRITE_WIDTH );
         size_t height( ( ( sprite_count / row_pitch ) + 1 ) * SPRITE_HEIGHT );
+        size_t pixel_count( width * height );
 
-        row_pitch *= SPRITE_WIDTH;
-
+        row_pitch = width;
         Color *data( new Color[ pixel_count ] );
 
+        Ogre::LogManager::getSingleton().stream()
+            << "Image Size: " << width << " x " << height
+            << " sprite_count " << sprite_count;
+        size_t dst_x( 0 ), dst_y( 0 );
         for( SpriteList::const_iterator it( sprites.begin() )
             ;it != sprites.end()
             ;++it)
         {
             const Page &data_page( m_pages[it->data_page] );
-            const PaletteFile::Page &palette_page( palette.getPage( it->palette_page ) );
-            const Pixel &src( it->src ), &dst( it->dst );
+            const PaletteFile::Page &palette_page( palette->getPage( it->palette_page ) );
+            const Pixel &src( it->src );
+            if( !data_page.enabled )
+            {
+                Ogre::LogManager::getSingleton().stream()
+                    << "Error: referencing an disabled data page";
+            }
+            Ogre::LogManager::getSingleton().stream()
+                << "Info: " << dst_x << " x " << dst_y << " " << row_pitch;
             for( uint16 y( SPRITE_HEIGHT ); y--; )
             {
-                for( u16 x( SPRITE_WIDTH ); x--; )
+                for( uint16 x( SPRITE_WIDTH ); x--; )
                 {
-                    uint8 index( data_page.data[ src.y + y ][ src.x + x ] );
-                    Color color( palette_page[ index ] );
-                    Color *color_out( data );
-                    color_out += ( dst.y + y ) * m_row_pitch;
-                    color_out += dst.x + x;
-                    color_out += layer_index * m_row_pitch * m_height;
-                    *color_out = color;
+                    size_t data_index( (src.y + y) * PAGE_DATA_WIDTH + src.x + x );
+                    if( data_index >= data_page.data.size() )
+                    {
+                        Ogre::LogManager::getSingleton().stream()
+                            << "Error: data page Index out of Bounds " << data_index;
+                    }
+                    uint8 index( data_page.data[ data_index ] );
+                    if( index >= palette_page.size() )
+                    {
+                        Ogre::LogManager::getSingleton().stream()
+                            << "Error: palette page Index out of Bounds " << index;
+                    }
+
+                    data_index = (dst_y + y ) * row_pitch + dst_x + x;
+                    if( data_index >= pixel_count )
+                    {
+                        Ogre::LogManager::getSingleton().stream()
+                            << "Error: writing Pixel out of Bounds " << data_index
+                            << " " << (dst_x + x) << " x " << dst_y + y;
+                    }
+                    data[data_index] = palette_page[ index ];
                 }
             }
-        }
 
-        image->loadDynamicImage( data, width, height, 1, Ogre::PF_A1R5G5B5  format, true );
+            dst_x += SPRITE_WIDTH;
+            if( dst_x >= width )
+            {
+                dst_x = 0;
+                dst_y += SPRITE_HEIGHT;
+            }
+        }
+        image->loadDynamicImage( reinterpret_cast< uchar* >( data ), width, height, 1, Ogre::PF_A1R5G5B5, true );
 
         return image;
     }
