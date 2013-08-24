@@ -54,9 +54,12 @@ namespace QGears
         virtual void setPalette   ( const PaletteFilePtr    &palette     );
 
     protected:
-        virtual void loadImpl();
-        virtual void unloadImpl();
-        virtual size_t calculateSize() const;
+        virtual void loadImpl( void );
+        virtual void unloadImpl( void );
+        virtual size_t calculateSize( void ) const;
+
+        virtual const String& getResourceType( void ) const;
+        virtual Ogre::DataStreamPtr openResource( void );
 
     private:
         BackgroundFilePtr   m_background;

@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #include "data/QGearsBackgroundFileManager.h"
 #include "data/QGearsPaletteFileManager.h"
+#include "data/QGearsLZSFLevelFileManager.h"
 
 BOOST_AUTO_TEST_CASE( read_file )
 {
@@ -54,6 +55,7 @@ BOOST_AUTO_TEST_CASE( read_file )
 	Ogre::ResourceGroupManager         &rgm( Ogre::ResourceGroupManager::getSingleton() );
 	QGears::PaletteFileManager          pmgr;
 	QGears::BackgroundFileManager       bmgr;
+	QGears::LZSFLevelFileManager        fmgr;
     logMgr.createLog( "Default Log", true, true, true );
 
     rgm.addResourceLocation( ".", "FileSystem" );
@@ -76,6 +78,15 @@ BOOST_AUTO_TEST_CASE( read_file )
     image->save( file.getName() + ".png" );
     delete image;
 
+    QGears::FLevelFilePtr lzs_file( fmgr.load( "reference_compressed.flevel", "General" ) );
+    BOOST_CHECK( !lzs_file->getPalette().isNull() );
+    BOOST_CHECK( !lzs_file->getBackground().isNull() );
+
+    image = lzs_file->getBackground()->createImage( lzs_file->getPalette() );
+    image->save( lzs_file->getName() + ".png" );
+    delete image;
+
+    lzs_file.setNull();
     logMgr.destroyLog( "Default Log" );
     stream->close();
 }

@@ -42,7 +42,7 @@ namespace QGears
                  ,Ogre::ManualResourceLoader *loader ) :
         Ogre::Resource( creator, name, handle, group, isManual, loader )
     {
-        createParamDictionary( RESOURCE_TYPE );
+        createParamDictionary( getResourceType() );
     }
 
     //---------------------------------------------------------------------
@@ -56,7 +56,7 @@ namespace QGears
     FLevelFile::loadImpl()
     {
         FLevelFileSerializer serializer;
-        Ogre::DataStreamPtr stream( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
+        Ogre::DataStreamPtr stream( openResource() );
         serializer.importFLevelFile( stream, this );
     }
 
@@ -66,6 +66,20 @@ namespace QGears
     {
         m_background.setNull();
         m_palette.setNull();
+    }
+
+    //---------------------------------------------------------------------
+    const String&
+    FLevelFile::getResourceType( void ) const
+    {
+        return RESOURCE_TYPE;
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::DataStreamPtr
+    FLevelFile::openResource( void )
+    {
+        return Ogre::DataStreamPtr( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
     }
 
     //---------------------------------------------------------------------
