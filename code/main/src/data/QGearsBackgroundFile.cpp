@@ -121,8 +121,6 @@ namespace QGears
     Ogre::Image*
     BackgroundFile::createImage( const PaletteFilePtr &palette ) const
     {
-        Ogre::Image *image( new Ogre::Image() );
-
         SpriteList sprites;
         for( size_t i(0); i < LAYER_COUNT; ++i )
         {
@@ -138,7 +136,8 @@ namespace QGears
         size_t pixel_count( width * height );
 
         row_pitch = width;
-        Color *data( new Color[ pixel_count ] );
+        Ogre::MemoryDataStream *buffer( new Ogre::MemoryDataStream( sizeof(Color) * pixel_count ) );
+        Color *color( reinterpret_cast<Color*>( buffer->getPtr() ) );
 
         Ogre::LogManager::getSingleton().stream()
             << "Image Size: " << width << " x " << height
@@ -180,7 +179,7 @@ namespace QGears
                             << "Error: writing Pixel out of Bounds " << data_index
                             << " " << (dst_x + x) << " x " << dst_y + y;
                     }
-                    data[data_index] = PaletteFile::convert( palette_page[ index ] );
+                    color[data_index] = PaletteFile::convert( palette_page[ index ] );
                 }
             }
 
@@ -191,7 +190,10 @@ namespace QGears
                 dst_y += SPRITE_HEIGHT;
             }
         }
-        image->loadDynamicImage( reinterpret_cast< uchar* >( data ), width, height, 1, Ogre::PF_A1R5G5B5, true );
+
+        Ogre::DataStreamPtr stream( buffer );
+        Ogre::Image *image( new Ogre::Image() );
+        image->loadRawData( stream, width, height, Ogre::PF_A1R5G5B5 );
 
         return image;
     }

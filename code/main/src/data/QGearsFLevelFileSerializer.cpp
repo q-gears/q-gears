@@ -28,6 +28,13 @@ THE SOFTWARE.
 #include <OgreLogManager.h>
 #include <OgreException.h>
 
+#include "common/QGearsStringUtil.h"
+
+#include "data/QGearsBackgroundFileManager.h"
+#include "data/QGearsBackgroundFileSerializer.h"
+#include "data/QGearsPaletteFileManager.h"
+#include "data/QGearsPaletteFileSerializer.h"
+
 namespace QGears
 {
     //---------------------------------------------------------------------
@@ -48,30 +55,38 @@ namespace QGears
     void
     FLevelFileSerializer::importFLevelFile( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
     {
+        size_t start_position( stream->tell() );
         readFileHeader( stream );
 
-        if( m_header.version != 0 )
-        {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
-                ,"FLevel has unsupported version"
-                ,"FLevelFileSerializer::importFLevelFile" );
-        }
-
-        if( m_header.section_count != SECTION_COUNT )
-        {
-            Ogre::LogManager::getSingleton().stream()
-                << "Warning: FLevel section_count has unexpected value "
-                << m_header.section_count << " should be " << SECTION_COUNT
-                << " FLevelFileSerializer::importFLevelFile";
-        }
-
         uint32 section_offsets[ m_header.section_count ];
+        readInts( stream, section_offsets, m_header.section_count );
 
-        for( size_t section(0); section < m_header ); ++section )
+        Ogre::DataStreamPtr section;
+        for( size_t i(0); i < m_header.section_count; ++i )
         {
+            size_t current_offset( stream->tell() - start_position );
+            size_t section_gap( current_offset - section_offsets[i] );
+            if( section_gap > 0 )
+            {
+                stream->skip( section_gap );
+                Ogre::LogManager::getSingleton().stream()
+                    << "Warning: skiing gap in front of section " << i
+                    << " gap size " << section_gap
+                    << " FLevelFileSerializer::importFLevelFile";
+            }
+            else if( section_gap < 0 )
+            {
+                OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
+                    ,"FLevel sections overlap"
+                    ,"FLevelFileSerializer::importFLevelFile" );
+            }
 
+            readSectionData( stream, section );
+            readSection( section, pDest, i );
+            section->close();
+            section.setNull();
         }
-        readEnd();
+        readEnd( stream );
     }
 
     //---------------------------------------------------------------------
@@ -79,13 +94,27 @@ namespace QGears
     FLevelFileSerializer::readFileHeader( Ogre::DataStreamPtr &stream )
     {
         readShort( stream, m_header.version );
+        if( m_header.version != 0 )
+        {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
+                ,"FLevel has unsupported version"
+                ,"FLevelFileSerializer::importFLevelFile" );
+        }
+
         readInt(   stream, m_header.section_count );
+        if( m_header.section_count != SECTION_COUNT )
+        {
+            Ogre::LogManager::getSingleton().stream()
+                << "Warning: FLevel section_count has unexpected value "
+                << m_header.section_count << " should be " << SECTION_COUNT
+                << " FLevelFileSerializer::importFLevelFile";
+        }
     }
 
     //---------------------------------------------------------------------
     void
-    FLevelFileSerializer::readSection( Ogre::DataStreamPtr &stream
-                                      ,Ogre::DataStreamPtr &out_buffer )
+    FLevelFileSerializer::readSectionData( Ogre::DataStreamPtr &stream
+                                          ,Ogre::DataStreamPtr &out_buffer )
     {
         uint32 length( 0 );
         readInt( stream, length );
@@ -93,7 +122,70 @@ namespace QGears
         // so we don't have to copy the whole memory
         Ogre::MemoryDataStream *buffer( new Ogre::MemoryDataStream( length ) );
         stream->read( buffer->getPtr(), length );
-        out_buffer = buffer;
+        out_buffer = Ogre::DataStreamPtr( buffer );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    FLevelFileSerializer::readSection( Ogre::DataStreamPtr &stream
+                                      ,FLevelFile* pDest
+                                      ,const size_t section_index )
+    {
+        switch( section_index )
+        {
+            case SECTION_PALETTE:
+                readPalette( stream, pDest );
+                break;
+
+            case SECTION_BACKGROUND:
+                readBackground( stream, pDest );
+                break;
+        }
+    }
+
+    //---------------------------------------------------------------------
+    void
+    FLevelFileSerializer::readPalette( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
+    {
+        PaletteFileManager &pmgr( PaletteFileManager::getSingleton() );
+        PaletteFileSerializer ser;
+        PaletteFilePtr palette( pmgr.create( getPaletteName( pDest ), pDest->getGroup() ) );
+        ser.importPaletteFile( stream, palette.getPointer() );
+        pDest->setPalette( palette );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    FLevelFileSerializer::readBackground( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
+    {
+        BackgroundFileManager &bmgr( BackgroundFileManager::getSingleton() );
+        BackgroundFilePtr background( bmgr.create( getBackgroundName( pDest ), pDest->getGroup(), true ) );
+        BackgroundFileSerializer ser;
+        ser.importBackgroundFile( stream, background.getPointer() );
+        pDest->setBackground( background );
+    }
+
+    //---------------------------------------------------------------------
+    String
+    FLevelFileSerializer::getBaseName( const FLevelFile* pDest ) const
+    {
+        String base_name;
+        StringUtil::splitBase( pDest->getName(), base_name );
+        return base_name;
+    }
+
+    //---------------------------------------------------------------------
+    String
+    FLevelFileSerializer::getPaletteName( const FLevelFile* pDest ) const
+    {
+        return getBaseName( pDest ) + EXT_PALETTE;
+    }
+
+    //---------------------------------------------------------------------
+    String
+    FLevelFileSerializer::getBackgroundName( const FLevelFile* pDest ) const
+    {
+        return getBaseName( pDest ) + EXT_BACKGROUND;
     }
 
     //---------------------------------------------------------------------

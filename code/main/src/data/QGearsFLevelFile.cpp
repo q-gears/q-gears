@@ -77,4 +77,32 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    const BackgroundFilePtr&
+    FLevelFile::getBackground( void ) const
+    {
+        return m_background;
+    };
+
+    //---------------------------------------------------------------------
+    const PaletteFilePtr&
+    FLevelFile::getPalette( void ) const
+    {
+        return m_palette;
+    };
+
+    //---------------------------------------------------------------------
+    void
+    FLevelFile::setBackground( const BackgroundFilePtr &background )
+    {
+        m_background = background;
+    };
+
+    //---------------------------------------------------------------------
+    void
+    FLevelFile::setPalette( const PaletteFilePtr &palette )
+    {
+        m_palette = palette;
+    };
+
+    //---------------------------------------------------------------------
 }

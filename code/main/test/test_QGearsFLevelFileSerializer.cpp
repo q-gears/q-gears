@@ -30,33 +30,52 @@ THE SOFTWARE.
 
 #include "data/QGearsFLevelFileSerializer.h"
 
+#include "data/QGearsBackgroundFileManager.h"
+#include "data/QGearsPaletteFileManager.h"
+
 BOOST_AUTO_TEST_CASE( read_file )
 {
     class TestFile : public QGears::FLevelFile
     {
     public:
-        TestFile() : QGears::FLevelFile( NULL, "", 0, "" ) {}
-        size_t getCalculatedSize() const { return calculateSize(); }
+        TestFile() : QGears::FLevelFile( NULL, "reference.flevel", 0, "General" ) {}
+    };
 
-        virtual void unload( void ) {};
+    class TestSerializer : public QGears::FLevelFileSerializer
+    {
+    public:
+        QGears::String base      ( TestFile *file ) { return getBaseName      ( file ); }
+        QGears::String palette   ( TestFile *file ) { return getPaletteName   ( file ); }
+        QGears::String background( TestFile *file ) { return getBackgroundName( file ); }
     };
 
 	Ogre::LogManager                    logMgr;
+	Ogre::Root                          root("","");
+	Ogre::ResourceGroupManager         &rgm( Ogre::ResourceGroupManager::getSingleton() );
+	QGears::PaletteFileManager          pmgr;
+	QGears::BackgroundFileManager       bmgr;
     logMgr.createLog( "Default Log", true, true, true );
 
-    const char*                     file_name( "reference.flevel" );
-    TestFile                        file;
-    QGears::FLevelFileSerializer   ser;
-    std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
-    BOOST_REQUIRE( ifs->is_open() );
+    rgm.addResourceLocation( ".", "FileSystem" );
+    rgm.initialiseAllResourceGroups();
 
-    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
+    TestFile                file;
+    Ogre::DataStreamPtr     stream( rgm.openResource( file.getName(), file.getGroup() ));
     BOOST_REQUIRE( stream->isReadable() );
 
+    TestSerializer   ser;
+    BOOST_CHECK_EQUAL( "reference"           , ser.base( &file ) );
+    BOOST_CHECK_EQUAL( "reference.palette"   , ser.palette( &file ) );
+    BOOST_CHECK_EQUAL( "reference.background", ser.background( &file ) );
     ser.importFLevelFile( stream, &file );
-    BOOST_CHECK_EQUAL( 7180, stream->tell() );
+    BOOST_CHECK_EQUAL( 757890, stream->tell() );
 
+    BOOST_CHECK( !file.getPalette().isNull() );
+    BOOST_CHECK( !file.getBackground().isNull() );
+    Ogre::Image *image( file.getBackground()->createImage( file.getPalette() ));
+    image->save( file.getName() + ".png" );
+    delete image;
 
     logMgr.destroyLog( "Default Log" );
-    ifs->close();
+    stream->close();
 }

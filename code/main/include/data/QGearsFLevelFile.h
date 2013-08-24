@@ -47,8 +47,11 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
-        virtual BackgroundFilePtr&   getBackground( void ) { return m_background; };
-        virtual PaletteFilePtr&      getPalette   ( void ) { return m_palette; };
+        virtual const BackgroundFilePtr&   getBackground( void ) const;
+        virtual const PaletteFilePtr&      getPalette   ( void ) const;
+
+        virtual void setBackground( const BackgroundFilePtr &background  );
+        virtual void setPalette   ( const PaletteFilePtr    &palette     );
 
     protected:
         virtual void loadImpl();
