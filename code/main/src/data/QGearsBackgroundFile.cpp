@@ -117,16 +117,24 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    // TODO implement BackgroundTextureLoader and move this code there
     Ogre::Image*
     BackgroundFile::createImage( const PaletteFilePtr &palette ) const
     {
         Ogre::Image *image( new Ogre::Image() );
 
-        const SpriteList &sprites( m_layers[0].sprites );
+        SpriteList sprites;
+        for( size_t i(0); i < LAYER_COUNT; ++i )
+        {
+            if( m_layers[i].enabled )
+            {
+                sprites.insert( sprites.end(), m_layers[i].sprites.begin(), m_layers[i].sprites.end() );
+            }
+        }
         size_t sprite_count( sprites.size() );
         size_t width( 1024 );
-        size_t row_pitch( width / SPRITE_WIDTH );
-        size_t height( ( ( sprite_count / row_pitch ) + 1 ) * SPRITE_HEIGHT );
+        size_t row_pitch( width);
+        size_t height( width );
         size_t pixel_count( width * height );
 
         row_pitch = width;
@@ -148,8 +156,6 @@ namespace QGears
                 Ogre::LogManager::getSingleton().stream()
                     << "Error: referencing an disabled data page";
             }
-            Ogre::LogManager::getSingleton().stream()
-                << "Info: " << dst_x << " x " << dst_y << " " << row_pitch;
             for( uint16 y( SPRITE_HEIGHT ); y--; )
             {
                 for( uint16 x( SPRITE_WIDTH ); x--; )

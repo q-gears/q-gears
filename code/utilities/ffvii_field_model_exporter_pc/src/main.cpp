@@ -30,11 +30,8 @@ THE SOFTWARE.
 #include "common/OgreBase.h"
 
 #include "data/QGearsAFileSerializer.h"
-#include "data/QGearsBackgroundFileManager.h"
-#include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsBackgroundFile.h"
 #include "data/QGearsPaletteFile.h"
-
 
 void attachMesh( Ogre::MeshPtr &mesh )
 {
@@ -83,18 +80,17 @@ main( int argc, char *argv[] )
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Run" );
 
-    QGears::BackgroundFileManager  *bmgr( new QGears::BackgroundFileManager() );
-    QGears::PaletteFileManager     *pmgr( new QGears::PaletteFileManager() );
+    Ogre::ResourceManager  *bmgr( Ogre::ResourceGroupManager::getSingleton()._getResourceManager( QGears::BackgroundFile::RESOURCE_TYPE ) );
+    Ogre::ResourceManager  *pmgr( Ogre::ResourceGroupManager::getSingleton()._getResourceManager( QGears::PaletteFile::RESOURCE_TYPE ) );
     QGears::PaletteFilePtr      p( pmgr->load( "ancnt1.palette", "General" ) );
     QGears::BackgroundFilePtr   b( bmgr->load( "ancnt1.background", "General" ) );
+
     Ogre::Image *image( b->createImage( p ) );
     image->save( "ancnt1.png" );
     delete image;
 
-    p.setNull();
     b.setNull();
-    delete bmgr;
-    delete pmgr;
+    p.setNull();
 
     //sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() );
     //mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );

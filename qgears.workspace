@@ -7,5 +7,6 @@
 		<Project filename="code/utilities/lzs/lzs.cbp" />
 		<Project filename="code/utilities/flevel/flevel.cbp" />
 		<Project filename="code/utilities/ffvii_field_model_exporter_pc/ffvii_field_model_exporter_pc.cbp" />
+		<Project filename="utilites/ffvii_field_dat_dumper/qgears.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

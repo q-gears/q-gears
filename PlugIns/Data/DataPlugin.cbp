@@ -94,6 +94,9 @@
 		<Unit filename="../../code/main/include/data/QGearsPFile.h" />
 		<Unit filename="../../code/main/include/data/QGearsPFileManager.h" />
 		<Unit filename="../../code/main/include/data/QGearsPFileSerializer.h" />
+		<Unit filename="../../code/main/include/data/QGearsPaletteFile.h" />
+		<Unit filename="../../code/main/include/data/QGearsPaletteFileManager.h" />
+		<Unit filename="../../code/main/include/data/QGearsPaletteFileSerializer.h" />
 		<Unit filename="../../code/main/include/data/QGearsRSDFile.h" />
 		<Unit filename="../../code/main/include/data/QGearsRSDFileManager.h" />
 		<Unit filename="../../code/main/include/data/QGearsRSDFileSerializer.h" />
@@ -116,6 +119,9 @@
 		<Unit filename="../../code/main/src/data/QGearsPFile.cpp" />
 		<Unit filename="../../code/main/src/data/QGearsPFileManager.cpp" />
 		<Unit filename="../../code/main/src/data/QGearsPFileSerializer.cpp" />
+		<Unit filename="../../code/main/src/data/QGearsPaletteFile.cpp" />
+		<Unit filename="../../code/main/src/data/QGearsPaletteFileManager.cpp" />
+		<Unit filename="../../code/main/src/data/QGearsPaletteFileSerializer.cpp" />
 		<Unit filename="../../code/main/src/data/QGearsRSDFile.cpp" />
 		<Unit filename="../../code/main/src/data/QGearsRSDFileManager.cpp" />
 		<Unit filename="../../code/main/src/data/QGearsRSDFileSerializer.cpp" />
