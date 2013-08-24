@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-22 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-24 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,41 +23,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsPaletteFileSerializer_H__
-#define __QGearsPaletteFileSerializer_H__
+#ifndef __QGearsFLevelFileSerializer_H__
+#define __QGearsFLevelFileSerializer_H__
 
 #include "common/TypeDefine.h"
 
-#include "QGearsPaletteFile.h"
+#include "QGearsFLevelFile.h"
 #include "QGearsSerializer.h"
 
 namespace QGears
 {
-    class PaletteFileSerializer : public Serializer
+    class FLevelFileSerializer : public Serializer
     {
     public:
-                        PaletteFileSerializer();
-        virtual        ~PaletteFileSerializer();
+                        FLevelFileSerializer();
+        virtual        ~FLevelFileSerializer();
 
-        virtual void 	importPaletteFile( Ogre::DataStreamPtr &stream, PaletteFile* pDest );
+        virtual void 	importFLevelFile( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+
+        enum
+        {
+            SECTION_SCRIPT
+           ,SECTION_CAMERA_MATRIX
+           ,SECTION_MODEL_LOADER
+           ,SECTION_PALETTE
+           ,SECTION_WALKMESH
+           ,SECTION_TILE_MAP
+           ,SECTION_ENCOUNTER
+           ,SECTION_TRIGGER
+           ,SECTION_BACKGROUND
+        };
 
         struct Header
         {
-            uint32 file_size;
-            uint16 pal_x;
-            uint16 pal_y;
-            uint16 colors_per_page;
-            uint16 page_count;
+            uint16 version;
+            uint32 section_count;
         };
-
-        typedef PaletteFile::Color  Color;
-        typedef PaletteFile::Page   Page;
 
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Color &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Page &pDest );
-        using Serializer::readObject;
+        //using Serializer::readObject;
 
         template<typename ValueType> void
         readVector( Ogre::DataStreamPtr &stream, std::vector<ValueType> &pDest, size_t count )
@@ -77,4 +82,4 @@ namespace QGears
     };
 }
 
-#endif // __QGearsPaletteFileSerializer_H__
+#endif // __QGearsFLevelFileSerializer_H__

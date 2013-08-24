@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-22 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-24 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,20 +23,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "data/QGearsPaletteFile.h"
+#include "data/QGearsFLevelFile.h"
 
 #include <OgreLogManager.h>
 #include <OgreResourceGroupManager.h>
 
-#include "data/QGearsPaletteFileSerializer.h"
+#include "data/QGearsFLevelFileSerializer.h"
 
 namespace QGears
 {
     //---------------------------------------------------------------------
-    const String    PaletteFile::RESOURCE_TYPE( "QGearsPaletteFile" );
+    const String    FLevelFile::RESOURCE_TYPE( "QGearsFLevelFile" );
 
     //---------------------------------------------------------------------
-    PaletteFile::PaletteFile( Ogre::ResourceManager *creator
+    FLevelFile::FLevelFile( Ogre::ResourceManager *creator
                  ,const String &name, Ogre::ResourceHandle handle
                  ,const String &group, bool isManual
                  ,Ogre::ManualResourceLoader *loader ) :
@@ -46,50 +46,35 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    PaletteFile::~PaletteFile()
+    FLevelFile::~FLevelFile()
     {
         unload();
     }
 
     //---------------------------------------------------------------------
     void
-    PaletteFile::loadImpl()
+    FLevelFile::loadImpl()
     {
-        PaletteFileSerializer serializer;
+        FLevelFileSerializer serializer;
         Ogre::DataStreamPtr stream( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
-        serializer.importPaletteFile( stream, this );
+        serializer.importFLevelFile( stream, this );
     }
 
     //---------------------------------------------------------------------
     void
-    PaletteFile::unloadImpl()
+    FLevelFile::unloadImpl()
     {
+        m_background.setNull();
+        m_palette.setNull();
     }
 
     //---------------------------------------------------------------------
     size_t
-    PaletteFile::calculateSize() const
+    FLevelFile::calculateSize() const
     {
-        size_t data_size( 0 );
-        for( PageList::const_iterator it( m_pages.begin() )
-            ;it != m_pages.end()
-            ;++it )
-        {
-            data_size += it->size() * sizeof( (*it)[0] );
-        }
-
-        return data_size;
+        // data is only stored in section resources
+        return 0;
     }
 
-    //---------------------------------------------------------------------
-    PaletteFile::Color
-    PaletteFile::convert( const Color color )
-    {
-        // Ogre only supports PF_A1R5G5B5 palette is in PF_(~A)1B5G5R5
-        return ( (   color  & BIT_MASK_RED   ) << 10 )
-              |  (   color  & BIT_MASK_GREEN )
-              |( (   color  & BIT_MASK_BLUE  ) >> 10 )
-              |  ( (~color) & BIT_MASK_ALPHA );
-    }
     //---------------------------------------------------------------------
 }

@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-17 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-24 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,33 +23,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsBackgroundFileManager_H__
-#define __QGearsBackgroundFileManager_H__
+#define BOOST_TEST_MODULE QGearsFLevelFileSerializer
+#include <boost/test/unit_test.hpp>
 
-#include <OgreResourceManager.h>
+#include <Ogre.h>
 
-#include "QGearsPrerequisites.h"
+#include "data/QGearsFLevelFileSerializer.h"
 
-#include "QGearsBackgroundFile.h"
-
-namespace QGears
+BOOST_AUTO_TEST_CASE( read_file )
 {
-    class _QGearsExport BackgroundFileManager : public Ogre::ResourceManager, public Ogre::Singleton<BackgroundFileManager>
+    class TestFile : public QGears::FLevelFile
     {
     public:
-        BackgroundFileManager();
-        virtual ~BackgroundFileManager();
+        TestFile() : QGears::FLevelFile( NULL, "", 0, "" ) {}
+        size_t getCalculatedSize() const { return calculateSize(); }
 
-        static BackgroundFileManager& getSingleton();
-        static BackgroundFileManager* getSingletonPtr();
-
-    protected:
-        Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
-          , const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader
-          , const Ogre::NameValuePairList *createParams );
-
-    private:
+        virtual void unload( void ) {};
     };
-}
 
-#endif // __QGearsBackgroundFileManager_H__
+	Ogre::LogManager                    logMgr;
+    logMgr.createLog( "Default Log", true, true, true );
+
+    const char*                     file_name( "reference.flevel" );
+    TestFile                        file;
+    QGears::FLevelFileSerializer   ser;
+    std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
+    BOOST_REQUIRE( ifs->is_open() );
+
+    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
+    BOOST_REQUIRE( stream->isReadable() );
+
+    ser.importFLevelFile( stream, &file );
+    BOOST_CHECK_EQUAL( 7180, stream->tell() );
+
+
+    logMgr.destroyLog( "Default Log" );
+    ifs->close();
+}

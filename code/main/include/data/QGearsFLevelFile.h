@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-22 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-24 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,44 +23,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsPaletteFile_H__
-#define __QGearsPaletteFile_H__
+#ifndef __QGearsFLevelFile_H__
+#define __QGearsFLevelFile_H__
 
 #include <OgreResource.h>
 
 #include "common/TypeDefine.h"
 
+#include "QGearsBackgroundFile.h"
+#include "QGearsPaletteFile.h"
+
 namespace QGears
 {
-    class PaletteFile : public Ogre::Resource
+    class FLevelFile : public Ogre::Resource
     {
     public:
 
-        PaletteFile( Ogre::ResourceManager *creator, const String &name
+        FLevelFile( Ogre::ResourceManager *creator, const String &name
               ,Ogre::ResourceHandle handle, const String &group
               ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
 
-        virtual ~PaletteFile();
+        virtual ~FLevelFile();
 
         static const String RESOURCE_TYPE;
 
-        enum {
-            BIT_MASK_RED    = 0x001F
-           ,BIT_MASK_GREEN  = 0x03E0
-           ,BIT_MASK_BLUE   = 0x7C00
-           ,BIT_MASK_ALPHA  = 0x8000
-        };
-
-
-        typedef uint16              Color;
-        typedef std::vector<Color>  Page;
-        typedef std::vector<Page>   PageList;
-
-        virtual PageList&  getPages( void ) { return m_pages; }
-
-        virtual const Page& getPage( size_t index ) const { return m_pages[index]; }
-
-        static Color convert( const Color color );
+        virtual BackgroundFilePtr&   getBackground( void ) { return m_background; };
+        virtual PaletteFilePtr&      getPalette   ( void ) { return m_palette; };
 
     protected:
         virtual void loadImpl();
@@ -68,24 +56,25 @@ namespace QGears
         virtual size_t calculateSize() const;
 
     private:
-        PageList m_pages;
+        BackgroundFilePtr   m_background;
+        PaletteFilePtr      m_palette;
     };
 
     //-------------------------------------------------------------------------
-    class PaletteFilePtr : public Ogre::SharedPtr<PaletteFile>
+    class FLevelFilePtr : public Ogre::SharedPtr<FLevelFile>
     {
     public:
-        PaletteFilePtr() : Ogre::SharedPtr<PaletteFile>() {}
-        explicit PaletteFilePtr( PaletteFile *rep ) : Ogre::SharedPtr<PaletteFile>(rep) {}
-        PaletteFilePtr( const PaletteFilePtr &r ) : Ogre::SharedPtr<PaletteFile>(r) {}
-        PaletteFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<PaletteFile>()
+        FLevelFilePtr() : Ogre::SharedPtr<FLevelFile>() {}
+        explicit FLevelFilePtr( FLevelFile *rep ) : Ogre::SharedPtr<FLevelFile>(rep) {}
+        FLevelFilePtr( const FLevelFilePtr &r ) : Ogre::SharedPtr<FLevelFile>(r) {}
+        FLevelFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<FLevelFile>()
         {
             if( r.isNull() )
                 return;
             // lock & copy other mutex pointer
             OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
             OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<PaletteFile*>(r.getPointer());
+            pRep = static_cast<FLevelFile*>(r.getPointer());
             pUseCount = r.useCountPointer();
             useFreeMethod = r.freeMethod();
             if (pUseCount)
@@ -94,10 +83,10 @@ namespace QGears
             }
         }
 
-        /// Operator used to convert a ResourcePtr to a PaletteFilePtr
-        PaletteFilePtr& operator=( const Ogre::ResourcePtr& r )
+        /// Operator used to convert a ResourcePtr to a FLevelFilePtr
+        FLevelFilePtr& operator=( const Ogre::ResourcePtr& r )
         {
-            if(pRep == static_cast<PaletteFile*>(r.getPointer()))
+            if(pRep == static_cast<FLevelFile*>(r.getPointer()))
                 return *this;
             release();
             if( r.isNull() )
@@ -105,7 +94,7 @@ namespace QGears
             // lock & copy other mutex pointer
             OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
             OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<PaletteFile*>(r.getPointer());
+            pRep = static_cast<FLevelFile*>(r.getPointer());
             pUseCount = r.useCountPointer();
             useFreeMethod = r.freeMethod();
             if (pUseCount)
@@ -117,4 +106,4 @@ namespace QGears
     };
 }
 
-#endif // __QGearsPaletteFile_H__
+#endif // __QGearsFLevelFile_H__

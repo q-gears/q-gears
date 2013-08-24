@@ -30,8 +30,8 @@ THE SOFTWARE.
 #include "common/OgreBase.h"
 
 #include "data/QGearsAFileSerializer.h"
-#include "data/QGearsBackgroundFile.h"
-#include "data/QGearsPaletteFile.h"
+#include "data/QGearsBackgroundFileManager.h"
+#include "data/QGearsPaletteFileManager.h"
 
 void attachMesh( Ogre::MeshPtr &mesh )
 {
@@ -80,8 +80,8 @@ main( int argc, char *argv[] )
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Run" );
 
-    Ogre::ResourceManager  *bmgr( Ogre::ResourceGroupManager::getSingleton()._getResourceManager( QGears::BackgroundFile::RESOURCE_TYPE ) );
-    Ogre::ResourceManager  *pmgr( Ogre::ResourceGroupManager::getSingleton()._getResourceManager( QGears::PaletteFile::RESOURCE_TYPE ) );
+    QGears::BackgroundFileManager  *bmgr( QGears::BackgroundFileManager::getSingletonPtr() );
+    QGears::PaletteFileManager     *pmgr( QGears::PaletteFileManager::getSingletonPtr() );
     QGears::PaletteFilePtr      p( pmgr->load( "ancnt1.palette", "General" ) );
     QGears::BackgroundFilePtr   b( bmgr->load( "ancnt1.background", "General" ) );
 

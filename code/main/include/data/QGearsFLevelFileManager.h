@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-17 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-24 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,25 +23,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsBackgroundFileManager_H__
-#define __QGearsBackgroundFileManager_H__
+#ifndef __QGearsFLevelFileManager_H__
+#define __QGearsFLevelFileManager_H__
 
 #include <OgreResourceManager.h>
 
 #include "QGearsPrerequisites.h"
 
-#include "QGearsBackgroundFile.h"
+#include "QGearsFLevelFile.h"
 
 namespace QGears
 {
-    class _QGearsExport BackgroundFileManager : public Ogre::ResourceManager, public Ogre::Singleton<BackgroundFileManager>
+    class _QGearsExport FLevelFileManager : public Ogre::ResourceManager, public Ogre::Singleton<FLevelFileManager>
     {
     public:
-        BackgroundFileManager();
-        virtual ~BackgroundFileManager();
+        FLevelFileManager();
+        virtual ~FLevelFileManager();
 
-        static BackgroundFileManager& getSingleton();
-        static BackgroundFileManager* getSingletonPtr();
+        static FLevelFileManager& getSingleton();
+        static FLevelFileManager* getSingletonPtr();
 
     protected:
         Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
@@ -52,4 +52,4 @@ namespace QGears
     };
 }
 
-#endif // __QGearsBackgroundFileManager_H__
+#endif // __QGearsFLevelFileManager_H__

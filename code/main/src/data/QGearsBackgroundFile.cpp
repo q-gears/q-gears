@@ -180,7 +180,7 @@ namespace QGears
                             << "Error: writing Pixel out of Bounds " << data_index
                             << " " << (dst_x + x) << " x " << dst_y + y;
                     }
-                    data[data_index] = palette_page[ index ];
+                    data[data_index] = PaletteFile::convert( palette_page[ index ] );
                 }
             }
 

@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-17 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-24 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,33 +23,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsBackgroundFileManager_H__
-#define __QGearsBackgroundFileManager_H__
+#include "data/QGearsFLevelFileSerializer.h"
 
-#include <OgreResourceManager.h>
-
-#include "QGearsPrerequisites.h"
-
-#include "QGearsBackgroundFile.h"
+#include <OgreLogManager.h>
 
 namespace QGears
 {
-    class _QGearsExport BackgroundFileManager : public Ogre::ResourceManager, public Ogre::Singleton<BackgroundFileManager>
+    //---------------------------------------------------------------------
+    FLevelFileSerializer::FLevelFileSerializer() :
+        Serializer()
     {
-    public:
-        BackgroundFileManager();
-        virtual ~BackgroundFileManager();
+    }
 
-        static BackgroundFileManager& getSingleton();
-        static BackgroundFileManager* getSingletonPtr();
+    //---------------------------------------------------------------------
+    FLevelFileSerializer::~FLevelFileSerializer()
+    {
+    }
 
-    protected:
-        Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
-          , const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader
-          , const Ogre::NameValuePairList *createParams );
+    //---------------------------------------------------------------------
+    void
+    FLevelFileSerializer::importFLevelFile( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
+    {
+        readFileHeader( stream );
+        //readVector( stream, pDest->getPages(), m_header.page_count );
+    }
 
-    private:
-    };
+    //---------------------------------------------------------------------
+    void
+    FLevelFileSerializer::readFileHeader( Ogre::DataStreamPtr &stream )
+    {
+        readShort( stream, m_header.version );
+        readInt(   stream, m_header.section_count );
+    }
+
+    //---------------------------------------------------------------------
 }
-
-#endif // __QGearsBackgroundFileManager_H__
