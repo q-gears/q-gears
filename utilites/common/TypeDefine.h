@@ -14,6 +14,7 @@ typedef Ogre::int32 s32;
 
 namespace QGears
 {
+    typedef Ogre::uchar  uchar;
     typedef Ogre::uint8  uint8;
     typedef Ogre::uint16 uint16;
     typedef Ogre::uint32 uint32;

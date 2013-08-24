@@ -14,10 +14,10 @@ namespace QGears
         typedef PaletteFile::Color_BGR Color_BGR;
 
         enum {
-            PAGE_DATA_WIDTH  = 0x100
+            PAGE_DATA_WIDTH  = 256
            ,PAGE_DATA_HEIGHT = PAGE_DATA_WIDTH
            ,PAGE_DATA_SIZE   = PAGE_DATA_WIDTH * PAGE_DATA_HEIGHT
-           ,SPRITE_WIDTH     = 0x10
+           ,SPRITE_WIDTH     = 16
            ,SPRITE_HEIGHT    = SPRITE_WIDTH
         };
 
