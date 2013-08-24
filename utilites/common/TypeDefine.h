@@ -48,6 +48,9 @@ namespace QGears
     extern const String    EXT_RSD;
     extern const String    EXT_TIM;
     extern const String    EXT_TEX;
+
+    extern const String    EXT_PALETTE;
+    extern const String    EXT_BACKGROUND;
 }
 
 #endif // TYPE_DEFINE_H

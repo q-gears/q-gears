@@ -36,4 +36,7 @@ namespace QGears
     const String    EXT_RSD     ( ".rsd"        );
     const String    EXT_TEX     ( ".tex"        );
     const String    EXT_TIM     ( ".tim"        );
+
+    const String    EXT_PALETTE   ( ".palette"    );
+    const String    EXT_BACKGROUND( ".background" );
 }
