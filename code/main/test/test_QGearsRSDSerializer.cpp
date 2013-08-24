@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include <Ogre.h>
 
-#include "QGearsRSDFileSerializer.h"
+#include "data/QGearsRSDFileSerializer.h"
 
 BOOST_AUTO_TEST_CASE( read_file )
 {

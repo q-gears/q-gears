@@ -26,9 +26,13 @@ THE SOFTWARE.
 #include "data/QGearsFLevelFileSerializer.h"
 
 #include <OgreLogManager.h>
+#include <OgreException.h>
 
 namespace QGears
 {
+    //---------------------------------------------------------------------
+    const String    FLevelFileSerializer::TAG_FILE_END  ("FINAL FANTASY7");
+
     //---------------------------------------------------------------------
     FLevelFileSerializer::FLevelFileSerializer() :
         Serializer()
@@ -45,7 +49,29 @@ namespace QGears
     FLevelFileSerializer::importFLevelFile( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
     {
         readFileHeader( stream );
-        //readVector( stream, pDest->getPages(), m_header.page_count );
+
+        if( m_header.version != 0 )
+        {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
+                ,"FLevel has unsupported version"
+                ,"FLevelFileSerializer::importFLevelFile" );
+        }
+
+        if( m_header.section_count != SECTION_COUNT )
+        {
+            Ogre::LogManager::getSingleton().stream()
+                << "Warning: FLevel section_count has unexpected value "
+                << m_header.section_count << " should be " << SECTION_COUNT
+                << " FLevelFileSerializer::importFLevelFile";
+        }
+
+        uint32 section_offsets[ m_header.section_count ];
+
+        for( size_t section(0); section < m_header ); ++section )
+        {
+
+        }
+        readEnd();
     }
 
     //---------------------------------------------------------------------
@@ -54,6 +80,27 @@ namespace QGears
     {
         readShort( stream, m_header.version );
         readInt(   stream, m_header.section_count );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    FLevelFileSerializer::readSection( Ogre::DataStreamPtr &stream
+                                      ,Ogre::DataStreamPtr &out_buffer )
+    {
+        uint32 length( 0 );
+        readInt( stream, length );
+        // TODO: implement SubDataStream class to restrict access size etc
+        // so we don't have to copy the whole memory
+        Ogre::MemoryDataStream *buffer( new Ogre::MemoryDataStream( length ) );
+        stream->read( buffer->getPtr(), length );
+        out_buffer = buffer;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    FLevelFileSerializer::readEnd( Ogre::DataStreamPtr &stream )
+    {
+        readEndString( stream, TAG_FILE_END );
     }
 
     //---------------------------------------------------------------------

@@ -138,4 +138,18 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    void
+    Serializer::readEndString( Ogre::DataStreamPtr &stream, const String &end_text )
+    {
+        String actual( readString( stream, end_text.size() ) );
+        if( actual != end_text )
+        {
+            Ogre::LogManager::getSingleton().stream()
+                << "Warning: File didn't end with"
+                << " expected String '" << end_text << "'"
+                << " actual was '" << actual << "'";
+        }
+    }
+
+    //---------------------------------------------------------------------
 }

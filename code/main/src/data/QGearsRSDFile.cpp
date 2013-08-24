@@ -127,7 +127,7 @@ namespace QGears
     {
         String base_name, ext, path;
         StringUtil::splitPath( getName(), path );
-        StringUtil::splitBaseFilename( m_material_name, base_name, ext );
+        StringUtil::splitBase( m_material_name, base_name );
         StringUtil::toLowerCase( base_name );
         return path + base_name;
     }

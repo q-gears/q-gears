@@ -95,14 +95,7 @@ namespace QGears
     void
     BackgroundFileSerializer::readEnd( Ogre::DataStreamPtr &stream )
     {
-        String actual( readString( stream, TAG_FILE_END.size() ) );
-        if( actual != TAG_FILE_END )
-        {
-            Ogre::LogManager::getSingleton().stream()
-                << "Warning: File didn't end with"
-                << " expected String '" << TAG_FILE_END << "'"
-                << " actual was '" << actual << "'";
-        }
+        readEndString( stream, TAG_FILE_END );
     }
 
     //---------------------------------------------------------------------

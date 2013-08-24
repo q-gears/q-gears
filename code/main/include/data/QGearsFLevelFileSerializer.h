@@ -52,6 +52,7 @@ namespace QGears
            ,SECTION_ENCOUNTER
            ,SECTION_TRIGGER
            ,SECTION_BACKGROUND
+           ,SECTION_COUNT
         };
 
         struct Header
@@ -63,6 +64,9 @@ namespace QGears
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
         //using Serializer::readObject;
+
+        virtual void    readEnd( Ogre::DataStreamPtr &stream );
+        virtual void    readSection( Ogre::DataStreamPtr &stream, Ogre::DataStreamPtr &out_buffer );
 
         template<typename ValueType> void
         readVector( Ogre::DataStreamPtr &stream, std::vector<ValueType> &pDest, size_t count )
@@ -76,6 +80,8 @@ namespace QGears
                 pDest.push_back( in_tmp );
             }
         }
+
+        static const String     TAG_FILE_END;
 
     private:
         Header  m_header;
