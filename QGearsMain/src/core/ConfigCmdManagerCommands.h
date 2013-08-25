@@ -9,7 +9,8 @@
 #include "Logger.h"
 #include "XmlMapFile.h"
 #include "XmlMapsFile.h"
-#include "../Main.h"
+
+#include "Main.h"
 
 
 

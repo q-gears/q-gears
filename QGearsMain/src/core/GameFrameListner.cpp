@@ -12,7 +12,7 @@
 #include "ScriptManager.h"
 #include "Timer.h"
 #include "UiManager.h"
-#include "../Main.h"
+#include "Main.h"
 
 
 
