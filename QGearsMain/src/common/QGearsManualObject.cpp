@@ -44,7 +44,7 @@ namespace QGears
        ,m_colour( NULL )
        ,m_texture_coordinate( NULL )
        ,m_index( NULL )
-
+       ,colour_type( Ogre::VertexElement::getBestColourVertexElementType() )
     {
     }
 
@@ -93,7 +93,7 @@ namespace QGears
     void
     ManualObject::createColourBuffer()
     {
-        m_colour = createBuffer<uint32>( BB_COLOUR, Ogre::VET_COLOUR_ABGR, Ogre::VES_DIFFUSE  );
+        m_colour = createBuffer<uint32>( BB_COLOUR, colour_type, Ogre::VES_DIFFUSE  );
     }
 
     //-------------------------------------------------------------------------
@@ -220,7 +220,7 @@ namespace QGears
         {
             createColourBuffer();
         }
-        *(m_colour++) = Ogre::VertexElement::convertColourValue( colour, Ogre::VET_COLOUR_ABGR );
+        *(m_colour++) = Ogre::VertexElement::convertColourValue( colour, colour_type );
     }
 
     //-------------------------------------------------------------------------

@@ -82,14 +82,4 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    PaletteFile::Color
-    PaletteFile::convert( const Color color )
-    {
-        // Ogre only supports PF_A1R5G5B5 palette is in PF_(~A)1B5G5R5
-        return ( (   color  & BIT_MASK_RED   ) << 10 )
-              |  (   color  & BIT_MASK_GREEN )
-              |( (   color  & BIT_MASK_BLUE  ) >> 10 )
-              |  ( (~color) & BIT_MASK_ALPHA );
-    }
-    //---------------------------------------------------------------------
 }

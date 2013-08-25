@@ -180,11 +180,7 @@ namespace QGears
                             << "Error: writing Pixel out of Bounds " << data_index
                             << " " << (dst_x + x) << " x " << dst_y + y;
                     }
-                    Color               colour( PaletteFile::convert( palette_page[ index ] ) );
-                    Ogre::ColourValue   cv;
-
-                    Ogre::PixelUtil::unpackColour( &cv, Ogre::PF_A1R5G5B5, &colour );
-                    color[data_index] = cv.getAsARGB();
+                    color[data_index] = palette_page[ index ].getAsARGB();
                 }
             }
 

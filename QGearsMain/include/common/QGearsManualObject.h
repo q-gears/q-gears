@@ -93,6 +93,8 @@ namespace QGears
             uint32         *m_colour;
             Ogre::Vector2  *m_texture_coordinate;
             uint16         *m_index;
+
+            const Ogre::VertexElementType colour_type;
     };
 }
 

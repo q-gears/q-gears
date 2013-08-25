@@ -30,6 +30,9 @@ THE SOFTWARE.
 namespace QGears
 {
     //---------------------------------------------------------------------
+    const Ogre::PixelFormat PaletteFileSerializer::PIXEL_FORMAT( Ogre::PF_A1R5G5B5 );
+
+    //---------------------------------------------------------------------
     PaletteFileSerializer::PaletteFileSerializer() :
         Serializer()
     {
@@ -42,7 +45,7 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    PaletteFileSerializer::importPaletteFile( Ogre::DataStreamPtr &stream, PaletteFile* pDest )
+    PaletteFileSerializer::importPaletteFile( Ogre::DataStreamPtr& stream, PaletteFile* pDest )
     {
         readFileHeader( stream );
         readVector( stream, pDest->getPages(), m_header.page_count );
@@ -50,7 +53,7 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    PaletteFileSerializer::readFileHeader( Ogre::DataStreamPtr &stream )
+    PaletteFileSerializer::readFileHeader( Ogre::DataStreamPtr& stream )
     {
         readInt(   stream, m_header.file_size );
         readShort( stream, m_header.pal_x );
@@ -61,9 +64,23 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    PaletteFileSerializer::readObject( Ogre::DataStreamPtr &stream, Color &pDest )
+    PaletteFileSerializer::readObject( Ogre::DataStreamPtr& stream, Color& pDest )
     {
-        readShort( stream, pDest );
+        uint16 colour;
+        readShort( stream, colour );
+        convertColour( colour );
+
+        Ogre::PixelUtil::unpackColour( &pDest, PIXEL_FORMAT, &colour );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    PaletteFileSerializer::convertColour( uint16 &colour ) const
+    {
+        colour = ( (   colour  & BIT_MASK_RED   ) << 10 )
+                |  (   colour  & BIT_MASK_GREEN )
+                |( (   colour  & BIT_MASK_BLUE  ) >> 10 )
+                |  ( (~colour) & BIT_MASK_ALPHA );
     }
 
     //---------------------------------------------------------------------

@@ -26,6 +26,7 @@ THE SOFTWARE.
 #ifndef __QGearsPaletteFile_H__
 #define __QGearsPaletteFile_H__
 
+#include <OgreColourValue.h>
 #include <OgreResource.h>
 
 #include "common/TypeDefine.h"
@@ -44,23 +45,13 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
-        enum {
-            BIT_MASK_RED    = 0x001F
-           ,BIT_MASK_GREEN  = 0x03E0
-           ,BIT_MASK_BLUE   = 0x7C00
-           ,BIT_MASK_ALPHA  = 0x8000
-        };
-
-
-        typedef uint16              Color;
+        typedef Ogre::ColourValue   Color;
         typedef std::vector<Color>  Page;
         typedef std::vector<Page>   PageList;
 
         virtual PageList&  getPages( void ) { return m_pages; }
 
         virtual const Page& getPage( size_t index ) const { return m_pages[index]; }
-
-        static Color convert( const Color color );
 
     protected:
         virtual void loadImpl();

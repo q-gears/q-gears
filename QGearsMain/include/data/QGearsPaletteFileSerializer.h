@@ -26,6 +26,8 @@ THE SOFTWARE.
 #ifndef __QGearsPaletteFileSerializer_H__
 #define __QGearsPaletteFileSerializer_H__
 
+#include <OgrePixelFormat.h>
+
 #include "common/TypeDefine.h"
 
 #include "QGearsPaletteFile.h"
@@ -40,6 +42,13 @@ namespace QGears
         virtual        ~PaletteFileSerializer();
 
         virtual void 	importPaletteFile( Ogre::DataStreamPtr &stream, PaletteFile* pDest );
+
+        enum {
+            BIT_MASK_RED    = 0x001F
+           ,BIT_MASK_GREEN  = 0x03E0
+           ,BIT_MASK_BLUE   = 0x7C00
+           ,BIT_MASK_ALPHA  = 0x8000
+        };
 
         struct Header
         {
@@ -58,6 +67,10 @@ namespace QGears
         virtual void    readObject( Ogre::DataStreamPtr &stream, Color &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Page &pDest );
         using Serializer::readObject;
+
+        virtual void    convertColour( uint16 &colour ) const;
+
+        static const Ogre::PixelFormat  PIXEL_FORMAT;
 
         template<typename ValueType> void
         readVector( Ogre::DataStreamPtr &stream, std::vector<ValueType> &pDest, size_t count )
