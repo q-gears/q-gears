@@ -5,6 +5,7 @@
 #include "../../utilites/Logger.h"
 
 #include <stdio.h>
+#include <cstring>
 
 #pragma pack(1)
 
