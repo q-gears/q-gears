@@ -237,7 +237,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add option="-DBOOST_ALL_DYN_LINK" />
-			<Add directory="$(BOOST_HOME)" />
+			<Add directory="$(BOOST_INCLUDE_DIR)" />
 			<Add directory="$(OGRE_HOME)/include/OGRE" />
 			<Add directory="$(OGRE_HOME)/include/OIS" />
 			<Add directory="../../QGearsMain/include" />
@@ -245,16 +245,14 @@
 			<Add directory="include" />
 		</Compiler>
 		<Linker>
-			<Add directory="$(BOOST_HOME)/stage/lib" />
+			<Add directory="$(BOOST_LIB_DIR)" />
 			<Add directory="$(OGRE_HOME)/lib" />
 			<Add directory="$(OGRE_HOME)/lib/opt" />
+			<Add directory="$(OGRE_HOME)/lib/release" />
+			<Add directory="$(OGRE_HOME)/lib/release/opt" />
+			<Add directory="$(OGRE_HOME)/lib/debug" />
+			<Add directory="$(OGRE_HOME)/lib/debug/opt" />
 		</Linker>
-		<Unit filename="../common/FileSystem.cpp" />
-		<Unit filename="../common/FileSystem.h" />
-		<Unit filename="../common/Logger.cpp" />
-		<Unit filename="../common/Logger.h" />
-		<Unit filename="../common/OgreBase.cpp" />
-		<Unit filename="../common/OgreBase.h" />
 		<Unit filename="../../QGearsMain/include/QGearsPrerequisites.h" />
 		<Unit filename="../../QGearsMain/include/common/QGearsManualObject.h" />
 		<Unit filename="../../QGearsMain/include/common/QGearsStringUtil.h" />
@@ -353,6 +351,12 @@
 		<Unit filename="../../QGearsMain/test/test_QGearsRingBuffer.cpp">
 			<Option target="Test_RingBuffer" />
 		</Unit>
+		<Unit filename="../common/FileSystem.cpp" />
+		<Unit filename="../common/FileSystem.h" />
+		<Unit filename="../common/Logger.cpp" />
+		<Unit filename="../common/Logger.h" />
+		<Unit filename="../common/OgreBase.cpp" />
+		<Unit filename="../common/OgreBase.h" />
 		<Unit filename="src/main.cpp">
 			<Option target="Release" />
 		</Unit>

@@ -1,4 +1,5 @@
 // $Id$
+#include <cstring>
 
 #include "Vram.h"
 

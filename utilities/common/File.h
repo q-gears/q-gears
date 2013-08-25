@@ -1,9 +1,9 @@
 #ifndef FILE_H
 #define FILE_H
 
-#include "TypeDefine.h"
 #include <OgreString.h>
 
+#include "common/TypeDefine.h"
 
 
 class File

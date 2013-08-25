@@ -4,8 +4,8 @@
 #include <Ogre.h>
 
 #include <vector>
-#include "../../common/File.h"
-#include "../../common/TypeDefine.h"
+#include "common/File.h"
+#include "common/TypeDefine.h"
 
 
 

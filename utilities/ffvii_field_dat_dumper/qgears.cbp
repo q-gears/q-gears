@@ -26,15 +26,21 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory="$(BOOST_HOME)" />
+			<Add directory="$(BOOST_INCLUDE_DIR)" />
 			<Add directory="$(OGRE_HOME)/include/OGRE" />
 			<Add directory="$(OGRE_HOME)/include/OIS" />
+			<Add directory="../../QGearsMain/include" />
+			<Add directory="../" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
-			<Add directory="$(BOOST_HOME)/stage/lib" />
+			<Add directory="$(BOOST_LIB_DIR)" />
 			<Add directory="$(OGRE_HOME)/lib" />
 			<Add directory="$(OGRE_HOME)/lib/opt" />
+			<Add directory="$(OGRE_HOME)/lib/release" />
+			<Add directory="$(OGRE_HOME)/lib/release/opt" />
+			<Add directory="$(OGRE_HOME)/lib/debug" />
+			<Add directory="$(OGRE_HOME)/lib/debug/opt" />
 		</Linker>
 		<Unit filename="../common/File.cpp" />
 		<Unit filename="../common/File.h" />

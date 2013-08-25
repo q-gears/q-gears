@@ -23,12 +23,19 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory="$(OGRE_HOME)/include" />
-			<Add directory="$(OGRE_HOME)/include/opt" />
-			<Add directory="$(OGRE_HOME)/Samples/include" />
+			<Add directory="$(BOOST_INCLUDE_DIR)" />
+			<Add directory="$(OGRE_HOME)/include/OGRE" />
+			<Add directory="$(OGRE_HOME)/include/OIS" />
 		</Compiler>
 		<Linker>
+			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+			<Add directory="$(BOOST_LIB_DIR)" />
 			<Add directory="$(OGRE_HOME)/lib" />
+			<Add directory="$(OGRE_HOME)/lib/opt" />
+			<Add directory="$(OGRE_HOME)/lib/release" />
+			<Add directory="$(OGRE_HOME)/lib/release/opt" />
+			<Add directory="$(OGRE_HOME)/lib/debug" />
+			<Add directory="$(OGRE_HOME)/lib/debug/opt" />
 		</Linker>
 		<Unit filename="src/Define.h" />
 		<Unit filename="src/GameDefine.h" />

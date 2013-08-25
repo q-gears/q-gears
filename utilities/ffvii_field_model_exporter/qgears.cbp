@@ -27,58 +27,19 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory="$(BOOST_HOME)" />
+			<Add directory="$(BOOST_INCLUDE_DIR)" />
 			<Add directory="$(OGRE_HOME)/include/OGRE" />
 			<Add directory="$(OGRE_HOME)/include/OIS" />
+			<Add directory="../../QGearsMain/include" />
 			<Add directory="../" />
-			<Add directory="../../code/main/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
-			<Add directory="$(BOOST_HOME)/stage/lib" />
+			<Add directory="$(BOOST_LIB_DIR)" />
 			<Add directory="$(OGRE_HOME)/lib" />
-			<Add directory="$(OGRE_HOME)/lib/opt" />
+			<Add directory="$(OGRE_HOME)/lib/release" />
+			<Add directory="$(OGRE_HOME)/lib/debug" />
 		</Linker>
-		<Unit filename="../../code/main/include/common/QGearsManualObject.h" />
-		<Unit filename="../../code/main/include/common/QGearsStringUtil.h" />
-		<Unit filename="../../code/main/include/data/QGearsAFile.h" />
-		<Unit filename="../../code/main/include/data/QGearsAFileSerializer.h" />
-		<Unit filename="../../code/main/include/data/QGearsBackgroundFile.h" />
-		<Unit filename="../../code/main/include/data/QGearsBackgroundFileManager.h" />
-		<Unit filename="../../code/main/include/data/QGearsBackgroundFileSerializer.h" />
-		<Unit filename="../../code/main/include/data/QGearsHRCFile.h" />
-		<Unit filename="../../code/main/include/data/QGearsHRCFileManager.h" />
-		<Unit filename="../../code/main/include/data/QGearsHRCFileSerializer.h" />
-		<Unit filename="../../code/main/include/data/QGearsHRCMeshLoader.h" />
-		<Unit filename="../../code/main/include/data/QGearsHRCSkeletonLoader.h" />
-		<Unit filename="../../code/main/include/data/QGearsLZSDataStream.h" />
-		<Unit filename="../../code/main/include/data/QGearsPFile.h" />
-		<Unit filename="../../code/main/include/data/QGearsPFileManager.h" />
-		<Unit filename="../../code/main/include/data/QGearsPFileSerializer.h" />
-		<Unit filename="../../code/main/include/data/QGearsRSDFile.h" />
-		<Unit filename="../../code/main/include/data/QGearsRSDFileManager.h" />
-		<Unit filename="../../code/main/include/data/QGearsRSDFileSerializer.h" />
-		<Unit filename="../../code/main/include/data/QGearsSerializer.h" />
-		<Unit filename="../../code/main/src/common/QGearsManualObject.cpp" />
-		<Unit filename="../../code/main/src/common/QGearsStringUtil.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsAFile.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsAFileSerializer.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsBackgroundFile.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsBackgroundFileManager.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsBackgroundFileSerializer.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsHRCFile.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsHRCFileManager.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsHRCFileSerializer.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsHRCMeshLoader.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsHRCSkeletonLoader.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsLZSDataStream.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsPFile.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsPFileManager.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsPFileSerializer.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsRSDFile.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsRSDFileManager.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsRSDFileSerializer.cpp" />
-		<Unit filename="../../code/main/src/data/QGearsSerializer.cpp" />
 		<Unit filename="../common/File.cpp" />
 		<Unit filename="../common/File.h" />
 		<Unit filename="../common/FileSystem.cpp" />
@@ -91,8 +52,6 @@
 		<Unit filename="../common/OgreBase.h" />
 		<Unit filename="../common/OgreGenUtilites.cpp" />
 		<Unit filename="../common/OgreGenUtilites.h" />
-		<Unit filename="../common/TypeDefine.cpp" />
-		<Unit filename="../common/TypeDefine.h" />
 		<Unit filename="../common/Vram.cpp" />
 		<Unit filename="../common/Vram.h" />
 		<Unit filename="src/AnimationFile.cpp" />

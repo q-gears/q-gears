@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "common/FileSystem.h"
 #include "common/Logger.h"
-#include "common/QGearsFLevelFile.h"
+//#include "common/QGearsFLevelFile.h"
 
 using std::cout;
 using std::endl;
@@ -41,7 +41,9 @@ namespace bpo = boost::program_options;
 void extractSections( const bfs::path &file_in, const bfs::path &path_out )
 {
     FILESYSTEM = new FileSystem();
+    /*
     File f( file_in.string() );
+    // TODO alternative implementation adapted to FLevel Resource
     QGears::FLevelFile flevel( &f );
     File** sections( flevel.getSections() );
 
@@ -66,6 +68,7 @@ void extractSections( const bfs::path &file_in, const bfs::path &path_out )
     sections[8]->WriteFile( file_out.string() );
     file_out = path_out / ( file_in.stem().string() + ".background" );
     sections[9]->WriteFile( file_out.string() );
+    */
 }
 
 int

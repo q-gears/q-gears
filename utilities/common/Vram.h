@@ -1,8 +1,8 @@
 #ifndef VRAM_H
 #define VRAM_H
 
-#include "TypeDefine.h"
-#include "Surface.h"
+#include "common/TypeDefine.h"
+#include "common/Surface.h"
 
 
 

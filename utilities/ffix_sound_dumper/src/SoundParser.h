@@ -3,8 +3,8 @@
 
 #include <Ogre.h>
 
-#include "../../common/File.h"
-#include "../../common/TypeDefine.h"
+#include "common/File.h"
+#include "common/TypeDefine.h"
 
 
 

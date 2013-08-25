@@ -299,8 +299,8 @@ int main(int argc, char *argv[])
 		path argument(argv[1]);
 
 		// passed akao frame
-		string extension(argument.extension());
-		if(extension.size() && string(extension, 1, argument.extension().size() - 1) == g_AKAO_EXT)
+		string extension(argument.extension().string());
+		if(extension.size() && string(extension, 1, argument.extension().string().size() - 1) == g_AKAO_EXT)
 		{
 			mode_print_frame = true;
 			print_usage = false;
@@ -591,7 +591,7 @@ void akao_extract_cb(void *a_data, path a_file)
 				++akao_counter;
 
 				// construct save path
-				string output_fn(a_file.filename());
+				string output_fn(a_file.filename().string());
 				size_t dot_pos;
 				while((dot_pos = output_fn.find_last_of(".")) != string::npos)
 					output_fn.replace(dot_pos, 1, "_");
@@ -898,8 +898,8 @@ void audio_tracks_create(path a_game_path, list<path> &a_file_list, path a_outpu
 			// add xml record about track
 			TiXmlElement *xml_node = new TiXmlElement("music");
 			music_xml_root->LinkEndChild(xml_node);
-			xml_node->SetAttribute("name", ogg_fn.stem().c_str());
-			xml_node->SetAttribute("file_name", ogg_fn.string().c_str());
+			xml_node->SetAttribute("name", ogg_fn.stem().string() );
+			xml_node->SetAttribute("file_name", ogg_fn.string() );
 			xml_node->SetAttribute("loop", ch_final.attack_size);
 
 			psf_decode(a_output_path / ogg_fn, a_output_path / raw_fn, a_dump_pcm,

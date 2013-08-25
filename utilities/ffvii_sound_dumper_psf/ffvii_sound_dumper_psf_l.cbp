@@ -35,15 +35,33 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add option="-DTIXML_USE_STL" />
 			<Add directory="src/libupse" />
+			<Add directory="$(BOOST_INCLUDE_DIR)" />
+			<Add directory="$(OGRE_HOME)/include/OGRE" />
+			<Add directory="$(OGRE_HOME)/include/OIS" />
+			<Add directory="$(ZLIB_INCLUDE_DIR)" />
+			<Add directory="../../QGearsMain/src/core/library/ogg" />
+			<Add directory="../../QGearsMain/src/core/library/vorbis" />
+			<Add directory="../../QGearsMain/src/core/library/tinyxml" />
 		</Compiler>
 		<Linker>
 			<Add library="boost_system" />
 			<Add library="boost_filesystem" />
-			<Add library="z" />
+			<Add library="zlib" />
 			<Add library="vorbis" />
 			<Add library="vorbisenc" />
 			<Add library="tinyxml" />
+			<Add directory="$(BOOST_LIB_DIR)" />
+			<Add directory="$(OGRE_HOME)/lib" />
+			<Add directory="$(OGRE_HOME)/lib/opt" />
+			<Add directory="$(OGRE_HOME)/lib/release" />
+			<Add directory="$(OGRE_HOME)/lib/release/opt" />
+			<Add directory="$(OGRE_HOME)/lib/debug" />
+			<Add directory="$(OGRE_HOME)/lib/debug/opt" />
+			<Add directory="$(ZLIB_LIB_DIR)" />
+			<Add directory="$(ZLIB_LIB_DIR)/Release" />
+			<Add directory="$(ZLIB_LIB_DIR)/Debug" />
 		</Linker>
 		<Unit filename="src/libupse/config.h" />
 		<Unit filename="src/libupse/upse-debug.h" />

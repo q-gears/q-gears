@@ -43,23 +43,29 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="$(BOOST_HOME)" />
-			<Add directory="$(OGRE_HOME)/include/Ogre" />
-			<Add directory="../../../utilites" />
+			<Add directory="$(BOOST_INCLUDE_DIR)" />
+			<Add directory="$(OGRE_HOME)/include/OGRE" />
+			<Add directory="$(OGRE_HOME)/include/OIS" />
+			<Add directory="../../QGearsMain/include" />
+			<Add directory="../" />
 		</Compiler>
 		<Linker>
-			<Add directory="$(BOOST_HOME)/stage/lib" />
+			<Add directory="$(BOOST_LIB_DIR)" />
 			<Add directory="$(OGRE_HOME)/lib" />
+			<Add directory="$(OGRE_HOME)/lib/opt" />
+			<Add directory="$(OGRE_HOME)/lib/release" />
+			<Add directory="$(OGRE_HOME)/lib/release/opt" />
+			<Add directory="$(OGRE_HOME)/lib/debug" />
+			<Add directory="$(OGRE_HOME)/lib/debug/opt" />
 		</Linker>
-		<Unit filename="../../../utilites/common/File.cpp" />
-		<Unit filename="../../../utilites/common/File.h" />
-		<Unit filename="../../../utilites/common/FileSystem.cpp" />
-		<Unit filename="../../../utilites/common/FileSystem.h" />
-		<Unit filename="../../../utilites/common/Logger.cpp" />
-		<Unit filename="../../../utilites/common/Logger.h" />
-		<Unit filename="../../../utilites/common/LzsFile.cpp" />
-		<Unit filename="../../../utilites/common/LzsFile.h" />
-		<Unit filename="../../../utilites/common/TypeDefine.h" />
+		<Unit filename="../common/File.cpp" />
+		<Unit filename="../common/File.h" />
+		<Unit filename="../common/FileSystem.cpp" />
+		<Unit filename="../common/FileSystem.h" />
+		<Unit filename="../common/Logger.cpp" />
+		<Unit filename="../common/Logger.h" />
+		<Unit filename="../common/LzsFile.cpp" />
+		<Unit filename="../common/LzsFile.h" />
 		<Unit filename="lzs.cpp" />
 		<Extensions>
 			<code_completion />

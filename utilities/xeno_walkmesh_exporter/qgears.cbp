@@ -30,8 +30,11 @@
 		</Build>
 		<Compiler>
 			<Add directory="$(BOOST_INCLUDE_DIR)" />
+			<Add directory="$(OGRE_HOME)/include" />
 			<Add directory="$(OGRE_HOME)/include/OGRE" />
-			<Add directory="$(OGRE_HOME)/include/OIS" />
+			<Add directory="$(ZLIB_INCLUDE_DIR)" />
+			<Add directory="$(ZLIB_INCLUDE_DIR)/Release" />
+			<Add directory="$(ZLIB_INCLUDE_DIR)/Debug" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />

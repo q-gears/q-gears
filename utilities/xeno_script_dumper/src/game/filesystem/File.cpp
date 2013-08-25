@@ -1,7 +1,7 @@
 // $Id: File.cpp 147 2007-02-24 06:13:17Z super_gb $
 
 #include <cassert>
-#include <string>
+#include <cstring>
 
 #include "../../common/filesystem/FileSystem.h"
 #include "../../common/filesystem/RealFileSystem.h"

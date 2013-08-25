@@ -1,4 +1,5 @@
 // $Id: TimFile.cpp 147 2007-02-24 06:13:17Z super_gb $
+#include <cstring>
 
 #include "../../common/filesystem/GameFileSystem.h"
 #include "../../common/utilites/Logger.h"

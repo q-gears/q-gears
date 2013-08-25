@@ -4,7 +4,7 @@
 #define COLOUR_BINDING 1
 
 #include "Logger.h"
-#include "TypeDefine.h"
+#include "common/TypeDefine.h"
 
 float* pPos;
 u32 cur_index;

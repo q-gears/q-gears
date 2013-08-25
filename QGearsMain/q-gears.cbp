@@ -61,21 +61,27 @@
 			<Add option="-DWIN32" />
 			<Add option="-D__WIN32__" />
 			<Add option="-D_WINDOWS" />
-			<Add directory="$(BOOST_HOME)" />
+			<Add directory="$(BOOST_INCLUDE_DIR)" />
 			<Add directory="$(OGRE_HOME)/include/OGRE" />
 			<Add directory="$(OGRE_HOME)/include/OIS" />
 			<Add directory="src/core/library" />
+			<Add directory="include" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 			<Add option="-Wl,--enable-auto-image-base" />
 			<Add option="-Wl,--add-stdcall-alias" />
 			<Add directory="$(MINGW_HOME)/lib" />
-			<Add directory="$(OGRE_HOME)/lib" />
-			<Add directory="$(BOOST_HOME)/stage/lib" />
+			<Add directory="$(BOOST_LIB_DIR)" />
+			<Add directory="$(OGRE_HOME)/lib/" />
+			<Add directory="$(OGRE_HOME)/lib/opt" />
+			<Add directory="$(OGRE_HOME)/lib/release" />
+			<Add directory="$(OGRE_HOME)/lib/release/opt" />
+			<Add directory="$(OGRE_HOME)/lib/debug" />
+			<Add directory="$(OGRE_HOME)/lib/debug/opt" />
 		</Linker>
-		<Unit filename="src/Main.cpp" />
 		<Unit filename="include/Main.h" />
+		<Unit filename="src/Main.cpp" />
 		<Unit filename="src/core/Assert.h" />
 		<Unit filename="src/core/Background2D.cpp" />
 		<Unit filename="src/core/Background2D.h" />

@@ -1,9 +1,9 @@
 #include "AkaoParser.h"
 
 #include "engine/SoundManager.h"
-#include "../../common/File.h"
-#include "../../common/Logger.h"
-#include "../../common/TypeDefine.h"
+#include "common/File.h"
+#include "common/Logger.h"
+#include "common/TypeDefine.h"
 
 
 
@@ -383,7 +383,7 @@ AkaoParser::PlayMusic( const Ogre::String& file )
 
                 m_MusicChannelData[ channel_id ].akao_sequence_pointer = 20 + offset_to_akao + 2 + m_Music->GetU16LE( 20 + offset_to_akao );
                 offset_to_akao += 2;
-                LOGGER->Log( "Init channel " + ToIntString( channel_id ) + " with offset to AKAO " + ToHexString( m_MusicChannelData[ channel_id ].akao_sequence_pointer, 4, '0' ) + "\n" );
+                //LOGGER->Log( "Init channel " + ToIntString( channel_id ) + " with offset to AKAO " + ToHexString( m_MusicChannelData[ channel_id ].akao_sequence_pointer, 4, '0' ) + "\n" );
 
                 InitChannelInstrument( m_MusicChannelData, channel_id, 0x14 );
 
@@ -779,7 +779,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         {
             LOGGER->Log( "    0xA1 [NOT COMPLETE] " );
             int instrument_id = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
-            LOGGER->Log( "Load instrument " + ToIntString( instrument_id ) + "with 0xA1.\n" );
+            //LOGGER->Log( "Load instrument " + ToIntString( instrument_id ) + "with 0xA1.\n" );
 
 /*
             A0 = hu[A3 + 24];
@@ -837,7 +837,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             channel_data[ channel_id ].pause_multiplier = 0;
             channel_data[ channel_id ].saved_pause = value;
             channel_data[ channel_id ].pause = ( value << 8 ) | value;
-            LOGGER->Log( "Set pause to 0x" + ToHexString( value, 2, '0' ) + ".\n" );
+            //LOGGER->Log( "Set pause to 0x" + ToHexString( value, 2, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if( opcode == 0xa3 ) // set volume multiplier
@@ -845,14 +845,14 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             LOGGER->Log( "    0xA3 " );
             channel_data[ channel_id ].volume_multiplier = ( s8 )( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) );
             channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
-            LOGGER->Log( "Set volume multiplier to 0x" + ToHexString( channel_data[ channel_id ].volume_multiplier, 2, '0' ) + ".\n" );
+            //LOGGER->Log( "Set volume multiplier to 0x" + ToHexString( channel_data[ channel_id ].volume_multiplier, 2, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if( opcode == 0xa5 ) // set pitch correction
         {
             LOGGER->Log( "    0xA5 " );
             channel_data[ channel_id ].pitch_correction = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
-            LOGGER->Log( "Set pitch correction to 0x" + ToHexString( channel_data[ channel_id ].pitch_correction, 4, '0' ) + ".\n" );
+            //LOGGER->Log( "Set pitch correction to 0x" + ToHexString( channel_data[ channel_id ].pitch_correction, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if( opcode == 0xa6 ) // increment pitch correction
@@ -874,7 +874,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
             channel_data[ channel_id ].volume_level_change_ticks = 0;
             channel_data[ channel_id ].volume_level = ( s8 )( m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) ) << 0x17;
-            LOGGER->Log( "Set volume to 0x" + ToHexString(channel_data[ channel_id ].volume_level, 8, '0' ) + " and reset volume_level_change_ticks.\n" );
+            //LOGGER->Log( "Set volume to 0x" + ToHexString(channel_data[ channel_id ].volume_level, 8, '0' ) + " and reset volume_level_change_ticks.\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if( opcode == 0xa9 ) // set volume increase/descrease
@@ -886,8 +886,8 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             channel_data[ channel_id ].volume_level_change_ticks = value1;
             channel_data[ channel_id ].volume_level &= 0xffff0000;
             channel_data[ channel_id ].volume_level_add = ( ( value2 << 0x17 ) - channel_data[ channel_id ].volume_level ) / channel_data[ channel_id ].volume_level_change_ticks;
-            LOGGER->Log( "Set volume tick to 0x" + ToHexString( channel_data[ channel_id ].volume_level_change_ticks, 4, '0' ) + " and " );
-            LOGGER->Log( "volume_level_add 0x" + ToHexString( channel_data[ channel_id ].volume_level_add, 8, '0' ) + ".\n" );
+            //LOGGER->Log( "Set volume tick to 0x" + ToHexString( channel_data[ channel_id ].volume_level_change_ticks, 4, '0' ) + " and " );
+            //LOGGER->Log( "volume_level_add 0x" + ToHexString( channel_data[ channel_id ].volume_level_add, 8, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if( opcode == 0xaa ) // set volume pan
@@ -896,7 +896,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             channel_data[ channel_id ].spu_update_flags |= SPU_LEFT_VOLUME | SPU_RIGHT_VOLUME;
             channel_data[ channel_id ].volume_index = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x8;
             channel_data[ channel_id ].unknown_62 = 0;
-            LOGGER->Log( "Set volume pan to 0x" + ToHexString( channel_data[ channel_id ].volume_index, 4, '0' ) + ".\n" );
+            //LOGGER->Log( "Set volume pan to 0x" + ToHexString( channel_data[ channel_id ].volume_index, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if( opcode == 0xad ) // ???
@@ -950,9 +950,9 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             channel_data[ channel_id ].wave1_delay_current = channel_data[ channel_id ].wave1_delay;
             channel_data[ channel_id ].wave1_refresh_interval_counter = channel_data[ channel_id ].wave1_table_node_index;
             channel_data[ channel_id ].wave1_table_index = akao_wave_table_key_nodes[ channel_data[ channel_id ].wave1_table_node_index ];
-            LOGGER->Log( "Set wave1 refresh interval to 0x" + ToHexString( channel_data[ channel_id ].wave1_refresh_interval, 4, '0' ) + " " );
-            LOGGER->Log( ", wave1 node index to 0x" + ToHexString( channel_data[ channel_id ].wave1_table_node_index, 4, '0' ) + " " );
-            LOGGER->Log( "and wave1 delay (or wave1 modifier) to 0x" + ToHexString( value1, 2, '0' ) + ".\n" );
+            //LOGGER->Log( "Set wave1 refresh interval to 0x" + ToHexString( channel_data[ channel_id ].wave1_refresh_interval, 4, '0' ) + " " );
+            //LOGGER->Log( ", wave1 node index to 0x" + ToHexString( channel_data[ channel_id ].wave1_table_node_index, 4, '0' ) + " " );
+            //LOGGER->Log( "and wave1 delay (or wave1 modifier) to 0x" + ToHexString( value1, 2, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 4;
         }
         else if( opcode == 0xb5 ) // set wave modifier
@@ -965,7 +965,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
                 pitch_base = ( pitch_base * 0xf ) >> 8;
             }
             channel_data[ channel_id ].wave1_multiplier = ( ( ( channel_data[ channel_id ].wave1_modifier & 0x7f00) >> 8 ) * pitch_base ) >> 7;
-            LOGGER->Log( "Set wave modifier to 0x" + ToHexString( channel_data[ channel_id ].wave1_modifier, 4, '0' ) + ".\n" );
+            //LOGGER->Log( "Set wave modifier to 0x" + ToHexString( channel_data[ channel_id ].wave1_modifier, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 2;
         }
         else if( opcode == 0xc2 ) // turn reverb on
@@ -980,7 +980,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             u16 index = channel_data[ channel_id ].loop_index;
             channel_data[ channel_id ].loop_pointer[ index ] = channel_data[ channel_id ].akao_sequence_pointer + 1;
             channel_data[ channel_id ].loop_count[ index ] = 0;
-            LOGGER->Log( "Set loop index 0x" + ToHexString( index, 4, '0' ) + ".\n" );
+            //LOGGER->Log( "Set loop index 0x" + ToHexString( index, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
         else if( opcode == 0xc9 ) // conditional jump
@@ -996,12 +996,12 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             if( channel_data[ channel_id ].loop_count[ index ] != value )
             {
                 channel_data[ channel_id ].akao_sequence_pointer = channel_data[ channel_id ].loop_pointer[ index ];
-                LOGGER->Log( "Repeat conditional jump with index 0x" + ToHexString( index, 4, '0' ) + " and value 0x" + ToHexString( value, 4, '0' ) + ". Current loop count 0x" +  ToHexString( channel_data[ channel_id ].loop_count[ index ], 4, '0' ) + "\n" );
+                //LOGGER->Log( "Repeat conditional jump with index 0x" + ToHexString( index, 4, '0' ) + " and value 0x" + ToHexString( value, 4, '0' ) + ". Current loop count 0x" +  ToHexString( channel_data[ channel_id ].loop_count[ index ], 4, '0' ) + "\n" );
             }
             else
             {
                 channel_data[ channel_id ].loop_index = ( index - 1 ) & 3;
-                LOGGER->Log( "Go through conditional jump with index 0x" + ToHexString( index, 4, '0' ) + " and value 0x" + ToHexString( value, 4, '0' ) + ".\n" );
+                //LOGGER->Log( "Go through conditional jump with index 0x" + ToHexString( index, 4, '0' ) + " and value 0x" + ToHexString( value, 4, '0' ) + ".\n" );
             }
             channel_data[ channel_id ].akao_sequence_pointer += 1;
         }
@@ -1036,7 +1036,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             LOGGER->Log( "    0xE8 " );
             channel_config.tempo = m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x10;
             channel_config.tempo_increment_counter = 0;
-            LOGGER->Log( "Set tempo to 0x" + ToHexString( channel_config.tempo, 8, '0' ) + " and reset tempo increment counter to 0.\n" );
+            //LOGGER->Log( "Set tempo to 0x" + ToHexString( channel_config.tempo, 8, '0' ) + " and reset tempo increment counter to 0.\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if( opcode == 0xea ) // set reverb depth
@@ -1045,7 +1045,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
             channel_config.spu_update_flags |= SPU_REVERB;
             channel_config.reverb_depth = m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 ) << 0x10;
             channel_config.reverb_depth_increment_counter = 0;
-            LOGGER->Log( "Set reverb depth to 0x" + ToHexString( channel_config.reverb_depth, 8, '0' ) + " and reset reverb depth increment counter to 0.\n" );
+            //LOGGER->Log( "Set reverb depth to 0x" + ToHexString( channel_config.reverb_depth, 8, '0' ) + " and reset reverb depth increment counter to 0.\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if( opcode == 0xec )
@@ -1072,7 +1072,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         {
             LOGGER->Log( "    0xF2 " );
             int instrument_id = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
-            LOGGER->Log( "Load instrument " + ToIntString( instrument_id ) + " with 0xF2.\n" );
+            //LOGGER->Log( "Load instrument " + ToIntString( instrument_id ) + " with 0xF2.\n" );
 
             InstrumentData data = m_InstrumentData[ instrument_id ];
 
@@ -1108,10 +1108,10 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         {
             LOGGER->Log( "    0xFD Reset upper timer to 0 with bound " );
             channel_config.upper_timer_top = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 2 );
-            LOGGER->Log( ToHexString( channel_config.upper_timer_top, 4, '0' ) + " and lower timer to 0 with bound " );
+            //LOGGER->Log( ToHexString( channel_config.upper_timer_top, 4, '0' ) + " and lower timer to 0 with bound " );
             channel_config.upper_timer = 0;
             channel_config.lower_timer_top = m_Music->GetU8( channel_data[ channel_id ].akao_sequence_pointer + 1 );
-            LOGGER->Log( ToHexString( channel_config.lower_timer_top, 4, '0' ) + ".\n" );
+            //LOGGER->Log( ToHexString( channel_config.lower_timer_top, 4, '0' ) + ".\n" );
             channel_config.lower_timer = 0;
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
@@ -1119,7 +1119,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         {
             LOGGER->Log( "    0xFE Reset top timer to " );
             channel_config.top_timer = m_Music->GetU16LE( channel_data[ channel_id ].akao_sequence_pointer + 1 );
-            LOGGER->Log( ToHexString( channel_config.top_timer, 4, '0' ) + ".\n" );
+            //LOGGER->Log( ToHexString( channel_config.top_timer, 4, '0' ) + ".\n" );
             channel_data[ channel_id ].akao_sequence_pointer += 3;
         }
         else if( opcode == 0xff )
@@ -1129,7 +1129,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
         }
         else
         {
-            LOGGER->Log( ToHexString( opcode, 2, '0' ) + " [UNKNOWN]\n" );
+            //LOGGER->Log( ToHexString( opcode, 2, '0' ) + " [UNKNOWN]\n" );
             break;
         }
     }
@@ -1138,7 +1138,7 @@ AkaoParser::UpdateSequence( ChannelData* channel_data, int channel_id, ChannelCo
 
     if( opcode != 0xa0 )
     {
-        LOGGER->Log( "    0x" + ToHexString( opcode, 2, '0' ) + " PLAY.\n" );
+        //LOGGER->Log( "    0x" + ToHexString( opcode, 2, '0' ) + " PLAY.\n" );
 
         u8 ret_op = NextSequenceHandle( channel_data, channel_id, channel_config );
 

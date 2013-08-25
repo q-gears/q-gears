@@ -20,12 +20,12 @@
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
-					<Add library="..\..\..\..\..\..\Program Files\mingw\lib\zdll.lib" />
+					<Add library="zlib" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
 					<Add library="SDL" />
 					<Add library="SDLmain" />
-					<Add directory="$(OGRE_HOME)/lib/opt/release" />
+					<Add library="boost_system-mt" />
 				</Linker>
 			</Target>
 			<Target title="Debug">
@@ -38,14 +38,28 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory="$(OGRE_HOME)/include" />
-			<Add directory="$(OGRE_HOME)/include/opt" />
-			<Add directory="$(OGRE_HOME)/Samples/include" />
+			<Add directory="$(BOOST_INCLUDE_DIR)" />
+			<Add directory="$(OGRE_HOME)/include/OGRE" />
+			<Add directory="$(OGRE_HOME)/include/OIS" />
+			<Add directory="$(SDL_HOME)/include" />
+			<Add directory="../../QGearsMain/include" />
+			<Add directory="../" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+			<Add directory="$(BOOST_LIB_DIR)" />
 			<Add directory="$(OGRE_HOME)/lib" />
+			<Add directory="$(OGRE_HOME)/lib/opt" />
+			<Add directory="$(OGRE_HOME)/lib/release" />
+			<Add directory="$(OGRE_HOME)/lib/release/opt" />
+			<Add directory="$(OGRE_HOME)/lib/debug" />
+			<Add directory="$(OGRE_HOME)/lib/debug/opt" />
+			<Add directory="$(ZLIB_LIB_DIR)" />
+			<Add directory="$(ZLIB_LIB_DIR)/Release" />
+			<Add directory="$(ZLIB_LIB_DIR)/Debug" />
+			<Add directory="$(SDL_HOME)/lib" />
 		</Linker>
+		<Unit filename="../../QGearsMain/include/common/TypeDefine.h" />
 		<Unit filename="../common/File.cpp">
 			<Option target="Release" />
 		</Unit>
@@ -62,9 +76,6 @@
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="../common/Logger.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="../common/TypeDefine.h">
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="src/AkaoParser.cpp">

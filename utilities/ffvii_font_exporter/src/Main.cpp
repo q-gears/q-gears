@@ -64,7 +64,7 @@ main( int argc, char *argv[] )
         buffer = ptex->getBuffer( 0, 0 );
         buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
         const Ogre::PixelBox& pb = buffer->getCurrentLock();
-        CreateTextureFromVram( pb, vram, 0, 0, 0x80, 0x1f7, 0x380, 0x100, 0 , false );
+        CreateTextureFromVram( pb, vram, 0, 0, 0x80, 0x1f7, 0x380, 0x100, BPP_4 , false );
         Ogre::Image image;
         image.loadDynamicImage( ( Ogre::uchar* )pb.data, 256, 256, Ogre::PF_R8G8B8A8 );
         image.save( "export_en/ui/fonts/ffvii_en.png" );
@@ -96,8 +96,8 @@ main( int argc, char *argv[] )
         buffer = ptex->getBuffer( 0, 0 );
         buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
         const Ogre::PixelBox& pb = buffer->getCurrentLock();
-        CreateTextureFromVram( pb, vram, 0, 0, 0x80, 0x1f7, 0x380, 0x100, 0 , false );
-        CreateTextureFromVram( pb, vram, 256, 0, 0x90, 0x1f7, 0x380, 0x100, 0 , false );
+        CreateTextureFromVram( pb, vram, 0, 0, 0x80, 0x1f7, 0x380, 0x100, BPP_4 , false );
+        CreateTextureFromVram( pb, vram, 256, 0, 0x90, 0x1f7, 0x380, 0x100, BPP_4 , false );
         Ogre::Image image;
         image.loadDynamicImage( ( Ogre::uchar* )pb.data, 512, 256, Ogre::PF_R8G8B8A8 );
         image.save( "export_jp/ui/fonts/ffvii_jp.png" );
@@ -120,7 +120,7 @@ main( int argc, char *argv[] )
         buffer = ptex->getBuffer( 0, 0 );
         buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
         const Ogre::PixelBox& pb = buffer->getCurrentLock();
-        CreateTextureFromVram( pb, vram, 0, 0, 0x0, 0x1e0, 0x0, 0x0, 1 , false );
+        CreateTextureFromVram( pb, vram, 0, 0, 0x0, 0x1e0, 0x0, 0x0, BPP_8 , false );
 
         Ogre::Image image;
         image.loadDynamicImage( ( Ogre::uchar* )pb.data, 256, 256, Ogre::PF_R8G8B8A8 );

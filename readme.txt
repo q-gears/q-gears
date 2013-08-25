@@ -4,6 +4,9 @@ BOOST_INCLUDE_DIR=$(BOOST_HOME)
 BOOST_LIB_DIR=$(BOOST_HOME)\stage\lib
 OGRE_HOME
 MINGW_HOME // for codeblocks set it to the MinGW folder in Codeblocks root directory
+SDL_HOME
+ZLIB_INCLUDE_DIR=$(BOOST_HOME)
+ZLIB_LIB_DIR=$(BOOST_HOME)\stage\lib
 
 an exampel of folders and content that is expected
 // b2 --layout=tagged toolset=gcc --build-type=complete --with-system  --with-atomic --with-chrono --with-date_time --with-filesystem --with-test --with-program_options --with-wave --with-thread
@@ -14,7 +17,9 @@ BOOST_LIB_DIR/libboost_system-mt-d
 
 OGRE_HOME/include
 OGRE_HOME/lib
-// this is not the default compilation setting it's set to install debug and
+OGRE_HOME/lib/release/libOgreMain.dll.a
+OGRE_HOME/lib/debug/libOgreMain_d.dll.a
+// also posible, none the default variation compilation setting were set to install debug and
 // release into the same folders for easier use
 OGRE_HOME/lib/libOgreMain.dll.a
 OGRE_HOME/lib/libOgreMain_d.dll.a

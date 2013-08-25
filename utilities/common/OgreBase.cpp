@@ -1,17 +1,17 @@
 #include "OgreBase.h"
 
-#include "data/QGearsBackgroundFileManager.h"
-#include "data/QGearsPaletteFileManager.h"
-#include "data/QGearsLZSFLevelFileManager.h"
+//#include "data/QGearsBackgroundFileManager.h"
+//#include "data/QGearsPaletteFileManager.h"
+//#include "data/QGearsLZSFLevelFileManager.h"
 
 Ogre::Root*                     root;
 Ogre::RenderWindow*             window;
 std::vector< Ogre::Entity* >    entitys;
 Ogre::Camera                   *camera;
 DisplayFrameListener           *frame_listener;
-QGears::BackgroundFileManager  *bmgr;
-QGears::PaletteFileManager     *pmgr;
-QGears::LZSFLevelFileManager   *fmgr;
+//QGears::BackgroundFileManager  *bmgr;
+//QGears::PaletteFileManager     *pmgr;
+//QGears::LZSFLevelFileManager   *fmgr;
 
 void
 InitializeOgreBase( const Ogre::String& name )
@@ -82,10 +82,10 @@ InitializeOgreBase( const Ogre::String& name )
     window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
 
 
-    // remove to plugin if not needed directly
-    bmgr = new QGears::BackgroundFileManager();
-    pmgr = new QGears::PaletteFileManager();
-    fmgr = new QGears::LZSFLevelFileManager();
+    // move to plugin if not needed directly
+    //bmgr = new QGears::BackgroundFileManager();
+    //pmgr = new QGears::PaletteFileManager();
+    //fmgr = new QGears::LZSFLevelFileManager();
 
     // initialize resource
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./", "FileSystem", "General" );
@@ -129,9 +129,9 @@ DeinitializeOgreBase()
     delete LOGGER;
     delete FILESYSTEM;
 
-    delete bmgr;
-    delete pmgr;
-    delete fmgr;
+    //delete bmgr;
+    //delete pmgr;
+    //delete fmgr;
 
     delete root;
     delete frame_listener;

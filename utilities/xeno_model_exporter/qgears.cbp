@@ -19,21 +19,29 @@
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
-					<Add library="libz" />
 					<Add library="OgreMain" />
 					<Add library="ois" />
+					<Add library="boost_system-mt" />
 					<Add directory="$(OGRE_HOME)/lib/opt/release" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory="$(OGRE_HOME)/include" />
-			<Add directory="$(OGRE_HOME)/include/opt" />
-			<Add directory="$(OGRE_HOME)/Samples/include" />
+			<Add directory="$(BOOST_INCLUDE_DIR)" />
+			<Add directory="$(OGRE_HOME)/include/OGRE" />
+			<Add directory="$(OGRE_HOME)/include/OIS" />
+			<Add directory="../../QGearsMain/include" />
+			<Add directory="../" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+			<Add directory="$(BOOST_LIB_DIR)" />
 			<Add directory="$(OGRE_HOME)/lib" />
+			<Add directory="$(OGRE_HOME)/lib/opt" />
+			<Add directory="$(OGRE_HOME)/lib/release" />
+			<Add directory="$(OGRE_HOME)/lib/release/opt" />
+			<Add directory="$(OGRE_HOME)/lib/debug" />
+			<Add directory="$(OGRE_HOME)/lib/debug/opt" />
 		</Linker>
 		<Unit filename="../common/DrawSkeleton.cpp" />
 		<Unit filename="../common/DrawSkeleton.h" />
@@ -43,6 +51,7 @@
 		<Unit filename="../common/FileSystem.h" />
 		<Unit filename="../common/Logger.cpp" />
 		<Unit filename="../common/Logger.h" />
+		<Unit filename="../common/OgreBase.cpp" />
 		<Unit filename="../common/OgreBase.h" />
 		<Unit filename="../common/OgreGenUtilites.cpp" />
 		<Unit filename="../common/OgreGenUtilites.h" />
