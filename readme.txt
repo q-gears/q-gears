@@ -1,14 +1,15 @@
 to build you need to set 3 environment variables, you can do so directly via
 CodeBlocks ( Settings -> Environment... -> Environment Variables )
-BOOST_HOME
+BOOST_INCLUDE_DIR=$(BOOST_HOME)
+BOOST_LIB_DIR=$(BOOST_HOME)\stage\lib
 OGRE_HOME
 MINGW_HOME // for codeblocks set it to the MinGW folder in Codeblocks root directory
 
 an exampel of folders and content that is expected
 // b2 --layout=tagged toolset=gcc --build-type=complete --with-system  --with-atomic --with-chrono --with-date_time --with-filesystem --with-test --with-program_options --with-wave --with-thread
-BOOST_HOME/boost      // include files
-BOOST_HOME/stage/lib  // libaries with 'system' layout nameing see http://stackoverflow.com/questions/8940249/boost-how-bjam-constructs-a-library-name
-BOOST_HOME/stage/lib/libboost_system-mt-d
+BOOST_INCLUDE_DIR/boost      // include files
+// libaries with 'system' layout nameing see http://stackoverflow.com/questions/8940249/boost-how-bjam-constructs-a-library-name
+BOOST_LIB_DIR/libboost_system-mt-d
 ...
 
 OGRE_HOME/include
