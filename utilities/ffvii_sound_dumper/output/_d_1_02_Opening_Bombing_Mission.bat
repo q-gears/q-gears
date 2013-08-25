@@ -1,1 +1,1 @@
-start q-gears.exe 1_02_Opening_Bombing_Mission.snd
+start ./ffvii_sound_dumper 1_02_Opening_Bombing_Mission.snd

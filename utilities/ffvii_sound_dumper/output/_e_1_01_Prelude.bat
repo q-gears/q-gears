@@ -1,1 +1,1 @@
-start q-gears.exe 1_01_prelude.snd
+start ./ffvii_sound_dumper 1_01_prelude.snd

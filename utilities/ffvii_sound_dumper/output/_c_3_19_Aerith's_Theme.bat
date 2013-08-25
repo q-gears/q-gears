@@ -1,1 +1,1 @@
-start q-gears.exe 3_19_Aerith's_Theme.snd
+start ./ffvii_sound_dumper 3_19_Aerith's_Theme.snd

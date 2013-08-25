@@ -1,1 +1,1 @@
-start q-gears.exe 3_04_Descendant_Of_Shinobi.snd
+start ./ffvii_sound_dumper 3_04_Descendant_Of_Shinobi.snd

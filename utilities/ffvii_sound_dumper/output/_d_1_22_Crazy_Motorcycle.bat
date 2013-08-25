@@ -1,1 +1,1 @@
-start q-gears.exe 1_22_Crazy_Motorcycle.snd
+start ./ffvii_sound_dumper 1_22_Crazy_Motorcycle.snd

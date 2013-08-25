@@ -1,1 +1,1 @@
-start q-gears.exe 1_13_Turk's_Theme.snd
+start ./ffvii_sound_dumper 1_13_Turk's_Theme.snd

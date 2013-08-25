@@ -1,1 +1,1 @@
-start q-gears.exe 1_10_Fighting.snd
+start ./ffvii_sound_dumper 1_10_Fighting.snd

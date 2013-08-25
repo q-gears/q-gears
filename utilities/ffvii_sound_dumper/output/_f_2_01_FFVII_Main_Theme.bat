@@ -1,1 +1,1 @@
-start q-gears.exe 2_01_FFVII_Main_Theme.snd
+start ./ffvii_sound_dumper 2_01_FFVII_Main_Theme.snd

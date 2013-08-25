@@ -1,1 +1,1 @@
-start q-gears.exe 1_03_Mako_Reactor.snd
+start ./ffvii_sound_dumper 1_03_Mako_Reactor.snd

@@ -1,1 +1,1 @@
-start q-gears.exe 1_08_Lurking_In_The_Darkness.snd
+start ./ffvii_sound_dumper 1_08_Lurking_In_The_Darkness.snd

@@ -1,1 +1,1 @@
-start q-gears.exe 1_09_Shinra_Company.snd
+start ./ffvii_sound_dumper 1_09_Shinra_Company.snd
