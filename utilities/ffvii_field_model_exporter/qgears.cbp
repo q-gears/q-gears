@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Release">
-				<Option output="output/q-gears.exe" prefix_auto="0" extension_auto="0" />
+				<Option output="output/ffvii_field_model_exporter.exe" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="output" />
 				<Option object_output="compile" />
 				<Option type="1" />

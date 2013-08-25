@@ -67,9 +67,11 @@ namespace QGears
         typedef PFile::Group                Group;
         typedef PFile::MaterialInformation  MaterialInformation;
         typedef PFile::PolygonDefinition    PolygonDefinition;
+        typedef PFile::Colour               Colour;
 
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
+        virtual void    readObject( Ogre::DataStreamPtr &stream, Colour &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Edge &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, PolygonDefinition &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Group &pDest );

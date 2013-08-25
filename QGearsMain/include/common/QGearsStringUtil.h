@@ -33,8 +33,9 @@ namespace QGears
     class StringUtil : public Ogre::StringUtil
     {
     public:
-        static void  splitPath( const String &qualifiedName, String &outPath );
-        static void  splitBase( const String &qualifiedName, String &outBasename );
+        static void splitPath( const String &qualifiedName, String &outPath );
+        static void splitBase( const String &qualifiedName, String &outBasename );
+        static void splitFull( const String &qualifiedName, String &outBasename );
     };
 }
 

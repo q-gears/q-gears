@@ -26,8 +26,11 @@ THE SOFTWARE.
 #include <fstream>
 
 #include <Ogre.h>
+#include <OgreMesh.h>
 
 #include "common/OgreBase.h"
+#include "common/TypeDefine.h"
+#include "common/QGearsStringUtil.h"
 
 #include "data/QGearsAFileSerializer.h"
 #include "data/QGearsLZSFLevelFileManager.h"
@@ -52,6 +55,33 @@ Ogre::DataStreamPtr getStream( const Ogre::String& file_name )
     return Ogre::ResourceGroupManager::getSingleton().openResource( file_name );
 }
 
+void exportMesh( const Ogre::MeshPtr &mesh )
+{
+    Ogre::MeshSerializer        mesh_ser;
+    mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );
+
+    Ogre::SkeletonPtr           skeleton( mesh->getSkeleton() );
+    Ogre::SkeletonSerializer    sk_ser;
+    sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() );
+
+    Ogre::Mesh::SubMeshIterator it( mesh->getSubMeshIterator() );
+    Ogre::MaterialSerializer    mat_ser;
+    size_t i(0);
+    while( it.hasMoreElements() )
+    {
+        Ogre::SubMesh *sub_mesh( it.getNext() );
+        Ogre::MaterialPtr mat( Ogre::MaterialManager::getSingleton().getByName( sub_mesh->getMaterialName() ) );
+        if( !mat.isNull() )
+        {
+            mat_ser.queueForExport( mat );
+        }
+        ++i;
+    }
+    QGears::String base_name;
+    QGears::StringUtil::splitFull( mesh->getName(), base_name );
+    mat_ser.exportQueued( base_name + QGears::EXT_MATERIAL );
+}
+
 int
 main( int argc, char *argv[] )
 {
@@ -60,9 +90,6 @@ main( int argc, char *argv[] )
     Ogre::SceneManager*         scene_manager( Ogre::Root::getSingleton().getSceneManager( "Scene" ) );
     Ogre::ManualObject*         mo( scene_manager->createManualObject() );
     Ogre::DataStreamPtr         stream;
-    Ogre::MeshSerializer        mesh_ser;
-    Ogre::MaterialSerializer    mat_ser;
-    Ogre::SkeletonSerializer    sk_ser;
     QGears::AFileSerializer     a_ser;
     QGears::AFile               a;
 
@@ -83,7 +110,34 @@ main( int argc, char *argv[] )
 
     entitys[0]->setVisible( true );
 
+    QGears::LZSFLevelFileManager   *fmgr( QGears::LZSFLevelFileManager::getSingletonPtr() );
+    QGears::FLevelFilePtr           f( fmgr->load( "field/gflevel/ancnt1", "General" ) );
+    Ogre::Image                    *img( f->getBackground()->createImage( f->getPalette() ) );
+    Ogre::TexturePtr                t( Ogre::TextureManager::getSingleton().loadImage( "foo", "General", *img ) );
+
+    // Create background rectangle covering the whole screen
+    Ogre::Rectangle2D* rect = new Ogre::Rectangle2D(true);
+    rect->setCorners(-1.0, 1.0, 1.0, -1.0);
+    rect->setMaterial( "map" );
+
+    // Render the background before everything else
+    rect->setRenderQueueGroup( Ogre::RENDER_QUEUE_BACKGROUND );
+
+    // Use infinite AAB to always stay visible
+    Ogre::AxisAlignedBox aabInf;
+    aabInf.setInfinite();
+    rect->setBoundingBox( aabInf );
+
+    // Attach background to the scene
+    Ogre::SceneNode* node = scene_manager->getRootSceneNode()->createChildSceneNode("Background");
+    node->attachObject( rect );
+
     Ogre::Root::getSingleton().startRendering();
+    t.setNull();
+    f.setNull();
+    delete rect;
+    delete img;
+
     skeleton.setNull();
     mesh.setNull();
     DeinitializeOgreBase();

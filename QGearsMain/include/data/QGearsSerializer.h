@@ -49,7 +49,6 @@ namespace QGears
     protected:
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector2 &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector3 &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::ColourValue &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::AxisAlignedBox &pDest );
 
         virtual void    read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );

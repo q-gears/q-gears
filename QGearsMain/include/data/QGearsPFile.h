@@ -99,12 +99,14 @@ namespace QGears
             Ogre::AxisAlignedBox bbox;
         };
 
+        typedef Ogre::ColourValue               Colour;
+
         typedef std::vector<Ogre::Vector3>      VertexList;
         typedef std::vector<Ogre::Vector3>      NormalList;
         typedef std::vector<Ogre::Vector3>      Unkown1List;
         typedef std::vector<Ogre::Vector2>      TextureCoordinateList;
-        typedef std::vector<Ogre::ColourValue>  VertexColorList;
-        typedef std::vector<Ogre::ColourValue>  PolygonColorList;
+        typedef std::vector<Colour>             VertexColorList;
+        typedef std::vector<Colour>             PolygonColorList;
         typedef std::vector<Edge>               EdgeList;
         typedef std::vector<PolygonDefinition>  PolygonDefinitionList;
         typedef std::vector<Group>              GroupList;

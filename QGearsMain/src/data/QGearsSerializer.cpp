@@ -71,16 +71,6 @@ namespace QGears
     //---------------------------------------------------------------------
     void
     Serializer::readObject( Ogre::DataStreamPtr &stream
-                           ,Ogre::ColourValue &pDest )
-    {
-        Ogre::uint32 tmp;
-        readInt( stream, tmp );
-        pDest.setAsARGB( tmp );
-    }
-
-    //---------------------------------------------------------------------
-    void
-    Serializer::readObject( Ogre::DataStreamPtr &stream
                            ,Ogre::AxisAlignedBox &pDest )
     {
         Ogre::Vector3 tmp;

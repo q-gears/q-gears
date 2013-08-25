@@ -135,8 +135,10 @@ namespace QGears
         size_t pixel_count( width * height );
 
         row_pitch = width;
-        Ogre::MemoryDataStream *buffer( new Ogre::MemoryDataStream( sizeof(Color) * pixel_count ) );
-        Color *color( reinterpret_cast<Color*>( buffer->getPtr() ) );
+        Ogre::PixelFormat format( Ogre::PF_A8R8G8B8 );
+        size_t memory_size( Ogre::PixelUtil::getMemorySize( width, height, 1, format ) );
+        Ogre::MemoryDataStream *buffer( new Ogre::MemoryDataStream( memory_size ) );
+        uint32 *color( reinterpret_cast<uint32*>( buffer->getPtr() ) );
 
         Ogre::LogManager::getSingleton().stream()
             << "Image Size: " << width << " x " << height
@@ -178,7 +180,11 @@ namespace QGears
                             << "Error: writing Pixel out of Bounds " << data_index
                             << " " << (dst_x + x) << " x " << dst_y + y;
                     }
-                    color[data_index] = PaletteFile::convert( palette_page[ index ] );
+                    Color               colour( PaletteFile::convert( palette_page[ index ] ) );
+                    Ogre::ColourValue   cv;
+
+                    Ogre::PixelUtil::unpackColour( &cv, Ogre::PF_A1R5G5B5, &colour );
+                    color[data_index] = cv.getAsARGB();
                 }
             }
 
@@ -192,7 +198,7 @@ namespace QGears
 
         Ogre::DataStreamPtr stream( buffer );
         Ogre::Image *image( new Ogre::Image() );
-        image->loadRawData( stream, width, height, Ogre::PF_A1R5G5B5 );
+        image->loadRawData( stream, width, height, format );
         return image;
     }
 

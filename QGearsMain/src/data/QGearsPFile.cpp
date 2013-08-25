@@ -25,9 +25,9 @@ THE SOFTWARE.
 */
 #include "data/QGearsPFile.h"
 
+#include <OgreBone.h>
 #include <OgreLogManager.h>
 #include <OgreStringConverter.h>
-#include <OgreBone.h>
 
 #include "common/QGearsStringUtil.h"
 #include "data/QGearsPFileSerializer.h"
