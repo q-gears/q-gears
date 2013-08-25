@@ -255,11 +255,10 @@
 		<Unit filename="../../../utilites/common/Logger.h" />
 		<Unit filename="../../../utilites/common/OgreBase.cpp" />
 		<Unit filename="../../../utilites/common/OgreBase.h" />
-		<Unit filename="../../../utilites/common/TypeDefine.cpp" />
-		<Unit filename="../../../utilites/common/TypeDefine.h" />
 		<Unit filename="../../main/include/QGearsPrerequisites.h" />
 		<Unit filename="../../main/include/common/QGearsManualObject.h" />
 		<Unit filename="../../main/include/common/QGearsStringUtil.h" />
+		<Unit filename="../../main/include/common/TypeDefine.h" />
 		<Unit filename="../../main/include/data/QGearsAFile.h" />
 		<Unit filename="../../main/include/data/QGearsAFileSerializer.h" />
 		<Unit filename="../../main/include/data/QGearsBackgroundFile.h" />
@@ -275,6 +274,8 @@
 		<Unit filename="../../main/include/data/QGearsHRCMeshLoader.h" />
 		<Unit filename="../../main/include/data/QGearsHRCSkeletonLoader.h" />
 		<Unit filename="../../main/include/data/QGearsLZSDataStream.h" />
+		<Unit filename="../../main/include/data/QGearsLZSFLevelFile.h" />
+		<Unit filename="../../main/include/data/QGearsLZSFLevelFileManager.h" />
 		<Unit filename="../../main/include/data/QGearsPFile.h" />
 		<Unit filename="../../main/include/data/QGearsPFileManager.h" />
 		<Unit filename="../../main/include/data/QGearsPFileSerializer.h" />
@@ -289,6 +290,7 @@
 		<Unit filename="../../main/include/data/QGearsTexFile.h" />
 		<Unit filename="../../main/src/common/QGearsManualObject.cpp" />
 		<Unit filename="../../main/src/common/QGearsStringUtil.cpp" />
+		<Unit filename="../../main/src/common/TypeDefine.cpp" />
 		<Unit filename="../../main/src/data/QGearsAFile.cpp" />
 		<Unit filename="../../main/src/data/QGearsAFileSerializer.cpp" />
 		<Unit filename="../../main/src/data/QGearsBackgroundFile.cpp" />
@@ -304,6 +306,8 @@
 		<Unit filename="../../main/src/data/QGearsHRCMeshLoader.cpp" />
 		<Unit filename="../../main/src/data/QGearsHRCSkeletonLoader.cpp" />
 		<Unit filename="../../main/src/data/QGearsLZSDataStream.cpp" />
+		<Unit filename="../../main/src/data/QGearsLZSFLevelFile.cpp" />
+		<Unit filename="../../main/src/data/QGearsLZSFLevelFileManager.cpp" />
 		<Unit filename="../../main/src/data/QGearsPFile.cpp" />
 		<Unit filename="../../main/src/data/QGearsPFileManager.cpp" />
 		<Unit filename="../../main/src/data/QGearsPFileSerializer.cpp" />

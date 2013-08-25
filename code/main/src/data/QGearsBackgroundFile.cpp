@@ -117,7 +117,6 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    // TODO implement BackgroundTextureLoader and move this code there
     Ogre::Image*
     BackgroundFile::createImage( const PaletteFilePtr &palette ) const
     {
@@ -131,7 +130,7 @@ namespace QGears
         }
         size_t sprite_count( sprites.size() );
         size_t width( 1024 );
-        size_t row_pitch( width);
+        size_t row_pitch( width );
         size_t height( width );
         size_t pixel_count( width * height );
 
@@ -194,7 +193,6 @@ namespace QGears
         Ogre::DataStreamPtr stream( buffer );
         Ogre::Image *image( new Ogre::Image() );
         image->loadRawData( stream, width, height, Ogre::PF_A1R5G5B5 );
-
         return image;
     }
 

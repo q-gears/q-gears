@@ -30,8 +30,7 @@ THE SOFTWARE.
 #include "common/OgreBase.h"
 
 #include "data/QGearsAFileSerializer.h"
-#include "data/QGearsBackgroundFileManager.h"
-#include "data/QGearsPaletteFileManager.h"
+#include "data/QGearsLZSFLevelFileManager.h"
 
 void attachMesh( Ogre::MeshPtr &mesh )
 {
@@ -79,21 +78,6 @@ main( int argc, char *argv[] )
     stream = getStream( "field/char/aeba.a" );
     a_ser.importAFile( stream, &a );
     a.addTo( skeleton, "Run" );
-
-    QGears::BackgroundFileManager  *bmgr( QGears::BackgroundFileManager::getSingletonPtr() );
-    QGears::PaletteFileManager     *pmgr( QGears::PaletteFileManager::getSingletonPtr() );
-    QGears::PaletteFilePtr      p( pmgr->load( "ancnt1.palette", "General" ) );
-    QGears::BackgroundFilePtr   b( bmgr->load( "ancnt1.background", "General" ) );
-
-    Ogre::Image *image( b->createImage( p ) );
-    image->save( "ancnt1.png" );
-    delete image;
-
-    b.setNull();
-    p.setNull();
-
-    //sk_ser.exportSkeleton( skeleton.getPointer(), skeleton->getName() );
-    //mesh_ser.exportMesh( mesh.getPointer(), mesh->getName() );
 
     attachMesh( mesh );
 

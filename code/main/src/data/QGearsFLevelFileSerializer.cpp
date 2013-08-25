@@ -65,20 +65,20 @@ namespace QGears
         for( size_t i(0); i < m_header.section_count; ++i )
         {
             size_t current_offset( stream->tell() - start_position );
-            size_t section_gap( current_offset - section_offsets[i] );
-            if( section_gap > 0 )
-            {
-                stream->skip( section_gap );
-                Ogre::LogManager::getSingleton().stream()
-                    << "Warning: skiing gap in front of section " << i
-                    << " gap size " << section_gap
-                    << " FLevelFileSerializer::importFLevelFile";
-            }
-            else if( section_gap < 0 )
+            size_t section_gap( section_offsets[i] - current_offset );
+            if( current_offset > section_offsets[i] )
             {
                 OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
                     ,"FLevel sections overlap"
                     ,"FLevelFileSerializer::importFLevelFile" );
+            }
+            else if( section_gap )
+            {
+                stream->skip( section_gap );
+                Ogre::LogManager::getSingleton().stream()
+                    << "Warning: skiping gap in front of section " << i
+                    << " gap size " << section_gap
+                    << " FLevelFileSerializer::importFLevelFile";
             }
 
             readSectionData( stream, section );
