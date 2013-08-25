@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="QGears">
-		<Project filename="src/q-gears.cbp" />
+		<Project filename="QGearsMain/q-gears.cbp" />
 		<Project filename="PlugIns/Data/DataPlugin.cbp" />
-		<Project filename="utilites/ffvii_field_model_exporter/qgears.cbp" />
-		<Project filename="code/utilities/lzs/lzs.cbp" />
-		<Project filename="code/utilities/flevel/flevel.cbp" />
-		<Project filename="code/utilities/ffvii_field_model_exporter_pc/ffvii_field_model_exporter_pc.cbp" />
-		<Project filename="utilites/ffvii_field_dat_dumper/qgears.cbp" />
+		<Project filename="utilities/ffvii_field_model_exporter/qgears.cbp" />
+		<Project filename="utilities/ffvii_field_dat_dumper/qgears.cbp" />
+		<Project filename="utilities/lzs/lzs.cbp" />
+		<Project filename="utilities/flevel/flevel.cbp" />
+		<Project filename="utilities/ffvii_field_model_exporter_pc/ffvii_field_model_exporter_pc.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
