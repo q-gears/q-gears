@@ -1,21 +1,13 @@
 syntax: glob
 src/compile/
-utilites/ffvii_field_dat_dumper/compile/
 *.log
 src/compile_d/
-reversing/utilites/hack_multiply/compile/
-utilites/ffvii_font_exporter/compile/
-utilites/ffvii_sound_dumper/compile/
-utilites/ffvii_battle_model_exporter/compile/
-utilites/ffvii_battle_scene_dumper/compile/
-utilites/xeno_model_dumper/compile/
-utilites/ffvii_field_model_exporter/compile/
-utilites/xeno_sound_dumper/compile/
-utilites/ffix_model_exporter/compile/
-utilites/xeno_model_exporter/compile/
 **/bin/**
 **/obj/**
 **.cbTemp
 **/ogre.cfg
 **.depend
 **.layout
+output/**
+**/output/**
+**/compile/**
