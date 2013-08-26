@@ -23,29 +23,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsBackground2DFileXMLSerializer_H__
-#define __QGearsBackground2DFileXMLSerializer_H__
+#define BOOST_TEST_MODULE QGearsBackground2DFileSerializer
+#include <boost/test/unit_test.hpp>
 
-#include "common/TypeDefine.h"
-#include "data/QGearsXMLSerializer.h"
+#include <Ogre.h>
 
-#include "QGearsBackground2DFile.h"
+#include "map/QGearsBackground2DFileXMLSerializer.h"
 
-namespace QGears
+BOOST_AUTO_TEST_CASE( read_file )
 {
-    class Background2DFileXMLSerializer : public XMLSerializer
+    class TestFile : public QGears::Background2DFile
     {
     public:
-                        Background2DFileXMLSerializer();
-        virtual        ~Background2DFileXMLSerializer();
+        TestFile() : QGears::Background2DFile( NULL, "", 0, "" ) {}
+        size_t getCalculatedSize() const { return calculateSize(); }
 
-        virtual void 	importBackground2DFile( Ogre::DataStreamPtr& stream, Background2DFile* pDest );
-
-    protected:
-        virtual void    readHeader( TiXmlNode* node );
-
-    private:
+        virtual void unload( void ) {};
     };
-}
 
-#endif // __QGearsBackground2DFileXMLSerializer_H__
+	Ogre::LogManager                    logMgr;
+    logMgr.createLog( "Default Log", true, true, true );
+
+    const char*                             file_name( "reference.background2d.xml" );
+    TestFile                                file;
+    QGears::Background2DFileXMLSerializer   ser;
+    std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
+    BOOST_REQUIRE( ifs->is_open() );
+
+    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
+    BOOST_REQUIRE( stream->isReadable() );
+
+    ser.importBackground2DFile( stream, &file );
+    BOOST_CHECK_EQUAL( 137956, stream->tell() );
+    BOOST_CHECK_EQUAL( "maps/ffvii/field/md1stin.png", file.getTextureName() );
+
+    logMgr.destroyLog( "Default Log" );
+    ifs->close();
+}

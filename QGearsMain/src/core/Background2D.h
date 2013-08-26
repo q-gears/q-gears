@@ -64,6 +64,17 @@ public:
 
     void renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation );
 
+    struct Tile
+    {
+        int x;
+        int y;
+        int width;
+        int height;
+        size_t start_vertex_index;
+        Blending blending;
+    };
+    typedef std::vector< Tile > TileList;
+
 private:
     void CreateVertexBuffers();
     void DestroyVertexBuffers();
@@ -77,16 +88,7 @@ private:
     int                                   m_RangeMaxX;
     int                                   m_RangeMaxY;
 
-    struct Tile
-    {
-        int x;
-        int y;
-        int width;
-        int height;
-        unsigned int start_vertex_index;
-        Blending blending;
-    };
-    std::vector< Tile >                   m_Tiles;
+    TileList                              m_Tiles;
 
     // alpha blended
     Ogre::RenderOperation                 m_AlphaRenderOp;

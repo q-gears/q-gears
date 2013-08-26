@@ -72,4 +72,32 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    void
+    Background2DFile::setTextureName( const String &texture_name )
+    {
+        m_texture_name = texture_name;
+    }
+
+    //---------------------------------------------------------------------
+    String
+    Background2DFile::getTextureName() const
+    {
+        return m_texture_name;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Background2DFile::setRange( const Ogre::Quaternion &range )
+    {
+        m_range = range;
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Quaternion
+    Background2DFile::getRange() const
+    {
+        return m_range;
+    }
+
+    //---------------------------------------------------------------------
 }

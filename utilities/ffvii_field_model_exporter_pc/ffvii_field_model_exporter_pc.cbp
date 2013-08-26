@@ -255,6 +255,7 @@
 		</Linker>
 		<Unit filename="../../QGearsMain/include/QGearsPrerequisites.h" />
 		<Unit filename="../../QGearsMain/include/common/QGearsManualObject.h" />
+		<Unit filename="../../QGearsMain/include/common/QGearsResource.h" />
 		<Unit filename="../../QGearsMain/include/common/QGearsStringUtil.h" />
 		<Unit filename="../../QGearsMain/include/common/TypeDefine.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsAFile.h" />
@@ -287,6 +288,7 @@
 		<Unit filename="../../QGearsMain/include/data/QGearsTexCodec.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsTexFile.h" />
 		<Unit filename="../../QGearsMain/src/common/QGearsManualObject.cpp" />
+		<Unit filename="../../QGearsMain/src/common/QGearsResource.cpp" />
 		<Unit filename="../../QGearsMain/src/common/QGearsStringUtil.cpp" />
 		<Unit filename="../../QGearsMain/src/common/TypeDefine.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsAFile.cpp" />

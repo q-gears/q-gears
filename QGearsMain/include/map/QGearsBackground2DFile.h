@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __QGearsBackground2DFile_H__
 
 #include "common/QGearsResource.h"
+#include "core/Background2D.h"
 
 namespace QGears
 {
@@ -42,12 +43,23 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
+        virtual void   setTextureName( const String &texture_name );
+        virtual String getTextureName( void ) const;
+
+        virtual void             setRange( const Ogre::Quaternion &range );
+        virtual Ogre::Quaternion getRange( void ) const;
+
+        typedef Background2D::Tile      Tile;
+        typedef Background2D::TileList  TileList;
+
     protected:
         virtual void loadImpl( void );
         virtual void unloadImpl( void );
         virtual size_t calculateSize( void ) const;
 
     private:
+        String              m_texture_name;
+        Ogre::Quaternion    m_range;
     };
 
     //-------------------------------------------------------------------------
