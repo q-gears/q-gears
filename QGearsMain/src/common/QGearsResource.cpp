@@ -23,52 +23,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "map/QGearsBackground2DFile.h"
+#include "common/QGearsResource.h"
 
-#include <OgreLogManager.h>
 #include <OgreResourceGroupManager.h>
-
-#include "map/QGearsBackground2DFileXMLSerializer.h"
 
 namespace QGears
 {
     //---------------------------------------------------------------------
-    const String    Background2DFile::RESOURCE_TYPE( "QGearsBackground2DFile" );
-
-    //---------------------------------------------------------------------
-    Background2DFile::Background2DFile( Ogre::ResourceManager *creator
+    Resource::Resource( Ogre::ResourceManager *creator
                  ,const String &name, Ogre::ResourceHandle handle
                  ,const String &group, bool isManual
                  ,Ogre::ManualResourceLoader *loader ) :
-        Resource( creator, name, handle, group, isManual, loader )
+        Ogre::Resource( creator, name, handle, group, isManual, loader )
     {
     }
 
     //---------------------------------------------------------------------
-    Background2DFile::~Background2DFile()
+    Resource::~Resource()
     {
+        unload();
     }
 
     //---------------------------------------------------------------------
-    void
-    Background2DFile::loadImpl()
+    Ogre::DataStreamPtr
+    Resource::openResource( void )
     {
-        Background2DFileXMLSerializer serializer;
-        Ogre::DataStreamPtr stream( openResource() );
-        serializer.importBackground2DFile( stream, this );
-    }
-
-    //---------------------------------------------------------------------
-    void
-    Background2DFile::unloadImpl()
-    {
-    }
-
-    //---------------------------------------------------------------------
-    size_t
-    Background2DFile::calculateSize() const
-    {
-        return 0;
+        return Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this );
     }
 
     //---------------------------------------------------------------------

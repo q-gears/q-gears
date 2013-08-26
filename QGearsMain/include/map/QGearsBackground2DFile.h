@@ -26,13 +26,11 @@ THE SOFTWARE.
 #ifndef __QGearsBackground2DFile_H__
 #define __QGearsBackground2DFile_H__
 
-#include <OgreResource.h>
-
-#include "common/TypeDefine.h"
+#include "common/QGearsResource.h"
 
 namespace QGears
 {
-    class Background2DFile : public Ogre::Resource
+    class Background2DFile : public Resource
     {
     public:
 

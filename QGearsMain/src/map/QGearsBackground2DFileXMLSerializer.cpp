@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "data/QGearsBackground2DFileXMLSerializer.h"
+#include "map/QGearsBackground2DFileXMLSerializer.h"
 
 #include <OgreLogManager.h>
 #include <OgreException.h>
@@ -45,38 +45,8 @@ namespace QGears
     void
     Background2DFileXMLSerializer::importBackground2DFile( Ogre::DataStreamPtr &stream, Background2DFile* pDest )
     {
-        size_t start_position( stream->tell() );
-        readFileHeader( stream );
-
-        uint32 section_offsets[ m_header.section_count ];
-        readInts( stream, section_offsets, m_header.section_count );
-
-        Ogre::DataStreamPtr section;
-        for( size_t i(0); i < m_header.section_count; ++i )
-        {
-            size_t current_offset( stream->tell() - start_position );
-            size_t section_gap( section_offsets[i] - current_offset );
-            if( current_offset > section_offsets[i] )
-            {
-                OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
-                    ,"FLevel sections overlap"
-                    ,"FLevelFileSerializer::importFLevelFile" );
-            }
-            else if( section_gap )
-            {
-                stream->skip( section_gap );
-                Ogre::LogManager::getSingleton().stream()
-                    << "Warning: skiping gap in front of section " << i
-                    << " gap size " << section_gap
-                    << " FLevelFileSerializer::importFLevelFile";
-            }
-
-            readSectionData( stream, section );
-            readSection( section, pDest, i );
-            section->close();
-            section.setNull();
-        }
-        readEnd( stream );
+        TiXmlDocument document;
+        parse( stream, document );
     }
 
     //---------------------------------------------------------------------

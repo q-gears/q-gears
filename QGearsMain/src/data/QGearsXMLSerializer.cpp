@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-10 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-26 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,122 +23,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "data/QGearsSerializer.h"
+#include "data/QGearsXMLSerializer.h"
 
 #include <OgreLogManager.h>
 
 namespace QGears
 {
-    typedef Ogre::StringUtil        StringUtil;
-
     //---------------------------------------------------------------------
-    const String Serializer::TAG_COMMENT( "#" );
-
-    //---------------------------------------------------------------------
-    Serializer::Serializer()
+    XMLSerializer::XMLSerializer()
     {
-        determineEndianness( Ogre::Serializer::ENDIAN_LITTLE );
     }
 
     //---------------------------------------------------------------------
-    Serializer::~Serializer()
+    XMLSerializer::~XMLSerializer()
     {
     }
 
     //---------------------------------------------------------------------
     void
-    Serializer::readObject( Ogre::DataStreamPtr &stream
-                           ,Ogre::Vector2 &pDest )
+    XMLSerializer::parse( Ogre::DataStreamPtr &stream, TiXmlDocument &pDest )
     {
-        float v[2];
-        readFloats( stream, v, 2 );
-        pDest.x = v[0];
-        pDest.y = v[1];
-    }
-
-    //---------------------------------------------------------------------
-    void
-    Serializer::readObject( Ogre::DataStreamPtr &stream
-                           ,Ogre::Vector3 &pDest )
-    {
-        float tmp[3];
-        readFloats( stream, tmp, 3 );
-        pDest.x = tmp[0];
-        pDest.y = tmp[1];
-        pDest.z = tmp[2];
-    }
-
-    //---------------------------------------------------------------------
-    void
-    Serializer::readObject( Ogre::DataStreamPtr &stream
-                           ,Ogre::AxisAlignedBox &pDest )
-    {
-        Ogre::Vector3 tmp;
-        readObject( stream, tmp );
-        pDest.setMaximum( tmp );
-
-        readObject( stream, tmp );
-        pDest.setMinimum( tmp );
-    }
-
-    //---------------------------------------------------------------------
-    void
-    Serializer::read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest )
-    {
-        uint8 enabled;
-        stream->read( &enabled, 1 );
-        pDest = enabled;
-    }
-
-    //---------------------------------------------------------------------
-    void
-    Serializer::read2ByteBool( Ogre::DataStreamPtr &stream, bool &pDest )
-    {
-        uint16 enabled;
-        readShort( stream, enabled );
-        pDest = enabled;
-    }
-
-    //---------------------------------------------------------------------
-    void
-    Serializer::readShort( Ogre::DataStreamPtr &stream, uint16 &pDest )
-    {
-        readShorts( stream, &pDest, 1 );
-    }
-
-    //---------------------------------------------------------------------
-    void
-    Serializer::readInt( Ogre::DataStreamPtr &stream, uint32 &pDest )
-    {
-        readInts( stream, &pDest, 1 );
-    }
-
-    //---------------------------------------------------------------------
-    String
-    Serializer::getLine( Ogre::DataStreamPtr &stream ) const
-    {
-        String line("");
-        do
-        {
-            line = stream->getLine();
-
-        } while( StringUtil::startsWith( line, TAG_COMMENT ) );
-
-        return line;
-    }
-
-    //---------------------------------------------------------------------
-    void
-    Serializer::readEndString( Ogre::DataStreamPtr &stream, const String &end_text )
-    {
-        String actual( readString( stream, end_text.size() ) );
-        if( actual != end_text )
-        {
-            Ogre::LogManager::getSingleton().stream()
-                << "Warning: File didn't end with"
-                << " expected String '" << end_text << "'"
-                << " actual was '" << actual << "'";
-        }
+        pDest.Parse( stream->getAsString().c_str() );
     }
 
     //---------------------------------------------------------------------

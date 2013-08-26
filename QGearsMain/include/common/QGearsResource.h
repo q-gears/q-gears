@@ -23,31 +23,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsXMLSerializer_H__
-#define __QGearsXMLSerializer_H__
+#ifndef __QGearsResource_H__
+#define __QGearsResource_H__
 
-#include <OgreAxisAlignedBox.h>
-#include <OgreColourValue.h>
-#include <OgreSerializer.h>
-#include <OgreVector2.h>
-#include <OgreVector3.h>
-#include <tinyxml.h>
+#include <OgreDataStream.h>
+#include <OgreResource.h>
 
 #include "common/TypeDefine.h"
 
 namespace QGears
 {
-    class XMLSerializer
+    class Resource : public Ogre::Resource
     {
     public:
-                        XMLSerializer();
-        virtual        ~XMLSerializer();
+
+        Resource( Ogre::ResourceManager *creator, const String &name
+              ,Ogre::ResourceHandle handle, const String &group
+              ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
+
+        virtual ~Resource();
 
     protected:
-        virtual void    parse( Ogre::DataStreamPtr &stream, TiXmlDocument &pDest );
+        virtual Ogre::DataStreamPtr openResource( void );
 
     private:
     };
 }
 
-#endif // __QGearsXMLSerializer_H__
+#endif // __QGearsResource_H__
