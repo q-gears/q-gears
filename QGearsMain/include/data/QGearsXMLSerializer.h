@@ -47,6 +47,8 @@ namespace QGears
         virtual void    parse( Ogre::DataStreamPtr &stream, TiXmlDocument &pDest );
         virtual void    assertElement( TiXmlNode& node );
 
+        virtual void    readInt( TiXmlNode& node, int &pDest, const String &attribute );
+
         virtual void    readAttribute( TiXmlNode& node,           String &pDest, const String &attribute );
         virtual void    readAttribute( TiXmlNode& node,       Ogre::Real &pDest, const String &attribute );
         virtual void    readAttribute( TiXmlNode& node,    Ogre::Vector2 &pDest, const String &attribute );

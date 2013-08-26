@@ -41,8 +41,34 @@ namespace QGears
 
         virtual void 	importBackground2DFile( Ogre::DataStreamPtr& stream, Background2DFile* pDest );
 
+        typedef Background2DFile::Tile      Tile;
+        typedef Background2DFile::Blending  Blending;
+
     protected:
         virtual void    readHeader( TiXmlNode* node );
+        virtual void    readObject( TiXmlNode& node, Tile& pDest );
+
+        static const String BLENDING_ALPHA;
+        static const String BLENDING_ADD;
+
+        template<typename ValueType> void
+        readVector( TiXmlNode& node, std::vector<ValueType> &pDest, const String &tag )
+        {
+            pDest.clear();
+
+            TiXmlNode* child( node.FirstChild() );
+            while( child != NULL )
+            {
+                if( child->Type() == TiXmlNode::TINYXML_ELEMENT && child->ValueStr() == tag )
+                {
+                    ValueType in_tmp;
+                    readObject( *child, in_tmp );
+                    pDest.push_back( in_tmp );
+                }
+                child = child->NextSibling();
+            }
+        }
+
 
     private:
     };

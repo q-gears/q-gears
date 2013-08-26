@@ -43,14 +43,36 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
+        typedef Background2D::Blending  Blending;
+
+        struct Tile
+        {
+            int             width;
+            int             height;
+            Ogre::Vector2   destination;
+            Ogre::Vector4   uv;
+            Ogre::Real      depth;
+            Blending        blending;
+        };
+
+        typedef std::vector< Tile >     TileList;
+
         virtual void   setTextureName( const String &texture_name );
         virtual String getTextureName( void ) const;
 
         virtual void             setRange( const Ogre::Quaternion &range );
         virtual Ogre::Quaternion getRange( void ) const;
 
-        typedef Background2D::Tile      Tile;
-        typedef Background2D::TileList  TileList;
+        virtual void          setPosition( const Ogre::Vector3 &position );
+        virtual Ogre::Vector3 getPosition( void ) const;
+
+        virtual void             setOrientation( const Ogre::Quaternion &orientation );
+        virtual Ogre::Quaternion getOrientation( void ) const;
+
+        virtual void         setFov( const Ogre::Radian &fov );
+        virtual Ogre::Radian getFov( void ) const;
+
+        virtual TileList& getTiles( void );
 
     protected:
         virtual void loadImpl( void );
@@ -60,6 +82,10 @@ namespace QGears
     private:
         String              m_texture_name;
         Ogre::Quaternion    m_range;
+        Ogre::Vector3       m_position;
+        Ogre::Quaternion    m_orientation;
+        Ogre::Radian        m_fov;
+        TileList            m_tiles;
     };
 
     //-------------------------------------------------------------------------

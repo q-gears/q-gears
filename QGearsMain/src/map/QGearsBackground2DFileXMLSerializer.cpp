@@ -31,6 +31,10 @@ THE SOFTWARE.
 namespace QGears
 {
     //---------------------------------------------------------------------
+    const String Background2DFileXMLSerializer::BLENDING_ALPHA( "alpha" );
+    const String Background2DFileXMLSerializer::BLENDING_ADD  ( "add"   );
+
+    //---------------------------------------------------------------------
     Background2DFileXMLSerializer::Background2DFileXMLSerializer() :
         XMLSerializer()
     {
@@ -49,7 +53,7 @@ namespace QGears
         {
             OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
                 ,"not a valid background2d file, no <background2d> in root"
-                ,"Background2DFileXMLSerializer::importBackground2DFile" );
+                ,"Background2DFileXMLSerializer::readHeader" );
         }
     }
 
@@ -65,93 +69,93 @@ namespace QGears
 
         String texture_name("");
         readAttribute( *node, texture_name, "image" );
+        if( texture_name.empty() )
+        {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
+                ,"image attribute not set"
+                ,"Background2DFileXMLSerializer::importBackground2DFile" );
+        }
         pDest->setTextureName( texture_name );
+
 
         Ogre::Quaternion range( -100000, -100000, 100000, 100000 );
         readAttribute( *node, range, "range" );
         pDest->setRange( range );
-/*
-    Ogre::String image = GetString( node, "image", "" );
 
-    if( image != "" )
+        Ogre::Vector3 position( Ogre::Vector3::ZERO );
+        readAttribute( *node, position, "position" );
+        pDest->setPosition( position );
+
+        Ogre::Quaternion orientation( Ogre::Quaternion::IDENTITY );
+        readAttribute( *node, orientation, "orientation" );
+        pDest->setOrientation( orientation );
+
+        Ogre::Real fov( 45 );
+        readAttribute( *node, fov, "fov" );
+        pDest->setFov( Ogre::Radian( Ogre::Degree( fov ) ) );
+
+        readVector( *node, pDest->getTiles(), "tile" );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Background2DFileXMLSerializer::readObject( TiXmlNode& node, Tile& pDest )
     {
-        background->SetImage( image );
+        pDest.width = 0;
+        readInt( node, pDest.width, "width" );
 
-        Ogre::Quaternion range = GetQuaternion( node, "range", Ogre::Quaternion( -100000, -100000, 100000, 100000 ) );
-        background->SetRange( ( int )range.w, ( int )range.x, ( int )range.y, ( int )range.z );
+        pDest.height = 0;
+        readInt( node, pDest.height, "height" );
 
-        Ogre::Vector3 position = GetVector3( node, "position", Ogre::Vector3::ZERO );
-        Ogre::Quaternion orientation = GetQuaternion( node, "orientation", Ogre::Quaternion::IDENTITY );
-        float fov = GetFloat( node, "fov", 45 );
-        CameraManager::getSingleton().Set2DCamera( position, orientation, Ogre::Radian( Ogre::Degree( fov ) ) );
+        pDest.destination = Ogre::Vector2::ZERO;
+        readAttribute( node, pDest.destination, "destination" );
 
-        int tile_id = 0;
+        pDest.uv = Ogre::Vector4::ZERO;
+        readAttribute( node, pDest.uv, "uv" );
 
-        node = node->FirstChild();
-        while( node != NULL )
+        pDest.depth = 0;
+        readAttribute( node, pDest.depth, "depth" );
+
+        String blending_name( BLENDING_ALPHA );
+        readAttribute( node, blending_name, "blending" );
+        pDest.blending = Background2D::ALPHA;
+        if( blending_name == BLENDING_ADD )
         {
-            if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "tile" )
-            {
-                int width = GetInt( node, "width", 0 );
-                int height = GetInt( node, "height", 0 );
-
-                Ogre::Vector2 destination = GetVector2( node, "destination", Ogre::Vector2::ZERO );
-                Ogre::Vector4 uv = GetVector4( node, "uv", Ogre::Vector4::ZERO );
-                float depth = GetFloat( node, "depth", 0 );
-                Ogre::String blending_str = GetString( node, "blending", "alpha" );
-
-                Background2D::Blending blending = ( blending_str == "add" ) ? Background2D::ADD : Background2D::ALPHA;
-
-                Ogre::Vector4 distance = Ogre::Vector4( 0, 0, -depth, 1 );
-                Ogre::Vector4 res = CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrixWithRSDepth() * distance;
-                res = res / res.w;
-                background->AddTile( destination.x, destination.y, width, height, res.z, uv.x, uv.y, uv.z, uv.w, blending );
-
-                TiXmlNode* node2 = node->FirstChild();
-                while( node2 != NULL )
-                {
-                    if( node2->Type() == TiXmlNode::TINYXML_ELEMENT && node2->ValueStr() == "animation" )
-                    {
-                        Ogre::String name = GetString( node2, "name", "" );
-                        if( name != "" )
-                        {
-                            Background2DAnimation* animation = new Background2DAnimation( name, background, tile_id );
-
-                            animation->SetLength( GetFloat( node2, "length", 0 ) );
-
-                            Ogre::String uv = GetString( node2, "uv", "" );
-                            if( uv != "" )
-                            {
-                                Ogre::StringVector key_frame = Ogre::StringUtil::split( uv, "," );
-                                for( unsigned int i = 0; i < key_frame.size(); ++i )
-                                {
-                                    Ogre::StringUtil::trim( key_frame[ i ] );
-
-                                    Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
-                                    if( data.size() > 1 )
-                                    {
-                                        float time = Ogre::StringConverter::parseReal( data[ 0 ] );
-                                        Ogre::Vector4 value = Ogre::StringConverter::parseVector4( data[ 1 ] );
-                                        animation->AddUVKeyFrame( time, value.x, value.y, value.z, value.w );
-                                    }
-                                }
-                            }
-
-                            background->AddAnimation( animation );
-                        }
-                    }
-
-                    node2 = node2->NextSibling();
-                }
-
-                ++tile_id;
-            }
-
-            node = node->NextSibling();
+            pDest.blending = Background2D::ADD;
         }
     }
+/*
+        if( node2->Type() == TiXmlNode::TINYXML_ELEMENT && node2->ValueStr() == "animation" )
+        {
+            Ogre::String name = GetString( node2, "name", "" );
+            if( name != "" )
+            {
+                Background2DAnimation* animation = new Background2DAnimation( name, background, tile_id );
+
+                animation->SetLength( GetFloat( node2, "length", 0 ) );
+
+                Ogre::String uv = GetString( node2, "uv", "" );
+                if( uv != "" )
+                {
+                    Ogre::StringVector key_frame = Ogre::StringUtil::split( uv, "," );
+                    for( unsigned int i = 0; i < key_frame.size(); ++i )
+                    {
+                        Ogre::StringUtil::trim( key_frame[ i ] );
+
+                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                        if( data.size() > 1 )
+                        {
+                            float time = Ogre::StringConverter::parseReal( data[ 0 ] );
+                            Ogre::Vector4 value = Ogre::StringConverter::parseVector4( data[ 1 ] );
+                            animation->AddUVKeyFrame( time, value.x, value.y, value.z, value.w );
+                        }
+                    }
+                }
+
+                background->AddAnimation( animation );
+            }
+        }
     */
-    }
 
     //---------------------------------------------------------------------
 }

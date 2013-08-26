@@ -62,6 +62,18 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
+    XMLSerializer::readInt( TiXmlNode& node, int &pDest, const String &attribute )
+    {
+        assertElement( node );
+        const String* value( node.ToElement()->Attribute( attribute ) );
+        if( value != NULL )
+        {
+            pDest = Ogre::StringConverter::parseInt( *value );
+        }
+    }
+
+    //---------------------------------------------------------------------
+    void
     XMLSerializer::readAttribute( TiXmlNode& node, String &pDest, const String &attribute )
     {
         assertElement( node );

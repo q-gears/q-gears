@@ -48,12 +48,32 @@
 			<Target title="Test_Background2DFileSerializer">
 				<Option output="bin/test/test_Background2DFileSerializer" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
-				<Option object_output="obj/Test" />
+				<Option object_output="obj/Test/standalone" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add option="-D_DEBUG" />
+					<Add option="-DBOOST_ALL_DYN_LINK" />
+					<Add option='-DBOOST_TEST_MODULE=&quot;standalone&quot;' />
+				</Compiler>
+				<Linker>
+					<Add library="OgreMain_d" />
+					<Add library="ois_d" />
+					<Add library="boost_system-mt-d" />
+					<Add library="boost_thread-mt-d" />
+					<Add library="boost_chrono-mt-d" />
+					<Add library="boost_date_time-mt-d" />
+					<Add library="boost_unit_test_framework-mt-d" />
+				</Linker>
+			</Target>
+			<Target title="Test_all">
+				<Option output="bin/test/test_all" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="$(TARGET_OUTPUT_DIR)" />
+				<Option object_output="obj/Test/all" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
 				</Compiler>
 				<Linker>
 					<Add library="OgreMain_d" />
@@ -76,7 +96,6 @@
 			<Add option="-D__WIN32__" />
 			<Add option="-D_WINDOWS" />
 			<Add option="-DTIXML_USE_STL" />
-			<Add option="-DBOOST_ALL_DYN_LINK" />
 			<Add directory="$(BOOST_INCLUDE_DIR)" />
 			<Add directory="$(OGRE_HOME)/include/OGRE" />
 			<Add directory="$(OGRE_HOME)/include/OIS" />
@@ -1293,6 +1312,10 @@
 		<Unit filename="src/map/QGearsBackground2DFileXMLSerializer.cpp" />
 		<Unit filename="test/test_QGearsBackground2DFileSerializer.cpp">
 			<Option target="Test_Background2DFileSerializer" />
+			<Option target="Test_all" />
+		</Unit>
+		<Unit filename="test/test_all.cpp">
+			<Option target="Test_all" />
 		</Unit>
 		<Extensions>
 			<code_completion />

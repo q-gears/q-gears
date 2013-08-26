@@ -100,4 +100,53 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    void
+    Background2DFile::setPosition( const Ogre::Vector3 &position )
+    {
+        m_position = position;
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Vector3
+    Background2DFile::getPosition() const
+    {
+        return m_position;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Background2DFile::setOrientation( const Ogre::Quaternion &orientation )
+    {
+        m_orientation = orientation;
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Quaternion
+    Background2DFile::getOrientation() const
+    {
+        return m_orientation;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Background2DFile::setFov( const Ogre::Radian &fov )
+    {
+        m_fov = fov;
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Radian
+    Background2DFile::getFov() const
+    {
+        return m_fov;
+    }
+
+    //---------------------------------------------------------------------
+    Background2DFile::TileList&
+    Background2DFile::getTiles( void )
+    {
+        return m_tiles;
+    }
+
+    //---------------------------------------------------------------------
 }
