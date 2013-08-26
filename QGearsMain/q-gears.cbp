@@ -81,6 +81,9 @@
 			<Add directory="$(OGRE_HOME)/lib/debug/opt" />
 		</Linker>
 		<Unit filename="include/Main.h" />
+		<Unit filename="include/map/QGearsBackground2DFile.h" />
+		<Unit filename="include/map/QGearsBackground2DFileManager.h" />
+		<Unit filename="include/map/QGearsBackground2DFileXMLSerializer.h" />
 		<Unit filename="src/Main.cpp" />
 		<Unit filename="src/core/Assert.h" />
 		<Unit filename="src/core/Background2D.cpp" />
@@ -433,6 +436,9 @@
 		<Unit filename="src/core/particles/renderer/ParticleEntityRendererDictionary.cpp" />
 		<Unit filename="src/core/particles/renderer/ParticleEntityRendererDictionary.h" />
 		<Unit filename="src/core/particles/renderer/ParticleEntityRendererFactory.h" />
+		<Unit filename="src/map/QGearsBackground2DFile.cpp" />
+		<Unit filename="src/map/QGearsBackground2DFileManager.cpp" />
+		<Unit filename="src/map/QGearsBackground2DFileXMLSerializer.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
