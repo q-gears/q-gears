@@ -63,7 +63,7 @@ XmlBackground2DFile::Load()
                 float depth = GetFloat( node, "depth", 0 );
                 Ogre::String blending_str = GetString( node, "blending", "alpha" );
 
-                Background2D::Blending blending = ( blending_str == "add" ) ? Background2D::ADD : Background2D::ALPHA;
+                QGears::Blending blending = ( blending_str == "add" ) ? QGears::B_ADD : QGears::B_ALPHA;
 
                 Ogre::Vector4 distance = Ogre::Vector4( 0, 0, -depth, 1 );
                 Ogre::Vector4 res = CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrixWithRSDepth() * distance;

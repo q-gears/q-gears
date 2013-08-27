@@ -26,8 +26,12 @@ THE SOFTWARE.
 #ifndef __QGearsBackground2DFile_H__
 #define __QGearsBackground2DFile_H__
 
+#include <OgreQuaternion.h>
+#include <OgreVector3.h>
+#include <OgreVector4.h>
+
 #include "common/QGearsResource.h"
-#include "core/Background2D.h"
+#include "QGearsTile.h"
 
 namespace QGears
 {
@@ -42,35 +46,6 @@ namespace QGears
         virtual ~Background2DFile();
 
         static const String RESOURCE_TYPE;
-
-        typedef Background2D::Blending  Blending;
-
-        struct KeyFrame
-        {
-            Ogre::Real      time;
-            Ogre::Vector4   uv;
-        };
-
-        typedef std::vector< KeyFrame >   KeyFrameList;
-
-        struct Animation
-        {
-            Ogre::Real      length;
-            KeyFrameList    key_frames;
-        };
-
-        typedef std::map< String, Animation >   AnimationMap;
-
-        struct Tile
-        {
-            int             width;
-            int             height;
-            Ogre::Vector2   destination;
-            Ogre::Vector4   uv;
-            Ogre::Real      depth;
-            Blending        blending;
-            AnimationMap    animations;
-        };
 
         typedef std::vector< Tile >     TileList;
 

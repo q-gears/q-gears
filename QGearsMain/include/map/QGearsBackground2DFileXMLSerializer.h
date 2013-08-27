@@ -41,11 +41,6 @@ namespace QGears
 
         virtual void 	importBackground2DFile( Ogre::DataStreamPtr& stream, Background2DFile* pDest );
 
-        typedef Background2DFile::Animation Animation;
-        typedef Background2DFile::Blending  Blending;
-        typedef Background2DFile::KeyFrame  KeyFrame;
-        typedef Background2DFile::Tile      Tile;
-
     protected:
         virtual void    readHeader( TiXmlNode* node );
         virtual void    readObject( TiXmlNode& node, Tile& pDest );

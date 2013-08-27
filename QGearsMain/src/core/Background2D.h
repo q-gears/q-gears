@@ -4,20 +4,19 @@
 #include <OgreHardwareVertexBuffer.h>
 #include <OgreRenderQueueListener.h>
 #include <OgreRoot.h>
+
+#include "map/QGearsBackground2DFile.h"
+
 #include "Background2DAnimation.h"
 #include "Entity.h"
 #include "ScriptManager.h"
 
 
-
 class Background2D : public Ogre::RenderQueueListener
 {
 public:
-    enum Blending
-    {
-        ALPHA,
-        ADD
-    };
+
+    typedef QGears::Blending  Blending;
 
     enum ScrollType
     {
@@ -52,8 +51,14 @@ public:
     const Ogre::Vector2& GetScroll() const;
 
     void SetImage( const Ogre::String& image );
+
     void SetRange( const int min_x, const int min_y, const int max_x, const int max_y );
+    void SetRange( const Ogre::Vector4& range );
+
     void AddTile( const int x, const int y, const int width, const int height, const float depth, const float u1, const float v1, const float u2, const float v2, const Blending blending );
+    void AddTile( const Ogre::Vector2& destination, const int width, const int height, const float depth, const Ogre::Vector4& uv, const Blending blending );
+    void AddTile( const QGears::Tile& tile );
+
     void UpdateTileUV( const unsigned int tile_id, const float u1, const float v1, const float u2, const float v2 );
 
     void AddAnimation( Background2DAnimation* animation );
@@ -74,6 +79,11 @@ public:
         Blending blending;
     };
     typedef std::vector< Tile > TileList;
+
+    virtual void load( const QGears::Background2DFilePtr& background );
+
+protected:
+    virtual void load( const QGears::Background2DFile::TileList& tiles );
 
 private:
     void CreateVertexBuffers();

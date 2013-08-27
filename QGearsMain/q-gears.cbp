@@ -127,6 +127,7 @@
 		<Unit filename="include/map/QGearsBackground2DFile.h" />
 		<Unit filename="include/map/QGearsBackground2DFileManager.h" />
 		<Unit filename="include/map/QGearsBackground2DFileXMLSerializer.h" />
+		<Unit filename="include/map/QGearsTile.h" />
 		<Unit filename="src/Main.cpp">
 			<Option target="Release" />
 			<Option target="Debug" />

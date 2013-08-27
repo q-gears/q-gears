@@ -61,10 +61,10 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_CHECK_EQUAL( Ogre::Quaternion( 0.742188, 0.667516, -0.0403783, -0.0450658 ), file.getOrientation() );
     BOOST_CHECK_EQUAL( Ogre::Radian( Ogre::Degree( 34.5389 ) ), file.getFov() );
     BOOST_CHECK_EQUAL( 6, file.getTiles().size() );
-    BOOST_CHECK_EQUAL( Background2D::ALPHA, file.getTiles()[0].blending );
+    BOOST_CHECK_EQUAL( QGears::B_ALPHA, file.getTiles()[0].blending );
     BOOST_CHECK_EQUAL( 123, file.getTiles()[0].depth );
 
-    BOOST_CHECK_EQUAL( Background2D::ADD  , file.getTiles()[1].blending );
+    BOOST_CHECK_EQUAL( QGears::B_ADD  , file.getTiles()[1].blending );
     BOOST_CHECK_EQUAL( 100, file.getTiles()[1].depth );
 
     BOOST_CHECK_EQUAL( 48, file.getTiles()[2].width  );

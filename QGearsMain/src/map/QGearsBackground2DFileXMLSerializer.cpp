@@ -118,10 +118,10 @@ namespace QGears
 
         String blending_name( BLENDING_ALPHA );
         readAttribute( node, blending_name, "blending" );
-        pDest.blending = Background2D::ALPHA;
+        pDest.blending = B_ALPHA;
         if( blending_name == BLENDING_ADD )
         {
-            pDest.blending = Background2D::ADD;
+            pDest.blending = B_ADD;
         }
 
         readMap( node, pDest.animations, "name", "animation" );
