@@ -55,9 +55,8 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_REQUIRE( stream->isReadable() );
 
     ser.importBackground2DFile( stream, &file );
-    BOOST_CHECK_EQUAL( 1383, stream->tell() );
     BOOST_CHECK_EQUAL( "maps/ffvii/field/md1stin.png", file.getTextureName() );
-    BOOST_CHECK_EQUAL( Ogre::Quaternion( -768, -768, 768, 768 ), file.getRange() );
+    BOOST_CHECK_EQUAL( Ogre::Vector4( -768, -768, 768, 768 ), file.getRange() );
     BOOST_CHECK_EQUAL( Ogre::Vector3( 28.4846, 210.83, 3.10751 ), file.getPosition() );
     BOOST_CHECK_EQUAL( Ogre::Quaternion( 0.742188, 0.667516, -0.0403783, -0.0450658 ), file.getOrientation() );
     BOOST_CHECK_EQUAL( Ogre::Radian( Ogre::Degree( 34.5389 ) ), file.getFov() );
@@ -76,6 +75,12 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_CHECK_EQUAL( 300, file.getTiles()[3].depth );
 
     BOOST_CHECK_CLOSE( 0.002, file.getTiles()[4].depth, 0.0001 );
+    BOOST_CHECK_EQUAL( 2, file.getTiles()[4].animations.size() );
+    BOOST_CHECK_EQUAL( 0.5 , file.getTiles()[4].animations["Fan"].length );
+    BOOST_CHECK_EQUAL( 3   , file.getTiles()[4].animations["Fan"].key_frames.size() );
+    BOOST_CHECK_EQUAL( 0.25, file.getTiles()[4].animations["Light"].length );
+    BOOST_CHECK_EQUAL( 3   , file.getTiles()[4].animations["Light"].key_frames.size() );
+
     BOOST_CHECK_CLOSE( 0.002, file.getTiles()[5].depth, 0.0001 );
 
     logMgr.destroyLog( "Default Log" );

@@ -45,6 +45,22 @@ namespace QGears
 
         typedef Background2D::Blending  Blending;
 
+        struct KeyFrame
+        {
+            Ogre::Real      time;
+            Ogre::Vector4   uv;
+        };
+
+        typedef std::vector< KeyFrame >   KeyFrameList;
+
+        struct Animation
+        {
+            Ogre::Real      length;
+            KeyFrameList    key_frames;
+        };
+
+        typedef std::map< String, Animation >   AnimationMap;
+
         struct Tile
         {
             int             width;
@@ -53,6 +69,7 @@ namespace QGears
             Ogre::Vector4   uv;
             Ogre::Real      depth;
             Blending        blending;
+            AnimationMap    animations;
         };
 
         typedef std::vector< Tile >     TileList;
@@ -60,17 +77,17 @@ namespace QGears
         virtual void   setTextureName( const String &texture_name );
         virtual String getTextureName( void ) const;
 
-        virtual void             setRange( const Ogre::Quaternion &range );
-        virtual Ogre::Quaternion getRange( void ) const;
+        virtual void            setRange( const Ogre::Vector4 &range );
+        virtual Ogre::Vector4   getRange( void ) const;
 
-        virtual void          setPosition( const Ogre::Vector3 &position );
-        virtual Ogre::Vector3 getPosition( void ) const;
+        virtual void            setPosition( const Ogre::Vector3 &position );
+        virtual Ogre::Vector3   getPosition( void ) const;
 
-        virtual void             setOrientation( const Ogre::Quaternion &orientation );
-        virtual Ogre::Quaternion getOrientation( void ) const;
+        virtual void                setOrientation( const Ogre::Quaternion &orientation );
+        virtual Ogre::Quaternion    getOrientation( void ) const;
 
-        virtual void         setFov( const Ogre::Radian &fov );
-        virtual Ogre::Radian getFov( void ) const;
+        virtual void            setFov( const Ogre::Radian &fov );
+        virtual Ogre::Radian    getFov( void ) const;
 
         virtual TileList& getTiles( void );
 
@@ -81,7 +98,7 @@ namespace QGears
 
     private:
         String              m_texture_name;
-        Ogre::Quaternion    m_range;
+        Ogre::Vector4       m_range;
         Ogre::Vector3       m_position;
         Ogre::Quaternion    m_orientation;
         Ogre::Radian        m_fov;

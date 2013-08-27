@@ -25,7 +25,7 @@ InitializeOgreBase( const Ogre::String& name )
     Ogre::String dyn_lib_ext("");
     Ogre::String render_system("");
 
-#ifdef OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
     dyn_lib_ext = ".dll";
 #else // Assume Linux for now
     dyn_lib_ext = ".so";

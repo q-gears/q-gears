@@ -87,13 +87,13 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    Background2DFile::setRange( const Ogre::Quaternion &range )
+    Background2DFile::setRange( const Ogre::Vector4 &range )
     {
         m_range = range;
     }
 
     //---------------------------------------------------------------------
-    Ogre::Quaternion
+    Ogre::Vector4
     Background2DFile::getRange() const
     {
         return m_range;

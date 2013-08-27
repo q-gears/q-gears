@@ -78,7 +78,7 @@ namespace QGears
         pDest->setTextureName( texture_name );
 
 
-        Ogre::Quaternion range( -100000, -100000, 100000, 100000 );
+        Ogre::Vector4 range( -100000, -100000, 100000, 100000 );
         readAttribute( *node, range, "range" );
         pDest->setRange( range );
 
@@ -123,7 +123,27 @@ namespace QGears
         {
             pDest.blending = Background2D::ADD;
         }
+
+        readMap( node, pDest.animations, "name", "animation" );
     }
+
+    //---------------------------------------------------------------------
+    void
+    Background2DFileXMLSerializer::readObject( TiXmlNode& node, Animation& pDest )
+    {
+        pDest.length = 0;
+        readAttribute( node, pDest.length, "length" );
+        readVector( node, pDest.key_frames, "keyframe" );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Background2DFileXMLSerializer::readObject( TiXmlNode& node, KeyFrame& pDest )
+    {
+        pDest.time = 0;
+        readAttribute( node, pDest.time, "time" );
+    }
+
 /*
         if( node2->Type() == TiXmlNode::TINYXML_ELEMENT && node2->ValueStr() == "animation" )
         {

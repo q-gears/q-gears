@@ -3227,31 +3227,30 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
 
         for( unsigned int l = 0; l < tile.animations.size(); ++l )
         {
-            export_text->Log( "        <animation name=\"" + tile.animations[ l ].name + "\" length=\"" + Ogre::StringConverter::toString( tile.animations[ l ].time ) + "\" uv=\"" );
+            export_text->Log( "        <animation name=\"" + tile.animations[ l ].name + "\" length=\"" + Ogre::StringConverter::toString( tile.animations[ l ].time ) + "\" >" );
 
             for( unsigned int i = 0; i < tile.animations[ l ].keyframes.size(); ++i )
             {
-                if( i != 0 )
-                {
-                    export_text->Log( "," );
-                }
+                export_text->Log( "<keyframe" );
+                export_text->Log( " time=\"" + Ogre::StringConverter::toString( tile.animations[ l ].keyframes[ i ].time ) + "\"" );
 
                 //LOGGER->Log( "Animation tile pixels src_x=\"" + IntToString( tile.animation_key.keyframes[ i ].src_x ) + "\" src_y=\"" + IntToString( tile.animation_key.keyframes[ i ].src_y ) + "\"\n" );
                 AddedTile added_tile = AddTileTex( tile.background, tile.animations[ l ].keyframes[ i ].src_x, tile.animations[ l ].keyframes[ i ].src_y, tile.animations[ l ].keyframes[ i ].clut_x, tile.animations[ l ].keyframes[ i ].clut_y, tile.animations[ l ].keyframes[ i ].bpp, tile.animations[ l ].keyframes[ i ].page_x, tile.animations[ l ].keyframes[ i ].page_y, mim, tile.animations[ l ].keyframes[ i ].clut_start, tile.animations[ l ].keyframes[ i ].clut_width, tile.animations[ l ].keyframes[ i ].mod_type, tile.animations[ l ].keyframes[ i ].mod_r, tile.animations[ l ].keyframes[ i ].mod_g, tile.animations[ l ].keyframes[ i ].mod_b );
                 //LOGGER->Log( "Animation tile pixels x=\"" + IntToString( x ) + "\" y=\"" + IntToString( y ) + "\"\n" );
-                export_text->Log( Ogre::StringConverter::toString( tile.animations[ l ].keyframes[ i ].time ) +
-                                  ":" +
-                                  Ogre::StringConverter::toString( added_tile.x / ( float ) full_image->width ) +
-                                  " " +
-                                  Ogre::StringConverter::toString( added_tile.y / ( float ) full_image->height ) +
-                                  " " +
-                                  Ogre::StringConverter::toString( ( added_tile.x + added_tile.width ) / ( float ) full_image->width ) +
-                                  " " +
-                                  Ogre::StringConverter::toString( ( added_tile.y + added_tile.height ) / ( float ) full_image->height )
+                export_text->Log( " uv=\""
+                                 +Ogre::StringConverter::toString( added_tile.x / ( float ) full_image->width )
+                                 +" "
+                                 +Ogre::StringConverter::toString( added_tile.y / ( float ) full_image->height )
+                                 +" "
+                                 +Ogre::StringConverter::toString( ( added_tile.x + added_tile.width ) / ( float ) full_image->width )
+                                 +" "
+                                 +Ogre::StringConverter::toString( ( added_tile.y + added_tile.height ) / ( float ) full_image->height )
+                                 +"\""
                 );
+                export_text->Log( "/>" );
             }
 
-            export_text->Log( "\" />\n" );
+            export_text->Log( "</animation>\n" );
         }
 
         export_text->Log( "    </tile>\n" );

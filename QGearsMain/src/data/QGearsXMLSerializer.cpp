@@ -61,87 +61,83 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    void
+    bool
     XMLSerializer::readInt( TiXmlNode& node, int &pDest, const String &attribute )
     {
         assertElement( node );
         const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value != NULL )
-        {
-            pDest = Ogre::StringConverter::parseInt( *value );
-        }
+        if( value == NULL ) return false;
+        pDest = Ogre::StringConverter::parseInt( *value );
+        return true;
     }
 
     //---------------------------------------------------------------------
-    void
+    bool
     XMLSerializer::readAttribute( TiXmlNode& node, String &pDest, const String &attribute )
     {
         assertElement( node );
         const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value != NULL )
-        {
-            pDest = *value;
-        }
+        if( value == NULL ) return false;
+        pDest = *value;
+        return true;
     }
 
     //---------------------------------------------------------------------
-    void
+    bool
     XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Real &pDest, const String &attribute )
     {
         assertElement( node );
         const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value != NULL )
-        {
-            pDest = Ogre::StringConverter::parseReal( *value );
-        }
+        if( value == NULL ) return false;
+
+        pDest = Ogre::StringConverter::parseReal( *value );
+        return true;
     }
 
     //---------------------------------------------------------------------
-    void
+    bool
     XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Vector2 &pDest, const String &attribute )
     {
         assertElement( node );
         const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value != NULL )
-        {
-            pDest = Ogre::StringConverter::parseVector2( *value );
-        }
+        if( value == NULL ) return false;
+
+        pDest = Ogre::StringConverter::parseVector2( *value );
+        return true;
     }
 
     //---------------------------------------------------------------------
-    void
+    bool
     XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Vector3 &pDest, const String &attribute )
     {
         assertElement( node );
         const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value != NULL )
-        {
-            pDest = Ogre::StringConverter::parseVector3( *value );
-        }
+        if( value == NULL ) return false;
+
+        pDest = Ogre::StringConverter::parseVector3( *value );
+        return true;
     }
 
     //---------------------------------------------------------------------
-    void
+    bool
     XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Vector4 &pDest, const String &attribute )
     {
         assertElement( node );
         const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value != NULL )
-        {
-            pDest = Ogre::StringConverter::parseVector4( *value );
-        }
+        if( value == NULL ) return false;
+
+        pDest = Ogre::StringConverter::parseVector4( *value );
     }
 
     //---------------------------------------------------------------------
-    void
+    bool
     XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Quaternion &pDest, const String &attribute )
     {
         assertElement( node );
         const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value != NULL )
-        {
-            pDest = Ogre::StringConverter::parseQuaternion( *value );
-        }
+        if( value == NULL ) return false;
+
+        pDest = Ogre::StringConverter::parseQuaternion( *value );
     }
 
     //---------------------------------------------------------------------

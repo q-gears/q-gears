@@ -41,12 +41,16 @@ namespace QGears
 
         virtual void 	importBackground2DFile( Ogre::DataStreamPtr& stream, Background2DFile* pDest );
 
-        typedef Background2DFile::Tile      Tile;
+        typedef Background2DFile::Animation Animation;
         typedef Background2DFile::Blending  Blending;
+        typedef Background2DFile::KeyFrame  KeyFrame;
+        typedef Background2DFile::Tile      Tile;
 
     protected:
         virtual void    readHeader( TiXmlNode* node );
         virtual void    readObject( TiXmlNode& node, Tile& pDest );
+        virtual void    readObject( TiXmlNode& node, Animation& pDest );
+        virtual void    readObject( TiXmlNode& node, KeyFrame& pDest );
 
         static const String BLENDING_ALPHA;
         static const String BLENDING_ADD;
@@ -64,6 +68,28 @@ namespace QGears
                     ValueType in_tmp;
                     readObject( *child, in_tmp );
                     pDest.push_back( in_tmp );
+                }
+                child = child->NextSibling();
+            }
+        }
+
+        template<typename KeyType, typename ValueType> void
+        readMap( TiXmlNode& node, std::map< KeyType, ValueType > &pDest, const String& key_attribute, const String& tag )
+        {
+            pDest.clear();
+
+            TiXmlNode* child( node.FirstChild() );
+            while( child != NULL )
+            {
+                if( child->Type() == TiXmlNode::TINYXML_ELEMENT && child->ValueStr() == tag )
+                {
+                    KeyType key;
+                    if( readAttribute( *child, key, key_attribute ) )
+                    {
+                        ValueType in_tmp;
+                        readObject( *child, in_tmp );
+                        pDest[key] = in_tmp;
+                    }
                 }
                 child = child->NextSibling();
             }
