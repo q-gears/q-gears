@@ -47,6 +47,7 @@ namespace QGears
     //---------------------------------------------------------------------
     Background2DFile::~Background2DFile()
     {
+        unload();
     }
 
     //---------------------------------------------------------------------
@@ -62,6 +63,12 @@ namespace QGears
     void
     Background2DFile::unloadImpl()
     {
+        m_texture_name.clear();
+        m_range = 0;
+        m_position = Ogre::Vector3::ZERO;
+        m_orientation = Ogre::Quaternion::IDENTITY;
+        m_fov = 0;
+        m_tiles.clear();
     }
 
     //---------------------------------------------------------------------

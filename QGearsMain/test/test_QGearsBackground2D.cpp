@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-26 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-08-28 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "common/QGearsResource.h"
+#include <boost/test/unit_test.hpp>
 
-#include <OgreResourceGroupManager.h>
+#include <Ogre.h>
 
-namespace QGears
+#include "core/Background2D.h"
+#include "map/QGearsBackground2DFileManager.h"
+
+BOOST_AUTO_TEST_SUITE( QGearsBackground2D )
+
+BOOST_AUTO_TEST_CASE( load )
 {
-    //---------------------------------------------------------------------
-    Resource::Resource( Ogre::ResourceManager *creator
-                 ,const String &name, Ogre::ResourceHandle handle
-                 ,const String &group, bool isManual
-                 ,Ogre::ManualResourceLoader *loader ) :
-        Ogre::Resource( creator, name, handle, group, isManual, loader )
+    class TestFile : public Background2D
     {
-    }
+    public:
+        TestFile() : Background2D() {}
+    };
 
-    //---------------------------------------------------------------------
-    Resource::~Resource()
-    {
-    }
+	Ogre::LogManager    logMgr;
+    logMgr.createLog( "Default Log", true, true, true );
+    Ogre::Root          root;
+    TestFile            file;
+    QGears::Background2DFileManager b_mgr;
+    QGears::Background2DFilePtr     b;
 
-    //---------------------------------------------------------------------
-    Ogre::DataStreamPtr
-    Resource::openResource( void )
-    {
-        return Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this );
-    }
 
-    //---------------------------------------------------------------------
+    logMgr.destroyLog( "Default Log" );
 }
+BOOST_AUTO_TEST_SUITE_END()

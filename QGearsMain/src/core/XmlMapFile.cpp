@@ -6,6 +6,7 @@
 #include "XmlBackground2DFile.h"
 #include "XmlWalkmeshFile.h"
 
+#include "map/QGearsBackground2DFileManager.h"
 
 
 XmlMapFile::XmlMapFile( const Ogre::String& file ):
@@ -54,8 +55,10 @@ XmlMapFile::LoadMap()
             Ogre::String name = GetString( node, "file_name" );
             if( name != "" )
             {
-                XmlBackground2DFile file( "./data/" + name );
-                file.Load();
+                QGears::Background2DFilePtr background( QGears::Background2DFileManager::getSingleton().load( name, "Game" ) );
+                EntityManager::getSingleton().GetBackground2D()->load( background );
+                //XmlBackground2DFile file( "./data/" + name );
+                //file.Load();
             }
         }
         else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "entity_model" )

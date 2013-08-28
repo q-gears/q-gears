@@ -10,14 +10,14 @@
 #include "XmlMapFile.h"
 #include "XmlMapsFile.h"
 
-#include "Main.h"
+#include "QGearsGameState.h"
 
 
 
 void
 CmdQuit( const Ogre::StringVector& params )
 {
-    g_ApplicationState = QG_EXIT;
+    QGears::g_ApplicationState = QGears::G_EXIT;
 }
 
 

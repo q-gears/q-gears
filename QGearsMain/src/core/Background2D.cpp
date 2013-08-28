@@ -443,6 +443,8 @@ Background2D::GetScroll() const
 void
 Background2D::SetImage( const Ogre::String& image )
 {
+    Ogre::LogManager::getSingleton().stream()
+        << "Background2D::SetImage " << image;
     Ogre::Pass* pass = m_AlphaMaterial->getTechnique( 0 )->getPass( 0 );
     Ogre::TextureUnitState* tex = pass->getTextureUnitState( 0 );
     tex->setTextureName( image );
@@ -462,6 +464,8 @@ Background2D::SetRange( const Ogre::Vector4& range )
 void
 Background2D::SetRange( const int min_x, const int min_y, const int max_x, const int max_y )
 {
+    Ogre::LogManager::getSingleton().stream()
+        << "Background2D::SetRange " << min_x << " " << min_y << " " << max_x << " " << max_y;
     // if screen range lesser than screen size - expand screen range to screen size
     float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth() / 2.0f;
     float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight() / 2.0f;
@@ -476,7 +480,7 @@ void
 Background2D::AddTile(  const QGears::Tile& tile )
 {
     const Ogre::Matrix4 &cam_projection( CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrixWithRSDepth() );
-    Ogre::Vector4 res( 0, 0, tile.depth, 1 );
+    Ogre::Vector4 res( 0, 0, -tile.depth, 1 );
     res = cam_projection * res;
     res /= res.w;
     AddTile( tile.destination, tile.width, tile.height, res.z, tile.uv, tile.blending );
@@ -863,7 +867,7 @@ Background2D::load( const QGears::Background2DFile::TileList& tiles )
     QGears::Background2DFile::TileList::const_iterator it_end( tiles.end() );
     while( it != it_end )
     {
-        AddTile( *it );
+        AddTile( *(it++) );
     }
 }
 

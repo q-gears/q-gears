@@ -2,7 +2,7 @@
 #include <OgreConfigFile.h>
 #include <OIS.h>
 
-#include "Main.h"
+#include "QgearsGameState.h"
 //#include "core/AudioManager.h"
 #include "core/CameraManager.h"
 #include "core/ConfigCmdManager.h"
@@ -18,10 +18,8 @@
 #include "core/Timer.h"
 #include "core/UiManager.h"
 #include "core/particles/ParticleSystemManager.h"
+#include "map/QGearsBackground2DFileManager.h"
 
-
-
-QG_STATE  g_ApplicationState;
 
 
 
@@ -112,6 +110,7 @@ main(int argc, char *argv[])
     scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
     scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
 
+    QGears::Background2DFileManager *b2d_mgr( new QGears::Background2DFileManager() );
     res_gm.addResourceLocation( "./data", "FileSystem", "Game", true );
     res_gm.initialiseResourceGroup( "Game" );
 
@@ -168,7 +167,7 @@ main(int argc, char *argv[])
 
 
     // run application cycle
-    g_ApplicationState = QG_GAME;
+    QGears::g_ApplicationState = QGears::G_GAME;
     root->startRendering();
 
 
@@ -188,6 +187,7 @@ main(int argc, char *argv[])
     delete debug_draw;
     delete config_cmd_manager;
     delete config_var_manager;
+    delete b2d_mgr;
     delete particle_system_manager;
     delete timer;
     delete root;

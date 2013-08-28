@@ -12,7 +12,7 @@
 #include "ScriptManager.h"
 #include "Timer.h"
 #include "UiManager.h"
-#include "Main.h"
+#include "QGearsGameState.h"
 
 
 
@@ -76,7 +76,7 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
 {
     Timer::getSingleton().AddTime( evt.timeSinceLastFrame );
 
-    if( g_ApplicationState == QG_EXIT )
+    if( QGears::g_ApplicationState == QGears::G_EXIT )
     {
         return false;
     }
@@ -167,7 +167,7 @@ GameFrameListener::windowResized( Ogre::RenderWindow *rw )
 void
 GameFrameListener::windowClosed( Ogre::RenderWindow* rw )
 {
-    g_ApplicationState = QG_EXIT;
+    QGears::g_ApplicationState = QGears::G_EXIT;
 }
 
 

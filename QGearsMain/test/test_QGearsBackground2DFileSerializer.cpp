@@ -75,11 +75,14 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_CHECK_EQUAL( 300, file.getTiles()[3].depth );
 
     BOOST_CHECK_CLOSE( 0.002, file.getTiles()[4].depth, 0.0001 );
-    BOOST_CHECK_EQUAL( 2, file.getTiles()[4].animations.size() );
-    BOOST_CHECK_EQUAL( 0.5 , file.getTiles()[4].animations["Fan"].length );
-    BOOST_CHECK_EQUAL( 3   , file.getTiles()[4].animations["Fan"].key_frames.size() );
-    BOOST_CHECK_EQUAL( 0.25, file.getTiles()[4].animations["Light"].length );
-    BOOST_CHECK_EQUAL( 3   , file.getTiles()[4].animations["Light"].key_frames.size() );
+    BOOST_CHECK_EQUAL( 2    , file.getTiles()[4].animations.size() );
+    BOOST_CHECK_EQUAL( 0.5  , file.getTiles()[4].animations["Fan"].length );
+    BOOST_CHECK_EQUAL( 3    , file.getTiles()[4].animations["Fan"].key_frames.size() );
+    BOOST_CHECK_EQUAL( 0    , file.getTiles()[4].animations["Fan"].key_frames[0].time );
+    BOOST_CHECK_CLOSE( 0.1  , file.getTiles()[4].animations["Fan"].key_frames[1].time, 0.01 );
+    BOOST_CHECK_CLOSE( 0.233, file.getTiles()[4].animations["Fan"].key_frames[2].time, 0.01 );
+    BOOST_CHECK_EQUAL( 0.25 , file.getTiles()[4].animations["Light"].length );
+    BOOST_CHECK_EQUAL( 3    , file.getTiles()[4].animations["Light"].key_frames.size() );
 
     BOOST_CHECK_CLOSE( 0.002, file.getTiles()[5].depth, 0.0001 );
 
