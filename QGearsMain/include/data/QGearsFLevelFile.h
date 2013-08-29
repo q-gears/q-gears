@@ -26,16 +26,21 @@ THE SOFTWARE.
 #ifndef __QGearsFLevelFile_H__
 #define __QGearsFLevelFile_H__
 
-#include <OgreResource.h>
+#include <OgreTexture.h>
 
+#include "common/QGearsResource.h"
 #include "common/TypeDefine.h"
+#include "map/QGearsBackground2DFile.h"
 
 #include "QGearsBackgroundFile.h"
 #include "QGearsPaletteFile.h"
 
 namespace QGears
 {
-    class FLevelFile : public Ogre::Resource
+    class FLevelTextureLoader;
+    class FLevelBackground2DLoader;
+
+    class FLevelFile : public Resource
     {
     public:
 
@@ -59,11 +64,20 @@ namespace QGears
         virtual size_t calculateSize( void ) const;
 
         virtual const String& getResourceType( void ) const;
-        virtual Ogre::DataStreamPtr openResource( void );
+        virtual String getBackgroundTextureName( void ) const;
+        virtual String getBackground2DName( void ) const;
+
+        static const String SUFFIX_BACKGROUND_TEXTURE;
+        static const String SUFFIX_BACKGROUND_2D;
 
     private:
-        BackgroundFilePtr   m_background;
-        PaletteFilePtr      m_palette;
+        BackgroundFilePtr           m_background;
+        PaletteFilePtr              m_palette;
+
+        FLevelTextureLoader        *m_background_texture_loader;
+        Ogre::TexturePtr            m_background_texture;
+        FLevelBackground2DLoader   *m_background_2d_loader;
+        Background2DFilePtr         m_background_2d;
     };
 
     //-------------------------------------------------------------------------

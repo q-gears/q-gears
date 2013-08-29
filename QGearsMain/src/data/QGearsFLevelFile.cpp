@@ -25,22 +25,29 @@ THE SOFTWARE.
 */
 #include "data/QGearsFLevelFile.h"
 
-#include <OgreLogManager.h>
-#include <OgreResourceGroupManager.h>
+#include <OgreTextureManager.h>
 
+#include "common/QGearsStringUtil.h"
 #include "data/QGearsFLevelFileSerializer.h"
+#include "map/QGearsBackground2DFileManager.h"
+#include "map/QGearsFLevelBackground2DLoader.h"
+#include "map/QGearsFLevelTextureLoader.h"
 
 namespace QGears
 {
     //---------------------------------------------------------------------
     const String    FLevelFile::RESOURCE_TYPE( "QGearsFLevelFile" );
+    const String    FLevelFile::SUFFIX_BACKGROUND_TEXTURE( "/texture" );
+    const String    FLevelFile::SUFFIX_BACKGROUND_2D     ( "/background_2d" );
 
     //---------------------------------------------------------------------
     FLevelFile::FLevelFile( Ogre::ResourceManager *creator
                  ,const String &name, Ogre::ResourceHandle handle
                  ,const String &group, bool isManual
                  ,Ogre::ManualResourceLoader *loader ) :
-        Ogre::Resource( creator, name, handle, group, isManual, loader )
+        Resource( creator, name, handle, group, isManual, loader )
+       ,m_background_texture_loader( NULL )
+       ,m_background_2d_loader( NULL )
     {
         createParamDictionary( getResourceType() );
     }
@@ -48,6 +55,22 @@ namespace QGears
     //---------------------------------------------------------------------
     FLevelFile::~FLevelFile()
     {
+        if( m_background_texture_loader )
+        {
+            Ogre::TextureManager::getSingleton().remove( m_background_texture->getHandle() );
+            delete m_background_texture_loader;
+            m_background_texture_loader = NULL;
+        }
+        m_background_texture.setNull();
+
+        if( m_background_2d_loader )
+        {
+            Background2DFileManager::getSingleton().remove( m_background_2d->getHandle() );
+            delete m_background_2d_loader;
+            m_background_2d_loader = NULL;
+        }
+        m_background_2d.setNull();
+
         unload();
     }
 
@@ -58,6 +81,20 @@ namespace QGears
         FLevelFileSerializer serializer;
         Ogre::DataStreamPtr stream( openResource() );
         serializer.importFLevelFile( stream, this );
+
+        String background_texture_name( getBackgroundTextureName() );
+        if( m_background_texture_loader == NULL )
+        {
+            m_background_texture_loader = new FLevelTextureLoader( *this );
+            m_background_texture = Ogre::TextureManager::getSingleton().create( background_texture_name, mGroup, true, m_background_texture_loader );
+        }
+
+        String background_2d_name( getBackground2DName() );
+        if( m_background_2d_loader == NULL )
+        {
+            m_background_2d_loader = new FLevelBackground2DLoader( *this );
+            m_background_2d = Background2DFileManager::getSingleton().create( background_2d_name, mGroup, true, m_background_2d_loader );
+        }
     }
 
     //---------------------------------------------------------------------
@@ -73,13 +110,6 @@ namespace QGears
     FLevelFile::getResourceType( void ) const
     {
         return RESOURCE_TYPE;
-    }
-
-    //---------------------------------------------------------------------
-    Ogre::DataStreamPtr
-    FLevelFile::openResource( void )
-    {
-        return Ogre::DataStreamPtr( Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this ) );
     }
 
     //---------------------------------------------------------------------
@@ -116,6 +146,26 @@ namespace QGears
     FLevelFile::setPalette( const PaletteFilePtr &palette )
     {
         m_palette = palette;
+    };
+
+    //---------------------------------------------------------------------
+    String
+    FLevelFile::getBackgroundTextureName( void ) const
+    {
+        String base_name;
+        StringUtil::splitFull( getName(), base_name );
+        base_name += SUFFIX_BACKGROUND_TEXTURE;
+        return base_name;
+    };
+
+    //---------------------------------------------------------------------
+    String
+    FLevelFile::getBackground2DName( void ) const
+    {
+        String base_name;
+        StringUtil::splitFull( getName(), base_name );
+        base_name += SUFFIX_BACKGROUND_2D;
+        return base_name;
     };
 
     //---------------------------------------------------------------------

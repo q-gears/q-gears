@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 namespace QGears
 {
-    class HRCFile;
+    class FLevelFile;
 
     class FLevelTextureLoader : public Ogre::ManualResourceLoader
     {

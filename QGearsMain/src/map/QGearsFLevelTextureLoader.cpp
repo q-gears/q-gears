@@ -25,6 +25,8 @@ THE SOFTWARE.
 */
 #include "map/QGearsFLevelTextureLoader.h"
 
+#include <OgreTexture.h>
+
 #include "data/QGearsFLevelFile.h"
 
 namespace QGears
@@ -49,6 +51,12 @@ namespace QGears
 
         m_flevel_file.load();
         texture->_notifyOrigin( m_flevel_file.getName() );
+
+        BackgroundFilePtr   background( m_flevel_file.getBackground() );
+        PaletteFilePtr      palette   ( m_flevel_file.getPalette() );
+        Ogre::Image *img( background->createImage( palette ) );
+        texture->loadImage( *img );
+        delete img;
     }
 
     //-------------------------------------------------------------------------

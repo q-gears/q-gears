@@ -30,12 +30,12 @@ THE SOFTWARE.
 
 namespace QGears
 {
-    class HRCFile;
+    class FLevelFile;
 
     class FLevelBackground2DLoader : public Ogre::ManualResourceLoader
     {
     public:
-        explicit FLevelBackground2DLoader( FLevelFile &flevel_file );
+        explicit FLevelBackground2DLoader( FLevelFile& flevel_file );
         virtual ~FLevelBackground2DLoader();
 
         virtual void loadResource( Ogre::Resource *resource );

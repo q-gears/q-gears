@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "map/QGearsFLevelBackground2DLoader.h"
 
 #include "data/QGearsFLevelFile.h"
+#include "map/QGearsBackground2DFile.h"
 
 namespace QGears
 {

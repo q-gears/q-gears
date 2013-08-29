@@ -161,6 +161,7 @@ namespace QGears
         BackgroundFileManager &bmgr( BackgroundFileManager::getSingleton() );
         BackgroundFilePtr background( bmgr.create( getBackgroundName( pDest ), pDest->getGroup(), true ) );
         BackgroundFileSerializer ser;
+        background->_notifyOrigin( pDest->getName() );
         ser.importBackgroundFile( stream, background.getPointer() );
         pDest->setBackground( background );
     }

@@ -143,7 +143,9 @@
 			<Option target="Debug" />
 		</Unit>
 		<Unit filename="include/common/QGearsResource.h" />
+		<Unit filename="include/common/QGearsStringUtil.h" />
 		<Unit filename="include/common/TypeDefine.h" />
+		<Unit filename="include/data/QGearsFLevelFile.h" />
 		<Unit filename="include/data/QGearsXMLSerializer.h" />
 		<Unit filename="include/map/QGearsBackground2DFile.h" />
 		<Unit filename="include/map/QGearsBackground2DFileManager.h" />
@@ -157,6 +159,7 @@
 		</Unit>
 		<Unit filename="src/QGearsGameState.cpp" />
 		<Unit filename="src/common/QGearsResource.cpp" />
+		<Unit filename="src/common/QGearsStringUtil.cpp" />
 		<Unit filename="src/common/TypeDefine.cpp" />
 		<Unit filename="src/core/Assert.h">
 			<Option target="Release" />
@@ -1615,6 +1618,7 @@
 			<Option target="Debug" />
 			<Option target="Test_Background2D" />
 		</Unit>
+		<Unit filename="src/data/QGearsFLevelFile.cpp" />
 		<Unit filename="src/data/QGearsXMLSerializer.cpp" />
 		<Unit filename="src/map/QGearsBackground2DFile.cpp" />
 		<Unit filename="src/map/QGearsBackground2DFileManager.cpp" />

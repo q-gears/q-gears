@@ -120,6 +120,7 @@ namespace QGears
     Ogre::Image*
     BackgroundFile::createImage( const PaletteFilePtr &palette ) const
     {
+        assert( !palette.isNull() );
         SpriteList sprites;
         for( size_t i(0); i < LAYER_COUNT; ++i )
         {
