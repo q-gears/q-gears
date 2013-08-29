@@ -23,33 +23,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "map/QGearsFLevelBackground2DLoader.h"
+#include "data/QGearsFLevelTextureLoader.h"
+
+#include <OgreTexture.h>
 
 #include "data/QGearsFLevelFile.h"
-#include "map/QGearsBackground2DFile.h"
 
 namespace QGears
 {
     //-------------------------------------------------------------------------
-    FLevelBackground2DLoader::FLevelBackground2DLoader( FLevelFile &flevel_file ) :
+    FLevelTextureLoader::FLevelTextureLoader( FLevelFile &flevel_file ) :
         m_flevel_file( flevel_file )
     {
     }
 
     //-------------------------------------------------------------------------
-    FLevelBackground2DLoader::~FLevelBackground2DLoader()
+    FLevelTextureLoader::~FLevelTextureLoader()
     {
     }
 
     //-------------------------------------------------------------------------
     void
-    FLevelBackground2DLoader::loadResource( Ogre::Resource *resource )
+    FLevelTextureLoader::loadResource( Ogre::Resource *resource )
     {
-        Background2DFile *background( static_cast<Background2DFile *>(resource) );
-        assert( background );
+        Ogre::Texture *texture( static_cast<Ogre::Texture *>(resource) );
+        assert( texture );
 
         m_flevel_file.load();
-        background->_notifyOrigin( m_flevel_file.getName() );
+        texture->_notifyOrigin( m_flevel_file.getName() );
+
+        BackgroundFilePtr   background( m_flevel_file.getBackground() );
+        PaletteFilePtr      palette   ( m_flevel_file.getPalette() );
+        Ogre::Image *img( background->createImage( palette ) );
+        texture->loadImage( *img );
+        delete img;
     }
 
     //-------------------------------------------------------------------------

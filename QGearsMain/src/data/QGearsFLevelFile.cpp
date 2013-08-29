@@ -29,9 +29,9 @@ THE SOFTWARE.
 
 #include "common/QGearsStringUtil.h"
 #include "data/QGearsFLevelFileSerializer.h"
+#include "data/QGearsFLevelBackground2DLoader.h"
+#include "data/QGearsFLevelTextureLoader.h"
 #include "map/QGearsBackground2DFileManager.h"
-#include "map/QGearsFLevelBackground2DLoader.h"
-#include "map/QGearsFLevelTextureLoader.h"
 
 namespace QGears
 {
