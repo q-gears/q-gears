@@ -148,6 +148,8 @@
 		<Unit filename="include/map/QGearsBackground2DFile.h" />
 		<Unit filename="include/map/QGearsBackground2DFileManager.h" />
 		<Unit filename="include/map/QGearsBackground2DFileXMLSerializer.h" />
+		<Unit filename="include/map/QGearsFLevelBackground2DLoader.h" />
+		<Unit filename="include/map/QGearsFLevelTextureLoader.h" />
 		<Unit filename="include/map/QGearsTile.h" />
 		<Unit filename="src/Main.cpp">
 			<Option target="Release" />
@@ -1617,6 +1619,8 @@
 		<Unit filename="src/map/QGearsBackground2DFile.cpp" />
 		<Unit filename="src/map/QGearsBackground2DFileManager.cpp" />
 		<Unit filename="src/map/QGearsBackground2DFileXMLSerializer.cpp" />
+		<Unit filename="src/map/QGearsFLevelBackground2DLoader.cpp" />
+		<Unit filename="src/map/QGearsFLevelTextureLoader.cpp" />
 		<Unit filename="test/test_QGearsBackground2D.cpp">
 			<Option target="Test_all" />
 			<Option target="Test_Background2D" />
