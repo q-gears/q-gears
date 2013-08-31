@@ -237,12 +237,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add option="-DBOOST_ALL_DYN_LINK" />
+			<Add option="-DTIXML_USE_STL" />
 			<Add directory="$(BOOST_INCLUDE_DIR)" />
 			<Add directory="$(OGRE_HOME)/include/OGRE" />
 			<Add directory="$(OGRE_HOME)/include/OIS" />
 			<Add directory="../../QGearsMain/include" />
 			<Add directory="../" />
 			<Add directory="include" />
+			<Add directory="../../QGearsMain/src/core/library/tinyxml" />
 		</Compiler>
 		<Linker>
 			<Add directory="$(BOOST_LIB_DIR)" />
@@ -264,9 +266,11 @@
 		<Unit filename="../../QGearsMain/include/data/QGearsBackgroundFileManager.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsBackgroundFileSerializer.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsBackgroundTextureLoader.h" />
+		<Unit filename="../../QGearsMain/include/data/QGearsFLevelBackground2DLoader.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsFLevelFile.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsFLevelFileManager.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsFLevelFileSerializer.h" />
+		<Unit filename="../../QGearsMain/include/data/QGearsFLevelTextureLoader.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsHRCFile.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsHRCFileManager.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsHRCFileSerializer.h" />
@@ -287,19 +291,32 @@
 		<Unit filename="../../QGearsMain/include/data/QGearsSerializer.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsTexCodec.h" />
 		<Unit filename="../../QGearsMain/include/data/QGearsTexFile.h" />
+		<Unit filename="../../QGearsMain/include/data/QGearsXMLSerializer.h" />
+		<Unit filename="../../QGearsMain/include/map/QGearsBackground2DFile.h" />
+		<Unit filename="../../QGearsMain/include/map/QGearsBackground2DFileManager.h" />
+		<Unit filename="../../QGearsMain/include/map/QGearsBackground2DFileXMLSerializer.h" />
+		<Unit filename="../../QGearsMain/include/map/QGearsTile.h" />
 		<Unit filename="../../QGearsMain/src/common/QGearsManualObject.cpp" />
 		<Unit filename="../../QGearsMain/src/common/QGearsResource.cpp" />
 		<Unit filename="../../QGearsMain/src/common/QGearsStringUtil.cpp" />
 		<Unit filename="../../QGearsMain/src/common/TypeDefine.cpp" />
+		<Unit filename="../../QGearsMain/src/core/library/tinyxml/tinystr.cpp" />
+		<Unit filename="../../QGearsMain/src/core/library/tinyxml/tinystr.h" />
+		<Unit filename="../../QGearsMain/src/core/library/tinyxml/tinyxml.cpp" />
+		<Unit filename="../../QGearsMain/src/core/library/tinyxml/tinyxml.h" />
+		<Unit filename="../../QGearsMain/src/core/library/tinyxml/tinyxmlerror.cpp" />
+		<Unit filename="../../QGearsMain/src/core/library/tinyxml/tinyxmlparser.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsAFile.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsAFileSerializer.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsBackgroundFile.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsBackgroundFileManager.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsBackgroundFileSerializer.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsBackgroundTextureLoader.cpp" />
+		<Unit filename="../../QGearsMain/src/data/QGearsFLevelBackground2DLoader.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsFLevelFile.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsFLevelFileManager.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsFLevelFileSerializer.cpp" />
+		<Unit filename="../../QGearsMain/src/data/QGearsFLevelTextureLoader.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsHRCFile.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsHRCFileManager.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsHRCFileSerializer.cpp" />
@@ -320,6 +337,10 @@
 		<Unit filename="../../QGearsMain/src/data/QGearsSerializer.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsTexCodec.cpp" />
 		<Unit filename="../../QGearsMain/src/data/QGearsTexFile.cpp" />
+		<Unit filename="../../QGearsMain/src/data/QGearsXMLSerializer.cpp" />
+		<Unit filename="../../QGearsMain/src/map/QGearsBackground2DFile.cpp" />
+		<Unit filename="../../QGearsMain/src/map/QGearsBackground2DFileManager.cpp" />
+		<Unit filename="../../QGearsMain/src/map/QGearsBackground2DFileXMLSerializer.cpp" />
 		<Unit filename="../../QGearsMain/test/test_QGearsAFileSerializer.cpp">
 			<Option target="Test_AFileSerializer" />
 		</Unit>

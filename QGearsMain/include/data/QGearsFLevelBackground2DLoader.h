@@ -28,6 +28,9 @@ THE SOFTWARE.
 
 #include <OgreResource.h>
 
+#include "data/QGearsBackgroundFile.h"
+#include "map/QGearsBackground2DFile.h"
+
 namespace QGears
 {
     class FLevelFile;
@@ -41,6 +44,10 @@ namespace QGears
         virtual void loadResource( Ogre::Resource *resource );
 
     protected:
+        typedef Background2DFile::TileList  TileList;
+        typedef BackgroundFile::Layer       Layer;
+        typedef BackgroundFile::SpriteData  SpriteData;
+        typedef BackgroundFile::SpriteList  SpriteList;
 
     private:
         FLevelFile  &m_flevel_file;

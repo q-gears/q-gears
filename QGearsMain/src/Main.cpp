@@ -18,6 +18,10 @@
 #include "core/Timer.h"
 #include "core/UiManager.h"
 #include "core/particles/ParticleSystemManager.h"
+
+#include "data/QGearsBackgroundFileManager.h"
+#include "data/QGearsPaletteFileManager.h"
+#include "data/QGearsLZSFLevelFileManager.h"
 #include "map/QGearsBackground2DFileManager.h"
 
 
@@ -111,8 +115,12 @@ main(int argc, char *argv[])
     scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
 
     QGears::Background2DFileManager *b2d_mgr( new QGears::Background2DFileManager() );
+    QGears::BackgroundFileManager   *bgf_mgr( new QGears::BackgroundFileManager() );
+    QGears::LZSFLevelFileManager    *flv_mgr( new QGears::LZSFLevelFileManager() );
+    QGears::PaletteFileManager      *plt_mgr( new QGears::PaletteFileManager() );
     res_gm.addResourceLocation( "./data", "FileSystem", "Game", true );
     res_gm.initialiseResourceGroup( "Game" );
+    QGears::FLevelFilePtr   f( QGears::LZSFLevelFileManager::getSingleton().load( "field/gflevel/md1stin", "Game" ) );
 
 
 
@@ -187,7 +195,13 @@ main(int argc, char *argv[])
     delete debug_draw;
     delete config_cmd_manager;
     delete config_var_manager;
+
+    f.setNull();
+    delete flv_mgr;
+    delete plt_mgr;
+    delete bgf_mgr;
     delete b2d_mgr;
+
     delete particle_system_manager;
     delete timer;
     delete root;

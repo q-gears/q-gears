@@ -58,14 +58,15 @@ namespace QGears
         virtual void setBackground( const BackgroundFilePtr &background  );
         virtual void setPalette   ( const PaletteFilePtr    &palette     );
 
+        virtual String getBackground2DName( void ) const;
+        virtual String getBackgroundTextureName( void ) const;
+
     protected:
         virtual void loadImpl( void );
         virtual void unloadImpl( void );
         virtual size_t calculateSize( void ) const;
 
         virtual const String& getResourceType( void ) const;
-        virtual String getBackgroundTextureName( void ) const;
-        virtual String getBackground2DName( void ) const;
 
         static const String SUFFIX_BACKGROUND_TEXTURE;
         static const String SUFFIX_BACKGROUND_2D;

@@ -112,8 +112,6 @@ main( int argc, char *argv[] )
 
     QGears::LZSFLevelFileManager   *fmgr( QGears::LZSFLevelFileManager::getSingletonPtr() );
     QGears::FLevelFilePtr           f( fmgr->load( "field/gflevel/ancnt1", "General" ) );
-    Ogre::Image                    *img( f->getBackground()->createImage( f->getPalette() ) );
-    Ogre::TexturePtr                t( Ogre::TextureManager::getSingleton().loadImage( "foo", "General", *img ) );
 
     // Create background rectangle covering the whole screen
     Ogre::Rectangle2D* rect = new Ogre::Rectangle2D(true);
@@ -133,10 +131,8 @@ main( int argc, char *argv[] )
     node->attachObject( rect );
 
     Ogre::Root::getSingleton().startRendering();
-    t.setNull();
     f.setNull();
     delete rect;
-    delete img;
 
     skeleton.setNull();
     mesh.setNull();

@@ -85,6 +85,13 @@ public:
 protected:
     virtual void load( const QGears::Background2DFile::TileList& tiles );
 
+    enum
+    {
+        TILE_VERTEX_COUNT = 6
+       ,TILE_VERTEX_INDEX_SIZE = TILE_VERTEX_COUNT + 3
+    };
+    static const float SCALE;
+
 private:
     void CreateVertexBuffers();
     void DestroyVertexBuffers();
@@ -121,6 +128,10 @@ private:
     std::vector< ScriptId >               m_ScrollSync;
     Ogre::Vector2                         m_Position;
     Ogre::Vector2                         m_PositionReal;
+
+    Ogre::Real                            m_screen_scale;
+    Ogre::Vector2                         m_virtual_screen_size;
+    Ogre::AxisAlignedBox                  m_range;
 
     struct AnimationPlayed
     {

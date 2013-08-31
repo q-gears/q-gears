@@ -45,11 +45,63 @@ namespace QGears
     void
     FLevelBackground2DLoader::loadResource( Ogre::Resource *resource )
     {
-        Background2DFile *background( static_cast<Background2DFile *>(resource) );
-        assert( background );
+        Background2DFile *background_2d( static_cast<Background2DFile *>(resource) );
+        assert( background_2d );
 
         m_flevel_file.load();
-        background->_notifyOrigin( m_flevel_file.getName() );
+        background_2d->_notifyOrigin( m_flevel_file.getName() );
+        background_2d->setTextureName( m_flevel_file.getBackgroundTextureName() );
+
+        Ogre::Vector3 position( 28.4846, 210.83, 3.10751 );
+        background_2d->setPosition( position );
+
+        Ogre::Quaternion orientation( 0.742188, 0.667516, -0.0403783, -0.0450658 );
+        background_2d->setOrientation( orientation );
+
+        background_2d->setFov( Ogre::Radian( Ogre::Degree( 34.5389 ) ) );
+
+        Ogre::Vector4 range( 0, 0, 0, 0 );
+
+        TileList& tiles( background_2d->getTiles() );
+        BackgroundFilePtr background( m_flevel_file.getBackground() );
+        Layer *layers( background->getLayers() );
+        Layer &layer( layers[0] );
+        if( layer.enabled )
+        {
+            SpriteList::const_iterator it    ( layer.sprites.begin() );
+            SpriteList::const_iterator it_end( layer.sprites.end() );
+            Ogre::Real step( BackgroundFile::SPRITE_WIDTH / 1024.0 );
+            Ogre::Vector4   uv( 0, 0, step, step );
+            Ogre::Vector4   col( step, 0, step, 0 );
+            Ogre::Vector4   row( 0, step, 0, step );
+            while( it != it_end )
+            {
+                const SpriteData& sprite( *it );
+                Tile tile;
+                tile.width  = BackgroundFile::SPRITE_WIDTH;
+                tile.height = BackgroundFile::SPRITE_HEIGHT;
+                tile.blending = B_ALPHA;
+                tile.depth = 999;
+                tile.destination.x = sprite.dst.x;
+                tile.destination.y = sprite.dst.y;
+                tile.uv = uv;
+                range.x = std::min( tile.destination.x, range.x );
+                range.y = std::min( tile.destination.y, range.y );
+                range.z = std::max( tile.destination.x + tile.width , range.z );
+                range.w = std::max( tile.destination.y + tile.height, range.w );
+                tiles.push_back( tile );
+
+                uv += col;
+                if( uv.x >= 1 )
+                {
+                    uv.x = 0;
+                    uv.z = step;
+                    uv += row;
+                }
+                ++it;
+            }
+        }
+        background_2d->setRange( range );
     }
 
     //-------------------------------------------------------------------------

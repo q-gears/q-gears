@@ -55,10 +55,9 @@ XmlMapFile::LoadMap()
             Ogre::String name = GetString( node, "file_name" );
             if( name != "" )
             {
+                // TODO migrate this code to a Resource and use it's group to load background
                 QGears::Background2DFilePtr background( QGears::Background2DFileManager::getSingleton().load( name, "Game" ) );
                 EntityManager::getSingleton().GetBackground2D()->load( background );
-                //XmlBackground2DFile file( "./data/" + name );
-                //file.Load();
             }
         }
         else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "entity_model" )

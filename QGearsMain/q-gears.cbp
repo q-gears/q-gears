@@ -149,7 +149,6 @@
 		<Unit filename="include/data/QGearsBackgroundFile.h" />
 		<Unit filename="include/data/QGearsBackgroundFileManager.h" />
 		<Unit filename="include/data/QGearsBackgroundFileSerializer.h" />
-		<Unit filename="include/data/QGearsBackgroundTextureLoader.h" />
 		<Unit filename="include/data/QGearsFLevelBackground2DLoader.h" />
 		<Unit filename="include/data/QGearsFLevelFile.h" />
 		<Unit filename="include/data/QGearsFLevelFileManager.h" />
@@ -185,6 +184,7 @@
 			<Option target="Debug" />
 		</Unit>
 		<Unit filename="src/QGearsGameState.cpp" />
+		<Unit filename="src/common/QGearsManualObject.cpp" />
 		<Unit filename="src/common/QGearsResource.cpp" />
 		<Unit filename="src/common/QGearsStringUtil.cpp" />
 		<Unit filename="src/common/TypeDefine.cpp" />
@@ -1648,7 +1648,6 @@
 		<Unit filename="src/data/QGearsBackgroundFile.cpp" />
 		<Unit filename="src/data/QGearsBackgroundFileManager.cpp" />
 		<Unit filename="src/data/QGearsBackgroundFileSerializer.cpp" />
-		<Unit filename="src/data/QGearsBackgroundTextureLoader.cpp" />
 		<Unit filename="src/data/QGearsFLevelBackground2DLoader.cpp" />
 		<Unit filename="src/data/QGearsFLevelFile.cpp" />
 		<Unit filename="src/data/QGearsFLevelFileManager.cpp" />

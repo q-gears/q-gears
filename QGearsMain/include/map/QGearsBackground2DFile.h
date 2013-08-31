@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <OgreVector4.h>
 
 #include "common/QGearsResource.h"
+
 #include "QGearsTile.h"
 
 namespace QGears

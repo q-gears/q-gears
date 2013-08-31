@@ -25,6 +25,7 @@ THE SOFTWARE.
 */
 #include "data/QGearsFLevelFile.h"
 
+#include <OgreLogManager.h>
 #include <OgreTextureManager.h>
 
 #include "common/QGearsStringUtil.h"
@@ -57,6 +58,7 @@ namespace QGears
     {
         if( m_background_texture_loader )
         {
+            assert( !m_background_texture.isNull() );
             Ogre::TextureManager::getSingleton().remove( m_background_texture->getHandle() );
             delete m_background_texture_loader;
             m_background_texture_loader = NULL;
@@ -65,6 +67,7 @@ namespace QGears
 
         if( m_background_2d_loader )
         {
+            assert( !m_background_2d.isNull() );
             Background2DFileManager::getSingleton().remove( m_background_2d->getHandle() );
             delete m_background_2d_loader;
             m_background_2d_loader = NULL;

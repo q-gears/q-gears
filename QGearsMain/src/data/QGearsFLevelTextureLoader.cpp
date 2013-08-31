@@ -51,11 +51,19 @@ namespace QGears
 
         m_flevel_file.load();
         texture->_notifyOrigin( m_flevel_file.getName() );
+        texture->setTextureType( Ogre::TEX_TYPE_2D );
+        texture->setNumMipmaps( 0 );
+        texture->setGamma( 1.0 );
+        texture->setTreatLuminanceAsAlpha( false );
+        texture->setFormat( Ogre::PF_UNKNOWN );
+        texture->setHardwareGammaEnabled( false );
 
         BackgroundFilePtr   background( m_flevel_file.getBackground() );
         PaletteFilePtr      palette   ( m_flevel_file.getPalette() );
         Ogre::Image *img( background->createImage( palette ) );
-        texture->loadImage( *img );
+        Ogre::ConstImagePtrList images;
+        images.push_back( img );
+        texture->_loadImages( images );
         delete img;
     }
 
