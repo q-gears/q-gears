@@ -7,6 +7,7 @@
 
 
 
+//-----------------------------------------------------------------------------
 Background2DAnimation::Background2DAnimation( const Ogre::String& name, Background2D* background, const int tile_index ):
     m_Name( name ),
     m_Background( background ),
@@ -16,14 +17,12 @@ Background2DAnimation::Background2DAnimation( const Ogre::String& name, Backgrou
 {
 }
 
-
-
+//-----------------------------------------------------------------------------
 Background2DAnimation::~Background2DAnimation()
 {
 }
 
-
-
+//-----------------------------------------------------------------------------
 void
 Background2DAnimation::AddTime( const float time )
 {
@@ -54,48 +53,56 @@ Background2DAnimation::AddTime( const float time )
     }
 }
 
-
-
+//-----------------------------------------------------------------------------
 const Ogre::String&
 Background2DAnimation::GetName() const
 {
     return m_Name;
 }
 
-
-
+//-----------------------------------------------------------------------------
 void
 Background2DAnimation::SetTime( const float time )
 {
     m_Time = time;
 }
 
-
-
+//-----------------------------------------------------------------------------
 float
 Background2DAnimation::GetTime() const
 {
     return m_Time;
 }
 
-
-
+//-----------------------------------------------------------------------------
 void
 Background2DAnimation::SetLength( const float time )
 {
     m_Length = time;
 }
 
-
-
+//-----------------------------------------------------------------------------
 float
 Background2DAnimation::GetLength() const
 {
     return m_Length;
 }
 
+//-----------------------------------------------------------------------------
+void
+Background2DAnimation::AddUVKeyFrame( const QGears::KeyFrame key_frame )
+{
+    AddUVKeyFrame( key_frame.time, key_frame.uv );
+}
 
+//-----------------------------------------------------------------------------
+void
+Background2DAnimation::AddUVKeyFrame( const float time, const Ogre::Vector4& uv )
+{
+    AddUVKeyFrame( time, uv.x, uv.y, uv.z, uv.w );
+}
 
+//-----------------------------------------------------------------------------
 void
 Background2DAnimation::AddUVKeyFrame( const float time, const float u1, const float v1, const float u2, const float v2 )
 {
@@ -108,3 +115,4 @@ Background2DAnimation::AddUVKeyFrame( const float time, const float u1, const fl
     m_UV.push_back( uv_key_frame );
 }
 
+//-----------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 #include <OgreVector2.h>
 #include <vector>
 
-
+#include "map/QGearsTile.h"
 
 class Background2D;
 
@@ -32,7 +32,9 @@ public:
     void  SetLength( const float time );
     float GetLength() const;
 
-    void  AddUVKeyFrame( const float time, const float u1, const float v1, const float u2, const float v2 );
+    virtual void AddUVKeyFrame( const QGears::KeyFrame key_frame );
+    virtual void AddUVKeyFrame( const float time, const Ogre::Vector4& uv );
+    virtual void AddUVKeyFrame( const float time, const float u1, const float v1, const float u2, const float v2 );
 
 private:
     Background2DAnimation();
