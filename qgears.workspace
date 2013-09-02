@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="QGears">
-		<Project filename="QGearsMain/q-gears.cbp" />
 		<Project filename="PlugIns/Data/DataPlugin.cbp" />
+		<Project filename="QGearsMain/q-gears.cbp" />
 		<Project filename="utilities/ffix_model_exporter/qgears.cbp" />
 		<Project filename="utilities/ffix_script_dumper/qgears.cbp" />
 		<Project filename="utilities/ffix_sound_dumper/qgears.cbp" />

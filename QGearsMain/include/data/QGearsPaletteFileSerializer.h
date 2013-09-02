@@ -47,6 +47,8 @@ namespace QGears
             BIT_MASK_RED    = 0x001F
            ,BIT_MASK_GREEN  = 0x03E0
            ,BIT_MASK_BLUE   = 0x7C00
+           ,BIT_SIZE        = 0x001F
+           ,BIT_MASK_RGB    = BIT_MASK_BLUE | BIT_MASK_GREEN | BIT_MASK_RED
            ,BIT_MASK_ALPHA  = 0x8000
         };
 

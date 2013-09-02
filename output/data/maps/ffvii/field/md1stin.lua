@@ -4,7 +4,7 @@ EntityContainer = {}
 
 EntityContainer[ "Director" ] = {
     on_start = function( self )
-        background2d:scroll_to_position( 0, 120, Background2D.NONE, 0 )
+        background2d:scroll_to_position( 0, 40, Background2D.NONE, 0 )
         if FFVII.Data.progress_game == 0 then
             player_lock( true )
             --03b2 (end 03d1): fade:black();
@@ -51,13 +51,13 @@ EntityContainer[ "Director" ] = {
             script:wait( 2.33333 )
             script:request( Script.ENTITY, "Barret", "action1", 2 )
             script:wait( 2.66667 )
-            background2d:scroll_to_position( -60, 390, Background2D.SMOOTH, 0.4 )
+            background2d:scroll_to_position( -20, 130, Background2D.SMOOTH, 0.4 )
             script:wait( 0.466667 )
             script:request( Script.ENTITY, "Cloud", "action1", 2 )
             script:wait( 0.0666667 )
             --0485 (end 04bd): music:execute_akao( 20, 00000040, 00000037 ); -- play sound
             script:wait( 0.733333 )
-            background2d:scroll_to_position( 30, 105, Background2D.SMOOTH, 0.5 )
+            background2d:scroll_to_position( 10, 35, Background2D.SMOOTH, 0.5 )
             script:wait( 0.533333 )
             --0499 (end 04bd): music:execute_akao( 20, 00000040, 00000038 ); -- play sound
             script:wait( 1.93333 )

@@ -68,19 +68,27 @@ namespace QGears
     {
         uint16 colour;
         readShort( stream, colour );
-        convertColour( colour );
-
-        Ogre::PixelUtil::unpackColour( &pDest, PIXEL_FORMAT, &colour );
+        //convertColour( colour );
+        //Ogre::PixelUtil::unpackColour( &pDest, PIXEL_FORMAT, &colour );
+        pDest.r =   colour & BIT_MASK_RED;
+        pDest.g = ( colour & BIT_MASK_GREEN ) >>  5;
+        pDest.b = ( colour & BIT_MASK_BLUE  ) >> 10;
+        pDest /= BIT_SIZE;
+        pDest.a = 0;
+        if ( colour & BIT_MASK_ALPHA )
+        {
+            pDest.a = 1;
+        }
     }
 
     //---------------------------------------------------------------------
     void
     PaletteFileSerializer::convertColour( uint16 &colour ) const
     {
-        colour = ( (   colour  & BIT_MASK_RED   ) << 10 )
-                |  (   colour  & BIT_MASK_GREEN )
-                |( (   colour  & BIT_MASK_BLUE  ) >> 10 )
-                |  ( (~colour) & BIT_MASK_ALPHA );
+        colour = ( (    colour   & BIT_MASK_RED   ) << 10 )
+                |  (    colour   & BIT_MASK_GREEN )
+                |( (    colour   & BIT_MASK_BLUE  ) >> 10 )
+                |  ( (  colour ) & BIT_MASK_ALPHA );
     }
 
     //---------------------------------------------------------------------

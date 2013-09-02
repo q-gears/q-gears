@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-08-16 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-09-02 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,33 +23,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "data/QGearsHRCFileManager.h"
-
-#include <OgreLogManager.h>
+#include "data/QGearsCameraMatrixFileManager.h"
 
 namespace QGears
 {
     //-------------------------------------------------------------------------
-    template<> HRCFileManager *Ogre::Singleton<HRCFileManager>::msSingleton = NULL;
+    template<> CameraMatrixFileManager *Ogre::Singleton<CameraMatrixFileManager>::msSingleton = NULL;
 
     //-------------------------------------------------------------------------
-    HRCFileManager*
-    HRCFileManager::getSingletonPtr()
+    CameraMatrixFileManager *CameraMatrixFileManager::getSingletonPtr()
     {
         return msSingleton;
     }
 
     //-------------------------------------------------------------------------
-    HRCFileManager&
-    HRCFileManager::getSingleton()
+    CameraMatrixFileManager &CameraMatrixFileManager::getSingleton()
     {
         assert( msSingleton );
         return(*msSingleton );
     }
      //-------------------------------------------------------------------------
-    HRCFileManager::HRCFileManager()
+    CameraMatrixFileManager::CameraMatrixFileManager()
     {
-        mResourceType = HRCFile::RESOURCE_TYPE;
+        mResourceType = CameraMatrixFile::RESOURCE_TYPE;
 
         // low, because it will likely reference other resources
         mLoadOrder = 30.0f;
@@ -59,27 +55,18 @@ namespace QGears
     }
 
     //-------------------------------------------------------------------------
-    HRCFileManager::~HRCFileManager()
+    CameraMatrixFileManager::~CameraMatrixFileManager()
     {
         Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager( mResourceType );
     }
 
     //-------------------------------------------------------------------------
-    void
-    HRCFileManager::parseScript( Ogre::DataStreamPtr &stream, const String &groupName )
-    {
-        HRCFilePtr  hrc( create( stream->getName(), groupName ) );
-        hrc->load();
-    }
-
-    //-------------------------------------------------------------------------
-    Ogre::Resource*
-    HRCFileManager::createImpl( const String &name
-      , Ogre::ResourceHandle handle, const String &group, bool isManual
+    Ogre::Resource *CameraMatrixFileManager::createImpl( const Ogre::String &name
+      , Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual
       , Ogre::ManualResourceLoader *loader
       , const Ogre::NameValuePairList *createParams )
     {
-        return new HRCFile( this, name, handle, group, isManual, loader );
+        return new CameraMatrixFile( this, name, handle, group, isManual, loader );
     }
 
     //-------------------------------------------------------------------------

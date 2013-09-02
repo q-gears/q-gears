@@ -3,6 +3,7 @@
 #include <OgreHardwareBufferManager.h>
 #include <OgreLogManager.h>
 #include <OgreMaterialManager.h>
+#include <OgreException.h>
 
 #include "CameraManager.h"
 #include "ConfigVar.h"
@@ -17,17 +18,9 @@ ConfigVar cv_show_background2d( "show_background2d", "Draw background", "true" )
 ConfigVar cv_background2d_manual( "background2d_manual", "Manual scrolling for 2d background", "false" );
 
 //-----------------------------------------------------------------------------
-const float Background2D::SCALE( 720 );
-
-//-----------------------------------------------------------------------------
 Background2D::Background2D():
     m_AlphaMaxVertexCount( 0 ),
     m_AddMaxVertexCount( 0 ),
-
-    m_RangeMinX( -100000 ),
-    m_RangeMinY( -100000 ),
-    m_RangeMaxX( 100000 ),
-    m_RangeMaxY( 100000 ),
 
     m_ScrollEntity( NULL ),
     m_ScrollPositionStart( Ogre::Vector2::ZERO ),
@@ -187,13 +180,11 @@ Background2D::Update()
 void
 Background2D::UpdateDebug()
 {
-    if( m_Position != m_PositionReal )
+    // is this necessary? does it cost to apply camera 2d Scroll?
+    // if so maybe move this check to applyScroll
+    if( m_PositionReal != GetScreenScroll() )
     {
-        if( cv_background2d_manual.GetB() != true )
-        {
-            m_PositionReal = m_Position;
-            CameraManager::getSingleton().Set2DScroll( m_Position );
-        }
+        applyScroll();
     }
 
     if( cv_debug_background2d.GetB() == true )
@@ -210,32 +201,50 @@ Background2D::UpdateDebug()
 
 //-----------------------------------------------------------------------------
 void
+Background2D::calculateScreenScale( void )
+{
+    Ogre::Viewport *viewport( Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 ) );
+    Ogre::Real scale_width( viewport->getActualWidth() );
+    Ogre::Real scale_height( viewport->getActualHeight() );
+
+    scale_width /= m_virtual_screen_size.x;
+    scale_height /= m_virtual_screen_size.y;
+
+    m_screen_scale = scale_height;
+    m_screen_proportion.x = m_screen_scale / scale_width;
+    m_screen_proportion.y = m_screen_scale / scale_height;
+}
+
+//-----------------------------------------------------------------------------
+void
 Background2D::OnResize()
 {
-    float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
-
-    float scaler = scr_height / SCALE;
+    calculateScreenScale();
 
     for( unsigned int i = 0; i < m_Tiles.size(); ++i )
     {
-        float new_x1 = ( m_Tiles[ i ].x * scaler / scr_width ) * 2 - 1;
-        float new_y1 = -( ( m_Tiles[ i ].y / SCALE ) * 2 - 1 );
-        float new_x2 = ( ( m_Tiles[ i ].x + m_Tiles[ i ].width ) * scaler / scr_width ) * 2 - 1;
-        float new_y2 = -( ( m_Tiles[ i ].y / SCALE ) * 2 - 1 );
-        float new_x3 = ( ( m_Tiles[ i ].x + m_Tiles[ i ].width ) * scaler / scr_width ) * 2 - 1;
-        float new_y3 = -( ( ( m_Tiles[ i ].y + m_Tiles[ i ].height ) / SCALE ) * 2 - 1 );
-        float new_x4 = ( m_Tiles[ i ].x * scaler / scr_width ) * 2 - 1;
-        float new_y4 = -( ( ( m_Tiles[ i ].y + m_Tiles[ i ].height ) / SCALE ) * 2 - 1 );
+        Tile &tile( m_Tiles[ i ] );
+        Ogre::Vector2   top_left ( tile.x, -tile.y );
+        Ogre::Vector2   top_right( tile.x + tile.width, top_left.y );
+        Ogre::Vector2   bottom_right( top_right.x, -( tile.y + tile.height ) );
+        Ogre::Vector2   bottom_left( top_left.x, bottom_right.y );
 
-        new_x1 += 1;
-        new_y1 -= 1;
-        new_x2 += 1;
-        new_y2 -= 1;
-        new_x3 += 1;
-        new_y3 -= 1;
-        new_x4 += 1;
-        new_y4 -= 1;
+        virtualScreenToWorldSpace( top_left );
+        virtualScreenToWorldSpace( top_right );
+        virtualScreenToWorldSpace( bottom_right );
+        virtualScreenToWorldSpace( bottom_left );
+
+        float new_x1 = top_left.x;
+        float new_y1 = top_left.y;
+
+        float new_x2 = top_right.x;
+        float new_y2 = top_right.y;
+
+        float new_x3 = bottom_right.x;
+        float new_y3 = bottom_right.y;
+
+        float new_x4 = bottom_left.x;
+        float new_y4 = bottom_left.y;
 
         Ogre::HardwareVertexBufferSharedPtr vertex_buffer;
 
@@ -280,9 +289,7 @@ Background2D::OnResize()
         vertex_buffer->unlock();
     }
 
-
-
-    SetScroll( GetScroll() );
+    applyScroll();
 }
 
 //-----------------------------------------------------------------------------
@@ -296,6 +303,7 @@ Background2D::Clear()
     m_ScrollCurrentSeconds = 0;
     m_Position = Ogre::Vector2::ZERO;
     m_PositionReal = Ogre::Vector2::ZERO;
+    m_range = Ogre::AxisAlignedBox::BOX_INFINITE;
     UnsetScroll();
 
     for( unsigned int i = 0; i < m_Animations.size(); ++i )
@@ -348,7 +356,7 @@ Background2D::ScriptScrollToPosition( const float x, const float y, const Scroll
         return;
     }
 
-    m_ScrollPositionStart = GetScroll();
+    m_ScrollPositionStart = m_Position;
     m_ScrollPositionEnd = position;
     m_ScrollType = type;
     m_ScrollSeconds = seconds;
@@ -424,20 +432,38 @@ Background2D::GetScrollCurrentSeconds() const
 
 //-----------------------------------------------------------------------------
 void
+Background2D::SetScreenScroll( const Ogre::Vector2& position )
+{
+    SetScroll( position / m_screen_scale );
+}
+
+//-----------------------------------------------------------------------------
+void
 Background2D::SetScroll( const Ogre::Vector2& position )
 {
     m_Position = position;
+    Ogre::Vector3 pos_3d( m_Position.x, m_Position.y, 0 );
 
-    float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth() / 2.0f;
-    float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight() / 2.0f;
-    m_Position.x = ( m_Position.x + scr_width > m_RangeMaxX ) ? m_RangeMaxX - scr_width : m_Position.x;
-    m_Position.x = ( m_Position.x - scr_width < m_RangeMinX ) ? m_RangeMinX + scr_width : m_Position.x;
-    m_Position.y = ( m_Position.y + scr_height > m_RangeMaxY ) ? m_RangeMaxY - scr_height : m_Position.y;
-    m_Position.y = ( m_Position.y - scr_height < m_RangeMinY ) ? m_RangeMinY + scr_height : m_Position.y;
+    if( !m_range.contains( pos_3d ) )
+    {
+        Ogre::Vector3 max_3d( m_range.getMaximum() );
+        Ogre::Vector3 min_3d( m_range.getMinimum() );
+        Ogre::Vector2 max( max_3d.x, max_3d.y );
+        Ogre::Vector2 min( min_3d.x, min_3d.y );
+        m_Position.makeCeil( min );
+        m_Position.makeFloor( max );
+    }
 
+    applyScroll();
+}
+
+//-----------------------------------------------------------------------------
+void
+Background2D::applyScroll()
+{
     if( cv_background2d_manual.GetB() != true )
     {
-        m_PositionReal = m_Position;
+        m_PositionReal = GetScreenScroll();
         CameraManager::getSingleton().Set2DScroll( m_PositionReal );
     }
 }
@@ -447,6 +473,13 @@ const Ogre::Vector2&
 Background2D::GetScroll() const
 {
     return m_Position;
+}
+
+//-----------------------------------------------------------------------------
+const Ogre::Vector2
+Background2D::GetScreenScroll() const
+{
+    return GetScroll() * m_screen_scale;
 }
 
 //-----------------------------------------------------------------------------
@@ -478,21 +511,14 @@ Background2D::SetRange( const int min_x, const int min_y, const int max_x, const
         << "Background2D::SetRange " << min_x << " " << min_y << " " << max_x << " " << max_y;
 
     Ogre::Vector2   half_virtual_screen_size( m_virtual_screen_size / 2 );
-    m_range.setMaximumX( max_x - half_virtual_screen_size.x );
-    m_range.setMaximumY( max_y - half_virtual_screen_size.y );
-    m_range.setMinimumX( min_x + half_virtual_screen_size.x );
-    m_range.setMinimumY( min_y + half_virtual_screen_size.y );
+    half_virtual_screen_size /= m_screen_proportion;
+    m_range.setMaximum( max_x - half_virtual_screen_size.x , max_y - half_virtual_screen_size.y, 1 );
+    m_range.setMinimum( min_x + half_virtual_screen_size.x , min_y + half_virtual_screen_size.y, 0 );
 
-    // if screen range lesser than screen size - expand screen range to screen size
-    Ogre::Viewport *viewport( Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 ) );
-    Ogre::Real scr_width( viewport->getActualWidth() );
-    Ogre::Real scr_height( viewport->getActualHeight() );
-    m_screen_scale = std::min( scr_width / m_virtual_screen_size.x, scr_height / m_virtual_screen_size.y );
+    Ogre::LogManager::getSingleton().stream()
+        << "Background2D::SetRange " << m_range;
 
-    m_RangeMinX = ( min_x > -scr_width ) ? -scr_width : min_x;
-    m_RangeMinY = ( min_y > -scr_height ) ? -scr_height : min_y;
-    m_RangeMaxX = ( max_x < scr_width ) ? scr_width : max_x;
-    m_RangeMaxY = ( max_y < scr_height ) ? scr_height : max_y;
+    calculateScreenScale();
 }
 
 //-----------------------------------------------------------------------------
@@ -500,10 +526,12 @@ void
 Background2D::AddTile(  const QGears::Tile& tile )
 {
     const Ogre::Matrix4 &cam_projection( CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrixWithRSDepth() );
-    Ogre::Vector4 res( 0, 0, -tile.depth, 1 );
+    Ogre::Vector4 res( 0, 0, -tile.depth / 32.0, 1 );
     res = cam_projection * res;
     res /= res.w;
-    AddTile( tile.destination, tile.width, tile.height, res.z, tile.uv, tile.blending );
+    Ogre::Real depth( 1 );
+    depth = std::min( depth, res.z );
+    AddTile( tile.destination, tile.width, tile.height, depth, tile.uv, tile.blending );
 }
 
 //-----------------------------------------------------------------------------
@@ -511,6 +539,17 @@ void
 Background2D::AddTile( const Ogre::Vector2& destination, const int width, const int height, const float depth, const Ogre::Vector4& uv, const Blending blending )
 {
     AddTile( destination.x, destination.y, width, height, depth, uv.x, uv.y, uv.z, uv.w, blending );
+}
+
+//-----------------------------------------------------------------------------
+void
+Background2D::virtualScreenToWorldSpace( Ogre::Vector2& pos ) const
+{
+    pos.x /= m_virtual_screen_size.x / 2;
+    pos.y /= m_virtual_screen_size.y / 2;
+
+    pos.x *= m_screen_proportion.x;
+    pos.y *= m_screen_proportion.y;
 }
 
 //-----------------------------------------------------------------------------
@@ -544,8 +583,6 @@ Background2D::AddTile( const int x, const int y, const int width, const int heig
         LOG_ERROR( "Max number of tiles reached. Can't create more than " + Ogre::StringConverter::toString( max_vertex_count / TILE_VERTEX_COUNT ) + " tiles." );
         return;
     }
-    Ogre::LogManager::getSingleton().stream()
-        << "AddTile x: " << x << "; y: " << y << "; width: " << width << "; height: " << height << "; depth:" << depth;
 
     Tile tile;
     tile.x = x;
@@ -556,30 +593,27 @@ Background2D::AddTile( const int x, const int y, const int width, const int heig
     tile.blending = blending;
     m_Tiles.push_back( tile );
 
-    float scr_width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float scr_height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    Ogre::Vector2   top_left ( x, -y );
+    Ogre::Vector2   top_right( x + width, top_left.y );
+    Ogre::Vector2   bottom_right( top_right.x, -( y + height ) );
+    Ogre::Vector2   bottom_left( top_left.x, bottom_right.y );
 
-    float scaler = scr_height / SCALE;
-    float new_x1 = ( x * scaler / scr_width ) * 2 - 1;
-    float new_y1 = -( ( y / SCALE ) * 2 - 1 );
+    virtualScreenToWorldSpace( top_left );
+    virtualScreenToWorldSpace( top_right );
+    virtualScreenToWorldSpace( bottom_right );
+    virtualScreenToWorldSpace( bottom_left );
 
-    float new_x2 = ( ( x + width ) * scaler / scr_width ) * 2 - 1;
-    float new_y2 = new_y1;
+    float new_x1 = top_left.x;
+    float new_y1 = top_left.y;
 
-    float new_x3 = new_x2;
-    float new_y3 = -( ( ( y + height ) / SCALE ) * 2 - 1 );
+    float new_x2 = top_right.x;
+    float new_y2 = top_right.y;
 
-    float new_x4 = new_x1;
-    float new_y4 = new_y3;
+    float new_x3 = bottom_right.x;
+    float new_y3 = bottom_right.y;
 
-    new_x1 += 1;
-    new_y1 -= 1;
-    new_x2 += 1;
-    new_y2 -= 1;
-    new_x3 += 1;
-    new_y3 -= 1;
-    new_x4 += 1;
-    new_y4 -= 1;
+    float new_x4 = bottom_left.x;
+    float new_y4 = bottom_left.y;
 
     float* writeIterator = ( float* )vertex_buffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
     writeIterator += render_op.vertexData->vertexCount * TILE_VERTEX_INDEX_SIZE;
@@ -614,7 +648,6 @@ Background2D::AddTile( const int x, const int y, const int width, const int heig
     *writeIterator++ = u2;
     *writeIterator++ = v2;
 
-    ///*
     *writeIterator++ = new_x1;
     *writeIterator++ = new_y1;
     *writeIterator++ = depth;
@@ -634,7 +667,6 @@ Background2D::AddTile( const int x, const int y, const int width, const int heig
     *writeIterator++ = 1;
     *writeIterator++ = u2;
     *writeIterator++ = v2;
-    //*/
 
     *writeIterator++ = new_x4;
     *writeIterator++ = new_y4;
@@ -873,6 +905,7 @@ Background2D::DestroyVertexBuffers()
 void
 Background2D::load( const QGears::Background2DFilePtr& background )
 {
+    assert( !background.isNull() );
     background->load();
     SetImage( background->getTextureName() );
     SetRange( background->getRange() );
@@ -888,12 +921,40 @@ Background2D::load( const QGears::Background2DFilePtr& background )
 void
 Background2D::load( const QGears::Background2DFile::TileList& tiles )
 {
-    const Ogre::Matrix4 &cam_projection( CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrixWithRSDepth() );
     QGears::Background2DFile::TileList::const_iterator it( tiles.begin() );
     QGears::Background2DFile::TileList::const_iterator it_end( tiles.end() );
+    size_t tile_index( 0 );
     while( it != it_end )
     {
-        AddTile( *(it++) );
+        AddTile( *it );
+        load( tile_index++, it->animations );
+        ++it;
+    }
+}
+
+//-----------------------------------------------------------------------------
+void
+Background2D::load( const size_t tile_index, const QGears::AnimationMap& animations )
+{
+    QGears::AnimationMap::const_iterator it( animations.begin() );
+    QGears::AnimationMap::const_iterator it_end( animations.end() );
+
+    while( it != it_end )
+    {
+        const QGears::String& name( it->first );
+        const QGears::Animation& animation( it->second );
+        Ogre::LogManager::getSingleton().stream()
+            << "Add Animation: " << name;
+        Background2DAnimation* anim( new Background2DAnimation( name, this, tile_index ) );
+        anim->SetLength( animation.length );
+        QGears::KeyFrameList::const_iterator itk( animation.key_frames.begin() );
+        QGears::KeyFrameList::const_iterator itk_end( animation.key_frames.end() );
+        while( itk != itk_end )
+        {
+            anim->AddUVKeyFrame( *(itk++) );
+        }
+        AddAnimation( anim );
+        ++it;
     }
 }
 

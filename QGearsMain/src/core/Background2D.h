@@ -47,8 +47,13 @@ public:
     void SetScrollCurrentSeconds( const float seconds );
     float GetScrollCurrentSeconds() const;
 
+    // Scroll position in screen coordinates
+    void SetScreenScroll( const Ogre::Vector2& position );
+    const Ogre::Vector2 GetScreenScroll() const;
+    // scroll in game internal screen coordinates
     void SetScroll( const Ogre::Vector2& position );
     const Ogre::Vector2& GetScroll() const;
+
 
     void SetImage( const Ogre::String& image );
 
@@ -84,13 +89,16 @@ public:
 
 protected:
     virtual void load( const QGears::Background2DFile::TileList& tiles );
+    virtual void load( const size_t tile_index, const QGears::AnimationMap& animations );
+    virtual void applyScroll( void );
+    virtual void calculateScreenScale( void );
+    virtual void virtualScreenToWorldSpace( Ogre::Vector2& pos ) const;
 
     enum
     {
         TILE_VERTEX_COUNT = 6
        ,TILE_VERTEX_INDEX_SIZE = TILE_VERTEX_COUNT + 3
     };
-    static const float SCALE;
 
 private:
     void CreateVertexBuffers();
@@ -99,11 +107,6 @@ private:
 private:
     Ogre::SceneManager*                   m_SceneManager;
     Ogre::RenderSystem*                   m_RenderSystem;
-
-    int                                   m_RangeMinX;
-    int                                   m_RangeMinY;
-    int                                   m_RangeMaxX;
-    int                                   m_RangeMaxY;
 
     TileList                              m_Tiles;
 
@@ -130,6 +133,7 @@ private:
     Ogre::Vector2                         m_PositionReal;
 
     Ogre::Real                            m_screen_scale;
+    Ogre::Vector2                         m_screen_proportion;
     Ogre::Vector2                         m_virtual_screen_size;
     Ogre::AxisAlignedBox                  m_range;
 

@@ -211,12 +211,12 @@ EntityManager::Update()
         if( scroll_entity == m_Entity[ i ] )
         {
             Ogre::Vector3 view = CameraManager::getSingleton().ProjectPointToScreen( scroll_entity->GetPosition() );
-            Ogre::Vector2 pos = m_Background2D.GetScroll();
+            Ogre::Vector2 pos = m_Background2D.GetScreenScroll();
             float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
             float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
             view.x = view.x - width / 2 - pos.x;
             view.y = view.y - height / 2 - pos.y;
-            m_Background2D.SetScroll( Ogre::Vector2( -view.x, -view.y ) );
+            m_Background2D.SetScreenScroll( Ogre::Vector2( -view.x, -view.y ) );
         }
 
 

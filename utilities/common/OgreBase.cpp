@@ -1,17 +1,24 @@
 #include "OgreBase.h"
 
-//#include "data/QGearsBackgroundFileManager.h"
-//#include "data/QGearsPaletteFileManager.h"
-//#include "data/QGearsLZSFLevelFileManager.h"
+#ifdef QGEARS_ADD_MANAGERS
+#include "data/QGearsBackgroundFileManager.h"
+#include "data/QGearsPaletteFileManager.h"
+#include "data/QGearsLZSFLevelFileManager.h"
+#include "map/QGearsBackground2DFileManager.h"
+#endif
 
 Ogre::Root*                     root;
 Ogre::RenderWindow*             window;
 std::vector< Ogre::Entity* >    entitys;
 Ogre::Camera                   *camera;
 DisplayFrameListener           *frame_listener;
-//QGears::BackgroundFileManager  *bmgr;
-//QGears::PaletteFileManager     *pmgr;
-//QGears::LZSFLevelFileManager   *fmgr;
+
+#ifdef QGEARS_ADD_MANAGERS
+QGears::Background2DFileManager    *b2d_mgr;
+QGears::BackgroundFileManager      *bmgr;
+QGears::PaletteFileManager         *pmgr;
+QGears::LZSFLevelFileManager       *fmgr;
+#endif
 
 void
 InitializeOgreBase( const Ogre::String& name )
@@ -82,10 +89,13 @@ InitializeOgreBase( const Ogre::String& name )
     window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
 
 
+    #ifdef QGEARS_ADD_MANAGERS
     // move to plugin if not needed directly
-    //bmgr = new QGears::BackgroundFileManager();
-    //pmgr = new QGears::PaletteFileManager();
-    //fmgr = new QGears::LZSFLevelFileManager();
+    b2d_mgr = new QGears::Background2DFileManager();
+    bmgr = new QGears::BackgroundFileManager();
+    pmgr = new QGears::PaletteFileManager();
+    fmgr = new QGears::LZSFLevelFileManager();
+    #endif
 
     // initialize resource
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./", "FileSystem", "General" );
@@ -129,9 +139,12 @@ DeinitializeOgreBase()
     delete LOGGER;
     delete FILESYSTEM;
 
-    //delete bmgr;
-    //delete pmgr;
-    //delete fmgr;
+    #ifdef QGEARS_ADD_MANAGERS
+    delete fmgr;
+    delete bmgr;
+    delete pmgr;
+    delete b2d_mgr;
+    #endif
 
     delete root;
     delete frame_listener;

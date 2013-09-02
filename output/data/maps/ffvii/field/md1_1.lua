@@ -23,7 +23,7 @@ EntityContainer[ "Director" ] = {
 
                 if ( FFVII.Data.progress_game < 7 ) and ( triangle_id == 62 ) then
                     player_lock( true )
-                    background2d:scroll_to_position( -288, 180, Background2D.SMOOTH, 1.06667 )
+                    background2d:scroll_to_position( -96, 60, Background2D.SMOOTH, 1.06667 )
 
                     script:request( Script.ENTITY, "Cloud", "scene_part_1", 6 )
 

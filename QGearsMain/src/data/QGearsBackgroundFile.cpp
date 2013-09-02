@@ -117,11 +117,9 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    Ogre::Image*
-    BackgroundFile::createImage( const PaletteFilePtr &palette ) const
+    void
+    BackgroundFile::addAllSprites( SpriteList& sprites ) const
     {
-        assert( !palette.isNull() );
-        SpriteList sprites;
         for( size_t i(0); i < LAYER_COUNT; ++i )
         {
             if( m_layers[i].enabled )
@@ -129,6 +127,16 @@ namespace QGears
                 sprites.insert( sprites.end(), m_layers[i].sprites.begin(), m_layers[i].sprites.end() );
             }
         }
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Image*
+    BackgroundFile::createImage( const PaletteFilePtr &palette ) const
+    {
+        assert( !palette.isNull() );
+        SpriteList sprites;
+        addAllSprites( sprites );
+
         size_t sprite_count( sprites.size() );
         size_t width( 1024 );
         size_t row_pitch( width );
@@ -149,9 +157,9 @@ namespace QGears
             ;it != sprites.end()
             ;++it)
         {
-            const Page &data_page( m_pages[it->data_page] );
-            const PaletteFile::Page &palette_page( palette->getPage( it->palette_page ) );
-            const Pixel &src( it->src );
+            const Page& data_page( m_pages[it->data_page] );
+            const PaletteFile::Page& palette_page( palette->getPage( it->palette_page ) );
+            const Pixel& src( it->src );
             if( !data_page.enabled )
             {
                 Ogre::LogManager::getSingleton().stream()
@@ -181,7 +189,16 @@ namespace QGears
                             << "Error: writing Pixel out of Bounds " << data_index
                             << " " << (dst_x + x) << " x " << dst_y + y;
                     }
-                    color[data_index] = palette_page[ index ].getAsARGB();
+                    Ogre::ColourValue colour( palette_page[ index ] );
+                    if( index == 0 && colour != Ogre::ColourValue::Black)
+                    {
+                        colour.a = 0;
+                    }
+                    else
+                    {
+                        colour.a = 1;
+                    }
+                    color[data_index] = colour.getAsARGB();
                 }
             }
 

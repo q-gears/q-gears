@@ -144,38 +144,5 @@ namespace QGears
         readAttribute( node, pDest.time, "time" );
     }
 
-/*
-        if( node2->Type() == TiXmlNode::TINYXML_ELEMENT && node2->ValueStr() == "animation" )
-        {
-            Ogre::String name = GetString( node2, "name", "" );
-            if( name != "" )
-            {
-                Background2DAnimation* animation = new Background2DAnimation( name, background, tile_id );
-
-                animation->SetLength( GetFloat( node2, "length", 0 ) );
-
-                Ogre::String uv = GetString( node2, "uv", "" );
-                if( uv != "" )
-                {
-                    Ogre::StringVector key_frame = Ogre::StringUtil::split( uv, "," );
-                    for( unsigned int i = 0; i < key_frame.size(); ++i )
-                    {
-                        Ogre::StringUtil::trim( key_frame[ i ] );
-
-                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
-                        if( data.size() > 1 )
-                        {
-                            float time = Ogre::StringConverter::parseReal( data[ 0 ] );
-                            Ogre::Vector4 value = Ogre::StringConverter::parseVector4( data[ 1 ] );
-                            animation->AddUVKeyFrame( time, value.x, value.y, value.z, value.w );
-                        }
-                    }
-                }
-
-                background->AddAnimation( animation );
-            }
-        }
-    */
-
     //---------------------------------------------------------------------
 }

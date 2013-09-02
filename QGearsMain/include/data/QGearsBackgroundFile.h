@@ -73,10 +73,10 @@ namespace QGears
             uint16 unknown_0C[4];
 
             uint16 palette_page;
-            uint16 unknown_16;
+            uint16 depth;
             uint8  flags_18[2];
             bool   flags_20[2];
-            uint16 unknown_1C;
+            uint16 unknown_1C; // maybe some 'mode'
             uint16 data_page;
             uint16 unknown_20;
             uint16 unknown_22;
@@ -118,6 +118,8 @@ namespace QGears
         virtual Page*  getPages  ( void ) { return m_pages;   };
 
         virtual Ogre::Image*        createImage     ( const PaletteFilePtr &palette ) const;
+
+        virtual void addAllSprites( SpriteList& sprites ) const;
 
     protected:
         virtual void loadImpl();
