@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "map/QGearsBackground2DFile.h"
 
 #include "QGearsBackgroundFile.h"
+#include "QGearsCameraMatrixFile.h"
 #include "QGearsPaletteFile.h"
 
 namespace QGears
@@ -52,11 +53,13 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
-        virtual const BackgroundFilePtr&   getBackground( void ) const;
-        virtual const PaletteFilePtr&      getPalette   ( void ) const;
+        virtual const BackgroundFilePtr&    getBackground  ( void ) const;
+        virtual const CameraMatrixFilePtr&  getCameraMatrix( void ) const;
+        virtual const PaletteFilePtr&       getPalette     ( void ) const;
 
-        virtual void setBackground( const BackgroundFilePtr &background  );
-        virtual void setPalette   ( const PaletteFilePtr    &palette     );
+        virtual void setBackground  ( const BackgroundFilePtr&      background    );
+        virtual void setCameraMatrix( const CameraMatrixFilePtr&    camera_matrix );
+        virtual void setPalette     ( const PaletteFilePtr&         palette       );
 
         virtual String getBackground2DName( void ) const;
         virtual String getBackgroundTextureName( void ) const;
@@ -72,6 +75,7 @@ namespace QGears
         static const String SUFFIX_BACKGROUND_2D;
 
     private:
+        CameraMatrixFilePtr         m_camera_matrix;
         BackgroundFilePtr           m_background;
         PaletteFilePtr              m_palette;
 

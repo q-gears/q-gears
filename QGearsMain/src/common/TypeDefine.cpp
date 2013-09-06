@@ -37,6 +37,8 @@ namespace QGears
     const String    EXT_TEX     ( ".tex"        );
     const String    EXT_TIM     ( ".tim"        );
 
-    const String    EXT_PALETTE   ( ".palette"    );
-    const String    EXT_BACKGROUND( ".background" );
+
+    const String    EXT_CAMERA_MATRIX( ".cam_matrix" );
+    const String    EXT_PALETTE      ( ".palette"    );
+    const String    EXT_BACKGROUND   ( ".background" );
 }

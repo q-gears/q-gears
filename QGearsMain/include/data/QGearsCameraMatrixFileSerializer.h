@@ -39,11 +39,19 @@ namespace QGears
                         CameraMatrixFileSerializer();
         virtual        ~CameraMatrixFileSerializer();
 
+        enum
+        {
+            CAMERA_MATRIX_ROW_COUNT     = 3
+           ,CAMERA_MATRIX_COL_COUNT     = CAMERA_MATRIX_ROW_COUNT
+           ,CAMERA_MATRIX_ENTRY_COUNT   = CAMERA_MATRIX_ROW_COUNT * CAMERA_MATRIX_COL_COUNT
+        };
+
         virtual void 	importCameraMatrixFile( Ogre::DataStreamPtr &stream, CameraMatrixFile* pDest );
 
     protected:
 
     private:
+        // http://en.wikipedia.org/wiki/Angle_of_view
     };
 }
 

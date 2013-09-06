@@ -20,6 +20,7 @@
 #include "core/particles/ParticleSystemManager.h"
 
 #include "data/QGearsBackgroundFileManager.h"
+#include "data/QGearsCameraMatrixFileManager.h"
 #include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
 #include "map/QGearsBackground2DFileManager.h"
@@ -116,6 +117,7 @@ main(int argc, char *argv[])
 
     QGears::Background2DFileManager *b2d_mgr( new QGears::Background2DFileManager() );
     QGears::BackgroundFileManager   *bgf_mgr( new QGears::BackgroundFileManager() );
+    QGears::CameraMatrixFileManager *cmf_mgr( new QGears::CameraMatrixFileManager() );
     QGears::LZSFLevelFileManager    *flv_mgr( new QGears::LZSFLevelFileManager() );
     QGears::PaletteFileManager      *plt_mgr( new QGears::PaletteFileManager() );
     res_gm.addResourceLocation( "./data", "FileSystem", "Game", true );
@@ -202,6 +204,7 @@ main(int argc, char *argv[])
     delete flv_mgr;
     delete plt_mgr;
     delete bgf_mgr;
+    delete cmf_mgr;
     delete b2d_mgr;
 
     delete particle_system_manager;

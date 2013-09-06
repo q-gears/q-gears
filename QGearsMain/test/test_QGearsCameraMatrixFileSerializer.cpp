@@ -55,7 +55,13 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_REQUIRE( stream->isReadable() );
 
     ser.importCameraMatrixFile( stream, &file );
-    BOOST_CHECK_EQUAL( 76, stream->tell() );
+    BOOST_CHECK_EQUAL( Ogre::Quaternion( 0.864826, 0.382658, 0.131622, 0.297191 ), file.getOrientation() );
+    BOOST_CHECK_EQUAL( Ogre::Vector3( -998, 930, 5141 ), file.getPosition() );
+    BOOST_CHECK_EQUAL( 0, file.getOffset().x );
+    BOOST_CHECK_EQUAL( 0, file.getOffset().y );
+    BOOST_CHECK_EQUAL( 703, file.getFocalLength() );
+    Ogre::Quaternion dir( file.getMatrix() );
+    BOOST_CHECK_EQUAL( 38, stream->tell() );
 
     logMgr.destroyLog( "Default Log" );
     ifs->close();

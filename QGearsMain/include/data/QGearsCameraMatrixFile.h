@@ -26,6 +26,8 @@ THE SOFTWARE.
 #ifndef __QGearsCameraMatrixFile_H__
 #define __QGearsCameraMatrixFile_H__
 
+#include <OgreMatrix3.h>
+
 #include "common/QGearsResource.h"
 
 namespace QGears
@@ -42,12 +44,31 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
+        virtual const Ogre::Matrix3&    getMatrix() const;
+        virtual void                    setMatrix( const Ogre::Matrix3& matrix );
+
+        virtual const Ogre::Vector3&    getPosition() const;
+        virtual void                    setPosition( const Ogre::Vector3& position );
+
+        virtual const Pixel&            getOffset() const;
+        virtual void                    setOffset( const Pixel& offset );
+
+        virtual const Ogre::Real&       getFocalLength() const;
+        virtual void                    setFocalLength( const Ogre::Real );
+
+        virtual Ogre::Quaternion        getOrientation() const;
+        virtual Ogre::Radian            getFov( const Ogre::Real& width ) const;
+
     protected:
         virtual void loadImpl( void );
         virtual void unloadImpl( void );
         virtual size_t calculateSize( void ) const;
 
     private:
+        Ogre::Matrix3   m_matrix;
+        Ogre::Vector3   m_position;
+        Pixel           m_offset;
+        Ogre::Real      m_focal_length;
     };
 
     //-------------------------------------------------------------------------

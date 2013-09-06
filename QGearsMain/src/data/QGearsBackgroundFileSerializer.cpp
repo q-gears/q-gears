@@ -201,13 +201,6 @@ namespace QGears
         #endif
     }
 
-    //---------------------------------------------------------------------
-    void
-    BackgroundFileSerializer::readObject( Ogre::DataStreamPtr &stream, Pixel &pDest )
-    {
-        stream->read( &pDest, sizeof( pDest ) );
-        flipFromLittleEndian( &pDest, 2, 2 );
-    }
 
     //---------------------------------------------------------------------
     void

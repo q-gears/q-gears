@@ -48,7 +48,6 @@ namespace QGears
         };
 
         typedef BackgroundFile::Layer       Layer;
-        typedef BackgroundFile::Pixel       Pixel;
         typedef BackgroundFile::SpriteData  SpriteData;
         typedef BackgroundFile::SpriteList  SpriteList;
         typedef BackgroundFile::Page        Page;
@@ -64,7 +63,6 @@ namespace QGears
 
         virtual void    readLayer( Ogre::DataStreamPtr &stream, Layer *pDest, size_t layer_index  );
 
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Pixel &pDest  );
         virtual void    readObject( Ogre::DataStreamPtr &stream, SpriteData &pDest  );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Page &pDest  );
         using Serializer::readObject;

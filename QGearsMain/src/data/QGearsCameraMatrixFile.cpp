@@ -62,6 +62,11 @@ namespace QGears
     void
     CameraMatrixFile::unloadImpl()
     {
+        m_matrix = Ogre::Matrix3::ZERO;
+        m_position = Ogre::Vector3::ZERO;
+        m_offset.x = 0;
+        m_offset.y = 0;
+        m_focal_length = 0;
     }
 
     //---------------------------------------------------------------------
@@ -69,6 +74,75 @@ namespace QGears
     CameraMatrixFile::calculateSize() const
     {
         return 0;
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Quaternion
+    CameraMatrixFile::getOrientation() const
+    {
+        return Ogre::Quaternion( m_matrix );
+    }
+    //---------------------------------------------------------------------
+    const Ogre::Matrix3&
+    CameraMatrixFile::getMatrix() const
+    {
+        return m_matrix;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    CameraMatrixFile::setMatrix( const Ogre::Matrix3& matrix )
+    {
+        m_matrix = matrix;
+    }
+
+    //---------------------------------------------------------------------
+    const Ogre::Vector3&
+    CameraMatrixFile::getPosition() const
+    {
+        return m_position;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    CameraMatrixFile::setPosition( const Ogre::Vector3& position )
+    {
+        m_position = position;
+    }
+
+    //---------------------------------------------------------------------
+    const Pixel&
+    CameraMatrixFile::getOffset() const
+    {
+        return m_offset;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    CameraMatrixFile::setOffset( const Pixel& offset )
+    {
+        m_offset = offset;
+    }
+
+    //---------------------------------------------------------------------
+    const Ogre::Real&
+    CameraMatrixFile::getFocalLength() const
+    {
+        return m_focal_length;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    CameraMatrixFile::setFocalLength( const Ogre::Real focal_length )
+    {
+        m_focal_length = focal_length;
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Radian
+    CameraMatrixFile::getFov( const Ogre::Real& width ) const
+    {
+        return 2 * Ogre::Math::ATan( width / (2 * m_focal_length ) );
     }
 
     //---------------------------------------------------------------------

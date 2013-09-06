@@ -83,6 +83,14 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
+    Serializer::readObject( Ogre::DataStreamPtr &stream, Pixel &pDest )
+    {
+        stream->read( &pDest, sizeof( pDest ) );
+        flipFromLittleEndian( &pDest, 2, 2 );
+    }
+
+    //---------------------------------------------------------------------
+    void
     Serializer::read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest )
     {
         uint8 enabled;
@@ -111,6 +119,13 @@ namespace QGears
     Serializer::readInt( Ogre::DataStreamPtr &stream, uint32 &pDest )
     {
         readInts( stream, &pDest, 1 );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    Serializer::readFloat( Ogre::DataStreamPtr &stream, float &pDest )
+    {
+        readFloats( stream, &pDest, 1 );
     }
 
     //---------------------------------------------------------------------

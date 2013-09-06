@@ -52,13 +52,17 @@ namespace QGears
         background_2d->_notifyOrigin( m_flevel_file.getName() );
         background_2d->setTextureName( m_flevel_file.getBackgroundTextureName() );
 
-        Ogre::Vector3 position( 28.4846, 210.83, 3.10751 );
-        background_2d->setPosition( position );
+        CameraMatrixFilePtr camera_matrix( m_flevel_file.getCameraMatrix() );
+        background_2d->setPosition( camera_matrix->getPosition() );
 
-        Ogre::Quaternion orientation( 0.742188, 0.667516, -0.0403783, -0.0450658 );
-        background_2d->setOrientation( orientation );
+        background_2d->setOrientation( camera_matrix->getOrientation() );
 
-        background_2d->setFov( Ogre::Radian( Ogre::Degree( 34.5389 ) ) );
+        Ogre::Real focal_length( camera_matrix->getFocalLength() );
+        background_2d->setFov( camera_matrix->getFov( 240 ) );
+
+        //background_2d->setPosition( Ogre::Vector3( 28.4846, 210.83, 3.10751 ) );
+        //background_2d->setOrientation( Ogre::Quaternion( 0.742188, 0.667516, -0.0403783, -0.0450658 ) );
+        //background_2d->setFov( Ogre::Radian( Ogre::Degree( 34.5389 ) ) );
 
         Ogre::Vector4 range( 0, 0, 0, 0 );
 
@@ -81,6 +85,18 @@ namespace QGears
             tile.height = BackgroundFile::SPRITE_HEIGHT;
             tile.blending = B_ALPHA;
             tile.depth = sprite.depth;
+            /*
+            if depth >= 1
+                if( ??? / 4.0 < depth )
+                    if( depth < 4095 )
+                    else
+                        depth = 0.9999
+                else
+                    depth = depth / 1000.0
+            else
+                depth = 0.0001
+            */
+
             tile.destination.x = sprite.dst.x;
             tile.destination.y = sprite.dst.y;
             tile.uv = uv;

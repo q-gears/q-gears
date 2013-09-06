@@ -2642,12 +2642,12 @@ DatFile::GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre
     matrix[ 2 ][ 2 ] = -matrix[ 2 ][ 2 ];
     orientation.FromRotationMatrix( matrix );
 
-    float distance = GetU16LE( offset_to_camera + 0x24 );
-    fov = Ogre::Degree( Ogre::Radian( 2 * atanf( 240.0f / ( 2.0f * distance ) ) ) );
+    float focal_length = GetU16LE( offset_to_camera + 0x24 );
+    fov = Ogre::Degree( Ogre::Radian( 2 * atanf( 240.0f / ( 2.0f * focal_length ) ) ) );
 
     LOGGER->Log( "Field camera matrix : " + Ogre::StringConverter::toString( matrix ) + "\n" );
     LOGGER->Log( "Camera position     : " + Ogre::StringConverter::toString( position ) + "\n" );
-    LOGGER->Log( "Camera distance:      distance = " + FloatToString( distance ) + "\n");
+    LOGGER->Log( "Camera focal_length : " + FloatToString( focal_length ) + "\n");
     LOGGER->Log( "Unknown (depth que?): DQB = " + HexToString( GetU32LE( offset_to_camera + 0x20 ), 8, '0' ) + ", DQA = " + HexToString( GetU16LE( offset_to_camera + 0x26 ), 4, '0' ) + "\n" );
 }
 

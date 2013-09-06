@@ -50,11 +50,13 @@ namespace QGears
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector2 &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector3 &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::AxisAlignedBox &pDest );
+        virtual void    readObject( Ogre::DataStreamPtr &stream, Pixel &pDest );
 
         virtual void    read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
         virtual void    read2ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
         virtual void    readShort( Ogre::DataStreamPtr &stream, uint16 &pDest );
         virtual void    readInt( Ogre::DataStreamPtr &stream, uint32 &pDest );
+        virtual void    readFloat( Ogre::DataStreamPtr &stream, float &pDest );
         virtual void    readEndString( Ogre::DataStreamPtr &stream, const String &end_text );
 
 

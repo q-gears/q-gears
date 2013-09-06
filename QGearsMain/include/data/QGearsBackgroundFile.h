@@ -35,6 +35,7 @@ THE SOFTWARE.
 
 namespace QGears
 {
+    // TODO inherit from Qgears Ressource
     class BackgroundFile : public Ogre::Resource
     {
     public:
@@ -57,12 +58,6 @@ namespace QGears
            ,LAYER_COUNT         = 4
            ,PALETTE_ENTRY_COUNT = 20
            ,PAGE_COUNT          = 42
-        };
-
-        struct Pixel
-        {
-            sint16 x;
-            sint16 y;
         };
 
         struct SpriteData

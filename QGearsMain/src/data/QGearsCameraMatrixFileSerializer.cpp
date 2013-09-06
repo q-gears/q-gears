@@ -45,6 +45,40 @@ namespace QGears
     void
     CameraMatrixFileSerializer::importCameraMatrixFile( Ogre::DataStreamPtr &stream, CameraMatrixFile* pDest )
     {
+        sint16 matrix_sint16[CAMERA_MATRIX_ROW_COUNT][CAMERA_MATRIX_COL_COUNT];
+        readShorts( stream, reinterpret_cast< uint16* >( matrix_sint16 ), CAMERA_MATRIX_ENTRY_COUNT  );
+        stream->skip( 2 );
+
+        sint32 pos[CAMERA_MATRIX_ROW_COUNT];
+        readInts( stream, reinterpret_cast< uint32* >( pos ), CAMERA_MATRIX_ROW_COUNT );
+
+        Ogre::Matrix3 camera_matrix;
+        Ogre::Vector3 position;
+        for( size_t i(0); i < CAMERA_MATRIX_ROW_COUNT; ++i )
+        {
+            position[i] = pos[i];
+            for( size_t j(0); j < CAMERA_MATRIX_COL_COUNT; ++j )
+            {
+                camera_matrix[j][i] = matrix_sint16[i][j] / 4096.0;
+            }
+        }
+        position = ( camera_matrix * position ) / -128;
+        camera_matrix[0][1] *= -1;
+        camera_matrix[1][1] *= -1;
+        camera_matrix[2][1] *= -1;
+        camera_matrix[0][2] *= -1;
+        camera_matrix[1][2] *= -1;
+        camera_matrix[2][2] *= -1;
+        pDest->setMatrix( camera_matrix );
+        pDest->setPosition( position );
+
+        Pixel offset;
+        readObject( stream, offset );
+        pDest->setOffset( offset );
+
+        uint16 focal_length;
+        readShort( stream, focal_length );
+        pDest->setFocalLength( focal_length );
     }
 
     //---------------------------------------------------------------------

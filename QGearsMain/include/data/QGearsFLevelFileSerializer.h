@@ -67,8 +67,9 @@ namespace QGears
         virtual void    readSectionData( Ogre::DataStreamPtr &stream, Ogre::DataStreamPtr &out_buffer );
         virtual void    readSection( Ogre::DataStreamPtr &stream, FLevelFile* pDest, const size_t section_index );
 
-        virtual void    readPalette   ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
-        virtual void    readBackground( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        virtual void    readCameraMatrix( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        virtual void    readPalette     ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        virtual void    readBackground  ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
 
         virtual void    readEnd( Ogre::DataStreamPtr &stream );
 
@@ -85,9 +86,10 @@ namespace QGears
             }
         }
 
-        virtual String  getBaseName      ( const FLevelFile* pDest ) const;
-        virtual String  getPaletteName   ( const FLevelFile* pDest ) const;
-        virtual String  getBackgroundName( const FLevelFile* pDest ) const;
+        virtual String  getBaseName        ( const FLevelFile* pDest ) const;
+        virtual String  getCameraMatrixName( const FLevelFile* pDest ) const;
+        virtual String  getPaletteName     ( const FLevelFile* pDest ) const;
+        virtual String  getBackgroundName  ( const FLevelFile* pDest ) const;
 
         static const String     TAG_FILE_END;
 

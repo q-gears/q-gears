@@ -39,6 +39,12 @@ namespace QGears
         u32 all;
     };
 
+    struct Pixel
+    {
+        sint16 x;
+        sint16 y;
+    };
+
     extern const String    EXT_MATERIAL;
     extern const String    EXT_MESH;
     extern const String    EXT_SKELETON;
@@ -49,6 +55,8 @@ namespace QGears
     extern const String    EXT_TIM;
     extern const String    EXT_TEX;
 
+
+    extern const String    EXT_CAMERA_MATRIX;
     extern const String    EXT_PALETTE;
     extern const String    EXT_BACKGROUND;
 }

@@ -105,6 +105,7 @@ namespace QGears
     FLevelFile::unloadImpl()
     {
         m_background.setNull();
+        m_camera_matrix.setNull();
         m_palette.setNull();
     }
 
@@ -131,6 +132,27 @@ namespace QGears
     };
 
     //---------------------------------------------------------------------
+    void
+    FLevelFile::setBackground( const BackgroundFilePtr& background )
+    {
+        m_background = background;
+    };
+
+    //---------------------------------------------------------------------
+    const CameraMatrixFilePtr&
+    FLevelFile::getCameraMatrix( void ) const
+    {
+        return m_camera_matrix;
+    };
+
+    //---------------------------------------------------------------------
+    void
+    FLevelFile::setCameraMatrix( const CameraMatrixFilePtr& camera_matrix )
+    {
+        m_camera_matrix = camera_matrix;
+    };
+
+    //---------------------------------------------------------------------
     const PaletteFilePtr&
     FLevelFile::getPalette( void ) const
     {
@@ -139,14 +161,7 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    FLevelFile::setBackground( const BackgroundFilePtr &background )
-    {
-        m_background = background;
-    };
-
-    //---------------------------------------------------------------------
-    void
-    FLevelFile::setPalette( const PaletteFilePtr &palette )
+    FLevelFile::setPalette( const PaletteFilePtr& palette )
     {
         m_palette = palette;
     };

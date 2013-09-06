@@ -182,12 +182,7 @@
 			<Option target="Test_all" />
 			<Option target="Test_CameraMatrixFile" />
 		</Unit>
-		<Unit filename="include/data/QGearsCameraMatrixFileSerializer.h">
-			<Option target="Release" />
-			<Option target="Debug" />
-			<Option target="Test_all" />
-			<Option target="Test_CameraMatrixFile" />
-		</Unit>
+		<Unit filename="include/data/QGearsCameraMatrixFileSerializer.h" />
 		<Unit filename="include/data/QGearsFLevelBackground2DLoader.h" />
 		<Unit filename="include/data/QGearsFLevelFile.h" />
 		<Unit filename="include/data/QGearsFLevelFileManager.h" />
@@ -1971,16 +1966,8 @@
 		<Unit filename="src/data/QGearsBackgroundFile.cpp" />
 		<Unit filename="src/data/QGearsBackgroundFileManager.cpp" />
 		<Unit filename="src/data/QGearsBackgroundFileSerializer.cpp" />
-		<Unit filename="src/data/QGearsCameraMatrixFile.cpp">
-			<Option target="Release" />
-			<Option target="Debug" />
-			<Option target="Test_all" />
-		</Unit>
-		<Unit filename="src/data/QGearsCameraMatrixFileManager.cpp">
-			<Option target="Release" />
-			<Option target="Debug" />
-			<Option target="Test_all" />
-		</Unit>
+		<Unit filename="src/data/QGearsCameraMatrixFile.cpp" />
+		<Unit filename="src/data/QGearsCameraMatrixFileManager.cpp" />
 		<Unit filename="src/data/QGearsCameraMatrixFileSerializer.cpp">
 			<Option target="Release" />
 			<Option target="Debug" />
@@ -2008,16 +1995,14 @@
 		<Unit filename="test/test_QGearsBackground2D.cpp">
 			<Option target="Test_all" />
 			<Option target="Test_Background2D" />
-			<Option target="Test_CameraMatrixFile" />
 		</Unit>
 		<Unit filename="test/test_QGearsBackground2DFileSerializer.cpp">
 			<Option target="Test_Background2DFileSerializer" />
 			<Option target="Test_all" />
 		</Unit>
 		<Unit filename="test/test_QGearsCameraMatrixFileSerializer.cpp">
-			<Option target="Release" />
-			<Option target="Debug" />
 			<Option target="Test_all" />
+			<Option target="Test_CameraMatrixFile" />
 		</Unit>
 		<Unit filename="test/test_all.cpp">
 			<Option target="Test_all" />

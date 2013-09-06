@@ -32,6 +32,8 @@ THE SOFTWARE.
 
 #include "data/QGearsBackgroundFileManager.h"
 #include "data/QGearsBackgroundFileSerializer.h"
+#include "data/QGearsCameraMatrixFileManager.h"
+#include "data/QGearsCameraMatrixFileSerializer.h"
 #include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsPaletteFileSerializer.h"
 
@@ -133,6 +135,10 @@ namespace QGears
     {
         switch( section_index )
         {
+            case SECTION_CAMERA_MATRIX:
+                readCameraMatrix( stream, pDest );
+                break;
+
             case SECTION_PALETTE:
                 readPalette( stream, pDest );
                 break;
@@ -145,11 +151,22 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
+    FLevelFileSerializer::readCameraMatrix( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
+    {
+        CameraMatrixFileManager &mgr( CameraMatrixFileManager::getSingleton() );
+        CameraMatrixFileSerializer ser;
+        CameraMatrixFilePtr camera_matrix( mgr.create( getCameraMatrixName( pDest ), pDest->getGroup() ) );
+        ser.importCameraMatrixFile( stream, camera_matrix.getPointer() );
+        pDest->setCameraMatrix( camera_matrix );
+    }
+
+    //---------------------------------------------------------------------
+    void
     FLevelFileSerializer::readPalette( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
     {
-        PaletteFileManager &pmgr( PaletteFileManager::getSingleton() );
+        PaletteFileManager &mgr( PaletteFileManager::getSingleton() );
         PaletteFileSerializer ser;
-        PaletteFilePtr palette( pmgr.create( getPaletteName( pDest ), pDest->getGroup() ) );
+        PaletteFilePtr palette( mgr.create( getPaletteName( pDest ), pDest->getGroup() ) );
         ser.importPaletteFile( stream, palette.getPointer() );
         pDest->setPalette( palette );
     }
@@ -158,8 +175,8 @@ namespace QGears
     void
     FLevelFileSerializer::readBackground( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
     {
-        BackgroundFileManager &bmgr( BackgroundFileManager::getSingleton() );
-        BackgroundFilePtr background( bmgr.create( getBackgroundName( pDest ), pDest->getGroup(), true ) );
+        BackgroundFileManager &mgr( BackgroundFileManager::getSingleton() );
+        BackgroundFilePtr background( mgr.create( getBackgroundName( pDest ), pDest->getGroup(), true ) );
         BackgroundFileSerializer ser;
         background->_notifyOrigin( pDest->getName() );
         ser.importBackgroundFile( stream, background.getPointer() );
@@ -180,6 +197,13 @@ namespace QGears
     FLevelFileSerializer::getPaletteName( const FLevelFile* pDest ) const
     {
         return getBaseName( pDest ) + EXT_PALETTE;
+    }
+
+    //---------------------------------------------------------------------
+    String
+    FLevelFileSerializer::getCameraMatrixName( const FLevelFile* pDest ) const
+    {
+        return getBaseName( pDest ) + EXT_CAMERA_MATRIX;
     }
 
     //---------------------------------------------------------------------
