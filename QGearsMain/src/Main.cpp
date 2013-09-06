@@ -122,8 +122,8 @@ main(int argc, char *argv[])
     QGears::PaletteFileManager      *plt_mgr( new QGears::PaletteFileManager() );
     res_gm.addResourceLocation( "./data", "FileSystem", "Game", true );
     res_gm.initialiseResourceGroup( "Game" );
-    QGears::FLevelFilePtr   f( QGears::LZSFLevelFileManager::getSingleton().load( "field/gflevel/md1stin", "Game" ) );
-    QGears::FLevelFilePtr   f2( QGears::LZSFLevelFileManager::getSingleton().load( "field/gflevel/md1_1", "Game" ) );
+    //QGears::FLevelFilePtr   f( QGears::LZ0SFLevelFileManager::getSingleton().load( "field/gflevel/md1stin", "Game" ) );
+    //QGears::FLevelFilePtr   f2( QGears::LZSFLevelFileManager::getSingleton().load( "field/gflevel/md1_1", "Game" ) );
 
 
 
@@ -199,8 +199,8 @@ main(int argc, char *argv[])
     delete config_cmd_manager;
     delete config_var_manager;
 
-    f.setNull();
-    f2.setNull();
+    //f.setNull();
+    //f2.setNull();
     delete flv_mgr;
     delete plt_mgr;
     delete bgf_mgr;
