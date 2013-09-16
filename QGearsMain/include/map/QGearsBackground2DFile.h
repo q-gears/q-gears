@@ -53,8 +53,11 @@ namespace QGears
         virtual void   setTextureName( const String &texture_name );
         virtual String getTextureName( void ) const;
 
-        virtual void            setRange( const Ogre::Vector4 &range );
+        virtual void            setRange( const Ogre::Vector4& range );
         virtual Ogre::Vector4   getRange( void ) const;
+
+        virtual void            setClip( const Ogre::Vector2& clip );
+        virtual Ogre::Vector2   getClip( void ) const;
 
         virtual void            setPosition( const Ogre::Vector3 &position );
         virtual Ogre::Vector3   getPosition( void ) const;
@@ -74,6 +77,7 @@ namespace QGears
 
     private:
         String              m_texture_name;
+        Ogre::Vector2       m_clip;
         Ogre::Vector4       m_range;
         Ogre::Vector3       m_position;
         Ogre::Quaternion    m_orientation;

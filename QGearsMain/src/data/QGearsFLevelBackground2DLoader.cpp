@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "data/QGearsFLevelFile.h"
 #include "map/QGearsBackground2DFile.h"
 
+#include "ffvii/FFVIICommon.h"
+
 namespace QGears
 {
     //-------------------------------------------------------------------------
@@ -51,18 +53,16 @@ namespace QGears
         m_flevel_file.load();
         background_2d->_notifyOrigin( m_flevel_file.getName() );
         background_2d->setTextureName( m_flevel_file.getBackgroundTextureName() );
+        background_2d->setClip( Ogre::Vector2( FFVII::Common::SCREEN_WIDTH, FFVII::Common::SCREEN_HEIGHT ) );
 
         CameraMatrixFilePtr camera_matrix( m_flevel_file.getCameraMatrix() );
-        background_2d->setPosition( camera_matrix->getPosition() );
+        Ogre::Real scale( camera_matrix->getCount() );
+        background_2d->setPosition( camera_matrix->getPosition() / -( scale * FFVII::Common::FIELD_POSITION_SCALE ) );
 
         background_2d->setOrientation( camera_matrix->getOrientation() );
 
         Ogre::Real focal_length( camera_matrix->getFocalLength() );
-        background_2d->setFov( camera_matrix->getFov( 240 ) );
-
-        //background_2d->setPosition( Ogre::Vector3( 28.4846, 210.83, 3.10751 ) );
-        //background_2d->setOrientation( Ogre::Quaternion( 0.742188, 0.667516, -0.0403783, -0.0450658 ) );
-        //background_2d->setFov( Ogre::Radian( Ogre::Degree( 34.5389 ) ) );
+        background_2d->setFov( camera_matrix->getFov( FFVII::Common::SCREEN_WIDTH ) );
 
         Ogre::Vector4 range( 0, 0, 0, 0 );
 
@@ -84,7 +84,7 @@ namespace QGears
             tile.width  = BackgroundFile::SPRITE_WIDTH;
             tile.height = BackgroundFile::SPRITE_HEIGHT;
             tile.blending = B_ALPHA;
-            tile.depth = sprite.depth;
+            tile.depth = sprite.depth / ( scale * FFVII::Common::FIELD_DEPTH_SCALE );
             /*
             if depth >= 1
                 if( ??? / 4.0 < depth )

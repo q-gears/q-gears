@@ -53,6 +53,9 @@ namespace QGears
         virtual const Pixel&            getOffset() const;
         virtual void                    setOffset( const Pixel& offset );
 
+        virtual const size_t&           getCount() const;
+        virtual void                    setCount( const size_t count );
+
         virtual const Ogre::Real&       getFocalLength() const;
         virtual void                    setFocalLength( const Ogre::Real );
 
@@ -69,6 +72,7 @@ namespace QGears
         Ogre::Vector3   m_position;
         Pixel           m_offset;
         Ogre::Real      m_focal_length;
+        size_t          m_count;
     };
 
     //-------------------------------------------------------------------------

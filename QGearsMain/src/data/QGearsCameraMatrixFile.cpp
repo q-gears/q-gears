@@ -67,6 +67,7 @@ namespace QGears
         m_offset.x = 0;
         m_offset.y = 0;
         m_focal_length = 0;
+        m_count = 0;
     }
 
     //---------------------------------------------------------------------
@@ -122,6 +123,20 @@ namespace QGears
     CameraMatrixFile::setOffset( const Pixel& offset )
     {
         m_offset = offset;
+    }
+
+    //---------------------------------------------------------------------
+    const size_t&
+    CameraMatrixFile::getCount() const
+    {
+        return m_count;
+    }
+
+    //---------------------------------------------------------------------
+    void
+    CameraMatrixFile::setCount( const size_t count )
+    {
+        m_count = count;
     }
 
     //---------------------------------------------------------------------

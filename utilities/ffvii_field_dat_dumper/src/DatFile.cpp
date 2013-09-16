@@ -2659,10 +2659,10 @@ DatFile::GetScreenRange( int& min_x, int& min_y, int& max_x, int& max_y )
     // sector 5
     u32 offset_to_triggers = 0x1c + GetU32LE( 0x10 ) - GetU32LE( 0x00 );
 
-    min_x = ( s16 )GetU16LE( offset_to_triggers + 0x0c );
-    min_y = ( s16 )GetU16LE( offset_to_triggers + 0x0e );
-    max_x = ( s16 )GetU16LE( offset_to_triggers + 0x10 );
-    max_y = ( s16 )GetU16LE( offset_to_triggers + 0x12 );
+    min_x = ( s16 )GetU16LE( offset_to_triggers + 0x0c ) * 3;
+    min_y = ( s16 )GetU16LE( offset_to_triggers + 0x0e ) * 3;
+    max_x = ( s16 )GetU16LE( offset_to_triggers + 0x10 ) * 3;
+    max_y = ( s16 )GetU16LE( offset_to_triggers + 0x12 ) * 3;
 
     //LOGGER->Log(LOGGER_INFO, "Screen range: x: max = %d", max_x);
     //LOGGER->Log(LOGGER_INFO, "                 min = %d", min_x);
@@ -2690,7 +2690,14 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     int min_x, min_y, max_x, max_y;
     GetScreenRange( min_x, min_y, max_x, max_y );
 
-    export_text->Log( "<background2d image=\"maps/ffvii/field/" + field.name + ".png\" position=\"" + Ogre::StringConverter::toString( position ) + "\" orientation=\"" + Ogre::StringConverter::toString( orientation ) + "\" fov=\"" + Ogre::StringConverter::toString( fov ) + "\" range=\"" + IntToString( min_x ) + " " + IntToString( min_y ) + " " + IntToString( max_x ) + " " + IntToString( max_y ) + "\">\n" );
+    export_text->Log( "<background2d" );
+    export_text->Log( " image=\"maps/ffvii/field/" + field.name + ".png\"" );
+    export_text->Log( " position=\"" + Ogre::StringConverter::toString( position ) + "\"" );
+    export_text->Log( " orientation=\"" + Ogre::StringConverter::toString( orientation ) + "\"" );
+    export_text->Log( " fov=\"" + Ogre::StringConverter::toString( fov ) + "\"" );
+    export_text->Log( " range=\"" + IntToString( min_x ) + " " + IntToString( min_y ) + " " + IntToString( max_x ) + " " + IntToString( max_y ) + "\"" );
+    export_text->Log( " clip=\"" + IntToString( 320 * 3 ) + " " + IntToString( 240 * 3 ) + "\"" );
+    export_text->Log( ">\n" );
 
     full_image = CreateSurface( width, height );
     x_32 = 0; y_32 = 0; x_16 = 0; y_16 = 0; n_16 = 0;
@@ -2787,7 +2794,7 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             tile.bpp             = ( GetU16LE( s4 + 0x08 ) & 0x0180 ) >> 0x07;
             tile.page_x          = GetU16LE( s4 + 0x08 ) & 0x000f;
             tile.page_y          = ( GetU16LE( s4 + 0x08 ) & 0x0010 ) >> 0x04;
-            tile.depth           = GetU16LE( s4 + 0x0a );
+            tile.depth           = GetU16LE( s4 + 0x0a ) / ( 32.0f * field.scale );
             tile.blending        = ( GetU16LE( s4 + 0x08 ) & 0x60 ) >> 0x05;
             tile.animation_id    = GetU8( s4 + 0x0c ) & 0x0f;
             tile.animation_frame = GetU8( s4 + 0x0d );
@@ -3197,13 +3204,13 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
 
     export_text->Log(
                         "    <tile destination=\"" +
-                        Ogre::StringConverter::toString( tile.dest_x ) +
+                        Ogre::StringConverter::toString( tile.dest_x * 3 ) +
                         " " +
-                        Ogre::StringConverter::toString( tile.dest_y ) +
+                        Ogre::StringConverter::toString( tile.dest_y * 3 ) +
                         "\" width=\"" +
-                        Ogre::StringConverter::toString( added_main_tile.width ) +
+                        Ogre::StringConverter::toString( added_main_tile.width * 3 ) +
                         "\" height=\"" +
-                        Ogre::StringConverter::toString( added_main_tile.height ) +
+                        Ogre::StringConverter::toString( added_main_tile.height * 3 ) +
                         "\" uv=\"" +
                         Ogre::StringConverter::toString( added_main_tile.x / ( float ) full_image->width ) +
                         " " +
@@ -3312,7 +3319,7 @@ DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const 
     }
 
     // set size depending on background
-    u8 size = 16; //( background > 1 ) ? 32 : 16;
+    u8 size = ( background > 1 ) ? 32 : 16;
 
     Surface* sub_image = CreateSubSurface( src_x, src_y, size, size, surface.surface );
 

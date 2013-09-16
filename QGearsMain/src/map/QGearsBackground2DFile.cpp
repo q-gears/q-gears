@@ -94,6 +94,20 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
+    Background2DFile::setClip( const Ogre::Vector2 &clip )
+    {
+        m_clip = clip;
+    }
+
+    //---------------------------------------------------------------------
+    Ogre::Vector2
+    Background2DFile::getClip() const
+    {
+        return m_clip;
+    }
+
+    //---------------------------------------------------------------------
+    void
     Background2DFile::setRange( const Ogre::Vector4 &range )
     {
         m_range = range;

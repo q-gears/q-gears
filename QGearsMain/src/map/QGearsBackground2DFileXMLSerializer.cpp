@@ -77,6 +77,9 @@ namespace QGears
         }
         pDest->setTextureName( texture_name );
 
+        Ogre::Vector2 clip( 320, 240 );
+        readAttribute( *node, clip, "clip" );
+        pDest->setClip( clip );
 
         Ogre::Vector4 range( -100000, -100000, 100000, 100000 );
         readAttribute( *node, range, "range" );
@@ -142,6 +145,8 @@ namespace QGears
     {
         pDest.time = 0;
         readAttribute( node, pDest.time, "time" );
+        pDest.uv = Ogre::Vector4::ZERO;
+        readAttribute( node, pDest.uv, "uv" );
     }
 
     //---------------------------------------------------------------------

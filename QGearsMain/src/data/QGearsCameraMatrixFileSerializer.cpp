@@ -47,7 +47,7 @@ namespace QGears
     {
         sint16 matrix_sint16[CAMERA_MATRIX_ROW_COUNT][CAMERA_MATRIX_COL_COUNT];
         readShorts( stream, reinterpret_cast< uint16* >( matrix_sint16 ), CAMERA_MATRIX_ENTRY_COUNT  );
-        stream->skip( 2 );
+        stream->skip( 2 ); // unused
 
         sint32 pos[CAMERA_MATRIX_ROW_COUNT];
         readInts( stream, reinterpret_cast< uint32* >( pos ), CAMERA_MATRIX_ROW_COUNT );
@@ -62,7 +62,7 @@ namespace QGears
                 camera_matrix[j][i] = matrix_sint16[i][j] / 4096.0;
             }
         }
-        position = ( camera_matrix * position ) / -128;
+        position = camera_matrix * position;
         camera_matrix[0][1] *= -1;
         camera_matrix[1][1] *= -1;
         camera_matrix[2][1] *= -1;
@@ -79,6 +79,14 @@ namespace QGears
         uint16 focal_length;
         readShort( stream, focal_length );
         pDest->setFocalLength( focal_length );
+
+        size_t count( 1 );
+        while( !stream->eof() )
+        {
+            stream->skip( TOTAL_DATA_SIZE );
+            ++count;
+        }
+        pDest->setCount( count );
     }
 
     //---------------------------------------------------------------------

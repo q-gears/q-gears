@@ -525,12 +525,24 @@ Background2D::SetRange( const int min_x, const int min_y, const int max_x, const
 void
 Background2D::AddTile(  const QGears::Tile& tile )
 {
-    const Ogre::Matrix4 &cam_projection( CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrixWithRSDepth() );
-    Ogre::Vector4 res( 0, 0, -tile.depth / 32.0, 1 );
-    res = cam_projection * res;
-    res /= res.w;
-    Ogre::Real depth( 1 );
-    depth = std::min( depth, res.z );
+    // TODO: move depth calculation to flevelBackgroundLoader maybe? and let Backgorund2D only handle 0 <= depth <= 1 or so?
+    // maybe just move the < 4095 part to flevel background loader?
+    Ogre::Real depth( 0.0001 );
+    if( tile.depth >= 1 )
+    {
+        if( tile.depth < 4095 )
+        {
+            const Ogre::Matrix4 &cam_projection( CameraManager::getSingleton().GetCurrentCamera()->getProjectionMatrixWithRSDepth() );
+            Ogre::Vector4 res( 0, 0, -tile.depth, 1 );
+            res = cam_projection * res;
+            res /= res.w;
+            depth = res.z;
+        }
+        else
+        {
+            depth = 0.9999;
+        }
+    }
     AddTile( tile.destination, tile.width, tile.height, depth, tile.uv, tile.blending );
 }
 
@@ -591,6 +603,7 @@ Background2D::AddTile( const int x, const int y, const int width, const int heig
     tile.height = height;
     tile.start_vertex_index = render_op.vertexData->vertexCount;
     tile.blending = blending;
+    size_t index( m_Tiles.size() );
     m_Tiles.push_back( tile );
 
     Ogre::Vector2   top_left ( x, -y );
@@ -908,6 +921,7 @@ Background2D::load( const QGears::Background2DFilePtr& background )
     assert( !background.isNull() );
     background->load();
     SetImage( background->getTextureName() );
+    m_virtual_screen_size = background->getClip();
     SetRange( background->getRange() );
 
     const Ogre::Vector3& position( background->getPosition() );
@@ -943,8 +957,6 @@ Background2D::load( const size_t tile_index, const QGears::AnimationMap& animati
     {
         const QGears::String& name( it->first );
         const QGears::Animation& animation( it->second );
-        Ogre::LogManager::getSingleton().stream()
-            << "Add Animation: " << name;
         Background2DAnimation* anim( new Background2DAnimation( name, this, tile_index ) );
         anim->SetLength( animation.length );
         QGears::KeyFrameList::const_iterator itk( animation.key_frames.begin() );

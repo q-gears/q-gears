@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2013-09-02 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 2013-09-16 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,37 +23,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __QGearsCameraMatrixFileSerializer_H__
-#define __QGearsCameraMatrixFileSerializer_H__
+#ifndef __FFVIICommon_H__
+#define __FFVIICommon_H__
 
-#include "common/TypeDefine.h"
-
-#include "QGearsCameraMatrixFile.h"
-#include "QGearsSerializer.h"
-
-namespace QGears
+namespace FFVII
 {
-    class CameraMatrixFileSerializer : public Serializer
+    namespace Common
     {
-    public:
-                        CameraMatrixFileSerializer();
-        virtual        ~CameraMatrixFileSerializer();
-
         enum
         {
-            CAMERA_MATRIX_ROW_COUNT     = 3
-           ,CAMERA_MATRIX_COL_COUNT     = CAMERA_MATRIX_ROW_COUNT
-           ,CAMERA_MATRIX_ENTRY_COUNT   = CAMERA_MATRIX_ROW_COUNT * CAMERA_MATRIX_COL_COUNT
-           ,TOTAL_DATA_SIZE             = 0x26
+            SCREEN_WIDTH    = 320
+           ,SCREEN_HEIGHT   = 240
+
+           ,FIELD_POSITION_SCALE    = 128
+           ,FIELD_DEPTH_SCALE       = 32
         };
-
-        virtual void 	importCameraMatrixFile( Ogre::DataStreamPtr &stream, CameraMatrixFile* pDest );
-
-    protected:
-
-    private:
-        // http://en.wikipedia.org/wiki/Angle_of_view
-    };
+    }
 }
 
-#endif // __QGearsCameraMatrixFileSerializer_H__
+#endif // __FFVIICommon_H__
