@@ -209,6 +209,7 @@
 		<Unit filename="include/data/QGearsTexCodec.h" />
 		<Unit filename="include/data/QGearsTexFile.h" />
 		<Unit filename="include/data/QGearsXMLSerializer.h" />
+		<Unit filename="include/ffvii/FFVIICommon.h" />
 		<Unit filename="include/map/QGearsBackground2DFile.h" />
 		<Unit filename="include/map/QGearsBackground2DFileManager.h" />
 		<Unit filename="include/map/QGearsBackground2DFileXMLSerializer.h" />
