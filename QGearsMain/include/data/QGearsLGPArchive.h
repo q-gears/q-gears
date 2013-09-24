@@ -84,8 +84,10 @@ namespace QGears
                 uint8  unknown1;
                 uint16 unknown2;
 
-                uint32 data_offset;
+                String data_file_name;
                 uint32 data_size;
+
+                uint32 data_offset;
             };
 
             typedef std::vector<FileEntry> FileList;
@@ -97,6 +99,7 @@ namespace QGears
         private:
             FileList            m_files;
             Ogre::DataStreamPtr m_lgp_file;
+            Ogre::FileInfoList  m_file_infos;
     };
 }
 

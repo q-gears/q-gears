@@ -47,22 +47,47 @@ BOOST_AUTO_TEST_CASE( load )
     BOOST_CHECK_EQUAL( 12649, archive.getFiles().size() );
     BOOST_CHECK_EQUAL(  true, archive.exists( "aaac.p" ) );
     BOOST_CHECK_EQUAL(  true, archive.exists( "mmmm.p" ) );
+    BOOST_CHECK_EQUAL( archive.getFiles().size(), archive.list()->size() );
+    BOOST_CHECK_EQUAL( archive.getFiles().size(), archive.listFileInfo()->size() );
 
     QGears::LGPArchive::FileEntry& entry( archive.getFiles()[1] );
     BOOST_CHECK_EQUAL( "aaad.rsd", entry.file_name );
+    BOOST_CHECK_EQUAL( entry.file_name, archive.list()->at( 1 ) );
     BOOST_CHECK_EQUAL( 0x00054ACB, entry.file_offset );
+    BOOST_CHECK_EQUAL( "AAAD.rsd", entry.data_file_name );
     BOOST_CHECK_EQUAL( 0x0000003E, entry.data_size );
     BOOST_CHECK_EQUAL( 0x00054AE3, entry.data_offset );
 
+    Ogre::FileInfoListPtr file_infos( archive.listFileInfo() );
+    Ogre::FileInfo& file_info( file_infos->at( 1 ) );
+    BOOST_CHECK_EQUAL( &archive, file_info.archive );
+    BOOST_CHECK_EQUAL( entry.file_name, file_info.filename );
+    BOOST_CHECK_EQUAL( entry.file_name, file_info.basename );
+    BOOST_CHECK_EQUAL( "", file_info.path );
+    BOOST_CHECK_EQUAL( entry.data_size, file_info.uncompressedSize );
+    BOOST_CHECK_EQUAL( file_info.uncompressedSize, file_info.compressedSize );
+
+    BOOST_CHECK_EQUAL( 3209, archive.find( "*.a" )->size() );
+    BOOST_CHECK_EQUAL(  385, archive.find( "*.hrc" )->size() );
+    BOOST_CHECK_EQUAL(  695, archive.find( "*.tex" )->size() );
+    BOOST_CHECK_EQUAL( 4180, archive.find( "*.p" )->size() );
+
+    Ogre::StringVectorPtr found( archive.find( "*.rsd" ) );
+    BOOST_CHECK_EQUAL( 4180, found->size() );
+    BOOST_CHECK_EQUAL( "aaad.rsd", found->at( 0 ) );
+    BOOST_CHECK_EQUAL( "aaib.rsd", found->at( 1 ) );
+
     Ogre::DataStreamPtr stream( archive.open( "aaad.rsd" ) );
     BOOST_CHECK_EQUAL( false, stream.isNull() );
-    BOOST_CHECK_EQUAL( 0x3E, stream->size() );
+    BOOST_CHECK_EQUAL( entry.data_size, stream->size() );
     BOOST_CHECK_EQUAL( "@RSD940102", stream->getLine() );
     BOOST_CHECK_EQUAL( "PLY=AAAE.PLY", stream->getLine() );
     BOOST_CHECK_EQUAL( "MAT=AAAE.MAT", stream->getLine() );
     BOOST_CHECK_EQUAL( "GRP=AAAE.GRP", stream->getLine() );
     BOOST_CHECK_EQUAL( "NTEX=0", stream->getLine() );
     BOOST_CHECK_EQUAL( true, stream->eof() );
+
+    BOOST_CHECK_EQUAL( 894914604, archive.getModifiedTime( "aaad.rsd" ) );
 
     archive.unload();
 

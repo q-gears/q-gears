@@ -25,6 +25,9 @@ THE SOFTWARE.
 */
 #include "data/QGearsLGPArchive.h"
 
+#include "OgreThreadDefines.h"
+
+#include "common/QGearsStringUtil.h"
 #include "data/QGearsLGPArchiveSerializer.h"
 
 namespace QGears
@@ -49,6 +52,22 @@ namespace QGears
         m_lgp_file.bind( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
         LGPArchiveSerializer lgp_archive_serializer;
         lgp_archive_serializer.importLGPArchive( m_lgp_file, this );
+
+        FileList::const_iterator it( m_files.begin() ), it_end( m_files.end() );
+        while( it != it_end )
+        {
+            Ogre::FileInfo file_info;
+            file_info.archive = this;
+            file_info.filename = it->file_name;
+            StringUtil::splitFilename( it->file_name, file_info.basename, file_info.path );
+            file_info.uncompressedSize = it->data_size;
+            file_info.compressedSize = file_info.uncompressedSize;
+            m_file_infos.push_back( file_info );
+            ++it;
+        }
+
+        // writing not implemented
+        mReadOnly = true;
     }
 
     //-------------------------------------------------------------------------
@@ -57,6 +76,7 @@ namespace QGears
     {
         m_files.clear();
         m_lgp_file.setNull();
+        m_file_infos.clear();
     }
 
     //-------------------------------------------------------------------------
@@ -103,28 +123,66 @@ namespace QGears
     Ogre::StringVectorPtr
     LGPArchive::list( bool recursive, bool dirs )
     {
-        return Ogre::StringVectorPtr();
+        //OGRE_LOCK_AUTO_MUTEX
+        Ogre::StringVector* file_names( OGRE_NEW_T( Ogre::StringVector, Ogre::MEMCATEGORY_GENERAL)() );
+        FileList::const_iterator it( m_files.begin() );
+        FileList::const_iterator it_end( m_files.end() );
+        while( it != it_end )
+        {
+            file_names->push_back( it->file_name );
+            ++it;
+        }
+        return Ogre::StringVectorPtr( file_names, Ogre::SPFM_DELETE_T );
     }
 
     //-------------------------------------------------------------------------
     Ogre::FileInfoListPtr
     LGPArchive::listFileInfo( bool recursive, bool dirs )
     {
-        return Ogre::FileInfoListPtr();
+        //OGRE_LOCK_AUTO_MUTEX
+        return Ogre::FileInfoListPtr( OGRE_NEW_T( Ogre::FileInfoList, Ogre::MEMCATEGORY_GENERAL )( m_file_infos ), Ogre::SPFM_DELETE_T );
     }
 
     //-------------------------------------------------------------------------
     Ogre::StringVectorPtr
     LGPArchive::find( const String& pattern, bool recursive, bool dirs )
     {
-        return Ogre::StringVectorPtr();
+        //OGRE_LOCK_AUTO_MUTEX
+        Ogre::StringVector* file_names( OGRE_NEW_T( Ogre::StringVector, Ogre::MEMCATEGORY_GENERAL)() );
+
+        Ogre::FileInfoListPtr found_infos( findFileInfo( pattern, recursive, dirs ) );
+        Ogre::FileInfoList::const_iterator it( found_infos->begin() ), it_end( found_infos->end() );
+        while( it != it_end )
+        {
+            file_names->push_back( it->filename );
+            ++it;
+        }
+
+        return Ogre::StringVectorPtr( file_names, Ogre::SPFM_DELETE_T );
     }
 
     //-------------------------------------------------------------------------
     Ogre::FileInfoListPtr
     LGPArchive::findFileInfo( const String& pattern, bool recursive, bool dirs ) const
     {
-        return Ogre::FileInfoListPtr();
+        //OGRE_LOCK_AUTO_MUTEX
+        Ogre::FileInfoList* file_infos( OGRE_NEW_T( Ogre::FileInfoList, Ogre::MEMCATEGORY_GENERAL)() );
+        // If pattern contains a directory name, do a full match
+        bool full_match = (pattern.find ('/') != String::npos) ||
+                          (pattern.find ('\\') != String::npos);
+
+        Ogre::FileInfoList::const_iterator it( m_file_infos.begin() ), it_end( m_file_infos.end() );
+        while( it != it_end )
+        {
+            const String& file_name( full_match ? it->filename : it->basename );
+            if ( StringUtil::match( file_name, pattern, isCaseSensitive() ) )
+            {
+                file_infos->push_back( *it );
+            }
+            ++it;
+        }
+
+        return Ogre::FileInfoListPtr( file_infos, Ogre::SPFM_DELETE_T );
     }
 
     //-------------------------------------------------------------------------

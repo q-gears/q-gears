@@ -57,7 +57,7 @@ namespace QGears
         while( it != it_end )
         {
             stream->seek( it->file_offset );
-            stream->skip( FILE_NAME_LENGTH );
+            it->data_file_name = readString( stream, FILE_NAME_LENGTH );
             readInt( stream, it->data_size );
             it->data_offset = stream->tell();
             ++it;
