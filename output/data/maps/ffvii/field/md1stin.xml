@@ -1,6 +1,7 @@
 <map>
     <script file_name="maps/ffvii/field/md1stin.lua" />
     <background2d file_name="maps/ffvii/field/md1stin_bg.xml" />
+    <!--background2d file_name="md1stin/background_2d" /-->
     <walkmesh file_name="maps/ffvii/field/md1stin_wm.xml" />
     <movement_rotation degree="-5.625" />
 

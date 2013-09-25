@@ -28,6 +28,9 @@ THE SOFTWARE.
 namespace QGears
 {
     //-------------------------------------------------------------------------
+    const String LGPArchiveFactory::ARCHIVE_TYPE( "LGP" );
+
+    //-------------------------------------------------------------------------
     LGPArchiveFactory::LGPArchiveFactory()
     {
     }

@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 #include "data/QGearsLGPArchive.h"
 
-#include "OgreThreadDefines.h"
+#include <OgreThreadDefines.h>
 
 #include "common/QGearsStringUtil.h"
 #include "data/QGearsLGPArchiveSerializer.h"

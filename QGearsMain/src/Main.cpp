@@ -1,5 +1,6 @@
 #include <OgreRoot.h>
 #include <OgreConfigFile.h>
+#include <OgreArchiveManager.h>
 #include <OIS.h>
 
 #include "QgearsGameState.h"
@@ -21,6 +22,7 @@
 
 #include "data/QGearsBackgroundFileManager.h"
 #include "data/QGearsCameraMatrixFileManager.h"
+#include "data/QGearsLGPArchiveFactory.h"
 #include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
 #include "map/QGearsBackground2DFileManager.h"
@@ -62,6 +64,8 @@ main(int argc, char *argv[])
 
     // init root early
     root = new Ogre::Root( plugins_cfg );
+    QGears::LGPArchiveFactory lgp_archive_factory;
+    Ogre::ArchiveManager::getSingleton().addArchiveFactory( &lgp_archive_factory );
 
     // set up resources
     // Load resource paths from config file
@@ -73,7 +77,7 @@ main(int argc, char *argv[])
 
     Ogre::String secName, typeName, archName;
     Ogre::ResourceGroupManager &res_gm( Ogre::ResourceGroupManager::getSingleton() );
-    while (seci.hasMoreElements())
+    while( seci.hasMoreElements() )
     {
         secName = seci.peekNextKey();
         Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
@@ -86,7 +90,7 @@ main(int argc, char *argv[])
         }
     }
 
-//-------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
     // configure
     // Show the configuration dialog and initialise the system
     // You can skip this and use root.restoreConfig() to load configuration
@@ -122,8 +126,10 @@ main(int argc, char *argv[])
     QGears::PaletteFileManager      *plt_mgr( new QGears::PaletteFileManager() );
     res_gm.addResourceLocation( "./data", "FileSystem", "Game", true );
     res_gm.initialiseResourceGroup( "Game" );
-    //QGears::FLevelFilePtr   f( QGears::LZ0SFLevelFileManager::getSingleton().load( "field/gflevel/md1stin", "Game" ) );
-    //QGears::FLevelFilePtr   f2( QGears::LZSFLevelFileManager::getSingleton().load( "field/gflevel/md1_1", "Game" ) );
+    QGears::FLevelFilePtr   f;
+    QGears::FLevelFilePtr   f2;
+    //f  = QGears::LZSFLevelFileManager::getSingleton().load( "md1stin", "FFVII" );
+    //f2 = QGears::LZSFLevelFileManager::getSingleton().load( "md1_1"  , "FFVII" );
 
 
 
@@ -199,8 +205,8 @@ main(int argc, char *argv[])
     delete config_cmd_manager;
     delete config_var_manager;
 
-    //f.setNull();
-    //f2.setNull();
+    f.setNull();
+    f2.setNull();
     delete flv_mgr;
     delete plt_mgr;
     delete bgf_mgr;

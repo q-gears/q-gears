@@ -28,6 +28,8 @@ THE SOFTWARE.
 
 #include <OgreArchiveFactory.h>
 
+#include "QGearsLGPArchive.h"
+
 namespace QGears
 {
     class LGPArchiveFactory : public Ogre::ArchiveFactory
@@ -35,7 +37,24 @@ namespace QGears
         public:
             LGPArchiveFactory();
             virtual ~LGPArchiveFactory();
+
+            /// @copydoc FactoryObj::getType
+            const String& getType(void) const
+            {
+                return ARCHIVE_TYPE;
+            }
+
+            /// @copydoc FactoryObj::createInstance
+            Ogre::Archive* createInstance( const String& name )
+            {
+                return OGRE_NEW LGPArchive( name, ARCHIVE_TYPE );
+            }
+            /// @copydoc FactoryObj::destroyInstance
+            void destroyInstance( Ogre::Archive* arch ) { delete arch; }
+
         protected:
+            static const String ARCHIVE_TYPE;
+
         private:
     };
 }

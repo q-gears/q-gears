@@ -193,6 +193,9 @@
 		<Unit filename="include/data/QGearsHRCFileSerializer.h" />
 		<Unit filename="include/data/QGearsHRCMeshLoader.h" />
 		<Unit filename="include/data/QGearsHRCSkeletonLoader.h" />
+		<Unit filename="include/data/QGearsLGPArchive.h" />
+		<Unit filename="include/data/QGearsLGPArchiveFactory.h" />
+		<Unit filename="include/data/QGearsLGPArchiveSerializer.h" />
 		<Unit filename="include/data/QGearsLZSDataStream.h" />
 		<Unit filename="include/data/QGearsLZSFLevelFile.h" />
 		<Unit filename="include/data/QGearsLZSFLevelFileManager.h" />
@@ -1980,6 +1983,9 @@
 		<Unit filename="src/data/QGearsFLevelFileManager.cpp" />
 		<Unit filename="src/data/QGearsFLevelFileSerializer.cpp" />
 		<Unit filename="src/data/QGearsFLevelTextureLoader.cpp" />
+		<Unit filename="src/data/QGearsLGPArchive.cpp" />
+		<Unit filename="src/data/QGearsLGPArchiveFactory.cpp" />
+		<Unit filename="src/data/QGearsLGPArchiveSerializer.cpp" />
 		<Unit filename="src/data/QGearsLZSDataStream.cpp" />
 		<Unit filename="src/data/QGearsLZSFLevelFile.cpp" />
 		<Unit filename="src/data/QGearsLZSFLevelFileManager.cpp" />
