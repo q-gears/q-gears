@@ -247,39 +247,10 @@ aux_source_directory( src/core/library/lua Lua_FILES)
 aux_source_directory( src/core/library/luabind LuaBind_FILES)
 aux_source_directory( src/core/library/tinyxml TinyXml_FILES)
 
-find_package(Boost 1.54 COMPONENTS system thread chrono date_time)
-
-find_path(OGRE_SDK
-  NAMES include/OGRE/Ogre.h include/OIS/OIS.h
-  DOC "Ogre SDK Path"
-)
-
-set(OGRE_LIB_DIRS
-  ${OGRE_SDK}/lib
-  ${OGRE_SDK}/lib/opt
-  ${OGRE_SDK}/lib/release
-  ${OGRE_SDK}/lib/release/opt
-  ${OGRE_SDK}/lib/debug
-  ${OGRE_SDK}/lib/debug/opt
-)
-
-find_library(OGRE_LIB_MAIN_REL
-  OgreMain
-  ${OGRE_LIB_DIRS}
-)
-find_library(OGRE_LIB_OIS
-  ois
-)
-
-set(OGRE_INCLUDE_DIRS
-  ${OGRE_SDK}/include/OGRE
-  ${OGRE_SDK}/include/OIS
-)
-
-set(OGRE_LIBRARIES
-  ${OGRE_LIB_MAIN_REL}
-  ${OGRE_LIB_OIS}
-)
+add_library(Lua STATIC ${Lua_FILES})
+add_library(LuaBind STATIC ${LuaBind_FILES})
+add_library(TinyXml STATIC ${TinyXml_FILES})
+target_link_libraries(LuaBind Lua)
 
 include_directories(
   ${Boost_INCLUDE_DIRS}
@@ -290,12 +261,24 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-add_definitions(-W
--mthreads
--fmessage-length=0
--fexceptions
--fident
--DTIXML_USE_STL -DNDEBUG)
+#compiler options
+add_definitions(
+  -W
+  -mthreads
+  -fmessage-length=0
+  -fexceptions
+  -fident
+)
+
+#linker options
+add_definitions(
+  -Wl,--enable-runtime-pseudo-reloc
+  -Wl,--enable-auto-image-base
+  -Wl,--add-stdcall-alias
+)
+
+#defines
+add_definitions(-DTIXML_USE_STL)
 
 if(WIN32)
   #check usage and remove if uneccessary
@@ -305,9 +288,6 @@ endif()
 add_executable(QGearsMain
   ${HEADER_FILES}
   ${SOURCE_FILES}
-  ${Lua_FILES}
-  ${LuaBind_FILES}
-  ${TinyXml_FILES}
 )
 
 set_target_properties(QGearsMain PROPERTIES OUTPUT_NAME q-gears)
@@ -315,6 +295,8 @@ set_target_properties(QGearsMain PROPERTIES OUTPUT_NAME q-gears)
 set(LIBRARIES
   ${Boost_LIBRARIES}
   ${OGRE_LIBRARIES}
+  LuaBind
+  TinyXml
 )
 
 target_link_libraries(QGearsMain ${LIBRARIES})
