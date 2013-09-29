@@ -11,3 +11,5 @@ src/compile_d/
 output/**
 **/output/**
 **/compile/**
+build
+*.user

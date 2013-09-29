@@ -385,7 +385,6 @@
 			<Option target="Test_HRCFileSerializer" />
 		</Unit>
 		<Unit filename="../../QGearsMain/test/test_QGearsLGPArchive.cpp">
-			<Option target="Release" />
 			<Option target="Test_LGPArchive" />
 		</Unit>
 		<Unit filename="../../QGearsMain/test/test_QGearsLZSDataStream.cpp">
