@@ -300,3 +300,7 @@ set(LIBRARIES
 )
 
 target_link_libraries(QGearsMain ${LIBRARIES})
+
+install(TARGETS QGearsMain
+  RUNTIME DESTINATION ./
+)
