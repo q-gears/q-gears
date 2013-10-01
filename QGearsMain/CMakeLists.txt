@@ -262,20 +262,22 @@ include_directories(
 )
 
 #compiler options
-add_definitions(
-  -W
-  -mthreads
-  -fmessage-length=0
-  -fexceptions
-  -fident
-)
+if(WIN32)
+    add_definitions(
+      -W
+      -mthreads
+      -fmessage-length=0
+      -fexceptions
+      -fident
+    )
 
-#linker options
-add_definitions(
-  -Wl,--enable-runtime-pseudo-reloc
-  -Wl,--enable-auto-image-base
-  -Wl,--add-stdcall-alias
-)
+    #linker options
+    add_definitions(
+      -Wl,--enable-runtime-pseudo-reloc
+      -Wl,--enable-auto-image-base
+      -Wl,--add-stdcall-alias
+    )
+endif()
 
 #defines
 add_definitions(-DTIXML_USE_STL)
