@@ -253,12 +253,13 @@ add_library(TinyXml STATIC ${TinyXml_FILES})
 target_link_libraries(LuaBind Lua)
 
 include_directories(
-  ${Boost_INCLUDE_DIRS}
-  ${OGRE_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/core/library
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/core/library/tinyxml
-  ${CMAKE_CURRENT_SOURCE_DIR}/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${OIS_INCLUDE_DIRS}
+    ${OGRE_INCLUDE_DIRS}
+    ${OGRE_SAMPLES_INCLUDEPATH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/library
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/library/tinyxml
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 #compiler options
@@ -294,15 +295,19 @@ add_executable(QGearsMain
 
 set_target_properties(QGearsMain PROPERTIES OUTPUT_NAME q-gears)
 
+if(WIN32)
+  set_target_properties(QGearsMain PROPERTIES WIN32_EXECUTABLE ON)
+endif()
+
 set(LIBRARIES
-  ${Boost_LIBRARIES}
-  ${OGRE_LIBRARIES}
-  LuaBind
-  TinyXml
+    ${OGRE_LIBRARIES}
+    ${OIS_LIBRARIES}
+    LuaBind
+    TinyXml
 )
 
 target_link_libraries(QGearsMain ${LIBRARIES})
 
 install(TARGETS QGearsMain
-  RUNTIME DESTINATION ./
+    RUNTIME DESTINATION ./
 )

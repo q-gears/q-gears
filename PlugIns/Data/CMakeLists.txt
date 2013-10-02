@@ -63,14 +63,15 @@ set(SOURCE_FILES
 )
 
 include_directories(
-  ${Boost_INCLUDE_DIRS}
-  ${OGRE_INCLUDE_DIRS}
-  ${QGearsMain_SOURCE_DIR}/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${OIS_INCLUDE_DIRS}
+    ${OGRE_INCLUDE_DIRS}
+    ${OGRE_SAMPLES_INCLUDEPATH}
+    ${QGearsMain_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 #defines
-add_definitions(-DBOOST_ALL_DYN_LINK)
+#add_definitions(-DBOOST_ALL_DYN_LINK)
 
 add_library(DataPlugin MODULE
   ${HEADER_FILES}
@@ -83,7 +84,6 @@ set_target_properties(DataPlugin PROPERTIES
 )
 
 set(LIBRARIES
-  ${Boost_SYSTEM_LIBRARY}
   ${OGRE_LIBRARIES}
 )
 

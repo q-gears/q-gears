@@ -3,7 +3,7 @@
 #include <OgreArchiveManager.h>
 #include <OIS.h>
 
-#include "QgearsGameState.h"
+#include "QGearsGameState.h"
 //#include "core/AudioManager.h"
 #include "core/CameraManager.h"
 #include "core/ConfigCmdManager.h"
