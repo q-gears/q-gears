@@ -13,7 +13,12 @@ to have them recognize the newly set variables
 
 Requirements
 ------------
-OgreSDK 1.8 (Ogre::Singleton was changed from 1.7 to 1.8 so we're incompatible with 1.7)
-Boost 1.51 (should be what ever the Ogre SDK needs)
+OgreSDK 1.8
+ - Ogre::Singleton was changed from 1.7 to 1.8 so we're incompatible with 1.7
+
+Boost 1.40
+ - should be what ever the Ogre SDK needs, they did build agains 1.51 but cmake script
+   suggessts that ogre is compatible with boost 1.40 and up
+
 
 mostly you can follow instructions here http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Prerequisites
