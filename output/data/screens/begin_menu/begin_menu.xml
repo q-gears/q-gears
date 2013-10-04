@@ -1,6 +1,6 @@
 <screen name="BeginMenu" script="screens/begin_menu/begin_menu.lua" visible="false">
     <widget name="Container" width="368" height="240" origin_x="50%" origin_y="50%" align="center" valign="middle" scale="2.61 3" visible="true">
-        <sprite name="Sword" image="screens/images/buster.tex" x="111" y="84" width="170" height="150" visible="true" />
+        <sprite name="Sword" image="screens/images/sword.png" x="111" y="84" width="170" height="150" visible="true" />
         <sprite name="Cursor" image="screens/images/cursor.png" x="132" y="99" width="24" height="16" visible="true">
             <animation name="Position1" length="0" y="0:0 99" />
             <animation name="Position2" length="0" y="0:0 111" />
