@@ -41,15 +41,20 @@ if(UNIX)
           set(CMAKE_MODULE_PATH "/usr/lib/OGRE/cmake/;${CMAKE_MODULE_PATH}")
           set(OGRE_SAMPLES_INCLUDEPATH "/usr/share/OGRE/samples/Common/include/") # Otherwise, this one
 
+        elseif(EXISTS "/usr/share/OGRE/cmake")
+
+          set(CMAKE_MODULE_PATH "/usr/share/OGRE/cmake;${CMAKE_MODULE_PATH}")
+          set(OGRE_SAMPLES_INCLUDEPATH "/usr/share/OGRE/samples/Common/include/") # Otherwise, this one
+
         else()
           message(SEND_ERROR "Failed to find module path.")
-        endif(EXISTS "/usr/local/lib/OGRE/cmake")
+        endif()
 endif(UNIX)
 
 if (CMAKE_BUILD_TYPE STREQUAL "")
   # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
   # differentiation between debug and release builds.
-  set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif ()
 
 set(CMAKE_DEBUG_POSTFIX "_d")
@@ -189,13 +194,13 @@ if(UNIX)
 #                CONFIGURATIONS Release RelWithDebInfo Debug
 #        )
 
-    get_filename_component(Plugin_RenderSystem_GL "${OGRE_RenderSystem_GL_LIBRARY_REL}" REALPATH)
-    install(FILES
-        ${Plugin_RenderSystem_GL}
-        DESTINATION ./
-        CONFIGURATIONS Release RelWithDebInfo Debug
-        RENAME RenderSystem_GL.so
-    )
+#    get_filename_component(Plugin_RenderSystem_GL "${OGRE_RenderSystem_GL_LIBRARY_REL}" REALPATH)
+#    install(FILES
+#        ${Plugin_RenderSystem_GL}
+#        DESTINATION ./
+#        CONFIGURATIONS Release RelWithDebInfo Debug
+#        RENAME RenderSystem_GL.so
+#    )
 
 #        install(FILES ${CMAKE_SOURCE_DIR}/dist/bin/plugins.cfg
 #                ${CMAKE_SOURCE_DIR}/dist/bin/resources.cfg
