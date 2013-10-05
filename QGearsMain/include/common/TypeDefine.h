@@ -27,16 +27,16 @@ namespace QGears
 
     struct ColorComponents
     {
-        u8 blue;
-        u8 green;
-        u8 red;
-        u8 alpha;
+        uint8 blue;
+        uint8 green;
+        uint8 red;
+        uint8 alpha;
     };
 
     union ColorA8R8G8B8
     {
         ColorComponents comp;
-        u32 all;
+        uint32 all;
     };
 
     struct Pixel

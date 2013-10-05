@@ -47,7 +47,7 @@ namespace QGears
            ,TOTAL_DATA_SIZE             = 0x26
         };
 
-        virtual void 	importCameraMatrixFile( Ogre::DataStreamPtr &stream, CameraMatrixFile* pDest );
+        virtual void    importCameraMatrixFile( Ogre::DataStreamPtr &stream, CameraMatrixFile* pDest );
 
     protected:
 

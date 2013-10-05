@@ -39,7 +39,7 @@ namespace QGears
                         BackgroundFileSerializer();
         virtual        ~BackgroundFileSerializer();
 
-        virtual void 	importBackgroundFile( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
+        virtual void    importBackgroundFile( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
 
         struct Header
         {

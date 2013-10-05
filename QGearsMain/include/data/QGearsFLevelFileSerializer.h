@@ -39,7 +39,7 @@ namespace QGears
                         FLevelFileSerializer();
         virtual        ~FLevelFileSerializer();
 
-        virtual void 	importFLevelFile( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        virtual void    importFLevelFile( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
 
         enum
         {
@@ -62,7 +62,7 @@ namespace QGears
         };
 
     protected:
-        virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
+        virtual void    readFileHeader( Ogre::DataStreamPtr &stream );
 
         virtual void    readSectionData( Ogre::DataStreamPtr &stream, Ogre::DataStreamPtr &out_buffer );
         virtual void    readSection( Ogre::DataStreamPtr &stream, FLevelFile* pDest, const size_t section_index );

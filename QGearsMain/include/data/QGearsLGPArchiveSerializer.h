@@ -37,7 +37,7 @@ namespace QGears
                         LGPArchiveSerializer();
         virtual        ~LGPArchiveSerializer();
 
-        virtual void 	importLGPArchive( Ogre::DataStreamPtr &stream, LGPArchive* pDest );
+        virtual void    importLGPArchive( Ogre::DataStreamPtr &stream, LGPArchive* pDest );
 
         enum {
             MAGIC_STRING_LENGTH = 10
@@ -48,7 +48,7 @@ namespace QGears
         typedef LGPArchive::FileList  FileList;
 
     protected:
-        virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
+        virtual void    readFileHeader( Ogre::DataStreamPtr &stream );
         virtual void    readObject( Ogre::DataStreamPtr &stream, FileEntry& file_entry );
 
         template<typename ValueType> void

@@ -37,7 +37,7 @@ namespace QGears
                         HRCFileSerializer();
         virtual        ~HRCFileSerializer();
 
-        virtual void 	importHRCFile( Ogre::DataStreamPtr &stream, HRCFile* pDest );
+        virtual void    importHRCFile( Ogre::DataStreamPtr &stream, HRCFile* pDest );
 
     protected:
         static const String TAG_COMMENT;
@@ -48,8 +48,8 @@ namespace QGears
         typedef std::vector<String> Block;
         typedef HRCFile::Bone       Bone;
 
-        virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
-        virtual void 	readBlock( Ogre::DataStreamPtr &stream, Block& pDest );
+        virtual void    readFileHeader( Ogre::DataStreamPtr &stream );
+        virtual void    readBlock( Ogre::DataStreamPtr &stream, Block& pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Bone &pDest );
 
         template<typename ValueType>

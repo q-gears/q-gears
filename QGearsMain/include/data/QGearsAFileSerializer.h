@@ -38,7 +38,7 @@ namespace QGears
                         AFileSerializer();
         virtual        ~AFileSerializer();
 
-        virtual void 	importAFile( Ogre::DataStreamPtr &stream, AFile* pDest );
+        virtual void    importAFile( Ogre::DataStreamPtr &stream, AFile* pDest );
 
         struct Header
         {
@@ -50,8 +50,8 @@ namespace QGears
         };
 
     protected:
-        virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
-        virtual void 	readObject( Ogre::DataStreamPtr &stream, AFile::Frame &pDest );
+        virtual void    readFileHeader( Ogre::DataStreamPtr &stream );
+        virtual void    readObject( Ogre::DataStreamPtr &stream, AFile::Frame &pDest );
         using Serializer::readObject;
 
         template<typename ValueType>
