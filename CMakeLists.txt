@@ -22,34 +22,18 @@ project(QGears)
 set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 21)
 
-
-if(WIN32)
-        set(CMAKE_MODULE_PATH "$ENV{OGRE_HOME}/CMake/;${CMAKE_MODULE_PATH}")
-        set(OGRE_SAMPLES_INCLUDEPATH
-                $ENV{OGRE_HOME}/Samples/include
-        )
-endif(WIN32)
-
-if(UNIX)
-        if(EXISTS "/usr/local/lib/OGRE/cmake")
-
-          set(CMAKE_MODULE_PATH "/usr/local/lib/OGRE/cmake/;${CMAKE_MODULE_PATH}")
-          set(OGRE_SAMPLES_INCLUDEPATH "/usr/local/share/OGRE/samples/Common/include/") # We could just *assume* that developers uses this basepath : /usr/local
-
-        elseif(EXISTS "/usr/lib/OGRE/cmake")
-
-          set(CMAKE_MODULE_PATH "/usr/lib/OGRE/cmake/;${CMAKE_MODULE_PATH}")
-          set(OGRE_SAMPLES_INCLUDEPATH "/usr/share/OGRE/samples/Common/include/") # Otherwise, this one
-
-        elseif(EXISTS "/usr/share/OGRE/cmake")
-
-          set(CMAKE_MODULE_PATH "/usr/share/OGRE/cmake;${CMAKE_MODULE_PATH}")
-          set(OGRE_SAMPLES_INCLUDEPATH "/usr/share/OGRE/samples/Common/include/") # Otherwise, this one
-
-        else()
-          message(SEND_ERROR "Failed to find module path.")
-        endif()
-endif(UNIX)
+find_path(OGRE_CMAKE_MODULE_PATH FindOGRE.cmake
+    HINTS
+    "$ENV{OGRE_HOME}/CMake/"
+    "/usr/local/lib/OGRE/cmake"
+    "/usr/lib/OGRE/cmake"
+    "/usr/share/OGRE/cmake"
+)
+if(OGRE_CMAKE_MODULE_PATH-NOTFOUND)
+    message(SEND_ERROR "Failed to find OGRE module path.")
+else()
+    set(CMAKE_MODULE_PATH "${OGRE_CMAKE_MODULE_PATH};${CMAKE_MODULE_PATH}")
+endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "")
   # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
