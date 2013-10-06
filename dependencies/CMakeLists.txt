@@ -10,6 +10,4 @@ add_library(Lua STATIC ${Lua_FILES})
 add_library(LuaBind STATIC ${LuaBind_FILES})
 target_link_libraries(LuaBind Lua)
 
-add_definitions(-DTIXML_USE_STL)
 add_library(TinyXml STATIC ${TinyXml_FILES})
-

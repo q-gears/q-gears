@@ -39,19 +39,19 @@ namespace QGears
                         Background2DFileXMLSerializer();
         virtual        ~Background2DFileXMLSerializer();
 
-        virtual void 	importBackground2DFile( Ogre::DataStreamPtr& stream, Background2DFile* pDest );
+        virtual void    importBackground2DFile( Ogre::DataStreamPtr &stream, Background2DFile *pDest );
 
     protected:
-        virtual void    readHeader( TiXmlNode* node );
-        virtual void    readObject( TiXmlNode& node, Tile& pDest );
-        virtual void    readObject( TiXmlNode& node, Animation& pDest );
-        virtual void    readObject( TiXmlNode& node, KeyFrame& pDest );
+        virtual void    readHeader( TiXmlNode *node );
+        virtual void    readObject( TiXmlNode &node, Tile &pDest );
+        virtual void    readObject( TiXmlNode &node, Animation &pDest );
+        virtual void    readObject( TiXmlNode &node, KeyFrame &pDest );
 
         static const String BLENDING_ALPHA;
         static const String BLENDING_ADD;
 
         template<typename ValueType> void
-        readVector( TiXmlNode& node, std::vector<ValueType> &pDest, const String &tag )
+        readVector( TiXmlNode &node, std::vector<ValueType> &pDest, const String &tag )
         {
             pDest.clear();
 

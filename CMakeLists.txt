@@ -216,6 +216,7 @@ set(QGears_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
 )
 
+add_definitions(-DTIXML_USE_STL)
 add_subdirectory(dependencies)
 add_subdirectory(QGearsMain)
 add_subdirectory(SupportedGames)

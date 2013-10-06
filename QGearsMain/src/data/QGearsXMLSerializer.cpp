@@ -62,7 +62,7 @@ namespace QGears
 
     //---------------------------------------------------------------------
     bool
-    XMLSerializer::readInt( TiXmlNode& node, int &pDest, const String &attribute )
+    XMLSerializer::readAttribute( TiXmlNode& node, int &pDest, const String &attribute )
     {
         assertElement( node );
         const String* value( node.ToElement()->Attribute( attribute ) );

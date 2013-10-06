@@ -47,7 +47,7 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    Background2DFileXMLSerializer::readHeader( TiXmlNode* node )
+    Background2DFileXMLSerializer::readHeader( TiXmlNode *node )
     {
         if( node == NULL || node->ValueStr() != "background2d" )
         {
@@ -59,16 +59,18 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    Background2DFileXMLSerializer::importBackground2DFile( Ogre::DataStreamPtr &stream, Background2DFile* pDest )
+    Background2DFileXMLSerializer::importBackground2DFile( Ogre::DataStreamPtr &stream
+                                                          ,Background2DFile *pDest )
     {
         TiXmlDocument document;
         parse( stream, document );
 
-        TiXmlNode* node = document.RootElement();
-        readHeader( node );
+        TiXmlNode *root_node( document.RootElement() );
+        readHeader( root_node );
+        TiXmlNode &node( *root_node );
 
         String texture_name("");
-        readAttribute( *node, texture_name, "image" );
+        readAttribute( node, texture_name, "image" );
         if( texture_name.empty() )
         {
             OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
@@ -78,26 +80,26 @@ namespace QGears
         pDest->setTextureName( texture_name );
 
         Ogre::Vector2 clip( 320, 240 );
-        readAttribute( *node, clip, "clip" );
+        readAttribute( node, clip, "clip" );
         pDest->setClip( clip );
 
         Ogre::Vector4 range( -100000, -100000, 100000, 100000 );
-        readAttribute( *node, range, "range" );
+        readAttribute( node, range, "range" );
         pDest->setRange( range );
 
         Ogre::Vector3 position( Ogre::Vector3::ZERO );
-        readAttribute( *node, position, "position" );
+        readAttribute( node, position, "position" );
         pDest->setPosition( position );
 
         Ogre::Quaternion orientation( Ogre::Quaternion::IDENTITY );
-        readAttribute( *node, orientation, "orientation" );
+        readAttribute( node, orientation, "orientation" );
         pDest->setOrientation( orientation );
 
         Ogre::Real fov( 45 );
-        readAttribute( *node, fov, "fov" );
+        readAttribute( node, fov, "fov" );
         pDest->setFov( Ogre::Radian( Ogre::Degree( fov ) ) );
 
-        readVector( *node, pDest->getTiles(), "tile" );
+        readVector( node, pDest->getTiles(), "tile" );
     }
 
     //---------------------------------------------------------------------
@@ -105,10 +107,10 @@ namespace QGears
     Background2DFileXMLSerializer::readObject( TiXmlNode& node, Tile& pDest )
     {
         pDest.width = 0;
-        readInt( node, pDest.width, "width" );
+        readAttribute( node, pDest.width, "width" );
 
         pDest.height = 0;
-        readInt( node, pDest.height, "height" );
+        readAttribute( node, pDest.height, "height" );
 
         pDest.destination = Ogre::Vector2::ZERO;
         readAttribute( node, pDest.destination, "destination" );
