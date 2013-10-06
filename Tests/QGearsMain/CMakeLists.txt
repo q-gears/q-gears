@@ -31,15 +31,15 @@ add_executable(TestQGearsAFileSerializer
 target_link_libraries(TestQGearsAFileSerializer ${QGears_TEST_LIBRARIES})
 add_test(TestQGearsAFileSerializer TestQGearsAFileSerializer)
 
-add_executable(TestQGearsWalkmeshFileSerializer
-    ${HEADER_FILES}
-    ${SOURCE_FILES}
-    ${QGearsMain_SOURCE_DIR}/include/data/QGearsWalkmeshFile.h
-    ${QGearsMain_SOURCE_DIR}/include/data/QGearsWalkmeshFileSerializer.h
-    ${QGearsMain_SOURCE_DIR}/src/data/QGearsWalkmeshFile.cpp
-    ${QGearsMain_SOURCE_DIR}/src/data/QGearsWalkmeshFileSerializer.cpp
-    src/test_QGearsWalkmeshFileSerializer.cpp
-)
+#add_executable(TestQGearsWalkmeshFileSerializer
+#    ${HEADER_FILES}
+#    ${SOURCE_FILES}
+#    ${QGearsMain_SOURCE_DIR}/include/map/QGearsWalkmeshFile.h
+#    ${QGearsMain_SOURCE_DIR}/include/map/QGearsWalkmeshFileSerializer.h
+#    ${QGearsMain_SOURCE_DIR}/src/map/QGearsWalkmeshFile.cpp
+#    ${QGearsMain_SOURCE_DIR}/src/map/QGearsWalkmeshFileSerializer.cpp
+#    src/test_QGearsWalkmeshFileSerializer.cpp
+#)
 
-target_link_libraries(TestQGearsWalkmeshFileSerializer ${QGears_TEST_LIBRARIES})
-add_test(TestQGearsWalkmeshFileSerializer TestQGearsWalkmeshFileSerializer)
+#target_link_libraries(TestQGearsWalkmeshFileSerializer ${QGears_TEST_LIBRARIES})
+#add_test(TestQGearsWalkmeshFileSerializer TestQGearsWalkmeshFileSerializer)

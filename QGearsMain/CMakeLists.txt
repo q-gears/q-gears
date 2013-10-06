@@ -41,12 +41,7 @@ set(HEADER_FILES
   include/data/QGearsSerializer.h
   include/data/QGearsTexCodec.h
   include/data/QGearsTexFile.h
-  include/data/QGearsWalkmeshFile.h
-  include/data/QGearsWalkmeshFileManager.h
-  include/data/QGearsWalkmeshFileSerializer.h
   include/data/QGearsXMLSerializer.h
-  #include/ffvii/FFVIICharacter.h
-  include/ffvii/FFVIICommon.h
   include/map/QGearsBackground2DFile.h
   include/map/QGearsBackground2DFileManager.h
   include/map/QGearsBackground2DFileXMLSerializer.h
@@ -239,11 +234,7 @@ set(SOURCE_FILES
   src/data/QGearsSerializer.cpp
   src/data/QGearsTexCodec.cpp
   src/data/QGearsTexFile.cpp
-  src/data/QGearsWalkmeshFile.cpp
-  src/data/QGearsWalkmeshFileManager.cpp
-  src/data/QGearsWalkmeshFileSerializer.cpp
   src/data/QGearsXMLSerializer.cpp
-  #src/ffvii/FFVIICharacter.cpp
   src/map/QGearsBackground2DFile.cpp
   src/map/QGearsBackground2DFileManager.cpp
   src/map/QGearsBackground2DFileXMLSerializer.cpp
@@ -299,16 +290,17 @@ if(WIN32)
   add_definitions(-DWIN32 -D__WIN32__ -D_WINDOWS)
 endif()
 
-add_executable(QGearsMain
+add_library(QGearsMain SHARED
   ${HEADER_FILES}
   ${SOURCE_FILES}
+)
+
+add_executable(q-gears
   src/Main.cpp
 )
 
-set_target_properties(QGearsMain PROPERTIES OUTPUT_NAME q-gears)
-
 if(WIN32)
-  set_target_properties(QGearsMain PROPERTIES WIN32_EXECUTABLE ON)
+  set_target_properties(q-gears PROPERTIES WIN32_EXECUTABLE ON)
 endif()
 
 set(LIBRARIES
@@ -319,7 +311,8 @@ set(LIBRARIES
 )
 
 target_link_libraries(QGearsMain ${LIBRARIES})
+target_link_libraries(q-gears    QGearsMain ${LIBRARIES})
 
-install(TARGETS QGearsMain
-    RUNTIME DESTINATION ./
+install(TARGETS QGearsMain q-gears
+    DESTINATION ./
 )

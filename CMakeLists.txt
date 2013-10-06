@@ -209,6 +209,7 @@ endif(UNIX)
 #*/
 
 add_subdirectory(QGearsMain)
+add_subdirectory(SupportedGames)
 
 if(QGears_BUILD_PLUGINS)
     add_subdirectory(PlugIns)
