@@ -3,7 +3,7 @@
 #include "core/ConfigVar.h"
 #include "core/DebugDraw.h"
 #include "core/Logger.h"
-
+#include "map/QGearsWalkmeshFile.h"
 
 
 ConfigVar cv_debug_walkmesh( "debug_walkmesh", "Draw walkmesh and walkmesh debug info", "false" );
@@ -196,3 +196,18 @@ Walkmesh::IsLocked( unsigned int triangle_id ) const
 
     return m_Triangles[ triangle_id ].locked;
 }
+
+//------------------------------------------------------------------------------
+void Walkmesh::load(const QGears::WalkmeshFilePtr &walkmesh)
+{
+    QGears::WalkmeshFile::TriangleList &triangles( walkmesh->getTriangles() );
+    QGears::WalkmeshFile::TriangleList::const_iterator it( triangles.begin() );
+    QGears::WalkmeshFile::TriangleList::const_iterator it_end( triangles.end() );
+    while( it != it_end )
+    {
+        AddTriangle( *it );
+        ++it;
+    }
+}
+
+//------------------------------------------------------------------------------

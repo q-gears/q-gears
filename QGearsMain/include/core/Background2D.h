@@ -85,14 +85,14 @@ public:
     };
     typedef std::vector< Tile > TileList;
 
-    virtual void load( const QGears::Background2DFilePtr& background );
+    virtual void load( const QGears::Background2DFilePtr &background );
 
 protected:
-    virtual void load( const QGears::Background2DFile::TileList& tiles );
-    virtual void load( const size_t tile_index, const QGears::AnimationMap& animations );
+    virtual void load( const QGears::Background2DFile::TileList &tiles );
+    virtual void load( const size_t tile_index, const QGears::AnimationMap &animations );
     virtual void applyScroll( void );
     virtual void calculateScreenScale( void );
-    virtual void virtualScreenToWorldSpace( Ogre::Vector2& pos ) const;
+    virtual void virtualScreenToWorldSpace( Ogre::Vector2 &pos ) const;
 
     enum
     {

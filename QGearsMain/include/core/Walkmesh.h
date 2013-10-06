@@ -4,8 +4,6 @@
 #include <OgreVector3.h>
 #include <vector>
 
-
-
 struct WalkmeshTriangle
 {
     WalkmeshTriangle():
@@ -27,7 +25,10 @@ struct WalkmeshTriangle
     bool          locked;
 };
 
-
+namespace QGears
+{
+    class WalkmeshFilePtr;
+}
 
 class Walkmesh
 {
@@ -47,6 +48,8 @@ public:
     int GetNumberOfTriangles() const;
     void LockWalkmesh( unsigned int triangle_id, bool lock );
     bool IsLocked( unsigned int triangle_id ) const;
+
+    virtual void load( const QGears::WalkmeshFilePtr &walkmesh );
 
 private:
     std::vector< WalkmeshTriangle > m_Triangles;

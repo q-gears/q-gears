@@ -128,7 +128,6 @@ set(HEADER_FILES
   include/core/XmlScriptsFile.h
   include/core/XmlTextFile.h
   include/core/XmlTextsFile.h
-  include/core/XmlWalkmeshFile.h
   #include/viewer/ViewerModule.h
 )
 set(SOURCE_FILES
@@ -196,7 +195,6 @@ set(SOURCE_FILES
   src/core/XmlScriptsFile.cpp
   src/core/XmlTextFile.cpp
   src/core/XmlTextsFile.cpp
-  src/core/XmlWalkmeshFile.cpp
   src/data/QGearsAFile.cpp
   src/data/QGearsAFileSerializer.cpp
   src/data/QGearsBackgroundFile.cpp

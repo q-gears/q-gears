@@ -4,9 +4,9 @@
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
 #include "core/XmlBackground2DFile.h"
-#include "core/XmlWalkmeshFile.h"
 
 #include "map/QGearsBackground2DFileManager.h"
+#include "map/QGearsWalkmeshFileManager.h"
 
 
 XmlMapFile::XmlMapFile( const Ogre::String& file ):
@@ -38,11 +38,12 @@ XmlMapFile::LoadMap()
     {
         if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "walkmesh" )
         {
-            Ogre::String name = GetString( node, "file_name" );
-            if( name != "" )
+            Ogre::String name( GetString( node, "file_name" ) );
+            if( !name.empty() )
             {
-                XmlWalkmeshFile file( "./data/" + name );
-                file.Load();
+                QGears::WalkmeshFileManager::getSingleton();
+                QGears::WalkmeshFilePtr walkmesh( QGears::WalkmeshFileManager::getSingleton().load( name, "Game" ) );
+                EntityManager::getSingleton().GetWalkmesh()->load( walkmesh );
             }
         }
         else if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "movement_rotation" )

@@ -26,6 +26,7 @@
 #include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
 #include "map/QGearsBackground2DFileManager.h"
+#include "map/QGearsWalkmeshFileManager.h"
 
 
 
@@ -43,23 +44,13 @@ main(int argc, char *argv[])
 
     Ogre::String ressource_cfg("");
     Ogre::String plugins_cfg("");
-    Ogre::String dyn_lib_ext("");
-    Ogre::String render_system("");
-
-#ifdef __WIN32__
-    dyn_lib_ext = ".dll";
-#else // Assume Linux for now
-    dyn_lib_ext = ".so";
-#endif
 
 #ifdef _DEBUG
     ressource_cfg = "resources_d.cfg";
     plugins_cfg = "plugins_d.cfg";
-    render_system = "./RenderSystem_GL_d" + dyn_lib_ext;
 #else
     ressource_cfg = "resources.cfg";
     plugins_cfg = "plugins.cfg";
-    render_system = "./RenderSystem_GL" + dyn_lib_ext;
 #endif
 
     // init root early
@@ -124,6 +115,7 @@ main(int argc, char *argv[])
     QGears::CameraMatrixFileManager *cmf_mgr( new QGears::CameraMatrixFileManager() );
     QGears::LZSFLevelFileManager    *flv_mgr( new QGears::LZSFLevelFileManager() );
     QGears::PaletteFileManager      *plt_mgr( new QGears::PaletteFileManager() );
+    QGears::WalkmeshFileManager     *wkm_mgr( new QGears::WalkmeshFileManager() );
     res_gm.addResourceLocation( "./data", "FileSystem", "Game", true );
     res_gm.initialiseResourceGroup( "Game" );
     QGears::FLevelFilePtr   f;
@@ -212,6 +204,7 @@ main(int argc, char *argv[])
     delete bgf_mgr;
     delete cmf_mgr;
     delete b2d_mgr;
+    delete wkm_mgr;
 
     delete particle_system_manager;
     delete timer;
