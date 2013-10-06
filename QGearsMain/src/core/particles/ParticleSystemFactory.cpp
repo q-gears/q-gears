@@ -1,30 +1,26 @@
-#include "ParticleSystemFactory.h"
+#include "core/particles/ParticleSystemFactory.h"
 
-#include "ParticleSystem.h"
-#include "ParticleSystemManager.h"
+#include "core/particles/ParticleSystem.h"
+#include "core/particles/ParticleSystemManager.h"
 
-
-
+//------------------------------------------------------------------------------
 Ogre::String ParticleSystemFactory::FACTORY_TYPE_NAME = "QgearsParticleSystem";
 
-
-
+//------------------------------------------------------------------------------
 const Ogre::String&
 ParticleSystemFactory::getType() const
 {
     return FACTORY_TYPE_NAME;
-};
+}
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystemFactory::destroyInstance(Ogre::MovableObject* obj)
 {
     delete obj;
-};
+}
 
-
-
+//------------------------------------------------------------------------------
 Ogre::MovableObject*
 ParticleSystemFactory::createInstanceImpl( const Ogre::String& name, const Ogre::NameValuePairList* params)
 {
@@ -53,3 +49,5 @@ ParticleSystemFactory::createInstanceImpl( const Ogre::String& name, const Ogre:
     // Not template based, just create one with the given name
     return new ParticleSystem(name);
 }
+
+//------------------------------------------------------------------------------

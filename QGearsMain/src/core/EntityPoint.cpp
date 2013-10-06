@@ -1,8 +1,8 @@
-#include "EntityPoint.h"
+#include "core/EntityPoint.h"
 
-#include "ConfigVar.h"
-#include "DebugDraw.h"
-#include "ScriptManager.h"
+#include "core/ConfigVar.h"
+#include "core/DebugDraw.h"
+#include "core/ScriptManager.h"
 
 
 

@@ -1,17 +1,15 @@
-#include "ParticleSystemTranslatorManager.h"
+#include "core/particles/ParticleSystemTranslatorManager.h"
 
 #include <OgreLogManager.h>
 
-
-
+//------------------------------------------------------------------------------
 size_t
 ParticleSystemTranslatorManager::getNumTranslators() const
 {
     return 1;
 }
 
-
-
+//------------------------------------------------------------------------------
 Ogre::ScriptTranslator*
 ParticleSystemTranslatorManager::getTranslator(const Ogre::AbstractNodePtr &node)
 {
@@ -44,3 +42,5 @@ ParticleSystemTranslatorManager::getTranslator(const Ogre::AbstractNodePtr &node
 
     return translator;
 }
+
+//------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
-#include "XmlMapsFile.h"
+#include "core/XmlMapsFile.h"
 
-#include "Logger.h"
+#include "core/Logger.h"
 
 
 

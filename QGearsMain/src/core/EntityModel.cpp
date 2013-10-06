@@ -1,10 +1,10 @@
-#include "EntityModel.h"
+#include "core/EntityModel.h"
 
 #include <OgreEntity.h>
 #include <OgreRoot.h>
 
-#include "../core/Logger.h"
-#include "../core/Timer.h"
+#include "core/Logger.h"
+#include "core/Timer.h"
 
 
 

@@ -1,11 +1,10 @@
-#include "ParticleTechniqueTranslator.h"
+#include "core/particles/ParticleTechniqueTranslator.h"
 
 #include <OgreLogManager.h>
 
-#include "ParticleSystemManager.h"
+#include "core/particles/ParticleSystemManager.h"
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechniqueTranslator::translate(Ogre::ScriptCompiler *compiler, const Ogre::AbstractNodePtr &node)
 {
@@ -31,3 +30,5 @@ ParticleTechniqueTranslator::translate(Ogre::ScriptCompiler *compiler, const Ogr
         }
     }
 }
+
+//------------------------------------------------------------------------------

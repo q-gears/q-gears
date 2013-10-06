@@ -1,11 +1,11 @@
- #include "XmlScreenFile.h"
+#include "core/XmlScreenFile.h"
 
-#include "Logger.h"
-#include "ScriptManager.h"
-#include "UiManager.h"
-#include "UiSprite.h"
-#include "UiTextArea.h"
-#include "UiWidget.h"
+#include "core/Logger.h"
+#include "core/ScriptManager.h"
+#include "core/UiManager.h"
+#include "core/UiSprite.h"
+#include "core/UiTextArea.h"
+#include "core/UiWidget.h"
 
 
 

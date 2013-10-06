@@ -1,12 +1,12 @@
-#include "ConfigVar.h"
+#include "core/ConfigVar.h"
 
 #include <OgreStringConverter.h>
 
-#include "Assert.h"
+#include "core/Assert.h"
 
 
 
-ConfigVar* ConfigVar::m_StaticConfigVarList = 0;
+ConfigVar* ConfigVar::m_StaticConfigVarList = NULL;
 
 
 

@@ -1,4 +1,4 @@
-#include "EntityCollision.h"
+#include "core/EntityCollision.h"
 
 #include <OgreHardwareBufferManager.h>
 

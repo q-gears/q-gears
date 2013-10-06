@@ -1,8 +1,8 @@
-#include "EntityTrigger.h"
+#include "core/EntityTrigger.h"
 
-#include "DebugDraw.h"
-#include "Entity.h"
-#include "ConfigVar.h"
+#include "core/DebugDraw.h"
+#include "core/Entity.h"
+#include "core/ConfigVar.h"
 
 
 

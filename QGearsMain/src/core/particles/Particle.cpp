@@ -1,8 +1,8 @@
-#include "Particle.h"
+#include "core/particles/Particle.h"
 
 
-
-Particle::Particle(): 
+//------------------------------------------------------------------------------
+Particle::Particle():
     m_ParentEmitter(NULL),
     m_ParticleType(PT_VISUAL),
     m_Enabled(true),
@@ -14,24 +14,21 @@ Particle::Particle():
     time_to_live(10),
     total_time_to_live(10)
 {
-};
+}
 
-
-
+//------------------------------------------------------------------------------
 Particle::~Particle()
 {
-};
+}
 
-
-
+//------------------------------------------------------------------------------
 void
 Particle::Update(Ogre::Real time_elapsed)
 {
     position += direction * time_elapsed;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 Particle::CopyAttributesTo(Particle* particle)
 {
@@ -45,3 +42,5 @@ Particle::CopyAttributesTo(Particle* particle)
     particle->time_to_live = time_to_live;
     particle->total_time_to_live = total_time_to_live;
 }
+
+//------------------------------------------------------------------------------

@@ -1,9 +1,9 @@
-#include "UiSprite.h"
+#include "core/UiSprite.h"
 
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
-#include "Logger.h"
+#include "core/Logger.h"
 
 
 

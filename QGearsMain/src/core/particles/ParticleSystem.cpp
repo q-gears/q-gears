@@ -1,19 +1,17 @@
-#include "ParticleSystem.h"
+#include "core/particles/ParticleSystem.h"
 
 #include <OgreLogManager.h>
 #include <OgreSceneNode.h>
 
-#include "ParticleSystemManager.h"
+#include "core/particles/ParticleSystemManager.h"
 
-
-
+//------------------------------------------------------------------------------
 ParticleSystem::ParticleSystem(const Ogre::String& name):
     MovableObject(name)
 {
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleSystem::~ParticleSystem()
 {
     // Destroy nodes that are used for renderers and stuff.
@@ -25,8 +23,7 @@ ParticleSystem::~ParticleSystem()
     DestroyAllTechniques();
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystem::CopyAttributesTo( ParticleSystem* ps )
 {
@@ -42,8 +39,7 @@ ParticleSystem::CopyAttributesTo( ParticleSystem* ps )
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 const Ogre::String&
 ParticleSystem::getMovableType() const
 {
@@ -51,24 +47,21 @@ ParticleSystem::getMovableType() const
     return type;
 }
 
-
-
+//------------------------------------------------------------------------------
 const Ogre::AxisAlignedBox&
 ParticleSystem::getBoundingBox() const
 {
     return Ogre::AxisAlignedBox::BOX_INFINITE;
 }
 
-
-
+//------------------------------------------------------------------------------
 Ogre::Real
 ParticleSystem::getBoundingRadius() const
 {
     return 999;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystem::_updateRenderQueue( Ogre::RenderQueue* queue )
 {
@@ -79,8 +72,7 @@ ParticleSystem::_updateRenderQueue( Ogre::RenderQueue* queue )
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystem::Update( Ogre::Real time_elapsed )
 {
@@ -91,8 +83,7 @@ ParticleSystem::Update( Ogre::Real time_elapsed )
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleTechnique*
 ParticleSystem::CreateTechnique()
 {
@@ -101,8 +92,7 @@ ParticleSystem::CreateTechnique()
     return technique;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystem::AddTechnique(ParticleTechnique* technique)
 {
@@ -110,8 +100,7 @@ ParticleSystem::AddTechnique(ParticleTechnique* technique)
     technique->SetParentSystem(this);
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystem::DestroyAllTechniques()
 {
@@ -121,3 +110,5 @@ ParticleSystem::DestroyAllTechniques()
     }
     m_Techniques.clear();
 }
+
+//------------------------------------------------------------------------------

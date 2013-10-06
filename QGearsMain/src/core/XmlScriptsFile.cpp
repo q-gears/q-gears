@@ -1,7 +1,7 @@
-#include "XmlScriptsFile.h"
+#include "core/XmlScriptsFile.h"
 
-#include "Logger.h"
-#include "ScriptManager.h"
+#include "core/Logger.h"
+#include "core/ScriptManager.h"
 
 
 

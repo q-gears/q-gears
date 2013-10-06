@@ -1,10 +1,10 @@
-#include "InputManager.h"
-#include "InputManagerCommands.h"
+#include "core/InputManager.h"
+#include "core/InputManagerCommands.h"
 
-#include "ConfigCmdManager.h"
-#include "Console.h"
-#include "Logger.h"
-#include "Timer.h"
+#include "core/ConfigCmdManager.h"
+#include "core/Console.h"
+#include "core/Logger.h"
+#include "core/Timer.h"
 
 
 

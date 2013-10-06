@@ -1,10 +1,10 @@
-#include "XmlBackground2DFile.h"
+#include "core/XmlBackground2DFile.h"
 
-#include "Background2D.h"
-#include "Background2DAnimation.h"
-#include "CameraManager.h"
-#include "EntityManager.h"
-#include "Logger.h"
+#include "core/Background2D.h"
+#include "core/Background2DAnimation.h"
+#include "core/CameraManager.h"
+#include "core/EntityManager.h"
+#include "core/Logger.h"
 
 
 

@@ -1,6 +1,6 @@
-#include "Timer.h"
+#include "core/Timer.h"
 
-#include "ConfigVar.h"
+#include "core/ConfigVar.h"
 
 
 

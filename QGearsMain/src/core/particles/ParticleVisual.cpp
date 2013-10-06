@@ -1,9 +1,6 @@
-#include "ParticleVisual.h"
+#include "core/particles/ParticleVisual.h"
 
-#include "ParticleVisual.h"
-
-
-
+//------------------------------------------------------------------------------
 VisualParticle::VisualParticle():
     Particle()
 {
@@ -11,8 +8,7 @@ VisualParticle::VisualParticle():
     m_Emittable = true; // Default is false, but visual particles are always emitted.
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 VisualParticle::InitForExpiration()
 {
@@ -23,3 +19,5 @@ VisualParticle::InitForExpiration()
         additional_data->SetVisible(false);
     }
 }
+
+//------------------------------------------------------------------------------

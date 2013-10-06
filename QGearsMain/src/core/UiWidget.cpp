@@ -1,13 +1,13 @@
-#include "UiWidget.h"
+#include "core/UiWidget.h"
 
 #include <OgreMath.h>
 #include <OgreRoot.h>
 
-#include "ConfigVar.h"
-#include "DebugDraw.h"
-#include "Logger.h"
-#include "ScriptManager.h"
-#include "Timer.h"
+#include "core/ConfigVar.h"
+#include "core/DebugDraw.h"
+#include "core/Logger.h"
+#include "core/ScriptManager.h"
+#include "core/Timer.h"
 
 
 

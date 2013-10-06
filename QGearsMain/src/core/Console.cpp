@@ -1,14 +1,14 @@
-#include "Console.h"
+#include "core/Console.h"
 
 #include <OgreFontManager.h>
 
-#include "ConfigCmdManager.h"
-#include "ConfigVarManager.h"
-#include "DebugDraw.h"
-#include "Logger.h"
-#include "ScriptManager.h"
-#include "Timer.h"
-#include "Utilites.h"
+#include "core/ConfigCmdManager.h"
+#include "core/ConfigVarManager.h"
+#include "core/DebugDraw.h"
+#include "core/Logger.h"
+#include "core/ScriptManager.h"
+#include "core/Timer.h"
+#include "core/Utilites.h"
 
 
 

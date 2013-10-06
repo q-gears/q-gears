@@ -1,8 +1,8 @@
-#include "XmlFile.h"
+#include "core/XmlFile.h"
 
 #include <OgreStringConverter.h>
 
-#include "Logger.h"
+#include "core/Logger.h"
 
 
 

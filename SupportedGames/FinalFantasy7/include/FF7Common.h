@@ -23,10 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __FFVIICommon_H__
-#define __FFVIICommon_H__
+#ifndef __FF7Common_H__
+#define __FF7Common_H__
 
-namespace FFVII
+namespace FF7
 {
     namespace Common
     {

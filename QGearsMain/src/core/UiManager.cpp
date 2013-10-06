@@ -1,15 +1,15 @@
-#include "UiManager.h"
+#include "core/UiManager.h"
 
 #include <OgreRoot.h>
 #include <OgreStringVector.h>
 
-#include "Logger.h"
-#include "ScriptManager.h"
-#include "Utilites.h"
-#include "XmlFontsFile.h"
-#include "XmlPrototypesFile.h"
-#include "XmlScreensFile.h"
-#include "XmlTextsFile.h"
+#include "core/Logger.h"
+#include "core/ScriptManager.h"
+#include "core/Utilites.h"
+#include "core/XmlFontsFile.h"
+#include "core/XmlPrototypesFile.h"
+#include "core/XmlScreensFile.h"
+#include "core/XmlTextsFile.h"
 
 
 

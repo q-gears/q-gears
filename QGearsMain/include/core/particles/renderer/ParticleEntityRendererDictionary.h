@@ -10,7 +10,7 @@ namespace ParticleEntityRendererDictionary
     class MeshName : public Ogre::ParamCommand
     {
     public:
-        Ogre::String doGet(const void* target) const {return "";};
+        Ogre::String doGet(const void* target) const {return "";}
         void doSet(void* target, const Ogre::String& val);
     };
 }

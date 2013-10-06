@@ -1,7 +1,7 @@
-#include "XmlFontsFile.h"
+#include "core/XmlFontsFile.h"
 
-#include "Logger.h"
-#include "XmlFontFile.h"
+#include "core/Logger.h"
+#include "core/XmlFontFile.h"
 
 
 

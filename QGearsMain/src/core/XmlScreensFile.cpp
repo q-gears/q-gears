@@ -1,7 +1,7 @@
-#include "XmlScreensFile.h"
+#include "core/XmlScreensFile.h"
 
-#include "Logger.h"
-#include "XmlScreenFile.h"
+#include "core/Logger.h"
+#include "core/XmlScreenFile.h"
 
 
 

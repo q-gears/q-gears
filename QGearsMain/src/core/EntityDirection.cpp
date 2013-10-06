@@ -1,4 +1,4 @@
-#include "EntityDirection.h"
+#include "core/EntityDirection.h"
 
 #include <OgreHardwareBufferManager.h>
 

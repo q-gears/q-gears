@@ -1,18 +1,18 @@
-#include "GameFrameListner.h"
+#include "core/GameFrameListner.h"
 
 #include <OgreStringConverter.h>
 
-#include "CameraManager.h"
-#include "ConfigVar.h"
-#include "Console.h"
-#include "DebugDraw.h"
-#include "EntityManager.h"
-#include "InputManager.h"
-#include "Logger.h"
-#include "ScriptManager.h"
-#include "Timer.h"
-#include "UiManager.h"
-#include "QGearsGameState.h"
+#include "core/CameraManager.h"
+#include "core/ConfigVar.h"
+#include "core/Console.h"
+#include "core/DebugDraw.h"
+#include "core/EntityManager.h"
+#include "core/InputManager.h"
+#include "core/Logger.h"
+#include "core/ScriptManager.h"
+#include "core/Timer.h"
+#include "core/UiManager.h"
+#include "core/QGearsGameState.h"
 
 
 

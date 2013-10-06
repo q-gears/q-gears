@@ -1,8 +1,8 @@
-#include "XmlWalkmeshFile.h"
+#include "core/XmlWalkmeshFile.h"
 
-#include "EntityManager.h"
-#include "Logger.h"
-#include "Walkmesh.h"
+#include "core/EntityManager.h"
+#include "core/Logger.h"
+#include "core/Walkmesh.h"
 
 
 

@@ -1,8 +1,8 @@
-#include "XmlFontFile.h"
+#include "core/XmlFontFile.h"
 
-#include "Logger.h"
-#include "UiManager.h"
-#include "UiFont.h"
+#include "core/Logger.h"
+#include "core/UiManager.h"
+#include "core/UiFont.h"
 
 
 

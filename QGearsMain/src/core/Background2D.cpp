@@ -1,23 +1,23 @@
-#include "Background2D.h"
+#include "core/Background2D.h"
 
 #include <OgreHardwareBufferManager.h>
 #include <OgreLogManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreException.h>
 
-#include "CameraManager.h"
-#include "ConfigVar.h"
-#include "DebugDraw.h"
-#include "Logger.h"
-#include "Timer.h"
+#include "core/CameraManager.h"
+#include "core/ConfigVar.h"
+#include "core/DebugDraw.h"
+#include "core/Logger.h"
+#include "core/Timer.h"
 
-
+//------------------------------------------------------------------------------
 
 ConfigVar cv_debug_background2d( "debug_background2d", "Draw background debug info", "false" );
 ConfigVar cv_show_background2d( "show_background2d", "Draw background", "true" );
 ConfigVar cv_background2d_manual( "background2d_manual", "Manual scrolling for 2d background", "false" );
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Background2D::Background2D():
     m_AlphaMaxVertexCount( 0 ),
     m_AddMaxVertexCount( 0 ),
@@ -73,7 +73,7 @@ Background2D::Background2D():
     m_SceneManager->addRenderQueueListener( this );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Background2D::~Background2D()
 {
     m_SceneManager->removeRenderQueueListener( this );
@@ -86,7 +86,7 @@ Background2D::~Background2D()
     DestroyVertexBuffers();
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::InputDebug( const Event& event )
 {
@@ -113,7 +113,7 @@ Background2D::InputDebug( const Event& event )
     }
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::Update()
 {
@@ -176,7 +176,7 @@ Background2D::Update()
     }
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::UpdateDebug()
 {
@@ -199,7 +199,7 @@ Background2D::UpdateDebug()
     }
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::calculateScreenScale( void )
 {
@@ -215,7 +215,7 @@ Background2D::calculateScreenScale( void )
     m_screen_proportion.y = m_screen_scale / scale_height;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::OnResize()
 {
@@ -292,7 +292,7 @@ Background2D::OnResize()
     applyScroll();
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::Clear()
 {
@@ -326,21 +326,21 @@ Background2D::Clear()
     CreateVertexBuffers();
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::ScriptAutoScrollToEntity( Entity* entity )
 {
     m_ScrollEntity = entity;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Entity*
 Background2D::GetAutoScrollEntity() const
 {
     return m_ScrollEntity;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::ScriptScrollToPosition( const float x, const float y, const ScrollType type, const float seconds )
 {
@@ -363,7 +363,7 @@ Background2D::ScriptScrollToPosition( const float x, const float y, const Scroll
     m_ScrollCurrentSeconds = 0;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 int
 Background2D::ScriptScrollSync()
 {
@@ -375,7 +375,7 @@ Background2D::ScriptScrollSync()
     return -1;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::UnsetScroll()
 {
@@ -388,56 +388,56 @@ Background2D::UnsetScroll()
     m_ScrollSync.clear();
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 const Ogre::Vector2&
 Background2D::GetScrollPositionStart() const
 {
     return m_ScrollPositionStart;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 const Ogre::Vector2&
 Background2D::GetScrollPositionEnd() const
 {
     return m_ScrollPositionEnd;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Background2D::ScrollType
 Background2D::GetScrollType() const
 {
     return m_ScrollType;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 float
 Background2D::GetScrollSeconds() const
 {
     return m_ScrollSeconds;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::SetScrollCurrentSeconds( const float seconds )
 {
     m_ScrollCurrentSeconds = seconds;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 float
 Background2D::GetScrollCurrentSeconds() const
 {
     return m_ScrollCurrentSeconds;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::SetScreenScroll( const Ogre::Vector2& position )
 {
     SetScroll( position / m_screen_scale );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::SetScroll( const Ogre::Vector2& position )
 {
@@ -457,7 +457,7 @@ Background2D::SetScroll( const Ogre::Vector2& position )
     applyScroll();
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::applyScroll()
 {
@@ -468,21 +468,21 @@ Background2D::applyScroll()
     }
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 const Ogre::Vector2&
 Background2D::GetScroll() const
 {
     return m_Position;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 const Ogre::Vector2
 Background2D::GetScreenScroll() const
 {
     return GetScroll() * m_screen_scale;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::SetImage( const Ogre::String& image )
 {
@@ -496,14 +496,14 @@ Background2D::SetImage( const Ogre::String& image )
     tex->setTextureName( image );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::SetRange( const Ogre::Vector4& range )
 {
     SetRange( ( int )range.x, ( int )range.y, ( int )range.z, ( int )range.w );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::SetRange( const int min_x, const int min_y, const int max_x, const int max_y )
 {
@@ -521,7 +521,7 @@ Background2D::SetRange( const int min_x, const int min_y, const int max_x, const
     calculateScreenScale();
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::AddTile(  const QGears::Tile& tile )
 {
@@ -546,14 +546,14 @@ Background2D::AddTile(  const QGears::Tile& tile )
     AddTile( tile.destination, tile.width, tile.height, depth, tile.uv, tile.blending );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::AddTile( const Ogre::Vector2& destination, const int width, const int height, const float depth, const Ogre::Vector4& uv, const Blending blending )
 {
     AddTile( destination.x, destination.y, width, height, depth, uv.x, uv.y, uv.z, uv.w, blending );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::virtualScreenToWorldSpace( Ogre::Vector2& pos ) const
 {
@@ -564,7 +564,7 @@ Background2D::virtualScreenToWorldSpace( Ogre::Vector2& pos ) const
     pos.y *= m_screen_proportion.y;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::AddTile( const int x, const int y, const int width, const int height, const float depth, const float u1, const float v1, const float u2, const float v2, const Blending blending )
 {
@@ -696,7 +696,7 @@ Background2D::AddTile( const int x, const int y, const int width, const int heig
     vertex_buffer->unlock();
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::UpdateTileUV( const unsigned int tile_id, const float u1, const float v1, const float u2, const float v2 )
 {
@@ -743,14 +743,14 @@ Background2D::UpdateTileUV( const unsigned int tile_id, const float u1, const fl
     vertex_buffer->unlock();
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::AddAnimation( Background2DAnimation* animation )
 {
     m_Animations.push_back( animation );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::PlayAnimation( const Ogre::String& animation, const Background2DAnimation::State state )
 {
@@ -787,21 +787,21 @@ Background2D::PlayAnimation( const Ogre::String& animation, const Background2DAn
     }
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::ScriptPlayAnimationLooped( const char* name )
 {
     PlayAnimation( Ogre::String( name ), Background2DAnimation::LOOPED );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::ScriptPlayAnimationOnce( const char* name )
 {
     PlayAnimation( Ogre::String( name ), Background2DAnimation::ONCE );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 int
 Background2D::ScriptAnimationSync( const char* animation )
 {
@@ -818,7 +818,7 @@ Background2D::ScriptAnimationSync( const char* animation )
     return 1;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation )
 {
@@ -854,7 +854,7 @@ Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& in
     }
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::CreateVertexBuffers()
 {
@@ -899,7 +899,7 @@ Background2D::CreateVertexBuffers()
     m_AddRenderOp.useIndexes = false;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::DestroyVertexBuffers()
 {
@@ -914,7 +914,7 @@ Background2D::DestroyVertexBuffers()
     m_AddMaxVertexCount = 0;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::load( const QGears::Background2DFilePtr& background )
 {
@@ -931,7 +931,7 @@ Background2D::load( const QGears::Background2DFilePtr& background )
     load( background->getTiles() );
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::load( const QGears::Background2DFile::TileList& tiles )
 {
@@ -946,7 +946,7 @@ Background2D::load( const QGears::Background2DFile::TileList& tiles )
     }
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void
 Background2D::load( const size_t tile_index, const QGears::AnimationMap& animations )
 {
@@ -970,4 +970,4 @@ Background2D::load( const size_t tile_index, const QGears::AnimationMap& animati
     }
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------

@@ -1,27 +1,28 @@
-#include "ParticleEmitterDictionary.h"
+#include "core/particles/ParticleEmitterDictionary.h"
 
 #include <OgreStringConverter.h>
 
-#include "ParticleEmitter.h"
-#include "../Logger.h"
-#include "../Utilites.h"
-
-
+#include "core/particles/ParticleEmitter.h"
+#include "core/Logger.h"
+#include "core/Utilites.h"
 
 namespace ParticleEmitterDictionary
 {
+    //--------------------------------------------------------------------------
     void
     EmissionRate::doSet(void* target, const Ogre::String& val)
     {
         static_cast<ParticleEmitter*>(target)->SetEmissionRate(Ogre::StringConverter::parseInt(val));
     }
 
+    //--------------------------------------------------------------------------
     void
     TotalTimeToLive::doSet(void* target, const Ogre::String& val)
     {
         static_cast<ParticleEmitter*>(target)->SetEmitTotalTimeToLive(Ogre::StringConverter::parseReal(val));
     }
 
+    //--------------------------------------------------------------------------
     void
     Direction::doSet(void* target, const Ogre::String& val)
     {
@@ -39,4 +40,6 @@ namespace ParticleEmitterDictionary
             LOG_WARNING("In particle emitter setting direction must be at least one value.");
         }
     }
+
+    //--------------------------------------------------------------------------
 }

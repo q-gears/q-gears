@@ -1,7 +1,7 @@
-#include "XmlTextFile.h"
+#include "core/XmlTextFile.h"
 
-#include "Logger.h"
-#include "UiManager.h"
+#include "core/Logger.h"
+#include "core/UiManager.h"
 
 
 

@@ -1,8 +1,8 @@
-#include "UiAnimation.h"
+#include "core/UiAnimation.h"
 
 #include <OgreVector2.h>
 
-#include "UiWidget.h"
+#include "core/UiWidget.h"
 
 
 

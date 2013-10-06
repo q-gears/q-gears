@@ -1,8 +1,8 @@
-#include "Walkmesh.h"
+#include "core/Walkmesh.h"
 
-#include "ConfigVar.h"
-#include "DebugDraw.h"
-#include "Logger.h"
+#include "core/ConfigVar.h"
+#include "core/DebugDraw.h"
+#include "core/Logger.h"
 
 
 

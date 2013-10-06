@@ -1,13 +1,12 @@
-#include "ParticleTechnique.h"
+#include "core/particles/ParticleTechnique.h"
 
 #include <OgreLogManager.h>
 #include <OgreStringConverter.h>
 
-#include "ParticleSystemManager.h"
-#include "ParticleVisual.h"
+#include "core/particles/ParticleSystemManager.h"
+#include "core/particles/ParticleVisual.h"
 
-
-
+//------------------------------------------------------------------------------
 ParticleTechnique::ParticleTechnique():
     m_Renderer(NULL),
 
@@ -19,16 +18,14 @@ ParticleTechnique::ParticleTechnique():
 {
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleTechnique::~ParticleTechnique()
 {
     DestroyAllEmitters();
     DestroyRenderer();
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::CopyAttributesTo(ParticleTechnique* technique)
 {
@@ -62,8 +59,7 @@ ParticleTechnique::CopyAttributesTo(ParticleTechnique* technique)
     Ogre::LogManager::getSingletonPtr()->logMessage("ParticleTechnique::CopyAttributesTo end");
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::UpdateRenderQueue(Ogre::RenderQueue* queue)
 {
@@ -73,8 +69,7 @@ ParticleTechnique::UpdateRenderQueue(Ogre::RenderQueue* queue)
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::Initialize()
 {
@@ -145,8 +140,7 @@ ParticleTechnique::Initialize()
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::Update(Ogre::Real time_elapsed)
 {
@@ -242,8 +236,7 @@ ParticleTechnique::Update(Ogre::Real time_elapsed)
     Ogre::LogManager::getSingletonPtr()->logMessage("ParticleTechnique::Update END");
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleRenderer*
 ParticleTechnique::CreateRenderer(const Ogre::String& renderer_type)
 {
@@ -262,8 +255,7 @@ ParticleTechnique::CreateRenderer(const Ogre::String& renderer_type)
     return m_Renderer;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::SetRenderer(ParticleRenderer* renderer)
 {
@@ -277,8 +269,7 @@ ParticleTechnique::SetRenderer(ParticleRenderer* renderer)
     m_Renderer->SetRendererInitialised(false);
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::DestroyRenderer()
 {
@@ -289,8 +280,7 @@ ParticleTechnique::DestroyRenderer()
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleEmitter*
 ParticleTechnique::CreateEmitter(const Ogre::String& emitter_type)
 {
@@ -307,8 +297,7 @@ ParticleTechnique::CreateEmitter(const Ogre::String& emitter_type)
     return emitter;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::AddEmitter(ParticleEmitter* emitter)
 {
@@ -320,8 +309,7 @@ ParticleTechnique::AddEmitter(ParticleEmitter* emitter)
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::DestroyAllEmitters()
 {
@@ -332,8 +320,7 @@ ParticleTechnique::DestroyAllEmitters()
     m_Emitters.clear();
 }
 
-
-
+//------------------------------------------------------------------------------
 int
 ParticleTechnique::GetNumEmittableEmitters() const
 {
@@ -349,8 +336,7 @@ ParticleTechnique::GetNumEmittableEmitters() const
     return count;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::EmissionChange()
 {
@@ -378,8 +364,7 @@ ParticleTechnique::EmissionChange()
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::ExecuteEmitParticles(ParticleEmitter* emitter, int requested, Ogre::Real time_elapsed)
 {
@@ -415,8 +400,7 @@ ParticleTechnique::ExecuteEmitParticles(ParticleEmitter* emitter, int requested,
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleTechnique::ResetVisualParticles()
 {
@@ -426,3 +410,5 @@ ParticleTechnique::ResetVisualParticles()
     }
     m_VisualParticlesPool.LockAllElements();
 }
+
+//------------------------------------------------------------------------------

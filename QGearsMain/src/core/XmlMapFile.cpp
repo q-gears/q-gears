@@ -1,10 +1,10 @@
-#include "XmlMapFile.h"
+#include "core/XmlMapFile.h"
 
-#include "EntityManager.h"
-#include "Logger.h"
-#include "ScriptManager.h"
-#include "XmlBackground2DFile.h"
-#include "XmlWalkmeshFile.h"
+#include "core/EntityManager.h"
+#include "core/Logger.h"
+#include "core/ScriptManager.h"
+#include "core/XmlBackground2DFile.h"
+#include "core/XmlWalkmeshFile.h"
 
 #include "map/QGearsBackground2DFileManager.h"
 

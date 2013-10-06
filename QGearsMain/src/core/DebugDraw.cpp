@@ -1,11 +1,11 @@
-#include "DebugDraw.h"
+#include "core/DebugDraw.h"
 
 #include <OgreFontManager.h>
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
-#include "CameraManager.h"
-#include "Logger.h"
+#include "core/CameraManager.h"
+#include "core/Logger.h"
 
 
 

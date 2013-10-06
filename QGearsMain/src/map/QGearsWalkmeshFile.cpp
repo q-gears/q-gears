@@ -14,11 +14,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 -----------------------------------------------------------------------------
 */
-#include "data/QGearsWalkmeshFile.h"
+#include "map/QGearsWalkmeshFile.h"
 
 #include <OgreLogManager.h>
 
-#include "data/QGearsWalkmeshFileSerializer.h"
+#include "map/QGearsWalkmeshFileXMLSerializer.h"
 
 namespace QGears
 {

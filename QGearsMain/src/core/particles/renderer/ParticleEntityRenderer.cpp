@@ -1,18 +1,16 @@
-#include "ParticleEntityRenderer.h"
+#include "core/particles/renderer/ParticleEntityRenderer.h"
 
 #include <OgreEntity.h>
 #include <OgreRoot.h>
 
-#include "../ParticleSystem.h"
-#include "../ParticleTechnique.h"
-#include "../ParticleVisual.h"
+#include "core/particles/ParticleSystem.h"
+#include "core/particles/ParticleTechnique.h"
+#include "core/particles/ParticleVisual.h"
 
-
-
+//------------------------------------------------------------------------------
 ParticleEntityRendererDictionary::MeshName ParticleEntityRenderer::m_MeshNameDictionary;
 
-
-
+//------------------------------------------------------------------------------
 ParticleEntityRenderer::ParticleEntityRenderer():
     ParticleRenderer(),
     m_MeshName(Ogre::StringUtil::BLANK)
@@ -27,8 +25,7 @@ ParticleEntityRenderer::ParticleEntityRenderer():
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleEntityRenderer::~ParticleEntityRenderer()
 {
     if (m_ParentTechnique == NULL)
@@ -39,8 +36,7 @@ ParticleEntityRenderer::~ParticleEntityRenderer()
     Clear();
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEntityRenderer::CopyAttributesTo(ParticleRenderer* renderer)
 {
@@ -54,16 +50,14 @@ ParticleEntityRenderer::CopyAttributesTo(ParticleRenderer* renderer)
     entity_renderer->m_MeshName = m_MeshName;
 }
 
-
-
+//------------------------------------------------------------------------------
 const Ogre::String&
 ParticleEntityRenderer::GetMeshName() const
 {
     return m_MeshName;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEntityRenderer::SetMeshName(const Ogre::String& mesh_name)
 {
@@ -72,8 +66,7 @@ ParticleEntityRenderer::SetMeshName(const Ogre::String& mesh_name)
     Clear(); // Delete all nodes en entities, they will be rebuild
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEntityRenderer::Clear()
 {
@@ -107,8 +100,7 @@ ParticleEntityRenderer::Clear()
     m_ParentTechnique->ResetVisualParticles();
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEntityRenderer::SetVisible(bool visible)
 {
@@ -120,8 +112,7 @@ ParticleEntityRenderer::SetVisible(bool visible)
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEntityRenderer::Initialize()
 {
@@ -163,8 +154,7 @@ ParticleEntityRenderer::Initialize()
     m_RendererInitialised = true;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEntityRenderer::UpdateRenderQueue(Ogre::RenderQueue* queue, ParticlePool<VisualParticle>& pool)
 {
@@ -198,3 +188,5 @@ ParticleEntityRenderer::UpdateRenderQueue(Ogre::RenderQueue* queue, ParticlePool
         particle = pool.GetNext();
     }
 }
+
+//------------------------------------------------------------------------------

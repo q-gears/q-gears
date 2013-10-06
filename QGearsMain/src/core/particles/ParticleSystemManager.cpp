@@ -1,19 +1,16 @@
-#include "ParticleSystemManager.h"
+#include "core/particles/ParticleSystemManager.h"
 
 #include <OgreLogManager.h>
 #include <OgreRoot.h>
 
-#include "ParticleSystemFactory.h"
-#include "emitters/ParticlePointEmitterFactory.h"
-#include "renderer/ParticleEntityRendererFactory.h"
+#include "core/particles/ParticleSystemFactory.h"
+#include "core/particles/emitters/ParticlePointEmitterFactory.h"
+#include "core/particles/renderer/ParticleEntityRendererFactory.h"
 
+//------------------------------------------------------------------------------
+template<> ParticleSystemManager* Ogre::Singleton<ParticleSystemManager>::msSingleton = NULL;
 
-
-template<> ParticleSystemManager* Ogre::Singleton<ParticleSystemManager>::msSingleton = 0;
-
-
-
-
+//------------------------------------------------------------------------------
 ParticleSystemManager::ParticleSystemManager()
 {
     m_TranslatorManager = new ParticleSystemTranslatorManager();
@@ -29,8 +26,7 @@ ParticleSystemManager::ParticleSystemManager()
     AddRendererFactory(new ParticleEntityRendererFactory());
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleSystemManager::~ParticleSystemManager()
 {
     Ogre::ScriptCompilerManager::getSingleton().removeTranslatorManager(m_TranslatorManager);
@@ -68,8 +64,7 @@ ParticleSystemManager::~ParticleSystemManager()
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleSystem*
 ParticleSystemManager::CreateParticleSystemTemplate(const Ogre::String& name)
 {
@@ -84,9 +79,7 @@ ParticleSystemManager::CreateParticleSystemTemplate(const Ogre::String& name)
     return particle_system_template;
 }
 
-
-
-
+//------------------------------------------------------------------------------
 ParticleSystem*
 ParticleSystemManager::GetParticleSystemTemplate(const Ogre::String& template_name)
 {
@@ -99,8 +92,7 @@ ParticleSystemManager::GetParticleSystemTemplate(const Ogre::String& template_na
     return 0;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystemManager::ParticleSystemTemplateNames(std::vector<Ogre::String>& v)
 {
@@ -112,8 +104,7 @@ ParticleSystemManager::ParticleSystemTemplateNames(std::vector<Ogre::String>& v)
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleSystem*
 ParticleSystemManager::CreateParticleSystem(const Ogre::String& name, const Ogre::String& template_name)
 {
@@ -124,16 +115,14 @@ ParticleSystemManager::CreateParticleSystem(const Ogre::String& name, const Ogre
     return system;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystemManager::DestroyParticleSystem(ParticleSystem* particle_system)
 {
     Ogre::Root::getSingleton().getSceneManager("Scene")->destroyMovableObject(particle_system);
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleTechnique*
 ParticleSystemManager::CreateTechnique()
 {
@@ -142,8 +131,7 @@ ParticleSystemManager::CreateTechnique()
     return technique;
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleTechnique*
 ParticleSystemManager::CloneTechnique(ParticleTechnique* technique)
 {
@@ -157,8 +145,7 @@ ParticleSystemManager::CloneTechnique(ParticleTechnique* technique)
     return cloned_technique;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystemManager::DestroyTechnique(ParticleTechnique* technique)
 {
@@ -166,8 +153,7 @@ ParticleSystemManager::DestroyTechnique(ParticleTechnique* technique)
     delete technique;
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleEmitter*
 ParticleSystemManager::CreateEmitter(const Ogre::String& emitter_type)
 {
@@ -180,8 +166,7 @@ ParticleSystemManager::CreateEmitter(const Ogre::String& emitter_type)
     return it->second->CreateEmitter();
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleEmitter*
 ParticleSystemManager::CloneEmitter(ParticleEmitter* emitter)
 {
@@ -195,8 +180,7 @@ ParticleSystemManager::CloneEmitter(ParticleEmitter* emitter)
     return cloned_emitter;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystemManager::DestroyEmitter(ParticleEmitter* emitter)
 {
@@ -209,8 +193,7 @@ ParticleSystemManager::DestroyEmitter(ParticleEmitter* emitter)
     it->second->DestroyEmitter(emitter);
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleRenderer*
 ParticleSystemManager::CreateRenderer(const Ogre::String& renderer_type)
 {
@@ -225,8 +208,7 @@ ParticleSystemManager::CreateRenderer(const Ogre::String& renderer_type)
     return it->second->CreateRenderer();
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleRenderer*
 ParticleSystemManager::CloneRenderer(ParticleRenderer* renderer)
 {
@@ -240,8 +222,7 @@ ParticleSystemManager::CloneRenderer(ParticleRenderer* renderer)
     return cloned_renderer;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystemManager::DestroyRenderer(ParticleRenderer* renderer)
 {
@@ -256,8 +237,7 @@ ParticleSystemManager::DestroyRenderer(ParticleRenderer* renderer)
     it->second->DestroyRenderer(renderer);
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystemManager::AddEmitterFactory(ParticleEmitterFactory* factory)
 {
@@ -266,8 +246,7 @@ ParticleSystemManager::AddEmitterFactory(ParticleEmitterFactory* factory)
     Ogre::LogManager::getSingleton().logMessage("ParticleUniverse: Particle Emitter Type '" + type + "' registered.");
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleSystemManager::AddRendererFactory(ParticleRendererFactory* factory)
 {
@@ -275,3 +254,5 @@ ParticleSystemManager::AddRendererFactory(ParticleRendererFactory* factory)
     m_RendererFactories[type] = factory;
     Ogre::LogManager::getSingleton().logMessage("ParticleUniverse: Particle Renderer Type '" + type + "' registered");
 }
+
+//------------------------------------------------------------------------------

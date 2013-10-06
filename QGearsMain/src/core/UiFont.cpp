@@ -1,6 +1,6 @@
-#include "UiFont.h"
+#include "core/UiFont.h"
 
-#include "Logger.h"
+#include "core/Logger.h"
 
 
 

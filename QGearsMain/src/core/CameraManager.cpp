@@ -1,13 +1,13 @@
-#include "CameraManager.h"
-#include "CameraManagerCommands.h"
+#include "core/CameraManager.h"
+#include "core/CameraManagerCommands.h"
 
 #include <OgreRenderWindow.h>
 #include <OgreRoot.h>
 #include <OIS.h>
 
-#include "ConfigVar.h"
-#include "InputManager.h"
-#include "Logger.h"
+#include "core/ConfigVar.h"
+#include "core/InputManager.h"
+#include "core/Logger.h"
 
 
 

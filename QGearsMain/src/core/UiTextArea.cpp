@@ -1,11 +1,11 @@
-#include "UiTextArea.h"
+#include "core/UiTextArea.h"
 
 #include <OgreFontManager.h>
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
-#include "Logger.h"
-#include "UiManager.h"
+#include "core/Logger.h"
+#include "core/UiManager.h"
 
 
 

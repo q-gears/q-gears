@@ -1,16 +1,16 @@
-#include "EntityManager.h"
+#include "core/EntityManager.h"
 
 #include <OgreEntity.h>
 #include <OgreRoot.h>
 
-#include "CameraManager.h"
-#include "ConfigVar.h"
-#include "DebugDraw.h"
-#include "EntityModel.h"
-#include "InputManager.h"
-#include "Logger.h"
-#include "ScriptManager.h"
-#include "Timer.h"
+#include "core/CameraManager.h"
+#include "core/ConfigVar.h"
+#include "core/DebugDraw.h"
+#include "core/EntityModel.h"
+#include "core/InputManager.h"
+#include "core/Logger.h"
+#include "core/ScriptManager.h"
+#include "core/Timer.h"
 
 
 

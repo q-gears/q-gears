@@ -1,19 +1,17 @@
-#include "ParticleEmitter.h"
+#include "core/particles/ParticleEmitter.h"
 
 #include <OgreLogManager.h>
 #include <OgreString.h>
 #include <OgreStringConverter.h>
 
-#include "ParticleTechnique.h"
+#include "core/particles/ParticleTechnique.h"
 
+//------------------------------------------------------------------------------
+ParticleEmitterDictionary::EmissionRate     ParticleEmitter::m_EmissionRateDictionary;
+ParticleEmitterDictionary::TotalTimeToLive  ParticleEmitter::m_TotalTimeToLiveDictionary;
+ParticleEmitterDictionary::Direction        ParticleEmitter::m_DirectionDictionary;
 
-
-ParticleEmitterDictionary::EmissionRate ParticleEmitter::m_EmissionRateDictionary;
-ParticleEmitterDictionary::TotalTimeToLive ParticleEmitter::m_TotalTimeToLiveDictionary;
-ParticleEmitterDictionary::Direction ParticleEmitter::m_DirectionDictionary;
-
-
-
+//------------------------------------------------------------------------------
 ParticleEmitter::ParticleEmitter(void) :
     Particle(),
     m_ParentTechnique(NULL),
@@ -39,14 +37,12 @@ ParticleEmitter::ParticleEmitter(void) :
     }
 }
 
-
-
+//------------------------------------------------------------------------------
 ParticleEmitter::~ParticleEmitter()
 {
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEmitter::CopyAttributesTo(ParticleEmitter* emitter)
 {
@@ -64,16 +60,14 @@ ParticleEmitter::CopyAttributesTo(ParticleEmitter* emitter)
     emitter->SetEmitTotalTimeToLive(m_EmitTotalTimeToLive);
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEmitter::InitForEmission()
 {
     m_EmissionRemainder = 0;
 }
 
-
-
+//------------------------------------------------------------------------------
 int
 ParticleEmitter::CalculateRequestedParticles(Ogre::Real time_elapsed)
 {
@@ -94,8 +88,7 @@ ParticleEmitter::CalculateRequestedParticles(Ogre::Real time_elapsed)
     return request;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEmitter::InitParticleForEmission(Particle* particle)
 {
@@ -109,8 +102,7 @@ ParticleEmitter::InitParticleForEmission(Particle* particle)
     particle->total_time_to_live = m_EmitTotalTimeToLive;
 }
 
-
-
+//------------------------------------------------------------------------------
 void
 ParticleEmitter::SetEmitsName(const Ogre::String& emits_name)
 {
@@ -121,3 +113,5 @@ ParticleEmitter::SetEmitsName(const Ogre::String& emits_name)
         m_ParentTechnique->EmissionChange();
     }
 }
+
+//------------------------------------------------------------------------------

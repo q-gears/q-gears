@@ -51,85 +51,85 @@ set(HEADER_FILES
   include/map/QGearsWalkmeshFileXMLSerializer.h
   include/QGearsGameState.h
   include/QGearsPrerequisites.h
-  src/core/particles/emitters/ParticlePointEmitter.h
-  src/core/particles/emitters/ParticlePointEmitterFactory.h
-  src/core/particles/renderer/ParticleEntityAdditionalData.h
-  src/core/particles/renderer/ParticleEntityRenderer.h
-  src/core/particles/renderer/ParticleEntityRendererDictionary.h
-  src/core/particles/renderer/ParticleEntityRendererFactory.h
-  src/core/particles/Particle.h
-  src/core/particles/ParticleAdditionalData.h
-  src/core/particles/ParticleEmitter.h
-  src/core/particles/ParticleEmitterDictionary.h
-  src/core/particles/ParticleEmitterFactory.h
-  src/core/particles/ParticleEmitterTranslator.h
-  src/core/particles/ParticlePool.h
-  src/core/particles/ParticlePoolMap.h
-  src/core/particles/ParticleRenderer.h
-  src/core/particles/ParticleRendererFactory.h
-  src/core/particles/ParticleRendererTranslator.h
-  src/core/particles/ParticleSystem.h
-  src/core/particles/ParticleSystemFactory.h
-  src/core/particles/ParticleSystemManager.h
-  src/core/particles/ParticleSystemTranslator.h
-  src/core/particles/ParticleSystemTranslatorManager.h
-  src/core/particles/ParticleTechnique.h
-  src/core/particles/ParticleTechniqueTranslator.h
-  src/core/particles/ParticleVisual.h
-  src/core/Assert.h
-  #src/core/AudioManager.h
-  src/core/Background2D.h
-  src/core/Background2DAnimation.h
-  src/core/CameraManager.h
-  src/core/CameraManagerCommands.h
-  src/core/ConfigCmd.h
-  src/core/ConfigCmdManager.h
-  src/core/ConfigCmdManagerCommands.h
-  src/core/ConfigFile.h
-  src/core/ConfigVar.h
-  src/core/ConfigVarManager.h
-  src/core/Console.h
-  src/core/DebugDraw.h
-  src/core/Entity.h
-  src/core/EntityCollision.h
-  src/core/EntityDirection.h
-  src/core/EntityManager.h
-  src/core/EntityModel.h
-  src/core/EntityPoint.h
-  src/core/EntityTrigger.h
-  src/core/Event.h
-  src/core/GameFrameListner.h
-  src/core/InputManager.h
-  src/core/InputManagerCommands.h
-  src/core/Logger.h
-  src/core/Module.h
-  src/core/ScriptManager.h
-  src/core/ScriptManagerBinds.h
-  src/core/ScriptManagerCommands.h
-  src/core/Timer.h
-  src/core/UiAnimation.h
-  src/core/UiFont.h
-  src/core/UiManager.h
-  src/core/UiSprite.h
-  src/core/UiTextArea.h
-  src/core/UiWidget.h
-  src/core/Utilites.h
-  src/core/Walkmesh.h
-  src/core/XmlBackground2DFile.h
-  src/core/XmlFile.h
-  src/core/XmlFontFile.h
-  src/core/XmlFontsFile.h
-  src/core/XmlMapFile.h
-  #src/core/XmlMapsFile.h
-  src/core/XmlMusicsFile.h
-  src/core/XmlPrototypesFile.h
-  src/core/XmlScreenFile.h
-  src/core/XmlScreensFile.h
-  src/core/XmlScriptsFile.h
-  src/core/XmlTextFile.h
-  src/core/XmlTextsFile.h
-  src/core/XmlWalkmeshFile.h
-  #src/viewer/ViewerModule.h
+  include/core/particles/emitters/ParticlePointEmitter.h
+  include/core/particles/emitters/ParticlePointEmitterFactory.h
+  include/core/particles/renderer/ParticleEntityAdditionalData.h
+  include/core/particles/renderer/ParticleEntityRenderer.h
+  include/core/particles/renderer/ParticleEntityRendererDictionary.h
+  include/core/particles/renderer/ParticleEntityRendererFactory.h
+  include/core/particles/Particle.h
+  include/core/particles/ParticleAdditionalData.h
+  include/core/particles/ParticleEmitter.h
+  include/core/particles/ParticleEmitterDictionary.h
+  include/core/particles/ParticleEmitterFactory.h
+  include/core/particles/ParticleEmitterTranslator.h
+  include/core/particles/ParticlePool.h
+  include/core/particles/ParticlePoolMap.h
+  include/core/particles/ParticleRenderer.h
+  include/core/particles/ParticleRendererFactory.h
+  include/core/particles/ParticleRendererTranslator.h
+  include/core/particles/ParticleSystem.h
+  include/core/particles/ParticleSystemFactory.h
+  include/core/particles/ParticleSystemManager.h
+  include/core/particles/ParticleSystemTranslator.h
+  include/core/particles/ParticleSystemTranslatorManager.h
+  include/core/particles/ParticleTechnique.h
+  include/core/particles/ParticleTechniqueTranslator.h
+  include/core/particles/ParticleVisual.h
+  include/core/Assert.h
+  #include/core/AudioManager.h
+  include/core/Background2D.h
+  include/core/Background2DAnimation.h
+  include/core/CameraManager.h
+  include/core/CameraManagerCommands.h
+  include/core/ConfigCmd.h
+  include/core/ConfigCmdManager.h
+  include/core/ConfigCmdManagerCommands.h
+  include/core/ConfigFile.h
+  include/core/ConfigVar.h
+  include/core/ConfigVarManager.h
+  include/core/Console.h
+  include/core/DebugDraw.h
+  include/core/Entity.h
+  include/core/EntityCollision.h
+  include/core/EntityDirection.h
+  include/core/EntityManager.h
+  include/core/EntityModel.h
+  include/core/EntityPoint.h
+  include/core/EntityTrigger.h
+  include/core/Event.h
+  include/core/GameFrameListner.h
+  include/core/InputManager.h
+  include/core/InputManagerCommands.h
+  include/core/Logger.h
+  include/core/Module.h
+  include/core/ScriptManager.h
+  include/core/ScriptManagerBinds.h
+  include/core/ScriptManagerCommands.h
+  include/core/Timer.h
+  include/core/UiAnimation.h
+  include/core/UiFont.h
+  include/core/UiManager.h
+  include/core/UiSprite.h
+  include/core/UiTextArea.h
+  include/core/UiWidget.h
+  include/core/Utilites.h
+  include/core/Walkmesh.h
+  include/core/XmlBackground2DFile.h
+  include/core/XmlFile.h
+  include/core/XmlFontFile.h
+  include/core/XmlFontsFile.h
+  include/core/XmlMapFile.h
+  #include/core/XmlMapsFile.h
+  include/core/XmlMusicsFile.h
+  include/core/XmlPrototypesFile.h
+  include/core/XmlScreenFile.h
+  include/core/XmlScreensFile.h
+  include/core/XmlScriptsFile.h
+  include/core/XmlTextFile.h
+  include/core/XmlTextsFile.h
+  include/core/XmlWalkmeshFile.h
+  #include/viewer/ViewerModule.h
 )
 set(SOURCE_FILES
   src/common/QGearsManualObject.cpp
@@ -245,9 +245,9 @@ set(SOURCE_FILES
   src/QGearsGameState.cpp
 )
 
-aux_source_directory( src/core/library/lua Lua_FILES)
-aux_source_directory( src/core/library/luabind LuaBind_FILES)
-aux_source_directory( src/core/library/tinyxml TinyXml_FILES)
+aux_source_directory( src/core/library/lua Lua_FILES )
+aux_source_directory( src/core/library/luabind LuaBind_FILES )
+aux_source_directory( src/core/library/tinyxml TinyXml_FILES )
 
 add_library(Lua STATIC ${Lua_FILES})
 add_library(LuaBind STATIC ${LuaBind_FILES})
@@ -261,7 +261,9 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/library
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/library/tinyxml
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
+
+    # TODO: remove dependency on ff7 related code
+    ${QGears_SOURCE_DIR}/SupportedGames/FinalFantasy7/include
 )
 
 #compiler options
@@ -290,7 +292,7 @@ if(WIN32)
   add_definitions(-DWIN32 -D__WIN32__ -D_WINDOWS)
 endif()
 
-add_library(QGearsMain SHARED
+add_library(QGearsMain STATIC
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
@@ -308,11 +310,12 @@ set(LIBRARIES
     ${OIS_LIBRARIES}
     LuaBind
     TinyXml
+    FinalFantasy7
 )
 
 target_link_libraries(QGearsMain ${LIBRARIES})
 target_link_libraries(q-gears    QGearsMain ${LIBRARIES})
 
-install(TARGETS QGearsMain q-gears
+install(TARGETS q-gears
     DESTINATION ./
 )
