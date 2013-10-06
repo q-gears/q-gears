@@ -11,9 +11,7 @@ set(SOURCE_FILES
 
 
 include_directories(
-    ${OIS_INCLUDE_DIRS}
-    ${OGRE_INCLUDE_DIRS}
-    ${OGRE_SAMPLES_INCLUDEPATH}
+    ${QGears_INCLUDE_DIRS}
     ${QGears_SOURCE_DIR}/QGearsMain/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )

@@ -9,7 +9,7 @@
 #include <OgreVector4.h>
 #include <OgreUTFString.h>
 
-#include "library/tinyxml/tinyxml.h"
+#include <tinyxml/tinyxml.h>
 
 
 

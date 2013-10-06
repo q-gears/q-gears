@@ -10,12 +10,12 @@
 #include "core/XmlScriptsFile.h"
 extern "C"
 {
-    #include "library/lua/lua.h"
-    #include "library/lua/lualib.h"
-    #include "library/lua/lauxlib.h"
+    #include <lua/lua.h>
+    #include <lua/lualib.h>
+    #include <lua/lauxlib.h>
 }
-#include "library/luabind/luabind.hpp"
-#include "library/luabind/yield_policy.hpp"
+#include <luabind/luabind.hpp>
+#include <luabind/yield_policy.hpp>
 
 
 

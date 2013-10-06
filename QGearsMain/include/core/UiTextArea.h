@@ -5,10 +5,10 @@
 #include <OgreRenderQueueListener.h>
 #include <OgreRoot.h>
 #include <OgreUTFString.h>
+#include <tinyxml/tinyxml.h>
 
 #include "UiFont.h"
 #include "UiWidget.h"
-#include "library/tinyxml/tinyxml.h"
 
 
 

@@ -2,15 +2,7 @@ add_definitions(
     -DBOOST_TEST_MODULE="standalone"
 )
 
+set(QGearsMain_SOURCE_DIR ${QGears_SOURCE_DIR}/QGearsMain)
+
 add_subdirectory(QGearsMain)
-#add_executable(TestQGearsAFileSerializer
-#  ${HEADER_FILES}
-#  ${SOURCE_FILES}
-#  test/test_QGearsAFileSerializer.cpp
-#)
-
-#target_link_libraries(TestQGearsAFileSerializer ${LIBRARIES})
-#install(TARGETS TestQGearsAFileSerializer
-#    RUNTIME DESTINATION ./test
-#)
-
+add_subdirectory(FinalFantasy7)

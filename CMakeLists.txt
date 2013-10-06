@@ -101,11 +101,12 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 
         if(QGears_BUILD_TESTS)
             find_package(Boost COMPONENTS unit_test_framework QUIET)
-            set(QGears_TEST_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
+            set(QGears_TEST_LIBRARIES
+                ${OGRE_LIBRARIES}
+                ${Boost_LIBRARIES}
+            )
             # enable CTest
-            ENABLE_TESTING()
-            INCLUDE(CTest)
-            add_subdirectory(Tests)
+            enable_testing()
         endif()
 endif()
 #/*
@@ -208,6 +209,14 @@ if(UNIX)
 endif(UNIX)
 #*/
 
+set(QGears_INCLUDE_DIRS
+    ${OIS_INCLUDE_DIRS}
+    ${OGRE_INCLUDE_DIRS}
+    ${OGRE_SAMPLES_INCLUDEPATH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
+)
+
+add_subdirectory(dependencies)
 add_subdirectory(QGearsMain)
 add_subdirectory(SupportedGames)
 
@@ -217,4 +226,8 @@ endif()
 
 if(QGears_BUILD_UTILITIES)
     add_subdirectory(utilities)
+endif()
+
+if(QGears_BUILD_TESTS)
+    add_subdirectory(Tests)
 endif()

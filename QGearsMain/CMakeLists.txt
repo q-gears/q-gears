@@ -245,21 +245,8 @@ set(SOURCE_FILES
   src/QGearsGameState.cpp
 )
 
-aux_source_directory( src/core/library/lua Lua_FILES )
-aux_source_directory( src/core/library/luabind LuaBind_FILES )
-aux_source_directory( src/core/library/tinyxml TinyXml_FILES )
-
-add_library(Lua STATIC ${Lua_FILES})
-add_library(LuaBind STATIC ${LuaBind_FILES})
-add_library(TinyXml STATIC ${TinyXml_FILES})
-target_link_libraries(LuaBind Lua)
-
 include_directories(
-    ${OIS_INCLUDE_DIRS}
-    ${OGRE_INCLUDE_DIRS}
-    ${OGRE_SAMPLES_INCLUDEPATH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/library
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/library/tinyxml
+    ${QGears_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 
     # TODO: remove dependency on ff7 related code

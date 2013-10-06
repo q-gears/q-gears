@@ -2,6 +2,7 @@
 
 #include <OgreStringConverter.h>
 
+#include "QGearsGameState.h"
 #include "core/CameraManager.h"
 #include "core/ConfigVar.h"
 #include "core/Console.h"
@@ -12,7 +13,6 @@
 #include "core/ScriptManager.h"
 #include "core/Timer.h"
 #include "core/UiManager.h"
-#include "core/QGearsGameState.h"
 
 
 

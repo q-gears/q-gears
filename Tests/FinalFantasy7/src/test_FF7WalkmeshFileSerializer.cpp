@@ -19,7 +19,7 @@ GNU General Public License for more details.
 #include <boost/test/unit_test.hpp>
 #include <Ogre.h>
 
-#include "data/QGearsWalkmeshFileSerializer.h"
+#include "map/FF7WalkmeshFileSerializer.h"
 
 BOOST_AUTO_TEST_CASE( read_file )
 {
@@ -37,9 +37,9 @@ BOOST_AUTO_TEST_CASE( read_file )
     Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
     BOOST_REQUIRE( stream->isReadable() );
 
-    Ogre::LogManager                logMgr;
-    QGears::WalkmeshFileXMLSerializer  ser;
-    TestFile                        f;
+    Ogre::LogManager                    logMgr;
+    QGears::FF7::WalkmeshFileSerializer ser;
+    TestFile                            f;
 
     logMgr.createLog( "Default Log", true, true, true );
 

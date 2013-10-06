@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <OgreSerializer.h>
 #include <OgreVector2.h>
 #include <OgreVector3.h>
-#include <tinyxml.h>
+#include <tinyxml/tinyxml.h>
 
 #include "common/TypeDefine.h"
 
