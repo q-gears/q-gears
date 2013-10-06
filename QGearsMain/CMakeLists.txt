@@ -41,6 +41,9 @@ set(HEADER_FILES
   include/data/QGearsSerializer.h
   include/data/QGearsTexCodec.h
   include/data/QGearsTexFile.h
+  include/data/QGearsWalkmeshFile.h
+  include/data/QGearsWalkmeshFileManager.h
+  include/data/QGearsWalkmeshFileSerializer.h
   include/data/QGearsXMLSerializer.h
   #include/ffvii/FFVIICharacter.h
   include/ffvii/FFVIICommon.h
@@ -48,6 +51,9 @@ set(HEADER_FILES
   include/map/QGearsBackground2DFileManager.h
   include/map/QGearsBackground2DFileXMLSerializer.h
   include/map/QGearsTile.h
+  include/map/QGearsWalkmeshFile.h
+  include/map/QGearsWalkmeshFileManager.h
+  include/map/QGearsWalkmeshFileXMLSerializer.h
   include/QGearsGameState.h
   include/QGearsPrerequisites.h
   src/core/particles/emitters/ParticlePointEmitter.h
@@ -233,13 +239,18 @@ set(SOURCE_FILES
   src/data/QGearsSerializer.cpp
   src/data/QGearsTexCodec.cpp
   src/data/QGearsTexFile.cpp
+  src/data/QGearsWalkmeshFile.cpp
+  src/data/QGearsWalkmeshFileManager.cpp
+  src/data/QGearsWalkmeshFileSerializer.cpp
   src/data/QGearsXMLSerializer.cpp
   #src/ffvii/FFVIICharacter.cpp
   src/map/QGearsBackground2DFile.cpp
   src/map/QGearsBackground2DFileManager.cpp
   src/map/QGearsBackground2DFileXMLSerializer.cpp
+  src/map/QGearsWalkmeshFile.cpp
+  src/map/QGearsWalkmeshFileManager.cpp
+  src/map/QGearsWalkmeshFileXMLSerializer.cpp
   #src/viewer/ViewerModule.cpp
-  src/Main.cpp
   src/QGearsGameState.cpp
 )
 
@@ -291,6 +302,7 @@ endif()
 add_executable(QGearsMain
   ${HEADER_FILES}
   ${SOURCE_FILES}
+  src/Main.cpp
 )
 
 set_target_properties(QGearsMain PROPERTIES OUTPUT_NAME q-gears)

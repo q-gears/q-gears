@@ -64,6 +64,7 @@ namespace QGears
     void
     PaletteFile::unloadImpl()
     {
+        m_pages.clear();
     }
 
     //---------------------------------------------------------------------

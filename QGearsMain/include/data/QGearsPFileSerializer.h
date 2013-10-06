@@ -39,7 +39,7 @@ namespace QGears
                         PFileSerializer();
         virtual        ~PFileSerializer();
 
-        virtual void 	importPFile( Ogre::DataStreamPtr &stream, PFile* pDest );
+        virtual void    importPFile( Ogre::DataStreamPtr &stream, PFile* pDest );
 
         struct Header
         {
@@ -70,7 +70,7 @@ namespace QGears
         typedef PFile::Colour               Colour;
 
     protected:
-        virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
+        virtual void    readFileHeader( Ogre::DataStreamPtr &stream );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Colour &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Edge &pDest );
         virtual void    readObject( Ogre::DataStreamPtr &stream, PolygonDefinition &pDest );

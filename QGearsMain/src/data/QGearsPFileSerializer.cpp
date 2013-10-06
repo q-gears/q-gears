@@ -55,7 +55,7 @@ namespace QGears
             readObject( stream, in_tmp );
             pDest.push_back( in_tmp );
         }
-    };
+    }
 
     //---------------------------------------------------------------------
     void

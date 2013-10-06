@@ -22,6 +22,10 @@ project(QGears)
 set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 21)
 
+option(QGears_BUILD_PLUGINS     "Build the plugins"     FALSE)
+option(QGears_BUILD_UTILITIES   "Build the utilities"   FALSE)
+option(QGears_BUILD_TESTS       "Build the unit tests"  FALSE)
+
 find_path(OGRE_CMAKE_MODULE_PATH FindOGRE.cmake
     HINTS
     "$ENV{OGRE_HOME}/CMake/"
@@ -94,6 +98,15 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
         include_directories(${Boost_INCLUDE_DIR})
         add_definitions(-DBOOST_ALL_NO_LIB)
         set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
+
+        if(QGears_BUILD_TESTS)
+            find_package(Boost COMPONENTS unit_test_framework QUIET)
+            set(QGears_TEST_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
+            # enable CTest
+            ENABLE_TESTING()
+            INCLUDE(CTest)
+            add_subdirectory(Tests)
+        endif()
 endif()
 #/*
 #file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dist/bin)
@@ -196,5 +209,11 @@ endif(UNIX)
 #*/
 
 add_subdirectory(QGearsMain)
-add_subdirectory(PlugIns)
-add_subdirectory(utilities)
+
+if(QGears_BUILD_PLUGINS)
+    add_subdirectory(PlugIns)
+endif()
+
+if(QGears_BUILD_UTILITIES)
+    add_subdirectory(utilities)
+endif()

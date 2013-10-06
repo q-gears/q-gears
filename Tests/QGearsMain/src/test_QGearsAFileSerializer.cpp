@@ -25,11 +25,10 @@ THE SOFTWARE.
 */
 #include <fstream>
 
-#define BOOST_TEST_MODULE QGearsASerializer
 #include <boost/test/unit_test.hpp>
 #include <Ogre.h>
 
-#include "QGearsAFileSerializer.h"
+#include "data/QGearsAFileSerializer.h"
 
 BOOST_AUTO_TEST_CASE( header_size )
 {
@@ -46,13 +45,13 @@ BOOST_AUTO_TEST_CASE( header_offset )
 
 BOOST_AUTO_TEST_CASE( read_file )
 {
-    const char* file_name( "../../../../output/data_orig/field/char/acfe.a" );
+    const char* file_name( "misc/reference.a" );
     std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
     BOOST_REQUIRE( ifs->is_open() );
     Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
     BOOST_REQUIRE( stream->isReadable() );
 
-	Ogre::LogManager            logMgr;
+    Ogre::LogManager            logMgr;
     QGears::AFileSerializer     ser;
     QGears::AFile               f;
 
