@@ -34,23 +34,23 @@
 int
 main(int argc, char *argv[])
 {
-    Ogre::Root* root;
-    Ogre::RenderWindow* window;
-    Ogre::SceneManager* scene_manager;
+    Ogre::Root         *root( NULL );
+    Ogre::RenderWindow *window( NULL );
+    Ogre::SceneManager *scene_manager( NULL );
 
-    Ogre::LogManager* log_manager = new Ogre::LogManager();
+    Ogre::LogManager *log_manager( new Ogre::LogManager() );
     log_manager->createLog( "q-gears.log", true, true );
     log_manager->getDefaultLog()->setLogDetail( ( Ogre::LoggingLevel )3 );
 
     Ogre::String ressource_cfg("");
     Ogre::String plugins_cfg("");
 
-#ifdef _DEBUG
-    ressource_cfg = "resources_d.cfg";
-    plugins_cfg = "plugins_d.cfg";
-#else
+#ifdef NDEBUG
     ressource_cfg = "resources.cfg";
     plugins_cfg = "plugins.cfg";
+#else
+    ressource_cfg = "resources_d.cfg";
+    plugins_cfg = "plugins_d.cfg";
 #endif
 
     // init root early
@@ -94,8 +94,6 @@ main(int argc, char *argv[])
     Ogre::NameValuePairList misc;
     misc[ "title" ] = QG_VERSION_NAME;
     window = root->createRenderWindow( "QGearsWindow", 1280, 720, false, &misc );
-
-
 
     Timer* timer = new Timer();
 
