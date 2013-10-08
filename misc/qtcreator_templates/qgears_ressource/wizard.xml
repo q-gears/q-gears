@@ -21,18 +21,30 @@ QGears Ressource Class -->
     <displayname>QGears::Ressource implementation</displayname>;
     <displaycategory>QGears</displaycategory>
     <files>
-        <file source="QGearsRessourceFile.h" target="include/%SubPath%/QGears%ClassName%.%CppHeaderSuffix%" openeditor="true"/>
-        <file source="QGearsRessourceFile.cpp" target="src/%SubPath%/QGears%ClassName%.%CppSourceSuffix%" openeditor="true"/>
-        <file source="QGearsRessourceFileManager.h" target="include/%SubPath%/QGears%ClassName%Manager.%CppHeaderSuffix%" openeditor="true"/>
-        <file source="QGearsRessourceFileManager.cpp" target="src/%SubPath%/QGears%ClassName%Manager.%CppSourceSuffix%" openeditor="true"/>
-        <file source="QGearsRessourceFileSerializer.h" target="include/%SubPath%/QGears%ClassName%Serializer.%CppHeaderSuffix%" openeditor="true"/>
-        <file source="QGearsRessourceFileSerializer.cpp" target="src/%SubPath%/QGears%ClassName%Serializer.%CppSourceSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFile.h" target="include/%SubPath%/%NameSpace%%ClassName%.%CppHeaderSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFile.cpp" target="src/%SubPath%/%NameSpace%%ClassName%.%CppSourceSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFileManager.h" target="include/%SubPath%/%NameSpace%%ClassName%Manager.%CppHeaderSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFileManager.cpp" target="src/%SubPath%/%NameSpace%%ClassName%Manager.%CppSourceSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFileSerializer.h" target="include/%SubPath%/%NameSpace%%ClassName%Serializer.%CppHeaderSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFileSerializer.cpp" target="src/%SubPath%/%NameSpace%%ClassName%Serializer.%CppSourceSuffix%" openeditor="true"/>
     </files>
     <fieldpagetitle>Resource parameters</fieldpagetitle>
     <fields>
+        <field name="NameSpace">
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$" defaulttext="QGears" />
+            <fielddescription>Namespace:</fielddescription>
+        </field>
         <field name="ClassName">
             <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$" defaulttext="MyResourceFile" />
-            <fielddescription>Class name:</fielddescription>
+            <fielddescription>Resource Class name:</fielddescription>
+        </field>
+        <field name="ClassNameManager">
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$" defaulttext="MyResourceFileManager" />
+            <fielddescription>Manager Class name:</fielddescription>
+        </field>
+        <field name="ClassNameSerializer">
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$" defaulttext="MyResourceFileSerializer" />
+            <fielddescription>Serializer Class name:</fielddescription>
         </field>
         <field name="SubPath">
             <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$" defaulttext="data" />

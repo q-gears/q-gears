@@ -1,6 +1,6 @@
-#include "%SubPath%/QGears%ClassName%Manager.%CppHeaderSuffix%"
+#include "%SubPath%/%NameSpace%%ClassName%Manager.%CppHeaderSuffix%"
 
-namespace QGears
+namespace %NameSpace%
 {
     //--------------------------------------------------------------------------
     template<> %ClassName%Manager *Ogre::Singleton<%ClassName%Manager>::msSingleton = NULL;

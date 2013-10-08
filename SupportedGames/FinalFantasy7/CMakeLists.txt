@@ -1,10 +1,16 @@
 # define header and source files for the library
 set(HEADER_FILES
+  include/data/FF7ModelListFile.h
+  include/data/FF7ModelListFileManager.h
+  include/data/FF7ModelListFileSerializer.h
   include/map/FF7WalkmeshFileSerializer.h
   include/FF7Common.h
   #include/FF7Character.h
 )
 set(SOURCE_FILES
+  src/data/FF7ModelListFile.cpp
+  src/data/FF7ModelListFileManager.cpp
+  src/data/FF7ModelListFileSerializer.cpp
   src/map/FF7WalkmeshFileSerializer.cpp
   #src/FF7Character.cpp
 )

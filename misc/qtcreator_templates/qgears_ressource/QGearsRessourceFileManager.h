@@ -1,13 +1,13 @@
-#ifndef __QGears%ClassName%Manager_H__
-#define __QGears%ClassName%Manager_H__
+#ifndef __%NameSpace%%ClassName%Manager_H__
+#define __%NameSpace%%ClassName%Manager_H__
 
 #include <OgreResourceManager.h>
 
 #include "QGearsPrerequisites.h"
 
-#include "QGears%ClassName%.h"
+#include "%NameSpace%%ClassName%.h"
 
-namespace QGears
+namespace %NameSpace%
 {
     class _QGearsExport %ClassName%Manager : public Ogre::ResourceManager, public Ogre::Singleton<%ClassName%Manager>
     {
@@ -27,4 +27,4 @@ namespace QGears
     };
 }
 
-#endif // __QGears%ClassName%Manager_H__
+#endif // __%NameSpace%%ClassName%Manager_H__

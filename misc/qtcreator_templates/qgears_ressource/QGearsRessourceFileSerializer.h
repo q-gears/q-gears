@@ -1,12 +1,12 @@
-#ifndef __QGears%ClassName%Serializer_H__
-#define __QGears%ClassName%Serializer_H__
+#ifndef __%NameSpace%%ClassName%Serializer_H__
+#define __%NameSpace%%ClassName%Serializer_H__
 
 #include "common/TypeDefine.h"
 
 #include "QGearsSerializer.h"
-#include "QGears%ClassName%.h"
+#include "%NameSpace%%ClassName%.h"
 
-namespace QGears
+namespace %NameSpace%
 {
     class %ClassName%Serializer : public Serializer
     {
@@ -22,4 +22,4 @@ namespace QGears
     };
 }
 
-#endif // __QGears%ClassName%Serializer_H__
+#endif // __%NameSpace%%ClassName%Serializer_H__

@@ -1,13 +1,13 @@
-#include "%SubPath%/QGears%ClassName%.%CppHeaderSuffix%"
+#include "%SubPath%/%NameSpace%%ClassName%.%CppHeaderSuffix%"
 
 
 
-#include "%SubPath%/QGears%ClassName%Serializer.%CppHeaderSuffix%"
+#include "%SubPath%/%NameSpace%%ClassName%Serializer.%CppHeaderSuffix%"
 
-namespace QGears
+namespace %NameSpace%
 {
     //---------------------------------------------------------------------
-    const String    %ClassName%::RESOURCE_TYPE( "QGears%ClassName%" );
+    const String    %ClassName%::RESOURCE_TYPE( "%NameSpace%%ClassName%" );
 
     //---------------------------------------------------------------------
     %ClassName%::%ClassName%( Ogre::ResourceManager *creator

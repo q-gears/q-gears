@@ -1,9 +1,9 @@
-#include "%SubPath%/QGears%ClassName%Serializer.%CppHeaderSuffix%"
+#include "%SubPath%/%NameSpace%%ClassName%Serializer.%CppHeaderSuffix%"
 
 #include <OgreLogManager.h>
 #include <OgreException.h>
 
-namespace QGears
+namespace %NameSpace%
 {
     //--------------------------------------------------------------------------
     %ClassName%Serializer::%ClassName%Serializer() :

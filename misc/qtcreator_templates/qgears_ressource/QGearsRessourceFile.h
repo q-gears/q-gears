@@ -1,9 +1,9 @@
-#ifndef __QGears%ClassName%_H__
-#define __QGears%ClassName%_H__
+#ifndef __%NameSpace%%ClassName%_H__
+#define __%NameSpace%%ClassName%_H__
 
 #include "common/QGearsResource.h"
 
-namespace QGears
+namespace %NameSpace%
 {
     class %ClassName% : public Resource
     {
@@ -70,4 +70,4 @@ namespace QGears
         }
     };
 }
-#endif // __QGears%ClassName%_H__
+#endif // __%NameSpace%%ClassName%_H__
