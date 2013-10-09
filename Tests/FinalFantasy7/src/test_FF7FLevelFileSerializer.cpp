@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#define BOOST_TEST_MODULE QGearsFLevelFileSerializer
 #include <boost/test/unit_test.hpp>
 
 #include <Ogre.h>
@@ -31,8 +30,11 @@ THE SOFTWARE.
 #include "data/QGearsFLevelFileSerializer.h"
 
 #include "data/QGearsBackgroundFileManager.h"
+#include "data/QGearsCameraMatrixFileManager.h"
 #include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
+#include "data/FF7ModelListFileManager.h"
+#include "map/QGearsWalkmeshFileManager.h"
 
 BOOST_AUTO_TEST_CASE( read_file )
 {
@@ -46,19 +48,19 @@ BOOST_AUTO_TEST_CASE( read_file )
     {
     public:
         QGears::String base      ( TestFile *file ) { return getBaseName      ( file ); }
-        QGears::String palette   ( TestFile *file ) { return getPaletteName   ( file ); }
-        QGears::String background( TestFile *file ) { return getBackgroundName( file ); }
     };
 
-	Ogre::LogManager                    logMgr;
-	Ogre::Root                          root("","");
-	Ogre::ResourceGroupManager         &rgm( Ogre::ResourceGroupManager::getSingleton() );
-	QGears::PaletteFileManager          pmgr;
-	QGears::BackgroundFileManager       bmgr;
-	QGears::LZSFLevelFileManager        fmgr;
+    Ogre::LogManager                    logMgr;
+    Ogre::Root                          root("","");
+    Ogre::ResourceGroupManager         &rgm( Ogre::ResourceGroupManager::getSingleton() );
+    QGears::CameraMatrixFileManager     cmgr;
+    QGears::WalkmeshFileManager         wmgr;
+    QGears::PaletteFileManager          pmgr;
+    QGears::BackgroundFileManager       bmgr;
+    QGears::LZSFLevelFileManager        fmgr;
     logMgr.createLog( "Default Log", true, true, true );
 
-    rgm.addResourceLocation( ".", "FileSystem" );
+    rgm.addResourceLocation( "misc", "FileSystem" );
     rgm.initialiseAllResourceGroups();
 
     TestFile                file;
@@ -67,8 +69,6 @@ BOOST_AUTO_TEST_CASE( read_file )
 
     TestSerializer   ser;
     BOOST_CHECK_EQUAL( "reference"           , ser.base( &file ) );
-    BOOST_CHECK_EQUAL( "reference.palette"   , ser.palette( &file ) );
-    BOOST_CHECK_EQUAL( "reference.background", ser.background( &file ) );
     ser.importFLevelFile( stream, &file );
     BOOST_CHECK_EQUAL( 757890, stream->tell() );
 

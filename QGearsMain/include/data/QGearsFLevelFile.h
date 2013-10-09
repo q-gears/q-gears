@@ -31,6 +31,9 @@ THE SOFTWARE.
 #include "common/QGearsResource.h"
 #include "common/TypeDefine.h"
 #include "map/QGearsBackground2DFile.h"
+#include "map/QGearsWalkmeshFile.h"
+
+#include "data/FF7ModelListFile.h"
 
 #include "QGearsBackgroundFile.h"
 #include "QGearsCameraMatrixFile.h"
@@ -38,6 +41,10 @@ THE SOFTWARE.
 
 namespace QGears
 {
+    // TODO: move flevel stuff to ff7 as it is ff7 related
+    using FF7::ModelListFile;
+    using FF7::ModelListFilePtr;
+
     class FLevelTextureLoader;
     class FLevelBackground2DLoader;
 
@@ -55,11 +62,15 @@ namespace QGears
 
         virtual const BackgroundFilePtr&    getBackground  ( void ) const;
         virtual const CameraMatrixFilePtr&  getCameraMatrix( void ) const;
+        virtual const ModelListFilePtr&     getModelList   ( void ) const;
         virtual const PaletteFilePtr&       getPalette     ( void ) const;
+        virtual const WalkmeshFilePtr&      getWalkmesh    ( void ) const;
 
-        virtual void setBackground  ( const BackgroundFilePtr&      background    );
-        virtual void setCameraMatrix( const CameraMatrixFilePtr&    camera_matrix );
-        virtual void setPalette     ( const PaletteFilePtr&         palette       );
+        virtual void setBackground  ( const BackgroundFilePtr      &background    );
+        virtual void setCameraMatrix( const CameraMatrixFilePtr    &camera_matrix );
+        virtual void setModelList   ( const ModelListFilePtr       &model_list    );
+        virtual void setPalette     ( const PaletteFilePtr         &palette       );
+        virtual void setWalkmesh    ( const WalkmeshFilePtr        &walkmesh      );
 
         virtual String getBackground2DName( void ) const;
         virtual String getBackgroundTextureName( void ) const;
@@ -75,9 +86,11 @@ namespace QGears
         static const String SUFFIX_BACKGROUND_2D;
 
     private:
-        CameraMatrixFilePtr         m_camera_matrix;
         BackgroundFilePtr           m_background;
+        CameraMatrixFilePtr         m_camera_matrix;
+        ModelListFilePtr            m_model_list;
         PaletteFilePtr              m_palette;
+        WalkmeshFilePtr             m_walkmesh;
 
         FLevelTextureLoader        *m_background_texture_loader;
         Ogre::TexturePtr            m_background_texture;
@@ -85,7 +98,7 @@ namespace QGears
         Background2DFilePtr         m_background_2d;
     };
 
-    //-------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     class FLevelFilePtr : public Ogre::SharedPtr<FLevelFile>
     {
     public:
@@ -109,7 +122,7 @@ namespace QGears
         }
 
         /// Operator used to convert a ResourcePtr to a FLevelFilePtr
-        FLevelFilePtr& operator=( const Ogre::ResourcePtr& r )
+        FLevelFilePtr& operator=( const Ogre::ResourcePtr &r )
         {
             if(pRep == static_cast<FLevelFile*>(r.getPointer()))
                 return *this;

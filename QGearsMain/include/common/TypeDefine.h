@@ -56,9 +56,11 @@ namespace QGears
     extern const String    EXT_TEX;
 
 
-    extern const String    EXT_CAMERA_MATRIX;
-    extern const String    EXT_PALETTE;
     extern const String    EXT_BACKGROUND;
+    extern const String    EXT_CAMERA_MATRIX;
+    extern const String    EXT_MODEL_LIST;
+    extern const String    EXT_PALETTE;
+    extern const String    EXT_WALKMESH;
 }
 
 #endif // TYPE_DEFINE_H

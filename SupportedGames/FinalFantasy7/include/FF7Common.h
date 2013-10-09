@@ -26,18 +26,21 @@ THE SOFTWARE.
 #ifndef __FF7Common_H__
 #define __FF7Common_H__
 
-namespace FF7
+namespace QGears
 {
-    namespace Common
+    namespace FF7
     {
-        enum
+        namespace Common
         {
-            SCREEN_WIDTH    = 320
-           ,SCREEN_HEIGHT   = 240
+            enum
+            {
+                SCREEN_WIDTH    = 320
+               ,SCREEN_HEIGHT   = 240
 
-           ,FIELD_POSITION_SCALE    = 128
-           ,FIELD_DEPTH_SCALE       = 32
-        };
+               ,FIELD_POSITION_SCALE    = 128
+               ,FIELD_DEPTH_SCALE       = 32
+            };
+        }
     }
 }
 

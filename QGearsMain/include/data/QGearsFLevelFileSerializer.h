@@ -67,29 +67,21 @@ namespace QGears
         virtual void    readSectionData( Ogre::DataStreamPtr &stream, Ogre::DataStreamPtr &out_buffer );
         virtual void    readSection( Ogre::DataStreamPtr &stream, FLevelFile* pDest, const size_t section_index );
 
+        template<typename ResourceManagerType>
+        Ogre::ResourcePtr createResource( FLevelFile *pDest, const String &extension );
+
         virtual void    readCameraMatrix( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        virtual void    readModelList   ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
         virtual void    readPalette     ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        virtual void    readWalkmesh    ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
         virtual void    readBackground  ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
 
         virtual void    readEnd( Ogre::DataStreamPtr &stream );
 
         template<typename ValueType> void
-        readVector( Ogre::DataStreamPtr &stream, std::vector<ValueType> &pDest, size_t count )
-        {
-            pDest.clear();
-            pDest.reserve( count );
-            for( size_t i( count ); i--; )
-            {
-                ValueType in_tmp;
-                readObject( stream, in_tmp );
-                pDest.push_back( in_tmp );
-            }
-        }
+        readVector( Ogre::DataStreamPtr &stream, std::vector<ValueType> &pDest, size_t count );
 
         virtual String  getBaseName        ( const FLevelFile* pDest ) const;
-        virtual String  getCameraMatrixName( const FLevelFile* pDest ) const;
-        virtual String  getPaletteName     ( const FLevelFile* pDest ) const;
-        virtual String  getBackgroundName  ( const FLevelFile* pDest ) const;
 
         static const String     TAG_FILE_END;
 

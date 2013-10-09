@@ -34,26 +34,35 @@ THE SOFTWARE.
 #include "data/QGearsBackgroundFileSerializer.h"
 #include "data/QGearsCameraMatrixFileManager.h"
 #include "data/QGearsCameraMatrixFileSerializer.h"
+#include "data/FF7ModelListFileManager.h"
+#include "data/FF7ModelListFileSerializer.h"
 #include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsPaletteFileSerializer.h"
+#include "map/QGearsWalkmeshFileManager.h"
+#include "map/FF7WalkmeshFileSerializer.h"
 
 namespace QGears
 {
-    //---------------------------------------------------------------------
-    const String    FLevelFileSerializer::TAG_FILE_END  ("FINAL FANTASY7");
+    // TODO: move flevel stuff to ff7 as it is ff7 related
+    using FF7::ModelListFileManager;
+    using FF7::ModelListFileSerializer;
+    using FF7::WalkmeshFileSerializer;
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    const String    FLevelFileSerializer::TAG_FILE_END( "FINAL FANTASY7" );
+
+    //--------------------------------------------------------------------------
     FLevelFileSerializer::FLevelFileSerializer() :
         Serializer()
     {
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     FLevelFileSerializer::~FLevelFileSerializer()
     {
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
     FLevelFileSerializer::importFLevelFile( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
     {
@@ -91,7 +100,7 @@ namespace QGears
         readEnd( stream );
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
     FLevelFileSerializer::readFileHeader( Ogre::DataStreamPtr &stream )
     {
@@ -113,7 +122,7 @@ namespace QGears
         }
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
     FLevelFileSerializer::readSectionData( Ogre::DataStreamPtr &stream
                                           ,Ogre::DataStreamPtr &out_buffer )
@@ -127,10 +136,10 @@ namespace QGears
         out_buffer = Ogre::DataStreamPtr( buffer );
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
     FLevelFileSerializer::readSection( Ogre::DataStreamPtr &stream
-                                      ,FLevelFile* pDest
+                                      ,FLevelFile *pDest
                                       ,const size_t section_index )
     {
         switch( section_index )
@@ -139,8 +148,16 @@ namespace QGears
                 readCameraMatrix( stream, pDest );
                 break;
 
+            case SECTION_MODEL_LOADER:
+                readPalette( stream, pDest );
+                break;
+
             case SECTION_PALETTE:
                 readPalette( stream, pDest );
+                break;
+
+            case SECTION_WALKMESH:
+                readWalkmesh( stream, pDest );
                 break;
 
             case SECTION_BACKGROUND:
@@ -149,76 +166,101 @@ namespace QGears
         }
     }
 
-    //---------------------------------------------------------------------
-    void
-    FLevelFileSerializer::readCameraMatrix( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
+    //--------------------------------------------------------------------------
+    template<typename ResourceManagerType>
+    Ogre::ResourcePtr
+    FLevelFileSerializer::createResource( FLevelFile *pDest, const String &extension )
     {
-        CameraMatrixFileManager &mgr( CameraMatrixFileManager::getSingleton() );
+        assert( pDest );
+        Ogre::ResourceManager &mgr( ResourceManagerType::getSingleton() );
+        String name( getBaseName( pDest ) + extension );
+        Ogre::ResourcePtr resource( mgr.create( name, pDest->getGroup(), true ) );
+        resource->_notifyOrigin( pDest->getName() );
+        return resource;
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    FLevelFileSerializer::readCameraMatrix( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
+    {
+        CameraMatrixFilePtr camera_matrix( createResource<CameraMatrixFileManager>( pDest, EXT_CAMERA_MATRIX ) );
         CameraMatrixFileSerializer ser;
-        CameraMatrixFilePtr camera_matrix( mgr.create( getCameraMatrixName( pDest ), pDest->getGroup() ) );
         ser.importCameraMatrixFile( stream, camera_matrix.getPointer() );
         pDest->setCameraMatrix( camera_matrix );
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
-    FLevelFileSerializer::readPalette( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
+    FLevelFileSerializer::readModelList( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
     {
-        PaletteFileManager &mgr( PaletteFileManager::getSingleton() );
+        ModelListFilePtr model_list( createResource<ModelListFileManager>( pDest, EXT_MODEL_LIST ) );
+        ModelListFileSerializer ser;
+        ser.importModelListFile( stream, model_list.getPointer() );
+        pDest->setModelList( model_list );
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    FLevelFileSerializer::readPalette( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
+    {
+        PaletteFilePtr palette( createResource<PaletteFileManager>( pDest, EXT_PALETTE ) );
         PaletteFileSerializer ser;
-        PaletteFilePtr palette( mgr.create( getPaletteName( pDest ), pDest->getGroup() ) );
         ser.importPaletteFile( stream, palette.getPointer() );
         pDest->setPalette( palette );
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
-    FLevelFileSerializer::readBackground( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
+    FLevelFileSerializer::readWalkmesh( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
     {
-        BackgroundFileManager &mgr( BackgroundFileManager::getSingleton() );
-        BackgroundFilePtr background( mgr.create( getBackgroundName( pDest ), pDest->getGroup(), true ) );
+        WalkmeshFilePtr walkmesh( createResource<WalkmeshFileManager>( pDest, EXT_WALKMESH ) );
+        WalkmeshFileSerializer ser;
+        ser.importWalkmeshFile( stream, walkmesh.getPointer() );
+        pDest->setWalkmesh( walkmesh );
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    FLevelFileSerializer::readBackground( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
+    {
+        BackgroundFilePtr background( createResource<BackgroundFileManager>( pDest, EXT_BACKGROUND ) );
         BackgroundFileSerializer ser;
-        background->_notifyOrigin( pDest->getName() );
         ser.importBackgroundFile( stream, background.getPointer() );
         pDest->setBackground( background );
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     String
-    FLevelFileSerializer::getBaseName( const FLevelFile* pDest ) const
+    FLevelFileSerializer::getBaseName( const FLevelFile *pDest ) const
     {
         String base_name;
         StringUtil::splitBase( pDest->getName(), base_name );
         return base_name;
     }
 
-    //---------------------------------------------------------------------
-    String
-    FLevelFileSerializer::getPaletteName( const FLevelFile* pDest ) const
-    {
-        return getBaseName( pDest ) + EXT_PALETTE;
-    }
-
-    //---------------------------------------------------------------------
-    String
-    FLevelFileSerializer::getCameraMatrixName( const FLevelFile* pDest ) const
-    {
-        return getBaseName( pDest ) + EXT_CAMERA_MATRIX;
-    }
-
-    //---------------------------------------------------------------------
-    String
-    FLevelFileSerializer::getBackgroundName( const FLevelFile* pDest ) const
-    {
-        return getBaseName( pDest ) + EXT_BACKGROUND;
-    }
-
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
     FLevelFileSerializer::readEnd( Ogre::DataStreamPtr &stream )
     {
         readEndString( stream, TAG_FILE_END );
     }
 
-    //---------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    template<typename ValueType>
+    void
+    FLevelFileSerializer::readVector( Ogre::DataStreamPtr &stream
+                                     ,std::vector<ValueType> &pDest
+                                     ,size_t count )
+    {
+        pDest.clear();
+        pDest.reserve( count );
+        for( size_t i( count ); i--; )
+        {
+            ValueType in_tmp;
+            readObject( stream, in_tmp );
+            pDest.push_back( in_tmp );
+        }
+    }
+
+    //--------------------------------------------------------------------------
 }

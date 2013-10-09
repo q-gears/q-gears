@@ -41,7 +41,7 @@ namespace QGears
     const String    FLevelFile::SUFFIX_BACKGROUND_TEXTURE( "/texture" );
     const String    FLevelFile::SUFFIX_BACKGROUND_2D     ( "/background_2d" );
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     FLevelFile::FLevelFile( Ogre::ResourceManager *creator
                  ,const String &name, Ogre::ResourceHandle handle
                  ,const String &group, bool isManual
@@ -53,7 +53,7 @@ namespace QGears
         createParamDictionary( getResourceType() );
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     FLevelFile::~FLevelFile()
     {
         if( m_background_texture_loader )
@@ -77,7 +77,7 @@ namespace QGears
         unload();
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
     FLevelFile::loadImpl()
     {
@@ -100,23 +100,25 @@ namespace QGears
         }
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
     FLevelFile::unloadImpl()
     {
         m_background.setNull();
         m_camera_matrix.setNull();
         m_palette.setNull();
+        m_model_list.setNull();
+        m_walkmesh.setNull();
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     const String&
     FLevelFile::getResourceType( void ) const
     {
         return RESOURCE_TYPE;
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     size_t
     FLevelFile::calculateSize() const
     {
@@ -124,49 +126,77 @@ namespace QGears
         return 0;
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     const BackgroundFilePtr&
     FLevelFile::getBackground( void ) const
     {
         return m_background;
-    };
+    }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
-    FLevelFile::setBackground( const BackgroundFilePtr& background )
+    FLevelFile::setBackground( const BackgroundFilePtr &background )
     {
         m_background = background;
-    };
+    }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     const CameraMatrixFilePtr&
     FLevelFile::getCameraMatrix( void ) const
     {
         return m_camera_matrix;
-    };
+    }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
-    FLevelFile::setCameraMatrix( const CameraMatrixFilePtr& camera_matrix )
+    FLevelFile::setCameraMatrix( const CameraMatrixFilePtr &camera_matrix )
     {
         m_camera_matrix = camera_matrix;
-    };
+    }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     const PaletteFilePtr&
     FLevelFile::getPalette( void ) const
     {
         return m_palette;
-    };
+    }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
-    FLevelFile::setPalette( const PaletteFilePtr& palette )
+    FLevelFile::setPalette( const PaletteFilePtr &palette )
     {
         m_palette = palette;
-    };
+    }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    const ModelListFilePtr&
+    FLevelFile::getModelList() const
+    {
+        return m_model_list;
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    FLevelFile::setModelList(const ModelListFilePtr &model_list)
+    {
+        m_model_list = model_list;
+    }
+
+    //--------------------------------------------------------------------------
+    const WalkmeshFilePtr&
+    FLevelFile::getWalkmesh() const
+    {
+        return m_walkmesh;
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    FLevelFile::setWalkmesh( const WalkmeshFilePtr &walkmesh )
+    {
+        m_walkmesh = walkmesh;
+    }
+
+    //--------------------------------------------------------------------------
     String
     FLevelFile::getBackgroundTextureName( void ) const
     {
@@ -174,9 +204,9 @@ namespace QGears
         StringUtil::splitFull( getName(), base_name );
         base_name += SUFFIX_BACKGROUND_TEXTURE;
         return base_name;
-    };
+    }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     String
     FLevelFile::getBackground2DName( void ) const
     {
@@ -184,7 +214,7 @@ namespace QGears
         StringUtil::splitFull( getName(), base_name );
         base_name += SUFFIX_BACKGROUND_2D;
         return base_name;
-    };
+    }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 }

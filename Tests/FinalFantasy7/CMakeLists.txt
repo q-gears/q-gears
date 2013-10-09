@@ -12,6 +12,13 @@ set(LIBRARIES
     FinalFantasy7
 )
 
+add_executable(TestFF7FLevelFileSerializer
+    src/test_FF7FLevelFileSerializer
+)
+target_link_libraries(TestFF7FLevelFileSerializer ${LIBRARIES})
+add_test(TestFF7FLevelFileSerializer TestFF7FLevelFileSerializer)
+
+
 add_executable(TestFF7ModelListFileSerializer
     src/test_FF7ModelListFileSerializer.cpp
 )
