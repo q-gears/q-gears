@@ -149,7 +149,7 @@ namespace QGears
                 break;
 
             case SECTION_MODEL_LOADER:
-                readPalette( stream, pDest );
+                readModelList( stream, pDest );
                 break;
 
             case SECTION_PALETTE:

@@ -34,7 +34,10 @@ THE SOFTWARE.
 #include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
 #include "data/FF7ModelListFileManager.h"
+#include "map/QGearsBackground2DFileManager.h"
 #include "map/QGearsWalkmeshFileManager.h"
+
+using namespace Ogre;
 
 BOOST_AUTO_TEST_CASE( read_file )
 {
@@ -44,37 +47,96 @@ BOOST_AUTO_TEST_CASE( read_file )
         TestFile() : QGears::FLevelFile( NULL, "reference.flevel", 0, "General" ) {}
     };
 
-    class TestSerializer : public QGears::FLevelFileSerializer
+    class TestTexture : public Texture
     {
     public:
-        QGears::String base      ( TestFile *file ) { return getBaseName      ( file ); }
+        TestTexture( ResourceManager* creator, const String& name, ResourceHandle handle,
+                  const String& group, bool isManual = false, ManualResourceLoader* loader = 0 )
+            : Texture( creator, name, handle, group, isManual, loader )
+        {}
+
+    protected:
+        virtual void loadImpl() {}
+        virtual void unloadImpl() {}
+        virtual HardwarePixelBufferSharedPtr getBuffer( size_t, size_t ){ return HardwarePixelBufferSharedPtr( NULL ); }
+        virtual void createInternalResourcesImpl(){}
+        virtual void freeInternalResourcesImpl(){}
     };
 
-    Ogre::LogManager                    logMgr;
-    Ogre::Root                          root("","");
-    Ogre::ResourceGroupManager         &rgm( Ogre::ResourceGroupManager::getSingleton() );
+    class TestTextureManager : public TextureManager
+    {
+    public:
+        virtual PixelFormat getNativeFormat( TextureType ttype, PixelFormat format, int usage )
+        {
+            return format;
+        }
+        virtual bool    isHardwareFilteringSupported( TextureType ttype, PixelFormat format, int usage, bool preciseFormatOnly=false )
+        {
+            return false;
+        }
+
+    protected:
+        virtual Resource* createImpl( const String &name
+          , ResourceHandle handle, const String &group, bool isManual
+          , ManualResourceLoader *loader
+          , const NameValuePairList *createParams )
+        {
+            return new TestTexture( this, name, handle, group, isManual, loader );
+        }
+    };
+
+
+    LogManager                          logMgr;
+    Root                                root("","");
+    ResourceGroupManager               &rgm( ResourceGroupManager::getSingleton() );
+    TestTextureManager                  tmgr;
     QGears::CameraMatrixFileManager     cmgr;
     QGears::WalkmeshFileManager         wmgr;
     QGears::PaletteFileManager          pmgr;
     QGears::BackgroundFileManager       bmgr;
+    QGears::Background2DFileManager     b2mgr;
+    QGears::FF7::ModelListFileManager   mmgr;
     QGears::LZSFLevelFileManager        fmgr;
     logMgr.createLog( "Default Log", true, true, true );
 
     rgm.addResourceLocation( "misc", "FileSystem" );
     rgm.initialiseAllResourceGroups();
 
-    TestFile                file;
-    Ogre::DataStreamPtr     stream( rgm.openResource( file.getName(), file.getGroup() ));
+    TestFile        file;
+    DataStreamPtr   stream( rgm.openResource( file.getName(), file.getGroup() ) );
     BOOST_REQUIRE( stream->isReadable() );
 
-    TestSerializer   ser;
-    BOOST_CHECK_EQUAL( "reference"           , ser.base( &file ) );
+    QGears::FLevelFileSerializer    ser;
     ser.importFLevelFile( stream, &file );
     BOOST_CHECK_EQUAL( 757890, stream->tell() );
 
-    BOOST_CHECK( !file.getPalette().isNull() );
-    BOOST_CHECK( !file.getBackground().isNull() );
-    Ogre::Image *image( file.getBackground()->createImage( file.getPalette() ));
+    QGears::BackgroundFilePtr       background   ( file.getBackground() );
+    QGears::CameraMatrixFilePtr     camera_matrix( file.getCameraMatrix() );
+    QGears::FF7::ModelListFilePtr   model_list   ( file.getModelList() );
+    QGears::PaletteFilePtr          palette      ( file.getPalette() );
+    QGears::WalkmeshFilePtr         walkmesh     ( file.getWalkmesh() );
+
+    BOOST_REQUIRE( !background.isNull() );
+    BOOST_REQUIRE( !camera_matrix.isNull() );
+    BOOST_REQUIRE( !model_list.isNull() );
+    BOOST_REQUIRE( !palette.isNull() );
+    BOOST_REQUIRE( !walkmesh.isNull() );
+    BOOST_CHECK_EQUAL( "reference.background", background->getName() );
+    BOOST_CHECK_EQUAL( "reference.cam_matrix", camera_matrix->getName() );
+    BOOST_CHECK_EQUAL( "reference.model_list", model_list->getName() );
+    BOOST_CHECK_EQUAL( "reference.palette"   , palette->getName() );
+    BOOST_CHECK_EQUAL( "reference.walkmesh"  , walkmesh->getName() );
+    Matrix3 m3_expected(
+        1, -0, -0
+       ,0, -1, -0
+       ,0, -0, -1
+    );
+    BOOST_CHECK_EQUAL( m3_expected, camera_matrix->getMatrix() );
+    BOOST_CHECK_EQUAL( Vector3( -1, 2, -3 ), camera_matrix->getPosition() );
+    BOOST_CHECK_EQUAL( 2, camera_matrix->getCount() );
+    BOOST_CHECK_EQUAL( 12345, camera_matrix->getFocalLength() );
+
+    Ogre::Image *image( background->createImage( palette ) );
     image->save( file.getName() + ".png" );
     delete image;
 
