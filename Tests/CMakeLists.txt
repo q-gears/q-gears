@@ -1,4 +1,5 @@
 add_definitions(
+    -DBOOST_TEST_DYN_LINK
     -DBOOST_TEST_MODULE="standalone"
 )
 
