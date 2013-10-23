@@ -18,6 +18,7 @@ GNU General Public License for more details.
 
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
+#include <OgreConfigFile.h>
 
 #include "QGearsGameState.h"
 
@@ -110,8 +111,8 @@ namespace QGears
             SettingsMultiMap::const_iterator end( settings->end()   );
             while( it != end )
             {
-                archive_type = i->first;
-                archive_name = i->second;
+                archive_type = it->first;
+                archive_name = it->second;
                 res_gm.addResourceLocation( archive_name, archive_type, section_name, true );
                 ++it;
             }

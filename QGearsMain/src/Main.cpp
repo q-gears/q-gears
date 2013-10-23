@@ -59,12 +59,15 @@ main(int argc, char *argv[])
     // set scene camera and viewport for other moduls
     // create this before initialize particle because some of them use scene to create themself
     scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
+    scene_manager->setAmbientLight( Ogre::ColourValue( 1, 1, 1 ) );
+    /*
     scene_manager->setAmbientLight( Ogre::ColourValue( 0.5, 0.5, 0.5 ) );
-    Ogre::Light *directionalLight = scene_manager->createLight("directionalLight");
+    Ogre::Light *directionalLight( scene_manager->createLight("directionalLight") );
     directionalLight->setType( Ogre::Light::LT_DIRECTIONAL );
     directionalLight->setDiffuseColour( Ogre::ColourValue( 0.5, 0.5, 0.5 ) );
     directionalLight->setSpecularColour( Ogre::ColourValue( 0.0, 0.0, 0.0 ) );
     directionalLight->setDirection( Ogre::Vector3( 0, 1, 0 ) );
+    */
 
     QGears::TexCodec::install();
     QGears::TexCodec::initialise();
@@ -80,7 +83,7 @@ main(int argc, char *argv[])
     QGears::RSDFileManager             *rsd_mgr( new QGears::RSDFileManager() );
     QGears::LZSFLevelFileManager       *flv_mgr( new QGears::LZSFLevelFileManager() );
 
-    res_gm.initialiseAllResourceGroups();
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
     QGears::FLevelFilePtr   f;
     QGears::FLevelFilePtr   f2;

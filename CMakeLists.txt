@@ -206,7 +206,7 @@ if(UNIX)
 #                CONFIGURATIONS Release RelWithDebInfo Debug
 #        )
 
-endif(UNIX)
+endif()
 #*/
 
 set(QGears_INCLUDE_DIRS
