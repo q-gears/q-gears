@@ -1,12 +1,15 @@
 <map>
     <script file_name="maps/ffvii/field/md1stin.lua" />
     <background2d file_name="maps/ffvii/field/md1stin_bg.xml" />
-    <!--background2d file_name="md1stin/background_2d" /-->
     <walkmesh file_name="maps/ffvii/field/md1stin_wm.xml" />
+    <!--background2d file_name="md1stin/background_2d" /-->
+    <!--walkmesh file_name="md1stin.walkmesh" /-->
     <movement_rotation degree="-5.625" />
 
     <entity_script name="Director" />
     <entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="29.0547 229.234 2.56082" direction="0" />
+    <!--entity_model name="Cloud" file_name="aaaa.mesh" position="29.0547 229.234 2.56082" direction="0"
+                  scale="0.03125 0.03125 0.03125" root_orientation="0.7071067811865476 0.7071067811865476 0 0" /-->
     <entity_model name="Barret" file_name="models/ffvii/field/units/barret.mesh" position="0 0 0" direction="0" />
     <entity_script name="View" />
     <entity_model name="Hei0" file_name="models/ffvii/field/units/soldier.mesh" position="0 0 0" direction="0" />
