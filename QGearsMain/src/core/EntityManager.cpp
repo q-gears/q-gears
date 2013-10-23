@@ -210,10 +210,12 @@ EntityManager::Update()
         Entity* scroll_entity = m_Background2D.GetAutoScrollEntity();
         if( scroll_entity == m_Entity[ i ] )
         {
-            Ogre::Vector3 view = CameraManager::getSingleton().ProjectPointToScreen( scroll_entity->GetPosition() );
+            CameraManager &camera_manager( CameraManager::getSingleton() );
+            Ogre::Vector3 view = camera_manager.ProjectPointToScreen( scroll_entity->GetPosition() );
             Ogre::Vector2 pos = m_Background2D.GetScreenScroll();
-            float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-            float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+            Ogre::Viewport *viewport( camera_manager.getViewport() );
+            float width = viewport->getActualWidth();
+            float height = viewport->getActualHeight();
             view.x = view.x - width / 2 - pos.x;
             view.y = view.y - height / 2 - pos.y;
             m_Background2D.SetScreenScroll( Ogre::Vector2( -view.x, -view.y ) );
@@ -449,22 +451,30 @@ EntityManager::GetBackground2D()
 }
 
 
+    //--------------------------------------------------------------------------
+    void
+    EntityManager::AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& rotation )
+    {
+        AddEntity( name, file_name, position, rotation, Ogre::Vector3::UNIT_SCALE, Ogre::Quaternion::IDENTITY );
+    }
 
-void
-EntityManager::AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& rotation )
-{
-    Ogre::SceneNode* node = m_SceneNode->createChildSceneNode( "Model_" + name );
-    EntityModel* entity = new EntityModel( name, file_name, node );
-    entity->SetPosition( position );
-    entity->SetRotation( rotation );
+    //--------------------------------------------------------------------------
+    void
+    EntityManager::AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& rotation, const Ogre::Vector3& scale, const Ogre::Quaternion& root_orientation )
+    {
+        Ogre::SceneNode* node = m_SceneNode->createChildSceneNode( "Model_" + name );
+        EntityModel* entity = new EntityModel( name, file_name, node );
+        entity->SetPosition( position );
+        entity->SetRotation( rotation );
+        entity->setScale( scale );
+        entity->setRootOrientation( root_orientation );
 
-    m_Entity.push_back( entity );
+        m_Entity.push_back( entity );
 
-    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, entity->GetName(), entity );
-}
+        ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, entity->GetName(), entity );
+    }
 
-
-
+//--------------------------------------------------------------------------
 void
 EntityManager::ScriptAddEntity( const char* name, const char* file_name, const float x, const float y, const float z, const float rotation )
 {

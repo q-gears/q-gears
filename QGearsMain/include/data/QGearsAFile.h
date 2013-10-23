@@ -1,26 +1,17 @@
 /*
 -----------------------------------------------------------------------------
-The MIT License (MIT)
+Copyright (c) 15.1.2013 Tobias Peters <tobias.peters@kreativeffekt.at>
 
-Copyright (c) 2013-08-12 Tobias Peters <tobias.peters@kreativeffekt.at>
+This file is part of Q-Gears
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Q-Gears is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 2.0 (GPLv2) of the License.
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+Q-Gears is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
 -----------------------------------------------------------------------------
 */
 #ifndef __QGearsAFile_H__
@@ -30,16 +21,21 @@ THE SOFTWARE.
 #include <OgreVector3.h>
 
 #include "common/TypeDefine.h"
+#include "common/QGearsResource.h"
 
 namespace QGears
 {
-    class AFile
+    class AFile : public Resource
     {
     public:
-        AFile();
+        AFile( Ogre::ResourceManager *creator, const String &name
+              ,Ogre::ResourceHandle handle, const String &group
+              ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
+
         virtual ~AFile();
 
         static const Ogre::Real FRAME_DURATION;
+        static const String     RESOURCE_TYPE;
 
         virtual void addTo( Ogre::SkeletonPtr skeleton, const String &name ) const;
 
@@ -53,10 +49,14 @@ namespace QGears
         };
 
         typedef std::vector<Frame>  FrameList;
-        virtual FrameList&  getFrames() { return m_frames; };
+        virtual FrameList&  getFrames() { return m_frames; }
 
         virtual void    setBoneCount( const uint32 bone_count );
+
     protected:
+        virtual void loadImpl();
+        virtual void unloadImpl();
+        virtual size_t calculateSize() const;
 
         virtual void    setFrameRotation( Ogre::TransformKeyFrame *key_frame
                                          ,const Ogre::Vector3 &rotation ) const;
@@ -64,6 +64,51 @@ namespace QGears
     private:
         uint32      m_bone_count;
         FrameList   m_frames;
+    };
+
+    //-------------------------------------------------------------------------
+    class AFilePtr : public Ogre::SharedPtr<AFile>
+    {
+    public:
+        AFilePtr() : Ogre::SharedPtr<AFile>() {}
+        explicit AFilePtr( AFile *rep ) : Ogre::SharedPtr<AFile>(rep) {}
+        AFilePtr( const AFilePtr &r ) : Ogre::SharedPtr<AFile>(r) {}
+        AFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<AFile>()
+        {
+            if( r.isNull() )
+                return;
+            // lock & copy other mutex pointer
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            pRep = static_cast<AFile*>(r.getPointer());
+            pUseCount = r.useCountPointer();
+            useFreeMethod = r.freeMethod();
+            if (pUseCount)
+            {
+                ++(*pUseCount);
+            }
+        }
+
+        /// Operator used to convert a ResourcePtr to a AFilePtr
+        AFilePtr& operator=( const Ogre::ResourcePtr& r )
+        {
+            if(pRep == static_cast<AFile*>(r.getPointer()))
+                return *this;
+            release();
+            if( r.isNull() )
+                return *this; // resource ptr is null, so the call to release above has done all we need to do.
+            // lock & copy other mutex pointer
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            pRep = static_cast<AFile*>(r.getPointer());
+            pUseCount = r.useCountPointer();
+            useFreeMethod = r.freeMethod();
+            if (pUseCount)
+            {
+                ++(*pUseCount);
+            }
+            return *this;
+        }
     };
 }
 

@@ -1,7 +1,9 @@
 #include "core/Console.h"
 
 #include <OgreFontManager.h>
+#include <OgreRenderWindow.h>
 
+#include "common/QGearsApplication.h"
 #include "core/ConfigCmdManager.h"
 #include "core/ConfigVarManager.h"
 #include "core/DebugDraw.h"
@@ -47,8 +49,9 @@ Console::Console():
     }
 
     // calculate width and height of console depending on size of application
-    m_ConsoleWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getWidth();
-    m_ConsoleHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getHeight() / 2.5f;
+    Ogre::RenderTarget *render_target( QGears::Application::getSingleton().getRenderWindow() );
+    m_ConsoleWidth = render_target->getWidth();
+    m_ConsoleHeight = render_target->getHeight() / 2.5f;
     m_LineWidth = ( m_ConsoleWidth - 20 ) / 8;
 
     LOG_TRIVIAL( "Created console width " + Ogre::StringConverter::toString( m_ConsoleWidth ) + ", height " + Ogre::StringConverter::toString( m_ConsoleHeight ) );
@@ -423,8 +426,9 @@ void
 Console::OnResize()
 {
     // calculate width and height of console depending on size of application
-    m_ConsoleWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getWidth();
-    m_ConsoleHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getHeight() / 2.5f;
+    Ogre::RenderTarget *render_target( QGears::Application::getSingleton().getRenderWindow() );
+    m_ConsoleWidth = render_target->getWidth();
+    m_ConsoleHeight = render_target->getHeight() / 2.5f;
     m_LineWidth = ( m_ConsoleWidth - 20 ) / 8;
 
     LOG_TRIVIAL( "Resized console width to " + Ogre::StringConverter::toString( m_ConsoleWidth ) + ", height to " + Ogre::StringConverter::toString( m_ConsoleHeight ) );

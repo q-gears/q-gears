@@ -14,26 +14,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 -----------------------------------------------------------------------------
 */
-#ifndef __FF7Common_H__
-#define __FF7Common_H__
-
-#include "common/TypeDefine.h"
+#include "FF7Common.h"
 
 namespace QGears
 {
     namespace FF7
     {
-        enum
-        {
-            SCREEN_WIDTH    = 320
-           ,SCREEN_HEIGHT   = 240
-
-           ,FIELD_POSITION_SCALE    = 128
-           ,FIELD_DEPTH_SCALE       = 32
-        };
-
-        extern const String EXT_A;
+        const String    EXT_A( ".a" );
     }
 }
-
-#endif // __FFVIICommon_H__

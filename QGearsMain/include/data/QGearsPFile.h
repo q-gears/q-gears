@@ -112,16 +112,16 @@ namespace QGears
         typedef std::vector<Group>              GroupList;
         typedef std::vector<BBoxEntry>          BBoxList;
 
-        virtual VertexList&             getVertices()           { return m_vertices; };
-        virtual NormalList&             getNormals()            { return m_normals; };
-        virtual Unkown1List&            getUnknown1()           { return m_unknown1; };
-        virtual TextureCoordinateList&  getTextureCoordinates() { return m_texture_coordinates; };
-        virtual VertexColorList&        getVertexColors()       { return m_vertex_colors; };
-        virtual PolygonColorList&       getPolygonColors()      { return m_polygon_colors; };
-        virtual EdgeList&               getEdges()              { return m_edges; };
-        virtual PolygonDefinitionList&  getPolygonDefinitions() { return m_polygon_definitions; };
-        virtual GroupList&              getGroups()             { return m_groups; };
-        virtual BBoxList&               getBBoxes()             { return m_bboxes; };
+        virtual VertexList&             getVertices()           { return m_vertices; }
+        virtual NormalList&             getNormals()            { return m_normals; }
+        virtual Unkown1List&            getUnknown1()           { return m_unknown1; }
+        virtual TextureCoordinateList&  getTextureCoordinates() { return m_texture_coordinates; }
+        virtual VertexColorList&        getVertexColors()       { return m_vertex_colors; }
+        virtual PolygonColorList&       getPolygonColors()      { return m_polygon_colors; }
+        virtual EdgeList&               getEdges()              { return m_edges; }
+        virtual PolygonDefinitionList&  getPolygonDefinitions() { return m_polygon_definitions; }
+        virtual GroupList&              getGroups()             { return m_groups; }
+        virtual BBoxList&               getBBoxes()             { return m_bboxes; }
 
         static const String RESOURCE_TYPE;
 

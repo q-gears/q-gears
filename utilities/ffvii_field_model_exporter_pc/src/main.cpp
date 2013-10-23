@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "common/TypeDefine.h"
 #include "common/QGearsStringUtil.h"
 
-#include "data/QGearsAFileSerializer.h"
+#include "data/QGearsAFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
 
 void attachMesh( Ogre::MeshPtr &mesh )
@@ -88,30 +88,25 @@ main( int argc, char *argv[] )
     InitializeOgreBase( "FFVII Field Model Exporter" );
 
     Ogre::SceneManager*         scene_manager( Ogre::Root::getSingleton().getSceneManager( "Scene" ) );
-    Ogre::ManualObject*         mo( scene_manager->createManualObject() );
-    Ogre::DataStreamPtr         stream;
-    QGears::AFileSerializer     a_ser;
-    QGears::AFile               a;
+    QGears::AFilePtr            a;
+    QGears::AFileManager        afl_mgr;
 
-    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().load( "field/char/sd_red_sk.mesh", "Game" ) );
+    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().load( "field/char/sd_red_sk.mesh", "FFVII" ) );
     Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
 
-    stream = getStream( "field/char/aeae.a" );
-    a_ser.importAFile( stream, &a );
-    a.addTo( skeleton, "Idle" );
-    stream = getStream( "field/char/aeaf.a" );
-    a_ser.importAFile( stream, &a );
-    a.addTo( skeleton, "Walk" );
-    stream = getStream( "field/char/aeba.a" );
-    a_ser.importAFile( stream, &a );
-    a.addTo( skeleton, "Run" );
+    a = afl_mgr.load( "field/char/aeae.a", "FFVII" );
+    a->addTo( skeleton, "Idle" );
+    a = afl_mgr.load( "field/char/aeaf.a", "FFVII" );
+    a->addTo( skeleton, "Walk" );
+    a = afl_mgr.load( "field/char/aeba.a", "FFVII" );
+    a->addTo( skeleton, "Run" );
 
     attachMesh( mesh );
 
     entitys[0]->setVisible( true );
 
     QGears::LZSFLevelFileManager   *fmgr( QGears::LZSFLevelFileManager::getSingletonPtr() );
-    QGears::FLevelFilePtr           f( fmgr->load( "field/gflevel/ancnt1", "General" ) );
+    QGears::FLevelFilePtr           f( fmgr->load( "field/gflevel/ancnt1", "FFVII" ) );
 
     // Create background rectangle covering the whole screen
     Ogre::Rectangle2D* rect = new Ogre::Rectangle2D(true);

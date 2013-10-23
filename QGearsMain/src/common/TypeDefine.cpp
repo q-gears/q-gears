@@ -30,6 +30,8 @@ namespace QGears
     const String    EXT_MATERIAL( ".material"   );
     const String    EXT_MESH    ( ".mesh"       );
     const String    EXT_SKELETON( ".skeleton"   );
+    const String    EXT_CONFIG  ( ".cfg"        );
+    const String    EXT_LOG     ( ".log"        );
 
     const String    EXT_P       ( ".p"          );
     const String    EXT_PLY     ( ".ply"        );

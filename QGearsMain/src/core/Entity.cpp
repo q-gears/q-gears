@@ -66,7 +66,8 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_AnimationCurrentName( "" ),
     m_AnimationAutoPlay( true )
 {
-    m_ModelNode = m_SceneNode->createChildSceneNode();
+    m_model_root_node = m_SceneNode->createChildSceneNode();
+    m_ModelNode = m_model_root_node->createChildSceneNode();
 
     m_Direction = new EntityDirection();
     m_Direction->setMaterial( "entity/direction" );
@@ -85,6 +86,7 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_TalkCollisionNode->setScale( m_TalkRadius, m_TalkRadius, m_Height );
     m_TalkCollisionNode->attachObject( m_TalkCollision );
 
+    m_model_root_node->setPosition( Ogre::Vector3::ZERO );
     m_ModelNode->setPosition( Ogre::Vector3::ZERO );
     m_SceneNode->setPosition( Ogre::Vector3::ZERO );
 
@@ -252,7 +254,8 @@ Entity::ScriptGetPosition() const
 void
 Entity::SetOffset( const Ogre::Vector3& position )
 {
-    m_ModelNode->setPosition( position );
+    assert( m_model_root_node );
+    m_model_root_node->setPosition( position );
 }
 
 
@@ -260,7 +263,8 @@ Entity::SetOffset( const Ogre::Vector3& position )
 const Ogre::Vector3
 Entity::GetOffset() const
 {
-    return m_ModelNode->getPosition();
+    assert( m_model_root_node );
+    return m_model_root_node->getPosition();
 }
 
 
@@ -268,6 +272,7 @@ Entity::GetOffset() const
 void
 Entity::SetRotation( const Ogre::Degree& rotation )
 {
+    assert( m_model_root_node );
     float angle = rotation.valueDegrees() - Ogre::Math::Floor( rotation.valueDegrees() / 360.0f ) * 360.0f;
 
     if( angle < 0 )
@@ -278,7 +283,7 @@ Entity::SetRotation( const Ogre::Degree& rotation )
     Ogre::Quaternion q;
     Ogre::Vector3 vec = Ogre::Vector3::UNIT_Z;
     q.FromAngleAxis( Ogre::Radian( Ogre::Degree( angle ) ), vec );
-    m_ModelNode->setOrientation( q );
+    m_model_root_node->setOrientation( q );
     m_DirectionNode->setOrientation( q );
 }
 
@@ -295,7 +300,8 @@ Entity::ScriptSetRotation( const float rotation )
 Ogre::Degree
 Entity::GetRotation() const
 {
-    Ogre::Quaternion q = m_ModelNode->getOrientation();
+    assert( m_model_root_node );
+    Ogre::Quaternion q = m_model_root_node->getOrientation();
     Ogre::Degree temp;
     Ogre::Vector3 vec = Ogre::Vector3::UNIT_Z;
     q.ToAngleAxis( temp, vec );
@@ -310,6 +316,22 @@ Entity::ScriptGetRotation() const
 {
     return GetRotation().valueDegrees();
 }
+
+    //--------------------------------------------------------------------------
+    void Entity::setScale(const Ogre::Vector3 &scale)
+    {
+        assert(m_model_root_node);
+        m_model_root_node->setScale( scale );
+    }
+
+    //--------------------------------------------------------------------------
+    void Entity::setRootOrientation(const Ogre::Quaternion &root_orientation)
+    {
+        assert(m_ModelNode);
+        m_ModelNode->setOrientation( root_orientation );
+    }
+
+    //--------------------------------------------------------------------------
 
 
 

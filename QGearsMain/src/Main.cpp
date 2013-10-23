@@ -5,6 +5,7 @@
 
 #include "QGearsGameState.h"
 //#include "core/AudioManager.h"
+#include "common/QGearsApplication.h"
 #include "core/CameraManager.h"
 #include "core/ConfigCmdManager.h"
 #include "core/ConfigFile.h"
@@ -20,108 +21,71 @@
 #include "core/UiManager.h"
 #include "core/particles/ParticleSystemManager.h"
 
+#include "data/QGearsAFileManager.h"
 #include "data/QGearsBackgroundFileManager.h"
 #include "data/QGearsCameraMatrixFileManager.h"
+#include "data/QGearsHRCFileManager.h"
 #include "data/QGearsLGPArchiveFactory.h"
-#include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
+#include "data/QGearsPaletteFileManager.h"
+#include "data/QGearsPFileManager.h"
+#include "data/QGearsRSDFileManager.h"
+#include "data/QGearsTexCodec.h"
 #include "map/QGearsBackground2DFileManager.h"
 #include "map/QGearsWalkmeshFileManager.h"
+#include "data/FF7ModelListFileManager.h"
 
-
-
+using std::cout;
+using std::endl;
 
 int
 main(int argc, char *argv[])
 {
-    Ogre::Root         *root( NULL );
-    Ogre::RenderWindow *window( NULL );
+    QGears::Application app( argc, argv );
+    if( !app.initOgre() ) return 0;
+
+    Ogre::Root         *root( app.getRoot() );
+    Ogre::RenderWindow *window( app.getRenderWindow() );
     Ogre::SceneManager *scene_manager( NULL );
 
-    Ogre::LogManager *log_manager( new Ogre::LogManager() );
-    log_manager->createLog( "q-gears.log", true, true );
-    log_manager->getDefaultLog()->setLogDetail( ( Ogre::LoggingLevel )3 );
-
-    Ogre::String ressource_cfg("");
-    Ogre::String plugins_cfg("");
-
-#ifdef NDEBUG
-    ressource_cfg = "resources.cfg";
-    plugins_cfg = "plugins.cfg";
-#else
-    ressource_cfg = "resources_d.cfg";
-    plugins_cfg = "plugins_d.cfg";
-#endif
-
-    // init root early
-    root = new Ogre::Root( plugins_cfg );
     QGears::LGPArchiveFactory lgp_archive_factory;
     Ogre::ArchiveManager::getSingleton().addArchiveFactory( &lgp_archive_factory );
 
-    // set up resources
-    // Load resource paths from config file
-    Ogre::ConfigFile cf;
-    cf.load( ressource_cfg );
-
-    // Go through all sections & settings in the file
-    Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-
-    Ogre::String secName, typeName, archName;
-    Ogre::ResourceGroupManager &res_gm( Ogre::ResourceGroupManager::getSingleton() );
-    while( seci.hasMoreElements() )
-    {
-        secName = seci.peekNextKey();
-        Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-        Ogre::ConfigFile::SettingsMultiMap::iterator i;
-        for (i = settings->begin(); i != settings->end(); ++i)
-        {
-            typeName = i->first;
-            archName = i->second;
-            res_gm.addResourceLocation( archName, typeName, secName, true );
-        }
-    }
-
-    //-------------------------------------------------------------------------
-    // configure
-    // Show the configuration dialog and initialise the system
-    // You can skip this and use root.restoreConfig() to load configuration
-    // settings if you were sure there are valid ones saved in ogre.cfg
-    if( !root->restoreConfig() && !root->showConfigDialog() )
-    {
-        root->setRenderSystem( root->getAvailableRenderers()[ 0 ] );
-    }
-    root->initialise( false );
-    Ogre::NameValuePairList misc;
-    misc[ "title" ] = QG_VERSION_NAME;
-    window = root->createRenderWindow( "QGearsWindow", 1280, 720, false, &misc );
+    app.loadResourcesConfig();
 
     Timer* timer = new Timer();
-
-
-
     ParticleSystemManager* particle_system_manager = new ParticleSystemManager();
-
-
 
     // set scene camera and viewport for other moduls
     // create this before initialize particle because some of them use scene to create themself
     scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
-    scene_manager->setAmbientLight( Ogre::ColourValue( 1.0, 1.0, 1.0 ) );
+    scene_manager->setAmbientLight( Ogre::ColourValue( 0.5, 0.5, 0.5 ) );
+    Ogre::Light *directionalLight = scene_manager->createLight("directionalLight");
+    directionalLight->setType( Ogre::Light::LT_DIRECTIONAL );
+    directionalLight->setDiffuseColour( Ogre::ColourValue( 0.5, 0.5, 0.5 ) );
+    directionalLight->setSpecularColour( Ogre::ColourValue( 0.0, 0.0, 0.0 ) );
+    directionalLight->setDirection( Ogre::Vector3( 0, 1, 0 ) );
 
-    QGears::Background2DFileManager *b2d_mgr( new QGears::Background2DFileManager() );
-    QGears::BackgroundFileManager   *bgf_mgr( new QGears::BackgroundFileManager() );
-    QGears::CameraMatrixFileManager *cmf_mgr( new QGears::CameraMatrixFileManager() );
-    QGears::LZSFLevelFileManager    *flv_mgr( new QGears::LZSFLevelFileManager() );
-    QGears::PaletteFileManager      *plt_mgr( new QGears::PaletteFileManager() );
-    QGears::WalkmeshFileManager     *wkm_mgr( new QGears::WalkmeshFileManager() );
-    res_gm.addResourceLocation( "./data", "FileSystem", "Game", true );
-    res_gm.initialiseResourceGroup( "Game" );
+    QGears::TexCodec::install();
+    QGears::TexCodec::initialise();
+    QGears::Background2DFileManager    *b2d_mgr( new QGears::Background2DFileManager() );
+    QGears::BackgroundFileManager      *bgf_mgr( new QGears::BackgroundFileManager() );
+    QGears::CameraMatrixFileManager    *cmf_mgr( new QGears::CameraMatrixFileManager() );
+    QGears::PaletteFileManager         *plt_mgr( new QGears::PaletteFileManager() );
+    QGears::WalkmeshFileManager        *wkm_mgr( new QGears::WalkmeshFileManager() );
+    QGears::FF7::ModelListFileManager  *mdl_mgr( new QGears::FF7::ModelListFileManager() );
+    QGears::HRCFileManager             *hrc_mgr( new QGears::HRCFileManager() );
+    QGears::AFileManager               *afl_mgr( new QGears::AFileManager() );
+    QGears::PFileManager               *pfl_mgr( new QGears::PFileManager() );
+    QGears::RSDFileManager             *rsd_mgr( new QGears::RSDFileManager() );
+    QGears::LZSFLevelFileManager       *flv_mgr( new QGears::LZSFLevelFileManager() );
+
+    res_gm.initialiseAllResourceGroups();
+
     QGears::FLevelFilePtr   f;
     QGears::FLevelFilePtr   f2;
     //f  = QGears::LZSFLevelFileManager::getSingleton().load( "md1stin", "FFVII" );
     //f2 = QGears::LZSFLevelFileManager::getSingleton().load( "md1_1"  , "FFVII" );
-
-
 
 
     // init it before console because it may use it
@@ -172,7 +136,6 @@ main(int argc, char *argv[])
     ui_manager->Initialise();
 
 
-
     // run application cycle
     QGears::g_ApplicationState = QGears::G_GAME;
     root->startRendering();
@@ -203,11 +166,16 @@ main(int argc, char *argv[])
     delete cmf_mgr;
     delete b2d_mgr;
     delete wkm_mgr;
+    delete mdl_mgr;
+    delete rsd_mgr;
+    delete hrc_mgr;
+    delete afl_mgr;
+    delete pfl_mgr;
+    QGears::TexCodec::shutdown();
+    QGears::TexCodec::uninstall();
 
     delete particle_system_manager;
     delete timer;
-    delete root;
-    delete log_manager;
 
     return 0;
 }

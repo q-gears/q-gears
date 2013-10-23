@@ -72,6 +72,11 @@ namespace QGears
             material = material_manager.getByName( material_name, mGroup );
             if( material.isNull() )
             {
+#ifndef NDEBUG
+                Ogre::LogManager::getSingleton().stream()
+                        << " creating Material for RSDFile"
+                        << " '" << material_name << "'";
+#endif
                 material = material_manager.create( material_name, mGroup );
                 material->_notifyOrigin( getName() );
                 m_materials.push_back( material );
@@ -98,7 +103,7 @@ namespace QGears
             ;it != m_materials.end()
             ;++it )
         {
-			Ogre::MaterialManager::getSingleton().remove( (*it)->getHandle() );
+            Ogre::MaterialManager::getSingleton().remove( (*it)->getHandle() );
         }
         m_materials.clear();
     }

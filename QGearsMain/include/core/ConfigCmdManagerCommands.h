@@ -11,7 +11,7 @@
 #include "XmlMapsFile.h"
 
 #include "QGearsGameState.h"
-
+#include "common/QGearsApplication.h"
 
 
 void
@@ -309,7 +309,7 @@ CmdResolution( const Ogre::StringVector& params )
         return;
     }
 
-    Ogre::RenderWindow* window = ( Ogre::RenderWindow* )Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" );
+    Ogre::RenderWindow* window = QGears::Application::getSingleton().getRenderWindow();
 
     if( params.size() >= 4 )
     {
@@ -343,7 +343,7 @@ CmdResolutionCompletition( Ogre::StringVector& complete_params )
 void
 CmdScreenshot( const Ogre::StringVector& params )
 {
-    Ogre::RenderWindow* window = ( Ogre::RenderWindow* )Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" );
+    Ogre::RenderWindow* window = QGears::Application::getSingleton().getRenderWindow();
     Ogre::String ret = window->writeContentsToTimestampedFile( "screenshot_", ".tga" );
     Console::getSingleton().AddTextToOutput( "Screenshot " + ret + " saved." );
 }

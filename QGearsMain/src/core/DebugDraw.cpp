@@ -137,8 +137,9 @@ DebugDraw::Line( const float x1, const float y1, const float x2, const float y2 
         return;
     }
 
-    float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
+    float width = viewport->getActualWidth();
+    float height = viewport->getActualHeight();
 
     float new_x1 = ( m_ScreenSpace == true ) ? ( ( int ) x1 / width ) * 2 - 1 : x1;
     float new_y1 = ( m_ScreenSpace == true ) ? -( ( ( int ) y1 / height ) * 2 - 1 ) : y1;
@@ -258,8 +259,9 @@ DebugDraw::Quad( const float x1, const float y1, const float x2, const float y2,
         return;
     }
 
-    float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
+    float width = viewport->getActualWidth();
+    float height = viewport->getActualHeight();
 
     float new_x1 = ( m_ScreenSpace == true ) ? ( ( int ) x1 / width ) * 2 - 1 : x1;
     float new_y1 = ( m_ScreenSpace == true ) ? -( ( ( int ) y1 / height ) * 2 - 1 ) : y1;
@@ -340,8 +342,9 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
     float* writeIterator = ( float* ) m_TextVertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
     writeIterator += m_TextRenderOp.vertexData->vertexCount * 9;
 
-    float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
+    float width = viewport->getActualWidth();
+    float height = viewport->getActualHeight();
 
     float length = 0;
     if( m_TextAlignment != LEFT )

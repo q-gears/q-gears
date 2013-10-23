@@ -82,6 +82,9 @@ public:
     Ogre::Degree         GetRotation() const;
     float                ScriptGetRotation() const;
 
+    virtual void         setScale( const Ogre::Vector3 &scale );
+    virtual void         setRootOrientation( const Ogre::Quaternion &root_orientation );
+
     // height related
     float                GetHeight() const;
 
@@ -197,6 +200,7 @@ protected:
 
     Ogre::SceneNode*        m_SceneNode;
     Ogre::SceneNode*        m_ModelNode;
+    Ogre::SceneNode*        m_model_root_node;
 
     // height related
     float                   m_Height;

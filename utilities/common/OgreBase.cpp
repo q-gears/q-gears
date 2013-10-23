@@ -1,10 +1,19 @@
 #include "OgreBase.h"
 
 #ifdef QGEARS_ADD_MANAGERS
+#include "data/QGearsAFileManager.h"
 #include "data/QGearsBackgroundFileManager.h"
-#include "data/QGearsPaletteFileManager.h"
+#include "data/QGearsCameraMatrixFileManager.h"
+#include "data/QGearsHRCFileManager.h"
+#include "data/QGearsLGPArchiveFactory.h"
 #include "data/QGearsLZSFLevelFileManager.h"
+#include "data/QGearsPaletteFileManager.h"
+#include "data/QGearsPFileManager.h"
+#include "data/QGearsRSDFileManager.h"
+#include "data/QGearsTexCodec.h"
 #include "map/QGearsBackground2DFileManager.h"
+#include "map/QGearsWalkmeshFileManager.h"
+#include "data/FF7ModelListFileManager.h"
 #endif
 
 Ogre::Root*                     root;
@@ -38,14 +47,14 @@ InitializeOgreBase( const Ogre::String& name )
     dyn_lib_ext = ".so";
 #endif
 
-#ifdef _DEBUG
-    ressource_cfg = "resources_d.cfg";
-    plugins_cfg = "plugins_d.cfg";
-    render_system = "./RenderSystem_GL_d" + dyn_lib_ext;
-#else
+#ifdef NDEBUG
     ressource_cfg = "resources.cfg";
     plugins_cfg = "plugins.cfg";
     render_system = "./RenderSystem_GL" + dyn_lib_ext;
+#else
+    ressource_cfg = "resources_d.cfg";
+    plugins_cfg = "plugins_d.cfg";
+    render_system = "./RenderSystem_GL_d" + dyn_lib_ext;
 #endif
 
     // init root early

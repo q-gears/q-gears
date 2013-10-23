@@ -30,6 +30,7 @@ public:
     Walkmesh* GetWalkmesh();
     Background2D* GetBackground2D();
     void AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& direction );
+    void AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& rotation, const Ogre::Vector3& scale, const Ogre::Quaternion& root_orientation );
     void ScriptAddEntity( const char* name, const char* file_name, const float x, const float y, const float z, const float direction );
     void AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& point1, const Ogre::Vector3& point2, const bool enabled );
     void AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& position, const float rotation );

@@ -28,11 +28,15 @@ THE SOFTWARE.
 #include <OgreLogManager.h>
 #include <OgreTextureManager.h>
 
+#include "common/FF7NameLookup.h"
 #include "common/QGearsStringUtil.h"
-#include "data/QGearsFLevelFileSerializer.h"
+#include "data/QGearsAFileManager.h"
 #include "data/QGearsFLevelBackground2DLoader.h"
+#include "data/QGearsFLevelFileSerializer.h"
 #include "data/QGearsFLevelTextureLoader.h"
+#include "data/QGearsHRCFileManager.h"
 #include "map/QGearsBackground2DFileManager.h"
+#include "FF7Common.h"
 
 namespace QGears
 {
@@ -98,6 +102,50 @@ namespace QGears
             m_background_2d_loader = new FLevelBackground2DLoader( *this );
             m_background_2d = Background2DFileManager::getSingleton().create( background_2d_name, mGroup, true, m_background_2d_loader );
         }
+
+        loadModels();
+    }
+
+    //--------------------------------------------------------------------------
+    void FLevelFile::loadModels()
+    {
+        HRCFileManager &hrc_mgr( HRCFileManager::getSingleton() );
+        ModelList      &models( m_model_list->getModels() );
+        ModelList::const_iterator it    ( models.begin() )
+                                , it_end( models.end()   );
+        while( it != it_end )
+        {
+            String hrc_name( it->hrc_name );
+            Ogre::LogManager::getSingleton().stream()
+                << "Loading Model: " << hrc_name;
+            StringUtil::toLowerCase( hrc_name );
+            HRCFilePtr  hrc( hrc_mgr.load( hrc_name, mGroup ) );
+            loadAnimations( hrc, it->animations );
+            m_hrc_files.push_back( hrc );
+            ++it;
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    FLevelFile::loadAnimations( const HRCFilePtr &model, const AnimationList &animations )
+    {
+        AFileManager    &a_mgr( AFileManager::getSingleton() );
+        AnimationList::const_iterator it    ( animations.begin() )
+                                    , it_end( animations.end()   );
+        while( it != it_end )
+        {
+            String animation_name;
+            StringUtil::splitBase( it->name, animation_name );
+            StringUtil::toLowerCase( animation_name );
+            String animation_filename( animation_name + FF7::EXT_A );
+            AFilePtr    animation( a_mgr.load( animation_filename, model->getGroup() ) );
+            animation_name = FF7::NameLookup::animation( animation_name );
+            Ogre::LogManager::getSingleton().stream()
+                << " Adding Animation: " << animation_name;
+            animation->addTo( model->getSkeleton(), animation_name );
+            ++it;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -109,6 +157,7 @@ namespace QGears
         m_palette.setNull();
         m_model_list.setNull();
         m_walkmesh.setNull();
+        m_hrc_files.clear();
     }
 
     //--------------------------------------------------------------------------

@@ -48,6 +48,8 @@ namespace QGears
     extern const String    EXT_MATERIAL;
     extern const String    EXT_MESH;
     extern const String    EXT_SKELETON;
+    extern const String    EXT_CONFIG;
+    extern const String    EXT_LOG;
 
     extern const String    EXT_P;
     extern const String    EXT_PLY;

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <OgreLogManager.h>
 #include <OgreException.h>
 
+#include "FF7Common.h"
 #include "common/QGearsStringUtil.h"
 
 #include "data/QGearsBackgroundFileManager.h"
@@ -216,6 +217,19 @@ namespace QGears
         WalkmeshFilePtr walkmesh( createResource<WalkmeshFileManager>( pDest, EXT_WALKMESH ) );
         WalkmeshFileSerializer ser;
         ser.importWalkmeshFile( stream, walkmesh.getPointer() );
+
+        WalkmeshFile::TriangleList& triangles( walkmesh->getTriangles() );
+        WalkmeshFile::TriangleList::iterator it( triangles.begin() );
+        WalkmeshFile::TriangleList::const_iterator it_end( triangles.end() );
+        Ogre::Real scale( pDest->getCameraMatrix()->getCount() );
+        scale *= FF7::FIELD_POSITION_SCALE;
+        while( it != it_end )
+        {
+            it->a /= scale;
+            it->b /= scale;
+            it->c /= scale;
+            ++it;
+        }
         pDest->setWalkmesh( walkmesh );
     }
 

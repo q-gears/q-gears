@@ -78,9 +78,9 @@ namespace QGears
         TexFile tex_file;
         tex_file.read( input );
 
-		DecodeResult ret;
-		ret.first = MemoryDataStreamPtr( tex_file.getPixelData() );
-		ret.second = Codec::CodecDataPtr( tex_file.getImageData() );
+        DecodeResult ret;
+        ret.first = MemoryDataStreamPtr( tex_file.getPixelData() );
+        ret.second = Codec::CodecDataPtr( tex_file.getImageData() );
         return ret;
     }
 

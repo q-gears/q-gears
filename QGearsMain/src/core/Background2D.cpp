@@ -203,7 +203,7 @@ Background2D::UpdateDebug()
 void
 Background2D::calculateScreenScale( void )
 {
-    Ogre::Viewport *viewport( Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 ) );
+    Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
     Ogre::Real scale_width( viewport->getActualWidth() );
     Ogre::Real scale_height( viewport->getActualHeight() );
 
@@ -834,8 +834,9 @@ Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& in
         m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
         m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
 
-        float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-        float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+        Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
+        float width = viewport->getActualWidth();
+        float height = viewport->getActualHeight();
         Ogre::Matrix4 view;
         view.makeTrans( Ogre::Vector3( m_PositionReal.x * 2 / width, -m_PositionReal.y * 2 / height, 0 ) );
         m_RenderSystem->_setViewMatrix( view );

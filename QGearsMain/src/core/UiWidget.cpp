@@ -4,6 +4,7 @@
 #include <OgreRoot.h>
 
 #include "core/ConfigVar.h"
+#include "core/CameraManager.h"
 #include "core/DebugDraw.h"
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
@@ -52,8 +53,9 @@ UiWidget::~UiWidget()
 void
 UiWidget::Initialise()
 {
-    m_ScreenWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    m_ScreenHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
+    m_ScreenWidth = viewport->getActualWidth();
+    m_ScreenHeight = viewport->getActualHeight();
 
     m_Visible = false;
 
@@ -238,8 +240,9 @@ UiWidget::Update()
 void
 UiWidget::OnResize()
 {
-    m_ScreenWidth = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    m_ScreenHeight = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
+    m_ScreenWidth = viewport->getActualWidth();
+    m_ScreenHeight = viewport->getActualHeight();
 
     for( size_t i = 0; i < m_Children.size(); ++i )
     {

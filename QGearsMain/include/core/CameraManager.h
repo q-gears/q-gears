@@ -28,15 +28,16 @@ public:
 
     const Ogre::Vector3 ProjectPointToScreen( const Ogre::Vector3& point );
 
-    Ogre::Camera* GetCurrentCamera();
+    Ogre::Camera*   GetCurrentCamera();
+    Ogre::Viewport* getViewport();
 
 private:
 
     void InitCommands();
 
 private:
-    Ogre::Camera* m_Camera;
-    Ogre::Viewport* m_Viewport;
+    Ogre::Camera   *m_Camera;
+    Ogre::Viewport *m_Viewport;
 
     // camera free related
     bool m_CameraFree;

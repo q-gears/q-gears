@@ -25,6 +25,7 @@ THE SOFTWARE.
 */
 #include "data/QGearsHRCFile.h"
 
+#include <OgreLogManager.h>
 #include <OgreMeshManager.h>
 #include <OgreSkeletonManager.h>
 
@@ -90,6 +91,8 @@ namespace QGears
         }
 
         const String mesh_file_name( getMeshFileName() );
+        Ogre::LogManager::getSingleton().stream()
+                << "HRC::loadImpl(): mesh_file_name: " << mesh_file_name;
         Ogre::MeshManager &mesh_manager( Ogre::MeshManager::getSingleton() );
         m_mesh = mesh_manager.getByName( mesh_file_name, mGroup );
         if( m_mesh.isNull() )
@@ -161,9 +164,9 @@ namespace QGears
     String
     HRCFile::getMeshFileName() const
     {
-        String path;
-        StringUtil::splitPath( getName(), path );
-        return path + m_skeleton_name + EXT_MESH;
+        String base_name;
+        StringUtil::splitBase( getName(), base_name );
+        return base_name + EXT_MESH;
     }
 
     //---------------------------------------------------------------------

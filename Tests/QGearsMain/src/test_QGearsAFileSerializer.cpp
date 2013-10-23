@@ -45,6 +45,12 @@ BOOST_AUTO_TEST_CASE( header_offset )
 
 BOOST_AUTO_TEST_CASE( read_file )
 {
+    class TestFile : public QGears::AFile
+    {
+    public:
+        TestFile() : QGears::AFile( NULL, "", 0, "" ) {}
+        size_t getCalculatedSize() const { return calculateSize(); }
+    };
     const char* file_name( "misc/reference.a" );
     std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
     BOOST_REQUIRE( ifs->is_open() );
@@ -53,7 +59,7 @@ BOOST_AUTO_TEST_CASE( read_file )
 
     Ogre::LogManager            logMgr;
     QGears::AFileSerializer     ser;
-    QGears::AFile               f;
+    TestFile                    f;
 
     logMgr.createLog( "Default Log", true, true, true );
 

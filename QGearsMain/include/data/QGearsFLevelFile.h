@@ -38,10 +38,11 @@ THE SOFTWARE.
 #include "QGearsBackgroundFile.h"
 #include "QGearsCameraMatrixFile.h"
 #include "QGearsPaletteFile.h"
+#include "QGearsHRCFile.h"
 
 namespace QGears
 {
-    // TODO: move flevel stuff to ff7 as it is ff7 related
+    // TODO: move flevel stuff to ff7 as it is ff7 related!?
     using FF7::ModelListFile;
     using FF7::ModelListFilePtr;
 
@@ -76,14 +77,20 @@ namespace QGears
         virtual String getBackgroundTextureName( void ) const;
 
     protected:
+        typedef std::vector<HRCFilePtr>         HRCList;
+        typedef ModelListFile::ModelList        ModelList;
+        typedef ModelListFile::AnimationList    AnimationList;
+
+        static const String SUFFIX_BACKGROUND_TEXTURE;
+        static const String SUFFIX_BACKGROUND_2D;
+
         virtual void loadImpl( void );
+        virtual void loadModels( void );
+        virtual void loadAnimations( const HRCFilePtr &model, const AnimationList &animations );
         virtual void unloadImpl( void );
         virtual size_t calculateSize( void ) const;
 
         virtual const String& getResourceType( void ) const;
-
-        static const String SUFFIX_BACKGROUND_TEXTURE;
-        static const String SUFFIX_BACKGROUND_2D;
 
     private:
         BackgroundFilePtr           m_background;
@@ -96,6 +103,7 @@ namespace QGears
         Ogre::TexturePtr            m_background_texture;
         FLevelBackground2DLoader   *m_background_2d_loader;
         Background2DFilePtr         m_background_2d;
+        HRCList                     m_hrc_files;
     };
 
     //--------------------------------------------------------------------------

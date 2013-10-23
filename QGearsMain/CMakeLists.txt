@@ -1,10 +1,12 @@
 # define header and source files for the library
 set(HEADER_FILES
-  #include/common/QGearsManualObject.h
+  include/common/QGearsApplication.h
+  include/common/QGearsManualObject.h
   include/common/QGearsResource.h
   include/common/QGearsStringUtil.h
   include/common/TypeDefine.h
   include/data/QGearsAFile.h
+  include/data/QGearsAFileManager.h
   include/data/QGearsAFileSerializer.h
   include/data/QGearsBackgroundFile.h
   include/data/QGearsBackgroundFileManager.h
@@ -131,6 +133,7 @@ set(HEADER_FILES
   #include/viewer/ViewerModule.h
 )
 set(SOURCE_FILES
+  src/common/QGearsApplication.cpp
   src/common/QGearsManualObject.cpp
   src/common/QGearsResource.cpp
   src/common/QGearsStringUtil.cpp
@@ -196,6 +199,7 @@ set(SOURCE_FILES
   src/core/XmlTextFile.cpp
   src/core/XmlTextsFile.cpp
   src/data/QGearsAFile.cpp
+  src/data/QGearsAFileManager.cpp
   src/data/QGearsAFileSerializer.cpp
   src/data/QGearsBackgroundFile.cpp
   src/data/QGearsBackgroundFileManager.cpp
@@ -270,8 +274,6 @@ if(WIN32)
 endif()
 
 #defines
-add_definitions(-DTIXML_USE_STL)
-
 if(WIN32)
   #check usage and remove if uneccessary
   add_definitions(-DWIN32 -D__WIN32__ -D_WINDOWS)
@@ -286,8 +288,8 @@ add_executable(q-gears
   src/Main.cpp
 )
 
-if(WIN32)
-  set_target_properties(q-gears PROPERTIES WIN32_EXECUTABLE ON)
+if( WIN32 AND NOT (CMAKE_BUILD_TYPE MATCHES "Debug") )
+    set_target_properties( q-gears PROPERTIES WIN32_EXECUTABLE ON )
 endif()
 
 set(LIBRARIES
@@ -299,7 +301,13 @@ set(LIBRARIES
 )
 
 target_link_libraries(QGearsMain ${LIBRARIES})
-target_link_libraries(q-gears    QGearsMain ${LIBRARIES})
+
+find_package(Boost COMPONENTS program_options filesystem QUIET)
+set(LIBRARIES
+    QGearsMain
+    ${Boost_LIBRARIES}
+)
+target_link_libraries(q-gears    ${LIBRARIES})
 
 install(TARGETS q-gears
     DESTINATION ./

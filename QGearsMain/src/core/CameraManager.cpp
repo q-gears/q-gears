@@ -5,6 +5,7 @@
 #include <OgreRoot.h>
 #include <OIS.h>
 
+#include "common/QGearsApplication.h"
 #include "core/ConfigVar.h"
 #include "core/InputManager.h"
 #include "core/Logger.h"
@@ -37,7 +38,7 @@ CameraManager::CameraManager():
     m_Camera->setFarClipDistance( 1000.0f );
     m_Camera->setPosition( Ogre::Vector3( 0, 0, 0 ) );
     m_Camera->lookAt( Ogre::Vector3( 0, 0, 0 ) );
-    m_Viewport = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->addViewport( m_Camera, 0 );
+    m_Viewport = QGears::Application::getSingleton().getRenderWindow()->addViewport( m_Camera, 0 );
     m_Viewport->setBackgroundColour( Ogre::ColourValue( 0, 0, 0 ) );
     m_Camera->setAspectRatio( Ogre::Real( m_Viewport->getActualWidth() ) / Ogre::Real( m_Viewport->getActualHeight() ) );
 }
@@ -156,8 +157,8 @@ CameraManager::Set2DScroll( const Ogre::Vector2& position )
         return;
     }
 
-    float width = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualWidth();
-    float height = Ogre::Root::getSingleton().getRenderTarget( "QGearsWindow" )->getViewport( 0 )->getActualHeight();
+    float width = m_Viewport->getActualWidth();
+    float height = m_Viewport->getActualHeight();
     float left, right, top, bottom;
     m_Camera->resetFrustumExtents();
     m_Camera->getFrustumExtents( left, right, top, bottom );
@@ -200,3 +201,12 @@ CameraManager::GetCurrentCamera()
 {
     return m_Camera;
 }
+
+    //--------------------------------------------------------------------------
+    Ogre::Viewport*
+    CameraManager::getViewport()
+    {
+        return m_Viewport;
+    }
+
+    //--------------------------------------------------------------------------
