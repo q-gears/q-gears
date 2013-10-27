@@ -99,6 +99,9 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
         add_definitions(-DBOOST_ALL_NO_LIB)
         set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
 
+        find_package(Boost COMPONENTS program_options filesystem QUIET)
+        set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
+
         if(QGears_BUILD_TESTS)
             find_package(Boost COMPONENTS unit_test_framework QUIET)
             set(QGears_TEST_LIBRARIES

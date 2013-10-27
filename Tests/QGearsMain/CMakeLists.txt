@@ -17,6 +17,13 @@ target_link_libraries(TestQGearsAFileSerializer ${LIBRARIES})
 add_test(TestQGearsAFileSerializer TestQGearsAFileSerializer)
 
 
+add_executable(TestQGearsMapFileXMLSerializer
+    src/test_QGearsMapFileXMLSerializer.cpp
+)
+target_link_libraries(TestQGearsMapFileXMLSerializer ${LIBRARIES})
+add_test(TestQGearsMapFileXMLSerializer TestQGearsMapFileXMLSerializer)
+
+
 add_executable(TestQGearsWalkmeshFileXMLSerializer
     src/test_QGearsWalkmeshFileXMLSerializer.cpp
 )

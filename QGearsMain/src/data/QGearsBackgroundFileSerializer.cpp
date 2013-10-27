@@ -177,28 +177,6 @@ namespace QGears
         readObject( stream, pDest.unknown_24 );
         pDest.unknown_24 /= unknown_24_SCALE;
         stream->skip( 2 * 2 ); // 2 * uint16 unused
-        #ifndef NDEBUG
-        Ogre::LogManager::getSingleton().stream()
-            << "Sprite:"
-            << " pDest.unknown_04[0]: " << pDest.unknown_04[0]
-            << " pDest.unknown_04[1]: " << pDest.unknown_04[1]
-
-            << " pDest.unknown_0C[0]: " << pDest.unknown_0C[0]
-            << " pDest.unknown_0C[1]: " << pDest.unknown_0C[1]
-            << " pDest.unknown_0C[2]: " << pDest.unknown_0C[2]
-            << " pDest.unknown_0C[3]: " << pDest.unknown_0C[3]
-
-            << " pDest.flags_18[0]: " << (uint16)pDest.flags_18[0]
-            << " pDest.flags_18[1]: " << (uint16)pDest.flags_18[1]
-            << " pDest.flags_20[0]: " << pDest.flags_20[0]
-            << " pDest.flags_20[1]: " << pDest.flags_20[1]
-
-            << " pDest.unknown_1C: " << pDest.unknown_1C
-            << " pDest.unknown_20: " << pDest.unknown_20
-            << " pDest.unknown_22: " << pDest.unknown_22
-            << " pDest.pDest.unknown_24: " << Ogre::StringConverter::toString( pDest.unknown_24 )
-            ;
-        #endif
     }
 
 

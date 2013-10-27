@@ -132,24 +132,29 @@ public:
 
         if( m_Keyboard->isKeyDown( OIS::KC_A ) )
         {
-            camera->moveRelative( Ogre::Vector3( -0.005, 0, 0 ) );
+            assert( m_camera );
+            m_camera->moveRelative( Ogre::Vector3( -0.005, 0, 0 ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_D ) )
         {
-            camera->moveRelative( Ogre::Vector3( 0.005, 0, 0 ) );
+            assert( m_camera );
+            m_camera->moveRelative( Ogre::Vector3( 0.005, 0, 0 ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_W ) )
         {
-            camera->moveRelative( Ogre::Vector3( 0, 0, -0.005 ) );
+            assert( m_camera );
+            m_camera->moveRelative( Ogre::Vector3( 0, 0, -0.005 ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_S ) )
         {
-            camera->moveRelative( Ogre::Vector3( 0, 0,  0.005 ) );
+            assert( m_camera );
+            m_camera->moveRelative( Ogre::Vector3( 0, 0,  0.005 ) );
         }
         if( m_MouseRotate == true )
         {
-            camera->yaw( Ogre::Degree( -m_MouseMoveX * 0.13 ) );
-            camera->pitch( Ogre::Degree( -m_MouseMoveY * 0.13 ) );
+            assert( m_camera );
+            m_camera->yaw( Ogre::Degree( -m_MouseMoveX * 0.13 ) );
+            m_camera->pitch( Ogre::Degree( -m_MouseMoveY * 0.13 ) );
             m_MouseMoveX = 0;
             m_MouseMoveY = 0;
         }
@@ -308,6 +313,7 @@ public:
 public:
     Ogre::TextAreaOverlayElement*   info_text;
     Ogre::Overlay*                  info_overlay;
+    virtual void    setCamera( Ogre::Camera *camera ){ m_camera = camera; }
 
 private:
     Ogre::RenderWindow* m_Window;
@@ -316,6 +322,7 @@ private:
     OIS::InputManager*  m_InputManager;
     OIS::Keyboard*      m_Keyboard;
     OIS::Mouse*         m_Mouse;
+    Ogre::Camera       *m_camera;
     float               m_MouseMoveX;
     float               m_MouseMoveY;
     bool                m_MouseRotate;

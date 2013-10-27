@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <OgreRoot.h>
 
 #include "TypeDefine.h"
+#include "data/QGearsLGPArchiveFactory.h"
 
 namespace QGears
 {
@@ -29,18 +30,28 @@ namespace QGears
         Application( int argc, char *argv[] );
         virtual ~Application();
 
-        virtual bool                initOgre();
-        virtual void                loadResourcesConfig();
+        virtual bool                initOgre( void );
 
-        virtual Ogre::Root*         getRoot();
-        virtual Ogre::RenderWindow* getRenderWindow();
-        virtual const String&       getResourcesFilename();
+        virtual Ogre::Root*         getRoot( void );
+        virtual Ogre::RenderWindow* getRenderWindow( void );
+        virtual const String&       getResourcesFilename( void );
 
     protected:
+        virtual String  getWindowTitle( void ) const;
+
         virtual bool    processCommandLine( int argc, char *argv[] );
+        virtual void    registerArchiveFactories( void );
+        virtual void    loadResourcesConfig( void );
+        virtual void    initComponents( void );
+        virtual void    destroyComponents( void );
+        virtual void    createResourceManagers( void );
+        virtual void    destroyResourceManagers( void );
 
     private:
+        typedef std::vector<Ogre::ResourceManager*> ResourceManagerList;
+
         Application();
+
         static const char*      CLI_SECTION_GENERIC;
         static const char*      CLI_HELP;
         static const char*      CLI_HELP_DESCRIPTION;
@@ -63,6 +74,8 @@ namespace QGears
         bool                m_initialized;
         Ogre::Root         *m_root;
         Ogre::RenderWindow *m_render_window;
+        ResourceManagerList m_resource_managers;
+        LGPArchiveFactory   m_lgp_archive_factory;
     };
 }
 

@@ -21,19 +21,7 @@
 #include "core/UiManager.h"
 #include "core/particles/ParticleSystemManager.h"
 
-#include "data/QGearsAFileManager.h"
-#include "data/QGearsBackgroundFileManager.h"
-#include "data/QGearsCameraMatrixFileManager.h"
-#include "data/QGearsHRCFileManager.h"
-#include "data/QGearsLGPArchiveFactory.h"
 #include "data/QGearsLZSFLevelFileManager.h"
-#include "data/QGearsPaletteFileManager.h"
-#include "data/QGearsPFileManager.h"
-#include "data/QGearsRSDFileManager.h"
-#include "data/QGearsTexCodec.h"
-#include "map/QGearsBackground2DFileManager.h"
-#include "map/QGearsWalkmeshFileManager.h"
-#include "data/FF7ModelListFileManager.h"
 
 using std::cout;
 using std::endl;
@@ -48,11 +36,6 @@ main(int argc, char *argv[])
     Ogre::RenderWindow *window( app.getRenderWindow() );
     Ogre::SceneManager *scene_manager( NULL );
 
-    QGears::LGPArchiveFactory lgp_archive_factory;
-    Ogre::ArchiveManager::getSingleton().addArchiveFactory( &lgp_archive_factory );
-
-    app.loadResourcesConfig();
-
     Timer* timer = new Timer();
     ParticleSystemManager* particle_system_manager = new ParticleSystemManager();
 
@@ -60,28 +43,12 @@ main(int argc, char *argv[])
     // create this before initialize particle because some of them use scene to create themself
     scene_manager = root->createSceneManager( Ogre::ST_GENERIC, "Scene" );
     scene_manager->setAmbientLight( Ogre::ColourValue( 1, 1, 1 ) );
-    /*
     scene_manager->setAmbientLight( Ogre::ColourValue( 0.5, 0.5, 0.5 ) );
     Ogre::Light *directionalLight( scene_manager->createLight("directionalLight") );
     directionalLight->setType( Ogre::Light::LT_DIRECTIONAL );
     directionalLight->setDiffuseColour( Ogre::ColourValue( 0.5, 0.5, 0.5 ) );
     directionalLight->setSpecularColour( Ogre::ColourValue( 0.0, 0.0, 0.0 ) );
     directionalLight->setDirection( Ogre::Vector3( 0, 1, 0 ) );
-    */
-
-    QGears::TexCodec::install();
-    QGears::TexCodec::initialise();
-    QGears::Background2DFileManager    *b2d_mgr( new QGears::Background2DFileManager() );
-    QGears::BackgroundFileManager      *bgf_mgr( new QGears::BackgroundFileManager() );
-    QGears::CameraMatrixFileManager    *cmf_mgr( new QGears::CameraMatrixFileManager() );
-    QGears::PaletteFileManager         *plt_mgr( new QGears::PaletteFileManager() );
-    QGears::WalkmeshFileManager        *wkm_mgr( new QGears::WalkmeshFileManager() );
-    QGears::FF7::ModelListFileManager  *mdl_mgr( new QGears::FF7::ModelListFileManager() );
-    QGears::HRCFileManager             *hrc_mgr( new QGears::HRCFileManager() );
-    QGears::AFileManager               *afl_mgr( new QGears::AFileManager() );
-    QGears::PFileManager               *pfl_mgr( new QGears::PFileManager() );
-    QGears::RSDFileManager             *rsd_mgr( new QGears::RSDFileManager() );
-    QGears::LZSFLevelFileManager       *flv_mgr( new QGears::LZSFLevelFileManager() );
 
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
@@ -163,19 +130,6 @@ main(int argc, char *argv[])
 
     f.setNull();
     f2.setNull();
-    delete flv_mgr;
-    delete plt_mgr;
-    delete bgf_mgr;
-    delete cmf_mgr;
-    delete b2d_mgr;
-    delete wkm_mgr;
-    delete mdl_mgr;
-    delete rsd_mgr;
-    delete hrc_mgr;
-    delete afl_mgr;
-    delete pfl_mgr;
-    QGears::TexCodec::shutdown();
-    QGears::TexCodec::uninstall();
 
     delete particle_system_manager;
     delete timer;

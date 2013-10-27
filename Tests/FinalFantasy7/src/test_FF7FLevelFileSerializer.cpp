@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include "data/QGearsBackgroundFileManager.h"
 #include "data/QGearsCameraMatrixFileManager.h"
+#include "data/QGearsHRCFileManager.h"
 #include "data/QGearsPaletteFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
 #include "data/FF7ModelListFileManager.h"
@@ -96,6 +97,7 @@ BOOST_AUTO_TEST_CASE( read_file )
     QGears::BackgroundFileManager       bmgr;
     QGears::Background2DFileManager     b2mgr;
     QGears::FF7::ModelListFileManager   mmgr;
+    QGears::HRCFileManager              hmgr;
     QGears::LZSFLevelFileManager        fmgr;
     logMgr.createLog( "Default Log", true, true, true );
 

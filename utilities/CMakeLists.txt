@@ -2,16 +2,19 @@ include_directories(
     ${QGears_INCLUDE_DIRS}
     ${QGears_SOURCE_DIR}/QGearsMain/include
     ${QGears_SOURCE_DIR}/SupportedGames/FinalFantasy7/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/common/include
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # define header and source files for the library
 set(HEADER_FILES
+  common/include/QGearsUtility.h
   common/FileSystem.h
   common/Logger.h
   common/OgreBase.h
 )
 set(SOURCE_FILES
+  common/src/QGearsUtility.cpp
   common/FileSystem.cpp
   common/Logger.cpp
   common/OgreBase.cpp

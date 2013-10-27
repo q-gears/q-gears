@@ -22,6 +22,7 @@ namespace QGears
     {
         //----------------------------------------------------------------------
         const NameLookup::LookupMap NameLookup::ms_animations   ( NameLookup::createAnimations() );
+        const NameLookup::LookupMap NameLookup::ms_models       ( NameLookup::createModels() );
 
         //----------------------------------------------------------------------
         NameLookup::NameLookup()
@@ -49,6 +50,22 @@ namespace QGears
             lookup.insert( LookupMap::value_type( "adcd", "Run" ) );
             lookup.insert( LookupMap::value_type( "bwaa", "Invitation" ) );
 
+            // sd_red
+            lookup.insert( LookupMap::value_type( "aeae", "Idle" ) );
+            lookup.insert( LookupMap::value_type( "aeaf", "Walk" ) );
+            lookup.insert( LookupMap::value_type( "aeba", "Run" ) );
+
+            return lookup;
+        }
+
+        //----------------------------------------------------------------------
+        NameLookup::LookupMap
+        NameLookup::createModels()
+        {
+            LookupMap lookup;
+            lookup.insert( LookupMap::value_type( "aaaa", "n_cloud" ) );
+            lookup.insert( LookupMap::value_type( "adda", "sd_red" ) );
+
             return lookup;
         }
 
@@ -67,6 +84,13 @@ namespace QGears
         NameLookup::animation( const String &key )
         {
             return lookup( key, ms_animations );
+        }
+
+        //----------------------------------------------------------------------
+        const String&
+        NameLookup::model( const String &key )
+        {
+            return lookup( key, ms_models );
         }
 
         //----------------------------------------------------------------------

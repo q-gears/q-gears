@@ -28,11 +28,12 @@ THE SOFTWARE.
 #include <Ogre.h>
 #include <OgreMesh.h>
 
-#include "common/OgreBase.h"
+#include "FF7FieldModelExporterPC.h"
 #include "common/TypeDefine.h"
 #include "common/QGearsStringUtil.h"
 
 #include "data/QGearsAFileManager.h"
+#include "data/QGearsHRCFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
 
 void attachMesh( Ogre::MeshPtr &mesh )
@@ -46,13 +47,9 @@ void attachMesh( Ogre::MeshPtr &mesh )
     Ogre::SceneNode* root_node = scene_manager->getRootSceneNode();
     root_node->showBoundingBox( true );
     root_node->attachObject( entity );
+    entity->setVisible( false );
 
     entitys.push_back( entity );
-}
-
-Ogre::DataStreamPtr getStream( const Ogre::String& file_name )
-{
-    return Ogre::ResourceGroupManager::getSingleton().openResource( file_name );
 }
 
 void exportMesh( const Ogre::MeshPtr &mesh )
@@ -85,28 +82,35 @@ void exportMesh( const Ogre::MeshPtr &mesh )
 int
 main( int argc, char *argv[] )
 {
-    InitializeOgreBase( "FFVII Field Model Exporter" );
+    QGears::FF7::FieldModelExporterPC app( argc, argv );
+    if( !app.initOgre() ) return 0;
 
     Ogre::SceneManager*         scene_manager( Ogre::Root::getSingleton().getSceneManager( "Scene" ) );
     QGears::AFilePtr            a;
-    QGears::AFileManager        afl_mgr;
+    QGears::HRCFilePtr          hrc( QGears::HRCFileManager::getSingleton().load( "adda.hrc", "FFVII" ));
+    QGears::AFileManager       &afl_mgr( QGears::AFileManager::getSingleton() );
 
-    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().load( "field/char/sd_red_sk.mesh", "FFVII" ) );
+    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().load( "sd_red.mesh", "FFVII" ) );
     Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
 
-    a = afl_mgr.load( "field/char/aeae.a", "FFVII" );
+    a = afl_mgr.load( "aeae.a", "FFVII" );
     a->addTo( skeleton, "Idle" );
-    a = afl_mgr.load( "field/char/aeaf.a", "FFVII" );
+    a = afl_mgr.load( "aeaf.a", "FFVII" );
     a->addTo( skeleton, "Walk" );
-    a = afl_mgr.load( "field/char/aeba.a", "FFVII" );
+    a = afl_mgr.load( "aeba.a", "FFVII" );
     a->addTo( skeleton, "Run" );
 
     attachMesh( mesh );
-
     entitys[0]->setVisible( true );
 
-    QGears::LZSFLevelFileManager   *fmgr( QGears::LZSFLevelFileManager::getSingletonPtr() );
-    QGears::FLevelFilePtr           f( fmgr->load( "field/gflevel/ancnt1", "FFVII" ) );
+    QGears::LZSFLevelFileManager   &fmgr( QGears::LZSFLevelFileManager::getSingleton() );
+    QGears::FLevelFilePtr           f( fmgr.load( "ancnt1", "FFVII" ) );
+
+    mesh = Ogre::MeshManager::getSingleton().load( "n_cloud.mesh", "FFVII" );
+    skeleton = mesh->getSkeleton();
+    a = afl_mgr.load( "bvjf.a", "FFVII" );
+    a->addTo( skeleton, "JumpFromTrain" );
+    attachMesh( mesh );
 
     // Create background rectangle covering the whole screen
     Ogre::Rectangle2D* rect = new Ogre::Rectangle2D(true);
@@ -126,12 +130,11 @@ main( int argc, char *argv[] )
     node->attachObject( rect );
 
     Ogre::Root::getSingleton().startRendering();
-    f.setNull();
-    delete rect;
-
     skeleton.setNull();
     mesh.setNull();
-    DeinitializeOgreBase();
+    f.setNull();
+    hrc.setNull();
+    delete rect;
 
     return 0;
 }

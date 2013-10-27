@@ -102,8 +102,6 @@ namespace QGears
             m_background_2d_loader = new FLevelBackground2DLoader( *this );
             m_background_2d = Background2DFileManager::getSingleton().create( background_2d_name, mGroup, true, m_background_2d_loader );
         }
-
-        loadModels();
     }
 
     //--------------------------------------------------------------------------

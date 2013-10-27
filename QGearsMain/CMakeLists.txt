@@ -48,6 +48,9 @@ set(HEADER_FILES
   include/map/QGearsBackground2DFileManager.h
   include/map/QGearsBackground2DFileXMLSerializer.h
   include/map/QGearsTile.h
+  include/map/QGearsMapFile.h
+  include/map/QGearsMapFileManager.h
+  include/map/QGearsMapFileXMLSerializer.h
   include/map/QGearsWalkmeshFile.h
   include/map/QGearsWalkmeshFileManager.h
   include/map/QGearsWalkmeshFileXMLSerializer.h
@@ -240,6 +243,9 @@ set(SOURCE_FILES
   src/map/QGearsBackground2DFile.cpp
   src/map/QGearsBackground2DFileManager.cpp
   src/map/QGearsBackground2DFileXMLSerializer.cpp
+  src/map/QGearsMapFile.cpp
+  src/map/QGearsMapFileManager.cpp
+  src/map/QGearsMapFileXMLSerializer.cpp
   src/map/QGearsWalkmeshFile.cpp
   src/map/QGearsWalkmeshFileManager.cpp
   src/map/QGearsWalkmeshFileXMLSerializer.cpp
@@ -302,10 +308,8 @@ set(LIBRARIES
 
 target_link_libraries(QGearsMain ${LIBRARIES})
 
-find_package(Boost COMPONENTS program_options filesystem QUIET)
 set(LIBRARIES
     QGearsMain
-    ${Boost_LIBRARIES}
 )
 target_link_libraries(q-gears    ${LIBRARIES})
 

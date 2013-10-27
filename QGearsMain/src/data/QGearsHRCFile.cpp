@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <OgreMeshManager.h>
 #include <OgreSkeletonManager.h>
 
+#include "common/FF7NameLookup.h"
 #include "common/QGearsStringUtil.h"
 #include "data/QGearsHRCFileSerializer.h"
 #include "data/QGearsHRCMeshLoader.h"
@@ -166,7 +167,8 @@ namespace QGears
     {
         String base_name;
         StringUtil::splitBase( getName(), base_name );
-        return base_name + EXT_MESH;
+
+        return FF7::NameLookup::model( base_name ) + EXT_MESH;
     }
 
     //---------------------------------------------------------------------

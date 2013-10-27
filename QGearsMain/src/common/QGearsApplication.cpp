@@ -19,8 +19,21 @@ GNU General Public License for more details.
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <OgreConfigFile.h>
+#include <OgreArchiveManager.h>
 
 #include "QGearsGameState.h"
+#include "data/QGearsAFileManager.h"
+#include "data/QGearsBackgroundFileManager.h"
+#include "data/QGearsCameraMatrixFileManager.h"
+#include "data/QGearsHRCFileManager.h"
+#include "data/QGearsLZSFLevelFileManager.h"
+#include "data/QGearsPaletteFileManager.h"
+#include "data/QGearsPFileManager.h"
+#include "data/QGearsRSDFileManager.h"
+#include "data/QGearsTexCodec.h"
+#include "map/QGearsBackground2DFileManager.h"
+#include "map/QGearsWalkmeshFileManager.h"
+#include "data/FF7ModelListFileManager.h"
 
 namespace QGears
 {
@@ -56,6 +69,7 @@ namespace QGears
     //--------------------------------------------------------------------------
     Application::~Application()
     {
+        destroyComponents();
         if( m_root ) delete m_root;
     }
 
@@ -84,7 +98,11 @@ namespace QGears
         {
             return false;
         }
-        m_render_window = m_root->initialise( true, QG_VERSION_NAME );
+        m_render_window = m_root->initialise( true, getWindowTitle() );
+
+        registerArchiveFactories();
+        loadResourcesConfig();
+        initComponents();
 
         return true;
     }
@@ -141,6 +159,12 @@ namespace QGears
     }
 
     //--------------------------------------------------------------------------
+    String Application::getWindowTitle() const
+    {
+        return QG_VERSION_NAME;
+    }
+
+    //--------------------------------------------------------------------------
     bool
     Application::processCommandLine(  int argc, char *argv[] )
     {
@@ -193,6 +217,64 @@ namespace QGears
         m_resources_filename    = vm[CLI_RESOURCES_FILE].as< String >();
 
         return true;
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    Application::registerArchiveFactories()
+    {
+        Ogre::ArchiveManager::getSingleton().addArchiveFactory( &m_lgp_archive_factory );
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    Application::initComponents()
+    {
+        QGears::TexCodec::install();
+        QGears::TexCodec::initialise();
+        createResourceManagers();
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    Application::destroyComponents()
+    {
+        destroyResourceManagers();
+        QGears::TexCodec::shutdown();
+        QGears::TexCodec::uninstall();
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    Application::createResourceManagers()
+    {
+        assert( m_resource_managers.empty() );
+        // TODO maybe we should use SharedPtr so we don't have to really care
+        // for destruction!?
+        m_resource_managers.push_back( new QGears::CameraMatrixFileManager() );
+        m_resource_managers.push_back( new QGears::PaletteFileManager() );
+        m_resource_managers.push_back( new QGears::WalkmeshFileManager() );
+        m_resource_managers.push_back( new QGears::FF7::ModelListFileManager() );
+        m_resource_managers.push_back( new QGears::HRCFileManager() );
+        m_resource_managers.push_back( new QGears::RSDFileManager() );
+        m_resource_managers.push_back( new QGears::AFileManager() );
+        m_resource_managers.push_back( new QGears::PFileManager() );
+        m_resource_managers.push_back( new QGears::LZSFLevelFileManager() );
+        m_resource_managers.push_back( new QGears::BackgroundFileManager() );
+        m_resource_managers.push_back( new QGears::Background2DFileManager() );
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    Application::destroyResourceManagers()
+    {
+        ResourceManagerList::iterator       it ( m_resource_managers.begin() );
+        ResourceManagerList::const_iterator end( m_resource_managers.end() );
+        while( it != end )
+        {
+            delete *it;
+        }
+        m_resource_managers.clear();
     }
 
     //--------------------------------------------------------------------------

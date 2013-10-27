@@ -1,33 +1,10 @@
 #include "OgreBase.h"
 
-#ifdef QGEARS_ADD_MANAGERS
-#include "data/QGearsAFileManager.h"
-#include "data/QGearsBackgroundFileManager.h"
-#include "data/QGearsCameraMatrixFileManager.h"
-#include "data/QGearsHRCFileManager.h"
-#include "data/QGearsLGPArchiveFactory.h"
-#include "data/QGearsLZSFLevelFileManager.h"
-#include "data/QGearsPaletteFileManager.h"
-#include "data/QGearsPFileManager.h"
-#include "data/QGearsRSDFileManager.h"
-#include "data/QGearsTexCodec.h"
-#include "map/QGearsBackground2DFileManager.h"
-#include "map/QGearsWalkmeshFileManager.h"
-#include "data/FF7ModelListFileManager.h"
-#endif
-
 Ogre::Root*                     root;
 Ogre::RenderWindow*             window;
 std::vector< Ogre::Entity* >    entitys;
 Ogre::Camera                   *camera;
 DisplayFrameListener           *frame_listener;
-
-#ifdef QGEARS_ADD_MANAGERS
-QGears::Background2DFileManager    *b2d_mgr;
-QGears::BackgroundFileManager      *bmgr;
-QGears::PaletteFileManager         *pmgr;
-QGears::LZSFLevelFileManager       *fmgr;
-#endif
 
 void
 InitializeOgreBase( const Ogre::String& name )
@@ -98,14 +75,6 @@ InitializeOgreBase( const Ogre::String& name )
     window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
 
 
-    #ifdef QGEARS_ADD_MANAGERS
-    // move to plugin if not needed directly
-    b2d_mgr = new QGears::Background2DFileManager();
-    bmgr = new QGears::BackgroundFileManager();
-    pmgr = new QGears::PaletteFileManager();
-    fmgr = new QGears::LZSFLevelFileManager();
-    #endif
-
     // initialize resource
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./", "FileSystem", "General" );
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./exported", "FileSystem", "General" );
@@ -138,7 +107,7 @@ InitializeOgreBase( const Ogre::String& name )
 
     FILESYSTEM = new FileSystem();
     LOGGER = new Logger( "game.log" );
-};
+}
 
 
 
@@ -148,13 +117,6 @@ DeinitializeOgreBase()
     delete LOGGER;
     delete FILESYSTEM;
 
-    #ifdef QGEARS_ADD_MANAGERS
-    delete fmgr;
-    delete bmgr;
-    delete pmgr;
-    delete b2d_mgr;
-    #endif
-
     delete root;
     delete frame_listener;
-};
+}

@@ -76,10 +76,10 @@ XmlMapFile::LoadMap()
                 continue;
             }
 
-            Ogre::Vector3 position( GetVector3( node, "position", Ogre::Vector3::ZERO ) );
+            Ogre::Vector3 position( GetVector3( node, "position" ) );
             Ogre::Degree direction( Ogre::Degree( GetFloat( node, "direction" ) ) );
             Ogre::Vector3 scale( GetVector3( node, "scale", Ogre::Vector3::UNIT_SCALE ) );
-            Ogre::Quaternion orientation( GetQuaternion( node, "root_orientation", Ogre::Quaternion::IDENTITY ) );
+            Ogre::Quaternion orientation( GetQuaternion( node, "root_orientation" ) );
 
             EntityManager::getSingleton().AddEntity( name, file_name, position, direction, scale, orientation );
         }

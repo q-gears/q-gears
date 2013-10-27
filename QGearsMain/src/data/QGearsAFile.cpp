@@ -102,20 +102,21 @@ namespace QGears
     {
         if( skeleton->hasAnimation( name) ) return;
 
-        Ogre::Real length( m_frames.size() * FRAME_DURATION );
-        Ogre::Animation* anim( skeleton->createAnimation(name, length ));
+        Ogre::Real length( ( m_frames.size() - 1 ) * FRAME_DURATION );
+        Ogre::Animation *anim( skeleton->createAnimation(name, length ));
         uint16 track_handle( 0 );
         Ogre::Bone* bone( skeleton->getBone( "root" ) );
         Ogre::NodeAnimationTrack* track;
         track = anim->createNodeTrack( track_handle++, bone );
-        Ogre::Real time( 0 );
+        Ogre::Real time;
+        size_t index( 0 );
         for( FrameList::const_iterator frame( m_frames.begin())
             ;frame != m_frames.end(); ++frame )
         {
+            time = (index++) * FRAME_DURATION;
             Ogre::TransformKeyFrame* key_frame( track->createNodeKeyFrame( time ) );
             key_frame->setTranslate( frame->root_translation );
             setFrameRotation( key_frame, frame->root_rotation );
-            time += FRAME_DURATION;
         }
         for( uint32 i(0); i < m_bone_count; ++i )
         {

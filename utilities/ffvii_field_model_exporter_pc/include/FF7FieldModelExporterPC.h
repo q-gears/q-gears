@@ -1,6 +1,6 @@
 /*
 -----------------------------------------------------------------------------
-Copyright (c) 15.10.2013 Tobias Peters <tobias.peters@kreativeffekt.at>
+Copyright (c) 26.10.2013 Tobias Peters <tobias.peters@kreativeffekt.at>
 
 This file is part of Q-Gears
 
@@ -14,37 +14,28 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 -----------------------------------------------------------------------------
 */
-#ifndef __FF7NameLookup_H__
-#define __FF7NameLookup_H__
+#ifndef __FF7FieldModelExporterPC_H__
+#define __FF7FieldModelExporterPC_H__
 
-#include "common/TypeDefine.h"
+#include "QGearsUtility.h"
 
 namespace QGears
 {
     namespace FF7
     {
-        class NameLookup
+        class FieldModelExporterPC : public Utility
         {
         public:
-            NameLookup();
-            virtual ~NameLookup();
-
-            static const String& animation( const String &key );
-            static const String& model( const String &key );
+            FieldModelExporterPC( int argc, char *argv[] );
+            virtual ~FieldModelExporterPC();
 
         protected:
-            typedef std::map<const String, const String>    LookupMap;
-
-            static LookupMap createAnimations();
-            static LookupMap createModels();
-
-            static const String& lookup( const String &key, const LookupMap &data );
+            virtual String getWindowTitle( void ) const;
 
         private:
-            static const LookupMap  ms_animations;
-            static const LookupMap  ms_models;
+            FieldModelExporterPC();
         };
     }
 }
 
-#endif // __FF7NameLookup_H__
+#endif // __FF7FieldModelExporterPC_H__
