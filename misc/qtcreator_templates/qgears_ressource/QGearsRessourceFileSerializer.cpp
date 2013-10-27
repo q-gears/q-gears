@@ -1,4 +1,4 @@
-#include "%SubPath%/%NameSpace%%ClassName%Serializer.%CppHeaderSuffix%"
+#include "%SubPath%/%NameSpace%%ClassNameSerializer%.%CppHeaderSuffix%"
 
 #include <OgreLogManager.h>
 #include <OgreException.h>
@@ -6,19 +6,19 @@
 namespace %NameSpace%
 {
     //--------------------------------------------------------------------------
-    %ClassName%Serializer::%ClassName%Serializer() :
+    %ClassNameSerializer%::%ClassNameSerializer%() :
         Serializer()
     {
     }
 
     //--------------------------------------------------------------------------
-    %ClassName%Serializer::~%ClassName%Serializer()
+    %ClassNameSerializer%::~%ClassNameSerializer%()
     {
     }
 
     //--------------------------------------------------------------------------
     void
-    %ClassName%Serializer::import%ClassName%( Ogre::DataStreamPtr &stream, %ClassName% *pDest )
+    %ClassNameSerializer%::import%ClassName%( Ogre::DataStreamPtr &stream, %ClassName% *pDest )
     {
     }
 

@@ -1,24 +1,24 @@
-#include "%SubPath%/%NameSpace%%ClassName%Manager.%CppHeaderSuffix%"
+#include "%SubPath%/%NameSpace%%ClassNameManager%.%CppHeaderSuffix%"
 
 namespace %NameSpace%
 {
     //--------------------------------------------------------------------------
-    template<> %ClassName%Manager *Ogre::Singleton<%ClassName%Manager>::msSingleton = NULL;
+    template<> %ClassNameManager% *Ogre::Singleton<%ClassNameManager%>::msSingleton = NULL;
 
     //--------------------------------------------------------------------------
-    %ClassName%Manager *%ClassName%Manager::getSingletonPtr()
+    %ClassNameManager% *%ClassNameManager%::getSingletonPtr()
     {
         return msSingleton;
     }
 
     //--------------------------------------------------------------------------
-    %ClassName%Manager &%ClassName%Manager::getSingleton()
+    %ClassNameManager% &%ClassNameManager%::getSingleton()
     {
         assert( msSingleton );
         return(*msSingleton );
     }
     //--------------------------------------------------------------------------
-    %ClassName%Manager::%ClassName%Manager()
+    %ClassNameManager%::%ClassNameManager%()
     {
         mResourceType = %ClassName%::RESOURCE_TYPE;
 
@@ -30,13 +30,13 @@ namespace %NameSpace%
     }
 
     //--------------------------------------------------------------------------
-    %ClassName%Manager::~%ClassName%Manager()
+    %ClassNameManager%::~%ClassNameManager%()
     {
         Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager( mResourceType );
     }
 
     //--------------------------------------------------------------------------
-    Ogre::Resource *%ClassName%Manager::createImpl( const Ogre::String &name
+    Ogre::Resource *%ClassNameManager%::createImpl( const Ogre::String &name
       , Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual
       , Ogre::ManualResourceLoader *loader
       , const Ogre::NameValuePairList *createParams )

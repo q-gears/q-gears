@@ -2,7 +2,7 @@
 
 
 
-#include "%SubPath%/%NameSpace%%ClassName%Serializer.%CppHeaderSuffix%"
+#include "%SubPath%/%NameSpace%%ClassNameSerializer%.%CppHeaderSuffix%"
 
 namespace %NameSpace%
 {
@@ -28,7 +28,7 @@ namespace %NameSpace%
     void
     %ClassName%::loadImpl()
     {
-        %ClassName%Serializer serializer;
+        %ClassNameSerializer% serializer;
         Ogre::DataStreamPtr stream( openResource() );
         serializer.import%ClassName%( stream, this );
     }

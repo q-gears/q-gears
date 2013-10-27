@@ -23,10 +23,10 @@ QGears Ressource Class -->
     <files>
         <file source="QGearsRessourceFile.h" target="include/%SubPath%/%NameSpace%%ClassName%.%CppHeaderSuffix%" openeditor="true"/>
         <file source="QGearsRessourceFile.cpp" target="src/%SubPath%/%NameSpace%%ClassName%.%CppSourceSuffix%" openeditor="true"/>
-        <file source="QGearsRessourceFileManager.h" target="include/%SubPath%/%NameSpace%%ClassName%Manager.%CppHeaderSuffix%" openeditor="true"/>
-        <file source="QGearsRessourceFileManager.cpp" target="src/%SubPath%/%NameSpace%%ClassName%Manager.%CppSourceSuffix%" openeditor="true"/>
-        <file source="QGearsRessourceFileSerializer.h" target="include/%SubPath%/%NameSpace%%ClassName%Serializer.%CppHeaderSuffix%" openeditor="true"/>
-        <file source="QGearsRessourceFileSerializer.cpp" target="src/%SubPath%/%NameSpace%%ClassName%Serializer.%CppSourceSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFileManager.h" target="include/%SubPath%/%NameSpace%%ClassNameManager%.%CppHeaderSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFileManager.cpp" target="src/%SubPath%/%NameSpace%%ClassNameManager%.%CppSourceSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFileSerializer.h" target="include/%SubPath%/%NameSpace%%ClassNameSerializer%.%CppHeaderSuffix%" openeditor="true"/>
+        <file source="QGearsRessourceFileSerializer.cpp" target="src/%SubPath%/%NameSpace%%ClassNameSerializer%.%CppSourceSuffix%" openeditor="true"/>
     </files>
     <fieldpagetitle>Resource parameters</fieldpagetitle>
     <fields>

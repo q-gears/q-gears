@@ -1,5 +1,5 @@
-#ifndef __%NameSpace%%ClassName%Serializer_H__
-#define __%NameSpace%%ClassName%Serializer_H__
+#ifndef __%NameSpace%%ClassNameSerializer%_H__
+#define __%NameSpace%%ClassNameSerializer%_H__
 
 #include "common/TypeDefine.h"
 
@@ -8,11 +8,11 @@
 
 namespace %NameSpace%
 {
-    class %ClassName%Serializer : public Serializer
+    class %ClassNameSerializer% : public Serializer
     {
     public:
-                        %ClassName%Serializer();
-        virtual        ~%ClassName%Serializer();
+                        %ClassNameSerializer%();
+        virtual        ~%ClassNameSerializer%();
 
         virtual void    import%ClassName%( Ogre::DataStreamPtr &stream, %ClassName% *pDest );
 
@@ -22,4 +22,4 @@ namespace %NameSpace%
     };
 }
 
-#endif // __%NameSpace%%ClassName%Serializer_H__
+#endif // __%NameSpace%%ClassNameSerializer%_H__
