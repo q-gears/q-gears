@@ -47,12 +47,12 @@ namespace QGears
     WalkmeshFileXMLSerializer::readObject( TiXmlNode &node
                                           ,WalkmeshFileXMLSerializer::Triangle &pDest )
     {
-        readAttribute( node, pDest.a, "a" );
-        readAttribute( node, pDest.b, "b" );
-        readAttribute( node, pDest.c, "c" );
-        readAttribute( node, pDest.access_side[0], "a_b" );
-        readAttribute( node, pDest.access_side[1], "b_c" );
-        readAttribute( node, pDest.access_side[2], "c_a" );
+        readAttribute( node, "a", pDest.a );
+        readAttribute( node, "b", pDest.b );
+        readAttribute( node, "c", pDest.c );
+        readAttribute( node, "a_b", pDest.access_side[0] );
+        readAttribute( node, "b_c", pDest.access_side[1] );
+        readAttribute( node, "c_a", pDest.access_side[2] );
     }
 
     //--------------------------------------------------------------------------

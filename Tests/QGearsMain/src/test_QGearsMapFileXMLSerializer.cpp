@@ -42,12 +42,22 @@ BOOST_AUTO_TEST_CASE( read_file )
     TestFile                        f;
 
     logMgr.createLog( "Default Log", true, true, true );
-
     ser.importMapFile( stream, &f );
-    f.
-    BOOST_FAIL( "not yet implemented" );
+
+    BOOST_CHECK_EQUAL( "path/to/script.lua"         , f.getScriptName() );
+    BOOST_CHECK_EQUAL( "background_2d_resource_name", f.getBackground2dName() );
+    BOOST_CHECK_EQUAL( "walkmesh_resource_name"     , f.getWalkmeshName() );
+    BOOST_CHECK_CLOSE( -5.625, f.getForwardDirection(), 0.001 );
+
+    QGears::MapFile::TriggerList    &triggers( f.getTriggers() );
+    BOOST_REQUIRE_EQUAL( 1, triggers.size() );
+
+    QGears::MapFile::TriggerList::value_type    &trigger( triggers.at(0) );
+    BOOST_CHECK_EQUAL( "Gateway0", trigger.GetName() );
+    BOOST_CHECK( Ogre::Vector3( 28.6016, 228.562, 2.75781 ).positionEquals( trigger.GetPoint1() ) );
+    BOOST_CHECK( Ogre::Vector3( 28.6641, 229.438, 2.75781 ).positionEquals( trigger.GetPoint2() ) );
+    BOOST_CHECK_EQUAL( true, trigger.IsEnabled() );
 
     logMgr.destroyLog( "Default Log" );
-
     ifs->close();
 }

@@ -58,6 +58,30 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
+    bool
+    Background2DFileXMLSerializer::readAttribute( TiXmlNode &node, const String &attribute, Blending &pDest, const Blending &pDefault )
+    {
+        const String *value( readAttribute( node, attribute ) );
+        if( value == NULL )
+        {
+            pDest = pDefault;
+            return false;
+        }
+        if( *value == BLENDING_ADD )
+        {
+            pDest = B_ADD;
+            return true;
+        }
+        if( *value == BLENDING_ALPHA )
+        {
+            pDest = B_ALPHA;
+            return true;
+        }
+        pDest = pDefault;
+        return false;
+    }
+
+    //---------------------------------------------------------------------
     void
     Background2DFileXMLSerializer::importBackground2DFile( Ogre::DataStreamPtr &stream
                                                           ,Background2DFile *pDest )
@@ -69,8 +93,8 @@ namespace QGears
         readHeader( root_node );
         TiXmlNode &node( *root_node );
 
-        String texture_name("");
-        readAttribute( node, texture_name, "image" );
+        String texture_name;
+        readAttribute( node, "image", texture_name );
         if( texture_name.empty() )
         {
             OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
@@ -79,76 +103,56 @@ namespace QGears
         }
         pDest->setTextureName( texture_name );
 
-        Ogre::Vector2 clip( 320, 240 );
-        readAttribute( node, clip, "clip" );
+        Ogre::Vector2 clip;
+        readAttribute( node, "clip", clip, Ogre::Vector2( 320, 240 ) );
         pDest->setClip( clip );
 
-        Ogre::Vector4 range( -100000, -100000, 100000, 100000 );
-        readAttribute( node, range, "range" );
+        Ogre::Vector4 range;
+        readAttribute( node, "range", range, Ogre::Vector4( -100000, -100000, 100000, 100000 ) );
         pDest->setRange( range );
 
-        Ogre::Vector3 position( Ogre::Vector3::ZERO );
-        readAttribute( node, position, "position" );
+        Ogre::Vector3 position;
+        readAttribute( node, "position", position );
         pDest->setPosition( position );
 
-        Ogre::Quaternion orientation( Ogre::Quaternion::IDENTITY );
-        readAttribute( node, orientation, "orientation" );
+        Ogre::Quaternion orientation;
+        readAttribute( node, "orientation", orientation );
         pDest->setOrientation( orientation );
 
-        Ogre::Real fov( 45 );
-        readAttribute( node, fov, "fov" );
+        Ogre::Real fov;
+        readAttribute( node, "fov", fov, Ogre::Real( 45 ) );
         pDest->setFov( Ogre::Radian( Ogre::Degree( fov ) ) );
 
-        readVector( node, pDest->getTiles(), "tile" );
+        readVector( node, "tile", pDest->getTiles() );
     }
 
     //---------------------------------------------------------------------
     void
     Background2DFileXMLSerializer::readObject( TiXmlNode& node, Tile& pDest )
     {
-        pDest.width = 0;
-        readAttribute( node, pDest.width, "width" );
-
-        pDest.height = 0;
-        readAttribute( node, pDest.height, "height" );
-
-        pDest.destination = Ogre::Vector2::ZERO;
-        readAttribute( node, pDest.destination, "destination" );
-
-        pDest.uv = Ogre::Vector4::ZERO;
-        readAttribute( node, pDest.uv, "uv" );
-
-        pDest.depth = 0;
-        readAttribute( node, pDest.depth, "depth" );
-
-        String blending_name( BLENDING_ALPHA );
-        readAttribute( node, blending_name, "blending" );
-        pDest.blending = B_ALPHA;
-        if( blending_name == BLENDING_ADD )
-        {
-            pDest.blending = B_ADD;
-        }
-
-        readMap( node, pDest.animations, "name", "animation" );
+        readAttribute( node, "width", pDest.width );
+        readAttribute( node, "height", pDest.height );
+        readAttribute( node, "destination", pDest.destination );
+        readAttribute( node, "uv", pDest.uv );
+        readAttribute( node, "depth", pDest.depth );
+        readAttribute( node, "blending", pDest.blending, B_ALPHA );
+        readMap( node, "animation", "name", pDest.animations );
     }
 
     //---------------------------------------------------------------------
     void
     Background2DFileXMLSerializer::readObject( TiXmlNode& node, Animation& pDest )
     {
-        pDest.length = 0;
-        readAttribute( node, pDest.length, "length" );
-        readVector( node, pDest.key_frames, "keyframe" );
+        readAttribute( node, "length", pDest.length );
+        readVector( node, "keyframe", pDest.key_frames );
     }
 
     //---------------------------------------------------------------------
     void
     Background2DFileXMLSerializer::readObject( TiXmlNode& node, KeyFrame& pDest )
     {
-        pDest.time = 0;
-        readAttribute( node, pDest.time, "time" );
-        pDest.uv = Ogre::Vector4::ZERO;
-        readAttribute( node, pDest.uv, "uv" );
+        readAttribute( node, "time", pDest.time );
+        readAttribute( node, "uv", pDest.uv );
     }
 
     //---------------------------------------------------------------------

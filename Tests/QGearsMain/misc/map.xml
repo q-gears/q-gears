@@ -1,11 +1,8 @@
 <map>
-    <script file_name="maps/ffvii/field/md1stin.lua" />
-    <!--background2d file_name="maps/ffvii/field/md1stin_bg.xml" /-->
-    <!--walkmesh file_name="maps/ffvii/field/md1stin_wm.xml" /-->
-    <background2d file_name="md1stin/background_2d" />
-    <walkmesh file_name="md1stin.walkmesh" />
+    <script file_name="path/to/script.lua" />
+    <background2d file_name="background_2d_resource_name" />
+    <walkmesh file_name="walkmesh_resource_name" />
     <movement_rotation degree="-5.625" />
-
     <entity_script name="Director" />
     <!--entity_model name="Cloud" file_name="models/ffvii/field/units/cloud.mesh" position="29.0547 229.234 2.56082" direction="0" /-->
     <entity_model name="Cloud" file_name="n_cloud.mesh" position="29.0547 229.234 2.56082" direction="0"

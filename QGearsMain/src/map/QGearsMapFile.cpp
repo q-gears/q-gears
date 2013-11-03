@@ -89,31 +89,45 @@ namespace QGears
     }
 
     //--------------------------------------------------------------------------
-    Ogre::Real
+    const Ogre::Real&
     MapFile::getForwardDirection() const
     {
         return m_forward_direction;
     }
 
     //--------------------------------------------------------------------------
-    void MapFile::setScriptName( const String &script_name )
+    MapFile::TriggerList&
+    MapFile::getTriggers()
     {
-    }
-
-    //--------------------------------------------------------------------------
-    void MapFile::getBackground2dName( const String &background2d_name )
-    {
+        return m_triggers;
     }
 
     //--------------------------------------------------------------------------
     void
-    MapFile::getWalkmeshName( const String &walkmesh_name )
+    MapFile::setScriptName( const String &script_name )
     {
+        m_script_name = script_name;
     }
 
     //--------------------------------------------------------------------------
-    void MapFile::getForwardDirection( const Ogre::Real &forward_direction )
+    void
+    MapFile::setBackground2dName( const String &background2d_name )
     {
+        m_background2d_name = background2d_name;
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    MapFile::setWalkmeshName( const String &walkmesh_name )
+    {
+        m_walkmesh_name = walkmesh_name;
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    MapFile::setForwardDirection( const Ogre::Real &forward_direction )
+    {
+        m_forward_direction = forward_direction;
     }
 
     //--------------------------------------------------------------------------

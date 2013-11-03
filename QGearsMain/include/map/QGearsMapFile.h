@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #define __QGearsMapFile_H__
 
 #include "common/QGearsResource.h"
+#include "core/EntityTrigger.h"
 
 namespace QGears
 {
@@ -31,16 +32,19 @@ namespace QGears
                 ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
         
         virtual ~MapFile();
-        
+
+        typedef std::vector<EntityTrigger>  TriggerList;
+
         virtual const String&       getScriptName       ( void ) const;
         virtual const String&       getBackground2dName ( void ) const;
         virtual const String&       getWalkmeshName     ( void ) const;
         virtual const Ogre::Real&   getForwardDirection ( void ) const;
+        virtual       TriggerList&  getTriggers         ( void );
 
         virtual void setScriptName      ( const String &script_name );
-        virtual void getBackground2dName( const String &background2d_name );
-        virtual void getWalkmeshName    ( const String &walkmesh_name );
-        virtual void getForwardDirection( const Ogre::Real &forward_direction );
+        virtual void setBackground2dName( const String &background2d_name );
+        virtual void setWalkmeshName    ( const String &walkmesh_name );
+        virtual void setForwardDirection( const Ogre::Real &forward_direction );
 
     protected:
         virtual void loadImpl( void );
@@ -52,6 +56,7 @@ namespace QGears
         String      m_background2d_name;
         String      m_walkmesh_name;
         Ogre::Real  m_forward_direction;
+        TriggerList m_triggers;
     };
     
     //--------------------------------------------------------------------------

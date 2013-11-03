@@ -31,114 +31,155 @@ THE SOFTWARE.
 
 namespace QGears
 {
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     XMLSerializer::XMLSerializer()
     {
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     XMLSerializer::~XMLSerializer()
     {
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void
-    XMLSerializer::parse( Ogre::DataStreamPtr& stream, TiXmlDocument &pDest )
+    XMLSerializer::parse( Ogre::DataStreamPtr &stream, TiXmlDocument &pDest )
     {
         pDest.Parse( stream->getAsString().c_str() );
     }
 
-    //---------------------------------------------------------------------
-    void
-    XMLSerializer::assertElement( TiXmlNode& node )
-    {
-        if( node.Type() != TiXmlNode::TINYXML_ELEMENT )
-        {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
-                ,"node has wrong type, needs to be TINYXML_ELEMENT"
-                ,"XMLSerializer::assertElement" );
-        }
-    }
-
-    //---------------------------------------------------------------------
-    bool
-    XMLSerializer::readAttribute( TiXmlNode& node, int &pDest, const String &attribute )
+    //--------------------------------------------------------------------------
+    const String*
+    XMLSerializer::readAttribute( TiXmlNode &node, const String &attribute )
     {
         assertElement( node );
-        const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value == NULL ) return false;
+        return node.ToElement()->Attribute( attribute );
+    }
+
+    //--------------------------------------------------------------------------
+    bool
+    XMLSerializer::readAttribute( TiXmlNode &node, const String &attribute, bool &pDest, const bool &pDefault)
+    {
+        const String *value( readAttribute( node, attribute ) );
+        if( value == NULL )
+        {
+            pDest = pDefault;
+            return false;
+        }
+        pDest = Ogre::StringConverter::parseBool( *value );
+        return true;
+    }
+
+    //--------------------------------------------------------------------------
+    bool
+    XMLSerializer::readAttribute( TiXmlNode &node, const String &attribute, int &pDest, const int &pDefault)
+    {
+        const String *value( readAttribute( node, attribute ) );
+        if( value == NULL )
+        {
+            pDest = pDefault;
+            return false;
+        }
         pDest = Ogre::StringConverter::parseInt( *value );
         return true;
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     bool
-    XMLSerializer::readAttribute( TiXmlNode& node, String &pDest, const String &attribute )
+    XMLSerializer::readAttribute( TiXmlNode &node, const String &attribute
+                                , String &pDest, const String &pDefault )
     {
-        assertElement( node );
-        const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value == NULL ) return false;
+        const String *value( readAttribute( node, attribute ) );
+        if( value == NULL )
+        {
+            pDest = pDefault;
+            return false;
+        }
         pDest = *value;
         return true;
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     bool
-    XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Real &pDest, const String &attribute )
+    XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Real &pDest, const Ogre::Real &pDefault)
     {
-        assertElement( node );
-        const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value == NULL ) return false;
-
+        const String *value( readAttribute( node, attribute ) );
+        if( value == NULL )
+        {
+            pDest = pDefault;
+            return false;
+        }
         pDest = Ogre::StringConverter::parseReal( *value );
         return true;
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     bool
-    XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Vector2 &pDest, const String &attribute )
+    XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Vector2 &pDest, const Ogre::Vector2 &pDefault)
     {
-        assertElement( node );
-        const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value == NULL ) return false;
-
+        const String *value( readAttribute( node, attribute ) );
+        if( value == NULL )
+        {
+            pDest = pDefault;
+            return false;
+        }
         pDest = Ogre::StringConverter::parseVector2( *value );
         return true;
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     bool
-    XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Vector3 &pDest, const String &attribute )
+    XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Vector3 &pDest, const Ogre::Vector3 &pDefault)
     {
-        assertElement( node );
-        const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value == NULL ) return false;
-
+        const String *value( readAttribute( node, attribute ) );
+        if( value == NULL )
+        {
+            pDest = pDefault;
+            return false;
+        }
         pDest = Ogre::StringConverter::parseVector3( *value );
         return true;
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     bool
-    XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Vector4 &pDest, const String &attribute )
+    XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Vector4 &pDest, const Ogre::Vector4 &pDefault)
     {
-        assertElement( node );
-        const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value == NULL ) return false;
-
+        const String *value( readAttribute( node, attribute ) );
+        if( value == NULL )
+        {
+            pDest = pDefault;
+            return false;
+        }
         pDest = Ogre::StringConverter::parseVector4( *value );
+        return true;
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     bool
-    XMLSerializer::readAttribute( TiXmlNode& node, Ogre::Quaternion &pDest, const String &attribute )
+    XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Quaternion &pDest, const Ogre::Quaternion &pDefault)
     {
-        assertElement( node );
-        const String* value( node.ToElement()->Attribute( attribute ) );
-        if( value == NULL ) return false;
-
+        const String *value( readAttribute( node, attribute ) );
+        if( value == NULL )
+        {
+            pDest = pDefault;
+            return false;
+        }
         pDest = Ogre::StringConverter::parseQuaternion( *value );
+        return true;
     }
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    TiXmlNode*
+    XMLSerializer::findChildNode( TiXmlNode &node, const String &tag )
+    {
+        TiXmlNode* child( node.FirstChild() );
+        while( child != NULL && child->ValueStr() != tag )
+        {
+            child = child->NextSibling();
+        }
+        return child;
+    }
+
+    //--------------------------------------------------------------------------
 }

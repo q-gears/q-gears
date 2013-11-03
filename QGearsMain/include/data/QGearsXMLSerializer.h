@@ -37,23 +37,41 @@ THE SOFTWARE.
 
 namespace QGears
 {
+#ifdef NDEBUG
+#define assertElement( node )((void)0)
+#else
+#define assertElement( node )\
+{\
+    if( node.Type() != TiXmlNode::TINYXML_ELEMENT )\
+    {\
+        OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS\
+            ,"node has wrong type, needs to be TINYXML_ELEMENT"\
+            ,"XMLSerializer::assertElement" );\
+    }\
+}
+#endif
+
     class XMLSerializer
     {
     public:
-                        XMLSerializer();
-        virtual        ~XMLSerializer();
+        XMLSerializer();
+        virtual ~XMLSerializer();
 
     protected:
         virtual void    parse( Ogre::DataStreamPtr &stream, TiXmlDocument &pDest );
-        virtual void    assertElement( TiXmlNode &node );
 
-        virtual bool    readAttribute( TiXmlNode &node,              int &pDest, const String &attribute );
-        virtual bool    readAttribute( TiXmlNode &node,           String &pDest, const String &attribute );
-        virtual bool    readAttribute( TiXmlNode &node,       Ogre::Real &pDest, const String &attribute );
-        virtual bool    readAttribute( TiXmlNode &node,    Ogre::Vector2 &pDest, const String &attribute );
-        virtual bool    readAttribute( TiXmlNode &node,    Ogre::Vector3 &pDest, const String &attribute );
-        virtual bool    readAttribute( TiXmlNode &node,    Ogre::Vector4 &pDest, const String &attribute );
-        virtual bool    readAttribute( TiXmlNode &node, Ogre::Quaternion &pDest, const String &attribute );
+        virtual const String* readAttribute( TiXmlNode &node, const String &attribute );
+
+        virtual bool    readAttribute( TiXmlNode &node, const String &attribute, bool             &pDest, const bool             &pDefault = false );
+        virtual bool    readAttribute( TiXmlNode &node, const String &attribute, int              &pDest, const int              &pDefault = 0 );
+        virtual bool    readAttribute( TiXmlNode &node, const String &attribute, String           &pDest, const String           &pDefault = "" );
+        virtual bool    readAttribute( TiXmlNode &node, const String &attribute, Ogre::Real       &pDest, const Ogre::Real       &pDefault = 0 );
+        virtual bool    readAttribute( TiXmlNode &node, const String &attribute, Ogre::Vector2    &pDest, const Ogre::Vector2    &pDefault = Ogre::Vector2::ZERO );
+        virtual bool    readAttribute( TiXmlNode &node, const String &attribute, Ogre::Vector3    &pDest, const Ogre::Vector3    &pDefault = Ogre::Vector3::ZERO );
+        virtual bool    readAttribute( TiXmlNode &node, const String &attribute, Ogre::Vector4    &pDest, const Ogre::Vector4    &pDefault = Ogre::Vector4::ZERO );
+        virtual bool    readAttribute( TiXmlNode &node, const String &attribute, Ogre::Quaternion &pDest, const Ogre::Quaternion &pDefault = Ogre::Quaternion::IDENTITY );
+
+        virtual TiXmlNode* findChildNode( TiXmlNode &node, const String &tag );
 
     private:
     };

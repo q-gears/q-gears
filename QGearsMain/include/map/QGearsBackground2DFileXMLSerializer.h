@@ -36,13 +36,16 @@ namespace QGears
     class Background2DFileXMLSerializer : public XMLSerializer
     {
     public:
-                        Background2DFileXMLSerializer();
+        Background2DFileXMLSerializer();
         virtual        ~Background2DFileXMLSerializer();
 
         virtual void    importBackground2DFile( Ogre::DataStreamPtr &stream, Background2DFile *pDest );
 
     protected:
         virtual void    readHeader( TiXmlNode *node );
+        virtual bool    readAttribute( TiXmlNode &node, const String &attribute, Blending &pDest, const Blending &pDefault );
+        using XMLSerializer::readAttribute;
+
         virtual void    readObject( TiXmlNode &node, Tile &pDest );
         virtual void    readObject( TiXmlNode &node, Animation &pDest );
         virtual void    readObject( TiXmlNode &node, KeyFrame &pDest );
@@ -51,7 +54,7 @@ namespace QGears
         static const String BLENDING_ADD;
 
         template<typename ValueType> void
-        readVector( TiXmlNode &node, std::vector<ValueType> &pDest, const String &tag )
+        readVector( TiXmlNode &node, const String &tag, std::vector<ValueType> &pDest )
         {
             pDest.clear();
 
@@ -69,7 +72,7 @@ namespace QGears
         }
 
         template<typename KeyType, typename ValueType> void
-        readMap( TiXmlNode& node, std::map< KeyType, ValueType > &pDest, const String& key_attribute, const String& tag )
+        readMap( TiXmlNode& node, const String& tag, const String& key_attribute, std::map< KeyType, ValueType > &pDest )
         {
             pDest.clear();
 
@@ -79,7 +82,7 @@ namespace QGears
                 if( child->Type() == TiXmlNode::TINYXML_ELEMENT && child->ValueStr() == tag )
                 {
                     KeyType key;
-                    if( readAttribute( *child, key, key_attribute ) )
+                    if( readAttribute( *child, key_attribute, key ) )
                     {
                         ValueType in_tmp;
                         readObject( *child, in_tmp );
@@ -89,7 +92,6 @@ namespace QGears
                 child = child->NextSibling();
             }
         }
-
 
     private:
     };
