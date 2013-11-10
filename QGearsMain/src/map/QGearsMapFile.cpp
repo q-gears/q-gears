@@ -96,6 +96,13 @@ namespace QGears
     }
 
     //--------------------------------------------------------------------------
+    MapFile::PointList&
+    MapFile::getPoints()
+    {
+        return m_points;
+    }
+
+    //--------------------------------------------------------------------------
     MapFile::TriggerList&
     MapFile::getTriggers()
     {

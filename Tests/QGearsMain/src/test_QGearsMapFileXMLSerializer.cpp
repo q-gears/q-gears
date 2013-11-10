@@ -49,9 +49,15 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_CHECK_EQUAL( "walkmesh_resource_name"     , f.getWalkmeshName() );
     BOOST_CHECK_CLOSE( -5.625, f.getForwardDirection(), 0.001 );
 
-    QGears::MapFile::TriggerList    &triggers( f.getTriggers() );
-    BOOST_REQUIRE_EQUAL( 1, triggers.size() );
+    QGears::MapFile::PointList     &points( f.getPoints() );
+    BOOST_REQUIRE_EQUAL( 1, points.size() );
+    QGears::MapFile::PointList::value_type    &point( points.at(0) );
+    BOOST_CHECK_EQUAL( "Spawn_md1_1", point.GetName() );
+    BOOST_CHECK( Ogre::Vector3( 29.0547, 229.234, 2.56082 ).positionEquals( point.GetPosition() ) );
+    BOOST_CHECK_CLOSE( 67.7647, point.GetRotation(), 0.001 );
 
+    QGears::MapFile::TriggerList   &triggers( f.getTriggers() );
+    BOOST_REQUIRE_EQUAL( 1, triggers.size() );
     QGears::MapFile::TriggerList::value_type    &trigger( triggers.at(0) );
     BOOST_CHECK_EQUAL( "Gateway0", trigger.GetName() );
     BOOST_CHECK( Ogre::Vector3( 28.6016, 228.562, 2.75781 ).positionEquals( trigger.GetPoint1() ) );

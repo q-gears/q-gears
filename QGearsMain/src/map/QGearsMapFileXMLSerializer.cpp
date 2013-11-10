@@ -117,24 +117,41 @@ namespace QGears
     void
     MapFileXMLSerializer::readEntities(TiXmlNode &node, MapFile *pDest)
     {
-        // TODO: implement factory pattern
-        readVector( node, "entity_trigger", pDest->getTriggers() );
+        // TODO: loop through all entities once and create corresponding
+        // via factory pattern
+        readEntities( node, "entity_point", pDest->getPoints() );
+        readEntities( node, "entity_trigger", pDest->getTriggers() );
     }
 
     //--------------------------------------------------------------------------
     void
-    MapFileXMLSerializer::readObject( TiXmlNode &node, MapFileXMLSerializer::TriggerData &pDest )
+    MapFileXMLSerializer::readObject( TiXmlNode &node, MapFileXMLSerializer::Point &pDest )
     {
-        readAttribute( node, "name"   , pDest.name );
-        readAttribute( node, "point1" , pDest.point1 );
-        readAttribute( node, "point2" , pDest.point2 );
-        readAttribute( node, "enabled", pDest.enabled );
+        Ogre::Vector3   position;
+        Ogre::Real      rotation;
+        readAttribute( node, "position", position );
+        readAttribute( node, "rotation", rotation );
+        pDest.SetPosition( position );
+        pDest.SetRotation( rotation );
+    }
+
+    //--------------------------------------------------------------------------
+    void
+    MapFileXMLSerializer::readObject( TiXmlNode &node, MapFileXMLSerializer::Trigger &pDest )
+    {
+        Ogre::Vector3 point1, point2;
+        bool enabled;
+        readAttribute( node, "point1" , point1 );
+        readAttribute( node, "point2" , point2 );
+        readAttribute( node, "enabled", enabled );
+        pDest.SetPoints( point1, point2 );
+        pDest.SetEnabled( enabled );
     }
 
     //--------------------------------------------------------------------------
     template<typename ValueType>
     void
-    MapFileXMLSerializer::readVector(TiXmlNode &node, const String &tag, std::vector<ValueType> &pDest)
+    MapFileXMLSerializer::readEntities(TiXmlNode &node, const String &tag, std::vector<ValueType> &pDest)
     {
         pDest.clear();
         TiXmlNode* child( node.FirstChild() );
@@ -142,30 +159,13 @@ namespace QGears
         {
             if( child->Type() == TiXmlNode::TINYXML_ELEMENT && child->ValueStr() == tag )
             {
-                ValueType in_tmp;
+                String name;
+                readAttribute( *child, "name", name );
+                ValueType in_tmp( name );
                 readObject( *child, in_tmp );
                 pDest.push_back( in_tmp );
             }
             child = child->NextSibling();
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    void
-    MapFileXMLSerializer::readVector(TiXmlNode &node, const String &tag, TriggerList &pDest)
-    {
-        pDest.clear();
-        TriggerDataList trigger_data;
-        readVector( node, tag, trigger_data );
-        TriggerDataList::const_iterator it( trigger_data.begin() )
-                                     , end( trigger_data.end() );
-        while( it != end )
-        {
-            TriggerList::value_type trigger( it->name );
-            trigger.SetEnabled( it->enabled );
-            trigger.SetPoints( it->point1, it->point2 );
-            pDest.push_back( trigger );
-            ++it;
         }
     }
 
