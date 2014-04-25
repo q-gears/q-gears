@@ -1,0 +1,12 @@
+#!/bin/sh
+#DEBHELPER#
+if [ -d /usr/lib/i386-linux-gnu/OGRE-1.8.0 ];then 
+  echo "PluginFolder =/usr/lib/i386-linux-gnu/OGRE-1.8.0/\nPlugin=RenderSystem_GL" >> /usr/share/q-gears/plugins.cfg
+elif [ -d /usr/lib/x86_64-linux-gnu/OGRE-1.8.0 ];then   
+  echo "PluginFolder =/usr/lib/x86_64-linux-gnu/OGRE-1.8.0/\nPlugin=RenderSystem_GL" >> /usr/share/q-gears/plugins.cfg
+else echo "failed to detect OGRE"; 
+fi   
+
+echo "" >> /usr/share/q-gears/ogre.cfg
+chmod 666 /usr/share/q-gears/ogre.cfg
+

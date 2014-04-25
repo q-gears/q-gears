@@ -1,0 +1,4 @@
+q-gears.desktop /usr/share/applications
+q-gears.png /usr/share/pixmaps
+output/resources.cfg /usr/share/q-gears
+output/data/* /usr/share/q-gears/data

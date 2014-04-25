@@ -1,0 +1,3 @@
+?package(q-gears):needs="x11" section="Games/Adventure"\
+  title="q-gears" command="/usr/games/q-gears"
+  
