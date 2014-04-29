@@ -182,7 +182,7 @@ endif()
 #endif(WIN32)
 
 if(UNIX)
-
+	 set(CMAKE_INSTALL_PREFIX /usr/games)
 #        install(TARGETS OgreApp
 #                RUNTIME DESTINATION bin
 #                CONFIGURATIONS All)
