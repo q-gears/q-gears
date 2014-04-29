@@ -1,0 +1,15 @@
+Source: q-gears
+Section: games
+Priority: extra
+Maintainer: Chris Rizzitello <sithlord48@gmail.com>
+Build-Depends: debhelper(>= 7.0.50~),libogre-1.8-dev, cmake, cdbs,libois-dev,libboost-program-options-dev,libboost-filesystem-dev
+Standards-Version: 3.9.4
+Homepage: http://sourceforge.net/projects/q-gears
+#Vcs-Git: git://git.debian.org/collab-maint/qgears.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/qgears.git;a=summary
+
+Package: q-gears
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A Free Final Fantasy VII Engine
+ A Free Replacement for the Final Fantasy VII Engine.
