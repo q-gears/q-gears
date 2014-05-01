@@ -24,7 +24,6 @@ THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
 
-#define BOOST_TEST_MODULE QGearsLGPArchive
 #include <boost/test/unit_test.hpp>
 
 #include <Ogre.h>
@@ -34,8 +33,8 @@ THE SOFTWARE.
 BOOST_AUTO_TEST_CASE( load )
 {
     QGears::LGPArchiveFactory factory;
-    Ogre::Archive* archive( factory.createInstance( "reference.lgp" ) );
-    QGears::LGPArchive lgp( "reference.lgp", "LGP" );
+    Ogre::Archive* archive( factory.createInstance( "misc/reference.lgp" ) );
+    QGears::LGPArchive lgp( "misc/reference.lgp", "LGP" );
 
     BOOST_CHECK_EQUAL(  true, lgp.getFiles().empty() );
     BOOST_CHECK_EQUAL( false, lgp.exists( "aaac.p" ) );
@@ -44,7 +43,7 @@ BOOST_AUTO_TEST_CASE( load )
     BOOST_CHECK_EQUAL( lgp.exists( "aaac.p" ), archive->exists( "aaac.p" ) );
     BOOST_CHECK_EQUAL( lgp.exists( "mmmm.p" ), archive->exists( "mmmm.p" ) );
 
-	Ogre::LogManager        logMgr;
+    Ogre::LogManager        logMgr;
     logMgr.createLog( "Default Log", true, true, true );
     lgp.load();
     archive->load();
@@ -96,8 +95,9 @@ BOOST_AUTO_TEST_CASE( load )
     BOOST_CHECK_EQUAL( "GRP=AAAE.GRP", stream->getLine() );
     BOOST_CHECK_EQUAL( "NTEX=0", stream->getLine() );
     BOOST_CHECK_EQUAL( true, stream->eof() );
+    stream.setNull();
 
-    BOOST_CHECK_EQUAL( 894914604, lgp.getModifiedTime( "aaad.rsd" ) );
+    BOOST_CHECK_EQUAL( 1381049923, lgp.getModifiedTime( "aaad.rsd" ) );
 
     lgp.unload();
 

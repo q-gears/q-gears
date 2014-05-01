@@ -47,7 +47,7 @@ namespace QGears
                                            ,LGPArchive* pDest )
     {
         readFileHeader( stream );
-        uint32 file_count;
+        uint32 file_count( 0 );
         readInt( stream, file_count );
         FileList& files( pDest->getFiles() );
         readVector( stream, files, file_count );

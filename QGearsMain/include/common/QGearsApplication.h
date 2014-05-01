@@ -20,7 +20,6 @@ GNU General Public License for more details.
 #include <OgreRoot.h>
 
 #include "TypeDefine.h"
-#include "data/QGearsLGPArchiveFactory.h"
 
 namespace QGears
 {
@@ -75,7 +74,6 @@ namespace QGears
         Ogre::Root         *m_root;
         Ogre::RenderWindow *m_render_window;
         ResourceManagerList m_resource_managers;
-        LGPArchiveFactory   m_lgp_archive_factory;
     };
 }
 

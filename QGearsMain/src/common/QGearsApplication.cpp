@@ -34,6 +34,7 @@ GNU General Public License for more details.
 #include "map/QGearsBackground2DFileManager.h"
 #include "map/QGearsWalkmeshFileManager.h"
 #include "data/FF7ModelListFileManager.h"
+#include "data/QGearsLGPArchiveFactory.h"
 
 namespace QGears
 {
@@ -223,7 +224,7 @@ namespace QGears
     void
     Application::registerArchiveFactories()
     {
-        Ogre::ArchiveManager::getSingleton().addArchiveFactory( &m_lgp_archive_factory );
+        Ogre::ArchiveManager::getSingleton().addArchiveFactory( new LGPArchiveFactory() );
     }
 
     //--------------------------------------------------------------------------
@@ -272,7 +273,7 @@ namespace QGears
         ResourceManagerList::const_iterator end( m_resource_managers.end() );
         while( it != end )
         {
-            delete *it;
+            delete (*it++);
         }
         m_resource_managers.clear();
     }

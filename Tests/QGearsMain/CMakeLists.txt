@@ -29,3 +29,12 @@ add_executable(TestQGearsWalkmeshFileXMLSerializer
 )
 target_link_libraries(TestQGearsWalkmeshFileXMLSerializer ${LIBRARIES})
 add_test(TestQGearsWalkmeshFileXMLSerializer TestQGearsWalkmeshFileXMLSerializer)
+
+
+add_executable(TestQGearsLGPArchive
+    src/test_QGearsLGPArchive.cpp
+)
+target_link_libraries(TestQGearsLGPArchive ${LIBRARIES})
+add_test(TestQGearsLGPArchive TestQGearsLGPArchive)
+
+
