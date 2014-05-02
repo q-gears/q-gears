@@ -30,6 +30,16 @@ THE SOFTWARE.
 
 #include "data/QGearsLGPArchiveFactory.h"
 
+BOOST_AUTO_TEST_CASE( stream )
+{
+    const char* file_name( "misc/reference.lgp" );
+    std::ifstream *ifs( OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
+    BOOST_REQUIRE( ifs->is_open() );
+    Ogre::FileStreamDataStream stream( ifs );
+    BOOST_REQUIRE( stream.isReadable() );
+    stream.close();
+}
+
 BOOST_AUTO_TEST_CASE( load )
 {
     QGears::LGPArchiveFactory factory;
@@ -95,7 +105,6 @@ BOOST_AUTO_TEST_CASE( load )
     BOOST_CHECK_EQUAL( "GRP=AAAE.GRP", stream->getLine() );
     BOOST_CHECK_EQUAL( "NTEX=0", stream->getLine() );
     BOOST_CHECK_EQUAL( true, stream->eof() );
-    stream.setNull();
 
     BOOST_CHECK_EQUAL( 1381049923, lgp.getModifiedTime( "aaad.rsd" ) );
 
@@ -103,6 +112,5 @@ BOOST_AUTO_TEST_CASE( load )
 
     BOOST_CHECK_EQUAL( false, lgp.exists( "aaac.p" ) );
     BOOST_CHECK_EQUAL( false, lgp.exists( "mmmm.p" ) );
-
     factory.destroyInstance( archive );
 }

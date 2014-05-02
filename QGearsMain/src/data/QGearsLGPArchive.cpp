@@ -48,7 +48,9 @@ namespace QGears
     void
     LGPArchive::load()
     {
+        //OGRE_LOCK_AUTO_MUTEX
         std::ifstream *ifs( OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( mName.c_str(), std::ifstream::binary ) );
+        m_lgp_file.setNull();
         m_lgp_file.bind( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
         LGPArchiveSerializer lgp_archive_serializer;
         lgp_archive_serializer.importLGPArchive( m_lgp_file, this );
@@ -74,9 +76,10 @@ namespace QGears
     void
     LGPArchive::unload()
     {
+        //OGRE_LOCK_AUTO_MUTEX
         m_files.clear();
-        m_lgp_file.setNull();
         m_file_infos.clear();
+        m_lgp_file.setNull();
     }
 
     //-------------------------------------------------------------------------
@@ -108,9 +111,9 @@ namespace QGears
     Ogre::DataStreamPtr
     LGPArchive::create( const String& filename ) const
     {
-		OGRE_EXCEPT(Ogre::Exception::ERR_NOT_IMPLEMENTED,
-			"Modification of lgp archives is not supported",
-			"LGPArchive::create");
+        OGRE_EXCEPT(Ogre::Exception::ERR_NOT_IMPLEMENTED,
+            "Modification of lgp archives is not supported",
+            "LGPArchive::create");
     }
 
     //-------------------------------------------------------------------------
@@ -203,17 +206,17 @@ namespace QGears
     time_t
     LGPArchive::getModifiedTime( const String& filename )
     {
-		struct stat tagStat;
-		bool ret = (stat(mName.c_str(), &tagStat) == 0);
+        struct stat tagStat;
+        bool ret = (stat(mName.c_str(), &tagStat) == 0);
 
-		if (ret)
-		{
-			return tagStat.st_mtime;
-		}
-		else
-		{
-			return 0;
-		}
+        if (ret)
+        {
+            return tagStat.st_mtime;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     //-------------------------------------------------------------------------
