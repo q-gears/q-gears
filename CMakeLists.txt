@@ -102,6 +102,9 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
         find_package(Boost COMPONENTS program_options filesystem QUIET)
         set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
 
+	# Find Threads
+	find_package (Threads REQUIRED)
+
         if(QGears_BUILD_TESTS)
             find_package(Boost COMPONENTS unit_test_framework QUIET)
             set(QGears_TEST_LIBRARIES
