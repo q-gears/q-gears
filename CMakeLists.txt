@@ -1,19 +1,3 @@
-#/*
-#-----------------------------------------------------------------------------
-#Filename:    CMakeLists.txt
-#-----------------------------------------------------------------------------
-#
-#This source file is part of the
-#   ___                 __    __ _ _    _
-#  /___\__ _ _ __ ___  / / /\ \ (_) | _(_)
-# //  // _` | '__/ _ \ \ \/  \/ / | |/ / |
-#/ \_// (_| | | |  __/  \  /\  /| |   <| |
-#\___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-#      |___/
-#      Tutorial Framework
-#      http://www.ogre3d.org/tikiwiki/
-#-----------------------------------------------------------------------------
-#*/
 cmake_minimum_required(VERSION 2.6)
 
 project(QGears)
@@ -22,6 +6,7 @@ project(QGears)
 set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 21)
 
+option(QGears_MULTITHREADING    "Enable multithreading" FALSE)
 option(QGears_BUILD_PLUGINS     "Build the plugins"     FALSE)
 option(QGears_BUILD_UTILITIES   "Build the utilities"   FALSE)
 option(QGears_BUILD_TESTS       "Build the unit tests"  FALSE)
@@ -102,8 +87,10 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
         find_package(Boost COMPONENTS program_options filesystem QUIET)
         set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
 
-	# Find Threads
-	find_package (Threads REQUIRED)
+        if(QGears_MULTITHREADING)
+            # Find Threads
+            find_package (Threads REQUIRED)
+        endif()
 
         if(QGears_BUILD_TESTS)
             find_package(Boost COMPONENTS unit_test_framework QUIET)
