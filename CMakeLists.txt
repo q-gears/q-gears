@@ -219,6 +219,9 @@ set(QGears_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
 )
 
+# Enable C++11, you may need to use -std=c++0x if using an older compiler
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 add_definitions(-DTIXML_USE_STL)
 add_subdirectory(dependencies)
 add_subdirectory(QGearsMain)
