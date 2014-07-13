@@ -22,9 +22,9 @@ project(QGears)
 set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 21)
 
-option(QGears_BUILD_PLUGINS     "Build the plugins"     FALSE)
-option(QGears_BUILD_UTILITIES   "Build the utilities"   FALSE)
-option(QGears_BUILD_TESTS       "Build the unit tests"  FALSE)
+option(QGears_BUILD_PLUGINS     "Build the plugins"     TRUE)
+option(QGears_BUILD_UTILITIES   "Build the utilities"   TRUE)
+option(QGears_BUILD_TESTS       "Build the unit tests"  TRUE)
 
 find_path(OGRE_CMAKE_MODULE_PATH FindOGRE.cmake
     HINTS

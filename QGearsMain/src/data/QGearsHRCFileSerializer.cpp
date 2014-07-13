@@ -127,7 +127,7 @@ namespace QGears
         pDest.length        = Ogre::StringConverter::parseReal( *(it++) );
 
         Ogre::StringVector rsd_list( Ogre::StringUtil::split( *it ) );
-        size_t rsd_count( Ogre::StringConverter::parseSizeT( rsd_list.front() ) );
+        size_t rsd_count( Ogre::StringConverter::parseUnsignedInt( rsd_list.front() ) );
 
         String rsd_names("");
         for( Ogre::StringVector::const_iterator it( ++rsd_list.begin() )

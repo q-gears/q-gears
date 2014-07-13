@@ -103,7 +103,7 @@ namespace QGears
                     ,"texture count already set"
                     ,"RSDFileSerializer::parseLine" );
             }
-            m_texture_count = StringConverter::parseSizeT( parts.back() );
+            m_texture_count = StringConverter::parseUnsignedInt( parts.back() );
             pDest->getTextureNames().resize( m_texture_count, "" );
             m_has_texture_count = true;
         }
@@ -124,7 +124,7 @@ namespace QGears
                      "should look like " + TAG_TEXTURE_NAME + "[0]=filename.ext"
                     ,"RSDFileSerializer::parseLine" );
             }
-            size_t texture_index( StringConverter::parseSizeT( parts[1] ) );
+            size_t texture_index( StringConverter::parseUnsignedInt( parts[1] ) );
             String texture_name( parts[2] );
             if( texture_index >= m_texture_count )
             {
