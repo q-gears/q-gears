@@ -6,10 +6,11 @@ project(QGears)
 set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 21)
 
+option(QGears_BUILD_PLUGINS     "Build the plugins"     TRUE)
+option(QGears_BUILD_UTILITIES   "Build the utilities"   TRUE)
+option(QGears_BUILD_TESTS       "Build the unit tests"  TRUE)
 option(QGears_MULTITHREADING    "Enable multithreading" FALSE)
-option(QGears_BUILD_PLUGINS     "Build the plugins"     FALSE)
-option(QGears_BUILD_UTILITIES   "Build the utilities"   FALSE)
-option(QGears_BUILD_TESTS       "Build the unit tests"  FALSE)
+
 
 find_path(OGRE_CMAKE_MODULE_PATH FindOGRE.cmake
     HINTS
@@ -208,6 +209,9 @@ set(QGears_INCLUDE_DIRS
     ${OGRE_SAMPLES_INCLUDEPATH}
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
 )
+
+# Enable C++11, you may need to use -std=c++0x if using an older compiler
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 add_definitions(-DTIXML_USE_STL)
 add_subdirectory(dependencies)

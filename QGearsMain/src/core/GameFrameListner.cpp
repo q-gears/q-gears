@@ -40,6 +40,7 @@ GameFrameListener::GameFrameListener( Ogre::RenderWindow* win ):
 #else
     pl.insert( std::make_pair( std::string( "x11_mouse_grab" ), std::string( "false" ) ) );
     pl.insert( std::make_pair( std::string( "x11_mouse_hide" ), std::string( "false" ) ) );
+    pl.insert( std::make_pair(std::string( "x11_keyboard_grab" ), std::string( "false" ) ) );
 #endif
 
     m_InputManager = OIS::InputManager::createInputSystem( pl );
@@ -83,12 +84,13 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
 
     if( m_Keyboard )
     {
-        m_Keyboard->capture();
+       m_Keyboard->capture();
     }
+
 
     if( m_Mouse )
     {
-        m_Mouse->capture();
+       m_Mouse->capture();
     }
 
     InputManager::getSingleton().Update();

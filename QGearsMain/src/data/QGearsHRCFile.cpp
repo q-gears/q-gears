@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include <OgreMeshManager.h>
 #include <OgreSkeletonManager.h>
 
-#include "common/FF7NameLookup.h"
+//#include "common/FF7NameLookup.h"
+#include "../../SupportedGames/FinalFantasy7/include/common/FF7NameLookup.h"
+
 #include "common/QGearsStringUtil.h"
 #include "data/QGearsHRCFileSerializer.h"
 #include "data/QGearsHRCMeshLoader.h"
