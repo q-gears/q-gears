@@ -54,6 +54,11 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 find_package(OGRE REQUIRED)
+find_package(OpenAL REQUIRED)
+
+SET(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}")
+
+find_package(OggVorbis REQUIRED)
 
 #if(NOT "${OGRE_VERSION_NAME}" STREQUAL "Cthugha")
 #  message(SEND_ERROR "You need Ogre 1.7 Cthugha to build this.")

@@ -1,7 +1,7 @@
-#include "XmlMusicsFile.h"
+#include "core/XmlMusicsFile.h"
 
-#include "AudioManager.h"
-#include "Logger.h"
+#include "core/AudioManager.h"
+#include "core/Logger.h"
 
 
 

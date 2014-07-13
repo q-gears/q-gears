@@ -120,6 +120,9 @@ namespace QGears
     void
     LGPArchive::remove(const String& filename) const
     {
+        OGRE_EXCEPT(Ogre::Exception::ERR_NOT_IMPLEMENTED,
+            "Modification of lgp archives is not supported",
+            "LGPArchive::remove");
     }
 
     //-------------------------------------------------------------------------

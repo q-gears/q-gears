@@ -108,9 +108,9 @@ namespace QGears
 
         typedef PaletteFile::Color Color;
 
-        virtual Layer* getLayers ( void ) { return m_layers;  };
-        virtual uint8* getPalette( void ) { return m_palette; };
-        virtual Page*  getPages  ( void ) { return m_pages;   };
+        virtual Layer* getLayers ( void ) { return m_layers;  }
+        virtual uint8* getPalette( void ) { return m_palette; }
+        virtual Page*  getPages  ( void ) { return m_pages;   }
 
         virtual Ogre::Image*        createImage     ( const PaletteFilePtr &palette ) const;
 

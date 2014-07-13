@@ -5,6 +5,7 @@
 #include <boost/thread.hpp>
 #include <vorbis/vorbisfile.h>
 
+// Include OpenAL
 #if defined(__WIN32__) || defined(_WIN32)
     #include <al.h>
     #include <alc.h>

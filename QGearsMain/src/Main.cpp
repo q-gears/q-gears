@@ -4,7 +4,7 @@
 #include <OIS.h>
 
 #include "QGearsGameState.h"
-//#include "core/AudioManager.h"
+#include "core/AudioManager.h"
 #include "common/QGearsApplication.h"
 #include "core/CameraManager.h"
 #include "core/ConfigCmdManager.h"
@@ -63,9 +63,8 @@ main(int argc, char *argv[])
     auto input_manager = std::make_unique<InputManager>();
 
 
-    //AudioManager* audio_manager = new AudioManager();
-    //audio_manager->MusicPlay( "loop1" );
-
+    auto audio_manager = std::make_unique<AudioManager>();
+    audio_manager->MusicPlay( "loop1" );
 
     // create This earlier than DisplayFrameListener cause it can fire event there
     auto camera_manager = std::make_unique<CameraManager>();

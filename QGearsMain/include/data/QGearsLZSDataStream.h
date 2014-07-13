@@ -103,8 +103,8 @@ namespace QGears
 	    virtual size_t tell(void) const;
         virtual void close(void);
 
-        virtual size_t availableCompressed( void ) const { return m_available_compressed; };
-        virtual size_t availableUncompressed( void ) const { return m_buffer.avail(); };
+        virtual size_t availableCompressed( void ) const { return m_available_compressed; }
+        virtual size_t availableUncompressed( void ) const { return m_buffer.avail(); }
 
         virtual void flipEndian( uint32 &inout_data );
 
