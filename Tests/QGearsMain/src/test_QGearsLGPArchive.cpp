@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE( stream )
 BOOST_AUTO_TEST_CASE( load )
 {
     QGears::LGPArchiveFactory factory;
-    Ogre::Archive* archive( factory.createInstance( "misc/reference.lgp" ) );
+    Ogre::Archive* archive = factory.createInstance( "misc/reference.lgp", true );
     QGears::LGPArchive lgp( "misc/reference.lgp", "LGP" );
 
     BOOST_CHECK_EQUAL(  true, lgp.getFiles().empty() );

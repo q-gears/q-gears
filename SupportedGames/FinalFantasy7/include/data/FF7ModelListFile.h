@@ -78,50 +78,8 @@ namespace QGears
             ModelList   m_models;
         };
 
-        //--------------------------------------------------------------------------
-        class ModelListFilePtr : public Ogre::SharedPtr<ModelListFile>
-        {
-        public:
-            ModelListFilePtr() : Ogre::SharedPtr<ModelListFile>() {}
-            explicit ModelListFilePtr( ModelListFile *rep ) : Ogre::SharedPtr<ModelListFile>(rep) {}
-            ModelListFilePtr( const ModelListFilePtr &r ) : Ogre::SharedPtr<ModelListFile>(r) {}
-            ModelListFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<ModelListFile>()
-            {
-                if( r.isNull() )
-                    return;
-                // lock & copy other mutex pointer
-                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-                        OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-                        pRep = static_cast<ModelListFile*>(r.getPointer());
-                pUseCount = r.useCountPointer();
-                useFreeMethod = r.freeMethod();
-                if (pUseCount)
-                {
-                    ++(*pUseCount);
-                }
-            }
 
-            /// Operator used to convert a ResourcePtr to a ModelListFilePtr
-            ModelListFilePtr& operator=( const Ogre::ResourcePtr &r )
-            {
-                if(pRep == static_cast<ModelListFile*>(r.getPointer()))
-                    return *this;
-                release();
-                if( r.isNull() )
-                    return *this; // resource ptr is null, so the call to release above has done all we need to do.
-                // lock & copy other mutex pointer
-                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-                        OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-                        pRep = static_cast<ModelListFile*>(r.getPointer());
-                pUseCount = r.useCountPointer();
-                useFreeMethod = r.freeMethod();
-                if (pUseCount)
-                {
-                    ++(*pUseCount);
-                }
-                return *this;
-            }
-        };
+        typedef Ogre::SharedPtr<ModelListFile> ModelListFilePtr;
     }
 }
 #endif // __FF7ModelListFile_H__

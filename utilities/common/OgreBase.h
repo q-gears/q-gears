@@ -2,7 +2,8 @@
 #define __OGRE_BASE_H__
 
 #include <Ogre.h>
-#include <OgreTextAreaOverlayElement.h>
+#include <Overlay/OgreTextAreaOverlayElement.h>
+#include <Overlay/OgreOverlayManager.h>
 #include <OIS.h>
 
 #include "FileSystem.h"
@@ -56,7 +57,7 @@ public:
         Ogre::WindowEventUtilities::addWindowEventListener( m_Window, this );
 
 
-
+/* TODO FIX ME
         // debug info
         info_text = new Ogre::TextAreaOverlayElement( "DebugText" );
         info_text->setCaption( "" );
@@ -68,7 +69,7 @@ public:
         info_overlay = Ogre::OverlayManager::getSingleton().create( "DebugOverlay" );
         info_overlay->setZOrder( 1 );
         info_overlay->add2D( ( Ogre::OverlayContainer* )info_text );
-        info_overlay->show();
+        info_overlay->show();*/
     }
 
     virtual
@@ -122,7 +123,8 @@ public:
                     {
                         state->addTime( evt.timeSinceLastFrame );
 
-                        info_text->setCaption( entitys[ i ]->getName() + ": " + state->getAnimationName() );
+                        // TODO FIX ME
+                        //info_text->setCaption( entitys[ i ]->getName() + ": " + state->getAnimationName() );
                     }
                 }
 
@@ -312,8 +314,10 @@ public:
     }
 
 public:
-    Ogre::TextAreaOverlayElement*   info_text;
-    Ogre::Overlay*                  info_overlay;
+
+    // TODO FIX ME
+    // Ogre::TextAreaOverlayElement*   info_text;
+   // Ogre::Overlay*                  info_overlay;
     virtual void    setCamera( Ogre::Camera *camera ){ m_camera = camera; }
 
 private:

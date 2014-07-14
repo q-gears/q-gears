@@ -87,28 +87,28 @@ main( int argc, char *argv[] )
 
     Ogre::SceneManager*         scene_manager( Ogre::Root::getSingleton().getSceneManager( "Scene" ) );
     QGears::AFilePtr            a;
-    QGears::HRCFilePtr          hrc( QGears::HRCFileManager::getSingleton().load( "adda.hrc", "FFVII" ));
+    QGears::HRCFilePtr          hrc = QGears::HRCFileManager::getSingleton().load( "adda.hrc", "FFVII" ).staticCast<QGears::HRCFile>();
     QGears::AFileManager       &afl_mgr( QGears::AFileManager::getSingleton() );
 
     Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().load( "sd_red.mesh", "FFVII" ) );
     Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
 
-    a = afl_mgr.load( "aeae.a", "FFVII" );
+    a = afl_mgr.load( "aeae.a", "FFVII" ).staticCast<QGears::AFile>();
     a->addTo( skeleton, "Idle" );
-    a = afl_mgr.load( "aeaf.a", "FFVII" );
+    a = afl_mgr.load( "aeaf.a", "FFVII" ).staticCast<QGears::AFile>();
     a->addTo( skeleton, "Walk" );
-    a = afl_mgr.load( "aeba.a", "FFVII" );
+    a = afl_mgr.load( "aeba.a", "FFVII" ).staticCast<QGears::AFile>();
     a->addTo( skeleton, "Run" );
 
     attachMesh( mesh );
     entitys[0]->setVisible( true );
 
     QGears::LZSFLevelFileManager   &fmgr( QGears::LZSFLevelFileManager::getSingleton() );
-    QGears::FLevelFilePtr           f( fmgr.load( "ancnt1", "FFVII" ) );
+    QGears::FLevelFilePtr           f = fmgr.load( "ancnt1", "FFVII" ).staticCast<QGears::FLevelFile>();
 
     mesh = Ogre::MeshManager::getSingleton().load( "n_cloud.mesh", "FFVII" );
     skeleton = mesh->getSkeleton();
-    a = afl_mgr.load( "bvjf.a", "FFVII" );
+    a = afl_mgr.load( "bvjf.a", "FFVII" ).staticCast<QGears::AFile>();
     a->addTo( skeleton, "JumpFromTrain" );
     attachMesh( mesh );
 

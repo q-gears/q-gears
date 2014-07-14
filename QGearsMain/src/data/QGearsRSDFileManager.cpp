@@ -64,7 +64,7 @@ namespace QGears
     void
     RSDFileManager::parseScript( Ogre::DataStreamPtr &stream, const String &groupName )
     {
-        RSDFilePtr  rsd( create( stream->getName(), groupName ) );
+        RSDFilePtr  rsd = createResource( stream->getName(), groupName ).staticCast<RSDFile>();
         rsd->load();
     }
 

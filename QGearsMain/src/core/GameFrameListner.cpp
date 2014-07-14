@@ -40,7 +40,10 @@ GameFrameListener::GameFrameListener( Ogre::RenderWindow* win ):
 #else
     pl.insert( std::make_pair( std::string( "x11_mouse_grab" ), std::string( "false" ) ) );
     pl.insert( std::make_pair( std::string( "x11_mouse_hide" ), std::string( "false" ) ) );
-    pl.insert( std::make_pair(std::string( "x11_keyboard_grab" ), std::string( "false" ) ) );
+
+    // prevents resize of window but also prevents input from randomly stop working!
+    // if you manage to alt+tab in debian even with this turned off the input can break..
+    //pl.insert( std::make_pair(std::string( "x11_keyboard_grab" ), std::string( "false" ) ) );
 #endif
 
     m_InputManager = OIS::InputManager::createInputSystem( pl );

@@ -1,12 +1,11 @@
 #ifndef DEBUG_DRAW_H
 #define DEBUG_DRAW_H
 
-#include <OgreFont.h>
 #include <OgreHardwareVertexBuffer.h>
 #include <OgreRenderQueueListener.h>
 #include <OgreRoot.h>
 #include <OgreSingleton.h>
-
+#include <Overlay/OgreFont.h>
 
 
 class DebugDraw : public Ogre::RenderQueueListener, public Ogre::Singleton< DebugDraw >

@@ -23,7 +23,9 @@
 
 #include "data/QGearsLZSFLevelFileManager.h"
 #include "common/make_unique.h"
-
+#include <Overlay/OgreFontManager.h>
+#include <Overlay/OgreOverlayManager.h>
+#include <Overlay/OgreOverlaySystem.h>
 int
 main(int argc, char *argv[])
 {
@@ -49,8 +51,13 @@ main(int argc, char *argv[])
     directionalLight->setSpecularColour( Ogre::ColourValue( 0.0, 0.0, 0.0 ) );
     directionalLight->setDirection( Ogre::Vector3( 0, 1, 0 ) );
 
+
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
+    // TODO FIX ME
+    //Ogre::OverlaySystem *mOverlaySystem = OGRE_NEW Ogre::OverlaySystem();
+    //auto fmgr = std::make_unique<Ogre::FontManager>();
+    //auto overlay = std::make_unique<Ogre::OverlayManager>();
 
     // init it before console because it may use it
     auto config_var_manager = std::make_unique<ConfigVarManager>();
@@ -82,6 +89,9 @@ main(int argc, char *argv[])
     // set base listner for usual game moduls
     auto frame_listener = std::make_unique<GameFrameListener>( window );
     root->addFrameListener( frame_listener.get() );
+
+    // TODO FIX ME
+    //scene_manager->addRenderQueueListener(mOverlaySystem);
 
     // execute config
     {

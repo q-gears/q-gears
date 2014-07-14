@@ -72,50 +72,7 @@ namespace QGears
         MaterialList    m_materials;
     };
 
-    //-------------------------------------------------------------------------
-    class RSDFilePtr : public Ogre::SharedPtr<RSDFile>
-    {
-    public:
-        RSDFilePtr() : Ogre::SharedPtr<RSDFile>() {}
-        explicit RSDFilePtr(RSDFile *rep) : Ogre::SharedPtr<RSDFile>(rep) {}
-        RSDFilePtr(const RSDFilePtr &r) : Ogre::SharedPtr<RSDFile>(r) {}
-        RSDFilePtr(const Ogre::ResourcePtr &r) : Ogre::SharedPtr<RSDFile>()
-        {
-            if( r.isNull() )
-                return;
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<RSDFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-        }
-
-        /// Operator used to convert a ResourcePtr to a RSDFilePtr
-        RSDFilePtr& operator=(const Ogre::ResourcePtr& r)
-        {
-            if(pRep == static_cast<RSDFile*>(r.getPointer()))
-                return *this;
-            release();
-            if( r.isNull() )
-                return *this; // resource ptr is null, so the call to release above has done all we need to do.
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<RSDFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-            return *this;
-        }
-    };
+    typedef Ogre::SharedPtr<RSDFile> RSDFilePtr;
 }
 
 #endif // __QGearsRSDFile_H__

@@ -130,50 +130,7 @@ namespace QGears
         Page m_pages[ PAGE_COUNT ];
     };
 
-    //-------------------------------------------------------------------------
-    class BackgroundFilePtr : public Ogre::SharedPtr<BackgroundFile>
-    {
-    public:
-        BackgroundFilePtr() : Ogre::SharedPtr<BackgroundFile>() {}
-        explicit BackgroundFilePtr( BackgroundFile *rep ) : Ogre::SharedPtr<BackgroundFile>(rep) {}
-        BackgroundFilePtr( const BackgroundFilePtr &r ) : Ogre::SharedPtr<BackgroundFile>(r) {}
-        BackgroundFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<BackgroundFile>()
-        {
-            if( r.isNull() )
-                return;
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<BackgroundFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-        }
-
-        /// Operator used to convert a ResourcePtr to a BackgroundFilePtr
-        BackgroundFilePtr& operator=( const Ogre::ResourcePtr& r )
-        {
-            if(pRep == static_cast<BackgroundFile*>(r.getPointer()))
-                return *this;
-            release();
-            if( r.isNull() )
-                return *this; // resource ptr is null, so the call to release above has done all we need to do.
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<BackgroundFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-            return *this;
-        }
-    };
+    typedef Ogre::SharedPtr<BackgroundFile> BackgroundFilePtr;
 }
 
 #endif // __QGearsBackgroundFile_H__

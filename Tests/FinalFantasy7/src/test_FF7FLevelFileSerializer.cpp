@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE( read_file )
     image->save( file.getName() + ".png" );
     delete image;
 
-    QGears::FLevelFilePtr lzs_file( fmgr.load( "reference_compressed.flevel", "General" ) );
+    QGears::FLevelFilePtr lzs_file = fmgr.load( "reference_compressed.flevel", "General" ).staticCast<QGears::FLevelFile>();
     BOOST_CHECK( !lzs_file->getPalette().isNull() );
     BOOST_CHECK( !lzs_file->getBackground().isNull() );
 

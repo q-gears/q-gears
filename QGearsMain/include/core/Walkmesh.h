@@ -27,7 +27,7 @@ struct WalkmeshTriangle
 
 namespace QGears
 {
-    class WalkmeshFilePtr;
+    typedef Ogre::SharedPtr<class WalkmeshFile> WalkmeshFilePtr;
 }
 
 class Walkmesh

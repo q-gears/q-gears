@@ -1,6 +1,5 @@
 #include "core/Console.h"
 
-#include <OgreFontManager.h>
 #include <OgreRenderWindow.h>
 
 #include "common/QGearsApplication.h"
@@ -11,7 +10,7 @@
 #include "core/ScriptManager.h"
 #include "core/Timer.h"
 #include "core/Utilites.h"
-
+#include <Overlay/OgreFontManager.h>
 
 
 template<>Console *Ogre::Singleton< Console >::msSingleton = NULL;
@@ -38,7 +37,9 @@ Console::Console():
 
     m_AutoCompletitionLine( 0 )
 {
-    Ogre::FontPtr font = Ogre::FontManager::getSingletonPtr()->getByName( "CourierNew" );
+
+    // TODO FIX ME
+    Ogre::FontPtr font; // = Ogre::FontManager::getSingleton().getByName( "CourierNew" );
     if( font.isNull() == false )
     {
         m_LetterWidth = font->getGlyphAspectRatio( '_' ) * 16;

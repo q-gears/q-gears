@@ -86,50 +86,7 @@ namespace QGears
         Ogre::MeshPtr       m_mesh;
     };
 
-    //-------------------------------------------------------------------------
-    class HRCFilePtr : public Ogre::SharedPtr<HRCFile>
-    {
-    public:
-        HRCFilePtr() : Ogre::SharedPtr<HRCFile>() {}
-        explicit HRCFilePtr(HRCFile *rep) : Ogre::SharedPtr<HRCFile>(rep) {}
-        HRCFilePtr(const HRCFilePtr &r) : Ogre::SharedPtr<HRCFile>(r) {}
-        HRCFilePtr(const Ogre::ResourcePtr &r) : Ogre::SharedPtr<HRCFile>()
-        {
-            if( r.isNull() )
-                return;
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<HRCFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-        }
-
-        /// Operator used to convert a ResourcePtr to a HRCFilePtr
-        HRCFilePtr& operator=(const Ogre::ResourcePtr& r)
-        {
-            if(pRep == static_cast<HRCFile*>(r.getPointer()))
-                return *this;
-            release();
-            if( r.isNull() )
-                return *this; // resource ptr is null, so the call to release above has done all we need to do.
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<HRCFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-            return *this;
-        }
-    };
+    typedef Ogre::SharedPtr<HRCFile> HRCFilePtr;
 }
 
 #endif // __QGearsHRCFile_H__

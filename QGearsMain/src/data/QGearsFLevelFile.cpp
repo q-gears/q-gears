@@ -100,7 +100,7 @@ namespace QGears
         if( m_background_2d_loader == NULL )
         {
             m_background_2d_loader = new FLevelBackground2DLoader( *this );
-            m_background_2d = Background2DFileManager::getSingleton().create( background_2d_name, mGroup, true, m_background_2d_loader );
+            m_background_2d = Background2DFileManager::getSingleton().createResource( background_2d_name, mGroup, true, m_background_2d_loader ).staticCast<Background2DFile>();
         }
     }
 
@@ -117,7 +117,7 @@ namespace QGears
             Ogre::LogManager::getSingleton().stream()
                 << "Loading Model: " << hrc_name;
             StringUtil::toLowerCase( hrc_name );
-            HRCFilePtr  hrc( hrc_mgr.load( hrc_name, mGroup ) );
+            HRCFilePtr  hrc =  hrc_mgr.load( hrc_name, mGroup ).staticCast<HRCFile>();
             loadAnimations( hrc, it->animations );
             m_hrc_files.push_back( hrc );
             ++it;
@@ -137,7 +137,7 @@ namespace QGears
             StringUtil::splitBase( it->name, animation_name );
             StringUtil::toLowerCase( animation_name );
             String animation_filename( animation_name + FF7::EXT_A );
-            AFilePtr    animation( a_mgr.load( animation_filename, model->getGroup() ) );
+            AFilePtr animation = a_mgr.load( animation_filename, model->getGroup() ).staticCast<AFile>();
             animation_name = FF7::NameLookup::animation( animation_name );
             Ogre::LogManager::getSingleton().stream()
                 << " Adding Animation: " << animation_name;

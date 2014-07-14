@@ -65,50 +65,7 @@ namespace QGears
         TriggerList m_triggers;
     };
     
-    //--------------------------------------------------------------------------
-    class MapFilePtr : public Ogre::SharedPtr<MapFile>
-    {
-    public:
-        MapFilePtr() : Ogre::SharedPtr<MapFile>() {}
-        explicit MapFilePtr( MapFile *rep ) : Ogre::SharedPtr<MapFile>(rep) {}
-        MapFilePtr( const MapFilePtr &r ) : Ogre::SharedPtr<MapFile>(r) {}
-        MapFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<MapFile>()
-        {
-            if( r.isNull() )
-                return;
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-                    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-                    pRep = static_cast<MapFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-        }
-        
-        /// Operator used to convert a ResourcePtr to a MapFilePtr
-        MapFilePtr& operator=( const Ogre::ResourcePtr &r )
-        {
-            if(pRep == static_cast<MapFile*>(r.getPointer()))
-                return *this;
-            release();
-            if( r.isNull() )
-                return *this; // resource ptr is null, so the call to release above has done all we need to do.
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-                    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-                    pRep = static_cast<MapFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-            return *this;
-        }
-    };
+    typedef Ogre::SharedPtr<MapFile> MapFilePtr;
 }
 #endif // __QGearsMapFile_H__
 

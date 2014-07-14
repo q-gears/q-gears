@@ -106,50 +106,7 @@ namespace QGears
         HRCList                     m_hrc_files;
     };
 
-    //--------------------------------------------------------------------------
-    class FLevelFilePtr : public Ogre::SharedPtr<FLevelFile>
-    {
-    public:
-        FLevelFilePtr() : Ogre::SharedPtr<FLevelFile>() {}
-        explicit FLevelFilePtr( FLevelFile *rep ) : Ogre::SharedPtr<FLevelFile>(rep) {}
-        FLevelFilePtr( const FLevelFilePtr &r ) : Ogre::SharedPtr<FLevelFile>(r) {}
-        FLevelFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<FLevelFile>()
-        {
-            if( r.isNull() )
-                return;
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<FLevelFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-        }
-
-        /// Operator used to convert a ResourcePtr to a FLevelFilePtr
-        FLevelFilePtr& operator=( const Ogre::ResourcePtr &r )
-        {
-            if(pRep == static_cast<FLevelFile*>(r.getPointer()))
-                return *this;
-            release();
-            if( r.isNull() )
-                return *this; // resource ptr is null, so the call to release above has done all we need to do.
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<FLevelFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-            return *this;
-        }
-    };
+    typedef Ogre::SharedPtr<FLevelFile> FLevelFilePtr;
 }
 
 #endif // __QGearsFLevelFile_H__

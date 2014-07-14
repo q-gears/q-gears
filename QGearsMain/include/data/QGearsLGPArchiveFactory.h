@@ -45,12 +45,16 @@ namespace QGears
             }
 
             /// @copydoc FactoryObj::createInstance
-            Ogre::Archive* createInstance( const String& name )
+            Ogre::Archive* createInstance( const String& name, bool readOnly ) override final
             {
                 return OGRE_NEW LGPArchive( name, ARCHIVE_TYPE );
             }
+
             /// @copydoc FactoryObj::destroyInstance
-            void destroyInstance( Ogre::Archive* arch ) { delete arch; }
+            void destroyInstance( Ogre::Archive* arch ) override final
+            {
+                OGRE_DELETE arch;
+            }
 
         protected:
             static const String ARCHIVE_TYPE;

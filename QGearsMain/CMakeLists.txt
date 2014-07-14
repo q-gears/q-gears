@@ -311,12 +311,13 @@ set(LIBRARIES
     FinalFantasy7
 )
 
+
 target_link_libraries(QGearsMain ${LIBRARIES})
 
 set(LIBRARIES
     QGearsMain
 )
-target_link_libraries(q-gears    ${LIBRARIES})
+target_link_libraries(q-gears    ${LIBRARIES}     ${OGRE_LIBRARIES})
 
 install(TARGETS q-gears
     DESTINATION ./
