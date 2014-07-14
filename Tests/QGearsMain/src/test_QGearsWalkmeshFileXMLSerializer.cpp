@@ -28,14 +28,14 @@ BOOST_AUTO_TEST_CASE( read_file )
     {
     public:
         TestFile() : QGears::WalkmeshFile( NULL, "", 0, "" ) {}
-        size_t getCalculatedSize() const { return calculateSize(); }
-
+        size_t getCalculatedSize() const { return QGears::WalkmeshFile::calculateSize(); }
         virtual void unload( void ) {}
     };
+
     const char* file_name( "misc/walkmesh.xml" );
-    std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
-    BOOST_REQUIRE( ifs->is_open() );
-    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
+    std::ifstream ifs( file_name, std::ifstream::binary );
+    BOOST_REQUIRE( ifs.is_open() );
+    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( &ifs ) );
     BOOST_REQUIRE( stream->isReadable() );
 
     Ogre::LogManager                    logMgr;
@@ -66,5 +66,5 @@ BOOST_AUTO_TEST_CASE( read_file )
 
     logMgr.destroyLog( "Default Log" );
 
-    ifs->close();
+    ifs.close();
 }
