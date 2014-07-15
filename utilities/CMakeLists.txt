@@ -8,16 +8,36 @@ include_directories(
 
 # define header and source files for the library
 set(HEADER_FILES
-  common/include/QGearsUtility.h
-  common/FileSystem.h
-  common/Logger.h
-  common/OgreBase.h
+./common/File.h
+./common/LzsFile.h
+./common/FontFile.h
+./common/include/QGearsUtility.h
+./common/Logger.h
+./common/Surface.h
+./common/TimToVram.h
+./common/BinGZipFile.h
+./common/OgreBase.h
+./common/OgreGenUtilites.h
+./common/Vram.h
+./common/DrawSkeleton.h
+./common/FileSystem.h
+
 )
+
 set(SOURCE_FILES
-  common/src/QGearsUtility.cpp
-  common/FileSystem.cpp
-  common/Logger.cpp
-  common/OgreBase.cpp
+./common/Logger.cpp
+./common/BinGZipFile.cpp
+./common/DrawSkeleton.cpp
+./common/Surface.cpp
+./common/File.cpp
+./common/OgreGenUtilites.cpp
+./common/FontFile.cpp
+./common/LzsFile.cpp
+./common/TimToVram.cpp
+./common/Vram.cpp
+./common/OgreBase.cpp
+./common/src/QGearsUtility.cpp
+./common/FileSystem.cpp
 )
 
 add_library(Utility STATIC
@@ -35,3 +55,4 @@ target_link_libraries(Utility ${LIBRARIES})
 
 
 add_subdirectory(ffvii_field_model_exporter_pc)
+add_subdirectory(ffvii_field_dat_dumper)

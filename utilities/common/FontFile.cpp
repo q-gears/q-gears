@@ -1,17 +1,20 @@
-#include "../../common/filesystem/GameFileSystem.h"
-#include "../../common/utilites/Logger.h"
+#include "common/FileSystem.h"
+#include "common/Logger.h"
 
 #include "FontFile.h"
 
 #include <Ogre.h>
 
+#include "common/TypeDefine.h"
 
+using namespace QGears;
 
-FontFile::FontFile(const RString& file):
+/*
+FontFile::FontFile(const Ogre::String& file):
     File(*GAMEFILESYSTEM, file)
 {
 }
-
+*/
 
 
 FontFile::FontFile(File* pFile):
@@ -121,13 +124,13 @@ FontFile::GetSurface(void)
     buffer->lock(Ogre::HardwareBuffer::HBL_DISCARD);
     const Ogre::PixelBox& pb = buffer->getCurrentLock();
 
-    for (Uint32 y = 0; y < ret->height; ++y)
+    for (auto y = 0; y < ret->height; ++y)
     {
-        Uint32* data = static_cast<Uint32*>(pb.data) + y * pb.rowPitch;
+        auto* data = static_cast<unsigned int*>(pb.data) + y * pb.rowPitch;
 
-        for (Uint32 x = 0; x < ret->width; ++x)
+        for (auto x = 0; x < ret->width; ++x)
         {
-            Uint32 clut = ret->pixels[y * ret->width * 4 + x * 4 + 3] | (ret->pixels[y * ret->width * 4 + x * 4 + 2] << 8) | (ret->pixels[y * ret->width * 4 + x * 4 + 1] << 16) | (ret->pixels[y * ret->width * 4 + x * 4 + 0] << 24);
+            auto clut = ret->pixels[y * ret->width * 4 + x * 4 + 3] | (ret->pixels[y * ret->width * 4 + x * 4 + 2] << 8) | (ret->pixels[y * ret->width * 4 + x * 4 + 1] << 16) | (ret->pixels[y * ret->width * 4 + x * 4 + 0] << 24);
             data[x] = clut;
         }
     }
