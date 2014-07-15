@@ -10,6 +10,7 @@ option(QGears_BUILD_PLUGINS     "Build the plugins"     TRUE)
 option(QGears_BUILD_UTILITIES   "Build the utilities"   TRUE)
 option(QGears_BUILD_TESTS       "Build the unit tests"  TRUE)
 option(QGears_MULTITHREADING    "Enable multithreading" FALSE)
+option(QGears_SOUND             "Enable Sound"          TRUE)
 
 
 find_path(OGRE_CMAKE_MODULE_PATH FindOGRE.cmake
@@ -24,6 +25,12 @@ if(OGRE_CMAKE_MODULE_PATH-NOTFOUND)
 else()
     set(CMAKE_MODULE_PATH "${OGRE_CMAKE_MODULE_PATH};${CMAKE_MODULE_PATH}")
 endif()
+
+set(CMAKE_MODULE_PATH "${OGRE_CMAKE_MODULE_PATH};${CMAKE_MODULE_PATH}")
+set(CMAKE_MODULE_PATH 
+  "${CMAKE_MODULE_PATH}"
+  "${QGears_SOURCE_DIR}/CMake" 
+)
 
 if (CMAKE_BUILD_TYPE STREQUAL "")
   # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
@@ -87,10 +94,25 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 
         find_package(Boost COMPONENTS program_options filesystem QUIET)
         set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
+        set(QGears_LIBRARIES ${OGRE_LIBRARIES})
+        if(QGears_SOUND)
+            find_package(OpenAL REQUIRED)
+            find_package(OggVorbis REQUIRED)
+            add_definitions(-DQGears_SOUND)
+            set(QGears_LIBRARIES
+                ${QGears_LIBRARIES}
+                ${OPENAL_LIBRARY}
+                ${OGGVORBIS_LIBRARIES}
+            )
+        endif()
 
         if(QGears_MULTITHREADING)
             # Find Threads
             find_package (Threads REQUIRED)
+            set(QGears_LIBRARIES
+                ${QGears_LIBRARIES}
+                ${CMAKE_THREAD_LIBS_INIT}
+            )
         endif()
 
         if(QGears_BUILD_TESTS)

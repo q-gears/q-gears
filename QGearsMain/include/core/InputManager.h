@@ -43,7 +43,7 @@ private:
         BindInfo( const Ogre::String& _cmd, const ButtonList& _key_set ):
             cmd( _cmd ),
             key_set( _key_set )
-        {};
+        {}
 
         ButtonList      key_set;
         Ogre::String    cmd;

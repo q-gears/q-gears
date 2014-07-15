@@ -5,6 +5,7 @@ set(HEADER_FILES
   include/common/QGearsResource.h
   include/common/QGearsStringUtil.h
   include/common/TypeDefine.h
+  include/common/make_unique.h
   include/data/QGearsAFile.h
   include/data/QGearsAFileManager.h
   include/data/QGearsAFileSerializer.h
@@ -82,7 +83,6 @@ set(HEADER_FILES
   include/core/particles/ParticleTechniqueTranslator.h
   include/core/particles/ParticleVisual.h
   include/core/Assert.h
-  #include/core/AudioManager.h
   include/core/Background2D.h
   include/core/Background2DAnimation.h
   include/core/CameraManager.h
@@ -158,7 +158,6 @@ set(SOURCE_FILES
   src/core/particles/ParticleVisual.cpp
   src/core/particles/renderer/ParticleEntityRenderer.cpp
   src/core/particles/renderer/ParticleEntityRendererDictionary.cpp
-  #src/core/AudioManager.cpp
   src/core/Background2D.cpp
   src/core/Background2DAnimation.cpp
   src/core/CameraManager.cpp
@@ -194,7 +193,7 @@ set(SOURCE_FILES
   src/core/XmlFontsFile.cpp
   src/core/XmlMapFile.cpp
   src/core/XmlMapsFile.cpp
-  #src/core/XmlMusicsFile.cpp
+  src/core/XmlMusicsFile.cpp
   src/core/XmlPrototypesFile.cpp
   src/core/XmlScreenFile.cpp
   src/core/XmlScreensFile.cpp
@@ -252,6 +251,16 @@ set(SOURCE_FILES
   #src/viewer/ViewerModule.cpp
   src/QGearsGameState.cpp
 )
+if(QGears_SOUND)
+    set(HEADER_FILES
+        ${HEADER_FILES}
+        include/core/AudioManager.h
+    )
+    set(SOURCE_FILES
+        ${SOURCE_FILES}
+        src/core/AudioManager.cpp
+    )
+endif()
 
 include_directories(
     ${QGears_INCLUDE_DIRS}
@@ -259,6 +268,8 @@ include_directories(
 
     # TODO: remove dependency on ff7 related code
     ${QGears_SOURCE_DIR}/SupportedGames/FinalFantasy7/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/SupportedGames/FinalFantasy7/include
+
 )
 
 #compiler options
@@ -299,13 +310,16 @@ if( WIN32 AND NOT (CMAKE_BUILD_TYPE MATCHES "Debug") )
 endif()
 
 set(LIBRARIES
-    ${OGRE_LIBRARIES}
-    ${OIS_LIBRARIES}
-    ${CMAKE_THREAD_LIBS_INIT}
+    ${QGears_LIBRARIES}
     LuaBind
     TinyXml
     FinalFantasy7
 )
+if(QGears_SOUND)
+    find_package(OpenAL REQUIRED)
+    find_package(OggVorbis REQUIRED)
+endif()
+
 
 target_link_libraries(QGearsMain ${LIBRARIES} )
 

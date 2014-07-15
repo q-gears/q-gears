@@ -1,14 +1,14 @@
-#include "AudioManager.h"
+#include "core/AudioManager.h"
 
 #include <list>
 #include <boost/thread.hpp>
 
-#include "XmlMusicsFile.h"
-#include "Logger.h"
+#include "core/XmlMusicsFile.h"
+#include "core/Logger.h"
 
 
 
-template<>AudioManager *Ogre::Singleton< AudioManager >::ms_Singleton = NULL;
+template<>AudioManager *Ogre::Singleton< AudioManager >::msSingleton = NULL;
 
 ALsizei AudioManager::m_ChannelBufferNumber = 2;
 int AudioManager::m_ChannelBufferSize = 96 * 1024;
@@ -90,7 +90,7 @@ AudioManager::operator()()
         Update();
 
         boost::xtime xt;
-        boost::xtime_get( &xt, boost::TIME_UTC );
+        boost::xtime_get( &xt, boost::TIME_UTC_ );
         xt.nsec += 250000000; // sleep for 250 ms
         boost::thread::sleep( xt );
 
