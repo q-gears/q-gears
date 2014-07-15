@@ -54,10 +54,6 @@ main(int argc, char *argv[])
 
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-    Ogre::OverlaySystem *mOverlaySystem = OGRE_NEW Ogre::OverlaySystem();
-    auto fmgr = std::make_unique<Ogre::FontManager>();
-    auto overlay = std::make_unique<Ogre::OverlayManager>();
-
     // init it before console because it may use it
     auto config_var_manager = std::make_unique<ConfigVarManager>();
     auto config_cmd_manager = std::make_unique<ConfigCmdManager>();
@@ -89,15 +85,11 @@ main(int argc, char *argv[])
     auto frame_listener = std::make_unique<GameFrameListener>( window );
     root->addFrameListener( frame_listener.get() );
 
-    scene_manager->addRenderQueueListener(mOverlaySystem);
-
     // execute config
     {
         ConfigFile config;
         config.Execute( "./data/config.cfg" );
     }
-
-
 
     // init ui and run it scripts
     ui_manager->Initialise();

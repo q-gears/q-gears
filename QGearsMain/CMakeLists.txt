@@ -306,6 +306,7 @@ set(LIBRARIES
     ${OIS_LIBRARIES}
     ${OPENAL_LIBRARY}
     ${OGGVORBIS_LIBRARIES}
+    ${OGRE_Overlay_LIBRARIES}
     LuaBind
     TinyXml
     FinalFantasy7
@@ -317,7 +318,7 @@ target_link_libraries(QGearsMain ${LIBRARIES})
 set(LIBRARIES
     QGearsMain
 )
-target_link_libraries(q-gears    ${LIBRARIES}     ${OGRE_LIBRARIES})
+target_link_libraries(q-gears    ${LIBRARIES})
 
 install(TARGETS q-gears
     DESTINATION ./

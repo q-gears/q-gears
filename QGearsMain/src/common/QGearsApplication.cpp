@@ -62,8 +62,9 @@ namespace QGears
         m_argc( argc )
       , m_argv( argv )
       , m_initialized( false )
-      , m_root( NULL )
-      , m_render_window( NULL )
+      , m_overlay_system( nullptr )
+      , m_root( nullptr )
+      , m_render_window( nullptr )
     {
     }
 
@@ -71,7 +72,7 @@ namespace QGears
     Application::~Application()
     {
         destroyComponents();
-        if( m_root ) delete m_root;
+        delete m_root;
     }
 
     //--------------------------------------------------------------------------
@@ -85,6 +86,8 @@ namespace QGears
 
         m_root = new Ogre::Root( m_plugins_filename, m_config_filename
                                , m_log_filename );
+
+        m_overlay_system = new Ogre::OverlaySystem();
 
         Ogre::Log* default_log( Ogre::LogManager::getSingleton().getDefaultLog() );
         assert( default_log );

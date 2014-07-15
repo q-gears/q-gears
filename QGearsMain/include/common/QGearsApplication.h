@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #define __QGearsApplication_H__
 
 #include <OgreRoot.h>
+#include <Overlay/OgreOverlaySystem.h>
 
 #include "TypeDefine.h"
 
@@ -72,6 +73,7 @@ namespace QGears
 
         bool                m_initialized;
         Ogre::Root         *m_root;
+        Ogre::OverlaySystem* m_overlay_system;
         Ogre::RenderWindow *m_render_window;
         ResourceManagerList m_resource_managers;
     };
