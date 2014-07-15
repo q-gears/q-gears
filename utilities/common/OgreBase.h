@@ -57,7 +57,6 @@ public:
         Ogre::WindowEventUtilities::addWindowEventListener( m_Window, this );
 
 
-/* TODO FIX ME
         // debug info
         info_text = new Ogre::TextAreaOverlayElement( "DebugText" );
         info_text->setCaption( "" );
@@ -69,7 +68,7 @@ public:
         info_overlay = Ogre::OverlayManager::getSingleton().create( "DebugOverlay" );
         info_overlay->setZOrder( 1 );
         info_overlay->add2D( ( Ogre::OverlayContainer* )info_text );
-        info_overlay->show();*/
+        info_overlay->show();
     }
 
     virtual
@@ -123,8 +122,7 @@ public:
                     {
                         state->addTime( evt.timeSinceLastFrame );
 
-                        // TODO FIX ME
-                        //info_text->setCaption( entitys[ i ]->getName() + ": " + state->getAnimationName() );
+                        info_text->setCaption( entitys[ i ]->getName() + ": " + state->getAnimationName() );
                     }
                 }
 
@@ -315,9 +313,8 @@ public:
 
 public:
 
-    // TODO FIX ME
-    // Ogre::TextAreaOverlayElement*   info_text;
-   // Ogre::Overlay*                  info_overlay;
+    Ogre::TextAreaOverlayElement*   info_text;
+    Ogre::Overlay*                  info_overlay;
     virtual void    setCamera( Ogre::Camera *camera ){ m_camera = camera; }
 
 private:

@@ -52,15 +52,14 @@ DebugDraw::DebugDraw():
     pass->setLightingEnabled( false );
     pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
-    // TODO FIX ME
-    //m_Font = Ogre::FontManager::getSingleton().getByName( "CourierNew" );
-    //if( m_Font.isNull() )
-    //{
-    //    LOG_ERROR( "Could not find font \"CourierNew\" for debug draw." );
-    //}
+    m_Font = Ogre::FontManager::getSingleton().getByName( "CourierNew" );
+    if( m_Font.isNull() )
+    {
+        LOG_ERROR( "Could not find font \"CourierNew\" for debug draw." );
+    }
 
-    //m_Font->load();
-    //pass = m_Font->getMaterial()->getTechnique( 0 )->getPass( 0 );
+    m_Font->load();
+    pass = m_Font->getMaterial()->getTechnique( 0 )->getPass( 0 );
     pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
     pass->setCullingMode( Ogre::CULL_NONE );
     pass->setDepthCheckEnabled( true );
@@ -335,8 +334,6 @@ DebugDraw::Quad( const float x1, const float y1, const float x2, const float y2,
 void
 DebugDraw::Text( const float x, const float y, const Ogre::String& text )
 {
-    // TODO FIX ME
-    /*
     if( m_TextRenderOp.vertexData->vertexCount + text.size() * 6 > m_TextMaxVertexCount )
     {
         LOG_ERROR( "Max number of text reached. Can't add text \"" + text + "\". Max number of letters is " + Ogre::StringConverter::toString( m_TextMaxVertexCount / 6 ) + "." );
@@ -452,7 +449,7 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
         m_TextRenderOp.vertexData->vertexCount += 6;
     }
 
-    m_TextVertexBuffer->unlock();*/
+    m_TextVertexBuffer->unlock();
 }
 
 
@@ -505,11 +502,9 @@ DebugDraw::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invoc
 
         if( m_TextRenderOp.vertexData->vertexCount != 0 )
         {
-            // TODO FIX ME
-            /*
             m_SceneManager->_setPass( m_Font->getMaterial()->getTechnique( 0 )->getPass( 0 ), true, false );
             m_RenderSystem->_render( m_TextRenderOp );
-            m_TextRenderOp.vertexData->vertexCount = 0;*/
+            m_TextRenderOp.vertexData->vertexCount = 0;
         }
     }
     else if( queueGroupId == Ogre::RENDER_QUEUE_MAIN )

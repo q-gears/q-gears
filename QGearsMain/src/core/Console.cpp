@@ -38,8 +38,7 @@ Console::Console():
     m_AutoCompletitionLine( 0 )
 {
 
-    // TODO FIX ME
-    Ogre::FontPtr font; // = Ogre::FontManager::getSingleton().getByName( "CourierNew" );
+    Ogre::FontPtr font = Ogre::FontManager::getSingleton().getByName( "CourierNew" );
     if( font.isNull() == false )
     {
         m_LetterWidth = font->getGlyphAspectRatio( '_' ) * 16;
