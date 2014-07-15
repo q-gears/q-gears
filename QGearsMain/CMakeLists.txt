@@ -126,7 +126,6 @@ set(HEADER_FILES
   include/core/XmlFontsFile.h
   include/core/XmlMapFile.h
   #include/core/XmlMapsFile.h
-  include/core/XmlMusicsFile.h
   include/core/XmlPrototypesFile.h
   include/core/XmlScreenFile.h
   include/core/XmlScreensFile.h
@@ -193,7 +192,6 @@ set(SOURCE_FILES
   src/core/XmlFontsFile.cpp
   src/core/XmlMapFile.cpp
   src/core/XmlMapsFile.cpp
-  src/core/XmlMusicsFile.cpp
   src/core/XmlPrototypesFile.cpp
   src/core/XmlScreenFile.cpp
   src/core/XmlScreensFile.cpp
@@ -255,10 +253,12 @@ if(QGears_SOUND)
     set(HEADER_FILES
         ${HEADER_FILES}
         include/core/AudioManager.h
+        include/core/XmlMusicsFile.h
     )
     set(SOURCE_FILES
         ${SOURCE_FILES}
         src/core/AudioManager.cpp
+        src/core/XmlMusicsFile.cpp
     )
 endif()
 
