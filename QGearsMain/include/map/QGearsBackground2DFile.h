@@ -85,50 +85,7 @@ namespace QGears
         TileList            m_tiles;
     };
 
-    //-------------------------------------------------------------------------
-    class Background2DFilePtr : public Ogre::SharedPtr<Background2DFile>
-    {
-    public:
-        Background2DFilePtr() : Ogre::SharedPtr<Background2DFile>() {}
-        explicit Background2DFilePtr( Background2DFile *rep ) : Ogre::SharedPtr<Background2DFile>(rep) {}
-        Background2DFilePtr( const Background2DFilePtr &r ) : Ogre::SharedPtr<Background2DFile>(r) {}
-        Background2DFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<Background2DFile>()
-        {
-            if( r.isNull() )
-                return;
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<Background2DFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-        }
-
-        /// Operator used to convert a ResourcePtr to a Background2DFilePtr
-        Background2DFilePtr& operator=( const Ogre::ResourcePtr& r )
-        {
-            if(pRep == static_cast<Background2DFile*>(r.getPointer()))
-                return *this;
-            release();
-            if( r.isNull() )
-                return *this; // resource ptr is null, so the call to release above has done all we need to do.
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<Background2DFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-            return *this;
-        }
-    };
+    typedef Ogre::SharedPtr<Background2DFile> Background2DFilePtr;
 }
 
 #endif // __QGearsBackground2DFile_H__

@@ -175,7 +175,7 @@ namespace QGears
         assert( pDest );
         Ogre::ResourceManager &mgr( ResourceManagerType::getSingleton() );
         String name( getBaseName( pDest ) + extension );
-        Ogre::ResourcePtr resource( mgr.create( name, pDest->getGroup(), true ) );
+        Ogre::ResourcePtr resource =  mgr.createResource( name, pDest->getGroup(), true );
         resource->_notifyOrigin( pDest->getName() );
         return resource;
     }
@@ -184,7 +184,7 @@ namespace QGears
     void
     FLevelFileSerializer::readCameraMatrix( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
     {
-        CameraMatrixFilePtr camera_matrix( createResource<CameraMatrixFileManager>( pDest, EXT_CAMERA_MATRIX ) );
+        CameraMatrixFilePtr camera_matrix = createResource<CameraMatrixFileManager>( pDest, EXT_CAMERA_MATRIX ).staticCast<CameraMatrixFile>();
         CameraMatrixFileSerializer ser;
         ser.importCameraMatrixFile( stream, camera_matrix.getPointer() );
         pDest->setCameraMatrix( camera_matrix );
@@ -194,7 +194,7 @@ namespace QGears
     void
     FLevelFileSerializer::readModelList( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
     {
-        ModelListFilePtr model_list( createResource<ModelListFileManager>( pDest, EXT_MODEL_LIST ) );
+        ModelListFilePtr model_list = createResource<ModelListFileManager>( pDest, EXT_MODEL_LIST ).staticCast<ModelListFile>();
         ModelListFileSerializer ser;
         ser.importModelListFile( stream, model_list.getPointer() );
         pDest->setModelList( model_list );
@@ -204,7 +204,7 @@ namespace QGears
     void
     FLevelFileSerializer::readPalette( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
     {
-        PaletteFilePtr palette( createResource<PaletteFileManager>( pDest, EXT_PALETTE ) );
+        PaletteFilePtr palette = createResource<PaletteFileManager>( pDest, EXT_PALETTE ).staticCast<PaletteFile>();
         PaletteFileSerializer ser;
         ser.importPaletteFile( stream, palette.getPointer() );
         pDest->setPalette( palette );
@@ -214,7 +214,7 @@ namespace QGears
     void
     FLevelFileSerializer::readWalkmesh( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
     {
-        WalkmeshFilePtr walkmesh( createResource<WalkmeshFileManager>( pDest, EXT_WALKMESH ) );
+        WalkmeshFilePtr walkmesh = createResource<WalkmeshFileManager>( pDest, EXT_WALKMESH ).staticCast<WalkmeshFile>();
         WalkmeshFileSerializer ser;
         ser.importWalkmeshFile( stream, walkmesh.getPointer() );
 
@@ -237,7 +237,7 @@ namespace QGears
     void
     FLevelFileSerializer::readBackground( Ogre::DataStreamPtr &stream, FLevelFile *pDest )
     {
-        BackgroundFilePtr background( createResource<BackgroundFileManager>( pDest, EXT_BACKGROUND ) );
+        BackgroundFilePtr background = createResource<BackgroundFileManager>( pDest, EXT_BACKGROUND ).staticCast<BackgroundFile>();
         BackgroundFileSerializer ser;
         ser.importBackgroundFile( stream, background.getPointer() );
         pDest->setBackground( background );

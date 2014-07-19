@@ -13,29 +13,34 @@ option(QGears_MULTITHREADING    "Enable multithreading" FALSE)
 option(QGears_SOUND             "Enable Sound"          TRUE)
 
 
-find_path(OGRE_CMAKE_MODULE_PATH FindOGRE.cmake
-    HINTS
-    "$ENV{OGRE_HOME}/CMake/"
-    "/usr/local/lib/OGRE/cmake"
-    "/usr/lib/OGRE/cmake"
-    "/usr/share/OGRE/cmake/modules"
-)
 if(OGRE_CMAKE_MODULE_PATH-NOTFOUND)
     message(SEND_ERROR "Failed to find OGRE module path.")
 else()
     set(CMAKE_MODULE_PATH "${OGRE_CMAKE_MODULE_PATH};${CMAKE_MODULE_PATH}")
 endif()
 
+<<<<<<< HEAD
+
+SET(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}")
+
+find_package(OGRE REQUIRED)
+find_package(OpenAL REQUIRED)
+find_package(OggVorbis REQUIRED)
+find_package(OIS REQUIRED)
+
+||||||| merged common ancestors
+=======
 set(CMAKE_MODULE_PATH "${OGRE_CMAKE_MODULE_PATH};${CMAKE_MODULE_PATH}")
 set(CMAKE_MODULE_PATH 
   "${CMAKE_MODULE_PATH}"
   "${QGears_SOURCE_DIR}/CMake" 
 )
 
+>>>>>>> upstream/master
 if (CMAKE_BUILD_TYPE STREQUAL "")
   # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
   # differentiation between debug and release builds.
-  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
+  set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif ()
 
 set(CMAKE_DEBUG_POSTFIX "_d")
@@ -46,13 +51,23 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   )
 endif()
 
+<<<<<<< HEAD
+||||||| merged common ancestors
+find_package(OGRE REQUIRED)
+find_package(OpenAL REQUIRED)
+
+SET(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}")
+
+find_package(OggVorbis REQUIRED)
+
+=======
 find_package(OGRE REQUIRED)
 
+>>>>>>> upstream/master
 #if(NOT "${OGRE_VERSION_NAME}" STREQUAL "Cthugha")
 #  message(SEND_ERROR "You need Ogre 1.7 Cthugha to build this.")
 #endif()
 
-find_package(OIS REQUIRED)
 
 if(NOT OIS_FOUND)
         message(SEND_ERROR "Failed to find OIS.")

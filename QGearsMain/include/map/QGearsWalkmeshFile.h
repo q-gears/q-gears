@@ -48,50 +48,7 @@ namespace QGears
         TriangleList    m_triangles;
     };
 
-    //-------------------------------------------------------------------------
-    class WalkmeshFilePtr : public Ogre::SharedPtr<WalkmeshFile>
-    {
-    public:
-        WalkmeshFilePtr() : Ogre::SharedPtr<WalkmeshFile>() {}
-        explicit WalkmeshFilePtr( WalkmeshFile *rep ) : Ogre::SharedPtr<WalkmeshFile>(rep) {}
-        WalkmeshFilePtr( const WalkmeshFilePtr &r ) : Ogre::SharedPtr<WalkmeshFile>(r) {}
-        WalkmeshFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<WalkmeshFile>()
-        {
-            if( r.isNull() )
-                return;
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<WalkmeshFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-        }
-
-        /// Operator used to convert a ResourcePtr to a WalkmeshFilePtr
-        WalkmeshFilePtr& operator=( const Ogre::ResourcePtr& r )
-        {
-            if(pRep == static_cast<WalkmeshFile*>(r.getPointer()))
-                return *this;
-            release();
-            if( r.isNull() )
-                return *this; // resource ptr is null, so the call to release above has done all we need to do.
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<WalkmeshFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-            return *this;
-        }
-    };
+    typedef Ogre::SharedPtr<WalkmeshFile> WalkmeshFilePtr;
 }
 
 #endif // __QGearsWalkmeshFile_H__

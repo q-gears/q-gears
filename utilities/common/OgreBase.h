@@ -2,7 +2,8 @@
 #define __OGRE_BASE_H__
 
 #include <Ogre.h>
-#include <OgreTextAreaOverlayElement.h>
+#include <Overlay/OgreTextAreaOverlayElement.h>
+#include <Overlay/OgreOverlayManager.h>
 #include <OIS.h>
 
 #include "FileSystem.h"
@@ -54,7 +55,6 @@ public:
 
         //Register as a Window listener
         Ogre::WindowEventUtilities::addWindowEventListener( m_Window, this );
-
 
 
         // debug info
@@ -312,6 +312,7 @@ public:
     }
 
 public:
+
     Ogre::TextAreaOverlayElement*   info_text;
     Ogre::Overlay*                  info_overlay;
     virtual void    setCamera( Ogre::Camera *camera ){ m_camera = camera; }

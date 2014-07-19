@@ -25,7 +25,9 @@
 
 #include "data/QGearsLZSFLevelFileManager.h"
 #include "common/make_unique.h"
-
+#include <Overlay/OgreFontManager.h>
+#include <Overlay/OgreOverlayManager.h>
+#include <Overlay/OgreOverlaySystem.h>
 int
 main(int argc, char *argv[])
 {
@@ -51,8 +53,8 @@ main(int argc, char *argv[])
     directionalLight->setSpecularColour( Ogre::ColourValue( 0.0, 0.0, 0.0 ) );
     directionalLight->setDirection( Ogre::Vector3( 0, 1, 0 ) );
 
-    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
     // init it before console because it may use it
     auto config_var_manager = std::make_unique<ConfigVarManager>();
@@ -92,8 +94,6 @@ main(int argc, char *argv[])
         ConfigFile config;
         config.Execute( "./data/config.cfg" );
     }
-
-
 
     // init ui and run it scripts
     ui_manager->Initialise();

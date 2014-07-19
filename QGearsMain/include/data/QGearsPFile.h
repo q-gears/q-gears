@@ -151,50 +151,7 @@ namespace QGears
         BBoxList                m_bboxes;
     };
 
-    //-------------------------------------------------------------------------
-    class PFilePtr : public Ogre::SharedPtr<PFile>
-    {
-    public:
-        PFilePtr() : Ogre::SharedPtr<PFile>() {}
-        explicit PFilePtr( PFile *rep ) : Ogre::SharedPtr<PFile>(rep) {}
-        PFilePtr( const PFilePtr &r ) : Ogre::SharedPtr<PFile>(r) {}
-        PFilePtr( const Ogre::ResourcePtr &r ) : Ogre::SharedPtr<PFile>()
-        {
-            if( r.isNull() )
-                return;
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<PFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-        }
-
-        /// Operator used to convert a ResourcePtr to a PFilePtr
-        PFilePtr& operator=( const Ogre::ResourcePtr& r )
-        {
-            if(pRep == static_cast<PFile*>(r.getPointer()))
-                return *this;
-            release();
-            if( r.isNull() )
-                return *this; // resource ptr is null, so the call to release above has done all we need to do.
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-            pRep = static_cast<PFile*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            useFreeMethod = r.freeMethod();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-            return *this;
-        }
-    };
+    typedef Ogre::SharedPtr<PFile> PFilePtr;
 }
 
 #endif // __QGearsPFile_H__

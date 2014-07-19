@@ -42,7 +42,7 @@ XmlMapFile::LoadMap()
             if( !name.empty() )
             {
                 QGears::WalkmeshFileManager::getSingleton();
-                QGears::WalkmeshFilePtr walkmesh( QGears::WalkmeshFileManager::getSingleton().load( name, "Game" ) );
+                QGears::WalkmeshFilePtr walkmesh =  QGears::WalkmeshFileManager::getSingleton().load( name, "Game" ).staticCast<QGears::WalkmeshFile>();
                 EntityManager::getSingleton().GetWalkmesh()->load( walkmesh );
             }
         }
@@ -57,7 +57,7 @@ XmlMapFile::LoadMap()
             if( name != "" )
             {
                 // TODO migrate this code to a Resource and use it's group to load background
-                QGears::Background2DFilePtr background( QGears::Background2DFileManager::getSingleton().load( name, "Game" ) );
+                QGears::Background2DFilePtr background =  QGears::Background2DFileManager::getSingleton().load( name, "Game" ).staticCast<QGears::Background2DFile>();
                 EntityManager::getSingleton().GetBackground2D()->load( background );
             }
         }

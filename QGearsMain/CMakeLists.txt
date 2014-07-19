@@ -310,7 +310,20 @@ if( WIN32 AND NOT (CMAKE_BUILD_TYPE MATCHES "Debug") )
 endif()
 
 set(LIBRARIES
+<<<<<<< HEAD
+    ${OGRE_LIBRARIES}
+    ${OIS_LIBRARIES}
+    ${OPENAL_LIBRARY}
+    ${OGGVORBIS_LIBRARIES}
+    ${OGRE_Overlay_LIBRARIES}
+||||||| merged common ancestors
+    ${OGRE_LIBRARIES}
+    ${OIS_LIBRARIES}
+    ${OPENAL_LIBRARY}
+    ${OGGVORBIS_LIBRARIES}
+=======
     ${QGears_LIBRARIES}
+>>>>>>> upstream/master
     LuaBind
     TinyXml
     FinalFantasy7
@@ -321,7 +334,14 @@ if(QGears_SOUND)
 endif()
 
 
+<<<<<<< HEAD
+
+target_link_libraries(QGearsMain ${LIBRARIES})
+||||||| merged common ancestors
+target_link_libraries(QGearsMain ${LIBRARIES})
+=======
 target_link_libraries(QGearsMain ${LIBRARIES} )
+>>>>>>> upstream/master
 
 set(LIBRARIES
     QGearsMain

@@ -1,6 +1,6 @@
 #include "core/DebugDraw.h"
 
-#include <OgreFontManager.h>
+#include <Overlay/OgreFontManager.h>
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
@@ -57,6 +57,7 @@ DebugDraw::DebugDraw():
     {
         LOG_ERROR( "Could not find font \"CourierNew\" for debug draw." );
     }
+
     m_Font->load();
     pass = m_Font->getMaterial()->getTechnique( 0 )->getPass( 0 );
     pass->setVertexColourTracking( Ogre::TVC_AMBIENT );

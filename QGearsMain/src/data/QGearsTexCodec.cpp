@@ -60,16 +60,14 @@ namespace QGears
         return ms_type_name;
     }
 
-    //---------------------------------------------------------------------
-    void TexCodec::codeToFile( MemoryDataStreamPtr& input, const String& outFileName, Codec::CodecDataPtr& pData ) const
+    Ogre::DataStreamPtr TexCodec::encode(Ogre::MemoryDataStreamPtr& input, CodecDataPtr& pData) const
     {
-        OGRE_EXCEPT(Exception::ERR_NOT_IMPLEMENTED, "Encoding not yet supported", "TexImageCodec::codeToFile");
+        OGRE_EXCEPT(Exception::ERR_NOT_IMPLEMENTED, "Encoding not yet supported", "TexImageCodec::encode");
     }
 
-    //---------------------------------------------------------------------
-    DataStreamPtr TexCodec::code( MemoryDataStreamPtr& input, Codec::CodecDataPtr& pData ) const
+    void TexCodec::encodeToFile(Ogre::MemoryDataStreamPtr& input, const Ogre::String& outFileName, CodecDataPtr& pData) const
     {
-        OGRE_EXCEPT(Exception::ERR_NOT_IMPLEMENTED, "Encoding not yet supported", "TexImageCodec::code");
+        OGRE_EXCEPT(Exception::ERR_NOT_IMPLEMENTED, "Encoding not yet supported", "TexImageCodec::encodeToFile");
     }
 
     //---------------------------------------------------------------------
@@ -116,7 +114,7 @@ namespace QGears
     void TexCodec::shutdown()
     {
         //shutdown called - unregister stuff here
-        unRegisterCodec( ms_tex_codex );
+        unregisterCodec( ms_tex_codex );
     }
 
     //---------------------------------------------------------------------

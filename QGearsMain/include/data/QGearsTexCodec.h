@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __QGearsTexCodec_H__
 
 #include <OgreImageCodec.h>
+#include <OgreCodec.h>
 
 #include "QGearsPrerequisites.h"
 
@@ -41,11 +42,8 @@ namespace QGears
         /// @copydoc Ogre::ImageCodec::getType
         virtual Ogre::String getType() const;
 
-        /// @copydoc Ogre::Codec::code
-        Ogre::DataStreamPtr code( Ogre::MemoryDataStreamPtr& input, Ogre::Codec::CodecDataPtr& pData ) const;
-
-        /// @copydoc Ogre::Codec::codeToFile
-        void codeToFile( Ogre::MemoryDataStreamPtr& input, const Ogre::String& outFileName, Ogre::Codec::CodecDataPtr& pData ) const;
+        virtual Ogre::DataStreamPtr encode(Ogre::MemoryDataStreamPtr& input, CodecDataPtr& pData) const override final;
+        virtual void encodeToFile(Ogre::MemoryDataStreamPtr& input, const Ogre::String& outFileName, CodecDataPtr& pData) const override final;
 
         /// @copydoc Ogre::Codec::decode
         Ogre::Codec::DecodeResult decode( Ogre::DataStreamPtr& input ) const;
