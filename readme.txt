@@ -13,7 +13,7 @@ to have them recognize the newly set variables
 
 Requirements
 ------------
-OgreSDK 1.8
+OgreSDK 1.9
  - Ogre::Singleton was changed from 1.7 to 1.8 so we're incompatible with 1.7
 
 Boost 1.40
