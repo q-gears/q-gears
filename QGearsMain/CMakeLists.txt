@@ -83,7 +83,6 @@ set(HEADER_FILES
   include/core/particles/ParticleTechniqueTranslator.h
   include/core/particles/ParticleVisual.h
   include/core/Assert.h
-  include/core/AudioManager.h
   include/core/Background2D.h
   include/core/Background2DAnimation.h
   include/core/CameraManager.h
@@ -127,7 +126,6 @@ set(HEADER_FILES
   include/core/XmlFontsFile.h
   include/core/XmlMapFile.h
   #include/core/XmlMapsFile.h
-  include/core/XmlMusicsFile.h
   include/core/XmlPrototypesFile.h
   include/core/XmlScreenFile.h
   include/core/XmlScreensFile.h
@@ -159,7 +157,6 @@ set(SOURCE_FILES
   src/core/particles/ParticleVisual.cpp
   src/core/particles/renderer/ParticleEntityRenderer.cpp
   src/core/particles/renderer/ParticleEntityRendererDictionary.cpp
-  src/core/AudioManager.cpp
   src/core/Background2D.cpp
   src/core/Background2DAnimation.cpp
   src/core/CameraManager.cpp
@@ -195,7 +192,6 @@ set(SOURCE_FILES
   src/core/XmlFontsFile.cpp
   src/core/XmlMapFile.cpp
   src/core/XmlMapsFile.cpp
-  src/core/XmlMusicsFile.cpp
   src/core/XmlPrototypesFile.cpp
   src/core/XmlScreenFile.cpp
   src/core/XmlScreensFile.cpp
@@ -253,6 +249,18 @@ set(SOURCE_FILES
   #src/viewer/ViewerModule.cpp
   src/QGearsGameState.cpp
 )
+if(QGears_SOUND)
+    set(HEADER_FILES
+        ${HEADER_FILES}
+        include/core/AudioManager.h
+        include/core/XmlMusicsFile.h
+    )
+    set(SOURCE_FILES
+        ${SOURCE_FILES}
+        src/core/AudioManager.cpp
+        src/core/XmlMusicsFile.cpp
+    )
+endif()
 
 include_directories(
     ${QGears_INCLUDE_DIRS}
@@ -302,23 +310,43 @@ if( WIN32 AND NOT (CMAKE_BUILD_TYPE MATCHES "Debug") )
 endif()
 
 set(LIBRARIES
+<<<<<<< HEAD
     ${OGRE_LIBRARIES}
     ${OIS_LIBRARIES}
     ${OPENAL_LIBRARY}
     ${OGGVORBIS_LIBRARIES}
     ${OGRE_Overlay_LIBRARIES}
+||||||| merged common ancestors
+    ${OGRE_LIBRARIES}
+    ${OIS_LIBRARIES}
+    ${OPENAL_LIBRARY}
+    ${OGGVORBIS_LIBRARIES}
+=======
+    ${QGears_LIBRARIES}
+>>>>>>> upstream/master
     LuaBind
     TinyXml
     FinalFantasy7
 )
+if(QGears_SOUND)
+    find_package(OpenAL REQUIRED)
+    find_package(OggVorbis REQUIRED)
+endif()
 
+
+<<<<<<< HEAD
 
 target_link_libraries(QGearsMain ${LIBRARIES})
+||||||| merged common ancestors
+target_link_libraries(QGearsMain ${LIBRARIES})
+=======
+target_link_libraries(QGearsMain ${LIBRARIES} )
+>>>>>>> upstream/master
 
 set(LIBRARIES
     QGearsMain
 )
-target_link_libraries(q-gears    ${LIBRARIES})
+target_link_libraries(q-gears ${LIBRARIES})
 
 install(TARGETS q-gears
     DESTINATION ./

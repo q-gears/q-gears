@@ -1,19 +1,3 @@
-#/*
-#-----------------------------------------------------------------------------
-#Filename:    CMakeLists.txt
-#-----------------------------------------------------------------------------
-#
-#This source file is part of the
-#   ___                 __    __ _ _    _
-#  /___\__ _ _ __ ___  / / /\ \ (_) | _(_)
-# //  // _` | '__/ _ \ \ \/  \/ / | |/ / |
-#/ \_// (_| | | |  __/  \  /\  /| |   <| |
-#\___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-#      |___/
-#      Tutorial Framework
-#      http://www.ogre3d.org/tikiwiki/
-#-----------------------------------------------------------------------------
-#*/
 cmake_minimum_required(VERSION 2.6)
 
 project(QGears)
@@ -25,6 +9,9 @@ set(QGears_VERSION_MINOR 21)
 option(QGears_BUILD_PLUGINS     "Build the plugins"     TRUE)
 option(QGears_BUILD_UTILITIES   "Build the utilities"   TRUE)
 option(QGears_BUILD_TESTS       "Build the unit tests"  TRUE)
+option(QGears_MULTITHREADING    "Enable multithreading" FALSE)
+option(QGears_SOUND             "Enable Sound"          TRUE)
+
 
 if(OGRE_CMAKE_MODULE_PATH-NOTFOUND)
     message(SEND_ERROR "Failed to find OGRE module path.")
@@ -32,6 +19,7 @@ else()
     set(CMAKE_MODULE_PATH "${OGRE_CMAKE_MODULE_PATH};${CMAKE_MODULE_PATH}")
 endif()
 
+<<<<<<< HEAD
 
 SET(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}")
 
@@ -40,6 +28,15 @@ find_package(OpenAL REQUIRED)
 find_package(OggVorbis REQUIRED)
 find_package(OIS REQUIRED)
 
+||||||| merged common ancestors
+=======
+set(CMAKE_MODULE_PATH "${OGRE_CMAKE_MODULE_PATH};${CMAKE_MODULE_PATH}")
+set(CMAKE_MODULE_PATH 
+  "${CMAKE_MODULE_PATH}"
+  "${QGears_SOURCE_DIR}/CMake" 
+)
+
+>>>>>>> upstream/master
 if (CMAKE_BUILD_TYPE STREQUAL "")
   # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
   # differentiation between debug and release builds.
@@ -54,6 +51,19 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   )
 endif()
 
+<<<<<<< HEAD
+||||||| merged common ancestors
+find_package(OGRE REQUIRED)
+find_package(OpenAL REQUIRED)
+
+SET(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}")
+
+find_package(OggVorbis REQUIRED)
+
+=======
+find_package(OGRE REQUIRED)
+
+>>>>>>> upstream/master
 #if(NOT "${OGRE_VERSION_NAME}" STREQUAL "Cthugha")
 #  message(SEND_ERROR "You need Ogre 1.7 Cthugha to build this.")
 #endif()
@@ -99,6 +109,26 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 
         find_package(Boost COMPONENTS program_options filesystem QUIET)
         set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
+        set(QGears_LIBRARIES ${OGRE_LIBRARIES})
+        if(QGears_SOUND)
+            find_package(OpenAL REQUIRED)
+            find_package(OggVorbis REQUIRED)
+            add_definitions(-DQGears_SOUND)
+            set(QGears_LIBRARIES
+                ${QGears_LIBRARIES}
+                ${OPENAL_LIBRARY}
+                ${OGGVORBIS_LIBRARIES}
+            )
+        endif()
+
+        if(QGears_MULTITHREADING)
+            # Find Threads
+            find_package (Threads REQUIRED)
+            set(QGears_LIBRARIES
+                ${QGears_LIBRARIES}
+                ${CMAKE_THREAD_LIBS_INIT}
+            )
+        endif()
 
         if(QGears_BUILD_TESTS)
             find_package(Boost COMPONENTS unit_test_framework QUIET)
