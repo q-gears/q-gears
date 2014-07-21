@@ -29,26 +29,22 @@ namespace QGears
     public:
         Application( int argc, char *argv[] );
         virtual ~Application();
-
-        virtual bool                initOgre( void );
-
-        virtual Ogre::Root*         getRoot( void );
-        virtual Ogre::RenderWindow* getRenderWindow( void );
-        virtual const String&       getResourcesFilename( void );
-
+        bool                initOgre( void );
+        Ogre::Root*         getRoot( void );
+        Ogre::RenderWindow* getRenderWindow( void );
+        const String&       getResourcesFilename( void );
     protected:
-        virtual String  getWindowTitle( void ) const;
-
-        virtual bool    processCommandLine( int argc, char *argv[] );
-        virtual void    registerArchiveFactories( void );
-        virtual void    loadResourcesConfig( void );
-        virtual void    initComponents( void );
-        virtual void    destroyComponents( void );
-        virtual void    createResourceManagers( void );
-        virtual void    destroyResourceManagers( void );
+        String  getWindowTitle( void ) const;
+        bool    processCommandLine( int argc, char *argv[] );
+        void    registerArchiveFactories( void );
+        void    loadResourcesConfig( void );
+        void    initComponents( void );
+        void    destroyComponents( void );
+        void    createResourceManagers( void );
+        void    destroyResourceManagers( void );
 
     private:
-        typedef std::vector<Ogre::ResourceManager*> ResourceManagerList;
+        typedef std::vector<std::shared_ptr<Ogre::ResourceManager>> ResourceManagerVector;
 
         Application();
 
@@ -64,18 +60,18 @@ namespace QGears
         static const char*      CLI_RESOURCES_FILE;
         static const char*      CLI_RESOURCES_FILE_DESCRIPTION;
 
-        int     m_argc;
-        char  **m_argv;
+        int     m_argc = 0;
+        char  **m_argv = nullptr;
         String  m_config_filename;
         String  m_log_filename;
         String  m_plugins_filename;
         String  m_resources_filename;
 
-        bool                m_initialized;
-        Ogre::Root         *m_root;
-        Ogre::OverlaySystem* m_overlay_system;
-        Ogre::RenderWindow *m_render_window;
-        ResourceManagerList m_resource_managers;
+        bool m_initialized = false;
+        std::unique_ptr<Ogre::Root> m_root;
+        std::unique_ptr<Ogre::OverlaySystem> m_overlay_system;
+        Ogre::RenderWindow* m_render_window = nullptr; // Not owned
+        ResourceManagerVector m_resource_managers;
     };
 }
 

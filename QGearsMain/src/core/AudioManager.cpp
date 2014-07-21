@@ -175,7 +175,7 @@ AudioManager::GetMusic( const Ogre::String& name )
 {
     boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
 
-    for( std::list< AudioManager::Music >::iterator it = m_MusicList.begin(); it != m_MusicList.end(); ++it )
+    for( auto it = m_MusicList.begin(); it != m_MusicList.end(); ++it )
     {
         if( it->name == name )
         {

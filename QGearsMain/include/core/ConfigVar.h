@@ -34,8 +34,8 @@ public:
 
 private:
     // forbid copy
-    ConfigVar(const ConfigVar&);
-    ConfigVar&operator=(const ConfigVar&);
+    ConfigVar(const ConfigVar&) = delete;
+    ConfigVar&operator=(const ConfigVar&) = delete;
 
     Ogre::String    m_Name;
     Ogre::String    m_Description;

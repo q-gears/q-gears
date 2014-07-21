@@ -25,13 +25,13 @@ public:
     ConfigCmdHandler        GetHandler() const;
     ConfigCmdCompletion     GetCompletion() const;
 
-private:
+
     // ConfigCmd could be created only by ConfigCmdManager
     ConfigCmd(const Ogre::String& name, const Ogre::String& description, const Ogre::String& params_description, ConfigCmdHandler handler, ConfigCmdCompletion completion);
-
+private:
     // forbid copy
-    ConfigCmd(const ConfigCmd& rhs);
-    ConfigCmd& operator =(const ConfigCmd& rhs);
+    ConfigCmd(const ConfigCmd& rhs) = delete;
+    ConfigCmd& operator =(const ConfigCmd& rhs) = delete;
 
     Ogre::String            m_Name;
     Ogre::String            m_Description;

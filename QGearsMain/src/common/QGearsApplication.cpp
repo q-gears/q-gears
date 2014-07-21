@@ -35,6 +35,7 @@ GNU General Public License for more details.
 #include "map/QGearsWalkmeshFileManager.h"
 #include "data/FF7ModelListFileManager.h"
 #include "data/QGearsLGPArchiveFactory.h"
+#include "common/make_unique.h"
 
 namespace QGears
 {
@@ -43,7 +44,7 @@ namespace QGears
     typedef Ogre::ConfigFile::SettingsMultiMap SettingsMultiMap;
 
     //--------------------------------------------------------------------------
-    template<> Application *Ogre::Singleton<Application>::msSingleton = NULL;
+    template<> Application *Ogre::Singleton<Application>::msSingleton = nullptr;
 
     const char*     Application::CLI_SECTION_GENERIC( "Generic options" );
     const char*     Application::CLI_HELP( "help" );
@@ -61,10 +62,6 @@ namespace QGears
     Application::Application( int argc, char *argv[] ) :
         m_argc( argc )
       , m_argv( argv )
-      , m_initialized( false )
-      , m_overlay_system( nullptr )
-      , m_root( nullptr )
-      , m_render_window( nullptr )
     {
     }
 
@@ -72,22 +69,26 @@ namespace QGears
     Application::~Application()
     {
         destroyComponents();
-        delete m_root;
     }
 
     //--------------------------------------------------------------------------
     bool
     Application::initOgre()
     {
-        if( m_initialized ) return false;
+        if( m_initialized )
+        {
+            return false;
+        }
+
         m_initialized = true;
 
-        if( !processCommandLine( m_argc, m_argv ) ) return false;
+        if( !processCommandLine( m_argc, m_argv ) )
+        {
+            return false;
+        }
 
-        m_root = new Ogre::Root( m_plugins_filename, m_config_filename
-                               , m_log_filename );
-
-        m_overlay_system = new Ogre::OverlaySystem();
+        m_root = std::make_unique<Ogre::Root>( m_plugins_filename, m_config_filename, m_log_filename );
+        m_overlay_system = std::make_unique<Ogre::OverlaySystem>();
 
         Ogre::Log* default_log( Ogre::LogManager::getSingleton().getDefaultLog() );
         assert( default_log );
@@ -145,7 +146,7 @@ namespace QGears
     Ogre::Root*
     Application::getRoot()
     {
-        return m_root;
+        return m_root.get();
     }
 
     //--------------------------------------------------------------------------
@@ -253,31 +254,23 @@ namespace QGears
     Application::createResourceManagers()
     {
         assert( m_resource_managers.empty() );
-        // TODO maybe we should use SharedPtr so we don't have to really care
-        // for destruction!?
-        m_resource_managers.push_back( new QGears::CameraMatrixFileManager() );
-        m_resource_managers.push_back( new QGears::PaletteFileManager() );
-        m_resource_managers.push_back( new QGears::WalkmeshFileManager() );
-        m_resource_managers.push_back( new QGears::FF7::ModelListFileManager() );
-        m_resource_managers.push_back( new QGears::HRCFileManager() );
-        m_resource_managers.push_back( new QGears::RSDFileManager() );
-        m_resource_managers.push_back( new QGears::AFileManager() );
-        m_resource_managers.push_back( new QGears::PFileManager() );
-        m_resource_managers.push_back( new QGears::LZSFLevelFileManager() );
-        m_resource_managers.push_back( new QGears::BackgroundFileManager() );
-        m_resource_managers.push_back( new QGears::Background2DFileManager() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::CameraMatrixFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::PaletteFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::WalkmeshFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::FF7::ModelListFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::HRCFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::RSDFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::AFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::PFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::LZSFLevelFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::BackgroundFileManager>() );
+        m_resource_managers.emplace_back( std::make_shared<QGears::Background2DFileManager>() );
     }
 
     //--------------------------------------------------------------------------
     void
     Application::destroyResourceManagers()
     {
-        ResourceManagerList::iterator       it ( m_resource_managers.begin() );
-        ResourceManagerList::const_iterator end( m_resource_managers.end() );
-        while( it != end )
-        {
-            delete (*it++);
-        }
         m_resource_managers.clear();
     }
 
