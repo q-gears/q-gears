@@ -3,7 +3,7 @@
 
 #include <OgreSingleton.h>
 #include <vector>
-
+#include <memory>
 #include "ConfigCmd.h"
 
 
@@ -25,12 +25,12 @@ public:
 
 private:
     // forbid copy
-    ConfigCmdManager( const ConfigCmdManager& rhs );
-    ConfigCmdManager operator =( const ConfigCmdManager& rhs );
+    ConfigCmdManager( const ConfigCmdManager& rhs ) = delete;
+    ConfigCmdManager operator =( const ConfigCmdManager& rhs ) = delete;
 
     void InitCmd();
 
-    std::vector< ConfigCmd* > m_Commands;
+    std::vector< std::unique_ptr<ConfigCmd> > m_Commands;
 };
 
 

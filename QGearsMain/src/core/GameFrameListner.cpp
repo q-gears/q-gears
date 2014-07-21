@@ -97,8 +97,10 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
     }
 
     InputManager::getSingleton().Update();
+
     static InputEventArray input_event_array;
     input_event_array.clear();
+
     InputManager::getSingleton().GetInputEvents( input_event_array );
 
     bool console_active = Console::getSingleton().IsVisible();

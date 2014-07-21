@@ -36,6 +36,10 @@ THE SOFTWARE.
 
 namespace QGears
 {
+    /*
+     * When parsing files this is used to create the rendering engine object, e.g when we see a bone
+     * in the file we are parsing then call bone() to add one.
+     */
     class ManualObject
     {
         public:

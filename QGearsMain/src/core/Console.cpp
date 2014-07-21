@@ -797,4 +797,4 @@ Console::messageLogged( const Ogre::String& message, Ogre::LogMessageLevel lml, 
         case 3: colour = Ogre::ColourValue( 1, 0, 0, 1 ); break;
     }
     AddTextToOutput( message, colour );
-};
+}

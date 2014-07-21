@@ -22,6 +22,7 @@ ConfigVar::ConfigVar(const Ogre::String& name, const Ogre::String& description, 
 
     UpdateVariables();
 
+    // TODO: This code looks suspect
     if (m_StaticConfigVarList != (ConfigVar*)0xffffffff)
     {
         m_Previous = m_StaticConfigVarList;

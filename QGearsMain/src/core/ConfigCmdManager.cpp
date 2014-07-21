@@ -2,7 +2,7 @@
 #include "core/ConfigCmdManagerCommands.h"
 
 #include "core/Assert.h"
-
+#include "common/make_unique.h"
 
 
 template<>ConfigCmdManager *Ogre::Singleton< ConfigCmdManager >::msSingleton = NULL;
@@ -18,10 +18,7 @@ ConfigCmdManager::ConfigCmdManager()
 
 ConfigCmdManager::~ConfigCmdManager()
 {
-    for( unsigned int i = 0; i < m_Commands.size(); ++i )
-    {
-        delete m_Commands[ i ];
-    }
+
 }
 
 
@@ -38,7 +35,7 @@ ConfigCmdManager::AddCommand( const Ogre::String& name, const Ogre::String& desc
         QGEARS_ASSERT( m_Commands[ i ]->GetName() != name, "Command already exist." );
     }
 
-    m_Commands.push_back( new ConfigCmd( name, description, params_description, handler, completion ) );
+    m_Commands.emplace_back( std::make_unique<ConfigCmd>( name, description, params_description, handler, completion ) );
 }
 
 
@@ -57,11 +54,10 @@ ConfigCmdManager::Find( const Ogre::String& name ) const
     {
         if( m_Commands[ i ]->GetName() == name )
         {
-            return m_Commands[ i ];
+            return m_Commands[ i ].get();
         }
     }
-
-    return NULL;
+    return nullptr;
 }
 
 
@@ -79,8 +75,8 @@ ConfigCmdManager::GetConfigCmd( unsigned int i ) const
 {
     if( i < m_Commands.size() )
     {
-        return m_Commands[ i ];
+        return m_Commands[ i ].get();
     }
 
-    return NULL;
+    return nullptr;
 }
