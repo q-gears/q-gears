@@ -125,6 +125,9 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
             enable_testing()
         endif()
 endif()
+
+set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${OGRE_Overlay_LIBRARIES})
+
 #/*
 #file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dist/bin)
 #file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dist/media)
@@ -228,6 +231,7 @@ endif()
 set(QGears_INCLUDE_DIRS
     ${OIS_INCLUDE_DIRS}
     ${OGRE_INCLUDE_DIRS}
+    ${OGRE_Overlay_INCLUDE_DIRS}
     ${OGRE_SAMPLES_INCLUDEPATH}
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
 )
