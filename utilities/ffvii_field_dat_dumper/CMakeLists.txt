@@ -17,20 +17,20 @@ add_definitions(
     -DQGEARS_ADD_MANAGERS
 )
 
-add_executable(ffvii_field_dat_dumper
+add_executable(ff7_field_dat_dumper
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
 
 if(WIN32)
-  set_target_properties(ffvii_field_dat_dumper PROPERTIES WIN32_EXECUTABLE ON)
+  set_target_properties(ff7_field_dat_dumper PROPERTIES WIN32_EXECUTABLE ON)
 endif()
 
 set(LIBRARIES
     Utility
 )
-target_link_libraries(ffvii_field_dat_dumper    ${LIBRARIES})
+target_link_libraries(ff7_field_dat_dumper    ${LIBRARIES})
 
-install(TARGETS ffvii_field_dat_dumper
+install(TARGETS ff7_field_dat_dumper
     DESTINATION tools/ff7
 )

@@ -94,6 +94,6 @@ if(NOT QGEARS_STATIC)
     COMPILE_DEFINITIONS QGEARS_DATAPLUGIN_EXPORTS
   )
   install(TARGETS DataPlugin
-    LIBRARY DESTINATION ./
+    LIBRARY DESTINATION /usr/lib/q-gears/plugins/
   )
 endif()
