@@ -1,0 +1,33 @@
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+# define header and source files
+set(HEADER_FILES
+
+)
+set(SOURCE_FILES
+flevel.cpp
+)
+
+add_definitions(
+    -DQGEARS_ADD_MANAGERS
+)
+
+add_executable(flevel
+  ${HEADER_FILES}
+  ${SOURCE_FILES}
+)
+
+if(WIN32)
+  set_target_properties(flevel PROPERTIES WIN32_EXECUTABLE ON)
+endif()
+
+set(LIBRARIES
+    Utility
+)
+target_link_libraries(flevel    ${LIBRARIES})
+
+install(TARGETS flevel
+    DESTINATION tools/ff7
+)

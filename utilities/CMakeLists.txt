@@ -4,6 +4,7 @@ include_directories(
     ${QGears_SOURCE_DIR}/SupportedGames/FinalFantasy7/include
     ${CMAKE_CURRENT_SOURCE_DIR}/common/include
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${ZLIB_INCLUDE_DIRS}
 )
 
 # define header and source files for the library
@@ -48,11 +49,27 @@ add_library(Utility STATIC
 set(LIBRARIES
     ${OGRE_LIBRARIES}
     ${OIS_LIBRARIES}
+    ${ZLIB_LIBRARIES}
     QGearsMain
 )
 
 target_link_libraries(Utility ${LIBRARIES})
 
-
-add_subdirectory(ffvii_field_model_exporter_pc)
+add_subdirectory(ffix_model_exporter)
+add_subdirectory(ffix_script_dumper)
+add_subdirectory(ffix_sound_dumper)
+add_subdirectory(ffvii_battle_model_exporter)
+add_subdirectory(ffvii_battle_scene_dumper)
 add_subdirectory(ffvii_field_dat_dumper)
+add_subdirectory(ffvii_field_model_exporter)
+add_subdirectory(ffvii_field_model_exporter_pc)
+add_subdirectory(ffvii_font_exporter)
+add_subdirectory(ffvii_sound_dumper)
+add_subdirectory(ffvii_sound_dumper_psf)
+add_subdirectory(flevel)
+add_subdirectory(lzs)
+add_subdirectory(xeno_cd_extract)
+add_subdirectory(xeno_model_exporter)
+add_subdirectory(xeno_script_dumper)
+add_subdirectory(xeno_sound_dumper)
+add_subdirectory(xeno_walkmesh_exporter)

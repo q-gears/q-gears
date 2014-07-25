@@ -3,7 +3,7 @@
 
 
 
-#include <SDL/SDL.h>
+//#include <SDL/SDL.h>
 #include "common/TypeDefine.h"
 
 #include "../SoundBackend.h"
@@ -21,8 +21,7 @@ class SoundBackendSDL : public SoundBackend
 		};
 
 		FillAudioContext m_Context;
-		friend void sound_manager_fill_audio(void *arg_user_data,
-	Uint8 *arg_stream, int arg_length);
+        //friend void sound_manager_fill_audio(void *arg_user_data, Uint8 *arg_stream, int arg_length);
 
 	public:
 		SoundBackendSDL();

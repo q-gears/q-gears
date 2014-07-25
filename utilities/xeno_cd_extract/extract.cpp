@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <direct.h>
+//#include <direct.h>
 
 FILE *infile;
 FILE *index_file;
@@ -303,7 +303,11 @@ void extract(char *filename)
             sprintf(numero, "%d", directory_number++);
             strcat(filename, numero);
             strcat(filename, "\\");
-            mkdir(filename);
+
+            // TODO FIX ME
+            //mkdir(filename);
+            abort();
+
             printf("number of file %d, in dir %d", -file_size, directory_number);
         }
         // file
@@ -380,7 +384,10 @@ main(int argc, char *argv[])
         strcat(filename, "2\\");
     }
 
-    mkdir(filename);
+    // TODO FIX ME
+    //mkdir(filename);
+    abort();
+
     extract(filename);
     fclose(infile);
     return EXIT_SUCCESS;

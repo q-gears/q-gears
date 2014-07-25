@@ -11,12 +11,14 @@
 #include <list>
 #include <vector>
 
+// TODO: This tool needs the "libupse" fixing so it can build properly
+
 #include <zlib.h>
 extern "C"
 {
-#include <upse.h>
+//#include <upse.h>
 }
-#include <tinyxml.h>
+#include <tinyxml/tinyxml.h>
 #include <vorbis/codec.h>
 #include <vorbis/vorbisenc.h>
 
@@ -272,7 +274,7 @@ void print_channel_stat(ChannelParam);
 string samples_to_time(u32);
 
 
-
+/*
 static upse_iofuncs_t upse_iofuncs =
 {
     upse_open_cb,
@@ -280,7 +282,7 @@ static upse_iofuncs_t upse_iofuncs =
     upse_seek_cb,
     upse_close_cb
 };
-
+*/
 
 
 // this is needed as workaround for dumb libupse io callbacks
@@ -701,6 +703,7 @@ void files_delete_duplicates(list<path> &r_file_list)
 void audio_tracks_create(path a_game_path, list<path> &a_file_list, path a_output_path, path a_music_xml_fn,
 		path a_music_path, const char *a_bios_fn, float a_ogg_quality, bool a_dump_psf, bool a_dump_pcm)
 {
+    /*
 	cout << "creating psf driver template... ";
 
 	// read full file to memory
@@ -916,7 +919,7 @@ void audio_tracks_create(path a_game_path, list<path> &a_file_list, path a_outpu
 
 	music_xml.SaveFile((a_output_path / a_music_xml_fn).string().c_str());
 
-	delete [] psf_driver;
+    delete [] psf_driver;*/
 }
 
 
@@ -993,6 +996,7 @@ u8 *lzs_extract(u32 &r_output_size, const u8 *a_input, u32 a_size)
 void psf_decode(path a_ogg_fn, path a_raw_fn, bool a_dump_pcm, char *a_psf_data, u32 a_psf_data_size,
 		u32 a_attack_size, u32 a_loop_size, float a_ogg_quality)
 {
+    /*
 	PsfContext ctx;
 
     upse_set_audio_callback(upse_write_audio_cb, (void *)&ctx);
@@ -1029,7 +1033,7 @@ void psf_decode(path a_ogg_fn, path a_raw_fn, bool a_dump_pcm, char *a_psf_data,
 		cout << "error: failed to load psf data" << endl;
 	}
 
-	upse_set_audio_callback(NULL, NULL);
+    upse_set_audio_callback(NULL, NULL);*/
 }
 
 
@@ -1037,6 +1041,7 @@ u32 psf_decode_time(char *a_psf_data, u32 a_psf_data_size)
 {
 	u32 time = 0;
 
+    /*
     upse_set_breakpoint_callback(upse_breakpoint_cb, (void *)&time, 0x80033894); //@[0x80049828 + 0xa0 * 4]
 
 	g_psf_data_size = a_psf_data_size;
@@ -1053,7 +1058,7 @@ u32 psf_decode_time(char *a_psf_data, u32 a_psf_data_size)
 	}
 
 	upse_set_breakpoint_callback(NULL, NULL, 0);
-
+*/
     return time;
 }
 
@@ -1141,7 +1146,7 @@ void upse_write_audio_cb(unsigned char *data, long bytes, void *user_data)
 
 	if(ctx.samples_decoded >= ctx.samples_total)
 	{
-		upse_stop();
+//		upse_stop();
 		cout << "done" << endl;
 	}
 }
@@ -1150,7 +1155,7 @@ void upse_write_audio_cb(unsigned char *data, long bytes, void *user_data)
 void upse_breakpoint_cb(u32 samples_count, void *user_data)
 {
 	*(u32 *)user_data = samples_count;
-	upse_stop();
+    //upse_stop();
 }
 
 

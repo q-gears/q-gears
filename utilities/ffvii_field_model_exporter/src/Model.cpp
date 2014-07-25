@@ -2,11 +2,12 @@
 
 #include <OgreTagPoint.h>
 
-#include "../../common/utilites/Logger.h"
 
 #include "Model.h"
 
-Uint32 g_ModelNumber = 0;
+using namespace QGears;
+
+uint32 g_ModelNumber = 0;
 
 
 
@@ -28,8 +29,9 @@ Model::~Model(void)
 
 
 void
-Model::Update(const Uint32 delta_time)
+Model::Update(const uint32 delta_time)
 {
+    /*
     if (m_AnimationWait >= 4)
     {
         if (m_Animation.size() > m_PlayedAnimation)
@@ -47,7 +49,7 @@ Model::Update(const Uint32 delta_time)
         m_AnimationWait = 0;
     }
 
-    ++m_AnimationWait;
+    ++m_AnimationWait;*/
 }
 
 
@@ -56,14 +58,14 @@ Model::Update(const Uint32 delta_time)
 
 
 void
-Model::DrawHierarchy(const Sint8 level) const
+Model::DrawHierarchy(const sint8 level) const
 {
 }
 
 
 
 void
-Model::AddBone(const Sint16 length, const Sint8 parent_id)
+Model::AddBone(const sint16 length, const sint8 parent_id)
 {
     Bone bone;
     bone.length    = length;
@@ -72,7 +74,7 @@ Model::AddBone(const Sint16 length, const Sint8 parent_id)
 }
 
 
-
+/*
 void
 Model::AddPart(const TotalGeometry& geometry, const int parent_bone)
 {
@@ -81,19 +83,19 @@ Model::AddPart(const TotalGeometry& geometry, const int parent_bone)
     part.parent_bone = parent_bone;
     m_Parts.push_back(part);
 }
-
+*/
 
 
 void
 Model::AddAnimation(const Animation& animation)
 {
-    m_Animation.push_back(animation);
+    //m_Animation.push_back(animation);
 }
 
 
 
 void
-Model::SetAnimation(Uint32 animation_id)
+Model::SetAnimation(uint32 animation_id)
 {
     m_PlayedAnimation = animation_id;
     m_CurrentFrame = 0;
