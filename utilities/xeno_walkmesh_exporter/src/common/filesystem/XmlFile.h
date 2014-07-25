@@ -8,9 +8,10 @@
 #include "../../common/utilites/NoCopy.h"
 #include "../../common/utilites/StdString.h"
 
-#include <libxml/tree.h>
+#include <tinyxml/tinyxml.h>
 
-
+// TODO: Port to tinyxml
+class xmlNodePtr;
 
 class XmlFile : public NoCopy<XmlFile>
 {
@@ -26,7 +27,7 @@ public:
 
 protected:
     RString   mFileName;   /**< @brief name of file       */
-    xmlDocPtr mFile;
+    //xmlDocPtr mFile;
 };
 
 

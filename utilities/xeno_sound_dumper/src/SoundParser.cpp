@@ -31,6 +31,7 @@ SoundParser::Update()
 void
 SoundParser::UpdateSpu()
 {
+    /*
     spu = w[8004ff84];
 
     T2 = 0;
@@ -130,5 +131,5 @@ SoundParser::UpdateSpu()
         [spu + 188] = h(V0);       // Voice ON (0-15)
         [spu + 18a] = h(V0 >> 10); // Voice ON (16-23)
         [80058b98] = w(0);
-    }
+    }*/
 }

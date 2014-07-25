@@ -19,7 +19,7 @@
 #define __UPSE_LIBUPSE_UPSE_H_GUARD
 
 #include <unistd.h>
-#include <upse-types.h>
+//#include <upse-types.h>
 
 typedef struct _upse_psftag
 {

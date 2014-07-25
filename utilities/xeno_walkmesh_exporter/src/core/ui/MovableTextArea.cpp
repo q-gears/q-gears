@@ -1,7 +1,7 @@
 #include "MovableTextArea.h"
 
 #include <Ogre.h>
-
+#include <OGRE/Overlay/OgreOverlayManager.h>
 
 
 MovableTextArea::MovableTextArea(const Ogre::String& name):

@@ -17,6 +17,11 @@ SoundManager *SOUNDMAN = NULL;
 SoundBackend *SBE = NULL;
 
 
+#define HIWORD(l) ((WORD) (((DWORD) (l) >> 16) & 0xFFFF))
+#define LOWORD(a) ((WORD)(a))
+
+typedef unsigned short int WORD;
+typedef unsigned int DWORD;
 
 unsigned long RateTable[160];
 

@@ -46,6 +46,8 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   )
 endif()
 
+find_package( ZLIB REQUIRED )
+
 find_package(OGRE REQUIRED)
 
 #if(NOT "${OGRE_VERSION_NAME}" STREQUAL "Cthugha")

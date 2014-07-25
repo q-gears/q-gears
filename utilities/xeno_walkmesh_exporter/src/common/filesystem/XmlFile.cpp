@@ -8,9 +8,11 @@
 
 
 XmlFile::XmlFile(const RString& file):
-    mFileName(file),
-    mFile(NULL)
+    mFileName(file) /*,
+    mFile(NULL)*/
 {
+        abort();
+    /*
     u32 buffer_size = REALFILESYSTEM->GetFileSize(file);
 
     // if it exist read properties
@@ -26,14 +28,14 @@ XmlFile::XmlFile(const RString& file):
     else
     {
         LOGGER->Log(LOGGER_WARNING, "Warning: %s not found!", mFileName.c_str());
-    }
+    }*/
 }
 
 
 
 XmlFile::~XmlFile(void)
 {
-    xmlFreeDoc(mFile);
+    //xmlFreeDoc(mFile);
 }
 
 
@@ -49,14 +51,15 @@ const Sint32
 XmlFile::GetInt(const xmlNodePtr& node, const RString& tag) const
 {
     s32 ret = 0;
-
+    abort();
+/*
     xmlChar* prop = xmlGetProp(node, BAD_CAST tag.c_str());
     if (prop != NULL)
     {
         ret = atoi((const char*)prop);
         xmlFree(prop);
     }
-
+*/
     return ret;
 }
 
@@ -66,14 +69,15 @@ const RString
 XmlFile::GetString(const xmlNodePtr& node, const RString& tag) const
 {
     RString ret("");
-
+    abort();
+/*
     xmlChar* prop = xmlGetProp(node, BAD_CAST tag.c_str());
     if (prop != NULL)
     {
         ret = (const char*)prop;
         xmlFree(prop);
     }
-
+*/
     return ret;
 }
 
@@ -83,7 +87,8 @@ const Vector3
 XmlFile::GetVector3(const xmlNodePtr& node, const RString& tag) const
 {
     Vector3 ret(0.0f, 0.0f, 0.0f);
-
+        abort();
+/*
     xmlChar* prop = xmlGetProp(node, BAD_CAST tag.c_str());
     if (prop != NULL)
     {
@@ -105,6 +110,6 @@ XmlFile::GetVector3(const xmlNodePtr& node, const RString& tag) const
             }
         }
     }
-
+*/
     return ret;
 }

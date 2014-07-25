@@ -1,4 +1,4 @@
-#include <SDL/SDL.h>
+//#include <SDL/SDL.h>
 #include "common/TypeDefine.h"
 
 #include "SoundBackendSDL.h"
@@ -9,12 +9,12 @@ using namespace std;
 
 
 
-void sound_manager_fill_audio(void *arg_user_data,
-	Uint8 *arg_stream, int arg_length);
+void sound_manager_fill_audio(void *arg_user_data, unsigned char *arg_stream, int arg_length);
 
 
 SoundBackendSDL::SoundBackendSDL()
 {
+    /*
 	// init SDL::Audio subsystem
 	Uint32 initialized_subsystems = SDL_WasInit(SDL_INIT_EVERYTHING);
 	int initialization_successfull;
@@ -67,12 +67,13 @@ SoundBackendSDL::SoundBackendSDL()
 
 	m_Context.play_length = 0;
 
-	SDL_PauseAudio(0);
+    SDL_PauseAudio(0);*/
 }
 
 
 SoundBackendSDL::~SoundBackendSDL()
 {
+    /*
 	SDL_PauseAudio(1);
 
 	SDL_CloseAudio();
@@ -84,7 +85,7 @@ SoundBackendSDL::~SoundBackendSDL()
 	}
 
 	if(m_Context.buffer != NULL)
-		delete [] m_Context.buffer;
+        delete [] m_Context.buffer;*/
 }
 
 
@@ -100,19 +101,20 @@ u32 SoundBackendSDL::GetBytesBuffered()
 
 void SoundBackendSDL::FeedStreamData(u8 *arg_data, u32 arg_length)
 {
+    /*
 	SDL_LockAudio();
 
 	memcpy((void *)(m_Context.buffer + m_Context.play_length),
 			(const void *)arg_data, arg_length);
 	m_Context.play_length += arg_length;
 
-	SDL_UnlockAudio();
+    SDL_UnlockAudio();*/
 }
 
 
-void sound_manager_fill_audio(void *arg_user_data,
-	Uint8 *arg_stream, int arg_length)
+void sound_manager_fill_audio(void *arg_user_data, unsigned char *arg_stream, int arg_length)
 {
+    /*
 	SoundBackendSDL::FillAudioContext *context =
 			(SoundBackendSDL::FillAudioContext *)arg_user_data;
 
@@ -130,6 +132,6 @@ void sound_manager_fill_audio(void *arg_user_data,
 	// shift pcm data to buffer beginning
 	memcpy((void *)context->buffer,
 			(const void *)(context->buffer + play_length),
-			context->play_length);
+            context->play_length);*/
 }
 
