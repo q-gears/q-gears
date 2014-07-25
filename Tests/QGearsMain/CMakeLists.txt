@@ -23,18 +23,26 @@ add_executable(TestQGearsMapFileXMLSerializer
 target_link_libraries(TestQGearsMapFileXMLSerializer ${LIBRARIES})
 add_test(TestQGearsMapFileXMLSerializer TestQGearsMapFileXMLSerializer)
 
-
+# field walk mesh
 add_executable(TestQGearsWalkmeshFileXMLSerializer
     src/test_QGearsWalkmeshFileXMLSerializer.cpp
 )
 target_link_libraries(TestQGearsWalkmeshFileXMLSerializer ${LIBRARIES})
 add_test(TestQGearsWalkmeshFileXMLSerializer TestQGearsWalkmeshFileXMLSerializer)
 
-
+# LGP archive
 add_executable(TestQGearsLGPArchive
     src/test_QGearsLGPArchive.cpp
 )
 target_link_libraries(TestQGearsLGPArchive ${LIBRARIES})
 add_test(TestQGearsLGPArchive TestQGearsLGPArchive)
+
+# world map
+add_executable(TestMapSerializer
+    src/test_MapSerializer.cpp
+)
+
+target_link_libraries(TestMapSerializer ${LIBRARIES})
+add_test(TestMapSerializer TestMapSerializer)
 
 

@@ -6,6 +6,9 @@ set(HEADER_FILES
   include/common/QGearsStringUtil.h
   include/common/TypeDefine.h
   include/common/make_unique.h
+  include/data/worldmap/MapFile.h
+  include/data/worldmap/MapFileManager.h
+  include/data/worldmap/MapFileSerializer.h
   include/data/QGearsAFile.h
   include/data/QGearsAFileManager.h
   include/data/QGearsAFileSerializer.h
@@ -203,6 +206,9 @@ set(SOURCE_FILES
   src/data/QGearsAFile.cpp
   src/data/QGearsAFileManager.cpp
   src/data/QGearsAFileSerializer.cpp
+  src/data/worldmap/MapFile.cpp
+  src/data/worldmap/MapFileManager.cpp
+  src/data/worldmap/MapFileSerializer.cpp
   src/data/QGearsBackgroundFile.cpp
   src/data/QGearsBackgroundFileManager.cpp
   src/data/QGearsBackgroundFileSerializer.cpp
