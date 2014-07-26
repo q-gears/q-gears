@@ -1,4 +1,5 @@
 #include "data/worldmap/MapFileSerializer.h"
+#include "common/LzsFile.h"
 
 BEGIN_QGEARS
 
@@ -166,8 +167,25 @@ MapFileSerializer::~MapFileSerializer()
 
 }
 
-void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, MapFile& dest )
+void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile& dest )
 {
+    // Read the offset to compressed data in this block
+    BlockHeader header = {};
+    readUInt32( stream, header.mCompressedDataOffset );
+
+    // Go to the offset
+    stream->seek( header.mCompressedDataOffset );
+
+    // Read the size of the compressed data
+    uint32 compressedDataSize = 0;
+    readUInt32( stream, compressedDataSize );
+
+    // Read the compressed data into a temp buffer
+    std::vector<uint8> buffer( compressedDataSize );
+    stream->read(buffer.data(), buffer.size());
+
+    // Decompress the data
+    auto decompressed = LzsBuffer::Decompress(buffer);
 
 }
 

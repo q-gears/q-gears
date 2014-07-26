@@ -3,21 +3,21 @@
 
 BEGIN_QGEARS
 
-/*static*/ const String MapFile::RESOURCE_TYPE( "QGearsWorldMap7File" );
+/*static*/ const String WorldMapFile::RESOURCE_TYPE( "QGearsWorldMap7File" );
 
-MapFile::~MapFile()
+WorldMapFile::~WorldMapFile()
 {
 
 }
 
-void MapFile::loadImpl()
+void WorldMapFile::loadImpl()
 {
     MapFileSerializer serializer;
     Ogre::DataStreamPtr stream( openResource() );
     serializer.importMapFile( stream, *this );
 }
 
-void MapFile::unloadImpl()
+void WorldMapFile::unloadImpl()
 {
 
 }

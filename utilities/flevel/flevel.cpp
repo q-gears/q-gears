@@ -40,7 +40,6 @@ namespace bpo = boost::program_options;
 
 void extractSections( const bfs::path &file_in, const bfs::path &path_out )
 {
-    FILESYSTEM = new FileSystem();
     /*
     File f( file_in.string() );
     // TODO alternative implementation adapted to FLevel Resource

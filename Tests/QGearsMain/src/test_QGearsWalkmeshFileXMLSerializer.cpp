@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE( read_file )
     const char* file_name( "misc/walkmesh.xml" );
     std::ifstream ifs( file_name, std::ifstream::binary );
     BOOST_REQUIRE( ifs.is_open() );
-    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( &ifs ) );
+    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( &ifs, false ) );
     BOOST_REQUIRE( stream->isReadable() );
 
     Ogre::LogManager                    logMgr;

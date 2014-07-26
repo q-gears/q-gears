@@ -105,7 +105,6 @@ InitializeOgreBase( const Ogre::String& name )
     viewport->setBackgroundColour( Ogre::ColourValue( 0, 0.4, 0 ) );
     camera->setAspectRatio( Ogre::Real( viewport->getActualWidth() ) / Ogre::Real( viewport->getActualHeight() ) );
 
-    FILESYSTEM = new FileSystem();
     LOGGER = new Logger( "game.log" );
 }
 
@@ -115,7 +114,6 @@ void
 DeinitializeOgreBase()
 {
     delete LOGGER;
-    delete FILESYSTEM;
 
     delete root;
     delete frame_listener;

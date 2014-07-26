@@ -6,14 +6,14 @@
 
 BEGIN_QGEARS
 
-class MapFile;
+class WorldMapFile;
 
 class MapFileSerializer : public Serializer
 {
 public:
     MapFileSerializer();
     virtual ~MapFileSerializer();
-    void importMapFile( Ogre::DataStreamPtr& stream, MapFile& dest );
+    void importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile& dest );
 };
 
 END_QGEARS

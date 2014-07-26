@@ -1,4 +1,3 @@
-#include "../../common/FileSystem.h"
 #include "../../common/Logger.h"
 
 #include "ScriptFile.h"
@@ -9,7 +8,6 @@
 int
 main(int argc, char *argv[])
 {
-    FILESYSTEM = new FileSystem();
     LOGGER = new Logger("game.log");
 
     TextFile* text_file = new TextFile("data/1.text");
@@ -21,7 +19,6 @@ main(int argc, char *argv[])
     delete script_file;
 
     delete LOGGER;
-    delete FILESYSTEM;
 
     return 0;
 }

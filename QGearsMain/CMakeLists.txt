@@ -5,6 +5,9 @@ set(HEADER_FILES
   include/common/QGearsResource.h
   include/common/QGearsStringUtil.h
   include/common/TypeDefine.h
+  include/common/LzsFile.h
+  include/common/File.h
+  include/common/FileSystem.h
   include/common/make_unique.h
   include/data/worldmap/MapFile.h
   include/data/worldmap/MapFileManager.h
@@ -144,6 +147,9 @@ set(SOURCE_FILES
   src/common/QGearsResource.cpp
   src/common/QGearsStringUtil.cpp
   src/common/TypeDefine.cpp
+  src/common/LzsFile.cpp
+  src/common/File.cpp
+  src/common/FileSystem.cpp
   src/core/particles/emitters/ParticlePointEmitter.cpp
   src/core/particles/Particle.cpp
   src/core/particles/ParticleEmitter.cpp

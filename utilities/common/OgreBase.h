@@ -6,7 +6,7 @@
 #include <Overlay/OgreOverlayManager.h>
 #include <OIS.h>
 
-#include "FileSystem.h"
+#include "common/FileSystem.h"
 #include "Logger.h"
 
 

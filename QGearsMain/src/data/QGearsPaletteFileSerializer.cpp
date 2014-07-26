@@ -55,7 +55,7 @@ namespace QGears
     void
     PaletteFileSerializer::readFileHeader( Ogre::DataStreamPtr& stream )
     {
-        readInt(   stream, m_header.file_size );
+        readUInt32(   stream, m_header.file_size );
         readShort( stream, m_header.pal_x );
         readShort( stream, m_header.pal_y );
         readShort( stream, m_header.colors_per_page );

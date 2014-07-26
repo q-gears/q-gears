@@ -3,7 +3,7 @@
 
 #include <Ogre.h>
 
-#include "../../common/File.h"
+#include "common/File.h"
 #include "../../common/OgreGenUtilites.h"
 
 

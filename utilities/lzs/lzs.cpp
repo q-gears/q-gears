@@ -40,8 +40,6 @@ namespace bpo = boost::program_options;
 
 void decompress( const bfs::path &file_in, const bfs::path &file_out )
 {
-    FILESYSTEM = new FileSystem();
-
     LzsFile lzs( file_in.string() );
     lzs.WriteFile( file_out.string() );
 }

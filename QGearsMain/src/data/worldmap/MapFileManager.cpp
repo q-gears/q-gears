@@ -18,7 +18,7 @@ MapFileManager &MapFileManager::getSingleton()
 
 MapFileManager::MapFileManager()
 {
-    mResourceType = MapFile::RESOURCE_TYPE;
+    mResourceType = WorldMapFile::RESOURCE_TYPE;
     mLoadOrder = 30.0f;
     Ogre::ResourceGroupManager::getSingleton()._registerResourceManager( mResourceType, this );
 }
@@ -36,7 +36,7 @@ Ogre::Resource* MapFileManager::createImpl(
         Ogre::ManualResourceLoader* loader,
         const Ogre::NameValuePairList* createParams )
 {
-    return new MapFile( this, name, handle, group, isManual, loader );
+    return new WorldMapFile( this, name, handle, group, isManual, loader );
 }
 
 END_QGEARS

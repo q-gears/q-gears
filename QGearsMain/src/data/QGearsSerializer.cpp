@@ -116,7 +116,7 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    Serializer::readInt( Ogre::DataStreamPtr &stream, uint32 &pDest )
+    Serializer::readUInt32( Ogre::DataStreamPtr &stream, uint32 &pDest )
     {
         readInts( stream, &pDest, 1 );
     }

@@ -3,8 +3,8 @@
 
 #include <Ogre.h>
 
-#include "../../common/File.h"
-#include "../../common/Logger.h"
+#include "common/File.h"
+#include "common/Logger.h"
 
 
 

@@ -5,18 +5,18 @@
 
 BEGIN_QGEARS
 
-class MapFile : public Resource
+class WorldMapFile : public Resource
 {
 public:
     static const String RESOURCE_TYPE;
     using Resource::Resource;
-    virtual ~MapFile();
+    virtual ~WorldMapFile();
 private:
     virtual void loadImpl() override final;
     virtual void unloadImpl() override final;
 };
 
-typedef Ogre::SharedPtr<MapFile> AFilePtr;
+typedef Ogre::SharedPtr<WorldMapFile> AFilePtr;
 
 END_QGEARS
 

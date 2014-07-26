@@ -1,7 +1,7 @@
 #ifndef DATFILE_H
 #define DATFILE_H
 
-#include "../../common/LzsFile.h"
+#include "common/LzsFile.h"
 
 
 

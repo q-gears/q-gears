@@ -3,8 +3,8 @@
 #include <Ogre.h>
 #include <OIS.h>
 
-#include "../../common/FileSystem.h"
-#include "../../common/Logger.h"
+#include "common/FileSystem.h"
+#include "common/Logger.h"
 
 
 #include "AkaoParser.h"
@@ -138,9 +138,6 @@ main( int argc, char *argv[] )
     misc[ "title" ] = "FFVII Exporter";
     window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
 
-
-
-    FILESYSTEM = new FileSystem();
     LOGGER = new Logger( "game.log" );
 
     state = GAME;
@@ -196,7 +193,6 @@ main( int argc, char *argv[] )
     delete root;
     delete frame_listener;
 
-    delete FILESYSTEM;
     delete LOGGER;
 
     return 0;

@@ -4,7 +4,7 @@
 
 
 #include "BsxFile.h"
-#include "../../common/LzsFile.h"
+#include "common/LzsFile.h"
 
 
 

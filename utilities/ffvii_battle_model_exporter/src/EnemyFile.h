@@ -2,7 +2,7 @@
 #define ENEMY_FILE_H
 
 #include "MeshExtractor.h"
-#include "../../common/LzsFile.h"
+#include "common/LzsFile.h"
 #include "../../common/Vram.h"
 #include "../../common/OgreGenUtilites.h"
 

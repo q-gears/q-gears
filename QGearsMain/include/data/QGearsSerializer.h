@@ -55,7 +55,7 @@ namespace QGears
         void    read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
         void    read2ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
         void    readShort( Ogre::DataStreamPtr &stream, uint16 &pDest );
-        void    readInt( Ogre::DataStreamPtr &stream, uint32 &pDest );
+        void    readUInt32( Ogre::DataStreamPtr &stream, uint32 &pDest );
         void    readFloat( Ogre::DataStreamPtr &stream, float &pDest );
         void    readEndString( Ogre::DataStreamPtr &stream, const String &end_text );
 

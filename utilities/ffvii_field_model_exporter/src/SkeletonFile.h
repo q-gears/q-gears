@@ -4,7 +4,7 @@
 #include <Ogre.h>
 
 #include "SkeletonFile.h"
-#include "../../common/File.h"
+#include "common/File.h"
 
 
 

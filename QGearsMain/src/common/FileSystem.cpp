@@ -1,23 +1,7 @@
-#include "FileSystem.h"
-#include "Logger.h"
+#include "common/FileSystem.h"
+#include "core/Logger.h"
 
 #include <stdio.h>
-
-
-
-FileSystem *FILESYSTEM = NULL;
-
-
-
-FileSystem::FileSystem()
-{
-}
-
-
-
-FileSystem::~FileSystem()
-{
-}
 
 
 
@@ -28,7 +12,7 @@ FileSystem::GetFileSize(const Ogre::String &path)
 
     if (file == NULL)
     {
-        LOGGER->Log("Can't open file " + path + ".\n");
+        LOG_ERROR("Can't open file " + path + ".\n");
         return 0;
     }
 
@@ -48,7 +32,7 @@ FileSystem::ReadFile(const Ogre::String &path, void* buffer, const unsigned int 
 
     if (file == NULL)
     {
-        LOGGER->Log("Can't open file " + path + ".\n");
+        LOG_ERROR("Can't open file " + path + ".\n");
         return false;
     }
 
