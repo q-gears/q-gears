@@ -8,9 +8,9 @@ const int kWorldMapBlockSize = 0xB800;
 struct BlockHeader
 {
     // Offset in this block of the compressed data
-    uint32 mCompressedDataOffset;
+    uint32 mCompressedDataOffsets[16];
 
-    // At the compressed data we have another uint32 which
+    // At the compressed data offset we have another uint32 which
     // is the size of the uncompressed data
 };
 
@@ -169,24 +169,51 @@ MapFileSerializer::~MapFileSerializer()
 
 void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile& dest )
 {
-    // Read the offset to compressed data in this block
-    BlockHeader header = {};
-    readUInt32( stream, header.mCompressedDataOffset );
+    const auto fileSize = stream->size();
+    const auto numBlocks = fileSize / kWorldMapBlockSize;
 
-    // Go to the offset
-    stream->seek( header.mCompressedDataOffset );
+    for ( int j=0; j<numBlocks; j++ )
+    {
+        const size_t basePos = kWorldMapBlockSize*j;
+        stream->seek( basePos );
 
-    // Read the size of the compressed data
-    uint32 compressedDataSize = 0;
-    readUInt32( stream, compressedDataSize );
+        // Read the offset to compressed data in this block
+        BlockHeader header = {};
+        for ( auto i=0u; i<16; i++)
+        {
+            readUInt32( stream, header.mCompressedDataOffsets[i] );
+        }
 
-    // Read the compressed data into a temp buffer
-    std::vector<uint8> buffer( compressedDataSize );
-    stream->read(buffer.data(), buffer.size());
+        for ( auto i=0u; i<16; i++)
+        {
+            // Go to the offset
+            stream->seek( basePos + header.mCompressedDataOffsets[i] );
 
-    // Decompress the data
-    auto decompressed = LzsBuffer::Decompress(buffer);
+            // Read the size of the compressed data
+            uint32 compressedDataSize = 0;
+            readUInt32( stream, compressedDataSize );
 
+            // Go back to before the compressed data size
+            stream->seek( basePos + header.mCompressedDataOffsets[i] );
+
+            // Read the compressed data into a temp buffer
+            std::vector<uint8> buffer( compressedDataSize + 4 );
+            stream->read(buffer.data(), buffer.size());
+
+            // Decompress the data
+            auto decompressed = LzsBuffer::Decompress(buffer);
+
+            BlockMeshHeader* h = reinterpret_cast<BlockMeshHeader*>(decompressed.data());
+
+            std::cout << "block: " << j
+                      << " from offset << " << header.mCompressedDataOffsets[i]
+                      << " old size: " << buffer.size()
+                      << " decompressed size is " << decompressed.size()
+                      << " header is tris: " << h->NumberOfTriangles
+                      << " verts " << h->NumberOfVertices
+                      << std::endl;
+        }
+    }
 }
 
 END_QGEARS
