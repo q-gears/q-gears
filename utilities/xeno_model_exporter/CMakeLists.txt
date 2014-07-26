@@ -42,5 +42,5 @@ set(LIBRARIES
 target_link_libraries(xeno_model_exporter    ${LIBRARIES})
 
 install(TARGETS xeno_model_exporter
-    DESTINATION tools/ff7
+    DESTINATION tools/xeno
 )

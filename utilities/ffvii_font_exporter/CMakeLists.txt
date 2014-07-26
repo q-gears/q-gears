@@ -16,20 +16,20 @@ add_definitions(
     -DQGEARS_ADD_MANAGERS
 )
 
-add_executable(ffvii_font_exporter
+add_executable(ff7_font_exporter
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
 
 if(WIN32)
-  set_target_properties(ffvii_font_exporter PROPERTIES WIN32_EXECUTABLE ON)
+  set_target_properties(ff7_font_exporter PROPERTIES WIN32_EXECUTABLE ON)
 endif()
 
 set(LIBRARIES
     Utility
 )
-target_link_libraries(ffvii_font_exporter    ${LIBRARIES})
+target_link_libraries(ff7_font_exporter    ${LIBRARIES})
 
-install(TARGETS ffvii_font_exporter
+install(TARGETS ff7_font_exporter
     DESTINATION tools/ff7
 )

@@ -94,5 +94,5 @@ set(LIBRARIES
 target_link_libraries(xeno_walkmesh_exporter    ${LIBRARIES})
 
 install(TARGETS xeno_walkmesh_exporter
-    DESTINATION tools/ff7
+    DESTINATION tools/xeno
 )

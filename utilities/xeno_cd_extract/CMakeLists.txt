@@ -29,5 +29,5 @@ set(LIBRARIES
 target_link_libraries(xeno_cd_extract    ${LIBRARIES})
 
 install(TARGETS xeno_cd_extract
-    DESTINATION tools/ff7
+    DESTINATION tools/xeno
 )
