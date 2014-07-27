@@ -53,11 +53,11 @@ CameraManager::~CameraManager()
 
 
 void
-CameraManager::Input( const Event& event )
+CameraManager::Input( const Event& event, Ogre::Real timeSinceLastFrame )
 {
     if( m_CameraFree == true )
     {
-        float speed = cv_cam_speed.GetF();
+        float speed = cv_cam_speed.GetF() * timeSinceLastFrame;
         if( InputManager::getSingleton().IsButtonPressed( OIS::KC_RSHIFT ) || InputManager::getSingleton().IsButtonPressed( OIS::KC_LSHIFT ) )
         {
             speed *= 4;

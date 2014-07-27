@@ -40,10 +40,7 @@ GameFrameListener::GameFrameListener( Ogre::RenderWindow* win ):
 #else
     pl.insert( std::make_pair( std::string( "x11_mouse_grab" ), std::string( "false" ) ) );
     pl.insert( std::make_pair( std::string( "x11_mouse_hide" ), std::string( "false" ) ) );
-
-    // prevents resize of window but also prevents input from randomly stop working!
-    // if you manage to alt+tab in debian even with this turned off the input can break..
-    //pl.insert( std::make_pair(std::string( "x11_keyboard_grab" ), std::string( "false" ) ) );
+    pl.insert( std::make_pair(std::string( "x11_keyboard_grab" ), std::string( "false" ) ) );
 #endif
 
     m_InputManager = OIS::InputManager::createInputSystem( pl );
@@ -113,7 +110,7 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
         {
             EntityManager::getSingleton().Input( input_event_array[ i ] );
             ScriptManager::getSingleton().Input( input_event_array[ i ] );
-            CameraManager::getSingleton().Input( input_event_array[ i ] );
+            CameraManager::getSingleton().Input( input_event_array[ i ], evt.timeSinceLastFrame );
         }
     }
 
