@@ -21,8 +21,6 @@ void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile
     const auto fileSize = stream->size();
     auto numBlocks = fileSize / kWorldMapBlockSize;
 
-    numBlocks = 1;
-
     for ( int j=0; j<numBlocks; j++ )
     {
 
@@ -52,7 +50,7 @@ void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile
             // Go back to before the compressed data size
             stream->seek( basePos + header.mCompressedDataOffsets[i] );
 
-            // Read the compressed data into a temp buffer
+            // Read the compressed data into a temp buffer, including the compressed data size
             std::vector<uint8> buffer( compressedDataSize + 4 );
             stream->read(buffer.data(), buffer.size());
 
@@ -64,13 +62,14 @@ void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile
             readUInt16(decStream, blockPart.mHeader.NumberOfTriangles);
             readUInt16(decStream, blockPart.mHeader.NumberOfVertices);
 
+            /*
             std::cout << "block: " << j
                       << " from offset " << header.mCompressedDataOffsets[i]
                       << " old size: " << buffer.size()
                       << " decompressed size is " << decompressed.size()
                       << " header is tris: " <<  blockPart.mHeader.NumberOfTriangles
                       << " verts " << blockPart.mHeader.NumberOfVertices
-                      << std::endl;
+                      << std::endl;*/
 
 
             blockPart.mTris.resize(blockPart.mHeader.NumberOfTriangles);
@@ -83,8 +82,8 @@ void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile
                 readUInt8( decStream, s.Vertex2Index );
 
                 readUInt8( decStream, s.WalkabilityInfo );
+                //readUInt8( decStream, s.Unknown );
 
-                readUInt8( decStream, s.Unknown );
                 readUInt8( decStream, s.uVertex0 );
                 readUInt8( decStream, s.vVertex0 );
 
@@ -95,8 +94,9 @@ void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile
                 readUInt8( decStream, s.vVertex2 );
 
                 readUInt16( decStream, s.TextureInfo );
-                readUInt16( decStream, s.Location );
+                //readUInt16( decStream, s.Location );
 
+                /*
                 std::cout << "v0: " << int(s.Vertex0Index)
                           << " v1 " << int(s.Vertex1Index)
                           << " v2 " << int(s.Vertex2Index)
@@ -107,39 +107,24 @@ void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile
                           << " u2 " << int(s.vVertex2)
                           << " texture " << s.TextureInfo
                           << " locId " << s.Location
-                          << std::endl;
+                          << std::endl;*/
 
             }
 
-            blockPart.mVertices.resize( blockPart.mHeader.NumberOfVertices );
             blockPart.mNormal.resize( blockPart.mHeader.NumberOfVertices );
+            blockPart.mVertices.resize( blockPart.mHeader.NumberOfVertices );
 
+            // All verts
             for ( int k=0; k<blockPart.mHeader.NumberOfVertices; k++)
             {
-                // Hmmm it might be all v's then n's, not sure yet
                 Vertex& v = blockPart.mVertices[k];
                 readInt16( decStream, v.X );
                 readInt16( decStream, v.Y );
                 readInt16( decStream, v.Z );
                 readUInt16( decStream, v.Unused );
-
-/*
-                Normal& n = blockPart.mNormal[k];
-                readInt16( decStream, n.X );
-                readInt16( decStream, n.Y );
-                readInt16( decStream, n.Z );
-                readUInt16( decStream, n.Unused );
-
-                std::cout << "vx: " << int(v.X)
-                          << " vy " << int(v.Y)
-                          << " vz " << int(v.Z)
-                          << " nx " << int(n.X)
-                          << " ny " << int(n.Y)
-                          << " nz " << int(n.Z)
-                          << std::endl;*/
             }
 
-
+            // Then all normals
             for ( int k=0; k<blockPart.mHeader.NumberOfVertices; k++)
             {
                 Normal& n = blockPart.mNormal[k];
@@ -149,7 +134,7 @@ void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile
                 readUInt16( decStream, n.Unused );
             }
 
-            block.mParts.push_back( blockPart );
+            block.mMeshes.push_back( blockPart );
         }
         mBlocks.push_back(block);
     }

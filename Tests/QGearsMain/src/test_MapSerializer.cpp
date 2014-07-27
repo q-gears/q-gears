@@ -66,6 +66,8 @@ BOOST_AUTO_TEST_CASE( replace_story_meshes )
 }
 */
 
+Camera *mainCam = nullptr;
+
 class GameFrameListener : public Ogre::FrameListener
 {
 public:
@@ -73,15 +75,22 @@ public:
 
     bool frameStarted( const Ogre::FrameEvent& evt )
     {
+        auto pos = mainCam->getPosition();
+
+        pos.x += 1.0f;
+
+        pos.z += 1.0f;
+
+        mainCam->setPosition(pos);
+
         return true;
     }
 };
 
-static float Convert(QGears::sint16 coord)
+static float From16BitFixedPoint(QGears::sint16 coord)
 {
-    return (float(coord) / 4096.0f) * 100.0f;
-
-   // return float(coord);
+    return float(coord);
+    //return (float(coord) / 4096.0f);
 }
 
 void createColourCube(SceneManager* mSceneMgr)
@@ -95,30 +104,53 @@ void createColourCube(SceneManager* mSceneMgr)
     });
 
     int c = 0;
+
     for ( int k=0; k<blocks.size(); k++ )
     {
+        // 7x9 size
+        int mc = (k / 9) * 32768;
+        int mr = (k % 7) * 32768;
+
+
         QGears::MapFileSerializer::SBlock& block = blocks[k];
 
-        for ( size_t i=0; i<block.mParts.size(); i++ )
+        for ( size_t i=0; i<block.mMeshes.size(); i++ )
         {
-            QGears::MapFileSerializer::SBlockPart& part = block.mParts[i];
+            QGears::MapFileSerializer::SBlockPart& part = block.mMeshes[i];
+
+            ManualObject* manual = mSceneMgr->createManualObject(("manual" + std::to_string(c++)).c_str());
+            manual->begin("BaseWhiteNoLighting", RenderOperation::OT_TRIANGLE_LIST);
+            for ( size_t j=0; j<part.mVertices.size(); j++)
+            {
+                QGears::MapFileSerializer::Vertex& v1 = part.mVertices.at(j);
+                std::cout << "v " << v1.X
+                          << " "
+                          << v1.Y
+                          << " "
+                          << v1.Z << std::endl;
+
+                manual->position(v1.X, v1.Y, v1.Z);
+            }
+
+
             for ( size_t j=0; j<part.mTris.size(); j++)
             {
-                ManualObject* manual = mSceneMgr->createManualObject(("manual" + std::to_string(c++)).c_str());
-                manual->begin("BaseWhiteNoLighting", RenderOperation::OT_TRIANGLE_LIST);
-
                 QGears::MapFileSerializer::BlockTriangle& tri = part.mTris.at(j);
 
-                QGears::MapFileSerializer::Vertex& v1 = part.mVertices.at(tri.Vertex0Index);
-                QGears::MapFileSerializer::Vertex& v2 = part.mVertices.at(tri.Vertex1Index);
-                QGears::MapFileSerializer::Vertex& v3 = part.mVertices.at(tri.Vertex2Index);
-
-                manual->position( Convert(v1.X), Convert(v1.Y), Convert(v1.Z) );
-                manual->position( Convert(v2.X), Convert(v2.Y), Convert(v2.Z) );
-                manual->position( Convert(v3.X), Convert(v3.Y), Convert(v3.Z) );
-                manual->end();
-                mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(manual);
+                // define usage of vertices by refering to the indexes
+                manual->index(tri.Vertex2Index);
+                manual->index(tri.Vertex1Index);
+                manual->index(tri.Vertex0Index);
             }
+
+
+            manual->end();
+            SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+            node->attachObject(manual);
+
+            int r = (i / 4) * 8192;
+            int c = (i % 4) * 8182;
+            node->setPosition( c + mr, 0, r + mc);
         }
 
     }
@@ -141,7 +173,7 @@ int main(int argc, char **argv)
     // create the scene
     SceneManager *sceneMgr = root->createSceneManager(Ogre::ST_GENERIC);
     // add a camera
-    Camera *mainCam = sceneMgr->createCamera("MainCam");
+    mainCam = sceneMgr->createCamera("MainCam");
     // add viewport
     Viewport *vp = renderWindow->addViewport(mainCam);
 
@@ -163,8 +195,8 @@ int main(int argc, char **argv)
 
       mainCam->setPolygonMode(PM_WIREFRAME);
 
-      mainCam->setFarClipDistance(9000.0f);
-      mainCam->setPosition( 400, 400, 4000 );
+      mainCam->setFarClipDistance(90000000000.0f);
+      mainCam->setPosition( 400, 40000, 4000 );
       mainCam->lookAt( 0, 0, 0);
 
     root->addFrameListener(frameListener);

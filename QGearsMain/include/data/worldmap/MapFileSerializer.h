@@ -176,7 +176,7 @@ public:
 
     struct SBlock
     {
-        std::vector<SBlockPart> mParts;
+        std::vector<SBlockPart> mMeshes;
     };
 
     std::vector<SBlock> mBlocks;
