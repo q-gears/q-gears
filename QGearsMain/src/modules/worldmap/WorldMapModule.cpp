@@ -82,7 +82,7 @@ void createTestMap(SceneManager* mSceneMgr)
             for ( size_t j=0; j<part.mVertices.size(); j++)
             {
                 QGears::MapFileSerializer::Vertex& v1 = part.mVertices.at(j);
-                manual->position(v1.X, -v1.Y, v1.Z);
+                manual->position(v1.X, v1.Y, v1.Z);
             }
 
             for ( size_t j=0; j<part.mTris.size(); j++)
@@ -90,9 +90,9 @@ void createTestMap(SceneManager* mSceneMgr)
                 QGears::MapFileSerializer::BlockTriangle& tri = part.mTris.at(j);
 
                 // define usage of vertices by refering to the indexes
-                manual->index(tri.Vertex0Index);
-                manual->index(tri.Vertex1Index);
                 manual->index(tri.Vertex2Index);
+                manual->index(tri.Vertex1Index);
+                manual->index(tri.Vertex0Index);
             }
 
 
