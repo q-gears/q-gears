@@ -28,6 +28,10 @@
 #include <Overlay/OgreFontManager.h>
 #include <Overlay/OgreOverlayManager.h>
 #include <Overlay/OgreOverlaySystem.h>
+
+#include "modules/worldmap/WorldMapModule.h"
+
+
 int
 main(int argc, char *argv[])
 {
@@ -80,6 +84,9 @@ main(int argc, char *argv[])
 
     auto entity_manager = std::make_unique<EntityManager>();
     auto ui_manager = std::make_unique<UiManager>();
+
+    auto worldMapModule = std::make_unique<QGears::WorldMapModule>();
+
     ui_manager->SetLanguage( "English" );
 
     // init after game managers because it attach them to script

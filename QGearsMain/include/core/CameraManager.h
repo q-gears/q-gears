@@ -31,6 +31,7 @@ public:
     Ogre::Camera*   GetCurrentCamera();
     Ogre::Viewport* getViewport();
 
+    void EnableWireFrame(bool);
 private:
 
     void InitCommands();

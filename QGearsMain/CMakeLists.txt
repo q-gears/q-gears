@@ -1,5 +1,6 @@
 # define header and source files for the library
 set(HEADER_FILES
+  include/modules/worldmap/WorldMapModule.h
   include/common/QGearsApplication.h
   include/common/QGearsManualObject.h
   include/common/QGearsResource.h
@@ -142,6 +143,7 @@ set(HEADER_FILES
   #include/viewer/ViewerModule.h
 )
 set(SOURCE_FILES
+  src/modules/worldmap/WorldMapModule.cpp
   src/common/QGearsApplication.cpp
   src/common/QGearsManualObject.cpp
   src/common/QGearsResource.cpp

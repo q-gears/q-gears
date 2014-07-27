@@ -87,74 +87,6 @@ public:
     }
 };
 
-static float From16BitFixedPoint(QGears::sint16 coord)
-{
-    return float(coord);
-    //return (float(coord) / 4096.0f);
-}
-
-void createColourCube(SceneManager* mSceneMgr)
-{ 
-    std::vector<QGears::MapFileSerializer::SBlock> blocks;
-    createReferenceFileInstance([&](Ogre::DataStreamPtr& stream, QGears::WorldMapFile& file)
-    {
-        QGears::MapFileSerializer s;
-        s.importMapFile( stream, file );
-        blocks = s.mBlocks;
-    });
-
-    int c = 0;
-
-    for ( int k=0; k<blocks.size(); k++ )
-    {
-        // 7x9 size
-        int mc = (k / 9) * 32768;
-        int mr = (k % 7) * 32768;
-
-
-        QGears::MapFileSerializer::SBlock& block = blocks[k];
-
-        for ( size_t i=0; i<block.mMeshes.size(); i++ )
-        {
-            QGears::MapFileSerializer::SBlockPart& part = block.mMeshes[i];
-
-            ManualObject* manual = mSceneMgr->createManualObject(("manual" + std::to_string(c++)).c_str());
-            manual->begin("BaseWhiteNoLighting", RenderOperation::OT_TRIANGLE_LIST);
-            for ( size_t j=0; j<part.mVertices.size(); j++)
-            {
-                QGears::MapFileSerializer::Vertex& v1 = part.mVertices.at(j);
-                std::cout << "v " << v1.X
-                          << " "
-                          << v1.Y
-                          << " "
-                          << v1.Z << std::endl;
-
-                manual->position(v1.X, v1.Y, v1.Z);
-            }
-
-
-            for ( size_t j=0; j<part.mTris.size(); j++)
-            {
-                QGears::MapFileSerializer::BlockTriangle& tri = part.mTris.at(j);
-
-                // define usage of vertices by refering to the indexes
-                manual->index(tri.Vertex2Index);
-                manual->index(tri.Vertex1Index);
-                manual->index(tri.Vertex0Index);
-            }
-
-
-            manual->end();
-            SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-            node->attachObject(manual);
-
-            int r = (i / 4) * 8192;
-            int c = (i % 4) * 8182;
-            node->setPosition( c + mr, 0, r + mc);
-        }
-
-    }
-}
 
 int main(int argc, char **argv)
 {
@@ -191,7 +123,7 @@ int main(int argc, char **argv)
       headNode->attachObject(ogreHead);
         headNode->setPosition( 200, 200, 30 );
 
-      createColourCube(sceneMgr);
+     // createColourCube(sceneMgr);
 
       mainCam->setPolygonMode(PM_WIREFRAME);
 
