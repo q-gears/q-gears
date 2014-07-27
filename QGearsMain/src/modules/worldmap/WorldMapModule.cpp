@@ -58,15 +58,21 @@ void createTestMap(SceneManager* mSceneMgr)
 
     int c = 0;
 
-    for ( int k=0; k<blocks.size(); k++ )
+    const int kSpace = 8182;
+
+    size_t numBlocks = blocks.size();
+
+    int mapX = 0;
+    int mapY = 0;
+
+    for ( int k=0; k<numBlocks; k++ )
     {
         // 7x9 size
-        float mc = float(k / 9) * From16BitFixedPoint(32768);
-        float mr = float(k % 7) * From16BitFixedPoint(32768);
-
 
         QGears::MapFileSerializer::SBlock& block = blocks[k];
 
+        int blockX = 0;
+        int blockY = 0;
         for ( size_t i=0; i<block.mMeshes.size(); i++ )
         {
             QGears::MapFileSerializer::SBlockPart& part = block.mMeshes[i];
@@ -76,25 +82,17 @@ void createTestMap(SceneManager* mSceneMgr)
             for ( size_t j=0; j<part.mVertices.size(); j++)
             {
                 QGears::MapFileSerializer::Vertex& v1 = part.mVertices.at(j);
-                /*
-                std::cout << "v " << v1.X
-                          << " "
-                          << v1.Y
-                          << " "
-                          << v1.Z << std::endl;*/
-
-                manual->position(v1.X, v1.Y, v1.Z);
+                manual->position(v1.X, -v1.Y, v1.Z);
             }
-
 
             for ( size_t j=0; j<part.mTris.size(); j++)
             {
                 QGears::MapFileSerializer::BlockTriangle& tri = part.mTris.at(j);
 
                 // define usage of vertices by refering to the indexes
-                manual->index(tri.Vertex2Index);
-                manual->index(tri.Vertex1Index);
                 manual->index(tri.Vertex0Index);
+                manual->index(tri.Vertex1Index);
+                manual->index(tri.Vertex2Index);
             }
 
 
@@ -102,9 +100,27 @@ void createTestMap(SceneManager* mSceneMgr)
             SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
             node->attachObject(manual);
 
-            float r = float(i / 4) * From16BitFixedPoint(8192);
-            float c = float(i % 4) * From16BitFixedPoint(8182);
-            node->setPosition( c + mr, 0, r + mc);
+
+            float xPos = (blockX * kSpace) + (mapX * kSpace * 4);
+            float yPos = (blockY * kSpace) + (mapY * kSpace * 4);
+            node->setPosition( xPos, 0, yPos);
+           // node->setOrientation( 0, 0, 180, 0);
+
+
+            blockX++;
+            if (blockX >= 4 )
+            {
+                blockX = 0;
+                blockY++;
+            }
+
+        }
+
+        mapX++;
+        if (mapX >= 9 )
+        {
+            mapX = 0;
+            mapY++;
         }
 
     }

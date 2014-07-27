@@ -89,7 +89,7 @@ CameraManager::Input( const Event& event )
         }
         else if( event.type == ET_MOUSE_MOVE && m_CameraFreeRotate == true )
         {
-            m_Camera->rotate( Ogre::Vector3::UNIT_Y, Ogre::Radian( Ogre::Degree( -event.param1 * 0.13 ) ) );
+            m_Camera->rotate( Ogre::Vector3::UNIT_Y, Ogre::Radian( Ogre::Degree( event.param1 * 0.13 ) ) );
             m_Camera->pitch( Ogre::Degree( -event.param2 * 0.13 ) );
         }
     }
@@ -215,7 +215,7 @@ void CameraManager::EnableWireFrame(bool)
     if ( m_Camera )
     {
         m_Camera->setPolygonMode(Ogre::PM_WIREFRAME);
-
+            m_Camera->rotate( Ogre::Vector3::UNIT_Z, Ogre::Radian( Ogre::Degree( 180 ) ) );
         m_Camera->setFarClipDistance(900000000);
     }
 }
