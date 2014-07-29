@@ -41,7 +41,7 @@ static void createReferenceFileInstance(std::string filename, std::function<void
 
 BOOST_AUTO_TEST_CASE( read_blocks )
 {
-    createReferenceFileInstance( "/home/paul/qgears/q-gears/Tests/FinalFantasy7/misc/reference.txz", [&](Ogre::DataStreamPtr& stream, QGears::TxzFile& file)
+    createReferenceFileInstance( "/home/paul/qgears/data/cd1/world/wm0.txz", [&](Ogre::DataStreamPtr& stream, QGears::TxzFile& file)
     {
         QGears::TxzFileSerializer s;
         s.import( stream, file );

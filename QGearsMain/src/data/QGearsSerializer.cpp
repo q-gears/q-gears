@@ -141,6 +141,11 @@ namespace QGears
         readInts( stream, &pDest, 1 );
     }
 
+    void Serializer::readUInt32( Ogre::DataStream &stream, uint32 &pDest )
+    {
+        stream.read(&pDest,sizeof(uint32));
+    }
+
     void Serializer::readUInt8( Ogre::DataStream& stream, uint8 &pDest )
     {
         stream.read(&pDest,1);

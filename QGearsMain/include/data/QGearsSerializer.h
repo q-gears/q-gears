@@ -60,6 +60,7 @@ namespace QGears
         void    readInt16( Ogre::DataStreamPtr &stream, sint16 &pDest );
         void    readUInt16( Ogre::DataStreamPtr &stream, uint16 &pDest );
         void    readUInt32( Ogre::DataStreamPtr &stream, uint32 &pDest );
+        void    readUInt32( Ogre::DataStream &stream, uint32 &pDest );
         void    readUInt8( Ogre::DataStream& stream, uint8 &pDest );
         void    readUInt8(Ogre::DataStreamPtr &stream, uint8 &pDest );
         void    readFloat( Ogre::DataStreamPtr &stream, float &pDest );
