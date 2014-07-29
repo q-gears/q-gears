@@ -1,23 +1,23 @@
-#ifndef _MAP_FILE_H_
-#define _MAP_FILE_H_
+#ifndef _TXZ_FILE_H_
+#define _TXZ_FILE_H_
 
 #include "common/QGearsResource.h"
 
 BEGIN_QGEARS
 
-class WorldMapFile : public Resource
+class TxzFile : public Resource
 {
 public:
     static const String RESOURCE_TYPE;
     using Resource::Resource;
-    virtual ~WorldMapFile();
+    virtual ~TxzFile();
 private:
     virtual void loadImpl() override final;
     virtual void unloadImpl() override final;
 };
 
-typedef Ogre::SharedPtr<WorldMapFile> MapFilePtr;
+typedef Ogre::SharedPtr<TxzFile> TxzFilePtr;
 
 END_QGEARS
 
-#endif // _MAP_FILE_H_
+#endif // _TXZ_FILE_H_

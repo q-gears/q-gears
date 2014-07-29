@@ -13,6 +13,9 @@ set(HEADER_FILES
   include/data/worldmap/MapFile.h
   include/data/worldmap/MapFileManager.h
   include/data/worldmap/MapFileSerializer.h
+  include/data/worldmap/TxzFile.h
+  include/data/worldmap/TxzFileManager.h
+  include/data/worldmap/TxzFileSerializer.h
   include/data/QGearsAFile.h
   include/data/QGearsAFileManager.h
   include/data/QGearsAFileSerializer.h
@@ -217,6 +220,9 @@ set(SOURCE_FILES
   src/data/worldmap/MapFile.cpp
   src/data/worldmap/MapFileManager.cpp
   src/data/worldmap/MapFileSerializer.cpp
+  src/data/worldmap/TxzFile.cpp
+  src/data/worldmap/TxzFileManager.cpp
+  src/data/worldmap/TxzFileSerializer.cpp
   src/data/QGearsBackgroundFile.cpp
   src/data/QGearsBackgroundFileManager.cpp
   src/data/QGearsBackgroundFileSerializer.cpp

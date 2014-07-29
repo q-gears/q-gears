@@ -41,8 +41,13 @@ add_test(TestQGearsLGPArchive TestQGearsLGPArchive)
 add_executable(TestMapSerializer
     src/test_MapSerializer.cpp
 )
-
 target_link_libraries(TestMapSerializer ${LIBRARIES})
 add_test(TestMapSerializer TestMapSerializer)
 
+
+add_executable(TestTxzSerializer
+    src/test_TxzSerializer.cpp
+)
+target_link_libraries(TestTxzSerializer ${LIBRARIES})
+add_test(TestTxzSerializer TestTxzSerializer)
 
