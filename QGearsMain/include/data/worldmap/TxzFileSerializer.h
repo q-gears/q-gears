@@ -12,43 +12,38 @@ class TxzFile;
 class TxzFileSerializer : public Serializer
 {
 public:
-    // All packed into a single 32bit number
     struct wm_texture
     {
+        unsigned int clutx:6;
+        unsigned int cluty:10;
+        unsigned int tx:4;
+        unsigned int ty:1;
+        unsigned int abr:2;
+        unsigned int tp:2;
+        unsigned int reserved:7;
+    } __attribute__((packed));
 
-        wm_texture(uint32 bits)
-        {
-            // TODO: Fix me this is very wrong..
-            clutx = (bits >> 0) & 0xFC000000;
-            cluty = (bits >> 6-1) & 0x3FF8000;
-            tx = (bits >> 16-1) & 0x7800;
-            ty = (bits >> 20-1) & 0x400;
-            abr = (bits >> 21-1) & 0x300;
-            tp = (bits >> 23-1) & 0xC0;
-            reserved = (bits >>  25-1) & 0x7F;
-        }
+    struct psx_pixel
+    {
+        uint16 r:5;
+        uint16 g:5;
+        uint16 b:5;
+        uint16 trans:1;
+    } __attribute__((packed));
 
-        // 0xFC000000 6 bits at index 0
-        unsigned int clutx = 0;
+    struct psx_pixel_4bit
+    {
+        uint8 index1:4;
+        uint8 index2:4;
+    } __attribute__((packed));
 
-        // 0x3FF8000 10 bits at index 6-1
-        unsigned int cluty = 0;
-
-        // 0x7800 4 bits at index 16-1
-        unsigned int tx = 0;
-
-        // 0x400 1 bit at index 20-1
-        unsigned int ty = 0;
-
-        // 0x300 2 bits at index 21-1
-        unsigned int abr = 0;
-
-        // 0xC0 2 bits at index 23-1
-        unsigned int tp = 0;
-
-        // 0x7F 7 bits at index 25-1
-        unsigned int reserved = 0;
-    };
+    struct rgba
+    {
+        unsigned char r = 0;
+        unsigned char g = 0;
+        unsigned char b = 0;
+        unsigned char a = 0;
+    } __attribute__((packed));
 
     struct vram_block
     {
@@ -70,7 +65,11 @@ private:
 
     void import_decompressed( Ogre::DataStream& stream, TxzFile& dest);
     void import_texture_section( Ogre::DataStream& stream, TxzFile& dest, size_t sectionEnd);
+    void extract_texture(const wm_texture& entry);
 };
+
+static_assert(sizeof(TxzFileSerializer::wm_texture)==4, "wm_texture is not packed");
+static_assert(sizeof(TxzFileSerializer::psx_pixel)==2, "psx_pixel is not packed");
 
 END_QGEARS
 
