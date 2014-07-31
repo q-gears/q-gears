@@ -214,7 +214,7 @@ void CameraManager::EnableWireFrame(bool)
 {
     if ( m_Camera )
     {
-        m_Camera->setPolygonMode(Ogre::PM_WIREFRAME);
+        //m_Camera->setPolygonMode(Ogre::PM_WIREFRAME);
         //    m_Camera->rotate( Ogre::Vector3::UNIT_Z, Ogre::Radian( Ogre::Degree( 180 ) ) );
         m_Camera->setFarClipDistance(900000000);
     }

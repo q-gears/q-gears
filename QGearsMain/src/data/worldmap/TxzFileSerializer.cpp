@@ -32,6 +32,18 @@ void TxzFileSerializer::import( Ogre::DataStreamPtr& stream, TxzFile& dest )
     import_decompressed(decStream, dest);
 }
 
+std::vector<std::vector<TxzFileSerializer::rgba>> TxzFileSerializer::GetWorldMapTexture(uint32 id)
+{
+    auto it = mTextures.find(id);
+    if ( it != std::end(mTextures))
+    {
+        return it->second;
+    }
+
+    std::vector<std::vector<TxzFileSerializer::rgba>> empty;
+    return empty;
+}
+
 void TxzFileSerializer::import_decompressed( Ogre::DataStream& stream, TxzFile& dest)
 {
     uint32 numberOfSections = 0;
@@ -106,7 +118,7 @@ void TxzFileSerializer::import_texture_section( Ogre::DataStream& stream, TxzFil
    // for ( size_t i=0; i<textureTable.size(); i++)
     {
         int i=19;
-        extract_texture(textureTable[i]);
+        extract_texture(textureTable[i], i);
     }
 
     std::cout << "stream pos "
@@ -173,7 +185,7 @@ static uint8 To24Bit(uint8 v)
     return uint8(value);
 }
 
-void TxzFileSerializer::extract_texture(const TxzFileSerializer::wm_texture& entry)
+void TxzFileSerializer::extract_texture(const TxzFileSerializer::wm_texture& entry, uint32 id)
 {
     const vram_block& pals = mVramBlocks[0];
     const vram_block& atlas1 = mVramBlocks[1];
@@ -230,10 +242,9 @@ void TxzFileSerializer::extract_texture(const TxzFileSerializer::wm_texture& ent
         for ( int i=0; i<16; i++)
         {
             pal[i] = palPixels[entry.cluty-pals.mDstY][entry.clutx-pals.mDstX+i];
-           // pal[i] = palPixels[0][i]; // clutX 0 clutY 480 4 bit tx is 384 ty on 0
-//            pal[i] = palPixels[0][i];
         }
 
+        /*
         {
 
             int c = 0;
@@ -258,7 +269,7 @@ void TxzFileSerializer::extract_texture(const TxzFileSerializer::wm_texture& ent
                 }
             }
             s.close();
-        }
+        }*/
 
         // Now we've got the pallete get the main vram block in 8bit format and convert each pixel
         // to 16bit
@@ -306,7 +317,7 @@ void TxzFileSerializer::extract_texture(const TxzFileSerializer::wm_texture& ent
             }
         }
 
-
+/*
         int c = 0;
         std::stringstream ss;
         ss << "extracted_texture" << c << ".raw";
@@ -337,7 +348,9 @@ void TxzFileSerializer::extract_texture(const TxzFileSerializer::wm_texture& ent
 
             }
         }
-        s.close();
+        s.close();*/
+
+        mTextures[id] = textureFinal;
     }
     else
     {

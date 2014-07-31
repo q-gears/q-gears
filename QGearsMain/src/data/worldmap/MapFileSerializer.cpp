@@ -94,6 +94,9 @@ void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile
                 readUInt8( decStream, s.vVertex2 );
 
                 readUInt16( decStream, s.TextureInfo );
+
+                s.TextureInfo = s.TextureInfo & 0x1FF;
+
                 //readUInt16( decStream, s.Location );
 
                 /*

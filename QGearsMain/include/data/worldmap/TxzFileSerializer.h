@@ -60,12 +60,16 @@ public:
     TxzFileSerializer();
     virtual ~TxzFileSerializer();
     void import( Ogre::DataStreamPtr& stream, TxzFile& dest );
+    std::vector<std::vector<rgba>> GetWorldMapTexture(uint32 id);
+
 private:
     std::vector<vram_block> mVramBlocks;
 
     void import_decompressed( Ogre::DataStream& stream, TxzFile& dest);
     void import_texture_section( Ogre::DataStream& stream, TxzFile& dest, size_t sectionEnd);
-    void extract_texture(const wm_texture& entry);
+    void extract_texture(const wm_texture& entry, uint32 id);
+
+    std::map<uint32, std::vector<std::vector<rgba>>> mTextures;
 };
 
 static_assert(sizeof(TxzFileSerializer::wm_texture)==4, "wm_texture is not packed");
