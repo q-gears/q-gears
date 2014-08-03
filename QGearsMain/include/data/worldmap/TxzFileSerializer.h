@@ -67,7 +67,7 @@ private:
 
     void import_decompressed( Ogre::DataStream& stream, TxzFile& dest);
     void import_texture_section( Ogre::DataStream& stream, TxzFile& dest, size_t sectionEnd);
-    void extract_texture(const wm_texture& entry, uint32 id);
+    void extract_texture(const std::array<wm_texture,512>& palTable);
 
     std::map<uint32, std::vector<std::vector<rgba>>> mTextures;
 };

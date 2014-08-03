@@ -6,8 +6,12 @@
 #include "common/TypeDefine.h"
 #include "data/worldmap/MapFileSerializer.h"
 #include "data/worldmap/MapFile.h"
+#include "data/worldmap/MapFileManager.h"
 
+#include "data/QGearsTexCodec.h"
 #include <functional>
+
+#include "data/QGearsLGPArchiveFactory.h"
 
 using namespace Ogre;
 
@@ -77,9 +81,9 @@ public:
     {
         auto pos = mainCam->getPosition();
 
-        pos.x += 1.0f;
+        //pos.x += 1.0f;
 
-        pos.z += 1.0f;
+        //pos.z += 1.0f;
 
         mainCam->setPosition(pos);
 
@@ -100,6 +104,8 @@ int main(int argc, char **argv)
 
     // initialise root
     root->initialise(false);
+
+
     // create main window
     RenderWindow *renderWindow = root->createRenderWindow("Main",320,240,false);
     // create the scene
@@ -109,9 +115,43 @@ int main(int argc, char **argv)
     // add viewport
     Viewport *vp = renderWindow->addViewport(mainCam);
 
-    Root::getSingleton().addResourceLocation (".", "FileSystem");
+
+    Ogre::ArchiveManager::getSingleton().addArchiveFactory( new QGears::LGPArchiveFactory() );
+
+
+    Ogre::TextureManager* tm = root->getTextureManager();
+
+
+    QGears::MapFileManager* worldManager = new QGears::MapFileManager();
+
+    Root::getSingleton().addResourceLocation(".", "FileSystem");
+    Root::getSingleton().addResourceLocation("/home/paul/qgears/data/cd1pc/wm", "FileSystem", "TEST");
+    Root::getSingleton().addResourceLocation("/home/paul/qgears/data/cd1pc/wm/world_us.lgp", QGears::LGPArchiveFactory::ARCHIVE_TYPE, "TEST");
+
+
+    QGears::TexCodec::install();
+    QGears::TexCodec::initialise();
+
+
+    ResourceGroupManager::getSingleton().declareResource("bridge.tex", "Texture", "TEST");
+
+    ResourceGroupManager::getSingleton().declareResource("wm0.map", QGears::WorldMapFile::RESOURCE_TYPE, "TEST");
+    ResourceGroupManager::getSingleton().declareResource("wm1.map", QGears::WorldMapFile::RESOURCE_TYPE, "TEST");
+    ResourceGroupManager::getSingleton().declareResource("wm2.map", QGears::WorldMapFile::RESOURCE_TYPE, "TEST");
+
+
     ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
+    Ogre::ResourcePtr f = worldManager->load("wm0.map", "TEST");
+
+    //worldManager->load("wm/wm0.map", "TEST");
+
+    TexturePtr p = tm->load("bridge.tex", "TEST");
+
+    int th = p->getSrcHeight();
+    int tw = p->getSrcWidth();
+
+/*
     GameFrameListener *frameListener= new GameFrameListener();
   //  frameListener->showDebugOverlay(true);
     // Create an Entity
@@ -121,19 +161,19 @@ int main(int argc, char **argv)
       // Create a SceneNode and attach the Entity to it
       Ogre::SceneNode* headNode = sceneMgr->getRootSceneNode()->createChildSceneNode("HeadNode");
       headNode->attachObject(ogreHead);
-        headNode->setPosition( 200, 200, 30 );
+        headNode->setPosition( 0, 0, 0 );
 
      // createColourCube(sceneMgr);
 
       mainCam->setPolygonMode(PM_WIREFRAME);
 
-      mainCam->setFarClipDistance(90000000000.0f);
-      mainCam->setPosition( 400, 40000, 4000 );
+      mainCam->setFarClipDistance(900000.0f);
+      mainCam->setPosition( 50, 500, 500 );
       mainCam->lookAt( 0, 0, 0);
 
     root->addFrameListener(frameListener);
 
     root->startRendering();
-
+*/
     return 0;
 }

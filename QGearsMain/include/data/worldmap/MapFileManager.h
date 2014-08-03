@@ -7,6 +7,8 @@
 
 BEGIN_QGEARS
 
+class WorldMapFile;
+
 class _QGearsExport MapFileManager
         : public Ogre::ResourceManager,
           public Ogre::Singleton<MapFileManager>

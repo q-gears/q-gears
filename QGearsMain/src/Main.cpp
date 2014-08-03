@@ -30,7 +30,8 @@
 #include <Overlay/OgreOverlaySystem.h>
 
 #include "modules/worldmap/WorldMapModule.h"
-
+#include "data/worldmap/MapFileManager.h"
+#include "data/QGearsLGPArchiveFactory.h"
 
 int
 main(int argc, char *argv[])
@@ -58,6 +59,13 @@ main(int argc, char *argv[])
     directionalLight->setDirection( Ogre::Vector3( 0, 1, 0 ) );
 
 
+    QGears::MapFileManager* worldManager = new QGears::MapFileManager();
+
+    Ogre::Root::getSingleton().addResourceLocation(".", "FileSystem");
+    Ogre::Root::getSingleton().addResourceLocation("/home/paul/qgears/data/cd1pc/wm", "FileSystem", "TEST");
+    Ogre::Root::getSingleton().addResourceLocation("/home/paul/qgears/data/cd1pc/wm/world_us.lgp", QGears::LGPArchiveFactory::ARCHIVE_TYPE, "TEST");
+
+
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
     // init it before console because it may use it
@@ -72,8 +80,8 @@ main(int argc, char *argv[])
 
 
 #ifdef QGears_SOUND
-    auto audio_manager = std::make_unique<AudioManager>();
-    audio_manager->MusicPlay( "loop1" );
+    //auto audio_manager = std::make_unique<AudioManager>();
+    //audio_manager->MusicPlay( "loop1" );
 #endif
 
     // create This earlier than DisplayFrameListener cause it can fire event there
@@ -95,6 +103,9 @@ main(int argc, char *argv[])
     // set base listner for usual game moduls
     auto frame_listener = std::make_unique<GameFrameListener>( window );
     root->addFrameListener( frame_listener.get() );
+
+
+
 
     // execute config
     {

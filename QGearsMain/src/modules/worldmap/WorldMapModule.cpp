@@ -10,6 +10,7 @@
 
 #include "data/worldmap/TxzFile.h"
 #include "data/worldmap/TxzFileSerializer.h"
+#include "data/worldmap/MapFileManager.h"
 
 BEGIN_QGEARS
 
@@ -313,6 +314,8 @@ static harcoded_texture_info gTextures[] =
     { 281, "wtrk",  32,  64,  64,  96 }
 };
 
+static const char* kWorldResourceGroup = "FFVII_World";
+
 static void createReferenceTextureFileInstance(QGears::TxzFileSerializer& s)
 {
     class TestFile : public QGears::TxzFile
@@ -371,11 +374,14 @@ void test(const std::vector<std::vector<TxzFileSerializer::rgba>>& data)
 {
     //Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().load("clf_l.png.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
+
+    // kWorldResourceGroup
+
     Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual("BackgroundTex",
                                                                                  Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
                                                                                  Ogre::TEX_TYPE_2D,
                                                                                  640, 256, 0,
-                                                                                 Ogre::PF_R8G8B8, Ogre:: TU_DYNAMIC);
+                                                                                 Ogre::PF_B8G8R8, Ogre:: TU_DYNAMIC);
 
     Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("BackgroundMat",Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
@@ -406,17 +412,38 @@ void test(const std::vector<std::vector<TxzFileSerializer::rgba>>& data)
 
 float ToTextureCoordU(uint8 coord, uint16 tId)
 {
-    return (float(gTextures[tId].mU) + float(coord)) / 256.0f;
+    return (float(coord) - float(gTextures[tId].mU)) / float(gTextures[tId].mWidth);
+    //return (float(gTextures[tId].mU) + float(coord)) / 256.0f;
 
-   // float uOff = float(gTextures[tId].mU) / float(256);
-    //return uOff + (float(coord) / float(gTextures[tId].mHeight));
 }
 
 float ToTextureCoordV(uint8 coord, uint16 tId)
 {
-    return (float(gTextures[tId].mV) + float(coord)) / 640.0f;
-   // float vOff = float(gTextures[tId].mV) / float(640);
-    //return vOff + (float(coord) /  float(gTextures[tId].mWidth));
+    return (float(coord) - float(gTextures[tId].mV)) / float(gTextures[tId].mHeight);
+
+    //return (float(gTextures[tId].mV) + float(coord)) / 640.0f;
+
+}
+
+std::vector<TexturePtr> gLoadedTextures;
+std::vector<MaterialPtr> gMats;
+
+static void LoadTextures()
+{
+    if (gLoadedTextures.empty())
+    {
+        for (int i=0; i<sizeof(gTextures)/sizeof(gTextures[0]); i++)
+        {
+            std::string textureName = std::string(gTextures[i].mName) + ".tex";
+            ResourceGroupManager::getSingleton().declareResource(textureName.c_str(), "Texture", "TEST");
+            TexturePtr tmp = Ogre::TextureManager::getSingleton().load( textureName.c_str(), "TEST");
+            gLoadedTextures.emplace_back(tmp);
+
+            Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create(gTextures[i].mName ,Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+            material->getTechnique(0)->getPass(0)->createTextureUnitState(textureName.c_str());
+            gMats.emplace_back(material);
+        }
+    }
 }
 
 void createTestMap(SceneManager* mSceneMgr)
@@ -429,12 +456,15 @@ void createTestMap(SceneManager* mSceneMgr)
         blocks = s.mBlocks;
     });
 
-
+/*
     QGears::TxzFileSerializer s;
     createReferenceTextureFileInstance(s);
 
     std::vector<std::vector<TxzFileSerializer::rgba>> data = s.GetWorldMapTexture(19);
     test(data);
+*/
+
+    LoadTextures();
 
     int c = 0;
 
@@ -467,14 +497,15 @@ void createTestMap(SceneManager* mSceneMgr)
             }
             */
 
-            ManualObject* manual = mSceneMgr->createManualObject(("zzz_manual" + std::to_string(c++)).c_str());
-            manual->begin("BaseWhiteNoLighting", RenderOperation::OT_TRIANGLE_LIST);
 
             for ( size_t j=0; j<part.mTris.size(); j++)
             {
                 QGears::MapFileSerializer::BlockTriangle& tri = part.mTris.at(j);
 
+                ManualObject* manual = mSceneMgr->createManualObject(("zzz_manual" + std::to_string(c++)).c_str());
+                manual->begin(gTextures[tri.TextureInfo].mName, RenderOperation::OT_TRIANGLE_LIST);
 
+                /*
                 std::string matName = "BaseWhiteNoLighting";
                  matName = "BackgroundMat";
                 if ( tri.TextureInfo == 19 )
@@ -488,7 +519,7 @@ void createTestMap(SceneManager* mSceneMgr)
                 }
 
                 manual->setMaterialName(0, matName.c_str());
-
+*/
 
 
                 // define usage of vertices by refering to the indexes
@@ -511,17 +542,17 @@ void createTestMap(SceneManager* mSceneMgr)
                 manual->textureCoord(ToTextureCoordU(tri.uVertex0, tri.TextureInfo), ToTextureCoordV(tri.vVertex0, tri.TextureInfo));
                 //manual->textureCoord(1.0f, 1.0f);
 
+                manual->end();
 
+                SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+                node->attachObject(manual);
+
+                float xPos = (blockX * kSpace) + (mapX * kSpace * 4);
+                float yPos = (blockY * kSpace) + (mapY * kSpace * 4);
+                node->setPosition( xPos, 0, yPos);
             }
 
-            manual->end();
 
-            SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-            node->attachObject(manual);
-
-            float xPos = (blockX * kSpace) + (mapX * kSpace * 4);
-            float yPos = (blockY * kSpace) + (mapY * kSpace * 4);
-            node->setPosition( xPos, 0, yPos);
 
 
             blockX++;
