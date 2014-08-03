@@ -427,6 +427,7 @@ float ToTextureCoordV(uint8 coord, uint16 tId)
 
 std::vector<TexturePtr> gLoadedTextures;
 std::vector<MaterialPtr> gMats;
+std::map<int, ManualObject*> gObjToTextureId;
 
 static void LoadTextures()
 {
@@ -436,12 +437,17 @@ static void LoadTextures()
         {
             std::string textureName = std::string(gTextures[i].mName) + ".tex";
             ResourceGroupManager::getSingleton().declareResource(textureName.c_str(), "Texture", "TEST");
-            TexturePtr tmp = Ogre::TextureManager::getSingleton().load( textureName.c_str(), "TEST");
+            TexturePtr tmp = Ogre::TextureManager::getSingleton().load(textureName.c_str(), "TEST", TEX_TYPE_2D, 1, 1.0f, false );
             gLoadedTextures.emplace_back(tmp);
 
             Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create(gTextures[i].mName ,Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
             material->getTechnique(0)->getPass(0)->createTextureUnitState(textureName.c_str());
+            material->getTechnique(0)->getPass(0)->setTextureFiltering(TFO_NONE);
+
+
             gMats.emplace_back(material);
+
+
         }
     }
 }
@@ -457,6 +463,7 @@ void createTestMap(SceneManager* mSceneMgr)
     });
 
 /*
+    // TODO: Get PSX textures working
     QGears::TxzFileSerializer s;
     createReferenceTextureFileInstance(s);
 
@@ -475,85 +482,59 @@ void createTestMap(SceneManager* mSceneMgr)
     int mapX = 0;
     int mapY = 0;
 
+
+
     for ( int k=0; k<numBlocks; k++ )
     {
         // 7x9 size
-
         QGears::MapFileSerializer::SBlock& block = blocks[k];
 
         int blockX = 0;
         int blockY = 0;
+
         for ( size_t i=0; i<block.mMeshes.size(); i++ )
         {
             QGears::MapFileSerializer::SBlockPart& part = block.mMeshes[i];
-
-
-
-            /*
-            for ( size_t j=0; j<part.mVertices.size(); j++)
-            {
-                QGears::MapFileSerializer::Vertex& v1 = part.mVertices.at(j);
-                manual->position(v1.X, v1.Y, v1.Z);
-            }
-            */
-
 
             for ( size_t j=0; j<part.mTris.size(); j++)
             {
                 QGears::MapFileSerializer::BlockTriangle& tri = part.mTris.at(j);
 
-                ManualObject* manual = mSceneMgr->createManualObject(("zzz_manual" + std::to_string(c++)).c_str());
-                manual->begin(gTextures[tri.TextureInfo].mName, RenderOperation::OT_TRIANGLE_LIST);
-
-                /*
-                std::string matName = "BaseWhiteNoLighting";
-                 matName = "BackgroundMat";
-                if ( tri.TextureInfo == 19 )
+                ManualObject* manual = nullptr;
+                auto it = gObjToTextureId.find(tri.TextureInfo);
+                if (it==gObjToTextureId.end())
                 {
-                    std::cout << "APPLY ONE WORKING TEXTURE!!!!!!!!!!!" << std::endl;
-                    matName = "BackgroundMat";
+                    manual = mSceneMgr->createManualObject(("zzz_manual" + std::to_string(c++)).c_str());
+                    manual->begin(gTextures[tri.TextureInfo].mName, RenderOperation::OT_TRIANGLE_LIST);
+                    manual->setDebugDisplayEnabled(true);
+                    manual->setDynamic(false);
+                    gObjToTextureId[tri.TextureInfo] = manual;
                 }
                 else
                 {
-                    // BaseWhiteNoLighting
+                    manual = it->second;
                 }
 
-                manual->setMaterialName(0, matName.c_str());
-*/
+                const float xPos = (blockX * kSpace) + (mapX * kSpace * 4);
+                const float yPos = (blockY * kSpace) + (mapY * kSpace * 4);
 
-
-                // define usage of vertices by refering to the indexes
-                //manual->index(tri.Vertex2Index);
+                // v1
                 QGears::MapFileSerializer::Vertex v1 = part.mVertices.at(tri.Vertex2Index);
-                manual->position(From16BitFixedPoint(v1.X), From16BitFixedPoint(v1.Y), From16BitFixedPoint(v1.Z));
-
+                manual->position(From16BitFixedPoint(v1.X)+xPos, From16BitFixedPoint(v1.Y), From16BitFixedPoint(v1.Z)+yPos);
                 manual->textureCoord(ToTextureCoordU(tri.uVertex2, tri.TextureInfo), ToTextureCoordV(tri.vVertex2, tri.TextureInfo));
-                //manual->textureCoord(0.0f, 0.0f);
 
-                //manual->index(tri.Vertex1Index);
+                // v2
                 v1 = part.mVertices.at(tri.Vertex1Index);
-                manual->position(From16BitFixedPoint(v1.X), From16BitFixedPoint(v1.Y), From16BitFixedPoint(v1.Z));
+                manual->position(From16BitFixedPoint(v1.X)+xPos, From16BitFixedPoint(v1.Y), From16BitFixedPoint(v1.Z)+yPos);
                 manual->textureCoord(ToTextureCoordU(tri.uVertex1, tri.TextureInfo), ToTextureCoordV(tri.vVertex1, tri.TextureInfo));
-                //manual->textureCoord(0.5f, 0.5f);
 
-               // manual->index(tri.Vertex0Index);
+                // v3
                 v1 = part.mVertices.at(tri.Vertex0Index);
-                manual->position(From16BitFixedPoint(v1.X), From16BitFixedPoint(v1.Y), From16BitFixedPoint(v1.Z));
+                manual->position(From16BitFixedPoint(v1.X)+xPos, From16BitFixedPoint(v1.Y), From16BitFixedPoint(v1.Z)+yPos);
                 manual->textureCoord(ToTextureCoordU(tri.uVertex0, tri.TextureInfo), ToTextureCoordV(tri.vVertex0, tri.TextureInfo));
-                //manual->textureCoord(1.0f, 1.0f);
 
-                manual->end();
 
-                SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-                node->attachObject(manual);
-
-                float xPos = (blockX * kSpace) + (mapX * kSpace * 4);
-                float yPos = (blockY * kSpace) + (mapY * kSpace * 4);
-                node->setPosition( xPos, 0, yPos);
             }
-
-
-
 
             blockX++;
             if (blockX >= 4 )
@@ -561,9 +542,7 @@ void createTestMap(SceneManager* mSceneMgr)
                 blockX = 0;
                 blockY++;
             }
-
         }
-
         mapX++;
         if (mapX >= 9 )
         {
@@ -572,14 +551,14 @@ void createTestMap(SceneManager* mSceneMgr)
         }
 
     }
-/*
-    Entity* planeEnt = mSceneMgr->createEntity("TestCube", SceneManager::PT_CUBE);
 
-    // Give the plane a texture
-    planeEnt->setMaterialName("BackgroundMat");
-
-    // Attach the 2 new entities to the root of the scene
-    mSceneMgr->getRootSceneNode()->attachObject(planeEnt);*/
+    for (auto& it : gObjToTextureId)
+    {
+        it.second->end();
+        SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+        node->attachObject(it.second);
+        node->setPosition( 0, 0, 0);
+    }
 }
 
 void WorldMapModule::Init()
