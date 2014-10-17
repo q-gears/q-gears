@@ -1,3 +1,0 @@
-skeleton data
-+0 [][] part id. (-1 if there is no part)
-+2 [][] parent id. (-1 if there is no parent)

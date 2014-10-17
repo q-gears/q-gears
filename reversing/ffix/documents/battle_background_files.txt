@@ -1,4 +1,0 @@
-directory 6
-file 71 (static) 0001: Prima Vista / Cargo Room (1st battle)
-file 72 (static) 0002: Prima Vista / Battle with Steiner
-file 73 (static) 0003: Prima Vista / Stage

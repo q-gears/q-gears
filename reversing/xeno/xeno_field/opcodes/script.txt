@@ -1,9 +1,0 @@
-Script auto run:
-
-script 0: run to execute for each entity at initialization. Not waitable - finish as soon as meet return or any wait opcode.
-
-script 1: run when no other scripts running with priority 7. Waitable. Only 8 opcodes executed each call.
-
-script 2 and 3 runned for entity 0 for unknown reasons. Not waitable - finish as soon as meet return or any wait opcode.
-
-script 0 can be runned for any player character entity for some reasons. Not waitable - finish as soon as meet return or any wait opcode.

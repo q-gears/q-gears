@@ -1,7 +1,0 @@
-+0 [][]     bone count
-+4 [][]     flags
-            0x01 - use rotation
-            0x02 - use translation
-+6 [][]
-+c [][]     number of rotations
-+e [][]     number of translations

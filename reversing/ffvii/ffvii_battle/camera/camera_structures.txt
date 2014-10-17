@@ -1,6 +1,0 @@
-header
-
-+00 [][][][] offset to list of offsets to cameras
-+04 [][][][] offset to list of offsets to cameras2
-+08 [][][][] offset to something
-+0c [][][][] offset to win cameras

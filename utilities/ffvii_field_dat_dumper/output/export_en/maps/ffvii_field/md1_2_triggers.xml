@@ -1,7 +1,0 @@
-    <entity_trigger name="Gateway0" point1="27.2266 238.578 5.07031" point2="28.25 238.516 5.07031" enabled="true" />
-    <entity_point name="Spawn_md1_2" position="4.61719 6.21875 0.242188" rotation="0" />
-    <!-- map "ffvii_md1_1" -->
-    <entity_trigger name="Gateway1" point1="23.7266 252.461 5.09375" point2="23.6797 253.219 5.09375" enabled="true" />
-    <entity_point name="Spawn_md1_2" position="6.5 -23.8359 0.046875" rotation="259.765" />
-    <!-- map "Unknown_0x0077" -->
-<movement_rotation degree="-5.625" />

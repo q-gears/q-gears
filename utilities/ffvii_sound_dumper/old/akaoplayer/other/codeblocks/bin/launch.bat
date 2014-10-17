@@ -1,1 +1,0 @@
-start AkaoParser.exe aeris_theme.snd

@@ -1,2 +1,0 @@
-+00 [][]     pointer to something1 in this file.
-+02 [][]     pointer to something2 in this file.

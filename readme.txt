@@ -19,6 +19,8 @@ OgreSDK 1.9
 Boost 1.40
  - should be what ever the Ogre SDK needs, they did build agains 1.51 but cmake script
    suggessts that ogre is compatible with boost 1.40 and up
-
-
 mostly you can follow instructions here http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Prerequisites
+
+   
+Please see the q-gears-data repo for sample configs and data (with out config q-gears and utilities will not run correctly / at all . Future installers will need to generate config for the users set up.  
+
