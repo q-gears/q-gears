@@ -1,0 +1,16 @@
+language: cpp
+
+before_install:
+  - sudo apt-get install libvorbis-dev
+  - sudo apt-get install libogre-1.9-dev
+  - sudo apt-get install libalut-dev
+
+compiler:
+  - gcc
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake ..
+
+script: make
