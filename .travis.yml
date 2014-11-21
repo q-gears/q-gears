@@ -20,7 +20,7 @@ before_install:
   - sudo apt-get install libglu-dev
   - sudo apt-get install mercurial
 compiler:
-  - gcc
+  - clang
 
 before_script:
   - mkdir ogre
