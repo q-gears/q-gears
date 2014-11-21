@@ -2,7 +2,6 @@ language: cpp
 
 before_install:
   - sudo apt-get install libvorbis-dev
-  - sudo apt-get install libogre-dev
   - sudo apt-get install libalut-dev
   - sudo apt-get install libfreetype6-dev 
   - sudo apt-get install libboost-date-time-dev 
