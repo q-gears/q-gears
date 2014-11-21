@@ -26,6 +26,7 @@ before_script:
   - mkdir ogre
   - cd ogre
   - hg clone https://bitbucket.org/sinbad/ogre/src
+  - cd src
   - ls -a
   - hg update v1-9-0
   - ls -a
@@ -34,6 +35,7 @@ before_script:
   - cmake ..
   - make
   - sudo make install
+  - cd ..
   - cd ..
   - cd ..
   - mkdir build_qgears
