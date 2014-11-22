@@ -3,7 +3,9 @@ language: cpp
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo add-apt-repository ppa:openmw/openmw -y
+  - sudo add-apt-repository add-apt-repository ppa:boost-latest/ppa -y
   - sudo apt-get update
+  - sudo apt-get install libogre-1.9-dev libogre-1.9.0 boost1.55
   - sudo apt-get install gcc-4.8
   - sudo apt-get install g++-4.8
   - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 20
@@ -26,7 +28,6 @@ before_install:
   - sudo apt-get install libxrandr-dev
   - sudo apt-get install libglu-dev
   - sudo apt-get install mercurial
-  - sudo apt-get install libogre-1.9-dev libogre-1.9.0 libboost1.54-dev libboost-thread1.54-dev
 compiler:
   - gcc
 
