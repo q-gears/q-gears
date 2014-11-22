@@ -30,6 +30,7 @@ before_install:
   - sudo apt-get install mercurial
   - sudo apt-get remove libboost-all-dev
   - sudo add-apt-repository ppa:boost-latest/ppa -y
+  - sudo apt-get update
   - sudo apt-get install -f boost1.55
 compiler:
   - gcc
