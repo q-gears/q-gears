@@ -2,7 +2,7 @@ language: cpp
 
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo add-apt-repository ppa:libreoffice/ppa -y
+  - add-apt-repository ppa:openmw/openmw -y
   - sudo apt-get update
   - sudo apt-get install gcc-4.8
   - sudo apt-get install g++-4.8
@@ -13,8 +13,6 @@ before_install:
   - sudo apt-get install libvorbis-dev
   - sudo apt-get install libalut-dev
   - sudo apt-get install libfreetype6-dev 
-  - sudo apt-get install libboost1.54--date-time-dev 
-  - sudo apt-get install libboost1.54--thread-dev
   - sudo apt-get install nvidia-cg-toolkit 
   - sudo apt-get install libfreeimage-dev
   - sudo apt-get install zlib1g-dev
@@ -28,25 +26,11 @@ before_install:
   - sudo apt-get install libxrandr-dev
   - sudo apt-get install libglu-dev
   - sudo apt-get install mercurial
+  - sudo apt-get install libogre-1.9-dev libogre-1.9.0 libboost1.54-dev libboost-thread1.54-dev
 compiler:
   - gcc
 
 before_script:
-  - mkdir ogre
-  - cd ogre
-  - hg clone https://bitbucket.org/sinbad/ogre/src
-  - cd src
-  - ls -a
-  - hg update v1-9-0
-  - ls -a
-  - mkdir ogre_build
-  - cd ogre_build
-  - cmake ..
-  - make
-  - sudo make install
-  - cd ..
-  - cd ..
-  - cd ..
   - mkdir build_qgears
   - cd build_qgears
   - cmake ..
