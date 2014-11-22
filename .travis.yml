@@ -3,7 +3,9 @@ language: cpp
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo add-apt-repository ppa:openmw/openmw -y
+  - sudo add-apt-repository ppa:boost-latest/ppa
   - sudo apt-get update
+  - sudo apt-get install libboost1X.55-all-dev
   - sudo apt-get install libogre-1.9-dev
   - sudo apt-get install gcc-4.8
   - sudo apt-get install g++-4.8
