@@ -1,4 +1,4 @@
-![Alt text](https://travis-ci.org/paulsapps/q-gears.svg?branch=master)
+Travis-Ci build status: ![Alt text](https://travis-ci.org/paulsapps/q-gears.svg?branch=master)
 
 Linux
 -----
