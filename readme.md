@@ -108,7 +108,7 @@ cd ..
 ```
 mkdir qgears
 cd qgears
-git clone https://github.com/paulsapps/q-gears.git
+git clone https://github.com/q-gears/q-gears.git
 cd q-gears
 ```
 
