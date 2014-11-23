@@ -18,20 +18,20 @@ add_definitions(
     -DQGEARS_ADD_MANAGERS
 )
 
-add_executable(ffix_script_dumper
+add_executable(ff9_script_dumper
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
 
 if(WIN32)
-  set_target_properties(ffix_script_dumper PROPERTIES WIN32_EXECUTABLE ON)
+  set_target_properties(ff9_script_dumper PROPERTIES WIN32_EXECUTABLE ON)
 endif()
 
 set(LIBRARIES
     Utility
 )
-target_link_libraries(ffix_script_dumper    ${LIBRARIES})
+target_link_libraries(ff9_script_dumper    ${LIBRARIES})
 
-install(TARGETS ffix_script_dumper
-    DESTINATION tools/ff7
+install(TARGETS ff9_script_dumper
+    DESTINATION tools/ff9
 )

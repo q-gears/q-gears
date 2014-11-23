@@ -1,1 +1,0 @@
-start ./ffvii_sound_dumper 1_12_Flowers_Blooming_In_The_Church.snd

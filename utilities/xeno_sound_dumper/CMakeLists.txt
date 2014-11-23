@@ -37,5 +37,5 @@ set(LIBRARIES
 target_link_libraries(xeno_sound_dumper    ${LIBRARIES})
 
 install(TARGETS xeno_sound_dumper
-    DESTINATION tools/ff7
+    DESTINATION tools/xeno
 )

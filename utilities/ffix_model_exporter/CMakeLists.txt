@@ -20,20 +20,20 @@ add_definitions(
     -DQGEARS_ADD_MANAGERS
 )
 
-add_executable(ffix_model_exporter
+add_executable(ff9_model_exporter
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
 
 if(WIN32)
-  set_target_properties(ffix_model_exporter PROPERTIES WIN32_EXECUTABLE ON)
+  set_target_properties(ff9_model_exporter PROPERTIES WIN32_EXECUTABLE ON)
 endif()
 
 set(LIBRARIES
     Utility
 )
-target_link_libraries(ffix_model_exporter    ${LIBRARIES})
+target_link_libraries(ff9_model_exporter    ${LIBRARIES})
 
-install(TARGETS ffix_model_exporter
-    DESTINATION tools/ff7
+install(TARGETS ff9_model_exporter
+    DESTINATION tools/ff9
 )

@@ -22,20 +22,20 @@ add_definitions(
     -DQGEARS_ADD_MANAGERS
 )
 
-add_executable(ffvii_sound_dumper
+add_executable(ff7_sound_dumper
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
 
 if(WIN32)
-  set_target_properties(ffvii_sound_dumper PROPERTIES WIN32_EXECUTABLE ON)
+  set_target_properties(ff7_sound_dumper PROPERTIES WIN32_EXECUTABLE ON)
 endif()
 
 set(LIBRARIES
     Utility
 )
-target_link_libraries(ffvii_sound_dumper    ${LIBRARIES})
+target_link_libraries(ff7_sound_dumper    ${LIBRARIES})
 
-install(TARGETS ffvii_sound_dumper
+install(TARGETS ff7_sound_dumper
     DESTINATION tools/ff7
 )
