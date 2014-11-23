@@ -1,5 +1,5 @@
 #include "Logger.h"
-#include "FileSystem.h"
+#include "common/FileSystem.h"
 
 #include <OgreStringConverter.h>
 
@@ -49,7 +49,7 @@ FloatToString( float value )
 Logger::Logger( const Ogre::String& logFileName ):
     m_LogFile( logFileName )
 {
-    FILESYSTEM->RemoveFile( m_LogFile );
+    FileSystem::RemoveFile( m_LogFile );
 }
 
 
@@ -63,7 +63,7 @@ Logger::~Logger()
 void
 Logger::Log( const Ogre::String& text )
 {
-    FILESYSTEM->WriteFile(m_LogFile, text.c_str(), text.size());
+    FileSystem::WriteFile(m_LogFile, text.c_str(), text.size());
 }
 
 
@@ -71,7 +71,7 @@ Logger::Log( const Ogre::String& text )
 void
 Logger::LogW( const Ogre::UTFString& text )
 {
-    FILESYSTEM->WriteFile( m_LogFile, text.c_str(), text.size() * 2 );
+    FileSystem::WriteFile( m_LogFile, text.c_str(), text.size() * 2 );
 }
 
 
@@ -85,7 +85,7 @@ Logger::Log( std::vector< unsigned char >& text )
         temp[ i ] = text[ i ];
     }
 
-    FILESYSTEM->WriteFile( m_LogFile, temp, text.size() );
+    FileSystem::WriteFile( m_LogFile, temp, text.size() );
 
     delete[] temp;
 }

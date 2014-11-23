@@ -55,8 +55,6 @@ namespace QGears
             {
                 OGRE_DELETE arch;
             }
-
-        protected:
             static const String ARCHIVE_TYPE;
 
         private:

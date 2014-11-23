@@ -4,7 +4,7 @@
 #include <Ogre.h>
 
 #include "EnemyFile.h"
-#include "../../common/File.h"
+#include "common/File.h"
 
 
 

@@ -4,7 +4,7 @@
 #include <Ogre.h>
 
 #include "../../common/Surface.h"
-#include "../../common/LzsFile.h"
+#include "common/LzsFile.h"
 #include "../../common/Vram.h"
 
 

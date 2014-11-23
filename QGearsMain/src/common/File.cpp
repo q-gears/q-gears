@@ -1,9 +1,9 @@
 #include <cassert>
 #include <string.h>
 
-#include "File.h"
-#include "FileSystem.h"
-#include "Logger.h"
+#include "common/File.h"
+#include "common/FileSystem.h"
+#include "core/Logger.h"
 
 
 
@@ -13,14 +13,14 @@ File::File(const Ogre::String& file):
   m_Buffer(NULL),
   m_BufferSize(0)
 {
-    LOGGER->Log("Loading file: " + m_FileName + "\n");
-    m_BufferSize = FILESYSTEM->GetFileSize(m_FileName);
+    LOG_TRIVIAL("Loading file: " + m_FileName + "\n");
+    m_BufferSize = FileSystem::GetFileSize(m_FileName);
 
     m_Buffer = (u8*)malloc(sizeof(u8) * m_BufferSize);
 
-    if (!FILESYSTEM->ReadFile(m_FileName, m_Buffer, 0, m_BufferSize))
+    if (!FileSystem::ReadFile(m_FileName, m_Buffer, 0, m_BufferSize))
     {
-        LOGGER->Log("Warning: " + m_FileName + " not found!\n");
+        LOG_TRIVIAL("Warning: " + m_FileName + " not found!\n");
     }
 }
 
@@ -71,7 +71,7 @@ File::~File()
 void
 File::WriteFile(const Ogre::String& file) const
 {
-  FILESYSTEM->WriteNewFile(file, m_Buffer, m_BufferSize);
+  FileSystem::WriteNewFile(file, m_Buffer, m_BufferSize);
 }
 
 //-------------------------------------------------------------------------

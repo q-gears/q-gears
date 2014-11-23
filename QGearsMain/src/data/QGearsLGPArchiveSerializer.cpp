@@ -48,7 +48,7 @@ namespace QGears
     {
         readFileHeader( stream );
         uint32 file_count( 0 );
-        readInt( stream, file_count );
+        readUInt32( stream, file_count );
         FileList& files( pDest->getFiles() );
         readVector( stream, files, file_count );
 
@@ -58,7 +58,7 @@ namespace QGears
         {
             stream->seek( it->file_offset );
             it->data_file_name = readString( stream, FILE_NAME_LENGTH );
-            readInt( stream, it->data_size );
+            readUInt32( stream, it->data_size );
             it->data_offset = stream->tell();
             ++it;
         }
@@ -78,7 +78,7 @@ namespace QGears
                                      ,FileEntry& file_entry )
     {
         file_entry.file_name = readString( stream, FILE_NAME_LENGTH );
-        readInt( stream, file_entry.file_offset );
+        readUInt32( stream, file_entry.file_offset );
         stream->read( &file_entry.unknown1, sizeof( file_entry.unknown1 ) );
         readShort( stream, file_entry.unknown2 );
 

@@ -113,7 +113,7 @@ namespace QGears
                 ,"FLevelFileSerializer::importFLevelFile" );
         }
 
-        readInt(   stream, m_header.section_count );
+        readUInt32(   stream, m_header.section_count );
         if( m_header.section_count != SECTION_COUNT )
         {
             Ogre::LogManager::getSingleton().stream()
@@ -129,7 +129,7 @@ namespace QGears
                                           ,Ogre::DataStreamPtr &out_buffer )
     {
         uint32 length( 0 );
-        readInt( stream, length );
+        readUInt32( stream, length );
         // TODO: implement SubDataStream class to restrict access size etc
         // so we don't have to copy the whole memory
         Ogre::MemoryDataStream *buffer( new Ogre::MemoryDataStream( length ) );

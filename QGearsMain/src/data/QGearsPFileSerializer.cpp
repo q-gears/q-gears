@@ -80,7 +80,7 @@ namespace QGears
     PFileSerializer::readObject( Ogre::DataStreamPtr &stream, Colour &pDest )
     {
         uint32 colour;
-        readInt( stream, colour );
+        readUInt32( stream, colour );
         pDest.setAsARGB( colour );
     }
 

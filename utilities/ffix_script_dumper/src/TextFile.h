@@ -1,7 +1,7 @@
 #ifndef TextFILE_H
 #define TextFILE_H
 
-#include "../../common/File.h"
+#include "common/File.h"
 
 
 

@@ -3,8 +3,8 @@ if UiContainer == nil then UiContainer = {} end
 
 
 UiContainer.BeginMenu = {
-    position = 1,
-    position_total = 5,
+    position = 6,
+    position_total = 6,
 
 
 
@@ -49,6 +49,11 @@ UiContainer.BeginMenu = {
                 elseif self.position == 5 then
                     script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
                     script:request_end_sync( Script.UI, "Idol", "show", 0 )
+                -- world map test menu
+                elseif self.position == 6 then
+					script:request_end_sync( Script.UI, "BeginMenu", "hide", 0 )
+					console( "camera_free true" )
+					world_map_module:init()                
                 end
             elseif button == "Down" then
                 self.position = self.position + 1

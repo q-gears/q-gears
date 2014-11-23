@@ -1,7 +1,7 @@
 #ifndef MIM_FILE_H
 #define MIM_FILE_H
 
-#include "../../common/LzsFile.h"
+#include "common/LzsFile.h"
 #include "../../common/Vram.h"
 
 

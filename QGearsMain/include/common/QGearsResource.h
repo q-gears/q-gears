@@ -44,7 +44,7 @@ namespace QGears
         virtual ~Resource();
 
     protected:
-        virtual Ogre::DataStreamPtr openResource( void );
+        Ogre::DataStreamPtr openResource( void );
 
     private:
     };

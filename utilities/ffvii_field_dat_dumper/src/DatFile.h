@@ -2,7 +2,7 @@
 #define DATFILE_H
 
 #include "../../common/Logger.h"
-#include "../../common/LzsFile.h"
+#include "common/LzsFile.h"
 #include "../../common/Surface.h"
 #include "MimFile.h"
 

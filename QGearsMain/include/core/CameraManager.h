@@ -14,7 +14,7 @@ public:
     CameraManager();
     virtual ~CameraManager();
 
-    void Input( const Event& event );
+    void Input(const Event& event , Ogre::Real timeSinceLastFrame);
     void Update();
     void OnResize();
 
@@ -31,6 +31,7 @@ public:
     Ogre::Camera*   GetCurrentCamera();
     Ogre::Viewport* getViewport();
 
+    void EnableWireFrame(bool);
 private:
 
     void InitCommands();

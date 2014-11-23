@@ -57,7 +57,7 @@ namespace QGears
                                                    ,WalkmeshFile *pDest )
         {
             uint32 triangle_count( 0 );
-            readInt( stream, triangle_count );
+            readUInt32( stream, triangle_count );
 
             TriangleList triangles;
             readVector( stream, triangles, triangle_count );

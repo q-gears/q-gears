@@ -1,7 +1,7 @@
 #ifndef ScriptFILE_H
 #define ScriptFILE_H
 
-#include "../../common/File.h"
+#include "common/File.h"
 
 
 
