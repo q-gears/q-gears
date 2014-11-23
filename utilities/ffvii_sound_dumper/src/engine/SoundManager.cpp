@@ -1,17 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-//#include <sys/time.h>
-
 #include "SoundManager.h"
 #include "SoundBackend.h"
 #include "backends/SoundBackendSDL.h"
-
 #ifdef _MSC_VER
     #include <windows.h>
+#else
+    #include <sys/time.h>
 #endif
-
-//#include "../../../common/Logger.h"
 
 SoundManager *SOUNDMAN = NULL;
 SoundBackend *SBE = NULL;
