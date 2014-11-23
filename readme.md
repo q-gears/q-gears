@@ -10,9 +10,11 @@ Q-Gears is an RPG engine for games like Squaresoft's Final Fantasy 7, Final Fant
 ### How do I build QGears?
 
 
-#### Ubuntu Linux 14.04
+#### Ubuntu Linux 14.04+
 
-Ogre version must be 1.9, Boost version must be 55, gcc version must be 4.9, QtCreator is optional - install if you want to use this as the IDE (recommended).
+**WARNING** For older Linux versions scroll down.
+
+Ogre version **must** be 1.9, Boost version **must** be 55, gcc version **must** be 4.9, QtCreator is optional - install if you want to use this as the IDE (recommended).
 
 **Install required packages:**
 ```
@@ -45,7 +47,7 @@ cmake ..
 make
 ```
 
-#### Ubuntu Linux 12.04
+#### Ubuntu Linux 12.04 (Should work on most Ubuntu versions before 12.04)
 
 If you are using an older Ubuntu version then you will have to add PPA's to get the correct gcc/boost/ogre versions, its easier just to upgrade the Ubuntu version IMO.
 
@@ -122,9 +124,69 @@ make
 
 #### Windows
 
-for CMake to find BOOST and OGRE SDK you should have 2 environment variables
-BOOST_ROOT pointing to the folder of your boost version
-and
-OGRE_HOME set to the path of the Ogre SDK
-after setting environment variables you might have to restart the applications depending on them
-to have them recognize the newly set variables
+**Download and install Visual Studio 2013 "community" (free/express) edition. Install all patches/Windows updates.**
+```
+http://www.visualstudio.com/en-us/products/free-developer-offers-vs
+```
+
+**Download and install the Ogre SDK 1.9 (The VC2012 SDK as there is no VC2013 SDK version):**
+```
+http://sourceforge.net/projects/ogre/files/ogre/1.9/1.9/OgreSDK_vc11_v1-9-0.exe/download
+```
+Install/extract to "C:\OgreSDK\"
+
+**Download and install Git for windows:**
+```
+http://git-scm.com/download/win
+```
+
+**Download and install cmake for windows:**
+```
+http://www.cmake.org/files/v3.1/cmake-3.1.0-rc2-win32-x86.exe
+```
+
+Select "Add CMake to the system PATH for all users" - this makes things easier later on.
+
+**Download boost 55:**
+```
+http://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.zip/download
+```
+
+Extract to C:\boost_1_55_0. Now we need to compile boost.
+
+**Build boost 55:**
+
+Open the Visual Studio 2013 command prompt and cd to the boost dir by entering 
+```
+"C:\boost_1_55_0" 
+Then run
+bootstrap.bat
+Finally run (this may take a while to complete, you may pass -j8 here, where 8 is the number of cpu cores/threads to use):
+b2 --toolset=msvc-12.0 --build-type=complete stage 
+```
+
+**Download the zlib dll version:**
+```
+http://zlib.net/zlib128-dll.zip
+```
+Extract to the root of C drive.
+
+Now sync down the QGears source code, first create a directory some where you want to sync the code to using Windows explorer. Then right in the newly created directory and select "GIT Bash here".
+
+In the git bash enter:
+```
+git clone https://github.com/paulsapps/q-gears.git
+```
+
+**Building the QGears code:**
+First launch a "Visual studio developer command prompt" (Found under "tools" in the start menu in the Visual studio directory" (you've already done this if you've got this far).
+
+Now cd to where you synced the qgears source code to. For me this was "cd C:\Users\paul\Desktop\qgears\src"
+```
+mkdir build
+cd build
+set OGRE_HOME=C:\OgreSDK\OgreSDK_vc11_v1-9-0
+cmake .. -DZLIB_ROOT=C:\zlib128-dll -DBOOST_ROOT=C:\boost_1_55_0
+```
+
+Now you can open the newly created QGears.sln in Visual Studio and build Win32/Release or Debug. If files are added/deleted/or the depends change then repeat the set and cmake commands in the Visual Studio command prompt in order to update QGears.sln.
