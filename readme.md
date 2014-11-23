@@ -1,3 +1,5 @@
+Build status ![Alt text](https://travis-ci.org/paulsapps/q-gears.svg?branch=master?raw=true)
+
 Linux
 -----
 CMake should find your boost and ogre files automagically
