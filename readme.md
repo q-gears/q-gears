@@ -49,7 +49,7 @@ make
 
 If you are using an older Ubuntu version then you will have to add PPA's to get the correct gcc/boost/ogre versions, its easier just to upgrade the Ubuntu version IMO.
 
-Anyway here is what we need for Ubuntu 12.04 (Travis-CI) *WARNING* updating the compiler and boost via the PPA's may break your system.
+Anyway here is what we need for Ubuntu 12.04 (Travis-CI) **WARNING** updating the compiler and boost via the PPA's may break your system.
 
 **Install required packages:**
 ```
