@@ -131,6 +131,7 @@ EntityCollision::~EntityCollision()
 Ogre::Real
 EntityCollision::getSquaredViewDepth( const Ogre::Camera* cam ) const
 {
+    return 0.0f;
 }
 
 
@@ -138,4 +139,5 @@ EntityCollision::getSquaredViewDepth( const Ogre::Camera* cam ) const
 Ogre::Real
 EntityCollision::getBoundingRadius() const
 {
+    return 0.0f;
 }

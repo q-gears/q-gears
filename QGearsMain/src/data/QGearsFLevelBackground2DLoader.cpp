@@ -56,7 +56,7 @@ namespace QGears
         background_2d->setClip( Ogre::Vector2( FF7::SCREEN_WIDTH, FF7::SCREEN_HEIGHT ) );
 
         CameraMatrixFilePtr camera_matrix( m_flevel_file.getCameraMatrix() );
-        Ogre::Real scale( camera_matrix->getCount() );
+        Ogre::Real scale(Ogre::Real(camera_matrix->getCount()));
         background_2d->setPosition( camera_matrix->getPosition() / -( scale * FF7::FIELD_POSITION_SCALE ) );
 
         background_2d->setOrientation( camera_matrix->getOrientation() );

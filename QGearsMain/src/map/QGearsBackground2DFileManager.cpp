@@ -25,11 +25,10 @@ THE SOFTWARE.
 */
 #include "map/QGearsBackground2DFileManager.h"
 
+template<> QGears::Background2DFileManager *Ogre::Singleton<QGears::Background2DFileManager>::msSingleton = NULL;
+
 namespace QGears
 {
-    //-------------------------------------------------------------------------
-    template<> Background2DFileManager *Ogre::Singleton<Background2DFileManager>::msSingleton = NULL;
-
     //-------------------------------------------------------------------------
     Background2DFileManager *Background2DFileManager::getSingletonPtr()
     {

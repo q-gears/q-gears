@@ -645,6 +645,9 @@ DatFile::DumpText( const Ogre::String& export_path, const Field& field, bool eng
 void
 DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
 {
+    // TODO FIX ME on MSVC
+    //Error	47	error C1061 : compiler limit : blocks nested too deeply	src\utilities\ffvii_field_dat_dumper\src\DatFile.cpp	1942
+#ifndef _MSC_VER
     Logger* export_script = new Logger( export_path + "maps/ffvii_field/" + field.name + "_script.txt" );
 
     // get sector 1 offset (scripts and dialog)
@@ -2357,6 +2360,7 @@ DatFile::DumpScript( const Ogre::String& export_path, const Field& field )
         }
     }
     delete export_script;
+#endif
 }
 
 

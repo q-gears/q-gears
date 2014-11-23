@@ -21,6 +21,9 @@ add_executable(lzs
 
 if(WIN32)
   set_target_properties(lzs PROPERTIES WIN32_EXECUTABLE ON)
+  if (MSVC)
+    set_target_properties(lzs PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+  endif()
 endif()
 
 set(LIBRARIES

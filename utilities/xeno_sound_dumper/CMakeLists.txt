@@ -29,6 +29,9 @@ add_executable(xeno_sound_dumper
 
 if(WIN32)
   set_target_properties(xeno_sound_dumper PROPERTIES WIN32_EXECUTABLE ON)
+  if (MSVC)
+    set_target_properties(xeno_sound_dumper PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+  endif()
 endif()
 
 set(LIBRARIES

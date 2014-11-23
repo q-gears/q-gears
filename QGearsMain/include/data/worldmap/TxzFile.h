@@ -9,7 +9,12 @@ class TxzFile : public Resource
 {
 public:
     static const String RESOURCE_TYPE;
-    using Resource::Resource;
+    TxzFile(Ogre::ResourceManager* creator, const Ogre::String& name, Ogre::ResourceHandle handle,
+        const Ogre::String& group, bool isManual = false, Ogre::ManualResourceLoader* loader = 0)
+        : Resource(creator, name, handle, group, isManual, loader)
+    {
+
+    }
     virtual ~TxzFile();
 private:
     virtual void loadImpl() override final;

@@ -16,13 +16,13 @@ GNU General Public License for more details.
 */
 #include "data/FF7ModelListFileManager.h"
 
+//----------------------------------------------------------------------
+template<> QGears::FF7::ModelListFileManager *Ogre::Singleton<QGears::FF7::ModelListFileManager>::msSingleton = NULL;
+
 namespace QGears
 {
     namespace FF7
     {
-        //----------------------------------------------------------------------
-        template<> ModelListFileManager *Ogre::Singleton<ModelListFileManager>::msSingleton = NULL;
-
         //----------------------------------------------------------------------
         ModelListFileManager *ModelListFileManager::getSingletonPtr()
         {

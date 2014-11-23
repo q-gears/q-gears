@@ -26,23 +26,64 @@ namespace QGears
         class NameLookup
         {
         public:
-            NameLookup();
-            virtual ~NameLookup();
+            NameLookup() = default;
+            virtual ~NameLookup() = default;
 
-            static const String& animation( const String &key );
-            static const String& model( const String &key );
+            static const String& animation(const String &key)
+            {
+                return lookup(key, ms_animations);
+            }
+
+            static const String& model(const String &key)
+            {
+                return lookup(key, ms_models);
+            }
 
         protected:
             typedef std::map<const String, const String>    LookupMap;
 
-            static LookupMap createAnimations();
-            static LookupMap createModels();
+            static LookupMap createAnimations()
+            {
+                LookupMap lookup;
+                lookup.insert(LookupMap::value_type("acfe", "Idle"));
+                lookup.insert(LookupMap::value_type("aaff", "Walk"));
+                lookup.insert(LookupMap::value_type("aaga", "Run"));
+                lookup.insert(LookupMap::value_type("bvjf", "JumpFromTrain"));
 
-            static const String& lookup( const String &key, const LookupMap &data );
+                // barret
+                lookup.insert(LookupMap::value_type("adcb", "Idle"));
+                lookup.insert(LookupMap::value_type("adcc", "Walk"));
+                lookup.insert(LookupMap::value_type("adcd", "Run"));
+                lookup.insert(LookupMap::value_type("bwaa", "Invitation"));
+
+                // sd_red
+                lookup.insert(LookupMap::value_type("aeae", "Idle"));
+                lookup.insert(LookupMap::value_type("aeaf", "Walk"));
+                lookup.insert(LookupMap::value_type("aeba", "Run"));
+
+                return lookup;
+            }
+
+            static LookupMap createModels()
+            {
+                LookupMap lookup;
+                lookup.insert(LookupMap::value_type("aaaa", "n_cloud"));
+                lookup.insert(LookupMap::value_type("adda", "sd_red"));
+
+                return lookup;
+            }
+
+            static const String& lookup(const String &key, const LookupMap &data)
+            {
+                LookupMap::const_iterator found(data.find(key));
+                if (found == data.end()) return key;
+
+                return found->second;
+            }
 
         private:
-            static const LookupMap  ms_animations;
-            static const LookupMap  ms_models;
+            static LookupMap  ms_animations;
+            static LookupMap  ms_models;
         };
     }
 }

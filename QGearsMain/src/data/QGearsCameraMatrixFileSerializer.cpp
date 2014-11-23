@@ -56,7 +56,7 @@ namespace QGears
         Ogre::Vector3 position;
         for( size_t i(0); i < CAMERA_MATRIX_ROW_COUNT; ++i )
         {
-            position[i] = pos[i];
+            position[i] = Ogre::Real(pos[i]);
             for( size_t j(0); j < CAMERA_MATRIX_COL_COUNT; ++j )
             {
                 camera_matrix[j][i] = matrix_sint16[i][j] / 4096.0;

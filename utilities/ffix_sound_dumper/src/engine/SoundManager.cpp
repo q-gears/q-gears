@@ -1,27 +1,30 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <sys/time.h>
-
 #include "SoundManager.h"
 #include "SoundBackend.h"
 #include "backends/SoundBackendSDL.h"
-
-#ifdef USE_MINGW
-    #include <windows.h>
+#ifdef _MSC_VER
+#include <windows.h>
+#else
+#include <sys/time.h>
 #endif
-
-//#include "../../../common/Logger.h"
 
 SoundManager *SOUNDMAN = NULL;
 SoundBackend *SBE = NULL;
 
-
+#ifndef HIWORD
 #define HIWORD(l) ((WORD) (((DWORD) (l) >> 16) & 0xFFFF))
+#endif
+
+#ifndef LOWORD
 #define LOWORD(a) ((WORD)(a))
+#endif
 
 typedef unsigned short int WORD;
+#ifndef _MSC_VER
 typedef unsigned int DWORD;
+#endif
 
 unsigned long RateTable[160];
 
@@ -2419,6 +2422,7 @@ void MixXA()
 
 void FeedXA(xa_decode_t *xap)
 {
+#ifdef QGears_SOUND
 	int sinc, spos, i, iSize, iPlace, vl, vr;
 
 	if(!bSPUIsOpen)
@@ -2723,6 +2727,7 @@ void FeedXA(xa_decode_t *xap)
 			}
 		}
 	}
+#endif
 }
 
 void InterpolateUp(int ch)
@@ -2890,7 +2895,7 @@ static void *MAINThread(void *arg)
 
 			// else sleep for x ms (linux)
 
-#ifndef USE_MINGW
+#ifndef _MSC_VER
 			usleep(PAUSE_L);
 #else
 			Sleep(PAUSE_L);
@@ -3045,7 +3050,7 @@ static void *MAINThread(void *arg)
 											iWatchDog = 1;
 											while(iWatchDog && !bEndThread &&
 												GGetTime() < dwWatchTime)
-#ifndef USE_MINGW
+#ifndef _MSC_VER
 			usleep(10);
 #else
 			Sleep(10);
@@ -3456,7 +3461,7 @@ void RemoveTimer(void)
 		// wait until thread has ended
 		while(!bThreadEnded && i < 2000)
 		{
-#ifndef USE_MINGW
+#ifndef _MSC_VER
 			usleep(10);
 #else
 			Sleep(10);
@@ -3811,11 +3816,15 @@ void SPUplaySector(unsigned long mode, unsigned char *p)
 
 u32 GGetTime()
 {
+#ifndef _MSC_VER
 	// well, maybe there are better ways
 	// to do that, but at least it works
 	struct timeval tv;
 	gettimeofday(&tv, 0);
 
 	return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+#else
+    return ::GetTickCount(); // TODO FIX ME, probably wrong
+#endif
 }
 

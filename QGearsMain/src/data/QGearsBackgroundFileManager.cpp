@@ -25,10 +25,11 @@ THE SOFTWARE.
 */
 #include "data/QGearsBackgroundFileManager.h"
 
+//-------------------------------------------------------------------------
+template<> QGears::BackgroundFileManager *Ogre::Singleton<QGears::BackgroundFileManager>::msSingleton = NULL;
+
 namespace QGears
 {
-    //-------------------------------------------------------------------------
-    template<> BackgroundFileManager *Ogre::Singleton<BackgroundFileManager>::msSingleton = NULL;
 
     //-------------------------------------------------------------------------
     BackgroundFileManager *BackgroundFileManager::getSingletonPtr()

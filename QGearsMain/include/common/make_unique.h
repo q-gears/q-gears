@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#ifndef _MSC_VER
 namespace std
 {
     template<typename T, typename ...Args>
@@ -11,5 +12,6 @@ namespace std
         return std::unique_ptr<T>( new T( std::forward<Args>(args)... ) );
     }
 }
+#endif
 
 #endif // _MAKE_UNIQUE_

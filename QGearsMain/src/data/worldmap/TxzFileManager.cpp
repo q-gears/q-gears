@@ -1,9 +1,9 @@
 #include "data/worldmap/TxzFileManager.h"
 #include "data/worldmap/TxzFile.h"
 
-BEGIN_QGEARS
+template<> QGears::TxzFileManager* Ogre::Singleton<QGears::TxzFileManager>::msSingleton = nullptr;
 
-template<> TxzFileManager* Ogre::Singleton<TxzFileManager>::msSingleton = nullptr;
+BEGIN_QGEARS
 
 TxzFileManager* TxzFileManager::getSingletonPtr()
 {

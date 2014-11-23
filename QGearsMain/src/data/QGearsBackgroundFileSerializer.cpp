@@ -167,8 +167,8 @@ namespace QGears
         stream->read( pDest.flags_18, sizeof( pDest.flags_18 ) );
         uint8 flags[2];
         stream->read( flags, sizeof( flags ) );
-        pDest.flags_20[0] = flags[0];
-        pDest.flags_20[1] = flags[1];
+        pDest.flags_20[0] = flags[0] > 0;
+        pDest.flags_20[1] = flags[1] > 0;
 
         readShort( stream, pDest.unknown_1C );
         readShort( stream, pDest.data_page );

@@ -1,17 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <sys/time.h>
-
 #include "SoundManager.h"
 #include "SoundBackend.h"
 #include "backends/SoundBackendSDL.h"
-
-#ifdef USE_MINGW
+#ifdef _MSC_VER
     #include <windows.h>
+#else
+    #include <sys/time.h>
 #endif
-
-//#include "../../../common/Logger.h"
 
 SoundManager *SOUNDMAN = NULL;
 SoundBackend *SBE = NULL;
@@ -2885,7 +2882,7 @@ static void *MAINThread(void *arg)
 
 			// else sleep for x ms (linux)
 
-#ifndef USE_MINGW
+#ifndef _MSC_VER
 			usleep(PAUSE_L);
 #else
 			Sleep(PAUSE_L);
@@ -3040,7 +3037,7 @@ static void *MAINThread(void *arg)
 											iWatchDog = 1;
 											while(iWatchDog && !bEndThread &&
 												GGetTime() < dwWatchTime)
-#ifndef USE_MINGW
+#ifndef _MSC_VER
 			usleep(10);
 #else
 			Sleep(10);
@@ -3451,7 +3448,7 @@ void RemoveTimer(void)
 		// wait until thread has ended
 		while(!bThreadEnded && i < 2000)
 		{
-#ifndef USE_MINGW
+#ifndef _MSC_VER
 			usleep(10);
 #else
 			Sleep(10);
@@ -3806,11 +3803,15 @@ void SPUplaySector(unsigned long mode, unsigned char *p)
 
 u32 GGetTime()
 {
+#ifdef _MSC_VER
+    return ::GetTickCount(); // TODO FIX ME
+#else
 	// well, maybe there are better ways
 	// to do that, but at least it works
 	struct timeval tv;
 	gettimeofday(&tv, 0);
 
 	return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+#endif
 }
 

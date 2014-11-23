@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include <OgrePrerequisites.h>
 
-#if (OGRE_PLATFORM == OGRE_PLATFORM_WIN32 ) && !defined(__MINGW32__) && !defined(QGEARS_STATIC_LIB)
+#if (OGRE_PLATFORM == OGRE_PLATFORM_WIN32 ) && !defined(_MSC_VER) && !defined(QGEARS_STATIC_LIB)
 #   ifdef QGEARS_EXPORTS
 #       define _QGearsExport __declspec(dllexport)
 #   else

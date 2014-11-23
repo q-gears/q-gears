@@ -97,6 +97,7 @@ u32 SoundBackendSDL::GetBytesBuffered()
 		return 0;
 	else
         return m_Context.buffer_size;*/
+    return 0;
 }
 
 

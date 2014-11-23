@@ -214,8 +214,8 @@ EntityManager::Update()
             Ogre::Vector3 view = camera_manager.ProjectPointToScreen( scroll_entity->GetPosition() );
             Ogre::Vector2 pos = m_Background2D.GetScreenScroll();
             Ogre::Viewport *viewport( camera_manager.getViewport() );
-            float width = viewport->getActualWidth();
-            float height = viewport->getActualHeight();
+            float width = float(viewport->getActualWidth());
+            float height = float(viewport->getActualHeight());
             view.x = view.x - width / 2 - pos.x;
             view.y = view.y - height / 2 - pos.y;
             m_Background2D.SetScreenScroll( Ogre::Vector2( -view.x, -view.y ) );
@@ -764,7 +764,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity, const float speed )
 
 
 
-    float solid = ( entity->IsSolid() == true ) ? entity->GetSolidRadius() : 0.01;
+    float solid = ( entity->IsSolid() == true ) ? entity->GetSolidRadius() : 0.01f;
 
 
 

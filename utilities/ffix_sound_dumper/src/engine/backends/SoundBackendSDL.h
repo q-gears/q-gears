@@ -7,7 +7,7 @@
 #include "common/TypeDefine.h"
 
 #include "../SoundBackend.h"
-
+#include <stdint.h>
 
 
 class SoundBackendSDL : public SoundBackend

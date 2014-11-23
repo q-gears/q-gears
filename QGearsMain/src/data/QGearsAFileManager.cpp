@@ -16,11 +16,10 @@ GNU General Public License for more details.
 */
 #include "data/QGearsAFileManager.h"
 
+template<> QGears::AFileManager *Ogre::Singleton<QGears::AFileManager>::msSingleton = NULL;
+
 namespace QGears
 {
-    //-------------------------------------------------------------------------
-    template<> AFileManager *Ogre::Singleton<AFileManager>::msSingleton = NULL;
-
     //-------------------------------------------------------------------------
     AFileManager *AFileManager::getSingletonPtr()
     {

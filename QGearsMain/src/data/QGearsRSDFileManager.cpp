@@ -25,11 +25,10 @@ THE SOFTWARE.
 */
 #include "data/QGearsRSDFileManager.h"
 
+template<> QGears::RSDFileManager *Ogre::Singleton<QGears::RSDFileManager>::msSingleton = NULL;
+
 namespace QGears
 {
-    //-------------------------------------------------------------------------
-    template<> RSDFileManager *Ogre::Singleton<RSDFileManager>::msSingleton = NULL;
-
     //-------------------------------------------------------------------------
     RSDFileManager *RSDFileManager::getSingletonPtr()
     {

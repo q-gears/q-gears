@@ -70,7 +70,10 @@ namespace QGears
         size_t start_position( stream->tell() );
         readFileHeader( stream );
 
-        uint32 section_offsets[ m_header.section_count ];
+        std::vector<uint32> section_offsetsVec(m_header.section_count);
+
+        uint32* section_offsets = section_offsetsVec.data();
+
         readInts( stream, section_offsets, m_header.section_count );
 
         Ogre::DataStreamPtr section;

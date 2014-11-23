@@ -25,30 +25,7 @@ THE SOFTWARE.
 */
 #include "common/QGearsResource.h"
 
-#include <OgreResourceGroupManager.h>
-
 namespace QGears
 {
-    //---------------------------------------------------------------------
-    Resource::Resource( Ogre::ResourceManager *creator
-                 ,const String &name, Ogre::ResourceHandle handle
-                 ,const String &group, bool isManual
-                 ,Ogre::ManualResourceLoader *loader ) :
-        Ogre::Resource( creator, name, handle, group, isManual, loader )
-    {
-    }
 
-    //---------------------------------------------------------------------
-    Resource::~Resource()
-    {
-    }
-
-    //---------------------------------------------------------------------
-    Ogre::DataStreamPtr
-    Resource::openResource( void )
-    {
-        return Ogre::ResourceGroupManager::getSingleton().openResource( mName, mGroup, true, this );
-    }
-
-    //---------------------------------------------------------------------
 }

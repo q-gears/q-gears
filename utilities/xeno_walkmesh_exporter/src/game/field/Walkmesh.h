@@ -37,7 +37,7 @@ struct WalkmeshTriangle
 
 
 
-class _OgreExport Walkmesh : public Ogre::SimpleRenderable
+class Walkmesh : public Ogre::SimpleRenderable
 {
 public:
                          Walkmesh(void);
