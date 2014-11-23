@@ -5,7 +5,7 @@ Q-Gears is an RPG engine for games like Squaresoft's Final Fantasy 7, Final Fant
 
 ## QGears Travis-CI build status
 
-![Alt text](https://travis-ci.org/paulsapps/q-gears.svg?branch=master)
+![Alt text](https://travis-ci.org/q-gears/q-gears.svg?branch=master)
 
 ### How do I build QGears?
 
