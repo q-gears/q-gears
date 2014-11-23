@@ -38,7 +38,7 @@ namespace QGears
     class _QGearsExport Resource : public Ogre::Resource
     {
     public:
-        Resource::Resource(Ogre::ResourceManager *creator
+        Resource(Ogre::ResourceManager *creator
             , const String &name, Ogre::ResourceHandle handle
             , const String &group, bool isManual
             , Ogre::ManualResourceLoader *loader) :
