@@ -15,7 +15,7 @@ Q-Gears is an RPG engine for games like Squaresoft's Final Fantasy 7, Final Fant
 Ogre version must be 1.9, Boost version must be 55, gcc version must be 4.9, QtCreator is optional - install if you want to use this as the IDE (recommended).
 
 **Install required packages:**
-
+```
 * sudo apt-get update
 * sudo apt-get install git
 * sudo apt-get install build-essential
@@ -27,20 +27,23 @@ Ogre version must be 1.9, Boost version must be 55, gcc version must be 4.9, QtC
 * sudo apt-get install qtcreator
 * sudo apt-get install libogre-1.9-dev
 * sudo apt-get install libois-dev
+```
 
 **Sync down the QGears source code:**
-
+```
 mkdir qgears
 cd qgears
 git clone https://github.com/paulsapps/q-gears.git
 cd q-gears
+```
 
 **Build the code:**
-
+```
 mkdir build
 cd build
 cmake ..
 make
+```
 
 #### Ubuntu Linux 12.04
 
@@ -49,7 +52,7 @@ If you are using an older Ubuntu version then you will have to add PPA's to get 
 Anyway here is what we need for Ubuntu 12.04 (Travis-CI) *WARNING* updating the compiler and boost via the PPA's may break your system.
 
 **Install required packages:**
-
+```
 * sudo apt-get update
 * sudo apt-get install build-essential
 * sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
@@ -76,15 +79,19 @@ Anyway here is what we need for Ubuntu 12.04 (Travis-CI) *WARNING* updating the 
 * sudo apt-get install libglu-dev
 * sudo apt-get install libfreetype6-dev 
 * sudo apt-get install checkinstall
+```
 
 **Sync down source for Ogre 1.9:**
 
+```
 mkdir ogre
 cd ogre
 hg clone https://bitbucket.org/sinbad/ogre/src
+```
 
 **Build Ogre 1.9:**
 
+```
 cd src
 hg update v1-9-0
 mkdir ogre_build
@@ -95,20 +102,23 @@ sudo checkinstall
 cd ..
 cd ..
 cd ..
+```
 
 **Sync down the QGears source code:**
-
+```
 mkdir qgears
 cd qgears
 git clone https://github.com/paulsapps/q-gears.git
 cd q-gears
+```
 
 **Build the code:**
-
+```
 mkdir build
 cd build
 cmake ..
 make
+```
 
 #### Windows
 
