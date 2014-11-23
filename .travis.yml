@@ -27,8 +27,8 @@ before_install:
   - sudo apt-get install libxrandr-dev
   - sudo apt-get install libglu-dev
   - sudo apt-get install mercurial
-  - wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb Ogre1.9.deb
-  - sudo dpkg -i Ogre1.9.deb
+  - wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb
+  - sudo dpkg -i ogre-build_1.9.0-1_amd64.deb
 compiler:
   - gcc
 
