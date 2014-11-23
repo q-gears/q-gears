@@ -142,7 +142,7 @@ set(QGears_INCLUDE_DIRS
 # Enable C++11, you may need to use -std=c++0x if using an older compiler
 if (MSVC)
 else()
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
 endif()
 
 add_definitions(-DTIXML_USE_STL)
