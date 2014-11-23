@@ -2,8 +2,8 @@
 
 #include "FieldFile.h"
 #include "ModelFile.h"
-#include "../../common/File.h"
-#include "../../common/Logger.h"
+#include "common/File.h"
+#include "common/Logger.h"
 #include "../../common/OgreGenUtilites.h"
 
 

@@ -1,11 +1,21 @@
 # define header and source files for the library
 set(HEADER_FILES
+  include/modules/worldmap/WorldMapModule.h
   include/common/QGearsApplication.h
   include/common/QGearsManualObject.h
   include/common/QGearsResource.h
   include/common/QGearsStringUtil.h
   include/common/TypeDefine.h
+  include/common/LzsFile.h
+  include/common/File.h
+  include/common/FileSystem.h
   include/common/make_unique.h
+  include/data/worldmap/MapFile.h
+  include/data/worldmap/MapFileManager.h
+  include/data/worldmap/MapFileSerializer.h
+  include/data/worldmap/TxzFile.h
+  include/data/worldmap/TxzFileManager.h
+  include/data/worldmap/TxzFileSerializer.h
   include/data/QGearsAFile.h
   include/data/QGearsAFileManager.h
   include/data/QGearsAFileSerializer.h
@@ -136,11 +146,15 @@ set(HEADER_FILES
   #include/viewer/ViewerModule.h
 )
 set(SOURCE_FILES
+  src/modules/worldmap/WorldMapModule.cpp
   src/common/QGearsApplication.cpp
   src/common/QGearsManualObject.cpp
   src/common/QGearsResource.cpp
   src/common/QGearsStringUtil.cpp
   src/common/TypeDefine.cpp
+  src/common/LzsFile.cpp
+  src/common/File.cpp
+  src/common/FileSystem.cpp
   src/core/particles/emitters/ParticlePointEmitter.cpp
   src/core/particles/Particle.cpp
   src/core/particles/ParticleEmitter.cpp
@@ -203,6 +217,12 @@ set(SOURCE_FILES
   src/data/QGearsAFile.cpp
   src/data/QGearsAFileManager.cpp
   src/data/QGearsAFileSerializer.cpp
+  src/data/worldmap/MapFile.cpp
+  src/data/worldmap/MapFileManager.cpp
+  src/data/worldmap/MapFileSerializer.cpp
+  src/data/worldmap/TxzFile.cpp
+  src/data/worldmap/TxzFileManager.cpp
+  src/data/worldmap/TxzFileSerializer.cpp
   src/data/QGearsBackgroundFile.cpp
   src/data/QGearsBackgroundFileManager.cpp
   src/data/QGearsBackgroundFileSerializer.cpp

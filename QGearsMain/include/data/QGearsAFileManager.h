@@ -35,9 +35,9 @@ namespace QGears
         static AFileManager* getSingletonPtr();
 
     protected:
-        Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
+        virtual Ogre::Resource *createImpl( const Ogre::String &name, Ogre::ResourceHandle handle
           , const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader
-          , const Ogre::NameValuePairList *createParams );
+          , const Ogre::NameValuePairList *createParams ) override final;
 
     private:
     };

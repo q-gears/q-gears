@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "../../common/BinGZipFile.h"
-#include "../../common/FileSystem.h"
+#include "common/FileSystem.h"
 #include "../../common/Logger.h"
 #include "../../common/TimToVram.h"
 #include "../../common/OgreGenUtilites.h"
@@ -38,8 +38,6 @@ main( int argc, char *argv[] )
     window = root->createRenderWindow( "QGearsWindow", 800, 600, false, &misc );
 
 
-
-    FILESYSTEM = new FileSystem();
     LOGGER = new Logger( "game.log" );
 
     state = GAME;
@@ -134,7 +132,6 @@ main( int argc, char *argv[] )
 
 
 
-    delete FILESYSTEM;
     delete LOGGER;
 
 

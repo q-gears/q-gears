@@ -12,6 +12,9 @@ typedef Ogre::int8  s8;
 typedef Ogre::int16 s16;
 typedef Ogre::int32 s32;
 
+#define BEGIN_QGEARS namespace QGears {
+#define END_QGEARS }
+
 namespace QGears
 {
     typedef Ogre::uchar  uchar;

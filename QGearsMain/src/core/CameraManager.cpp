@@ -53,11 +53,11 @@ CameraManager::~CameraManager()
 
 
 void
-CameraManager::Input( const Event& event )
+CameraManager::Input( const Event& event, Ogre::Real timeSinceLastFrame )
 {
     if( m_CameraFree == true )
     {
-        float speed = cv_cam_speed.GetF();
+        float speed = cv_cam_speed.GetF() * timeSinceLastFrame;
         if( InputManager::getSingleton().IsButtonPressed( OIS::KC_RSHIFT ) || InputManager::getSingleton().IsButtonPressed( OIS::KC_LSHIFT ) )
         {
             speed *= 4;
@@ -89,7 +89,7 @@ CameraManager::Input( const Event& event )
         }
         else if( event.type == ET_MOUSE_MOVE && m_CameraFreeRotate == true )
         {
-            m_Camera->rotate( Ogre::Vector3::UNIT_Z, Ogre::Radian( Ogre::Degree( -event.param1 * 0.13 ) ) );
+            m_Camera->rotate( Ogre::Vector3::UNIT_Y, Ogre::Radian( Ogre::Degree( -event.param1 * 0.13 ) ) );
             m_Camera->pitch( Ogre::Degree( -event.param2 * 0.13 ) );
         }
     }
@@ -202,11 +202,20 @@ CameraManager::GetCurrentCamera()
     return m_Camera;
 }
 
-    //--------------------------------------------------------------------------
-    Ogre::Viewport*
-    CameraManager::getViewport()
-    {
-        return m_Viewport;
-    }
+//--------------------------------------------------------------------------
+Ogre::Viewport*
+CameraManager::getViewport()
+{
+    return m_Viewport;
+}
 
-    //--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+void CameraManager::EnableWireFrame(bool)
+{
+    if ( m_Camera )
+    {
+        //m_Camera->setPolygonMode(Ogre::PM_WIREFRAME);
+        //    m_Camera->rotate( Ogre::Vector3::UNIT_Z, Ogre::Radian( Ogre::Degree( 180 ) ) );
+        m_Camera->setFarClipDistance(900000000);
+    }
+}

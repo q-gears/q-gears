@@ -1,7 +1,5 @@
-#include "LzsFile.h"
-
-#include "Logger.h"
-
+#include "common/LzsFile.h"
+//#include "common/Logger.h"
 
 
 LzsFile::LzsFile(const Ogre::String& file):
@@ -20,7 +18,7 @@ LzsFile::LzsFile(File* pFile, u32 offset, u32 length):
 
 
 
-LzsFile::LzsFile(u8* pBuffer, u32 offset, u32 length):
+LzsFile::LzsFile(const u8* pBuffer, u32 offset, u32 length):
     File(pBuffer, offset, length)
 {
     ExtractLzs();
@@ -49,7 +47,7 @@ LzsFile::ExtractLzs()
 
     if (input_length != m_BufferSize)
     {
-        LOGGER->Log("Warning: extract failed, this is not lzs!\n");
+        //LOGGER->Log("Warning: extract failed, this is not lzs!\n");
         return;
     }
 
@@ -123,4 +121,12 @@ LzsFile::ExtractLzs()
     // the real buffer size and mBufferSize will be a bit different
     m_Buffer = extract_buffer;
     m_BufferSize = output_offset;
+}
+
+/*static*/ std::vector<QGears::uint8> LzsBuffer::Decompress(const std::vector<QGears::uint8>& buffer)
+{
+    LzsFile tmp(static_cast<const u8*>(buffer.data()), 0, buffer.size());
+    std::vector<QGears::uint8> ret(tmp.m_BufferSize);
+    ret.assign(tmp.m_Buffer, tmp.m_Buffer + tmp.m_BufferSize);
+    return ret;
 }

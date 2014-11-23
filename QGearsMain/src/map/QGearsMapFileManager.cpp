@@ -33,6 +33,7 @@ namespace QGears
         assert( msSingleton );
         return(*msSingleton );
     }
+
     //--------------------------------------------------------------------------
     MapFileManager::MapFileManager()
     {
@@ -50,7 +51,7 @@ namespace QGears
     {
         Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager( mResourceType );
     }
-    
+
     //--------------------------------------------------------------------------
     Ogre::Resource *MapFileManager::createImpl( const Ogre::String &name
                                                 , Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual

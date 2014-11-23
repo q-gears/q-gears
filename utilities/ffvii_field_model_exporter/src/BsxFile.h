@@ -4,7 +4,7 @@
 #include <Ogre.h>
 
 #include "DatFile.h"
-#include "../../common/LzsFile.h"
+#include "common/LzsFile.h"
 #include "../../common/Vram.h"
 #include "../../common/OgreGenUtilites.h"
 

@@ -3,7 +3,7 @@
 #include <Ogre.h>
 #include <OIS.h>
 
-#include "../../common/FileSystem.h"
+#include "common/FileSystem.h"
 #include "../../common/Logger.h"
 
 
@@ -140,7 +140,7 @@ main( int argc, char *argv[] )
 
 
 
-    FILESYSTEM = new FileSystem();
+
     LOGGER = new Logger( "game.log" );
 
     state = GAME;
@@ -179,7 +179,6 @@ main( int argc, char *argv[] )
     delete root;
     delete frame_listener;
 
-    delete FILESYSTEM;
     delete LOGGER;
 
     return 0;

@@ -9,6 +9,7 @@
 #include "XmlMapsFile.h"
 
 
+#include "modules/worldmap/WorldMapModule.h"
 
 void
 ScriptPrint( const char* text )
@@ -199,9 +200,19 @@ ScriptManager::InitBinds()
             ]
     ];
 
+    luabind::module( m_LuaState )
+    [
+        luabind::class_< QGears::WorldMapModule >( "world_map_module" )
+            .def( "init", ( void( QGears::WorldMapModule::* )() ) &QGears::WorldMapModule::Init )
+    ];
+
     luabind::globals( m_LuaState )[ "entity_manager" ] = boost::ref( *( EntityManager::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "background2d" ] = boost::ref( *( EntityManager::getSingletonPtr()->GetBackground2D() ) );
     luabind::globals( m_LuaState )[ "ui_manager" ] = boost::ref( *( UiManager::getSingletonPtr() ) );
+    luabind::globals( m_LuaState )[ "world_map_module" ] = boost::ref( *( QGears::WorldMapModule::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "timer" ] = boost::ref( *( Timer::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "script" ] = boost::ref( *this );
+
+
+
 }

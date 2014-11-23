@@ -47,20 +47,27 @@ namespace QGears
         // virtual void readObject( ISerializable o ) { o.readObject( this ); }
         // template<T> readObject( T )
     protected:
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector2 &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector3 &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Ogre::AxisAlignedBox &pDest );
-        virtual void    readObject( Ogre::DataStreamPtr &stream, Pixel &pDest );
+        void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector2 &pDest );
+        void    readObject( Ogre::DataStreamPtr &stream, Ogre::Vector3 &pDest );
+        void    readObject( Ogre::DataStreamPtr &stream, Ogre::AxisAlignedBox &pDest );
+        void    readObject( Ogre::DataStreamPtr &stream, Pixel &pDest );
 
-        virtual void    read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
-        virtual void    read2ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
-        virtual void    readShort( Ogre::DataStreamPtr &stream, uint16 &pDest );
-        virtual void    readInt( Ogre::DataStreamPtr &stream, uint32 &pDest );
-        virtual void    readFloat( Ogre::DataStreamPtr &stream, float &pDest );
-        virtual void    readEndString( Ogre::DataStreamPtr &stream, const String &end_text );
+        void    read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
+        void    read2ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
+        void    readShort( Ogre::DataStreamPtr &stream, uint16 &pDest );
+        void    readInt16( Ogre::DataStream &stream, sint16 &pDest );
+        void    readUInt16( Ogre::DataStream &stream, uint16 &pDest );
+        void    readInt16( Ogre::DataStreamPtr &stream, sint16 &pDest );
+        void    readUInt16( Ogre::DataStreamPtr &stream, uint16 &pDest );
+        void    readUInt32( Ogre::DataStreamPtr &stream, uint32 &pDest );
+        void    readUInt32( Ogre::DataStream &stream, uint32 &pDest );
+        void    readUInt8( Ogre::DataStream& stream, uint8 &pDest );
+        void    readUInt8(Ogre::DataStreamPtr &stream, uint8 &pDest );
+        void    readFloat( Ogre::DataStreamPtr &stream, float &pDest );
+        void    readEndString( Ogre::DataStreamPtr &stream, const String &end_text );
 
 
-        virtual String  getLine( Ogre::DataStreamPtr &stream ) const;
+        String  getLine( Ogre::DataStreamPtr &stream ) const;
 
         static const String TAG_COMMENT;
 

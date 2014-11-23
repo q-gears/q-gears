@@ -28,6 +28,7 @@ namespace QGears
     class AFile : public Resource
     {
     public:
+
         AFile( Ogre::ResourceManager *creator, const String &name
               ,Ogre::ResourceHandle handle, const String &group
               ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
@@ -37,7 +38,7 @@ namespace QGears
         static const Ogre::Real FRAME_DURATION;
         static const String     RESOURCE_TYPE;
 
-        virtual void addTo( Ogre::SkeletonPtr skeleton, const String &name ) const;
+        void addTo( Ogre::SkeletonPtr skeleton, const String &name ) const;
 
         typedef std::vector<Ogre::Vector3>  BoneRotationList;
 
@@ -49,16 +50,16 @@ namespace QGears
         };
 
         typedef std::vector<Frame>  FrameList;
-        virtual FrameList&  getFrames() { return m_frames; }
+        FrameList&  getFrames() { return m_frames; }
 
-        virtual void    setBoneCount( const uint32 bone_count );
+        void    setBoneCount( const uint32 bone_count );
 
     protected:
-        virtual void loadImpl();
-        virtual void unloadImpl();
-        virtual size_t calculateSize() const;
+        virtual void loadImpl() override final;
+        virtual void unloadImpl() override final;
+        size_t calculateSize() const;
 
-        virtual void    setFrameRotation( Ogre::TransformKeyFrame *key_frame
+        void    setFrameRotation( Ogre::TransformKeyFrame *key_frame
                                          ,const Ogre::Vector3 &rotation ) const;
 
     private:

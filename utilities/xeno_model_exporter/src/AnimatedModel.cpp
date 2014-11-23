@@ -1,8 +1,8 @@
 #include "AnimatedModel.h"
 #include "AnimationExtractor.h"
 #include "ModelFile.h"
-#include "../../common/File.h"
-#include "../../common/Logger.h"
+#include "common/File.h"
+#include "common/Logger.h"
 
 
 

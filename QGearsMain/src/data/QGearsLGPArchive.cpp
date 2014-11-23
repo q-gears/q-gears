@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include "common/QGearsStringUtil.h"
 #include "data/QGearsLGPArchiveSerializer.h"
+#include "core/Logger.h"
 
 namespace QGears
 {
@@ -64,6 +65,8 @@ namespace QGears
             StringUtil::splitFilename( it->file_name, file_info.basename, file_info.path );
             file_info.uncompressedSize = it->data_size;
             file_info.compressedSize = file_info.uncompressedSize;
+
+            LOG_DEBUG( "add file:" + file_info.filename );
             m_file_infos.push_back( file_info );
             ++it;
         }
@@ -86,6 +89,7 @@ namespace QGears
     Ogre::DataStreamPtr
     LGPArchive::open( const String& filename, bool readOnly ) const
     {
+        LOG_DEBUG( "file:" + filename + " readOnly: " + Ogre::StringConverter::toString(readOnly) );
         Ogre::MemoryDataStream* buffer( NULL );
         if( !m_lgp_file.isNull() )
         {
@@ -153,6 +157,8 @@ namespace QGears
     Ogre::StringVectorPtr
     LGPArchive::find( const String& pattern, bool recursive, bool dirs )
     {
+        LOG_DEBUG( pattern );
+
         //OGRE_LOCK_AUTO_MUTEX
         Ogre::StringVector* file_names( OGRE_NEW_T( Ogre::StringVector, Ogre::MEMCATEGORY_GENERAL)() );
 
@@ -171,6 +177,8 @@ namespace QGears
     Ogre::FileInfoListPtr
     LGPArchive::findFileInfo( const String& pattern, bool recursive, bool dirs ) const
     {
+        LOG_DEBUG( pattern );
+
         //OGRE_LOCK_AUTO_MUTEX
         Ogre::FileInfoList* file_infos( OGRE_NEW_T( Ogre::FileInfoList, Ogre::MEMCATEGORY_GENERAL)() );
         // If pattern contains a directory name, do a full match
@@ -199,9 +207,14 @@ namespace QGears
         FileList::const_iterator it_end( m_files.end() );
         while( it != it_end )
         {
-            if( it->file_name == filename ) return true;
+            if( it->file_name == filename )
+            {
+                LOG_DEBUG( "Found " + filename + " in " + mName );
+                return true;
+            }
             ++it;
         }
+        LOG_DEBUG( "Couldn't find " + filename + " in " + mName );
         return false;
     }
 

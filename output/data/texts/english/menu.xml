@@ -4,6 +4,7 @@
     <text name="BeginMenu2">Xenogears map</text>
     <text name="BeginMenu3">Entity testarea</text>
     <text name="BeginMenu4">Idol menu</text>
+    <text name="BeginMenu5">World map test</text>
 
     <text name="PauseMenuHeader">Paused</text>
     <text name="PauseMenuText">Are you want to quit?</text>

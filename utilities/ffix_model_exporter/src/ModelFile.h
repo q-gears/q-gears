@@ -1,7 +1,7 @@
 #ifndef MODEL_FILE_H
 #define MODEL_FILE_H
 
-#include "../../common/File.h"
+#include "common/File.h"
 #include "../../common/OgreGenUtilites.h"
 #include "../../common/DrawSkeleton.h"
 
