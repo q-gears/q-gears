@@ -25,11 +25,10 @@ THE SOFTWARE.
 */
 #include "data/QGearsPFileManager.h"
 
+template<> QGears::PFileManager *Ogre::Singleton<QGears::PFileManager>::msSingleton = NULL;
+
 namespace QGears
 {
-    //-------------------------------------------------------------------------
-    template<> PFileManager *Ogre::Singleton<PFileManager>::msSingleton = NULL;
-
     //-------------------------------------------------------------------------
     PFileManager *PFileManager::getSingletonPtr()
     {

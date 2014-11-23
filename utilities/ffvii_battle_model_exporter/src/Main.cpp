@@ -124,8 +124,6 @@ fill_names()
     LOGGER->Log("Initialize export list finished.\n\n\n\n");
 }
 
-
-
 int
 main(int argc, char *argv[])
 {

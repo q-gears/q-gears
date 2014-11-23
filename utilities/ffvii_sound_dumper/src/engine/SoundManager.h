@@ -208,8 +208,14 @@ extern const int gauss[];
 #define DECAY_MS       572L
 #define SUSTAIN_MS     441L
 #define RELEASE_MS     437L
+
+#ifndef LOWORD
 #define LOWORD(l)    ((unsigned short)(l))
+#endif
+
+#ifndef HIWORD
 #define HIWORD(l)    ((unsigned short)(((unsigned long)(l) >> 16) & 0xFFFF))
+#endif
 
 extern int bSPUIsOpen;
 

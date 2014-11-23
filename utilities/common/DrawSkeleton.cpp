@@ -63,16 +63,16 @@ DrawSkeleton( const Skeleton& skeleton, const Ogre::MeshPtr& mesh )
     pPos = static_cast< float* >( vbuf0->lock( Ogre::HardwareBuffer::HBL_DISCARD ) );
 
 
-    Ogre::RGBA colours[ sub_mesh->vertexData->vertexCount ];
+    std::vector<Ogre::RGBA> colours(sub_mesh->vertexData->vertexCount);
 
 
 
-    DrawBone( skeleton, -1, colours );
+    DrawBone( skeleton, -1, colours.data() );
 
 
 
     vbuf0->unlock();
-    vbuf1->writeData( 0, vbuf1->getSizeInBytes(), colours, true );
+    vbuf1->writeData(0, vbuf1->getSizeInBytes(), colours.data(), true);
 
     sub_mesh->indexData->indexBuffer->unlock();
     sub_mesh->indexData->optimiseVertexCacheTriList();

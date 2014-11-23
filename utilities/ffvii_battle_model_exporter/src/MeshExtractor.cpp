@@ -74,8 +74,9 @@ MeshExtractor( const MeshData& mesh_data, const Ogre::String& material_name, Fil
     float* tPos   = static_cast< float* >( vbuf2->lock( Ogre::HardwareBuffer::HBL_DISCARD ) );
 
     Ogre::RenderSystem* rs = Ogre::Root::getSingleton().getRenderSystem();
-    Ogre::RGBA colours[ sub_mesh->vertexData->vertexCount ];
 
+    std::vector<Ogre::RGBA> coloursVec(sub_mesh->vertexData->vertexCount);
+    Ogre::RGBA* colours = coloursVec.data();
 
 
     // add textured triangle

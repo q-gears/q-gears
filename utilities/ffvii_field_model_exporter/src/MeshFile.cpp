@@ -219,7 +219,10 @@ MeshFile::readPart( const Ogre::String& name, const u32 i, const u32 offset_to_p
     float* tPos   = static_cast<float*>(vbuf2->lock(Ogre::HardwareBuffer::HBL_DISCARD));
 
     Ogre::RenderSystem* rs = Ogre::Root::getSingleton().getRenderSystem();
-    Ogre::RGBA colours[sub_mesh->vertexData->vertexCount];
+    
+    std::vector<Ogre::RGBA> coloursVec(sub_mesh->vertexData->vertexCount);
+    Ogre::RGBA* colours = coloursVec.data();
+
     Ogre::RGBA* cur_colour( colours );
 
 

@@ -37,14 +37,13 @@ GNU General Public License for more details.
 #include "data/QGearsLGPArchiveFactory.h"
 #include "common/make_unique.h"
 
+template<> QGears::Application *Ogre::Singleton<QGears::Application>::msSingleton = nullptr;
+
 namespace QGears
 {
     namespace bfs = boost::filesystem;
     namespace bpo = boost::program_options;
     typedef Ogre::ConfigFile::SettingsMultiMap SettingsMultiMap;
-
-    //--------------------------------------------------------------------------
-    template<> Application *Ogre::Singleton<Application>::msSingleton = nullptr;
 
     const char*     Application::CLI_SECTION_GENERIC( "Generic options" );
     const char*     Application::CLI_HELP( "help" );

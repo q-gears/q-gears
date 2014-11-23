@@ -27,6 +27,9 @@ add_executable(ff7_battle_scene_dumper
 
 if(WIN32)
   set_target_properties(ff7_battle_scene_dumper PROPERTIES WIN32_EXECUTABLE ON)
+  if (MSVC)
+    set_target_properties(ff7_battle_scene_dumper PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+  endif()
 endif()
 
 set(LIBRARIES

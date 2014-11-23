@@ -80,7 +80,7 @@ void
 Logger::Log( std::vector< unsigned char >& text )
 {
     unsigned char* temp = new unsigned char[ text.size() ];
-    for( int i = 0; i < text.size(); ++i )
+    for( unsigned int i = 0; i < text.size(); ++i )
     {
         temp[ i ] = text[ i ];
     }

@@ -56,6 +56,9 @@ add_executable(xeno_script_dumper
 
 if(WIN32)
   set_target_properties(xeno_script_dumper PROPERTIES WIN32_EXECUTABLE ON)
+  if (MSVC)
+    set_target_properties(xeno_script_dumper PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+  endif()
 endif()
 
 set(LIBRARIES

@@ -21,6 +21,9 @@ add_executable(flevel
 
 if(WIN32)
   set_target_properties(flevel PROPERTIES WIN32_EXECUTABLE ON)
+  if (MSVC)
+    set_target_properties(flevel PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+  endif()
 endif()
 
 set(LIBRARIES

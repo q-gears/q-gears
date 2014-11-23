@@ -48,6 +48,7 @@ EntityDirection::~EntityDirection()
 Ogre::Real
 EntityDirection::getSquaredViewDepth( const Ogre::Camera* cam ) const
 {
+    return 0.0f;
 }
 
 
@@ -55,4 +56,5 @@ EntityDirection::getSquaredViewDepth( const Ogre::Camera* cam ) const
 Ogre::Real
 EntityDirection::getBoundingRadius() const
 {
+    return 0.0f;
 }

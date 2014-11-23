@@ -28,23 +28,31 @@ THE SOFTWARE.
 
 #include <OgreDataStream.h>
 #include <OgreResource.h>
+#include <OgreResourceGroupManager.h>
 
 #include "common/TypeDefine.h"
+#include "QGearsPrerequisites.h"
 
 namespace QGears
 {
-    class Resource : public Ogre::Resource
+    class _QGearsExport Resource : public Ogre::Resource
     {
     public:
+        Resource::Resource(Ogre::ResourceManager *creator
+            , const String &name, Ogre::ResourceHandle handle
+            , const String &group, bool isManual
+            , Ogre::ManualResourceLoader *loader) :
+            Ogre::Resource(creator, name, handle, group, isManual, loader)
+        {
+        }
 
-        Resource( Ogre::ResourceManager *creator, const String &name
-              ,Ogre::ResourceHandle handle, const String &group
-              ,bool isManual = false, Ogre::ManualResourceLoader *loader = NULL );
-
-        virtual ~Resource();
+        virtual ~Resource() = default;
 
     protected:
-        Ogre::DataStreamPtr openResource( void );
+        Ogre::DataStreamPtr openResource()
+        {
+            return Ogre::ResourceGroupManager::getSingleton().openResource(mName, mGroup, true, this);
+        }
 
     private:
     };

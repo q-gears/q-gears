@@ -12,6 +12,10 @@ class TxzFile;
 class TxzFileSerializer : public Serializer
 {
 public:
+#ifdef _MSC_VER
+#pragma pack(push)
+#pragma pack(1)
+#endif
     struct wm_texture
     {
         unsigned int clutx:6;
@@ -21,29 +25,63 @@ public:
         unsigned int abr:2;
         unsigned int tp:2;
         unsigned int reserved:7;
+#ifdef _MSC_VER
+    };
+#pragma pack(pop)
+#else
+        // Assume GCC
     } __attribute__((packed));
+#endif
 
+#ifdef _MSC_VER
+#pragma pack(push)
+#pragma pack(1)
+#endif
     struct psx_pixel
     {
         uint16 r:5;
         uint16 g:5;
         uint16 b:5;
         uint16 trans:1;
+#ifdef _MSC_VER
+    };
+#pragma pack(pop)
+#else
+        // Assume GCC
     } __attribute__((packed));
-
+#endif
+#ifdef _MSC_VER
+#pragma pack(push)
+#pragma pack(1)
+#endif
     struct psx_pixel_4bit
     {
         uint8 index1:4;
         uint8 index2:4;
+#ifdef _MSC_VER
+    };
+#pragma pack(pop)
+#else
+        // Assume GCC
     } __attribute__((packed));
-
+#endif
+#ifdef _MSC_VER
+#pragma pack(push)
+#pragma pack(1)
+#endif
     struct rgba
     {
         unsigned char r = 0;
         unsigned char g = 0;
         unsigned char b = 0;
         unsigned char a = 0;
+#ifdef _MSC_VER
+    };
+#pragma pack(pop)
+#else
+        // Assume GCC
     } __attribute__((packed));
+#endif
 
     struct vram_block
     {

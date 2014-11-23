@@ -95,7 +95,7 @@ namespace QGears
     {
         uint8 enabled;
         stream->read( &enabled, 1 );
-        pDest = enabled;
+        pDest = enabled > 0;
     }
 
     //---------------------------------------------------------------------
@@ -104,7 +104,7 @@ namespace QGears
     {
         uint16 enabled;
         readShort( stream, enabled );
-        pDest = enabled;
+        pDest = enabled > 0;
     }
 
     //---------------------------------------------------------------------

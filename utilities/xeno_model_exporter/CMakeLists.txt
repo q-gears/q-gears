@@ -34,6 +34,9 @@ add_executable(xeno_model_exporter
 
 if(WIN32)
   set_target_properties(xeno_model_exporter PROPERTIES WIN32_EXECUTABLE ON)
+  if (MSVC)
+    set_target_properties(xeno_model_exporter PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+  endif()
 endif()
 
 set(LIBRARIES

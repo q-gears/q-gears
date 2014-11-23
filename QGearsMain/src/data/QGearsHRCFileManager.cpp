@@ -27,11 +27,10 @@ THE SOFTWARE.
 
 #include <OgreLogManager.h>
 
+template<> QGears::HRCFileManager *Ogre::Singleton<QGears::HRCFileManager>::msSingleton = NULL;
+
 namespace QGears
 {
-    //-------------------------------------------------------------------------
-    template<> HRCFileManager *Ogre::Singleton<HRCFileManager>::msSingleton = NULL;
-
     //-------------------------------------------------------------------------
     HRCFileManager*
     HRCFileManager::getSingletonPtr()

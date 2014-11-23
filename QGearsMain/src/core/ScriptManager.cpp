@@ -95,7 +95,7 @@ ScriptManager::Input( const Event& event )
             {
                 argument2 = "Repeat";
             }
-            ScriptRequest( &m_ScriptEntity[ i ], "on_button", 100, KeyToString( ( OIS::KeyCode )event.param1 ), argument2, false, false );
+            ScriptRequest( &m_ScriptEntity[ i ], "on_button", 100, KeyToString( ( OIS::KeyCode )((int)event.param1) ), argument2, false, false );
         }
     }
 }

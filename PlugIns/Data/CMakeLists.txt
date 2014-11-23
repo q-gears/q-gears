@@ -84,7 +84,8 @@ set_target_properties(DataPlugin PROPERTIES
 )
 
 set(LIBRARIES
-  ${OGRE_LIBRARIES}
+  ${OGRE_LIBRARIES} FinalFantasy7
+
 )
 
 target_link_libraries(DataPlugin ${LIBRARIES})

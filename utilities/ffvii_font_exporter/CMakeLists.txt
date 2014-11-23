@@ -23,10 +23,14 @@ add_executable(ff7_font_exporter
 
 if(WIN32)
   set_target_properties(ff7_font_exporter PROPERTIES WIN32_EXECUTABLE ON)
+  if (MSVC)
+    set_target_properties(ff7_font_exporter PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+  endif()
 endif()
 
 set(LIBRARIES
     Utility
+	${ZLIB_LIBRARIES}
 )
 target_link_libraries(ff7_font_exporter    ${LIBRARIES})
 

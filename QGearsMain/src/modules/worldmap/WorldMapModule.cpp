@@ -12,9 +12,9 @@
 #include "data/worldmap/TxzFileSerializer.h"
 #include "data/worldmap/MapFileManager.h"
 
-BEGIN_QGEARS
+template<> QGears::WorldMapModule *Ogre::Singleton< QGears::WorldMapModule >::msSingleton = NULL;
 
-template<>WorldMapModule *Ogre::Singleton< WorldMapModule >::msSingleton = NULL;
+BEGIN_QGEARS
 
 using namespace Ogre;
 
@@ -484,7 +484,7 @@ void createTestMap(SceneManager* mSceneMgr)
 
 
 
-    for ( int k=0; k<numBlocks; k++ )
+    for ( unsigned int k=0; k<numBlocks; k++ )
     {
         // 7x9 size
         QGears::MapFileSerializer::SBlock& block = blocks[k];

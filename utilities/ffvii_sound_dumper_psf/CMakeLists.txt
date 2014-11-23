@@ -63,6 +63,9 @@ add_executable(ff7_sound_dumper_psf
 
 if(WIN32)
   set_target_properties(ff7_sound_dumper_psf PROPERTIES WIN32_EXECUTABLE ON)
+  if (MSVC)
+    set_target_properties(ff7_sound_dumper_psf PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+  endif()
 endif()
 
 set(LIBRARIES

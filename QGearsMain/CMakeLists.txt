@@ -293,6 +293,8 @@ include_directories(
 )
 
 #compiler options
+if (MSVC)
+else()
 if(WIN32)
     add_definitions(
       -W
@@ -308,6 +310,7 @@ if(WIN32)
       -Wl,--enable-auto-image-base
       -Wl,--add-stdcall-alias
     )
+endif()
 endif()
 
 #defines
@@ -327,6 +330,9 @@ add_executable(q-gears
 
 if( WIN32 AND NOT (CMAKE_BUILD_TYPE MATCHES "Debug") )
     set_target_properties( q-gears PROPERTIES WIN32_EXECUTABLE ON )
+	if (MSVC)
+        set_target_properties(q-gears PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+    endif()
 endif()
 
 set(LIBRARIES
@@ -345,6 +351,7 @@ target_link_libraries(QGearsMain ${LIBRARIES} )
 
 set(LIBRARIES
     QGearsMain
+	${Boost_LIBRARIES}
 )
 target_link_libraries(q-gears ${LIBRARIES})
 

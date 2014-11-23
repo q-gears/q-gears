@@ -21,7 +21,7 @@ void MapFileSerializer::importMapFile( Ogre::DataStreamPtr& stream, WorldMapFile
     const auto fileSize = stream->size();
     auto numBlocks = fileSize / kWorldMapBlockSize;
 
-    for ( int j=0; j<numBlocks; j++ )
+    for ( unsigned int j=0; j<numBlocks; j++ )
     {
 
         SBlock block;

@@ -621,9 +621,9 @@ void TxzFileSerializer::extract_texture(const std::array<TxzFileSerializer::wm_t
 
         // Now apply the info's rect into the virtual frame buffer using pal
 
-        for (int y=info.mU; y<(info.mU)+info.mHeight; y++)
+        for (unsigned int y=info.mU; y<(info.mU)+info.mHeight; y++)
         {
-            for (int x=info.mV; x<info.mV+info.mWidth; x++)
+            for (unsigned int x=info.mV; x<info.mV+info.mWidth; x++)
             {
 
                 if (wmTexture.ty)

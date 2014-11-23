@@ -58,7 +58,7 @@ LzsFile::ExtractLzs()
 
 
 
-    int input_offset = 4;
+    unsigned int input_offset = 4;
     int output_offset = 0;
     u8 control_byte = 0;
     u8 control_bit = 0;

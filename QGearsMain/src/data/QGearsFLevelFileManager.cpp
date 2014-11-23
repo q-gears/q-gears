@@ -25,11 +25,10 @@ THE SOFTWARE.
 */
 #include "data/QGearsFLevelFileManager.h"
 
+template<> QGears::FLevelFileManager *Ogre::Singleton<QGears::FLevelFileManager>::msSingleton = NULL;
+
 namespace QGears
 {
-    //-------------------------------------------------------------------------
-    template<> FLevelFileManager *Ogre::Singleton<FLevelFileManager>::msSingleton = NULL;
-
     //-------------------------------------------------------------------------
     FLevelFileManager *FLevelFileManager::getSingletonPtr()
     {

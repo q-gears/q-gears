@@ -25,11 +25,10 @@ THE SOFTWARE.
 */
 #include "data/QGearsLZSFLevelFileManager.h"
 
+template<> QGears::LZSFLevelFileManager *Ogre::Singleton<QGears::LZSFLevelFileManager>::msSingleton = NULL;
+
 namespace QGears
 {
-    //-------------------------------------------------------------------------
-    template<> LZSFLevelFileManager *Ogre::Singleton<LZSFLevelFileManager>::msSingleton = NULL;
-
     //-------------------------------------------------------------------------
     LZSFLevelFileManager *LZSFLevelFileManager::getSingletonPtr()
     {

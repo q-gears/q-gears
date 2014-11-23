@@ -220,7 +220,11 @@ Walkmesh::SetUpWalkmeshVertices(void)
 
 
     Ogre::RenderSystem* rs = Ogre::Root::getSingleton().getRenderSystem();
-    Ogre::RGBA colours[m_Triangles.size() * 6];
+    
+    std::vector<Ogre::RGBA> coloursVec(m_Triangles.size() * 6);
+
+    Ogre::RGBA* colours = coloursVec.data();
+
     Ogre::ColourValue c_access = Ogre::ColourValue(1, 1, 1);
     Ogre::ColourValue c_deny   = Ogre::ColourValue(1, 0, 0);
 
