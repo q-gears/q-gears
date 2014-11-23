@@ -33,7 +33,7 @@ Ogre version must be 1.9, Boost version must be 55, gcc version must be 4.9, QtC
 ```
 mkdir qgears
 cd qgears
-git clone https://github.com/paulsapps/q-gears.git
+git clone https://github.com/q-gears/q-gears.git
 cd q-gears
 ```
 
