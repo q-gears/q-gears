@@ -37,4 +37,4 @@ before_script:
   - cd build_qgears
   - cmake ..
 
-script: make -j4
+script: make -j3
