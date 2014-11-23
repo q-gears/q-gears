@@ -14,19 +14,11 @@ before_install:
   - sudo apt-get install libvorbis-dev
   - sudo apt-get install libalut-dev
   - sudo apt-get install libfreetype6-dev 
-  - sudo apt-get install nvidia-cg-toolkit 
   - sudo apt-get install libfreeimage-dev
   - sudo apt-get install zlib1g-dev
   - sudo apt-get install libzzip-dev
   - sudo apt-get install libois-dev
-  - sudo apt-get install libcppunit-dev
-  - sudo apt-get install doxygen
-  - sudo apt-get install libxt-dev
-  - sudo apt-get install libxaw7-dev
-  - sudo apt-get install libxxf86vm-dev
-  - sudo apt-get install libxrandr-dev
   - sudo apt-get install libglu-dev
-  - sudo apt-get install mercurial
   - wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb
   - sudo dpkg -i ogre-build_1.9.0-1_amd64.deb
 compiler:
