@@ -65,7 +65,7 @@ namespace QGears
 
         Ogre::RenderWindow *window( getRenderWindow() );
         m_viewport = window->addViewport( m_camera );
-        m_viewport->setBackgroundColour( Ogre::ColourValue( 0, 0.4, 0 ) );
+        m_viewport->setBackgroundColour( Ogre::ColourValue( 0.0f, 0.4f, 0.0f ) );
         m_camera->setAspectRatio( Ogre::Real( m_viewport->getActualWidth() ) / Ogre::Real( m_viewport->getActualHeight() ) );
 
         m_frame_listener = new DisplayFrameListener( window );

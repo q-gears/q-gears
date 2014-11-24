@@ -97,7 +97,7 @@ std::vector< Ogre::String > DatFile::m_SoundOpcodes;
 
 
 //////////////////////////////////////////////
-unsigned short english_chars[256] = {
+const unsigned short english_chars[256] = {
     // 0    1       2       3       4       5       6       7       8       9       A       B       C       D       E       F
     0x2000, 0x2100, 0x2200, 0x2300, 0x2400, 0x2500, 0x2600, 0x2700, 0x2800, 0x2900, 0x2A00, 0x2B00, 0x2C00, 0x2D00, 0x2E00, 0x2F00, // 0x00 - 0x0F
     0x3000, 0x3100, 0x3200, 0x3300, 0x3400, 0x3500, 0x3600, 0x3700, 0x3800, 0x3900, 0x3A00, 0x3B00, 0x3C00, 0x3D00, 0x3E00, 0x3F00, // 0x10 - 0x1F
@@ -117,7 +117,7 @@ unsigned short english_chars[256] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0xF0 - 0xFF
 };
 
-unsigned short japanese_chars[256] = {
+const unsigned short japanese_chars[256] = {
     // 0    1       2       3       4       5       6       7       8       9       A       B       C       D       E       F
     0xD030, 0x7030, 0xD330, 0x7330, 0xD630, 0x7630, 0xD930, 0x0000, 0xDC30, 0x7C30, 0xAC30, 0x4C30, 0xAE30, 0x4E30, 0xB030, 0x5030, // 0x00 - 0x0F
     0xB230, 0x5230, 0xB430, 0x5430, 0xB630, 0x5630, 0xB830, 0x5830, 0xBA30, 0x5A30, 0xBC30, 0x5C30, 0xBE30, 0x5E30, 0xC030, 0x6030, // 0x10 - 0x1F
@@ -139,7 +139,7 @@ unsigned short japanese_chars[256] = {
 
 
 
-unsigned short japanese_chars_fa[256] = {
+const unsigned short japanese_chars_fa[256] = {
     // 0    1       2       3       4       5       6       7       8       9       A       B       C       D       E       F
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x00 - 0x0F
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x10 - 0x1F
@@ -161,7 +161,7 @@ unsigned short japanese_chars_fa[256] = {
 
 
 
-unsigned short japanese_chars_fb[256] = {
+const unsigned short japanese_chars_fb[256] = {
     // 0    1       2       3       4       5       6       7       8       9       A       B       C       D       E       F
     0x0000, 0x0000, 0xB182, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0B4E, 0x0000, 0x6551, 0x4851, 0x0D4E, 0x505B, 0x9B4F, 0x4B5C, // 0x00 - 0x0F
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x8E96, 0x0000, 0x0000, 0xE890, 0x0000, 0x3458, 0x0000, 0xF24E, 0x9395, 0x0000, 0x0000, // 0x10 - 0x1F
@@ -183,7 +183,7 @@ unsigned short japanese_chars_fb[256] = {
 
 
 
-unsigned short japanese_chars_fc[256] = {
+const unsigned short japanese_chars_fc[256] = {
     // 0    1       2       3       4       5       6       7       8       9       A       B       C       D       E       F
     0x0000, 0x0000, 0x188A, 0x0000, 0x7890, 0x6A75, 0x5788, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x00 - 0x0F
     0x9358, 0xC35F, 0x0000, 0x0000, 0x0000, 0x0000, 0x5390, 0x0000, 0x0000, 0x0000, 0x0000, 0xFB5D, 0x0000, 0x0000, 0x0000, 0x0000, // 0x10 - 0x1F
@@ -205,7 +205,7 @@ unsigned short japanese_chars_fc[256] = {
 
 
 
-unsigned short japanese_chars_fd[256] = {
+const unsigned short japanese_chars_fd[256] = {
     // 0    1       2       3       4       5       6       7       8       9       A       B       C       D       E       F
     0x0000, 0x1D4F, 0x0000, 0xA263, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x00 - 0x0F
     0xE682, 0x0000, 0xF056, 0x0000, 0x0000, 0x0000, 0x0000, 0xA25B, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x10 - 0x1F
@@ -227,7 +227,7 @@ unsigned short japanese_chars_fd[256] = {
 
 
 
-unsigned short japanese_chars_fe[256] = {
+const unsigned short japanese_chars_fe[256] = {
     // 0    1       2       3       4       5       6       7       8       9       A       B       C       D       E       F
     0x0000, 0x0000, 0x0000, 0x667D, 0x0000, 0x0000, 0x0000, 0xAD65, 0x0000, 0x0000, 0xB96C, 0x0000, 0xD550, 0x585B, 0x0000, 0x0000, // 0x00 - 0x0F
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x10 - 0x1F
@@ -2762,8 +2762,8 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             tile.clut_y          = ( GetU16LE( s2 + 0x06 ) & 0xffc0 ) >> 6;
             tile.clut_x          = ( GetU16LE( s2 + 0x06 ) & 0x003f ) << 4;
             tile.bpp             = g_bpp;
-            tile.page_x          = g_page_x;
-            tile.page_y          = g_page_y;
+            tile.page_x          = u8(g_page_x);
+            tile.page_y          = u8(g_page_y);
             tile.depth           = 999;
             tile.blending        = 0;
             tile.animation_id    = 0;
@@ -2791,8 +2791,8 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
             tile.background      = 1;
             tile.dest_x          = GetU16LE( s4 + 0x00 );
             tile.dest_y          = GetU16LE( s4 + 0x02 );
-            tile.src_x           = GetU16LE( s4 + 0x04 );
-            tile.src_y           = GetU16LE( s4 + 0x05 );
+            tile.src_x           = u8(GetU16LE( s4 + 0x04 ));
+            tile.src_y           = u8(GetU16LE( s4 + 0x05 ));
             tile.clut_y          = ( GetU16LE( s4 + 0x06 ) & 0xffc0 ) >> 6;
             tile.clut_x          = ( GetU16LE( s4 + 0x06 ) & 0x003f ) << 4;
             tile.bpp             = ( GetU16LE( s4 + 0x08 ) & 0x0180 ) >> 0x07;
@@ -3329,8 +3329,8 @@ DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const 
 
     if( sub_image->width == 32 )
     {
-        tile.x = x_32;
-        tile.y = y_32;
+        tile.x = float(x_32);
+        tile.y = float(y_32);
 
         x_32 += 32;
         if( x_32 == full_image->width )
@@ -3355,8 +3355,8 @@ DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const 
             }
         }
 
-        tile.x = x_16;
-        tile.y = y_16;
+        tile.x = float(x_16);
+        tile.y = float(y_16);
 
         ++n_16;
         if( n_16 == 1 || n_16 == 3 )
@@ -3374,7 +3374,7 @@ DatFile::AddTileTex( const u8 background, const u8 src_x, const u8 src_y, const 
         }
     }
 
-    CopyToSurface( full_image, tile.x, tile.y, sub_image );
+    CopyToSurface( full_image, int(tile.x), int(tile.y), sub_image );
 
 
 

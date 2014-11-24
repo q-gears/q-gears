@@ -292,7 +292,7 @@ MimFile::GetModifiedClut( MimFile::ClutColor& clut, const Ogre::String& mod_type
         }
         else
         {
-            clut.r *= mod_r;
+            clut.r *= u8(mod_r);
         }
 
         if( clut.g * mod_g >= 256 )
@@ -305,7 +305,7 @@ MimFile::GetModifiedClut( MimFile::ClutColor& clut, const Ogre::String& mod_type
         }
         else
         {
-            clut.g *= mod_g;
+            clut.g *= u8(mod_g);
         }
 
         if( clut.b * mod_b >= 256 )
@@ -318,7 +318,7 @@ MimFile::GetModifiedClut( MimFile::ClutColor& clut, const Ogre::String& mod_type
         }
         else
         {
-            clut.b *= mod_b;
+            clut.b *= u8(mod_b);
         }
     }
     else if( mod_type == "add" )
@@ -333,7 +333,7 @@ MimFile::GetModifiedClut( MimFile::ClutColor& clut, const Ogre::String& mod_type
         }
         else
         {
-            clut.r += mod_r * 8;
+            clut.r += u8(mod_r * 8);
         }
 
         if( clut.g + mod_g * 8 >= 256 )
@@ -346,7 +346,7 @@ MimFile::GetModifiedClut( MimFile::ClutColor& clut, const Ogre::String& mod_type
         }
         else
         {
-            clut.g += mod_g * 8;
+            clut.g += u8(mod_g * 8);
         }
 
         if( clut.b + mod_b * 8 >= 256 )
@@ -359,7 +359,7 @@ MimFile::GetModifiedClut( MimFile::ClutColor& clut, const Ogre::String& mod_type
         }
         else
         {
-            clut.b += mod_b * 8;
+            clut.b += u8(mod_b * 8);
         }
     }
 }

@@ -105,7 +105,7 @@ InitializeOgreBase( const Ogre::String& name )
     camera->lookAt( 0, 0, 0 );
 
     viewport = window->addViewport( camera );
-    viewport->setBackgroundColour( Ogre::ColourValue( 0, 0.4, 0 ) );
+    viewport->setBackgroundColour( Ogre::ColourValue( 0.0f, 0.4f, 0.0f ) );
     camera->setAspectRatio( Ogre::Real( viewport->getActualWidth() ) / Ogre::Real( viewport->getActualHeight() ) );
 
     LOGGER = new Logger( "game.log" );
