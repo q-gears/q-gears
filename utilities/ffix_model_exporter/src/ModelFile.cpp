@@ -124,7 +124,7 @@ ModelFile::GetModel( const ModelInfo& info )
     // create and export textures for model
     //if (textures.size() > 0)
     {
-        Vram* vram = new Vram();
+        Vram* vram = Vram::MakeInstance().release();
 
         File* tex = new File( "./data/field/5/1b/2/4/1.tim" );
         LoadTimFileToVram( tex, 0, vram );

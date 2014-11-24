@@ -90,7 +90,7 @@ FieldModel::Export( const Ogre::String& model_file, const Ogre::String& texture_
     if( textures.size() > 0 )
     {
         File* texture = new File( texture_file );
-        Vram* vram = new Vram();
+        Vram* vram = Vram::MakeInstance().release();
 
         for( u32 i = 0; i < texture->GetFileSize(); )
         {

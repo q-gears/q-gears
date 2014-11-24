@@ -102,7 +102,7 @@ StageFile::GetModel( const StageInfo& info )
     {
         int number_of_files = GetU32LE( 0x00 );
         int offset_to_texture = GetU32LE( number_of_files * 0x04 );
-        Vram* vram = new Vram();
+        Vram* vram = Vram::MakeInstance().release();
 
         LoadTimFileToVram( this, offset_to_texture, vram );
         //vram->Save( "qqq" );

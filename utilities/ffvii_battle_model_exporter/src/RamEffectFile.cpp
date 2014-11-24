@@ -70,7 +70,7 @@ RamEffectFile::GetModel(const EffectInfo info)
     // create and export textures for model
     if (textures.size() > 0)
     {
-        Vram* vram = new Vram();
+        Vram* vram = Vram::MakeInstance().release();
         CreateTexture(vram, info.data, "exported/models/ffvii/battle/effects/" + info.data.name + ".png", textures);
         delete vram;
     }

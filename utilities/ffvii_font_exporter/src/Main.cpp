@@ -52,7 +52,7 @@ main( int argc, char *argv[] )
         font.Export( "export_en/ui/fonts/ffvii_en.xml", true );
         //font_graf->WriteFile( "font.tim" );
 
-        Vram* vram = new Vram();
+        Vram* vram = Vram::MakeInstance().release();
         LoadTimFileToVram( font_graf, 0, vram );
         //vram->Save( "text" );
 
@@ -83,7 +83,7 @@ main( int argc, char *argv[] )
         font_graf->WriteFile( "font.tim" );
         font_graf2->WriteFile( "font2.tim" );
 
-        Vram* vram = new Vram();
+        Vram* vram = Vram::MakeInstance().release();
         LoadTimFileToVram( font_graf, 0, vram );
         LoadTimFileToVram( font_graf2, 0, vram );
         //vram->Save( "text" );
@@ -108,7 +108,7 @@ main( int argc, char *argv[] )
     {
         File sword( "sword.tim" );
 
-        Vram* vram = new Vram();
+        Vram* vram = Vram::MakeInstance().release();
         LoadTimFileToVram( &sword, 0, vram );
         //vram->Save( "sword" );
 

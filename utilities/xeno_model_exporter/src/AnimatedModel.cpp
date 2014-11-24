@@ -110,7 +110,7 @@ AnimatedModel::Export( const ModelInfo& info )
     // create and export textures for model
     if( textures.size() > 0 )
     {
-        Vram* vram = new Vram();
+        Vram* vram = Vram::MakeInstance().release();
 
         for( int i = 0; i < texture->GetU32LE( 0 ); ++i )
         {
