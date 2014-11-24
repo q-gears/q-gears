@@ -8,8 +8,13 @@
 
 class Vram
 {
-public:
+private:
     Vram();
+public:
+    static std::unique_ptr<Vram> MakeInstance()
+    {
+        return std::unique_ptr<Vram>(new Vram());
+    }
     virtual ~Vram();
 
     u16 GetWidth() const;

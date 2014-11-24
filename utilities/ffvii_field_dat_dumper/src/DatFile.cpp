@@ -340,7 +340,7 @@ DatFile::DumpText( const Ogre::String& export_path, const Field& field, bool eng
     dialog.push_back(0xFF);
     dialog.push_back(0xFE);
 
-    for (int i = 0; i < m_Dialogs.size(); ++i)
+    for (unsigned int i = 0; i < m_Dialogs.size(); ++i)
     {
         // get offset of string data
         u32 offset = offset_to_sector + offset_to_dialogs + GetU16LE(offset_to_sector + offset_to_dialogs + 0x02 + m_Dialogs[i] * 0x02);
@@ -2373,7 +2373,7 @@ DatFile::DumpSoundOpcodesData( const Ogre::String& export_file )
 
     Logger* export_sound = new Logger(export_file);
 
-    for (int i = 0; i < m_SoundOpcodes.size(); ++i)
+    for (unsigned int i = 0; i < m_SoundOpcodes.size(); ++i)
     {
         export_sound->Log(m_SoundOpcodes[i]);
     }
@@ -3086,9 +3086,9 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
 
 
     LOGGER->Log( "Start sorting all tiles.\n" );
-    for( int i = 0; i < temp_tiles.size(); ++i )
+    for( unsigned int i = 0; i < temp_tiles.size(); ++i )
     {
-        for( int l = 0; l < temp_tiles[ i ].animations.size(); ++l )
+        for (unsigned int l = 0; l < temp_tiles[i].animations.size(); ++l)
         {
             std::sort( temp_tiles[ i ].animations[ l ].keyframes.begin(), temp_tiles[ i ].animations[ l ].keyframes.end(), anim_time_sort() );
         }
@@ -3118,11 +3118,11 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
     const Ogre::PixelBox& pb = buffer->getCurrentLock();
 
-    for( u32 y = 0; y < height; ++y )
+    for( s32 y = 0; y < height; ++y )
     {
         u32* data = static_cast< u32* >( pb.data ) + y * pb.rowPitch;
 
-        for( u32 x = 0; x < width; ++x )
+        for( s32 x = 0; x < width; ++x )
         {
             u32 clut = full_image->pixels[ y * width * 4 + x * 4 + 3 ]
                    | ( full_image->pixels[ y * width * 4 + x * 4 + 2 ] << 8 )

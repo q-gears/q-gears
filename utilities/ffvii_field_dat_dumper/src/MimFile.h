@@ -58,7 +58,7 @@ private:
     u16  mImageWidth;
     u16  mImageHeight;
 
-    Vram m_Vram;
+    std::unique_ptr<Vram> m_Vram;
 };
 
 
