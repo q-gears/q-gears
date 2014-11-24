@@ -62,7 +62,7 @@ public:
         info_text->setCaption( "" );
         info_text->setMetricsMode( Ogre::GMM_PIXELS );
         info_text->setPosition( 5, 5 );
-        info_text->setFontName( "BlueHighway" );
+       // info_text->setFontName( "BlueHighway" );
         info_text->setCharHeight( 18 );
 
         info_overlay = Ogre::OverlayManager::getSingleton().create( "DebugOverlay" );
@@ -108,7 +108,7 @@ public:
             m_Mouse->capture();
         }
 
-        for( int i = 0; i < entitys.size(); ++i )
+        for (unsigned int i = 0; i < entitys.size(); ++i)
         {
             if( entitys[ i ]->isVisible() == true )
             {
@@ -133,7 +133,7 @@ public:
         if( m_Keyboard->isKeyDown( OIS::KC_A ) )
         {
             assert( m_camera );
-            m_camera->moveRelative( Ogre::Vector3( -0.005, 0, 0 ) );
+            m_camera->moveRelative( Ogre::Vector3( -0.005f, 0.0f, 0.0f ) );
         }
         if( m_Keyboard->isKeyDown( OIS::KC_D ) )
         {
@@ -172,7 +172,7 @@ public:
             case OIS::KC_RIGHT:
             {
                 bool change = false;
-                for( int i = 0; i < entitys.size(); ++i )
+                for (unsigned int i = 0; i < entitys.size(); ++i)
                 {
                     if( change == true )
                     {
@@ -210,7 +210,7 @@ public:
             case OIS::KC_UP:
             {
                 bool change = false;
-                for( int i = 0; i < entitys.size(); ++i )
+                for (unsigned int i = 0; i < entitys.size(); ++i)
                 {
                     if( entitys[ i ]->isVisible() == true )
                     {
@@ -242,7 +242,7 @@ public:
             case OIS::KC_DOWN:
             {
                 bool change = false;
-                for( int i = 0; i < entitys.size(); ++i )
+                for (unsigned int i = 0; i < entitys.size(); ++i)
                 {
                     if( entitys[ i ]->isVisible() == true )
                     {
@@ -285,8 +285,8 @@ public:
     bool
     mouseMoved( const OIS::MouseEvent& e )
     {
-        m_MouseMoveX = e.state.X.rel;
-        m_MouseMoveY = e.state.Y.rel;
+        m_MouseMoveX = float(e.state.X.rel);
+        m_MouseMoveY = float(e.state.Y.rel);
         return true;
     }
 

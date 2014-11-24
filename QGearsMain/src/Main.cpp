@@ -58,12 +58,13 @@ main(int argc, char *argv[])
     directionalLight->setSpecularColour( Ogre::ColourValue( 0.0, 0.0, 0.0 ) );
     directionalLight->setDirection( Ogre::Vector3( 0, 1, 0 ) );
 
+   // auto fontManager = std::make_unique<Ogre::FontManager>();
 
     QGears::MapFileManager* worldManager = new QGears::MapFileManager();
 
     Ogre::Root::getSingleton().addResourceLocation(".", "FileSystem");
-    Ogre::Root::getSingleton().addResourceLocation("/home/paul/qgears/data/cd1pc/wm", "FileSystem", "TEST");
-    Ogre::Root::getSingleton().addResourceLocation("/home/paul/qgears/data/cd1pc/wm/world_us.lgp", QGears::LGPArchiveFactory::ARCHIVE_TYPE, "TEST");
+    Ogre::Root::getSingleton().addResourceLocation("C:\\Program Files (x86)\\Steam\\SteamApps\\common\\FINAL FANTASY VII\\data\\wm", "FileSystem", "TEST");
+    Ogre::Root::getSingleton().addResourceLocation("C:\\Program Files (x86)\\Steam\\SteamApps\\common\\FINAL FANTASY VII\\data\\wm\\world_us.lgp", QGears::LGPArchiveFactory::ARCHIVE_TYPE, "TEST");
 
 
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();

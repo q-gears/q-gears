@@ -4,32 +4,32 @@
 
 
 
-MimFile::MimFile( const Ogre::String& file ):
-    LzsFile( file )
+MimFile::MimFile( const Ogre::String& file )
+    : LzsFile(file), m_Vram(Vram::MakeInstance())
 {
     InnerGetImage();
 }
 
 
 
-MimFile::MimFile( File* pFile ):
-    LzsFile( pFile )
+MimFile::MimFile( File* pFile )
+    : LzsFile(pFile), m_Vram(Vram::MakeInstance())
 {
     InnerGetImage();
 }
 
 
 
-MimFile::MimFile( File* pFile, const u32 offset, const u32 length ):
-    LzsFile( pFile, offset, length )
+MimFile::MimFile( File* pFile, const u32 offset, const u32 length )
+    : LzsFile(pFile, offset, length), m_Vram(Vram::MakeInstance())
 {
     InnerGetImage();
 }
 
 
 
-MimFile::MimFile( u8* pBuffer, const u32 offset, const u32 length ):
-    LzsFile( pBuffer, offset, length )
+MimFile::MimFile( u8* pBuffer, const u32 offset, const u32 length )
+    : LzsFile(pBuffer, offset, length), m_Vram(Vram::MakeInstance())
 {
     InnerGetImage();
 }
@@ -67,8 +67,8 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 u16 real_x = mImageVramPositionX + page_x * 128 + x;
                 u16 real_y = mImageVramPositionY + page_y * 256 + y;
 
-                int data = ( m_Vram.GetU8( real_x, real_y ) & 0x0f ) + clut_x;
-                u16 col = m_Vram.GetU16( data * 2, clut_y );
+                int data = (m_Vram->GetU8(real_x, real_y) & 0x0f) + clut_x;
+                u16 col = m_Vram->GetU16(data * 2, clut_y);
 
                 color.r = ( ( col       ) & 31 ) * 255 / 31;
                 color.g = ( ( col >>  5 ) & 31 ) * 255 / 31;
@@ -100,8 +100,8 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
 
 
 
-                data    = ( ( m_Vram.GetU8( real_x, real_y ) & 0xf0 ) >> 4 ) + clut_x;
-                col     = m_Vram.GetU16( data * 2, clut_y );
+                data = ((m_Vram->GetU8(real_x, real_y) & 0xf0) >> 4) + clut_x;
+                col = m_Vram->GetU16(data * 2, clut_y);
 
                 color.r = ( ( col       ) & 31 ) * 255 / 31;
                 color.g = ( ( col >>  5 ) & 31 ) * 255 / 31;
@@ -145,8 +145,8 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                 u16 real_x = mImageVramPositionX + page_x * 128 + x;
                 u16 real_y = mImageVramPositionY + page_y * 256 + y;
 
-                u8 data = m_Vram.GetU8( real_x, real_y );
-                u16 col = m_Vram.GetU16( data * 2 + clut_x * 2, clut_y );
+                u8 data = m_Vram->GetU8(real_x, real_y);
+                u16 col = m_Vram->GetU16(data * 2 + clut_x * 2, clut_y);
 
                 color.r = ( ( col       ) & 31 ) * 255 / 31;
                 color.g = ( ( col >>  5 ) & 31 ) * 255 / 31;
@@ -201,7 +201,7 @@ MimFile::InnerGetImage()
         for( int x = 0; x < mClutWidth; ++x )
         {
             u16 color = GetU16LE( sizeof( MimHeader ) + y * mClutWidth * 2 + x * 2 );
-            m_Vram.PutU16( x * 2 + mClutVramPositionX, y + mClutVramPositionY, color );
+            m_Vram->PutU16(x * 2 + mClutVramPositionX, y + mClutVramPositionY, color);
         }
     }
 
@@ -219,7 +219,7 @@ MimFile::InnerGetImage()
         for( int x = 0; x < mImageWidth; ++x )
         {
             u8 data = GetU8( mim_header->header2_offset + sizeof( MimHeader2 ) + y * mImageWidth + x );
-            m_Vram.PutU8( x + mImageVramPositionX, y + mImageVramPositionY, data );
+            m_Vram->PutU8( x + mImageVramPositionX, y + mImageVramPositionY, data );
         }
     }
 
@@ -244,7 +244,7 @@ MimFile::InnerGetImage()
                 for( int x = 0; x < image_width; ++x )
                 {
                     u8 data = GetU8( data_3_offset + sizeof( MimHeader2 ) + y * image_width + x );
-                    m_Vram.PutU8( x + image_vram_position_x, y + image_vram_position_y, data );
+                    m_Vram->PutU8(x + image_vram_position_x, y + image_vram_position_y, data);
                 }
             }
 

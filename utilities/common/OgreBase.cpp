@@ -1,4 +1,5 @@
 #include "OgreBase.h"
+#include <OgreFontManager.h>
 
 Ogre::Root*                     root;
 Ogre::RenderWindow*             window;
@@ -80,9 +81,11 @@ InitializeOgreBase( const Ogre::String& name )
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "./exported", "FileSystem", "General" );
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-
     Ogre::SceneManager* scene_manager;
     Ogre::Viewport*     viewport;
+
+    Ogre::FontManager* fmgr = new Ogre::FontManager;
+    Ogre::OverlayManager* overlay = new Ogre::OverlayManager();
 
     frame_listener = new DisplayFrameListener( window );
     root->addFrameListener( frame_listener );

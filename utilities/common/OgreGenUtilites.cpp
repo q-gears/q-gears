@@ -66,7 +66,7 @@ CreateTexture( Vram* vram, const MeshData& mesh_data, const Ogre::String& textur
     buffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
     const Ogre::PixelBox& pb = buffer->getCurrentLock();
 
-    for( int i = 0; i < textures.size(); ++i )
+    for( unsigned int i = 0; i < textures.size(); ++i )
     {
         LOGGER->Log( "CreateTexture palette_x=\"" + Ogre::StringConverter::toString( textures[ i ].palette_x ) + "\" palette_y=\"" + Ogre::StringConverter::toString( textures[ i ].palette_y ) + "\" bpp=\"" + Ogre::StringConverter::toString( textures[ i ].bpp ) + "\"." );
         CreateTextureFromVram( pb, vram, textures[ i ].start_x, textures[ i ].start_y, textures[ i ].palette_x, textures[ i ].palette_y, textures[ i ].texture_x, textures[ i ].texture_y, textures[ i ].bpp, true );
@@ -119,7 +119,7 @@ CreateMaterial( const Ogre::String& material_name, const Ogre::String& material_
 void
 AddTexture( TexForGen& texture, const MeshData& data, VectorTexForGen& textures, Logger* logger )
 {
-    for( int i = 0; i < textures.size(); ++i )
+    for( unsigned int i = 0; i < textures.size(); ++i )
     {
         if( texture == textures[ i ] )
         {
@@ -139,8 +139,8 @@ AddTexture( TexForGen& texture, const MeshData& data, VectorTexForGen& textures,
 
     if( textures.size() > 0 )
     {
-        start_x = textures[ textures.size() - 1 ].start_x;
-        start_y = textures[ textures.size() - 1 ].start_y;
+        start_x = float(textures[ textures.size() - 1 ].start_x);
+        start_y = float(textures[ textures.size() - 1 ].start_y);
 
         if( start_x + 256 >= data.tex_width )
         {

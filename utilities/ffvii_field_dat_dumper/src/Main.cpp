@@ -184,7 +184,7 @@ main( int argc, char *argv[] )
         dat.DumpWalkmeshData("export_jp_in/" + fields[f].name + "_wm.xml");
     }
 */
-    for( int f = 0; f < fields.size(); ++f )
+    for (unsigned int f = 0; f < fields.size(); ++f)
     {
         DatFile dat( "data/en/" + fields[ f ].name + ".dat" );
         MimFile mim( "data/en/" + fields[ f ].name + ".mim" );
