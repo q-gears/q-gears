@@ -5,16 +5,14 @@ Q-Gears is an RPG engine for games like Squaresoft's Final Fantasy 7, Final Fant
 
 ## QGears Travis-CI build status
 
-![Alt text](https://travis-ci.org/paulsapps/q-gears.svg?branch=master)
+![Alt text](https://travis-ci.org/q-gears/q-gears.svg?branch=master)
 
 ### How do I build QGears?
 
 
-#### Ubuntu Linux 14.04+
+#### Ubuntu Linux 14.04
 
-**WARNING** For older Linux versions scroll down.
-
-Ogre version **must** be 1.9, Boost version **must** be 55, gcc version **must** be 4.9, QtCreator is optional - install if you want to use this as the IDE (recommended).
+Ogre version must be 1.9, Boost version must be 55, gcc version must be 4.9, QtCreator is optional - install if you want to use this as the IDE (recommended).
 
 **Install required packages:**
 ```
@@ -35,7 +33,7 @@ Ogre version **must** be 1.9, Boost version **must** be 55, gcc version **must**
 ```
 mkdir qgears
 cd qgears
-git clone https://github.com/paulsapps/q-gears.git
+git clone https://github.com/q-gears/q-gears.git
 cd q-gears
 ```
 
@@ -47,7 +45,7 @@ cmake ..
 make
 ```
 
-#### Ubuntu Linux 12.04 (Should work on most Ubuntu versions before 12.04)
+#### Ubuntu Linux 12.04
 
 If you are using an older Ubuntu version then you will have to add PPA's to get the correct gcc/boost/ogre versions, its easier just to upgrade the Ubuntu version IMO.
 
@@ -110,7 +108,7 @@ cd ..
 ```
 mkdir qgears
 cd qgears
-git clone https://github.com/paulsapps/q-gears.git
+git clone https://github.com/q-gears/q-gears.git
 cd q-gears
 ```
 
@@ -175,7 +173,7 @@ Now sync down the QGears source code, first create a directory some where you wa
 
 In the git bash enter:
 ```
-git clone https://github.com/paulsapps/q-gears.git
+git clone https://github.com/q-gears/q-gears.git
 ```
 
 **Building the QGears code:**
