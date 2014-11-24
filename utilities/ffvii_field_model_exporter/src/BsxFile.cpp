@@ -12,7 +12,7 @@
 
 
 BsxFile::BsxFile(const Ogre::String& file):
-    LzsFile(file)
+LzsFile(file), m_Vram(Vram::MakeInstance())
 {
     ReadBSXTextureToVram();
 }
@@ -20,7 +20,7 @@ BsxFile::BsxFile(const Ogre::String& file):
 
 
 BsxFile::BsxFile(File* pFile):
-    LzsFile(pFile)
+LzsFile(pFile), m_Vram(Vram::MakeInstance())
 {
     ReadBSXTextureToVram();
 }
@@ -28,7 +28,7 @@ BsxFile::BsxFile(File* pFile):
 
 
 BsxFile::BsxFile(File* pFile, const u32 offset, const u32 length):
-    LzsFile(pFile, offset, length)
+LzsFile(pFile, offset, length), m_Vram(Vram::MakeInstance())
 {
     ReadBSXTextureToVram();
 }
@@ -36,7 +36,7 @@ BsxFile::BsxFile(File* pFile, const u32 offset, const u32 length):
 
 
 BsxFile::BsxFile(u8* pBuffer, const u32 offset, const u32 length):
-    LzsFile(pBuffer, offset, length)
+LzsFile(pBuffer, offset, length), m_Vram(Vram::MakeInstance())
 {
     ReadBSXTextureToVram();
 }
@@ -54,7 +54,7 @@ BsxFile::GetModel( Ogre::Entity* entity, const s8 character_id, const Unit& unit
 {
     int start_animation = ( dat.global_model_id > 0 ) ? 3 : 0;
     u32 offset_to_models_description = GetU32LE( 0x04 );
-    u32 number_of_models_description = GetU32LE( offset_to_models_description + 0x04 );
+    s32 number_of_models_description = GetU32LE( offset_to_models_description + 0x04 );
 
     if( character_id >= number_of_models_description )
     {
@@ -268,7 +268,7 @@ BsxFile::CreateTexture( const Ogre::String& name, const int face_id, const Vecto
 
 
 
-    for( int i = 0; i < textures.size(); ++i )
+    for( unsigned int i = 0; i < textures.size(); ++i )
     {
         // type 0x0 - eye, type 0x1 - mouth, type 0x2 - normal texture.
         if( textures[ i ].type == 0 || textures[ i ].type == 1 )
@@ -278,7 +278,7 @@ BsxFile::CreateTexture( const Ogre::String& name, const int face_id, const Vecto
         }
         else if( textures[ i ].type == 2 )
         {
-            CreateTextureFromVram( pb, &m_Vram, textures[ i ].start_x, textures[ i ].start_y, textures[ i ].palette_x, textures[ i ].palette_y, textures[ i ].texture_x, textures[ i ].texture_y, textures[ i ].bpp, true );
+            CreateTextureFromVram( pb, m_Vram.get(), textures[ i ].start_x, textures[ i ].start_y, textures[ i ].palette_x, textures[ i ].palette_y, textures[ i ].texture_x, textures[ i ].texture_y, textures[ i ].bpp, true );
         }
     }
 
@@ -322,7 +322,7 @@ BsxFile::ReadBSXTextureToVram()
         {
             for( int x = 0; x < width; ++x )
             {
-                m_Vram.PutU8( vram_x + x, vram_y + y, GetU8( start + y * width + x ) );
+                m_Vram->PutU8( vram_x + x, vram_y + y, GetU8( start + y * width + x ) );
             }
         }
     }
