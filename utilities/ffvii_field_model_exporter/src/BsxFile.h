@@ -55,7 +55,7 @@ public:
     void         ReadBSXTextureToVram();
 
 private:
-    Vram m_Vram;
+    std::unique_ptr<Vram> m_Vram;
 };
 
 
