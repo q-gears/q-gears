@@ -168,6 +168,9 @@ main( int argc, char *argv[] )
 
     fill_names();
 
+    Field f = {};
+    f.name = "C:\\Users\\paul\\Downloads\\data\\data\\en\\nmkin_1";
+    fields.push_back(f);
 /*
     for (int f = 0; f < fields.size(); ++f)
     {
@@ -186,8 +189,8 @@ main( int argc, char *argv[] )
 */
     for (unsigned int f = 0; f < fields.size(); ++f)
     {
-        DatFile dat( "data/en/" + fields[ f ].name + ".dat" );
-        MimFile mim( "data/en/" + fields[ f ].name + ".mim" );
+        DatFile dat( fields[ f ].name + ".dat" );
+        MimFile mim( fields[ f ].name + ".mim" );
         dat.DumpScript(  "export_en/", fields[ f ] );
         dat.DumpText( "export_en/", fields[ f ], true );
         dat.DumpTriggersMovements( "export_en/", fields[ f ] );
