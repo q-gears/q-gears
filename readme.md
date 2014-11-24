@@ -129,9 +129,9 @@ make
 http://www.visualstudio.com/en-us/products/free-developer-offers-vs
 ```
 
-**Download and install the Ogre SDK 1.9 (The VC2012 SDK as there is no VC2013 SDK version):**
+**Download and install the Ogre SDK 1.9 (The VC2013 build is not offical):**
 ```
-http://sourceforge.net/projects/ogre/files/ogre/1.9/1.9/OgreSDK_vc11_v1-9-0.exe/download
+https://bitbucket.org/lezo/ogre_build/downloads/OgreSDK_vc12_v1-9-0.exe
 ```
 Install/extract to "C:\OgreSDK\"
 
@@ -185,7 +185,7 @@ Now cd to where you synced the qgears source code to. For me this was "cd C:\Use
 ```
 mkdir build
 cd build
-set OGRE_HOME=C:\OgreSDK\OgreSDK_vc11_v1-9-0
+set OGRE_HOME=C:\OgreSDK\OgreSDK_vc12_v1-9-0
 cmake .. -DZLIB_ROOT=C:\zlib128-dll -DBOOST_ROOT=C:\boost_1_55_0
 ```
 
