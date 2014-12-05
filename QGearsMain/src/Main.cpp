@@ -63,8 +63,8 @@ main(int argc, char *argv[])
     QGears::MapFileManager* worldManager = new QGears::MapFileManager();
 
     Ogre::Root::getSingleton().addResourceLocation(".", "FileSystem");
-    Ogre::Root::getSingleton().addResourceLocation("C:\\Program Files (x86)\\Steam\\SteamApps\\common\\FINAL FANTASY VII\\data\\wm", "FileSystem", "TEST");
-    Ogre::Root::getSingleton().addResourceLocation("C:\\Program Files (x86)\\Steam\\SteamApps\\common\\FINAL FANTASY VII\\data\\wm\\world_us.lgp", QGears::LGPArchiveFactory::ARCHIVE_TYPE, "TEST");
+    Ogre::Root::getSingleton().addResourceLocation("./data/wm", "FileSystem", "TEST");
+    Ogre::Root::getSingleton().addResourceLocation("./data/wm/world_us.lgp", QGears::LGPArchiveFactory::ARCHIVE_TYPE, "TEST");
 
 
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();

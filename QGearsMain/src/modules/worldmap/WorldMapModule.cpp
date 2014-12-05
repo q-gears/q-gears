@@ -345,7 +345,7 @@ static void createReferenceFileInstance(std::function<void(Ogre::DataStreamPtr& 
         TestFile() : QGears::WorldMapFile( NULL, "", 0, "" ) {}
     };
 
-    const char* file_name = "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\FINAL FANTASY VII\\data\\wm\\WM0.MAP";
+    const char* file_name = "./data/wm/WM0.MAP";
     std::ifstream ifs( file_name, std::ifstream::binary );
     {
 //        BOOST_REQUIRE( ifs.is_open() );
