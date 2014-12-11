@@ -4,3 +4,6 @@
 [submodule "dependencies/lua"]
 	path = dependencies/lua
 	url = git://github.com/LuaDist/lua.git
+[submodule "dependencies/luabind"]
+	path = dependencies/luabind
+	url = git://github.com/LuaDist/luabind.git
