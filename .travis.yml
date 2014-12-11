@@ -30,3 +30,6 @@ before_script:
   - cmake ..
 
 script: make -j2
+
+notifications:
+  irc: "irc.esper.net#qhimm.com"
