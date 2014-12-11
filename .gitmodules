@@ -7,3 +7,7 @@
 [submodule "dependencies/luabind"]
 	path = dependencies/luabind
 	url = git://github.com/LuaDist/luabind.git
+[submodule "dependencies/dependencies/lua"]
+	path = dependencies/dependencies/lua
+	url = git://github.com/LuaDist/lua.git
+	branch = lua-5.1
