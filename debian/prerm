@@ -1,0 +1,7 @@
+#!/bin/bash
+#DEBHELPER#
+set -e
+if [ -d /usr/share/q-gears ];then
+  rm -r /usr/share/q-gears 
+else exit 0
+fi

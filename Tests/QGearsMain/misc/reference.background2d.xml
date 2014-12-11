@@ -1,0 +1,21 @@
+<background2d image="maps/ffvii/field/md1stin.png" position="28.4846 210.83 3.10751" orientation="0.742188 0.667516 -0.0403783 -0.0450658" fov="34.5389" range="-768 -768 768 768">
+    <tile destination="-720 192" width="48" height="48" uv="0 0 0.015625 0.03125" depth="123" blending="alpha" />
+    <tile destination="-672 192" width="48" height="48" uv="0.015625 0 0.03125 0.03125" depth="100" blending="add" />
+    <tile destination="-624 192" width="48" height="48" uv="0 0.03125 0.015625 0.0625" depth="200" blending="alpha" />
+    <tile destination="-576 192" width="48" height="48" uv="0.015625 0.03125 0.03125 0.0625" depth="300" blending="alpha" />
+    <tile destination="-240 -528" width="48" height="48" uv="0 0 0.015625 0.03125" depth="0.002" blending="alpha">
+        <animation name="Fan" length="0.5">
+          <keyframe time="0"     uv="0.015625 0 0.03125 0.03125" />
+          <keyframe time="0.1"   uv="0 0.03125 0.015625 0.0625" />
+          <keyframe time="0.233" uv="0.015625 0.03125 0.03125 0.0625" />
+        </animation>
+        <animation name="Light" length="0.25">
+          <keyframe time="0"     uv="0.015625 0 0.03125 0.03125" />
+          <keyframe time="0.1"   uv="0 0.03125 0.015625 0.0625" />
+          <keyframe time="0.233" uv="0.015625 0.03125 0.03125 0.0625" />
+        </animation>
+    </tile>
+    <tile destination="-192 -528" width="48" height="48" uv="0.03125 0 0.046875 0.03125" depth="0.002" blending="alpha">
+        <animation name="Fan" length="0.366" />
+    </tile>
+</background2d>

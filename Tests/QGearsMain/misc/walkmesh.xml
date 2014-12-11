@@ -1,0 +1,4 @@
+<walkmesh>
+    <triangle a="1 2 4" b="8 16 32" c="64 128 256" a_b="1" b_c="-1" c_a="-1"/>
+    <triangle a="4 2 1" b="32 16 8" c="256 128 64" a_b="-1" b_c="0" c_a="-1"/>
+</walkmesh>

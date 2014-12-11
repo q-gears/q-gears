@@ -1,0 +1,15 @@
+syntax: glob
+src/compile/
+*.log
+src/compile_d/
+**/bin/**
+**/obj/**
+**.cbTemp
+**/ogre.cfg
+**.depend
+**.layout
+output/**
+**/output/**
+**/compile/**
+build
+*.user*
