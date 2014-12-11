@@ -33,7 +33,7 @@ Ogre version must be 1.9, Boost version must be 55, gcc version must be 4.9, QtC
 ```
 mkdir qgears
 cd qgears
-git clone https://github.com/q-gears/q-gears.git
+git clone --recursive https://github.com/q-gears/q-gears.git
 cd q-gears
 ```
 
@@ -108,7 +108,7 @@ cd ..
 ```
 mkdir qgears
 cd qgears
-git clone https://github.com/q-gears/q-gears.git
+git clone --recursive https://github.com/q-gears/q-gears.git
 cd q-gears
 ```
 
@@ -173,7 +173,7 @@ Now sync down the QGears source code, first create a directory some where you wa
 
 In the git bash enter:
 ```
-git clone https://github.com/q-gears/q-gears.git
+git clone --recursive https://github.com/q-gears/q-gears.git
 ```
 
 **Building the QGears code:**
