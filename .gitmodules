@@ -1,6 +1,3 @@
 [submodule "dependencies/tinyxml"]
 	path = dependencies/tinyxml
 	url = git://github.com/paulsapps/TinyXML.git
-[submodule "dependencies/luabind"]
-	path = dependencies/luabind
-	url = git://github.com/LuaDist/luabind.git
