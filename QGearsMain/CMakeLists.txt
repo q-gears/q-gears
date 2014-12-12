@@ -338,6 +338,7 @@ endif()
 set(LIBRARIES
     ${QGears_LIBRARIES}
     LuaBind
+	liblua_static
     TinyXml
     FinalFantasy7
 )

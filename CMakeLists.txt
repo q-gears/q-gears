@@ -137,11 +137,19 @@ set(QGears_INCLUDE_DIRS
     ${OGRE_Overlay_INCLUDE_DIRS}
     ${OGRE_SAMPLES_INCLUDEPATH}
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
+	${CMAKE_CURRENT_BINARY_DIR}/dependencies/lua
+	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/lua/src
+	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind
+	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind/luabind/detail
+	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/tinyxml
 )
 
-# Enable C++11, you may need to use -std=c++0x if using an older compiler
+
 if (MSVC)
+# Build cpp files on all cores
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
 else()
+# Enable C++11, you may need to use -std=c++0x if using an older gcc compiler
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
 endif()
 

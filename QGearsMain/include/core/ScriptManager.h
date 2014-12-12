@@ -7,7 +7,7 @@
 #include "Event.h"
 extern "C"
 {
-    #include <lua/lua.h>
+    #include <lua.h>
 }
 #include <luabind/luabind.hpp>
 
