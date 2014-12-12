@@ -1,11 +1,3 @@
 [submodule "dependencies/tinyxml"]
 	path = dependencies/tinyxml
 	url = git://github.com/paulsapps/TinyXML.git
-[submodule "dependencies/luabind"]
-	path = dependencies/luabind
-	url = git://github.com/luabind/luabind
-	branch = 0.8
-[submodule "dependencies/lua"]
-	path = dependencies/lua
-	url = git://github.com/LuaDist/lua
-	branch = lua-5.1
