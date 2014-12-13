@@ -347,6 +347,12 @@ static void createReferenceFileInstance(std::function<void(Ogre::DataStreamPtr& 
 
     const char* file_name = "./data/wm/WM0.MAP";
     std::ifstream ifs( file_name, std::ifstream::binary );
+    if (!ifs.is_open())
+    {
+        LogManager::getSingleton().logMessage("ERROR: Failed to open ./data/wm/WM0.MAP");
+        return;
+    }
+
     {
 //        BOOST_REQUIRE( ifs.is_open() );
         Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( &ifs, false ) );
@@ -462,6 +468,11 @@ void createTestMap(SceneManager* mSceneMgr)
         blocks = s.mBlocks;
     });
 
+    if (blocks.empty())
+    {
+        // Load failed
+        return;
+    }
 /*
     // TODO: Get PSX textures working
     QGears::TxzFileSerializer s;
