@@ -9,3 +9,7 @@
 	path = dependencies/luabind
 	url = https://github.com/paulsapps/luabind.git
 	branch = master
+[submodule "output/data"]
+	path = output/data
+	url = https://github.com/q-gears/data.git
+	branch = master
