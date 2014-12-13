@@ -33,3 +33,5 @@ script: make -j2
 
 notifications:
   irc: "irc.esper.net#qhimm.com"
+  on_success: change
+  on_failure: always
