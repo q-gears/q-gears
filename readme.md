@@ -189,6 +189,8 @@ cmake .. -DZLIB_ROOT=C:\zlib128-dll -DBOOST_ROOT=C:\boost_1_55_0
 
 Now you can open the newly created QGears.sln in Visual Studio and build Win32/Release or Debug. If files are added/deleted/or the depends change then repeat the set and cmake commands in the Visual Studio command prompt in order to update QGears.sln.
 
+You can also build the sln file from the command line by entering "msbuild QGears.sln /m" in the Visual Studio command prompt.
+
 # What next?
 
 Now that you've got everything built see the wiki for how to run QGears, coding style, how to start hacking etc.
