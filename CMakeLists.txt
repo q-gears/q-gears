@@ -172,12 +172,12 @@ endif()
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/output)
 
-if(LINUX)
-	# On Linux generate DEB packages
-	SET(CPACK_GENERATOR "DEB")
-else()
+if(WIN32)
 	# On Windows generate MSI packages
 	SET(CPACK_GENERATOR "WIX")
+else()
+	# On Linux generate DEB packages
+	SET(CPACK_GENERATOR "DEB")
 endif()
 
 # Set generic CPack properties
