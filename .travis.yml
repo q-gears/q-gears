@@ -29,7 +29,9 @@ before_script:
   - cd build_qgears
   - cmake ..
 
-script: make -j2
+script: 
+  - make -j2
+  - cpack -C Debug
 
 notifications:
   irc: "irc.esper.net#qhimm.com"

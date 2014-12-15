@@ -356,6 +356,4 @@ set(LIBRARIES
 )
 target_link_libraries(q-gears ${LIBRARIES})
 
-install(TARGETS q-gears
-    DESTINATION ./
-)
+install(TARGETS q-gears DESTINATION ./)

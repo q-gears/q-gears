@@ -169,3 +169,39 @@ endif()
 if(QGears_BUILD_TESTS)
     add_subdirectory(Tests)
 endif()
+
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/output)
+
+if(LINUX)
+	# On Linux generate DEB packages
+	SET(CPACK_GENERATOR "DEB")
+else()
+	# On Windows generate MSI packages
+	SET(CPACK_GENERATOR "WIX")
+endif()
+
+# Set generic CPack properties
+SET(CPACK_PACKAGE_NAME "qgears")
+SET(CPACK_PACKAGE_VERSION ${QGears_VERSION_MAJOR}.${QGears_VERSION_MINOR}.0)
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Free Final Fantasy VII Engine")
+
+# TODO: Need to set these up properly, installing build instructions is a bit strange :)
+#SET(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.md")
+#SET(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/readme.md")
+
+# Setup MSI package properties
+SET(CPACK_WIX_UPGRADE_GUID 8fbb893f-5622-4f6d-a7f6-c221f7be5d52)
+
+# TODO: Set MSI banner image, copyright info etc, also include startmenu/desktop shortcuts
+# TODO: For MSI we also need to include OGRE dlls etc
+
+# Setup DEB package properties
+SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Chris Rizzitello <sithlord48@gmail.com>")
+
+# TODO: Detect if we're building x64 and change this to match
+SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE i386)
+SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9, libois,libboost-program-options,libboost-filesystem,libvorbis,libopenal,libboost-test,zlib1g")
+SET(CPACK_DEBIAN_PACKAGE_SECTION games)
+SET(CPACK_DEBIAN_PACKAGE_PRIORITY extra)
+
+INCLUDE(CPack)
