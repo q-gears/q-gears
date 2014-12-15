@@ -120,11 +120,20 @@ cmake ..
 make
 ```
 
+#### Building DEB package for Linux
+
+To do this use "cpack -C Debug" or "cpack -C Release" after running the make command.
+
 #### Windows
 
 **Download and install Visual Studio 2013 "community" (free/express) edition. Install all patches/Windows updates.**
 ```
 http://www.visualstudio.com/en-us/products/free-developer-offers-vs
+```
+
+***Download and install WIX toolkit 3.9 (to generate MSI installer)***
+```
+https://wix.codeplex.com/downloads/get/925661
 ```
 
 **Download and install the Ogre SDK 1.9 (The VC2013 build is not offical):**
@@ -190,6 +199,8 @@ cmake .. -DZLIB_ROOT=C:\zlib128-dll -DBOOST_ROOT=C:\boost_1_55_0
 Now you can open the newly created QGears.sln in Visual Studio and build Win32/Release or Debug. If files are added/deleted/or the depends change then repeat the set and cmake commands in the Visual Studio command prompt in order to update QGears.sln.
 
 You can also build the sln file from the command line by entering "msbuild QGears.sln /m" in the Visual Studio command prompt.
+
+To build the installer build the "PACKAGE" project from VisualStudio, this will generate an MSI, alternatively you can run it from the Visual Studio command prompt by entering "cpack -C Debug" (replace Debug with Release if building release).
 
 # What next?
 
