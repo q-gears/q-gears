@@ -1,11 +1,7 @@
-# What is QGears?
+# What is QGears? [![Build Status](https://travis-ci.org/q-gears/q-gears.svg?branch=master)](https://travis-ci.org/q-gears/q-gears)
 
 
 Q-Gears is an RPG engine for games like Squaresoft's Final Fantasy 7, Final Fantasy IX or Xenogears. It is designed to be cross-platfrom and run on modern operating systems such as Win32 and Linux.
-
-## QGears Travis-CI build status
-
-![Alt text](https://travis-ci.org/q-gears/q-gears.svg?branch=master)
 
 ### How do I build QGears?
 
