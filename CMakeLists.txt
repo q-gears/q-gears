@@ -202,10 +202,14 @@ if(WIN32)
 else()
 	# On Linux generate DEB packages
 	SET(CPACK_GENERATOR "DEB")
+	install( FILES ${CMAKE_SOURCE_DIR}/q-gears.png DESTINATION ./share/pixmaps/ )
+	install( FILES ${CMAKE_SOURCE_DIR}/q-gears.desktop DESTINATION ./share/applications/ )
 endif()
+# include install required system libaries as shown in cpack demo install
+INCLUDE(InstallRequiredSystemLibraries)
 
 # Set generic CPack properties
-SET(CPACK_PACKAGE_NAME "qgears")
+SET(CPACK_PACKAGE_NAME "q-gears")
 SET(CPACK_PACKAGE_VERSION ${QGears_VERSION_MAJOR}.${QGears_VERSION_MINOR}.0)
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Free Final Fantasy VII Engine")
 
@@ -222,8 +226,18 @@ SET(CPACK_WIX_UPGRADE_GUID 8fbb893f-5622-4f6d-a7f6-c221f7be5d52)
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Chris Rizzitello <sithlord48@gmail.com>")
 
 # TODO: Detect if we're building x64 and change this to match
-SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE i386)
-SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9, libois,libboost-program-options,libboost-filesystem,libvorbis,libopenal,libboost-test,zlib1g")
+#SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9, libois,libboost-program-options,libboost-filesystem,libvorbis,libopenal,libboost-test,zlib1g")
+if("${CMAKE_SIZEOF_VOID_P}" MATCHES 8)
+		MESSAGE ("64 bit")
+		set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+		
+else()
+		MESSAGE ("32 bit")
+		set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "i386")
+endif()
+
+SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9.0, libois-1.3.0,libboost-program-options1.54.0,libboost-filesystem1.54.0,libvorbis0a,libvorbisfile3,libvorbisenc2,libopenal1,libboost-test1.54.0,zlib1g")
+
 SET(CPACK_DEBIAN_PACKAGE_SECTION games)
 SET(CPACK_DEBIAN_PACKAGE_PRIORITY extra)
 
