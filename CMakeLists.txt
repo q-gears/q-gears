@@ -172,9 +172,33 @@ endif()
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/output)
 
+SET(CPACK_COMPONENTS_ALL q-gears)
+
 if(WIN32)
 	# On Windows generate MSI packages
 	SET(CPACK_GENERATOR "WIX")
+	
+	set(CPACK_WIX_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/wix.template.in")
+
+	# If empty assume release
+	if (CMAKE_BUILD_TYPE STREQUAL "")
+		install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
+		install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
+		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OgreMain.dll DESTINATION ./)
+		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/RenderSystem_GL.dll DESTINATION ./)
+		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OGREOVERLAY.DLL DESTINATION ./)
+		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OIS.DLL DESTINATION ./)
+	else()
+		install(FILES ${PROJECT_SOURCE_DIR}/output/resources_d.cfg DESTINATION ./)
+		install(FILES ${PROJECT_SOURCE_DIR}/output/plugins_d.cfg DESTINATION ./)
+		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OgreMain_d.dll DESTINATION ./)
+		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/RenderSystem_GL_d.dll DESTINATION ./)
+		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OGREOVERLAY_D.DLL DESTINATION ./)
+		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OIS_D.DLL DESTINATION ./)
+
+		# BOOST_SYSTEM-VC120-MT-GD-1_55.DLL
+	endif()
+	
 else()
 	# On Linux generate DEB packages
 	SET(CPACK_GENERATOR "DEB")
@@ -193,7 +217,6 @@ SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Free Final Fantasy VII Engine")
 SET(CPACK_WIX_UPGRADE_GUID 8fbb893f-5622-4f6d-a7f6-c221f7be5d52)
 
 # TODO: Set MSI banner image, copyright info etc, also include startmenu/desktop shortcuts
-# TODO: For MSI we also need to include OGRE dlls etc
 
 # Setup DEB package properties
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Chris Rizzitello <sithlord48@gmail.com>")
