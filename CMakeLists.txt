@@ -5,6 +5,7 @@ project(QGears)
 # The version number.
 set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 22)
+set(QGears_VERSION_PATCH 0)
 
 option(QGears_BUILD_PLUGINS     "Build the plugins"     TRUE)
 option(QGears_BUILD_UTILITIES   "Build the utilities"   TRUE)
@@ -172,14 +173,28 @@ endif()
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/output)
 
-SET(CPACK_COMPONENTS_ALL q-gears)
+# Set generic CPack properties
+INCLUDE(InstallRequiredSystemLibraries)
 
+SET(CPACK_COMPONENTS_ALL QGears )
+set(CPACK_PACKAGE_NAME "q-gears")
+SET(CPACK_PACKAGE_VERSION ${QGears_VERSION_MAJOR}.${QGears_VERSION_MINOR}.${QGears_VERSION_PATCH})
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Free Final Fantasy VII Engine")
+# TODO: Need to set these up properly, installing build instructions is a bit strange :)
+SET(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING.txt")
+#SET(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/readme.md")
+
+#OS SPECIFIC 
 if(WIN32)
 	# On Windows generate MSI packages
 	SET(CPACK_GENERATOR "WIX")
 	
 	set(CPACK_WIX_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/wix.template.in")
+	SET(CPACK_WIX_UPGRADE_GUID 8fbb893f-5622-4f6d-a7f6-c221f7be5d52)
 
+# TODO: Set MSI banner image, copyright info etc, also include startmenu/desktop shortcuts
+	#set the name of the installer default formating is name-version-os
+	
 	# If empty assume release
 	if (CMAKE_BUILD_TYPE STREQUAL "")
 		install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
@@ -202,29 +217,25 @@ if(WIN32)
 else()
 	# On Linux generate DEB packages
 	SET(CPACK_GENERATOR "DEB")
+	install( FILES ${PROJECT_SOURCE_DIR}/q-gears.png DESTINATION ./share/pixmaps/ )
+	install( FILES ${PROJECT_SOURCE_DIR}/q-gears.desktop DESTINATION ./share/applications/ )
+	
+	# Setup DEB package properties
+	SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Chris Rizzitello <sithlord48@gmail.com>")
+	
+	#Find out what architecture are we running on and set the package architecture 
+	EXECUTE_PROCESS(COMMAND dpkg --print-architecture OUTPUT_VARIABLE CPACK_DEBIAN_PACKAGE_ARCHITECTURE OUTPUT_STRIP_TRAILING_WHITESPACE)
+	MESSAGE ("Architecture: ${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
+	
+	SET(CPACK_DEBIAN_PACKAGE_SECTION games)
+	SET(CPACK_DEBIAN_PACKAGE_PRIORITY extra)
+	SET(CPACK_PACKAGE_EXECUTABLE )
+	#set the name to be debian package like.
+	SET(CPACK_PACKAGE_FILE_NAME "q-gears_${CPACK_PACKAGE_VERSION}-${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
+	#SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9, libois,libboost-program-options,libboost-filesystem,libvorbis,libopenal,libboost-test,zlib1g")
+	SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9.0, libois-1.3.0,libboost-program-options1.54.0,libboost-filesystem1.54.0,libvorbis0a,libvorbisfile3,libvorbisenc2,libopenal1,libboost-test1.54.0,zlib1g")
 endif()
 
-# Set generic CPack properties
-SET(CPACK_PACKAGE_NAME "qgears")
-SET(CPACK_PACKAGE_VERSION ${QGears_VERSION_MAJOR}.${QGears_VERSION_MINOR}.0)
-SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Free Final Fantasy VII Engine")
-
-# TODO: Need to set these up properly, installing build instructions is a bit strange :)
-#SET(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.md")
-#SET(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/readme.md")
-
-# Setup MSI package properties
-SET(CPACK_WIX_UPGRADE_GUID 8fbb893f-5622-4f6d-a7f6-c221f7be5d52)
-
-# TODO: Set MSI banner image, copyright info etc, also include startmenu/desktop shortcuts
-
-# Setup DEB package properties
-SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Chris Rizzitello <sithlord48@gmail.com>")
-
-# TODO: Detect if we're building x64 and change this to match
-SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE i386)
-SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9, libois,libboost-program-options,libboost-filesystem,libvorbis,libopenal,libboost-test,zlib1g")
-SET(CPACK_DEBIAN_PACKAGE_SECTION games)
-SET(CPACK_DEBIAN_PACKAGE_PRIORITY extra)
 
 INCLUDE(CPack)
+#End of install instructions
