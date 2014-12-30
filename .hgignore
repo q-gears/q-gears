@@ -1,7 +1,0 @@
-*.suo
-*.exe
-*.dll
-*.obj
-*.o
-*.vcxproj
-build/
