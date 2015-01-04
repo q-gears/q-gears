@@ -3,6 +3,10 @@
 
 Q-Gears is an RPG engine for games like Squaresoft's Final Fantasy 7, Final Fantasy IX or Xenogears. It is designed to be cross-platfrom and run on modern operating systems such as Win32 and Linux.
 
+## Where can I get a build of QGears?
+
+See here for nightly Windows builds http://qgears.itscovarr.com (Linux builds to come soon).
+
 ### How do I build QGears?
 
 
