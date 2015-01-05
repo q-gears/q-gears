@@ -5,7 +5,7 @@ Q-Gears is an RPG engine for games like Squaresoft's Final Fantasy 7, Final Fant
 
 ## Where can I get a build of QGears?
 
-See here for nightly Windows builds http://qgears.itscovarr.com (Linux builds to come soon).
+See here for builds http://qgears.itscovarr.com here you will find nightly builds and Linux builds for every version. Since the Windows version only builds daily not every change will have a matching Windows build.
 
 ### How do I build QGears?
 
