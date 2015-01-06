@@ -38,6 +38,8 @@ before_script:
 after_success:
 - hash=`git rev-parse HEAD`
 - cat $KEY > ~/.ssh/id_rsa
+- chmod 600 ~/.ssh/id_rsa
+- chmod 755 ~/.ssh
 - ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/
 - scp -o StrictHostKeyChecking=no ~/build/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/
 language: cpp
