@@ -66,8 +66,8 @@ after_success:
 - echo "-----END RSA PRIVATE KEY-----" >>  ~/.ssh/id_rsa
 - ls ~/.ssh -all
 - rm ~/.ssh/_temp_id_rsa
-- chmod 600 ~/.ssh/id_rsa
-- chmod 755 ~/.ssh
+- chmod 400 ~/.ssh/id_rsa
+- chmod 700 ~/.ssh
 - ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/
 - scp -o StrictHostKeyChecking=no ~/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/
 script: 
