@@ -1,17 +1,34 @@
 compiler: 
 - gcc
 before_script: 
+- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+- sudo add-apt-repository ppa:boost-latest/ppa -y
+- sudo apt-get update
+- sudo apt-get install boost1.55
+- sudo apt-get install gcc-4.9
+- sudo apt-get install g++-4.9
+- sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20
+- sudo update-alternatives --config gcc
+- sudo update-alternatives --config g++
+- sudo apt-get install libvorbis-dev
+- sudo apt-get install libalut-dev
+- sudo apt-get install libfreetype6-dev
+- sudo apt-get install libfreeimage-dev
+- sudo apt-get install zlib1g-dev
+- sudo apt-get install libzzip-dev
+- sudo apt-get install libois-dev
+- sudo apt-get install libglu-dev
+- wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb
+- sudo dpkg -i ogre-build_1.9.0-1_amd64.deb
 before_install: 
 script: 
-- echo passme
+- mkdir build_qgears
+- cd build_qgears
+- cmake ..
 language: cpp
 after_success: 
-- echo $foo
-- echo $zfoo
 - hash=`git rev-parse HEAD`
-- ls ~ -all
-- mkdir ~/.ssh
-- ls ~/.ssh -all
 - rm ~/.ssh/known_hosts
 - rm ~/.ssh/config
 - echo "-----BEGIN RSA PRIVATE KEY-----" >  ~/.ssh/id_rsa
@@ -41,10 +58,8 @@ after_success:
 - echo $KEY24 >> ~/.ssh/id_rsa
 - echo $KEY25 >> ~/.ssh/id_rsa
 - echo "-----END RSA PRIVATE KEY-----" >>  ~/.ssh/id_rsa
-- ls ~/.ssh -all
 - chmod 400 ~/.ssh/id_rsa
 - chmod 700 ~/.ssh
-- ls ~/.ssh -all
 - md5sum ~/.ssh/id_rsa
 - ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/
 - scp -o StrictHostKeyChecking=no ~/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/
