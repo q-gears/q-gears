@@ -12,6 +12,8 @@ after_success:
 - ls ~ -all
 - mkdir ~/.ssh
 - ls ~/.ssh -all
+- rm ~/.ssh/known_hosts
+- rm ~/.ssh/config
 - echo $KEY01 > ~/.ssh/_temp_id_rsa
 - echo $KEY02 >> ~/.ssh/_temp_id_rsa
 - echo $KEY03 >> ~/.ssh/_temp_id_rsa
