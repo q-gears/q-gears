@@ -47,6 +47,7 @@ after_success:
 - chmod 400 ~/.ssh/id_rsa
 - chmod 700 ~/.ssh
 - ls ~/.ssh -all
+- md5sum ~/.ssh/id_rsa
 - ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/
 - scp -o StrictHostKeyChecking=no ~/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/
 notifications: 
