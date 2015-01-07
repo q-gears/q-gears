@@ -14,36 +14,34 @@ after_success:
 - ls ~/.ssh -all
 - rm ~/.ssh/known_hosts
 - rm ~/.ssh/config
-- echo $KEY01 > ~/.ssh/_temp_id_rsa
-- echo $KEY02 >> ~/.ssh/_temp_id_rsa
-- echo $KEY03 >> ~/.ssh/_temp_id_rsa
-- echo $KEY04 >> ~/.ssh/_temp_id_rsa
-- echo $KEY05 >> ~/.ssh/_temp_id_rsa
-- echo $KEY06 >> ~/.ssh/_temp_id_rsa
-- echo $KEY07 >> ~/.ssh/_temp_id_rsa
-- echo $KEY08 >> ~/.ssh/_temp_id_rsa
-- echo $KEY09 >> ~/.ssh/_temp_id_rsa
-- echo $KEY10 >> ~/.ssh/_temp_id_rsa
-- echo $KEY11 >> ~/.ssh/_temp_id_rsa
-- echo $KEY12 >> ~/.ssh/_temp_id_rsa
-- echo $KEY13 >> ~/.ssh/_temp_id_rsa
-- echo $KEY14 >> ~/.ssh/_temp_id_rsa
-- echo $KEY15 >> ~/.ssh/_temp_id_rsa
-- echo $KEY16 >> ~/.ssh/_temp_id_rsa
-- echo $KEY17 >> ~/.ssh/_temp_id_rsa
-- echo $KEY18 >> ~/.ssh/_temp_id_rsa
-- echo $KEY19 >> ~/.ssh/_temp_id_rsa
-- echo $KEY20 >> ~/.ssh/_temp_id_rsa
-- echo $KEY21 >> ~/.ssh/_temp_id_rsa
-- echo $KEY22 >> ~/.ssh/_temp_id_rsa
-- echo $KEY23 >> ~/.ssh/_temp_id_rsa
-- echo $KEY24 >> ~/.ssh/_temp_id_rsa
-- echo $KEY25 >> ~/.ssh/_temp_id_rsa
 - echo "-----BEGIN RSA PRIVATE KEY-----" >  ~/.ssh/id_rsa
-- echo `cat ~/.ssh/_temp_id_rsa` >> ~/.ssh/id_rsa
+- echo $KEY01 >> ~/.ssh/id_rsa
+- echo $KEY02 >> ~/.ssh/id_rsa
+- echo $KEY03 >> ~/.ssh/id_rsa
+- echo $KEY04 >> ~/.ssh/id_rsa
+- echo $KEY05 >> ~/.ssh/id_rsa
+- echo $KEY06 >> ~/.ssh/id_rsa
+- echo $KEY07 >> ~/.ssh/id_rsa
+- echo $KEY08 >> ~/.ssh/id_rsa
+- echo $KEY09 >> ~/.ssh/id_rsa
+- echo $KEY10 >> ~/.ssh/id_rsa
+- echo $KEY11 >> ~/.ssh/id_rsa
+- echo $KEY12 >> ~/.ssh/id_rsa
+- echo $KEY13 >> ~/.ssh/id_rsa
+- echo $KEY14 >> ~/.ssh/id_rsa
+- echo $KEY15 >> ~/.ssh/id_rsa
+- echo $KEY16 >> ~/.ssh/id_rsa
+- echo $KEY17 >> ~/.ssh/id_rsa
+- echo $KEY18 >> ~/.ssh/id_rsa
+- echo $KEY19 >> ~/.ssh/id_rsa
+- echo $KEY20 >> ~/.ssh/id_rsa
+- echo $KEY21 >> ~/.ssh/id_rsa
+- echo $KEY22 >> ~/.ssh/id_rsa
+- echo $KEY23 >> ~/.ssh/id_rsa
+- echo $KEY24 >> ~/.ssh/id_rsa
+- echo $KEY25 >> ~/.ssh/id_rsa
 - echo "-----END RSA PRIVATE KEY-----" >>  ~/.ssh/id_rsa
 - ls ~/.ssh -all
-- rm ~/.ssh/_temp_id_rsa
 - chmod 400 ~/.ssh/id_rsa
 - chmod 700 ~/.ssh
 - ls ~/.ssh -all
