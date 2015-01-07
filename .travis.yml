@@ -62,7 +62,7 @@ after_success:
 - echo $KEY24 >> ~/.ssh/_temp_id_rsa
 - echo $KEY25 >> ~/.ssh/_temp_id_rsa
 - echo "-----BEGIN RSA PRIVATE KEY-----" >  ~/.ssh/id_rsa
-- base64 -d -i ~/.ssh/_temp_id_rsa >> ~/.ssh/id_rsa
+- echo `cat ~/.ssh/_temp_id_rsa` >> ~/.ssh/id_rsa
 - echo "-----END RSA PRIVATE KEY-----" >>  ~/.ssh/id_rsa
 - ls ~/.ssh -all
 - rm ~/.ssh/_temp_id_rsa
