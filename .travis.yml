@@ -37,7 +37,7 @@ env:
   - secure: esCtImRZw62FYx6v4P/QjNlbceNb4F8ZelANcMnGjV21wFh6jL5tjatgpO0d/EPFmIku3CQpxc+WOypQ7qDjp+LNbSja4r3GXkpR9r/EJn/hsYD+/byjHK9owRatbEbG8isyOCGvL5Na+3XpvgFV9ZDIn7E0yu8bUAzGHEyXnS4=
 before_install: 
 script: 
-
+- echo passme
 notifications: 
   on_success: change
   irc: irc.esper.net#qhimm.com
