@@ -37,8 +37,11 @@ before_script:
 - cmake ..
 after_success:
 - hash=`git rev-parse HEAD`
+- ls ~
 - mkdir ~/.ssh
+- ls ~/.ssh
 - cat $KEY > ~/.ssh/id_rsa
+- ls ~/.ssh
 - chmod 600 ~/.ssh/id_rsa
 - chmod 755 ~/.ssh
 - ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/
