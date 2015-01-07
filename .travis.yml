@@ -26,6 +26,7 @@ script:
 - mkdir build_qgears
 - cd build_qgears
 - cmake ..
+- make -j2
 language: cpp
 after_success: 
 - hash=`git rev-parse HEAD`
