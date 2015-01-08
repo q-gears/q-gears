@@ -63,7 +63,7 @@ after_success:
 - chmod 700 ~/.ssh
 - md5sum ~/.ssh/id_rsa
 - ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/
-- scp -o StrictHostKeyChecking=no ~/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/
+- scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/
 notifications: 
   on_failure: always
   irc: irc.esper.net#qhimm.com
