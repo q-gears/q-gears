@@ -27,6 +27,7 @@ script:
 - cd build_qgears
 - cmake ..
 - make -j2
+- cpack -C Debug
 language: cpp
 after_success: 
 - hash=`git rev-parse HEAD`
