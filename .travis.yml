@@ -26,8 +26,8 @@ script:
 - mkdir build_qgears
 - cd build_qgears
 - cmake ..
-- make -j2
-- cpack -C Debug
+- if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then make -j2 ; fi
+- if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then cpack -C Debug ; fi
 language: cpp
 after_success: 
 - hash=`git rev-parse HEAD`
