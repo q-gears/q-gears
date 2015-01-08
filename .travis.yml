@@ -69,8 +69,22 @@ notifications:
   on_failure: always
   irc: irc.esper.net#qhimm.com
   on_success: change
+addons:
+  coverity_scan:
+    project:
+      name: "q-gears/q-gears"
+      description: "Build submitted via Travis CI"
+    notification_email: coverityscan@paulsapps.com
+    build_command_prepend: "mkdir qgears_build; cd qgears_build; cmake .."
+    build_command: "make -j4"
+    branch_pattern: coverity_scan
 env: 
   global: 
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "PUtlviIMOxgXYfBiAW+tsDHQPq+XfftHy2Te1qFvkzkqfGtHQMiCM5an1tZW8LuuYLhuRo+piG+XsK5A8THW4At+hsQZFRPK4b952aHGTQNimTPFr3COccKOlGsLDJD+iKEBJbME1u/Kml9IvwVFBLoL6UtjEWPUJ3jVOitfnoA="
+
+  # Key
   - secure: pc5w4v8EzEtKD+iSZaao9Qq7FoPz2a65cpubHQjD36IN7g4gNaUcv2i/9cgqWk8+au7jKbJg0lFnkXRA/ldzBd30xsXubKWSmvcKt2dQRNJkKVBWsKW2ZiAtID/uibu5kwxdGn1zi4uO+WXygmu/fWSvOkToq87NsGrQYGU+Ahs=
   - secure: fqca/ai9xM7M0TLcZHwr8YqWB2+/+k5Bg5D9C/gTaZQgQvvTbXRdI8LFUTgUYCHiFu/QphvzvXyVHPTVL1xB3xZIMC5G8Cqe2T+Zy+UprK0A8Fmxk/V/qTTMgigAevtCXeVYH7+I0M+LNZrz4oYYa6FRJY79OPv+T1QQ8FUGTqc=
   - secure: kbpP9dDfBy3n8uaEHw1ULJZDpNRosgb1wGGguuSgPGTKjnSyVeOTJHkQb48+scIcmRUdxb9xNtBHcC/W2xg0AW06oZMAegUjHQcIWO1J2s24IgXgizvXIiUlm2bVn53yqyYHTJ1DYN6KsWJt+E8c+fbszPfOzCs73i9pnnUt+1A=
