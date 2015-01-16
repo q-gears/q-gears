@@ -157,7 +157,9 @@ Select "Add CMake to the system PATH for all users" - this makes things easier l
 ```
 http://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.zip/download
 ```
-Extract to C:\boost_1_55_0. **WARNING**: I recommend extracting using 7zip, if not then be sure to go in to the file properties and click "unblock" otherwise you may see "access dendied" errors when building as windows will mark all of the executables as unsafe since the files came from the Internet.
+Extract to C:\boost_1_55_0. 
+
+**WARNING**: I recommend extracting using 7zip, if not then be sure to go in to the file properties and click "unblock" otherwise you may see "access denied" errors when building as windows will mark all of the executables as unsafe since the files came from the Internet.
 
 Now we need to compile boost.
 
