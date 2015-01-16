@@ -157,12 +157,18 @@ Select "Add CMake to the system PATH for all users" - this makes things easier l
 ```
 http://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.zip/download
 ```
+Extract to C:\boost_1_55_0. **WARNING**: I recommend extracting using 7zip, if not then be sure to go in to the file properties and click "unblock" otherwise you may see "access dendied" errors when building as windows will mark all of the executables as unsafe since the files came from the Internet.
 
-Extract to C:\boost_1_55_0. Now we need to compile boost.
+Now we need to compile boost.
 
 **Build boost 55:**
 
-Open the Visual Studio 2013 command prompt and cd to the boost dir by entering 
+Open the Visual Studio 2013 command prompt. This can be found at "Start menu -> All programs -> Visual studio 2013 -> Visual studio tools" then you'll see "Developer Command Prompt for VS2013". Which is simply a shortcut for:
+
+%comspec% /k ""C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\VsDevCmd.bat""
+
+In the command prompt cd to the boost dir by entering:
+
 ```
 "C:\boost_1_55_0" 
 Then run
