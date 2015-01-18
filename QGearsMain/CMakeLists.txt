@@ -348,4 +348,4 @@ target_link_libraries(q-gears
 	${Boost_LIBRARIES}
 )
 
-install(TARGETS q-gears DESTINATION ./games)
+install(TARGETS q-gears DESTINATION .)
