@@ -93,6 +93,7 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
         find_package(Boost COMPONENTS program_options filesystem QUIET)
         set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
         set(QGears_LIBRARIES ${OGRE_LIBRARIES})
+		
         if(QGears_SOUND)
             find_package(OpenAL REQUIRED)
             find_package(OggVorbis REQUIRED)
@@ -138,8 +139,8 @@ set(QGears_INCLUDE_DIRS
     ${OGRE_Overlay_INCLUDE_DIRS}
     ${OGRE_SAMPLES_INCLUDEPATH}
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
-	${CMAKE_CURRENT_BINARY_DIR}/dependencies/lua
-	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/lua/src
+	${CMAKE_CURRENT_BINARY_DIR}/dependencies/luajit
+	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luajit/src
 	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind
 	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind/luabind/detail
 	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/tinyxml
