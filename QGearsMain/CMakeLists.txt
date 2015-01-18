@@ -335,25 +335,17 @@ if( WIN32 AND NOT (CMAKE_BUILD_TYPE MATCHES "Debug") )
     endif()
 endif()
 
-set(LIBRARIES
+target_link_libraries(QGearsMain 
     ${QGears_LIBRARIES}
     LuaBind
 	liblua
     TinyXml
     FinalFantasy7
 )
-if(QGears_SOUND)
-    find_package(OpenAL REQUIRED)
-    find_package(OggVorbis REQUIRED)
-endif()
 
-
-target_link_libraries(QGearsMain ${LIBRARIES} )
-
-set(LIBRARIES
-    QGearsMain
+target_link_libraries(q-gears 
+	QGearsMain
 	${Boost_LIBRARIES}
 )
-target_link_libraries(q-gears ${LIBRARIES})
 
 install(TARGETS q-gears DESTINATION ./games)

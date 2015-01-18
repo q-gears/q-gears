@@ -39,14 +39,12 @@ add_library(Utility STATIC
   ${SOURCE_FILES}
 )
 
-set(LIBRARIES
+target_link_libraries(Utility
+    QGearsMain
     ${OGRE_LIBRARIES}
     ${OIS_LIBRARIES}
     ${ZLIB_LIBRARIES}
-    QGearsMain
 )
-
-target_link_libraries(Utility ${LIBRARIES})
 
 add_subdirectory(ffix_model_exporter)
 add_subdirectory(ffix_script_dumper)

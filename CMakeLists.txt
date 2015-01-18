@@ -93,6 +93,7 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
         find_package(Boost COMPONENTS program_options filesystem QUIET)
         set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
         set(QGears_LIBRARIES ${OGRE_LIBRARIES})
+		
         if(QGears_SOUND)
             find_package(OpenAL REQUIRED)
             find_package(OggVorbis REQUIRED)
