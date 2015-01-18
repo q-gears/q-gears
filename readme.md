@@ -199,9 +199,11 @@ Now cd to where you synced the qgears source code to. For me this was "cd C:\Use
 ```
 mkdir build
 cd build
-set OGRE_HOME=C:\OgreSDK\OgreSDK_vc12_v1-9-0
-cmake .. -DZLIB_ROOT=C:\zlib128-dll -DBOOST_ROOT=C:\boost_1_55_0
+set OGRE_HOME=C:/OgreSDK/OgreSDK_vc12_v1-9-0
+cmake .. -DZLIB_ROOT=C:/zlib128-dll -DBOOST_ROOT=C:/boost_1_55_0
 ```
+
+(Note how we use / and not \ in paths here).
 
 Now you can open the newly created QGears.sln in Visual Studio and build Win32/Release or Debug. If files are added/deleted/or the depends change then repeat the set and cmake commands in the Visual Studio command prompt in order to update QGears.sln.
 
