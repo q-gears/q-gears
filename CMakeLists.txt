@@ -32,10 +32,11 @@ set(CMAKE_MODULE_PATH
   "${QGears_SOURCE_DIR}/CMake" 
 )
 
-if (CMAKE_BUILD_TYPE STREQUAL "")
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
   # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
   # differentiation between debug and release builds.
-  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
+  set(CMAKE_BUILD_TYPE "release" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
+  message("RELEASE set")
 endif ()
 
 set(CMAKE_DEBUG_POSTFIX "_d")
@@ -184,6 +185,9 @@ SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Free Final Fantasy VII Engine")
 SET(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING.txt")
 #SET(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/readme.md")
 
+MESSAGE( STATUS "CMAKE_BUILD_TYPE:         " ${CMAKE_BUILD_TYPE} )
+MESSAGE( STATUS "BOOST_ROOT:         " ${BOOST_ROOT} )
+
 #OS SPECIFIC 
 if(WIN32)
 	# On Windows generate MSI packages
@@ -196,22 +200,23 @@ if(WIN32)
 	#set the name of the installer default formating is name-version-os
 	
 	# If empty assume release
-	if (CMAKE_BUILD_TYPE STREQUAL "")
+	if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "release")
+		message("RELEASE installer build")
 		install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
 		install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OgreMain.dll DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/RenderSystem_GL.dll DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OGREOVERLAY.DLL DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OIS.DLL DESTINATION ./)
+		install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-GD-1_55.DLL" DESTINATION ./)
 	else()
+		message("DEBUG installer build")
 		install(FILES ${PROJECT_SOURCE_DIR}/output/resources_d.cfg DESTINATION ./)
 		install(FILES ${PROJECT_SOURCE_DIR}/output/plugins_d.cfg DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OgreMain_d.dll DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/RenderSystem_GL_d.dll DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OGREOVERLAY_D.DLL DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OIS_D.DLL DESTINATION ./)
-
-		# BOOST_SYSTEM-VC120-MT-GD-1_55.DLL
 	endif()
 	
 else()
