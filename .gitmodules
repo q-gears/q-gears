@@ -1,10 +1,6 @@
 [submodule "dependencies/tinyxml"]
 	path = dependencies/tinyxml
 	url = git://github.com/paulsapps/TinyXML.git
-[submodule "dependencies/lua"]
-	path = dependencies/lua
-	url = https://github.com/LuaDist/lua.git
-	branch = lua-5.1
 [submodule "dependencies/luabind"]
 	path = dependencies/luabind
 	url = https://github.com/paulsapps/luabind.git
@@ -13,3 +9,6 @@
 	path = output/data
 	url = https://github.com/q-gears/data.git
 	branch = master
+[submodule "dependencies/luajit"]
+	path = dependencies/luajit
+	url = https://github.com/LuaDist/luajit.git

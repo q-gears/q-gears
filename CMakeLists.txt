@@ -138,8 +138,8 @@ set(QGears_INCLUDE_DIRS
     ${OGRE_Overlay_INCLUDE_DIRS}
     ${OGRE_SAMPLES_INCLUDEPATH}
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
-	${CMAKE_CURRENT_BINARY_DIR}/dependencies/lua
-	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/lua/src
+	${CMAKE_CURRENT_BINARY_DIR}/dependencies/luajit
+	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luajit/src
 	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind
 	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind/luabind/detail
 	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/tinyxml

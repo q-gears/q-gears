@@ -1,14 +1,13 @@
 include_directories(
     ${QGears_INCLUDE_DIRS}
 	luabind
-	lua/src
+	luajit/src
 	luabind/luabind
 	luabind/luabind/detail
-	${CMAKE_CURRENT_BINARY_DIR}/lua
 )
 
 add_subdirectory(tinyxml)
-add_subdirectory(lua)
+add_subdirectory(luajit)
 
  aux_source_directory( luabind/luabind LuaBind_header_FILES )
  aux_source_directory( luabind/luabind/details LuaBind_header_details_FILES )		
