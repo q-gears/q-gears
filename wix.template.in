@@ -16,7 +16,7 @@
         <Package InstallerVersion="301" Compressed="yes"/>
 
 		<DirectoryRef Id="TARGETDIR">
-            <Merge Id="VC10CRT" Language="0" DiskId="1" SourceFile="$(env.ProgramFiles(x86))\Common Files\Merge Modules\Microsoft_VC110_CRT_x86.msm" />
+            <Merge Id="VC10CRT" Language="0" DiskId="1" SourceFile="$(env.ProgramFiles(x86))\Common Files\Merge Modules\Microsoft_VC120_CRT_x86.msm" />
         </DirectoryRef>	
         <Feature Id="runtimes" Title="3rd party runtime libraries" Level="1" Description='3rd party libraries necessary for operation' Display='expand'>
             <MergeRef Id='VC10CRT' />
