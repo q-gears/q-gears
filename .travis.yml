@@ -9,15 +9,15 @@ matrix:
 # Don't build using gcc on mac
  exclude:
   - os: osx
-   compiler: gcc
+    compiler: gcc
 # Don't try to do Coverity builds on mac   
  exclude:
   - os: osx
-   env: COVERITY=1
+    env: COVERITY=1
 # Only do coverity build on Linux when the compiler is gcc
   - os: linux
-   compiler: clang
-   env: COVERITY=1
+    compiler: clang
+    env: COVERITY=1
   
 compiler: 
 - gcc
