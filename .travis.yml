@@ -65,7 +65,7 @@ before_script:
 
 #- if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK/OgreSDK/OgreSDK.pkg -target /usr/local/; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated boost || brew upgrade boost; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated scp || brew outdated scp; fi
+#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated scp || brew outdated scp; fi
 - $CXX --version
 
 before_install: 
