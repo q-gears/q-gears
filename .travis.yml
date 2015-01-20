@@ -53,6 +53,7 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes/OgreSDK_v1-9-0; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK_v1-9-0/OgreSDK_v1-9-0.pkg -target /usr/local/; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install boost; fi
 
 before_install: 
 script: 
