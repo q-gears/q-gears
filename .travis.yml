@@ -57,8 +57,8 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then hdiutil attach OgreSDK_v1-9-0.dmg; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes/OgreSDK_v1-9-0; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK_v1-9-0/OgreSDK_v1-9-0.pkg -target /usr/local/; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes/OgreSDK; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK/OgreSDK.pkg -target /usr/local/; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated boost || brew upgrade boost; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew scp boost || brew scp boost; fi
 - $CXX --version
