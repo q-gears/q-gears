@@ -25,9 +25,12 @@ compiler:
 before_script: 
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:boost-latest/ppa -y; fi
+- echo $CXX
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then sudo add-apt-repository ppa:h-rayflood/llvm -y; fi
+- echo $CXX
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then sudo apt-get install --allow-unauthenticated -qq clang-3.5; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
+- echo $CXX
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.4"; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.4"; fi
 
@@ -49,7 +52,6 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libglu-dev; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo dpkg -i ogre-build_1.9.0-1_amd64.deb; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb; fi
 
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated wget || brew upgrade wget; fi
@@ -58,7 +60,8 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes/OgreSDK; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK/OgreSDK.pkg -target /usr/local/; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes/OgreSDK/OgreSDK; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK/OgreSDK/OgreSDK.pkg -target /usr/local/; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated boost || brew upgrade boost; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew scp boost || brew scp boost; fi
 - $CXX --version
