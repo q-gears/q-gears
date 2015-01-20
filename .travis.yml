@@ -1,3 +1,9 @@
+os:
+ - linux
+ - osx
+matrix:
+  allow_failures:
+   - os: osx
 compiler: 
 - gcc
 before_script: 
