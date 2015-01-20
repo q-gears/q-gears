@@ -1,32 +1,60 @@
 os:
  - linux
  - osx
+
 matrix:
-  allow_failures:
-   - os: osx
+ allow_failures:
+  - os: osx
+  - compiler: clang
+ # Don't build using gcc on mac
+ exclude:
+  - os: osx
+   compiler: gcc
+ # Don't try to do Coverity builds on mac   
+ exclude:
+  - os: osx
+   env: COVERITY=1
+ # Only do coverity build on Linux when the compiler is gcc
+  - os: linux
+   compiler: clang
+   env: COVERITY=1
+  
 compiler: 
 - gcc
+- clang
+
 before_script: 
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository ppa:boost-latest/ppa -y; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get update; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install boost1.55; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install gcc-4.9; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install g++-4.9; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo update-alternatives --config gcc; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo update-alternatives --config g++; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libvorbis-dev; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libalut-dev; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libfreetype6-dev; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libfreeimage-dev; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install zlib1g-dev; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libzzip-dev; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libois-dev; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libglu-dev; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo dpkg -i ogre-build_1.9.0-1_amd64.deb; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:boost-latest/ppa -y; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install boost1.55; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install gcc-4.9; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install g++-4.9; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo update-alternatives --config gcc; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo update-alternatives --config g++; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libvorbis-dev; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libalut-dev; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libfreetype6-dev; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libfreeimage-dev; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install zlib1g-dev; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libzzip-dev; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libois-dev; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libglu-dev; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo dpkg -i ogre-build_1.9.0-1_amd64.deb; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb; fi
+
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install wget; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreSDK_v1-9-0.dmg; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then hdiutil attach OgreSDK_v1-9-0.dmg; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes/OgreSDK_v1-9-0; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK_v1-9-0/OgreSDK_v1-9-0.pkg -target /usr/local/; fi
+
 before_install: 
 script: 
 - mkdir build_qgears
@@ -69,8 +97,8 @@ after_success:
 - chmod 400 ~/.ssh/id_rsa
 - chmod 700 ~/.ssh
 - md5sum ~/.ssh/id_rsa
-- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/ fi
-- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/ fi
+- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/ fi
+- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/ fi
 notifications: 
   on_failure: always
   irc: irc.esper.net#qhimm.com
