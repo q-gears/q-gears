@@ -76,8 +76,8 @@ before_script:
 
 before_install: 
 script: 
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export sudo tar xfzC NVIDIA_Cg.tgz /; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export cginfo; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tar xfzC NVIDIA_Cg.tgz /; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cginfo; fi
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then unzip OgreDependencies_OSX_libc._20130610.zip; fi
 
