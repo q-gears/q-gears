@@ -19,6 +19,7 @@ find_path(OGRE_CMAKE_MODULE_PATH FindOGRE.cmake
     "/usr/local/lib/OGRE/cmake"
     "/usr/lib/OGRE/cmake"
     "/usr/share/OGRE/cmake/modules"
+    "/Volumes/OgreSDK/OgreSDK/CMake"
 )
 if(OGRE_CMAKE_MODULE_PATH-NOTFOUND)
     message(SEND_ERROR "Failed to find OGRE module path.")
