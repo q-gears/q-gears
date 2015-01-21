@@ -57,6 +57,8 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated wget || brew upgrade wget; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreSDK_v1-9-0.dmg; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreDependencies_OSX_libc._20130610.zip; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/NVIDIA_Cg.tgz; fi
+
 
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then hdiutil attach OgreSDK_v1-9-0.dmg; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls; fi
@@ -74,6 +76,9 @@ before_script:
 
 before_install: 
 script: 
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export sudo tar xfzC NVIDIA_Cg.tgz /; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export cginfo; fi
+
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then unzip OgreDependencies_OSX_libc._20130610.zip; fi
 
 - mkdir build_qgears
