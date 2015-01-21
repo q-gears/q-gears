@@ -75,7 +75,7 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake ..; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_HOME=/Volumes/OgreSDK/OgreSDK; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_SDK=/Volumes/OgreSDK/OgreSDK; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake ..; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -GXcode ..; fi
 - if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then make -j2; fi
 - if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then cpack -C Release; fi
 language: cpp
