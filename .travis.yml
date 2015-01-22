@@ -94,7 +94,11 @@ script:
 #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make install /Volumes/OgreSDK/OgreSDK; fi
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -GXcode ..; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cat /Users/travis/build/q-gears/q-gears/build_qgears/CMakeFiles/CMakeOutput.log; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls .; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild; fi
+
+
+#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cat /Users/travis/build/q-gears/q-gears/build_qgears/CMakeFiles/CMakeOutput.log; fi
 
 - if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then make -j2; fi
 - if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then cpack -C Release; fi
