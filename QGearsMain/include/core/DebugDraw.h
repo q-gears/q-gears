@@ -5,7 +5,7 @@
 #include <OgreRenderQueueListener.h>
 #include <OgreRoot.h>
 #include <OgreSingleton.h>
-#include <Overlay/OgreFont.h>
+#include <OgreFont.h>
 
 
 class DebugDraw : public Ogre::RenderQueueListener, public Ogre::Singleton< DebugDraw >

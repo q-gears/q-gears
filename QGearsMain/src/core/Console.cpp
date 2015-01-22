@@ -10,7 +10,7 @@
 #include "core/ScriptManager.h"
 #include "core/Timer.h"
 #include "core/Utilites.h"
-#include <Overlay/OgreFontManager.h>
+#include <OgreFontManager.h>
 
 
 template<>Console *Ogre::Singleton< Console >::msSingleton = NULL;

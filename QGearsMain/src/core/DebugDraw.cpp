@@ -1,6 +1,6 @@
 #include "core/DebugDraw.h"
 
-#include <Overlay/OgreFontManager.h>
+#include <OgreFontManager.h>
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 

@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #define __QGearsApplication_H__
 
 #include <OgreRoot.h>
-#include <Overlay/OgreOverlaySystem.h>
+#include <OgreOverlaySystem.h>
 
 #include "TypeDefine.h"
 

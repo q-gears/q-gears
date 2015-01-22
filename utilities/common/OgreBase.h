@@ -2,8 +2,8 @@
 #define __OGRE_BASE_H__
 
 #include <Ogre.h>
-#include <Overlay/OgreTextAreaOverlayElement.h>
-#include <Overlay/OgreOverlayManager.h>
+#include <OgreTextAreaOverlayElement.h>
+#include <OgreOverlayManager.h>
 #include <OIS.h>
 
 #include "common/FileSystem.h"

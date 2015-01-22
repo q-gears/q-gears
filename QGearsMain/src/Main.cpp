@@ -25,9 +25,9 @@
 
 #include "data/QGearsLZSFLevelFileManager.h"
 #include "common/make_unique.h"
-#include <Overlay/OgreFontManager.h>
-#include <Overlay/OgreOverlayManager.h>
-#include <Overlay/OgreOverlaySystem.h>
+#include <OgreFontManager.h>
+#include <OgreOverlayManager.h>
+#include <OgreOverlaySystem.h>
 
 #include "modules/worldmap/WorldMapModule.h"
 #include "data/worldmap/MapFileManager.h"

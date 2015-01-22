@@ -1,7 +1,7 @@
 // $Id$
 
 #include <Ogre.h>
-#include <OGRE/Overlay/OgreOverlayManager.h>
+#include <OgreOverlayManager.h>
 
 #include "Walkmesh.h"
 #include "../../Main.h"
