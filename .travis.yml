@@ -68,7 +68,7 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes/OgreSDK/OgreSDK/CMake; fi
 
 #- if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK/OgreSDK/OgreSDK.pkg -target /usr/local/; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated boost || brew upgrade boost; fi
+#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated boost || brew upgrade boost; fi
 #- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated ois || brew upgrade ois; fi
 
 #- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated scp || brew outdated scp; fi
