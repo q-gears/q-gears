@@ -97,7 +97,7 @@ script:
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -GXcode ..; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls .; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild ARCHS=i386 ONLY_ACTIVE_ARCH=NO -configuration Release; fi
 
 
 #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cat /Users/travis/build/q-gears/q-gears/build_qgears/CMakeFiles/CMakeOutput.log; fi
