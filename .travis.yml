@@ -56,6 +56,10 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated wget || brew upgrade wget; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreSDK_v1-9-0.dmg; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreDependencies_OSX_libc._20130610.zip; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/NVIDIA_Cg.tgz; fi
+
+
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then hdiutil attach OgreSDK_v1-9-0.dmg; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes; fi
@@ -64,17 +68,38 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes/OgreSDK/OgreSDK/CMake; fi
 
 #- if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK/OgreSDK/OgreSDK.pkg -target /usr/local/; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated boost || brew upgrade boost; fi
+#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated boost || brew upgrade boost; fi
+#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated ois || brew upgrade ois; fi
+
 #- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated scp || brew outdated scp; fi
 - $CXX --version
 
 before_install: 
 script: 
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tar xfzC NVIDIA_Cg.tgz /; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cginfo; fi
+
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then unzip OgreDependencies_OSX_libc._20130610.zip >> extract.log; fi
+
 - mkdir build_qgears
 - cd build_qgears
+
+
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake ..; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_HOME=/Volumes/OgreSDK/OgreSDK; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake ..; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_SDK=/Volumes/OgreSDK/OgreSDK; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OIS_HOME=/Users/travis/build/q-gears/q-gears/Dependencies; fi
+
+#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DCMAKE_INSTALL_PREFIX=/usr /Volumes/OgreSDK/OgreSDK; fi
+#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make install /Volumes/OgreSDK/OgreSDK; fi
+
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -GXcode ..; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls .; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild; fi
+
+
+#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cat /Users/travis/build/q-gears/q-gears/build_qgears/CMakeFiles/CMakeOutput.log; fi
+
 - if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then make -j2; fi
 - if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then cpack -C Release; fi
 language: cpp

@@ -7,6 +7,16 @@ set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 22)
 set(QGears_VERSION_PATCH 0)
 
+set(CMAKE_FRAMEWORK_PATH
+      ${CMAKE_FRAMEWORK_PATH}
+      /Volumes/OgreSDK/OgreSDK/lib/macosx/Release
+      /Volumes/OgreSDK/OgreSDK/lib/macosx/Debug
+   )
+
+set(OGRE_FRAMEWORK_INCLUDES
+    /Volumes/OgreSDK/OgreSDK/include
+)
+
 option(QGears_BUILD_PLUGINS     "Build the plugins"     TRUE)
 option(QGears_BUILD_UTILITIES   "Build the utilities"   TRUE)
 option(QGears_BUILD_TESTS       "Build the unit tests"  TRUE)
@@ -19,6 +29,7 @@ find_path(OGRE_CMAKE_MODULE_PATH FindOGRE.cmake
     "/usr/local/lib/OGRE/cmake"
     "/usr/lib/OGRE/cmake"
     "/usr/share/OGRE/cmake/modules"
+    "/Volumes/OgreSDK/OgreSDK/CMake"
 )
 if(OGRE_CMAKE_MODULE_PATH-NOTFOUND)
     message(SEND_ERROR "Failed to find OGRE module path.")
