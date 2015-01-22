@@ -9,3 +9,7 @@
 	path = output/data
 	url = https://github.com/q-gears/data.git
 	branch = master
+[submodule "dependencies/luajit"]
+	path = dependencies/luajit
+	url = https://github.com/q-gears/luajit.git
+	branch = master
