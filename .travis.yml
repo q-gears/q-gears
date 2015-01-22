@@ -88,8 +88,8 @@ script:
 
 
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake ..; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_HOME= /Users/travis/build/q-gears/q-gears/OgreSDK; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_SDK= /Users/travis/build/q-gears/q-gears/OgreSDK; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_HOME=/Users/travis/build/q-gears/q-gears/OgreSDK; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_SDK=/Users/travis/build/q-gears/q-gears/OgreSDK; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OIS_HOME=/Users/travis/build/q-gears/q-gears/Dependencies; fi
 
 #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DCMAKE_INSTALL_PREFIX=/usr /Volumes/OgreSDK/OgreSDK; fi
