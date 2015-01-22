@@ -5,15 +5,9 @@
 #include <OgreString.h>
 
 #include "Event.h"
-extern "C"
-{
-    #include <lua.h>
-}
-#include <luabind/luabind.hpp>
+#include "LuaIncludes.h"
 
 class Entity;
-
-
 
 struct ScriptId
 {

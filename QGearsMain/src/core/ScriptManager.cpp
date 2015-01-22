@@ -8,15 +8,7 @@
 #include "core/Timer.h"
 #include "core/Utilites.h"
 #include "core/XmlScriptsFile.h"
-extern "C"
-{
-    #include <lua.h>
-    #include <lualib.h>
-    #include <lauxlib.h>
-}
-#include <luabind/luabind.hpp>
-#include <luabind/yield_policy.hpp>
-
+#include "LuaIncludes.h"
 
 
 ConfigVar cv_debug_script( "debug_script", "Debug script flags. 0x01 - System, 0x02 - Entity, 0x04 - Ui.", "0" );

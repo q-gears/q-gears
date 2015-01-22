@@ -65,6 +65,7 @@ set(HEADER_FILES
   include/map/QGearsWalkmeshFile.h
   include/map/QGearsWalkmeshFileManager.h
   include/map/QGearsWalkmeshFileXMLSerializer.h
+  include/LuaIncludes.h
   include/QGearsGameState.h
   include/QGearsPrerequisites.h
   include/core/particles/emitters/ParticlePointEmitter.h
