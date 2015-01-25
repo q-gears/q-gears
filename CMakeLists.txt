@@ -7,6 +7,12 @@ set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 22)
 set(QGears_VERSION_PATCH 0)
 
+if (APPLE)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -m32")
+endif()
+
 set(CMAKE_FRAMEWORK_PATH
       ${CMAKE_FRAMEWORK_PATH}
        /Users/travis/build/q-gears/q-gears/OgreSDK/lib/macosx/Release
