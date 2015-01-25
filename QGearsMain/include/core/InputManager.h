@@ -10,7 +10,7 @@
 
 
 
-typedef std::vector< Event > InputEventArray;
+typedef std::vector< QGears::Event > InputEventArray;
 typedef std::vector< int > ButtonList;
 
 

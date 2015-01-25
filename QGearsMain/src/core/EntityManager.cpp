@@ -118,7 +118,7 @@ EntityManager::~EntityManager()
 
 
 void
-EntityManager::Input( const Event& event )
+EntityManager::Input(const QGears::Event& event)
 {
     m_Background2D.InputDebug( event );
 
@@ -133,21 +133,21 @@ EntityManager::Input( const Event& event )
 
     if( m_PlayerEntity != NULL && m_PlayerLock == false )
     {
-        if( ( event.type == ET_KEY_IMPULSE ) && ( event.param1 == OIS::KC_LEFT ) )
+        if ((event.type == QGears::ET_KEY_IMPULSE) && (event.param1 == OIS::KC_LEFT))
         {
             m_PlayerMove.x = -1;
         }
-        else if( ( event.type == ET_KEY_IMPULSE ) && ( event.param1 == OIS::KC_RIGHT ) )
+        else if ((event.type == QGears::ET_KEY_IMPULSE) && (event.param1 == OIS::KC_RIGHT))
         {
             m_PlayerMove.x = 1;
         }
 
-        if( ( event.type == ET_KEY_IMPULSE ) && ( event.param1 == OIS::KC_DOWN ) )
+        if ((event.type == QGears::ET_KEY_IMPULSE) && (event.param1 == OIS::KC_DOWN))
         {
             m_PlayerMove.y = -1;
         }
 
-        if( ( event.type == ET_KEY_IMPULSE ) && ( event.param1 == OIS::KC_UP ) )
+        if ((event.type == QGears::ET_KEY_IMPULSE) && (event.param1 == OIS::KC_UP))
         {
             m_PlayerMove.y = 1;
         }

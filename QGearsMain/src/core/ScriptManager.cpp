@@ -62,9 +62,9 @@ ScriptManager::~ScriptManager()
 
 
 void
-ScriptManager::Input( const Event& event )
+ScriptManager::Input(const QGears::Event& event)
 {
-    if( ( event.type == ET_KEY_PRESS || event.type == ET_KEY_REPEAT ) &&
+    if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) &&
                                       (
                                         event.param1 == OIS::KC_RETURN ||
                                         event.param1 == OIS::KC_ESCAPE ||
@@ -79,11 +79,11 @@ ScriptManager::Input( const Event& event )
         for( unsigned int i = 0; i < m_ScriptEntity.size(); ++i )
         {
             Ogre::String argument2 = "";
-            if( event.type == ET_KEY_PRESS )
+            if (event.type == QGears::ET_KEY_PRESS)
             {
                 argument2 = "Press";
             }
-            else if( event.type == ET_KEY_REPEAT )
+            else if (event.type == QGears::ET_KEY_REPEAT)
             {
                 argument2 = "Repeat";
             }
