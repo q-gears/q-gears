@@ -31,8 +31,8 @@ before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then sudo apt-get install --allow-unauthenticated clang-3.4; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
 - echo $CXX
-- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.4"; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.4"; fi
+#- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.4"; fi
+#- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.4"; fi
 
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then sudo apt-get install gcc-4.9; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then sudo apt-get install g++-4.9; fi
