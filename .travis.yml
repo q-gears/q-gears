@@ -66,6 +66,9 @@ before_script:
 before_install: 
 script: 
 
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp OgreSDK/lib/macosx/Release/Ogre.framework/Versions/1.9.0/Ogre OgreSDK/lib/macosx/Release/Ogre.framework/Ogre; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp OgreSDK/lib/macosx/Release/OgreOverlay.framework/Versions/1.9.0/OgreOverlay OgreSDK/lib/macosx/Release/OgreOverlay.framework/OgreOverlay; fi
+
 - mkdir build_qgears
 - cd build_qgears
 
