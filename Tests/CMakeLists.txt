@@ -2,7 +2,7 @@ add_definitions(
     -DBOOST_TEST_MODULE="standalone"
 )
 
-if(UNIX)
+if(UNIX OR APPLE)
     add_definitions(
         -DBOOST_TEST_DYN_LINK
     )

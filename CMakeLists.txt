@@ -15,12 +15,12 @@ set(QGears_VERSION_PATCH 0)
 
 set(CMAKE_FRAMEWORK_PATH
       ${CMAKE_FRAMEWORK_PATH}
-       /Users/travis/build/q-gears/q-gears/OgreSDK/lib/macosx/Release
-       /Users/travis/build/q-gears/q-gears/OgreSDK/lib/macosx/Debug
+      ${CMAKE_CURRENT_SOURCE_DIR}/OgreSDK/lib/macosx/Release
+      ${CMAKE_CURRENT_SOURCE_DIR}/OgreSDK/lib/macosx/Debug
    )
 
 set(OGRE_FRAMEWORK_INCLUDES
-     /Users/travis/build/q-gears/q-gears/OgreSDK/include
+      ${CMAKE_CURRENT_SOURCE_DIR}/OgreSDK/include
 )
 
 option(QGears_BUILD_PLUGINS     "Build the plugins"     TRUE)
@@ -35,7 +35,7 @@ find_path(OGRE_CMAKE_MODULE_PATH FindOGRE.cmake
     "/usr/local/lib/OGRE/cmake"
     "/usr/lib/OGRE/cmake"
     "/usr/share/OGRE/cmake/modules"
-    "/Users/travis/build/q-gears/q-gears/OgreSDK/CMake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/OgreSDK/CMake"
 )
 if(OGRE_CMAKE_MODULE_PATH-NOTFOUND)
     message(SEND_ERROR "Failed to find OGRE module path.")

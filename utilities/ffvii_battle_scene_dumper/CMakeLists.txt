@@ -25,6 +25,10 @@ add_executable(ff7_battle_scene_dumper
   ${SOURCE_FILES}
 )
 
+if (APPLE)
+target_link_libraries(ff7_battle_scene_dumper "-framework CoreFoundation -framework Cocoa -framework IOKit")
+endif()
+
 if(WIN32)
   set_target_properties(ff7_battle_scene_dumper PROPERTIES WIN32_EXECUTABLE ON)
   if (MSVC)

@@ -73,3 +73,4 @@ BOOST_AUTO_TEST_CASE( read_file )
 
     ifs->close();
 }
+

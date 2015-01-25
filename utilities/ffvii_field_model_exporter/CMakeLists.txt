@@ -36,6 +36,10 @@ add_executable(ff7_field_model_exporter
   ${SOURCE_FILES}
 )
 
+if (APPLE)
+target_link_libraries(ff7_field_model_exporter "-framework CoreFoundation -framework Cocoa -framework IOKit")
+endif()
+
 if(WIN32)
   set_target_properties(ff7_field_model_exporter PROPERTIES WIN32_EXECUTABLE ON)
   if (MSVC)

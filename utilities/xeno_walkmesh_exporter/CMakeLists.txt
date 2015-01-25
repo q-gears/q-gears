@@ -84,6 +84,10 @@ add_executable(xeno_walkmesh_exporter
   ${SOURCE_FILES}
 )
 
+if (APPLE)
+target_link_libraries(xeno_walkmesh_exporter "-framework CoreFoundation -framework Cocoa -framework IOKit")
+endif()
+
 if(WIN32)
   set_target_properties(xeno_walkmesh_exporter PROPERTIES WIN32_EXECUTABLE ON)
   if (MSVC)
