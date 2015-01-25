@@ -28,7 +28,7 @@ before_script:
 - echo $CXX
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then sudo add-apt-repository ppa:h-rayflood/llvm -y; fi
 - echo $CXX
-- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then sudo apt-get install --allow-unauthenticated clang-3.5; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then sudo apt-get install --allow-unauthenticated clang-3.4; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
 - echo $CXX
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.4"; fi
@@ -58,52 +58,25 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreDependencies_OSX_libc._20130610.zip; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/NVIDIA_Cg.tgz; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreSDK.zip; fi
-
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then unzip OgreSDK.zip >> OgreSDK_extract.log; fi
-
-#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then hdiutil attach OgreSDK_v1-9-0.dmg; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Volumes; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls /Users/travis/build/q-gears/q-gears/OgreSDK; fi
-
-#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg /Volumes/OgreSDK/OgreSDK/OgreSDK.pkg -target /usr/local/; fi
-#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated boost || brew upgrade boost; fi
-#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated ois || brew upgrade ois; fi
-
-#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated scp || brew outdated scp; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tar xfzC NVIDIA_Cg.tgz /; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then unzip OgreDependencies_OSX_libc._20130610.zip >> extract.log; fi
 - $CXX --version
 
 before_install: 
 script: 
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tar xfzC NVIDIA_Cg.tgz /; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cginfo; fi
-
-# fix broken SDK
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo cp /Volumes/OgreSDK/OgreSDK/include/OGRE/Overlay/OgreTextAreaOverlayElement.h /Volumes/OgreSDK/OgreSDK/lib/macosx/Release/OgreOverlay.framework/Versions/1.9.0/Headers/OgreTextAreaOverlayElement.h; fi
-
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then unzip OgreDependencies_OSX_libc._20130610.zip >> extract.log; fi
 
 - mkdir build_qgears
 - cd build_qgears
 
-
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake ..; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_HOME=/Users/travis/build/q-gears/q-gears/OgreSDK; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_SDK=/Users/travis/build/q-gears/q-gears/OgreSDK; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OIS_HOME=/Users/travis/build/q-gears/q-gears/Dependencies; fi
-
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export C_FLAGS=-m32; fi
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CXX_FLAGS=-m32; fi
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export L_FLAGS=-m32; fi
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LD_FLAGS=-m32; fi
-
-
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -G"Unix Makefiles" ..; fi
-
-
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake ..; fi
 
 - if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then make -j2; fi
-- if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then cpack -C Release; fi
+- if [[ ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then cpack -C Release; fi
 language: cpp
 after_success: 
 - hash=`git rev-parse HEAD`
