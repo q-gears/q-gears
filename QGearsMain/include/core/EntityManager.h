@@ -18,7 +18,7 @@ public:
     EntityManager();
     virtual ~EntityManager();
 
-    void Input( const Event& event );
+    void Input(const QGears::Event& event);
     void Update();
     void UpdateDebug();
     void OnResize();

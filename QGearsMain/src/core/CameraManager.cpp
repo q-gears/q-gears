@@ -53,7 +53,7 @@ CameraManager::~CameraManager()
 
 
 void
-CameraManager::Input( const Event& event, Ogre::Real timeSinceLastFrame )
+CameraManager::Input(const QGears::Event& event, Ogre::Real timeSinceLastFrame)
 {
     if( m_CameraFree == true )
     {
@@ -63,31 +63,31 @@ CameraManager::Input( const Event& event, Ogre::Real timeSinceLastFrame )
             speed *= 4;
         }
 
-        if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_W )
+        if (event.type == QGears::ET_KEY_IMPULSE && event.param1 == OIS::KC_W)
         {
             m_Camera->moveRelative( Ogre::Vector3( 0, 0, -speed ) );
         }
-        else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_A )
+        else if (event.type == QGears::ET_KEY_IMPULSE && event.param1 == OIS::KC_A)
         {
             m_Camera->moveRelative( Ogre::Vector3( -speed, 0, 0 ) );
         }
-        else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_S )
+        else if (event.type == QGears::ET_KEY_IMPULSE && event.param1 == OIS::KC_S)
         {
             m_Camera->moveRelative( Ogre::Vector3( 0, 0, speed ) );
         }
-        else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_D )
+        else if (event.type == QGears::ET_KEY_IMPULSE && event.param1 == OIS::KC_D)
         {
             m_Camera->moveRelative( Ogre::Vector3( speed, 0, 0 ) );
         }
-        else if( event.type == ET_MOUSE_PRESS && event.param1 == OIS::MB_Right )
+        else if (event.type == QGears::ET_MOUSE_PRESS && event.param1 == OIS::MB_Right)
         {
             m_CameraFreeRotate = true;
         }
-        else if( event.type == ET_MOUSE_RELEASE && event.param1 == OIS::MB_Right )
+        else if (event.type == QGears::ET_MOUSE_RELEASE && event.param1 == OIS::MB_Right)
         {
             m_CameraFreeRotate = false;
         }
-        else if( event.type == ET_MOUSE_MOVE && m_CameraFreeRotate == true )
+        else if (event.type == QGears::ET_MOUSE_MOVE && m_CameraFreeRotate == true)
         {
             m_Camera->rotate( Ogre::Vector3::UNIT_Z, Ogre::Radian( Ogre::Degree( -event.param1 * 0.13 ) ) );
             m_Camera->pitch( Ogre::Degree( -event.param2 * 0.13 ) );

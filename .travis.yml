@@ -97,14 +97,8 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export L_FLAGS=-m32; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LD_FLAGS=-m32; fi
 
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd ..; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd Dependencies; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd luajit; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir build; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cd build; fi
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -G"Unix Makefiles" ..; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake ..; fi
 
 
 
@@ -146,10 +140,10 @@ after_success:
 - chmod 700 ~/.ssh
 - md5sum ~/.ssh/id_rsa
 
-- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/ fi
-- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/ fi
+- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/; fi
+- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/; fi
 
-- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "clang" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/mac/ fi
+- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "clang" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/mac/; fi
 
 
 notifications: 

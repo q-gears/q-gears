@@ -12,3 +12,4 @@
 [submodule "dependencies/luajit"]
 	path = dependencies/luajit
 	url = https://github.com/q-gears/luajit.git
+	branch = master

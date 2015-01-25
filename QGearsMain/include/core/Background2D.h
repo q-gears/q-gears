@@ -28,7 +28,7 @@ public:
     Background2D();
     virtual ~Background2D();
 
-    void InputDebug( const Event& event );
+    void InputDebug(const QGears::Event& event);
     void Update();
     void UpdateDebug();
     void OnResize();

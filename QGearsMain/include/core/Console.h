@@ -19,7 +19,7 @@ public:
     Console();
     ~Console();
 
-    void Input( const Event& event );
+    void Input(const QGears::Event& event);
     void Update();
     void UpdateDraw();
     void UpdateNotification();

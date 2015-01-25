@@ -64,7 +64,7 @@ public:
     ScriptManager();
     virtual ~ScriptManager();
 
-    void Input( const Event& event );
+    void Input(const QGears::Event& event);
     void Update( const Type type );
 
     void RunString( const Ogre::String& lua );

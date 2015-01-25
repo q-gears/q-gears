@@ -88,23 +88,23 @@ Background2D::~Background2D()
 
 //------------------------------------------------------------------------------
 void
-Background2D::InputDebug( const Event& event )
+Background2D::InputDebug(const QGears::Event& event)
 {
     if( cv_background2d_manual.GetB() == true )
     {
-        if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_W )
+        if (event.type == QGears::ET_KEY_IMPULSE && event.param1 == OIS::KC_W)
         {
             m_PositionReal.y += 2;
         }
-        else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_A )
+        else if (event.type == QGears::ET_KEY_IMPULSE && event.param1 == OIS::KC_A)
         {
             m_PositionReal.x += 2;
         }
-        else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_S )
+        else if (event.type == QGears::ET_KEY_IMPULSE && event.param1 == OIS::KC_S)
         {
             m_PositionReal.y -= 2;
         }
-        else if( event.type == ET_KEY_IMPULSE && event.param1 == OIS::KC_D )
+        else if (event.type == QGears::ET_KEY_IMPULSE && event.param1 == OIS::KC_D)
         {
             m_PositionReal.x -= 2;
         }
