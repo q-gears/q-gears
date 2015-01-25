@@ -94,5 +94,9 @@ if(NOT QGEARS_STATIC)
   set_target_properties(DataPlugin PROPERTIES
     COMPILE_DEFINITIONS QGEARS_DATAPLUGIN_EXPORTS
   )
-  install(TARGETS DataPlugin LIBRARY DESTINATION .)
+    if(WIN32)
+    install(TARGETS DataPlugin LIBRARY DESTINATION .)
+  else()
+    install(TARGETS DataPlugin LIBRARY DESTINATION ./lib/q-gears/plugins/)
+  endif()
 endif()

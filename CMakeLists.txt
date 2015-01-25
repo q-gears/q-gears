@@ -252,7 +252,8 @@ else()
 	
 	SET(CPACK_DEBIAN_PACKAGE_SECTION games)
 	SET(CPACK_DEBIAN_PACKAGE_PRIORITY extra)
-	SET(CPACK_PACKAGE_EXECUTABLE )
+	#SET(CPACK_PACKAGE_EXECUTABLE )
+	SET(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA ${CMAKE_SOURCE_DIR}/debian/postinst )
 	#set the name to be debian package like.
 	SET(CPACK_PACKAGE_FILE_NAME "q-gears_${CPACK_PACKAGE_VERSION}-${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
 	#SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9, libois,libboost-program-options,libboost-filesystem,libvorbis,libopenal,libboost-test,zlib1g")

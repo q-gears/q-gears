@@ -349,4 +349,8 @@ target_link_libraries(q-gears
 	${Boost_LIBRARIES}
 )
 
-install(TARGETS q-gears DESTINATION .)
+if(WIN32)
+  install(TARGETS q-gears DESTINATION .)
+else()
+  install(TARGETS q-gears RUNTIME DESTINATION ./games)
+endif()
