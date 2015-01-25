@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.6)
 
 project(QGears)
 
+#set( CMAKE_VERBOSE_MAKEFILE on )
+
 # The version number.
 set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 22)
@@ -76,7 +78,7 @@ endif()
 
 # Find Boost
 if (NOT OGRE_BUILD_PLATFORM_IPHONE)
-        if (WIN32 OR APPLE)
+        if (WIN32)
                 set(Boost_USE_STATIC_LIBS TRUE)
         else ()
                 # Statically linking boost to a dynamic Ogre build doesn't work on Linux 64bit
@@ -89,7 +91,7 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
                 set(CMAKE_FIND_LIBRARY_PREFIXES ${CMAKE_FIND_LIBRARY_PREFIXES} "")
         endif ()
 
-        set(Boost_ADDITIONAL_VERSIONS "1.53" "1.53.0" "1.52" "1.52.0" "1.51" "1.51.0" "1.50" "1.50.0" "1.49" "1.49.0" "1.48" "1.48.0" "1.47" "1.47.0" "1.46" "1.46.0" "1.45" "1.45.0" "1.44" "1.44.0" "1.42" "1.42.0" "1.41.0" "1.41" "1.40.0" "1.40")
+        set(Boost_ADDITIONAL_VERSIONS "1.55" "1.55.0" "1.53" "1.53.0" "1.52" "1.52.0" "1.51" "1.51.0" "1.50" "1.50.0" "1.49" "1.49.0" "1.48" "1.48.0" "1.47" "1.47.0" "1.46" "1.46.0" "1.45" "1.45.0" "1.44" "1.44.0" "1.42" "1.42.0" "1.41.0" "1.41" "1.40.0" "1.40")
         # Components that need linking (NB does not include header-only components like bind)
         set(OGRE_BOOST_COMPONENTS thread date_time)
         find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
@@ -105,7 +107,10 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 
         # Set up referencing of Boost
         include_directories(${Boost_INCLUDE_DIR})
-        add_definitions(-DBOOST_ALL_NO_LIB)
+	if (NOT APPLE)        
+	add_definitions(-DBOOST_ALL_NO_LIB)
+	endif()
+
         set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
 
         find_package(Boost COMPONENTS program_options filesystem QUIET)
@@ -133,11 +138,13 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
         endif()
 
         if(QGears_BUILD_TESTS)
-            find_package(Boost COMPONENTS unit_test_framework QUIET)
+	    message(STATUS "Looking for boost unit test..")
+            find_package(Boost COMPONENTS unit_test_framework REQUIRED)
             set(QGears_TEST_LIBRARIES
                 ${OGRE_LIBRARIES}
                 ${Boost_LIBRARIES}
             )
+            message(STATUS "Test libs = ${QGears_TEST_LIBRARIES}")
             # enable CTest
             enable_testing()
         endif()
