@@ -4,7 +4,6 @@ os:
 
 matrix:
  allow_failures:
-  - os: osx
   - compiler: clang
  exclude:
 # Don't build using gcc on mac
