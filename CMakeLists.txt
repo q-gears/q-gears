@@ -243,7 +243,7 @@ if(WIN32)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OIS_D.DLL DESTINATION ./)
 		install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-GD-1_55.DLL" DESTINATION ./)
 	endif()
-elseif(LINUX)
+elseif(UNIX)
 	# On Linux generate DEB packages
 	SET(CPACK_GENERATOR "DEB")
 	install( FILES ${PROJECT_SOURCE_DIR}/q-gears.png DESTINATION ./share/pixmaps/ )
