@@ -3,20 +3,20 @@ os:
  - osx
 
 matrix:
- allow_failures:
-  - compiler: clang
  exclude:
 # Don't build using gcc on mac
   - os: osx
     compiler: gcc
-# Don't try to do Coverity builds on mac   
+# Don't try to do Coverity builds on mac
   - os: osx
     env: COVERITY=1
 # Only do coverity build on Linux when the compiler is gcc
   - os: linux
     compiler: clang
     env: COVERITY=1
-  
+# Don't build with clang on Linux
+  - os: linux
+    compiler: clang
 compiler: 
 - gcc
 - clang
