@@ -243,7 +243,19 @@ if(WIN32)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OIS_D.DLL DESTINATION ./)
 		install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-GD-1_55.DLL" DESTINATION ./)
 	endif()
-elseif(LINUX)
+elseif(APPLE)
+	# APPLE is also UNIX, so must check for APPLE before UNIX
+	SET(CPACK_GENERATOR "DragNDrop")
+ 	install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
+	install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
+        install(FILES ${OGRE_CMAKE_MODULE_PATH}/../lib/macosx/Release/Ogre.framework/Ogre DESTINATION ./)
+        install(FILES ${OGRE_CMAKE_MODULE_PATH}/../lib/macosx/Release/RenderSystem_GL.framework/Versions/1.9.0/RenderSystem_GL DESTINATION ./)
+        install(FILES ${OGRE_CMAKE_MODULE_PATH}/../lib/macosx/Release/OgreOverlay.framework/Versions/1.9.0/OgreOverlay DESTINATION ./)
+
+	# TODO: Fix up other files and use "otool" to fix dynlib + framework paths
+        #install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OIS.DLL DESTINATION ./)
+        #install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-1_55.DLL" DESTINATION ./)
+elseif(UNIX)
 	# On Linux generate DEB packages
 	SET(CPACK_GENERATOR "DEB")
 	install( FILES ${PROJECT_SOURCE_DIR}/q-gears.png DESTINATION ./share/pixmaps/ )
@@ -264,17 +276,6 @@ elseif(LINUX)
 	SET(CPACK_PACKAGE_FILE_NAME "q-gears_${CPACK_PACKAGE_VERSION}-${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
 	#SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9, libois,libboost-program-options,libboost-filesystem,libvorbis,libopenal,libboost-test,zlib1g")
 	SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9.0, libois-1.3.0,libboost-program-options1.54.0,libboost-filesystem1.54.0,libvorbis0a,libvorbisfile3,libvorbisenc2,libopenal1,libboost-test1.54.0,zlib1g")
-elseif(APPLE)
-	SET(CPACK_GENERATOR "DragNDrop")
- 	install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
-	install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
-        install(FILES ${OGRE_CMAKE_MODULE_PATH}/../lib/macosx/Release/Ogre.framework/Ogre DESTINATION ./)
-        install(FILES ${OGRE_CMAKE_MODULE_PATH}/../lib/macosx/Release/RenderSystem_GL.framework/Versions/1.9.0/RenderSystem_GL DESTINATION ./)
-        install(FILES ${OGRE_CMAKE_MODULE_PATH}/../lib/macosx/Release/OgreOverlay.framework/Versions/1.9.0/OgreOverlay DESTINATION ./)
-
-	# TODO: Fix up other files and use "otool" to fix dynlib + framework paths
-        #install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OIS.DLL DESTINATION ./)
-        #install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-1_55.DLL" DESTINATION ./)
 endif()
 
 
