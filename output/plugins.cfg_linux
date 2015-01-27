@@ -1,0 +1,8 @@
+# Define plugin folder
+PluginFolder=/usr/share/q-gears/plugins/
+#PluginFolder=~/.q-gears/plugins
+
+# Define plugins
+    Plugin=RenderSystem_GL
+#    Plugin=Plugin_Data
+ 

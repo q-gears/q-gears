@@ -1,0 +1,6 @@
+# alternative ressources directly from the game files
+[Game]
+FileSystem=data
+
+[FFVII_World]
+#LGP=~/.wine/drive_c/FF7/data/wm/world_us.lgp
