@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 
 project(QGears)
-
+set (CMAKE_PACKAGE_ICON q-gears.png)
 #set( CMAKE_VERBOSE_MAKEFILE on )
 
 # The version number.
@@ -267,10 +267,15 @@ elseif(UNIX)
 	install( FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg_linux DESTINATION share/q-gears/ RENAME resources.cfg PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ GROUP_WRITE WORLD_WRITE WORLD_READ)
 	install( FILES ${PROJECT_SOURCE_DIR}/output/q-gears.cfg_linux DESTINATION share/q-gears/ RENAME q-gears.cfg PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ GROUP_WRITE WORLD_WRITE WORLD_READ)
 		
+	
+	#attempt to install a simlink to gl rendersystem from ogre
 	if(EXISTS "/usr/lib/x86_64-linux-gnu/OGRE-1.9.0/RenderSystem_GL.so")
-	  install( FILES /usr/lib/x86_64-linux-gnu/OGRE-1.9.0/RenderSystem_GL.so DESTINATION share/q-gears/plugins/ RENAME RenderSystem_GL.so.1.9.0 )
+	  EXECUTE_PROCESS( COMMAND ln -s /usr/lib/x86_64-linux-gnu/OGRE-1.9.0/RenderSystem_GL.so ${PROJECT_SOURCE_DIR}/output/RenderSystem_GL.so.1.9.0 )
+	elseif(EXISTS "/usr/lib/i386-linux-gnu/OGRE-1.9.0/RenderSystem_GL.so")
+	  EXECUTE_PROCESS( COMMAND ln -s /usr/lib/i386-linux-gnu/OGRE-1.9.0/RenderSystem_GL.so ${PROJECT_SOURCE_DIR}/output/RenderSystem_GL.so.1.9.0 )
 	endif()
-		
+	
+	install( FILES ${PROJECT_SOURCE_DIR}/output/RenderSystem_GL.so.1.9.0 DESTINATION share/q-gears/plugins/ )
 		
 	SET(CPACK_SOURCE_GENERATOR "TGZ;TZ")
 	SET(CPACK_GENERATOR "TGZ")
