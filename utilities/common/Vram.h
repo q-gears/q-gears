@@ -1,9 +1,9 @@
 #ifndef VRAM_H
 #define VRAM_H
 
+#include <memory>
 #include "common/TypeDefine.h"
 #include "common/Surface.h"
-
 
 
 class Vram
