@@ -200,7 +200,8 @@ endif()
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/output)
 
 # Set generic CPack properties
-INCLUDE(InstallRequiredSystemLibraries)
+# DO NOT include on win32 - causes CRT dlls to be included
+#INCLUDE(InstallRequiredSystemLibraries)
 
 set(CPACK_PACKAGE_NAME "q-gears")
 SET(CPACK_PACKAGE_VERSION ${QGears_VERSION_MAJOR}.${QGears_VERSION_MINOR}.${QGears_VERSION_PATCH})
