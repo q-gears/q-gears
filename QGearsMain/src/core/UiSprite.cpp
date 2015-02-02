@@ -149,25 +149,25 @@ UiSprite::UpdateGeometry()
         float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
         float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
 
-        x1 = local_x1 * cos - local_y1 * sin + x;
-        y1 = local_x1 * sin + local_y1 * cos + y;
-        x2 = local_x2 * cos - local_y1 * sin + x;
-        y2 = local_x2 * sin + local_y1 * cos + y;
-        x3 = local_x2 * cos - local_y2 * sin + x;
-        y3 = local_x2 * sin + local_y2 * cos + y;
-        x4 = local_x1 * cos - local_y2 * sin + x;
-        y4 = local_x1 * sin + local_y2 * cos + y;
+        x1 = static_cast<int>(local_x1 * cos - local_y1 * sin + x);
+        y1 = static_cast<int>(local_x1 * sin + local_y1 * cos + y);
+        x2 = static_cast<int>(local_x2 * cos - local_y1 * sin + x);
+        y2 = static_cast<int>(local_x2 * sin + local_y1 * cos + y);
+        x3 = static_cast<int>(local_x2 * cos - local_y2 * sin + x);
+        y3 = static_cast<int>(local_x2 * sin + local_y2 * cos + y);
+        x4 = static_cast<int>(local_x1 * cos - local_y2 * sin + x);
+        y4 = static_cast<int>(local_x1 * sin + local_y2 * cos + y);
     }
     else
     {
-        x1 = local_x1 + x;
-        y1 = local_y1 + y;
-        x2 = local_x2 + x;
-        y2 = local_y1 + y;
-        x3 = local_x2 + x;
-        y3 = local_y2 + y;
-        x4 = local_x1 + x;
-        y4 = local_y2 + y;
+        x1 = static_cast<int>(local_x1 + x);
+        y1 = static_cast<int>(local_y1 + y);
+        x2 = static_cast<int>(local_x2 + x);
+        y2 = static_cast<int>(local_y1 + y);
+        x3 = static_cast<int>(local_x2 + x);
+        y3 = static_cast<int>(local_y2 + y);
+        x4 = static_cast<int>(local_x1 + x);
+        y4 = static_cast<int>(local_y2 + y);
     }
 
     //LOG_ERROR( "x1 = " + Ogre::StringConverter::toString( x1 ) + ", y1 = " + Ogre::StringConverter::toString( y1 ) );

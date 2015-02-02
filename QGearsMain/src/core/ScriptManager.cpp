@@ -127,8 +127,8 @@ ScriptManager::Update( const ScriptManager::Type type )
         {
             if( ( debug & ( 1 << i ) ) != 0 )
             {
-                DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.8, 0.8, 0, 1 ) );
-                DEBUG_DRAW.Text( 10, y, "Script \"" + script_entity_type[ i ] + "\" entity:" );
+                DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.8f, 0.8f, 0.0f, 1.0f ) );
+                DEBUG_DRAW.Text( 10.0f, static_cast<float>(y), "Script \"" + script_entity_type[ i ] + "\" entity:" );
                 y += 16;
 
                 for( unsigned int j = 0; j < m_ScriptEntity.size(); ++j )
@@ -141,7 +141,7 @@ ScriptManager::Update( const ScriptManager::Type type )
                         if( queue_size > 0 )
                         {
                             text += ": ";
-                            DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.8, 0.8, 0, 1 ) );
+                            DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.8f, 0.8f, 0.0f, 1.0f ) );
                         }
                         else
                         {
@@ -164,7 +164,7 @@ ScriptManager::Update( const ScriptManager::Type type )
                             }
                         }
 
-                        DEBUG_DRAW.Text( 20, y, text );
+                        DEBUG_DRAW.Text( 20.0f, static_cast<float>(y), text );
                         y += 16;
                     }
                 }
@@ -207,7 +207,7 @@ ScriptManager::Update( const ScriptManager::Type type )
                             {
                                 ret = luabind::resume_function< int >( table[ m_CurrentScriptId.function ], table, m_ScriptEntity[ i ].queue[ 0 ].argument1.c_str(), m_ScriptEntity[ i ].queue[ 0 ].argument2.c_str() );
                             }
-                            catch( luabind::error& e )
+                            catch( luabind::error& /*e*/ )
                             {
                                 LOG_ERROR( Ogre::String( lua_tostring( m_ScriptEntity[ i ].queue[ 0 ].state , -1 ) ) );
                             }

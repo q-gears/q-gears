@@ -59,7 +59,7 @@ namespace QGears
             position[i] = Ogre::Real(pos[i]);
             for( size_t j(0); j < CAMERA_MATRIX_COL_COUNT; ++j )
             {
-                camera_matrix[j][i] = matrix_sint16[i][j] / 4096.0;
+                camera_matrix[j][i] = matrix_sint16[i][j] / 4096.0f;
             }
         }
         position = camera_matrix * position;
