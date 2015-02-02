@@ -56,6 +56,7 @@ DebugDraw::DebugDraw():
     if( m_Font.isNull() )
     {
         LOG_ERROR( "Could not find font \"CourierNew\" for debug draw." );
+        throw std::runtime_error("Font load failure");
     }
 
     m_Font->load();
@@ -139,8 +140,8 @@ DebugDraw::Line( const float x1, const float y1, const float x2, const float y2 
     }
 
     Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
-    float width = viewport->getActualWidth();
-    float height = viewport->getActualHeight();
+    float width = static_cast<float>(viewport->getActualWidth());
+    float height = static_cast<float>(viewport->getActualHeight());
 
     float new_x1 = ( m_ScreenSpace == true ) ? ( ( int ) x1 / width ) * 2 - 1 : x1;
     float new_y1 = ( m_ScreenSpace == true ) ? -( ( ( int ) y1 / height ) * 2 - 1 ) : y1;
@@ -261,8 +262,8 @@ DebugDraw::Quad( const float x1, const float y1, const float x2, const float y2,
     }
 
     Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
-    float width = viewport->getActualWidth();
-    float height = viewport->getActualHeight();
+    float width = static_cast<float>(viewport->getActualWidth());
+    float height = static_cast<float>(viewport->getActualHeight());
 
     float new_x1 = ( m_ScreenSpace == true ) ? ( ( int ) x1 / width ) * 2 - 1 : x1;
     float new_y1 = ( m_ScreenSpace == true ) ? -( ( ( int ) y1 / height ) * 2 - 1 ) : y1;
@@ -344,8 +345,8 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
     writeIterator += m_TextRenderOp.vertexData->vertexCount * 9;
 
     Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
-    float width = viewport->getActualWidth();
-    float height = viewport->getActualHeight();
+    float width = static_cast<float>(viewport->getActualWidth());
+    float height = static_cast<float>(viewport->getActualHeight());
 
     float length = 0;
     if( m_TextAlignment != LEFT )
