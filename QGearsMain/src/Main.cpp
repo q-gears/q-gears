@@ -141,6 +141,10 @@ main(int argc, char *argv[])
     {
         std::cout << "std::runtime_error thrown: " << ex.what() << std::endl;
     }
+    catch (const Ogre::Exception& ex)
+    {
+        std::cout << "Ogre::Exception thrown: " << ex.what() << std::endl;
+    }
 
     return 0;
 }
