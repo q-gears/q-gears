@@ -58,7 +58,7 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo dpkg -i ogre-build_1.9.0-1_amd64.deb; fi
 
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew doctor; fi
+#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew doctor; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated wget || brew upgrade wget; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install qt; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreDependencies_OSX_libc._20130610.zip; fi
