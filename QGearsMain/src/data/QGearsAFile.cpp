@@ -24,7 +24,7 @@ GNU General Public License for more details.
 namespace QGears
 {
    //-------------------------------------------------------------------------
-   const Ogre::Real AFile::FRAME_DURATION( 1.0 / 30.0 );
+   const Ogre::Real AFile::FRAME_DURATION( 1.0f / 30.0f );
    const String     AFile::RESOURCE_TYPE( "QGearsAFile" );
 
    //-------------------------------------------------------------------------

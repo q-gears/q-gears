@@ -41,7 +41,7 @@ Console::Console():
     Ogre::FontPtr font = Ogre::FontManager::getSingleton().getByName( "CourierNew" );
     if( font.isNull() == false )
     {
-        m_LetterWidth = font->getGlyphAspectRatio( '_' ) * 16;
+        m_LetterWidth = static_cast<int>(font->getGlyphAspectRatio( '_' ) * 16);
     }
     else
     {
@@ -51,7 +51,7 @@ Console::Console():
     // calculate width and height of console depending on size of application
     Ogre::RenderTarget *render_target( QGears::Application::getSingleton().getRenderWindow() );
     m_ConsoleWidth = render_target->getWidth();
-    m_ConsoleHeight = render_target->getHeight() / 2.5f;
+    m_ConsoleHeight = static_cast<int>(render_target->getHeight() / 2.5f);
     m_LineWidth = ( m_ConsoleWidth - 20 ) / 8;
 
     LOG_TRIVIAL( "Created console width " + Ogre::StringConverter::toString( m_ConsoleWidth ) + ", height " + Ogre::StringConverter::toString( m_ConsoleHeight ) );
@@ -266,7 +266,7 @@ Console::Input(const QGears::Event& event)
     else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && m_InputLine.size() < m_LineWidth)
     {
         char legalchars[] = "ABCDEFGHIJKLMNOPQRSTUVWXUZabcdefghijklmnopqrstuvwxyz1234567890~!@#$%^&*()-_=+?{[]}|\\;:'\"<>,./? ";
-        char txt = event.param2;
+        char txt = static_cast<char>(event.param2);
         for( unsigned int c = 0; c < sizeof( legalchars ) - 1; ++c )
         {
             if( legalchars[ c ] == txt )
@@ -294,7 +294,7 @@ Console::Update()
 
         if( m_Height >= m_ConsoleHeight )
         {
-            m_Height = m_ConsoleHeight;
+            m_Height = static_cast<float>(m_ConsoleHeight);
         }
     }
     else if( m_ToVisible == false && m_Height > 0 )
@@ -329,14 +329,14 @@ Console::UpdateDraw()
     DEBUG_DRAW.SetScreenSpace( true );
     DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.05f, 0.06f, 0.2f, 0.95f ) );
     DEBUG_DRAW.SetZ( -0.5f );
-    DEBUG_DRAW.Quad( 0, 0, m_ConsoleWidth, 0, m_ConsoleWidth, m_Height, 0, m_Height );
+    DEBUG_DRAW.Quad( 0.0f, 0.0f, static_cast<float>(m_ConsoleWidth), 0.0f, static_cast<float>(m_ConsoleWidth), m_Height, 0.0f, m_Height );
     DEBUG_DRAW.SetColour( Ogre::ColourValue(  0.18f, 0.22f, 0.74f, 0.95f ) );
     DEBUG_DRAW.SetZ( -0.6f );
-    DEBUG_DRAW.Line( 0, m_Height, m_ConsoleWidth, m_Height );
+    DEBUG_DRAW.Line( 0.0f, m_Height, static_cast<float>(m_ConsoleWidth), m_Height );
 
     int row = 1;
     int rows = ( m_ConsoleHeight - 30 ) / 16;
-    int y = -m_ConsoleHeight + m_Height;
+    int y = static_cast<int>(-m_ConsoleHeight + m_Height);
     int empty = rows - m_DisplayLine;
     if( empty > 0 )
     {
@@ -350,7 +350,7 @@ Console::UpdateDraw()
         {
 
             DEBUG_DRAW.SetColour( ( *i ).colour );
-            DEBUG_DRAW.Text( 5, y, ( *i ).text );
+            DEBUG_DRAW.Text( 5.0f, static_cast<float>(y), ( *i ).text );
             y += 16;
         }
     }
@@ -361,8 +361,8 @@ Console::UpdateDraw()
         {
             temp += "^";
         }
-        DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
-        DEBUG_DRAW.Text( 5, y, temp );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        DEBUG_DRAW.Text( 5.0f, static_cast<float>(y), temp );
     }
 
 
@@ -371,7 +371,7 @@ Console::UpdateDraw()
     if( ( ( ( int )( m_CursorBlinkTime * 1000 ) ) >> 8 ) & 1 )
     {
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.88f, 0.88f, 0.88f, 1 ) );
-        DEBUG_DRAW.Text( 12 + m_CursorPosition * m_LetterWidth, -19 + m_Height, "_" );
+        DEBUG_DRAW.Text( static_cast<float>(12 + m_CursorPosition * m_LetterWidth), static_cast<float>(-19 + m_Height), "_" );
     }
 
 
@@ -380,7 +380,7 @@ Console::UpdateDraw()
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 1, 1, 1 ) );
         DEBUG_DRAW.Text( 12, -20 + m_Height, m_InputLine);
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 0, 1, 0, 1 ) );
-        DEBUG_DRAW.Text( 12 + ( m_InputLine.size() * m_LetterWidth ), -20 + m_Height, m_AutoCompletition[ m_AutoCompletitionLine ] );
+        DEBUG_DRAW.Text( static_cast<float>(12 + ( m_InputLine.size() * m_LetterWidth )), static_cast<float>(-20 + m_Height), m_AutoCompletition[ m_AutoCompletitionLine ] );
     }
     else
     {
@@ -413,7 +413,7 @@ Console::UpdateNotification()
             Ogre::ColourValue colour = ( *i ).colour;
             colour.a = ( max_time - time ) / max_time;
             DEBUG_DRAW.SetColour( colour );
-            DEBUG_DRAW.Text( 5, y, ( *i ).text );
+            DEBUG_DRAW.Text( 5.0f, static_cast<float>(y), ( *i ).text );
             y -= 16;
             ++line;
         }
@@ -428,7 +428,7 @@ Console::OnResize()
     // calculate width and height of console depending on size of application
     Ogre::RenderTarget *render_target( QGears::Application::getSingleton().getRenderWindow() );
     m_ConsoleWidth = render_target->getWidth();
-    m_ConsoleHeight = render_target->getHeight() / 2.5f;
+    m_ConsoleHeight = static_cast<int>(render_target->getHeight() / 2.5f);
     m_LineWidth = ( m_ConsoleWidth - 20 ) / 8;
 
     LOG_TRIVIAL( "Resized console width to " + Ogre::StringConverter::toString( m_ConsoleWidth ) + ", height to " + Ogre::StringConverter::toString( m_ConsoleHeight ) );

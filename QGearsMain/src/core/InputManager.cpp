@@ -48,7 +48,7 @@ InputManager::ButtonPressed( int button, char text, bool down )
         m_ButtonState[ button ] = down;
         m_ButtonText[ button ] = text;
 
-        m_EventQueue.push_back(QGears::Event((down == true) ? QGears::ET_KEY_PRESS : QGears::ET_KEY_RELEASE, button, text));
+        m_EventQueue.push_back(QGears::Event((down == true) ? QGears::ET_KEY_PRESS : QGears::ET_KEY_RELEASE, static_cast<float>(button), static_cast<float>(text)));
 
         m_RepeatFirstWait = true;
         m_RepeatTimer = 0;
@@ -65,7 +65,7 @@ InputManager::ButtonPressed( int button, char text, bool down )
 void
 InputManager::MousePressed( int button, bool down )
 {
-    m_EventQueue.push_back(QGears::Event((down == true) ? QGears::ET_MOUSE_PRESS : QGears::ET_MOUSE_RELEASE, button, 0));
+    m_EventQueue.push_back(QGears::Event((down == true) ? QGears::ET_MOUSE_PRESS : QGears::ET_MOUSE_RELEASE, static_cast<float>(button), 0.0f));
 }
 
 
@@ -73,7 +73,7 @@ InputManager::MousePressed( int button, bool down )
 void
 InputManager::MouseMoved( int x, int y )
 {
-    m_EventQueue.push_back(QGears::Event(QGears::ET_MOUSE_MOVE, x, y));
+    m_EventQueue.push_back(QGears::Event(QGears::ET_MOUSE_MOVE, static_cast<float>(x), static_cast<float>(y)));
 }
 
 
@@ -81,7 +81,7 @@ InputManager::MouseMoved( int x, int y )
 void
 InputManager::MouseScrolled( int value )
 {
-    m_EventQueue.push_back(QGears::Event(QGears::ET_MOUSE_SCROLL, value, 0));
+    m_EventQueue.push_back(QGears::Event(QGears::ET_MOUSE_SCROLL, static_cast<float>(value), 0.0f));
 }
 
 
@@ -97,7 +97,7 @@ InputManager::Update()
         {
             if( m_ButtonState[ button ] == true )
             {
-                m_EventQueue.push_back(QGears::Event(QGears::ET_KEY_REPEAT, button, m_ButtonText[button]));
+                m_EventQueue.push_back(QGears::Event(QGears::ET_KEY_REPEAT, static_cast<float>(button), static_cast<float>(m_ButtonText[button])));
             }
         }
 
@@ -110,7 +110,7 @@ InputManager::Update()
     {
         if( m_ButtonState[ button ] == true )
         {
-            m_EventQueue.push_back(QGears::Event(QGears::ET_KEY_IMPULSE, button, m_ButtonText[button]));
+            m_EventQueue.push_back(QGears::Event(QGears::ET_KEY_IMPULSE, static_cast<float>(button), static_cast<float>(m_ButtonText[button])));
         }
     }
 }

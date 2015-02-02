@@ -224,7 +224,7 @@ namespace QGears
         WalkmeshFile::TriangleList& triangles( walkmesh->getTriangles() );
         WalkmeshFile::TriangleList::iterator it( triangles.begin() );
         WalkmeshFile::TriangleList::const_iterator it_end( triangles.end() );
-        Ogre::Real scale( pDest->getCameraMatrix()->getCount() );
+        Ogre::Real scale = static_cast<Ogre::Real>(pDest->getCameraMatrix()->getCount() );
         scale *= FF7::FIELD_POSITION_SCALE;
         while( it != it_end )
         {
