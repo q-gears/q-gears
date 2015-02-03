@@ -53,11 +53,14 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libzzip-dev; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libois-dev; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libglu-dev; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libqt4-dev; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo dpkg -i ogre-build_1.9.0-1_amd64.deb; fi
 
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
+#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew doctor; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated wget || brew upgrade wget; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install qt; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreDependencies_OSX_libc._20130610.zip; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/NVIDIA_Cg.tgz; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreSDK.zip; fi
@@ -81,8 +84,8 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -G"Unix Makefiles" ..; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake ..; fi
 
-- if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then make -j2; fi
-- if [[ ${COVERITY_SCAN_BRANCH} != 1 ]]; then cpack -C Release; fi
+- if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then make -j2; fi
+- if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then cpack -C Release; fi
 language: cpp
 after_success: 
 - hash=`git rev-parse HEAD`
@@ -119,13 +122,12 @@ after_success:
 - chmod 700 ~/.ssh
 - md5sum ~/.ssh/id_rsa
 
-- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/; fi
-- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.tar.gz paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/; fi
 
-
-
-- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/mac/; fi
-- if [[ $TRAVIS_PULL_REQUEST == 'false' && ${COVERITY_SCAN_BRANCH} != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.dmg paul@itscovarr.com:/var/www/storage/qgears/$hash/mac/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/mac/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.dmg paul@itscovarr.com:/var/www/storage/qgears/$hash/mac/; fi
 
 
 notifications: 

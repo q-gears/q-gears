@@ -89,8 +89,8 @@ CameraManager::Input(const QGears::Event& event, Ogre::Real timeSinceLastFrame)
         }
         else if (event.type == QGears::ET_MOUSE_MOVE && m_CameraFreeRotate == true)
         {
-            m_Camera->rotate( Ogre::Vector3::UNIT_Z, Ogre::Radian( Ogre::Degree( -event.param1 * 0.13 ) ) );
-            m_Camera->pitch( Ogre::Degree( -event.param2 * 0.13 ) );
+            m_Camera->rotate( Ogre::Vector3::UNIT_Z, Ogre::Radian( Ogre::Degree( -event.param1 * 0.13f ) ) );
+            m_Camera->pitch( Ogre::Degree( -event.param2 * 0.13f ) );
         }
     }
 }
@@ -120,7 +120,7 @@ CameraManager::SetCameraFree( const bool enable )
     if( m_CameraFree == true )
     {
         m_Camera->resetFrustumExtents();
-        CameraManager::getSingleton().GetCurrentCamera()->setFOVy( Ogre::Radian( Ogre::Math::PI / 4.0 ) );
+        CameraManager::getSingleton().GetCurrentCamera()->setFOVy( Ogre::Radian( Ogre::Math::PI / 4.0f ) );
     }
     else
     {
@@ -157,8 +157,8 @@ CameraManager::Set2DScroll( const Ogre::Vector2& position )
         return;
     }
 
-    float width = m_Viewport->getActualWidth();
-    float height = m_Viewport->getActualHeight();
+    float width = static_cast<float>(m_Viewport->getActualWidth());
+    float height = static_cast<float>(m_Viewport->getActualHeight());
     float left, right, top, bottom;
     m_Camera->resetFrustumExtents();
     m_Camera->getFrustumExtents( left, right, top, bottom );
@@ -185,8 +185,8 @@ CameraManager::ProjectPointToScreen( const Ogre::Vector3& point )
     view = m_Camera->getProjectionMatrix() * view;
     view.z = z;
 
-    float width = m_Viewport->getActualWidth() / 2;
-    float height = m_Viewport->getActualHeight() / 2;
+    float width = static_cast<float>(m_Viewport->getActualWidth() / 2);
+    float height = static_cast<float>(m_Viewport->getActualHeight() / 2);
 
     view.x = width + view.x * width;
     view.y = height - view.y * height;

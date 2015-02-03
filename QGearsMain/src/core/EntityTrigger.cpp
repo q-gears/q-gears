@@ -57,7 +57,7 @@ EntityTrigger::UpdateDebug()
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.04f, 0.9f, 0.5f ) );
         for( unsigned int i = 0; i < m_Activators.size(); ++i )
         {
-            DEBUG_DRAW.Text( center, 0, ( i + 1 ) * 16, m_Activators[ i ]->GetName() );
+            DEBUG_DRAW.Text( center, 0.0f, static_cast<float>(( i + 1 ) * 16), m_Activators[ i ]->GetName() );
         }
     }
 }

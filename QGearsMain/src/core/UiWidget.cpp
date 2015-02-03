@@ -54,8 +54,8 @@ void
 UiWidget::Initialise()
 {
     Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
-    m_ScreenWidth = viewport->getActualWidth();
-    m_ScreenHeight = viewport->getActualHeight();
+    m_ScreenWidth = static_cast<float>(viewport->getActualWidth());
+    m_ScreenHeight = static_cast<float>(viewport->getActualHeight());
 
     m_Visible = false;
 
@@ -89,9 +89,9 @@ UiWidget::Initialise()
 
     m_Scissor = false;
     m_ScissorTop = 0;
-    m_ScissorBottom = m_ScreenHeight;
+    m_ScissorBottom = static_cast<int>(m_ScreenHeight);
     m_ScissorLeft = 0;
-    m_ScissorRight = m_ScreenWidth;
+    m_ScissorRight = static_cast<int>(m_ScreenWidth);
 
     m_AnimationCurrent = NULL;
     m_AnimationDefault = "";
@@ -186,32 +186,32 @@ UiWidget::Update()
             float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
             float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
 
-            x1 = local_x1 * cos - local_y1 * sin + x;
-            y1 = local_x1 * sin + local_y1 * cos + y;
-            x2 = local_x2 * cos - local_y1 * sin + x;
-            y2 = local_x2 * sin + local_y1 * cos + y;
-            x3 = local_x2 * cos - local_y2 * sin + x;
-            y3 = local_x2 * sin + local_y2 * cos + y;
-            x4 = local_x1 * cos - local_y2 * sin + x;
-            y4 = local_x1 * sin + local_y2 * cos + y;
+            x1 = static_cast<int>(local_x1 * cos - local_y1 * sin + x);
+            y1 = static_cast<int>(local_x1 * sin + local_y1 * cos + y);
+            x2 = static_cast<int>(local_x2 * cos - local_y1 * sin + x);
+            y2 = static_cast<int>(local_x2 * sin + local_y1 * cos + y);
+            x3 = static_cast<int>(local_x2 * cos - local_y2 * sin + x);
+            y3 = static_cast<int>(local_x2 * sin + local_y2 * cos + y);
+            x4 = static_cast<int>(local_x1 * cos - local_y2 * sin + x);
+            y4 = static_cast<int>(local_x1 * sin + local_y2 * cos + y);
         }
         else
         {
-            x1 = local_x1 + x;
-            y1 = local_y1 + y;
-            x2 = local_x2 + x;
-            y2 = local_y1 + y;
-            x3 = local_x2 + x;
-            y3 = local_y2 + y;
-            x4 = local_x1 + x;
-            y4 = local_y2 + y;
+            x1 = static_cast<int>(local_x1 + x);
+            y1 = static_cast<int>(local_y1 + y);
+            x2 = static_cast<int>(local_x2 + x);
+            y2 = static_cast<int>(local_y1 + y);
+            x3 = static_cast<int>(local_x2 + x);
+            y3 = static_cast<int>(local_y2 + y);
+            x4 = static_cast<int>(local_x1 + x);
+            y4 = static_cast<int>(local_y2 + y);
         }
 
         // slightly modify to let show things that are on board of screen
-        DEBUG_DRAW.Line( x1, y1 + 1, x2, y2 + 1 );
-        DEBUG_DRAW.Line( x2 - 1, y2, x3 - 1, y3 );
-        DEBUG_DRAW.Line( x3, y3, x4, y4 );
-        DEBUG_DRAW.Line( x4, y4, x1, y1 );
+        DEBUG_DRAW.Line(static_cast<float>(x1), static_cast<float>(y1 + 1), static_cast<float>(x2), static_cast<float>(y2 + 1));
+        DEBUG_DRAW.Line(static_cast<float>(x2 - 1), static_cast<float>(y2), static_cast<float>(x3 - 1), static_cast<float>(y3));
+        DEBUG_DRAW.Line(static_cast<float>(x3), static_cast<float>(y3), static_cast<float>(x4), static_cast<float>(y4));
+        DEBUG_DRAW.Line(static_cast<float>(x4), static_cast<float>(y4), static_cast<float>(x1), static_cast<float>(y1));
 
         // draw translation
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 0, 1, 0, 1 ) );
@@ -225,13 +225,13 @@ UiWidget::Update()
         {
             DEBUG_DRAW.SetColour( Ogre::ColourValue::White );
             DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
-            DEBUG_DRAW.Text( x1 + 3, y1, m_PathName );
-            DEBUG_DRAW.Text( x1 + 3, y1 + 12, GetCurrentAnimationName() );
+            DEBUG_DRAW.Text(static_cast<float>(x1 + 3), static_cast<float>(y1), m_PathName);
+            DEBUG_DRAW.Text(static_cast<float>(x1 + 3), static_cast<float>(y1 + 12), GetCurrentAnimationName());
         }
 
         // draw origin
         DEBUG_DRAW.SetColour( Ogre::ColourValue( 1, 0, 0, 1 ) );
-        DEBUG_DRAW.Line( x, y, x1, y1 + 1 );
+        DEBUG_DRAW.Line( x, y, static_cast<float>(x1), static_cast<float>(y1 + 1) );
     }
 }
 
@@ -241,8 +241,8 @@ void
 UiWidget::OnResize()
 {
     Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
-    m_ScreenWidth = viewport->getActualWidth();
-    m_ScreenHeight = viewport->getActualHeight();
+    m_ScreenWidth = static_cast<float>(viewport->getActualWidth());
+    m_ScreenHeight = static_cast<float>(viewport->getActualHeight());
 
     for( size_t i = 0; i < m_Children.size(); ++i )
     {
@@ -487,9 +487,9 @@ UiWidget::UpdateTransformation()
 
     // scissor update
     m_ScissorTop = ( m_Parent != NULL ) ? m_Parent->GetScissorTop() : 0;
-    m_ScissorBottom = ( m_Parent != NULL ) ? m_Parent->GetScissorBottom() : m_ScreenHeight;
+    m_ScissorBottom = ( m_Parent != NULL ) ? m_Parent->GetScissorBottom() : static_cast<int>(m_ScreenHeight);
     m_ScissorLeft = ( m_Parent != NULL ) ? m_Parent->GetScissorLeft() : 0;
-    m_ScissorRight = ( m_Parent != NULL ) ? m_Parent->GetScissorRight() : m_ScreenWidth;
+    m_ScissorRight = (m_Parent != NULL) ? m_Parent->GetScissorRight() : static_cast<int>(m_ScreenWidth);
 
     if( m_Scissor == true )
     {
@@ -507,25 +507,25 @@ UiWidget::UpdateTransformation()
             float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
             float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
 
-            x1 = local_x1 * cos - local_y1 * sin + x;
-            y1 = local_x1 * sin + local_y1 * cos + y;
-            x2 = local_x2 * cos - local_y1 * sin + x;
-            y2 = local_x2 * sin + local_y1 * cos + y;
-            x3 = local_x2 * cos - local_y2 * sin + x;
-            y3 = local_x2 * sin + local_y2 * cos + y;
-            x4 = local_x1 * cos - local_y2 * sin + x;
-            y4 = local_x1 * sin + local_y2 * cos + y;
+            x1 = static_cast<int>(local_x1 * cos - local_y1 * sin + x);
+            y1 = static_cast<int>(local_x1 * sin + local_y1 * cos + y);
+            x2 = static_cast<int>(local_x2 * cos - local_y1 * sin + x);
+            y2 = static_cast<int>(local_x2 * sin + local_y1 * cos + y);
+            x3 = static_cast<int>(local_x2 * cos - local_y2 * sin + x);
+            y3 = static_cast<int>(local_x2 * sin + local_y2 * cos + y);
+            x4 = static_cast<int>(local_x1 * cos - local_y2 * sin + x);
+            y4 = static_cast<int>(local_x1 * sin + local_y2 * cos + y);
         }
         else
         {
-            x1 = local_x1 + x;
-            y1 = local_y1 + y;
-            x2 = local_x2 + x;
-            y2 = local_y1 + y;
-            x3 = local_x2 + x;
-            y3 = local_y2 + y;
-            x4 = local_x1 + x;
-            y4 = local_y2 + y;
+            x1 = static_cast<int>(local_x1 + x);
+            y1 = static_cast<int>(local_y1 + y);
+            x2 = static_cast<int>(local_x2 + x);
+            y2 = static_cast<int>(local_y1 + y);
+            x3 = static_cast<int>(local_x2 + x);
+            y3 = static_cast<int>(local_y2 + y);
+            x4 = static_cast<int>(local_x1 + x);
+            y4 = static_cast<int>(local_y2 + y);
         }
 
         m_ScissorTop = std::max( m_ScissorTop, std::min( std::min( y1 , y2 ), std::min( y3 , y4 ) ) );

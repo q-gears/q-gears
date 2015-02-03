@@ -70,14 +70,14 @@ namespace QGears
         readShort( stream, colour );
         //convertColour( colour );
         //Ogre::PixelUtil::unpackColour( &pDest, PIXEL_FORMAT, &colour );
-        pDest.r =   colour & BIT_MASK_RED;
-        pDest.g = ( colour & BIT_MASK_GREEN ) >>  5;
-        pDest.b = ( colour & BIT_MASK_BLUE  ) >> 10;
+        pDest.r = static_cast<float>(colour & BIT_MASK_RED);
+        pDest.g = static_cast<float>(( colour & BIT_MASK_GREEN ) >>  5);
+        pDest.b = static_cast<float>(( colour & BIT_MASK_BLUE  ) >> 10);
         pDest /= BIT_SIZE;
-        pDest.a = 0;
+        pDest.a = 0.0f;
         if ( colour & BIT_MASK_ALPHA )
         {
-            pDest.a = 1;
+            pDest.a = 1.0f;
         }
     }
 

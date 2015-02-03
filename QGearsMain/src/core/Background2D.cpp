@@ -191,10 +191,10 @@ Background2D::UpdateDebug()
     {
         DEBUG_DRAW.SetTextAlignment( DEBUG_DRAW.LEFT );
         DEBUG_DRAW.SetScreenSpace( true );
-        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.0, 0.8, 0.8, 1 ) );
+        DEBUG_DRAW.SetColour( Ogre::ColourValue( 0.0f, 0.8f, 0.8f, 1.0f ) );
         for( unsigned int i = 0; i < m_AnimationPlayed.size(); ++i )
         {
-            DEBUG_DRAW.Text( 150, 34 + i * 12, "Background 2D animation: " + m_AnimationPlayed[ i ].name );
+            DEBUG_DRAW.Text( 150.0f, static_cast<float>(34 + i * 12), "Background 2D animation: " + m_AnimationPlayed[ i ].name );
         }
     }
 }
@@ -204,8 +204,8 @@ void
 Background2D::calculateScreenScale( void )
 {
     Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
-    Ogre::Real scale_width( viewport->getActualWidth() );
-    Ogre::Real scale_height( viewport->getActualHeight() );
+    Ogre::Real scale_width = static_cast<Ogre::Real>(viewport->getActualWidth());
+    Ogre::Real scale_height = static_cast<Ogre::Real>(viewport->getActualHeight());
 
     scale_width /= m_virtual_screen_size.x;
     scale_height /= m_virtual_screen_size.y;
@@ -224,10 +224,10 @@ Background2D::OnResize()
     for( unsigned int i = 0; i < m_Tiles.size(); ++i )
     {
         Tile &tile( m_Tiles[ i ] );
-        Ogre::Vector2   top_left ( tile.x, -tile.y );
-        Ogre::Vector2   top_right( tile.x + tile.width, top_left.y );
-        Ogre::Vector2   bottom_right( top_right.x, -( tile.y + tile.height ) );
-        Ogre::Vector2   bottom_left( top_left.x, bottom_right.y );
+        Ogre::Vector2   top_left(static_cast<Ogre::Real>(tile.x), static_cast<Ogre::Real>(- tile.y));
+        Ogre::Vector2   top_right(static_cast<Ogre::Real>(tile.x + tile.width), static_cast<Ogre::Real>(top_left.y));
+        Ogre::Vector2   bottom_right(static_cast<Ogre::Real>(top_right.x), static_cast<Ogre::Real>(-(tile.y + tile.height)));
+        Ogre::Vector2   bottom_left(static_cast<Ogre::Real>(top_left.x), static_cast<Ogre::Real>(bottom_right.y));
 
         virtualScreenToWorldSpace( top_left );
         virtualScreenToWorldSpace( top_right );
@@ -527,7 +527,7 @@ Background2D::AddTile(  const QGears::Tile& tile )
 {
     // TODO: move depth calculation to flevelBackgroundLoader maybe? and let Backgorund2D only handle 0 <= depth <= 1 or so?
     // maybe just move the < 4095 part to flevel background loader?
-    Ogre::Real depth( 0.0001 );
+    Ogre::Real depth( 0.0001f );
     if( tile.depth >= 1 )
     {
         if( tile.depth < 4095 )
@@ -540,7 +540,7 @@ Background2D::AddTile(  const QGears::Tile& tile )
         }
         else
         {
-            depth = 0.9999;
+            depth = 0.9999f;
         }
     }
     AddTile( tile.destination, tile.width, tile.height, depth, tile.uv, tile.blending );
@@ -550,7 +550,7 @@ Background2D::AddTile(  const QGears::Tile& tile )
 void
 Background2D::AddTile( const Ogre::Vector2& destination, const int width, const int height, const float depth, const Ogre::Vector4& uv, const Blending blending )
 {
-    AddTile( destination.x, destination.y, width, height, depth, uv.x, uv.y, uv.z, uv.w, blending );
+    AddTile( static_cast<int>(destination.x), static_cast<int>(destination.y), width, height, depth, uv.x, uv.y, uv.z, uv.w, blending );
 }
 
 //------------------------------------------------------------------------------
@@ -606,9 +606,9 @@ Background2D::AddTile( const int x, const int y, const int width, const int heig
     size_t index( m_Tiles.size() );
     m_Tiles.push_back( tile );
 
-    Ogre::Vector2   top_left ( x, -y );
-    Ogre::Vector2   top_right( x + width, top_left.y );
-    Ogre::Vector2   bottom_right( top_right.x, -( y + height ) );
+    Ogre::Vector2   top_left(static_cast<Ogre::Real>(x), static_cast<Ogre::Real>(-y));
+    Ogre::Vector2   top_right(static_cast<Ogre::Real>(x + width), static_cast<Ogre::Real>(top_left.y));
+    Ogre::Vector2   bottom_right(static_cast<Ogre::Real>(top_right.x), static_cast<Ogre::Real>(-(y + height)));
     Ogre::Vector2   bottom_left( top_left.x, bottom_right.y );
 
     virtualScreenToWorldSpace( top_left );
@@ -835,8 +835,8 @@ Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& in
         m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
 
         Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
-        float width = viewport->getActualWidth();
-        float height = viewport->getActualHeight();
+        float width = static_cast<float>(viewport->getActualWidth());
+        float height = static_cast<float>(viewport->getActualHeight());
         Ogre::Matrix4 view;
         view.makeTrans( Ogre::Vector3( m_PositionReal.x * 2 / width, -m_PositionReal.y * 2 / height, 0 ) );
         m_RenderSystem->_setViewMatrix( view );

@@ -16,9 +16,9 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_Name( name ),
     m_SceneNode( node ),
 
-    m_Height( 1 ),
+    m_Height( 1.0f ),
 
-    m_SolidRadius( 0.24 ),
+    m_SolidRadius( 0.24f ),
     m_Solid( false ),
 
     m_TalkRadius( 0.45f ),
@@ -31,7 +31,7 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
     m_MoveRunSpeed( 0.8f ),
     m_MovePosition( Ogre::Vector3( 0, 0, 0 ) ),
     m_MoveEntity( NULL ),
-    m_MoveStopDistance( 0 ),
+    m_MoveStopDistance( 0.0f ),
     m_MoveTriangleId( -1 ),
     m_MoveAutoRotation( true ),
     m_MoveAutoAnimation( true ),
@@ -44,24 +44,24 @@ Entity::Entity( const Ogre::String& name, Ogre::SceneNode* node ):
 
     m_JumpStart( 0.0f, 0.0f, 0.0f ),
     m_JumpEnd( 0.0f, 0.0f, 0.0f ),
-    m_JumpSeconds( 0 ),
-    m_JumpCurrentSeconds( 0 ),
+    m_JumpSeconds( 0.0f ),
+    m_JumpCurrentSeconds( 0.0f ),
 
     m_OffsetPositionStart( 0.0f, 0.0f, 0.0f ),
     m_OffsetPositionEnd( 0.0f, 0.0f, 0.0f ),
     m_OffsetType( AT_NONE ),
-    m_OffsetSeconds( 0 ),
-    m_OffsetCurrentSeconds( 0 ),
+    m_OffsetSeconds( 0.0f ),
+    m_OffsetCurrentSeconds( 0.0f ),
 
     m_TurnDirection( TD_CLOSEST ),
     m_TurnDirectionStart( 0 ),
     m_TurnDirectionEnd( 0 ),
     m_TurnEntity( NULL ),
     m_TurnType( AT_NONE ),
-    m_TurnSeconds( 0 ),
-    m_TurnCurrentSeconds( 0 ),
+    m_TurnSeconds( 0.0f ),
+    m_TurnCurrentSeconds( 0.0f ),
 
-    m_AnimationSpeed( 1 ),
+    m_AnimationSpeed( 1.0f ),
     m_AnimationDefault( "Idle" ),
     m_AnimationCurrentName( "" ),
     m_AnimationAutoPlay( true )

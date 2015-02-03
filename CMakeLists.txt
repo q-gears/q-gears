@@ -200,7 +200,8 @@ endif()
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/output)
 
 # Set generic CPack properties
-INCLUDE(InstallRequiredSystemLibraries)
+# DO NOT include on win32 - causes CRT dlls to be included
+#INCLUDE(InstallRequiredSystemLibraries)
 
 set(CPACK_PACKAGE_NAME "q-gears")
 SET(CPACK_PACKAGE_VERSION ${QGears_VERSION_MAJOR}.${QGears_VERSION_MINOR}.${QGears_VERSION_PATCH})
@@ -232,7 +233,6 @@ if(WIN32)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/RenderSystem_GL.dll DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OGREOVERLAY.DLL DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OIS.DLL DESTINATION ./)
-		install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-1_55.DLL" DESTINATION ./)
 	else()
 		message("DEBUG installer build")
 		install(FILES ${PROJECT_SOURCE_DIR}/output/resources_d.cfg DESTINATION ./)
@@ -241,7 +241,6 @@ if(WIN32)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/RenderSystem_GL_d.dll DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OGREOVERLAY_D.DLL DESTINATION ./)
 		install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/debug/OIS_D.DLL DESTINATION ./)
-		install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-GD-1_55.DLL" DESTINATION ./)
 	endif()
 elseif(APPLE)
 	# APPLE is also UNIX, so must check for APPLE before UNIX

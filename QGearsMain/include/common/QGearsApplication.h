@@ -19,7 +19,7 @@ GNU General Public License for more details.
 
 #include <OgreRoot.h>
 #include <OgreOverlaySystem.h>
-
+#include <memory>
 #include "TypeDefine.h"
 
 namespace QGears
