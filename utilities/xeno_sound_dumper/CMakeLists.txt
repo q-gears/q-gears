@@ -26,6 +26,7 @@ add_executable(xeno_sound_dumper
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET xeno_sound_dumper PROPERTY FOLDER "utilities")
 
 if (APPLE)
 target_link_libraries(xeno_sound_dumper "-framework CoreFoundation -framework Cocoa -framework IOKit")

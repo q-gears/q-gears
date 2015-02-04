@@ -19,6 +19,7 @@ add_executable(ff7_field_model_exporter_pc
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET ff7_field_model_exporter_pc PROPERTY FOLDER "utilities")
 
 if (APPLE)
 target_link_libraries(ff7_field_model_exporter_pc "-framework CoreFoundation -framework Cocoa -framework IOKit")

@@ -26,6 +26,7 @@ add_executable(ff7_sound_dumper
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET ff7_sound_dumper PROPERTY FOLDER "utilities")
 
 if (APPLE)
 target_link_libraries(ff7_sound_dumper "-framework CoreFoundation -framework Cocoa -framework IOKit")

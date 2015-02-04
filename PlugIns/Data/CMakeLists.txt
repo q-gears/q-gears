@@ -77,6 +77,7 @@ add_library(DataPlugin MODULE
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET DataPlugin PROPERTY FOLDER "q-gears")
 
 set_target_properties(DataPlugin PROPERTIES
   PREFIX ${PLUGIN_PREFIX}

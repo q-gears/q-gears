@@ -22,6 +22,7 @@ add_executable(ff9_script_dumper
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET ff9_script_dumper PROPERTY FOLDER "utilities")
 
 if(WIN32)
   set_target_properties(ff9_script_dumper PROPERTIES WIN32_EXECUTABLE ON)

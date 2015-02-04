@@ -324,16 +324,17 @@ add_library(QGearsMain STATIC
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET QGearsMain PROPERTY FOLDER "q-gears")
 
 add_executable(q-gears
   src/Main.cpp
 )
+SET_PROPERTY(TARGET q-gears PROPERTY FOLDER "q-gears")
 
 
 if (APPLE)
 target_link_libraries(q-gears "-framework CoreFoundation -framework Cocoa -framework IOKit")
 endif()
-
 
 if( WIN32 AND NOT (CMAKE_BUILD_TYPE MATCHES "Debug") )
     set_target_properties( q-gears PROPERTIES WIN32_EXECUTABLE ON )
