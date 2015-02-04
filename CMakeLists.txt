@@ -9,6 +9,9 @@ set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 22)
 set(QGears_VERSION_PATCH 0)
 
+# Enable Visual Studio solution "folders"
+SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON) 
+
 #if (APPLE)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
@@ -66,11 +69,11 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   )
 endif()
 
-find_package( ZLIB REQUIRED )
-
+#find_package(Qt4 REQUIRED)
+find_package(ZLIB REQUIRED)
 find_package(OGRE REQUIRED)
-
 find_package(OIS REQUIRED)
+
 
 if(NOT OIS_FOUND)
         message(SEND_ERROR "Failed to find OIS.")
@@ -324,6 +327,14 @@ elseif(UNIX)
 	  #SET(CPACK_RPM_PACKAGE_REQUIRES "ogre,ois,boost,vorbis,lua,zlib1g")
 
 endif()
+
+SET_PROPERTY(TARGET liblua PROPERTY FOLDER "3rdparty")
+SET_PROPERTY(TARGET buildvm PROPERTY FOLDER "3rdparty")
+SET_PROPERTY(TARGET LuaBind PROPERTY FOLDER "3rdparty")
+SET_PROPERTY(TARGET luajit PROPERTY FOLDER "3rdparty")
+SET_PROPERTY(TARGET minilua PROPERTY FOLDER "3rdparty")
+SET_PROPERTY(TARGET TinyXml PROPERTY FOLDER "3rdparty")
+
 
 INCLUDE(CPack)
 #End of install instructions

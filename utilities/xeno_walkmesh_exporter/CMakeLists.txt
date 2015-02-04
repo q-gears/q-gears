@@ -83,6 +83,7 @@ add_executable(xeno_walkmesh_exporter
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET xeno_walkmesh_exporter PROPERTY FOLDER "utilities")
 
 if (APPLE)
 target_link_libraries(xeno_walkmesh_exporter "-framework CoreFoundation -framework Cocoa -framework IOKit")

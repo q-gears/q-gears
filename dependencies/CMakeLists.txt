@@ -9,6 +9,8 @@ include_directories(
 add_subdirectory(tinyxml)
 add_subdirectory(luajit)
 
+
+
  aux_source_directory( luabind/luabind LuaBind_header_FILES )
  aux_source_directory( luabind/luabind/details LuaBind_header_details_FILES )		
  aux_source_directory( luabind/src LuaBind_src_FILES )		
