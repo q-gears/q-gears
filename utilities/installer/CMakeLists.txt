@@ -1,14 +1,28 @@
+INCLUDE(${QT_USE_FILE})
+ADD_DEFINITIONS(${QT_DEFINITIONS})
+
+# This is where the ui generated header files end up
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 # define header and source files
 set(HEADER_FILES
-
+    src/mainwindow.h
 )
 set(SOURCE_FILES
     src/Main.cpp
+    src/mainwindow.cpp
 )
+
+set(INSTALLER_FORMS
+   src/mainwindow.ui
+)
+
+QT4_WRAP_UI(INSTALLER_FORM_HEADERS ${INSTALLER_FORMS})
+QT4_WRAP_CPP(INSTALLER_HEADERS_MOC ${HEADER_FILES})
 
 add_definitions(
     -DQGEARS_ADD_MANAGERS
@@ -17,6 +31,8 @@ add_definitions(
 add_executable(installer
   ${HEADER_FILES}
   ${SOURCE_FILES}
+  ${INSTALLER_FORM_HEADERS}
+  ${INSTALLER_HEADERS_MOC}
 )
 SET_PROPERTY(TARGET installer PROPERTY FOLDER "utilities")
 
@@ -35,7 +51,7 @@ set(LIBRARIES
     Utility
 )
 
-target_link_libraries(installer    ${LIBRARIES})
+target_link_libraries(installer    ${LIBRARIES} ${QT_LIBRARIES})
 
 install(TARGETS installer
     DESTINATION .

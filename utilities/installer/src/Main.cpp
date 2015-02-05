@@ -1,8 +1,11 @@
-#include <Ogre.h>
-#include "../../common/OgreBase.h"
-#include "../../common/Logger.h"
+#include "mainwindow.h"
+#include <QApplication>
 
-int main( int argc, char *argv[] )
+int main(int argc, char *argv[])
 {
-    return 0;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+
+    return a.exec();
 }
