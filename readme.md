@@ -11,7 +11,7 @@ See here for builds http://qgears.itscovarr.com here you will find nightly build
 
 #### Ubuntu Linux 14.04
 
-Ogre version must be 1.9, Boost version must be 55, gcc version must be 4.9, QtCreator is optional - install if you want to use this as the IDE (recommended).
+Ogre version must be 1.9, Qt version 4.8, Boost version must be 55, gcc version must be 4.9, QtCreator is optional - install if you want to use this as the IDE (recommended).
 
 **Install required packages:**
 ```
@@ -26,6 +26,7 @@ Ogre version must be 1.9, Boost version must be 55, gcc version must be 4.9, QtC
 * sudo apt-get install qtcreator
 * sudo apt-get install libogre-1.9-dev
 * sudo apt-get install libois-dev
+* sudo apt-get install libqt4-dev
 ```
 
 **Sync down the QGears source code:**
@@ -78,6 +79,7 @@ Anyway here is what we need for Ubuntu 12.04 (Travis-CI) **WARNING** updating th
 * sudo apt-get install libglu-dev
 * sudo apt-get install libfreetype6-dev 
 * sudo apt-get install checkinstall
+* sudo apt-get install libqt4-dev
 ```
 
 **Sync down source for Ogre 1.9:**
@@ -185,6 +187,23 @@ http://zlib.net/zlib128-dll.zip
 ```
 Extract to the root of C drive.
 
+
+** Download Qt 4.8 source code:**
+```
+https://download.qt.io/archive/qt/4.8/4.8.6/qt-everywhere-opensource-src-4.8.6.zip
+```
+Again Extract to the root of C drive.
+
+**Build Qt:**
+
+Open a Visual Studio 2013 command prompt and enter:
+
+```
+configure -platform win32-msvc2013 -no-webkit -debug-and-release -no-phonon -no-qt3support -mp -no-scripttools -nomake demos -nomake examples -no-openssl 
+```
+
+Key in "o" to use the open source license and then "y" to agree. Once this is done enter "nmake" to finish compling Qt.
+
 Now sync down the QGears source code, first create a directory some where you want to sync the code to using Windows explorer. Then right in the newly created directory and select "GIT Bash here".
 
 In the git bash enter:
@@ -199,6 +218,7 @@ Now cd to where you synced the qgears source code to. For me this was "cd C:\Use
 ```
 mkdir build
 cd build
+set QTDIR=C:/qt-everywhere-opensource-src-4.8.6
 set OGRE_HOME=C:/OgreSDK/OgreSDK_vc12_v1-9-0
 cmake .. -DZLIB_ROOT=C:/zlib128-dll -DBOOST_ROOT=C:/boost_1_55_0
 ```
