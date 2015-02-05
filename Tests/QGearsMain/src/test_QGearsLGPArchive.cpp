@@ -30,55 +30,57 @@ THE SOFTWARE.
 
 #include "data/QGearsLGPArchiveFactory.h"
 
-BOOST_AUTO_TEST_CASE( stream )
-{
-    const char* file_name( "misc/reference.lgp" );
-    std::ifstream *ifs( OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
-    BOOST_REQUIRE( ifs->is_open() );
-    Ogre::FileStreamDataStream stream( ifs );
-    BOOST_REQUIRE( stream.isReadable() );
-    stream.close();
-}
-
 BOOST_AUTO_TEST_CASE( load )
 {
-    QGears::LGPArchiveFactory factory;
-    Ogre::Archive* archive = factory.createInstance( "misc/reference.lgp", true );
-    QGears::LGPArchive lgp( "misc/reference.lgp", "LGP" );
-
-    BOOST_CHECK_EQUAL(  true, lgp.getFiles().empty() );
-    BOOST_CHECK_EQUAL( false, lgp.exists( "aaac.p" ) );
-    BOOST_CHECK_EQUAL( false, lgp.exists( "mmmm.p" ) );
-    BOOST_CHECK_EQUAL( lgp.getFiles().empty(), archive->list()->empty() );
-    BOOST_CHECK_EQUAL( lgp.exists( "aaac.p" ), archive->exists( "aaac.p" ) );
-    BOOST_CHECK_EQUAL( lgp.exists( "mmmm.p" ), archive->exists( "mmmm.p" ) );
-
     Ogre::LogManager        logMgr;
     logMgr.createLog( "Default Log", true, true, true );
-    lgp.load();
-    archive->load();
-    logMgr.destroyLog( "Default Log" );
+    const char* filename_1( "Filename 1" );
+    const char* filename_2( "max length filename!" );
 
-    BOOST_CHECK_EQUAL( 12649, lgp.getFiles().size() );
-    BOOST_CHECK_EQUAL(  true, lgp.exists( "aaac.p" ) );
-    BOOST_CHECK_EQUAL(  true, lgp.exists( "mmmm.p" ) );
+    class TestLGPArchive : public QGears::LGPArchive
+    {
+        public:
+
+            TestLGPArchive() :
+                QGears::LGPArchive( "misc/reference.lgp", "LGP" )
+              , test_stream( NULL )
+            {}
+
+            void load()
+            {
+                QGears::LGPArchive::load( test_stream );
+            }
+
+        Ogre::DataStream* test_stream;
+    };
+
+    TestLGPArchive lgp;
+    // TODO: use Ogre::MemoryDataStream and include data via byte array
+    std::ifstream *ifs( OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( lgp.getName().c_str(), std::ifstream::binary ) );
+    lgp.test_stream = OGRE_NEW Ogre::FileStreamDataStream( ifs );
+
+    BOOST_CHECK_EQUAL(  true, lgp.getFiles().empty() );
+    BOOST_CHECK_EQUAL( false, lgp.exists( filename_1 ) );
+    BOOST_CHECK_EQUAL( false, lgp.exists( filename_2 ) );
+
+    lgp.load();
+
+    BOOST_CHECK_EQUAL( 2, lgp.getFiles().size() );
+    BOOST_CHECK_EQUAL(  true, lgp.exists( filename_1 ) );
+    BOOST_CHECK_EQUAL(  true, lgp.exists( filename_2 ) );
     BOOST_CHECK_EQUAL( lgp.getFiles().size(), lgp.list()->size() );
     BOOST_CHECK_EQUAL( lgp.getFiles().size(), lgp.listFileInfo()->size() );
-    BOOST_CHECK_EQUAL( lgp.getFiles().size(), archive->list()->size() );
-    BOOST_CHECK_EQUAL( lgp.exists( "aaac.p" ), archive->exists( "aaac.p" ) );
-    BOOST_CHECK_EQUAL( lgp.exists( "mmmm.p" ), archive->exists( "mmmm.p" ) );
 
-    QGears::LGPArchive::FileEntry& entry( lgp.getFiles()[1] );
-    BOOST_CHECK_EQUAL( "aaad.rsd", entry.file_name );
-    BOOST_CHECK_EQUAL( entry.file_name, lgp.list()->at( 1 ) );
-    BOOST_CHECK_EQUAL( entry.file_name, archive->list()->at( 1 ) );
-    BOOST_CHECK_EQUAL( 0x00054ACB, entry.file_offset );
-    BOOST_CHECK_EQUAL( "AAAD.rsd", entry.data_file_name );
-    BOOST_CHECK_EQUAL( 0x0000003E, entry.data_size );
-    BOOST_CHECK_EQUAL( 0x00054AE3, entry.data_offset );
+    QGears::LGPArchive::FileEntry& entry( lgp.getFiles()[0] );
+    BOOST_CHECK_EQUAL( filename_1, entry.file_name );
+    BOOST_CHECK_EQUAL( entry.file_name, lgp.list()->at( 0 ) );
+    BOOST_CHECK_EQUAL( 0x00000050, entry.file_offset );
+    BOOST_CHECK_EQUAL( "FILENAME 1", entry.data_file_name );
+    BOOST_CHECK_EQUAL( 0x00000018, entry.data_size );
+    BOOST_CHECK_EQUAL( 0x00000068, entry.data_offset );
 
     Ogre::FileInfoListPtr file_infos( lgp.listFileInfo() );
-    Ogre::FileInfo& file_info( file_infos->at( 1 ) );
+    Ogre::FileInfo& file_info( file_infos->at( 0 ) );
     BOOST_CHECK_EQUAL( &lgp, file_info.archive );
     BOOST_CHECK_EQUAL( entry.file_name, file_info.filename );
     BOOST_CHECK_EQUAL( entry.file_name, file_info.basename );
@@ -86,31 +88,24 @@ BOOST_AUTO_TEST_CASE( load )
     BOOST_CHECK_EQUAL( entry.data_size, file_info.uncompressedSize );
     BOOST_CHECK_EQUAL( file_info.uncompressedSize, file_info.compressedSize );
 
-    BOOST_CHECK_EQUAL( 3209, lgp.find( "*.a" )->size() );
-    BOOST_CHECK_EQUAL(  385, lgp.find( "*.hrc" )->size() );
-    BOOST_CHECK_EQUAL(  695, lgp.find( "*.tex" )->size() );
-    BOOST_CHECK_EQUAL( 4180, lgp.find( "*.p" )->size() );
+    BOOST_CHECK_EQUAL( 1, lgp.find( "Filename*" )->size() );
+    BOOST_CHECK_EQUAL( 1, lgp.find( "*!" )->size() );
+    BOOST_CHECK_EQUAL( 2, lgp.find( "*name*" )->size() );
 
-    Ogre::StringVectorPtr found( lgp.find( "*.rsd" ) );
-    BOOST_CHECK_EQUAL( 4180, found->size() );
-    BOOST_CHECK_EQUAL( "aaad.rsd", found->at( 0 ) );
-    BOOST_CHECK_EQUAL( "aaib.rsd", found->at( 1 ) );
+    Ogre::StringVectorPtr found( lgp.find( "*name*" ) );
+    BOOST_CHECK_EQUAL( 2, found->size() );
+    BOOST_CHECK_EQUAL( filename_1, found->at( 0 ) );
+    BOOST_CHECK_EQUAL( filename_2, found->at( 1 ) );
 
-    Ogre::DataStreamPtr stream( lgp.open( "aaad.rsd" ) );
+    Ogre::DataStreamPtr stream( lgp.open( filename_1 ) );
     BOOST_CHECK_EQUAL( false, stream.isNull() );
     BOOST_CHECK_EQUAL( entry.data_size, stream->size() );
-    BOOST_CHECK_EQUAL( "@RSD940102", stream->getLine() );
-    BOOST_CHECK_EQUAL( "PLY=AAAE.PLY", stream->getLine() );
-    BOOST_CHECK_EQUAL( "MAT=AAAE.MAT", stream->getLine() );
-    BOOST_CHECK_EQUAL( "GRP=AAAE.GRP", stream->getLine() );
-    BOOST_CHECK_EQUAL( "NTEX=0", stream->getLine() );
+    BOOST_CHECK_EQUAL( "data of file 1 for test!", stream->getLine() );
     BOOST_CHECK_EQUAL( true, stream->eof() );
-
-    BOOST_CHECK_EQUAL( 1381049923, lgp.getModifiedTime( "aaad.rsd" ) );
 
     lgp.unload();
 
-    BOOST_CHECK_EQUAL( false, lgp.exists( "aaac.p" ) );
-    BOOST_CHECK_EQUAL( false, lgp.exists( "mmmm.p" ) );
-    factory.destroyInstance( archive );
+    BOOST_CHECK_EQUAL( false, lgp.exists( filename_1 ) );
+    BOOST_CHECK_EQUAL( false, lgp.exists( filename_2 ) );
+    logMgr.destroyLog( "Default Log" );
 }

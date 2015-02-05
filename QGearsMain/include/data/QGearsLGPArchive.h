@@ -95,6 +95,7 @@ namespace QGears
             virtual FileList& getFiles( void );
 
         protected:
+            void load( Ogre::DataStream* lgp );
 
         private:
             FileList            m_files;
