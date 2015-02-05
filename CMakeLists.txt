@@ -69,7 +69,7 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   )
 endif()
 
-#find_package(Qt4 REQUIRED)
+find_package(Qt4 REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OGRE REQUIRED)
 find_package(OIS REQUIRED)
