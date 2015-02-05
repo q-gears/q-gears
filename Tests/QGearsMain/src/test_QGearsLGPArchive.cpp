@@ -37,33 +37,43 @@ BOOST_AUTO_TEST_CASE( load )
     const char* filename_1( "Filename 1" );
     const char* filename_2( "max length filename!" );
 
-    QGears::LGPArchiveFactory factory;
-    Ogre::Archive* archive = factory.createInstance( "misc/reference.lgp", true );
-    QGears::LGPArchive lgp( "misc/reference.lgp", "LGP" );
+    class TestLGPArchive : public QGears::LGPArchive
+    {
+        public:
+
+            TestLGPArchive() :
+                QGears::LGPArchive( "misc/reference.lgp", "LGP" )
+              , test_stream( NULL )
+            {}
+
+            void load()
+            {
+                QGears::LGPArchive::load( test_stream );
+            }
+
+        Ogre::DataStream* test_stream;
+    };
+
+    TestLGPArchive lgp;
+    // TODO: use Ogre::MemoryDataStream and include data via byte array
+    std::ifstream *ifs( OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( lgp.getName().c_str(), std::ifstream::binary ) );
+    lgp.test_stream = OGRE_NEW Ogre::FileStreamDataStream( ifs );
 
     BOOST_CHECK_EQUAL(  true, lgp.getFiles().empty() );
     BOOST_CHECK_EQUAL( false, lgp.exists( filename_1 ) );
     BOOST_CHECK_EQUAL( false, lgp.exists( filename_2 ) );
-    BOOST_CHECK_EQUAL( lgp.getFiles().empty(), archive->list()->empty() );
-    BOOST_CHECK_EQUAL( lgp.exists( filename_1 ), archive->exists( filename_1 ) );
-    BOOST_CHECK_EQUAL( lgp.exists( filename_2 ), archive->exists( filename_2 ) );
 
     lgp.load();
-    archive->load();
 
     BOOST_CHECK_EQUAL( 2, lgp.getFiles().size() );
     BOOST_CHECK_EQUAL(  true, lgp.exists( filename_1 ) );
     BOOST_CHECK_EQUAL(  true, lgp.exists( filename_2 ) );
     BOOST_CHECK_EQUAL( lgp.getFiles().size(), lgp.list()->size() );
     BOOST_CHECK_EQUAL( lgp.getFiles().size(), lgp.listFileInfo()->size() );
-    BOOST_CHECK_EQUAL( lgp.getFiles().size(), archive->list()->size() );
-    BOOST_CHECK_EQUAL( lgp.exists( filename_1 ), archive->exists( filename_1 ) );
-    BOOST_CHECK_EQUAL( lgp.exists( filename_2 ), archive->exists( filename_2 ) );
 
     QGears::LGPArchive::FileEntry& entry( lgp.getFiles()[0] );
     BOOST_CHECK_EQUAL( filename_1, entry.file_name );
     BOOST_CHECK_EQUAL( entry.file_name, lgp.list()->at( 0 ) );
-    BOOST_CHECK_EQUAL( entry.file_name, archive->list()->at( 0 ) );
     BOOST_CHECK_EQUAL( 0x00000050, entry.file_offset );
     BOOST_CHECK_EQUAL( "FILENAME 1", entry.data_file_name );
     BOOST_CHECK_EQUAL( 0x00000018, entry.data_size );
@@ -97,6 +107,5 @@ BOOST_AUTO_TEST_CASE( load )
 
     BOOST_CHECK_EQUAL( false, lgp.exists( filename_1 ) );
     BOOST_CHECK_EQUAL( false, lgp.exists( filename_2 ) );
-    factory.destroyInstance( archive );
     logMgr.destroyLog( "Default Log" );
 }
