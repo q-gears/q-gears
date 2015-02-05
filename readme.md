@@ -188,7 +188,7 @@ http://zlib.net/zlib128-dll.zip
 Extract to the root of C drive.
 
 
-** Download Qt 4.8 source code:**
+**Download Qt 4.8 source code:**
 ```
 https://download.qt.io/archive/qt/4.8/4.8.6/qt-everywhere-opensource-src-4.8.6.zip
 ```
