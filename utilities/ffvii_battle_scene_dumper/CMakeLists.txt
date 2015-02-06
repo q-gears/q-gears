@@ -24,6 +24,7 @@ add_executable(ff7_battle_scene_dumper
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET ff7_battle_scene_dumper PROPERTY FOLDER "utilities")
 
 if (APPLE)
 target_link_libraries(ff7_battle_scene_dumper "-framework CoreFoundation -framework Cocoa -framework IOKit")

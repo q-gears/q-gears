@@ -18,6 +18,7 @@ add_executable(xeno_cd_extract
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET xeno_cd_extract PROPERTY FOLDER "utilities")
 
 if(WIN32)
   set_target_properties(xeno_cd_extract PROPERTIES WIN32_EXECUTABLE ON)

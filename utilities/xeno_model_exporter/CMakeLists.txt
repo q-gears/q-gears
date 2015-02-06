@@ -31,6 +31,7 @@ add_executable(xeno_model_exporter
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET xeno_model_exporter PROPERTY FOLDER "utilities")
 
 if (APPLE)
 target_link_libraries(xeno_model_exporter "-framework CoreFoundation -framework Cocoa -framework IOKit")

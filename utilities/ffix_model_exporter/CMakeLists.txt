@@ -24,6 +24,7 @@ add_executable(ff9_model_exporter
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET ff9_model_exporter PROPERTY FOLDER "utilities")
 
 if (APPLE)
 target_link_libraries(ff9_model_exporter "-framework CoreFoundation -framework Cocoa -framework IOKit")

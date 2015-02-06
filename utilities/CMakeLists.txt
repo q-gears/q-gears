@@ -45,6 +45,7 @@ target_link_libraries(Utility
     ${OIS_LIBRARIES}
     ${ZLIB_LIBRARIES}
 )
+SET_PROPERTY(TARGET Utility PROPERTY FOLDER "utilities")
 
 add_subdirectory(ffix_model_exporter)
 add_subdirectory(ffix_script_dumper)
@@ -58,6 +59,7 @@ add_subdirectory(ffvii_font_exporter)
 add_subdirectory(ffvii_sound_dumper)
 add_subdirectory(ffvii_sound_dumper_psf)
 add_subdirectory(flevel)
+add_subdirectory(installer)
 add_subdirectory(lzs)
 add_subdirectory(xeno_cd_extract)
 add_subdirectory(xeno_model_exporter)

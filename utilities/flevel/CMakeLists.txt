@@ -18,6 +18,7 @@ add_executable(flevel
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET flevel PROPERTY FOLDER "utilities")
 
 if(WIN32)
   set_target_properties(flevel PROPERTIES WIN32_EXECUTABLE ON)

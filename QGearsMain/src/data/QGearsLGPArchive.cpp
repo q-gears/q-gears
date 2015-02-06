@@ -51,8 +51,15 @@ namespace QGears
     {
         //OGRE_LOCK_AUTO_MUTEX
         std::ifstream *ifs( OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( mName.c_str(), std::ifstream::binary ) );
+        load( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
+    }
+
+    //-------------------------------------------------------------------------
+    void
+    LGPArchive::load( Ogre::DataStream* lgp )
+    {
         m_lgp_file.setNull();
-        m_lgp_file.bind( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
+        m_lgp_file.bind( lgp );
         LGPArchiveSerializer lgp_archive_serializer;
         lgp_archive_serializer.importLGPArchive( m_lgp_file, this );
 

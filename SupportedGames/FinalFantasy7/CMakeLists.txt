@@ -29,6 +29,7 @@ add_library(FinalFantasy7 STATIC
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+SET_PROPERTY(TARGET FinalFantasy7 PROPERTY FOLDER "q-gears")
 
 set(LIBRARIES
     ${OGRE_LIBRARIES}
