@@ -18,72 +18,123 @@ GNU General Public License for more details.
 #define __FF7NameLookup_H__
 
 #include "common/TypeDefine.h"
+#include "common/QGearsStringUtil.h"
+#include "core/XmlFile.h"
 
 namespace QGears
 {
     namespace FF7
     {
+        class FF7FiledModelsAndAnimationMetadata : public XmlFile
+        {
+        public:
+            FF7FiledModelsAndAnimationMetadata(Ogre::String file)
+                : XmlFile(file)
+            {
+                TiXmlNode* node = m_File.RootElement();
+
+                if (node == nullptr || node->ValueStr() != "metadata")
+                {
+                    throw std::runtime_error("FF7FiledModelsAndAnimationMetadata: " + m_File.ValueStr() + " is not a valid metadata file! No <metadata> in root.");
+                }
+
+                node = node->FirstChild();
+                while (node)
+                {
+                    if (node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "models")
+                    {
+                        ReadModels(node->FirstChild());
+                    }
+                    else if (node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "animations")
+                    {
+                        ReadAnimations(node->FirstChild());
+                    }
+                    node = node->NextSibling();
+                }
+            }
+
+            const String& Animation(const String &key) const
+            {
+                auto it = mAnimations.find(key);
+                if (it != std::end(mAnimations))
+                {
+                    return it->second;
+                }
+
+                String base_name;
+                StringUtil::splitBase(key, base_name);
+                it = mAnimations.find(base_name);
+                if (it != std::end(mAnimations))
+                {
+                    return it->second;
+                }
+
+                return key;
+            }
+
+            const String& Model(const String &key) const
+            {
+                auto it = mModels.find(key);
+                if (it != std::end(mModels))
+                {
+                    return it->second;
+                }
+
+                String base_name;
+                StringUtil::splitBase(key, base_name);
+                it = mModels.find(base_name);
+                if (it != std::end(mModels))
+                {
+                    return it->second;
+                }
+
+                return key;
+            }
+
+        private:
+            void ReadModels(TiXmlNode* node)
+            {
+                while (node)
+                {
+                    const auto src = GetString(node, "name");
+                    const auto dst = GetString(node, "target");
+                    mModels[src] = dst;
+                    node = node->NextSibling();
+                }
+            }
+
+            void ReadAnimations(TiXmlNode* node)
+            {
+                while (node)
+                {
+                    const auto src = GetString(node, "name");
+                    const auto dst = GetString(node, "target");
+                    mAnimations[src] = dst;
+                    node = node->NextSibling();
+                }
+            }
+
+            typedef std::map<String, String> LookupMap;
+            LookupMap mModels;
+            LookupMap mAnimations;
+        };
+
         class NameLookup
         {
         public:
-            NameLookup() = default;
-            virtual ~NameLookup() = default;
+            NameLookup() = delete;
 
             static const String& animation(const String &key)
             {
-                return lookup(key, ms_animations);
+                static FF7FiledModelsAndAnimationMetadata data("field_models_and_animation_metadata.xml");
+                return data.Animation(key);
             }
 
             static const String& model(const String &key)
             {
-                return lookup(key, ms_models);
+                static FF7FiledModelsAndAnimationMetadata data("field_models_and_animation_metadata.xml");
+                return data.Model(key);
             }
-
-        protected:
-            typedef std::map<const String, const String>    LookupMap;
-
-            static LookupMap createAnimations()
-            {
-                LookupMap lookup;
-                lookup.insert(LookupMap::value_type("acfe", "Idle"));
-                lookup.insert(LookupMap::value_type("aaff", "Walk"));
-                lookup.insert(LookupMap::value_type("aaga", "Run"));
-                lookup.insert(LookupMap::value_type("bvjf", "JumpFromTrain"));
-
-                // barret
-                lookup.insert(LookupMap::value_type("adcb", "Idle"));
-                lookup.insert(LookupMap::value_type("adcc", "Walk"));
-                lookup.insert(LookupMap::value_type("adcd", "Run"));
-                lookup.insert(LookupMap::value_type("bwaa", "Invitation"));
-
-                // sd_red
-                lookup.insert(LookupMap::value_type("aeae", "Idle"));
-                lookup.insert(LookupMap::value_type("aeaf", "Walk"));
-                lookup.insert(LookupMap::value_type("aeba", "Run"));
-
-                return lookup;
-            }
-
-            static LookupMap createModels()
-            {
-                LookupMap lookup;
-                lookup.insert(LookupMap::value_type("aaaa", "n_cloud"));
-                lookup.insert(LookupMap::value_type("adda", "sd_red"));
-
-                return lookup;
-            }
-
-            static const String& lookup(const String &key, const LookupMap &data)
-            {
-                LookupMap::const_iterator found(data.find(key));
-                if (found == data.end()) return key;
-
-                return found->second;
-            }
-
-        private:
-            static LookupMap  ms_animations;
-            static LookupMap  ms_models;
         };
     }
 }
