@@ -15,6 +15,3 @@ GNU General Public License for more details.
 -----------------------------------------------------------------------------
 */
 #include "common/FF7NameLookup.h"
-
-QGears::FF7::NameLookup::LookupMap QGears::FF7::NameLookup::ms_animations(NameLookup::createAnimations());
-QGears::FF7::NameLookup::LookupMap QGears::FF7::NameLookup::ms_models(NameLookup::createModels());
