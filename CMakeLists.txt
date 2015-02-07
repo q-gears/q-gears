@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 
 project(QGears)
-set (CMAKE_PACKAGE_ICON q-gears.png)
+
 #set( CMAKE_VERBOSE_MAKEFILE on )
 
 # The version number.
@@ -262,80 +262,6 @@ elseif(APPLE)
         #install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OIS.DLL DESTINATION ./)
         #install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-1_55.DLL" DESTINATION ./)
 elseif(UNIX)
-<<<<<<< HEAD
-	# On Linux generate TAR.GZ,DEB and RPM packages
-	#Find out what architecture are we running on and set the package architecture 
-	
-	# set the generic files needing to be installed
-	install( FILES ${PROJECT_SOURCE_DIR}/q-gears.png DESTINATION ./share/pixmaps/ )
-	install( FILES ${PROJECT_SOURCE_DIR}/q-gears.desktop DESTINATION ./share/applications/ )
-	install( FILES ${PROJECT_SOURCE_DIR}/debian/menu DESTINATION share/menu/ RENAME q-gears )
-	install( FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg_linux DESTINATION share/q-gears/ RENAME plugins.cfg PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ GROUP_WRITE WORLD_WRITE WORLD_READ)
-	install( FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg_linux DESTINATION share/q-gears/ RENAME resources.cfg PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ GROUP_WRITE WORLD_WRITE WORLD_READ)
-	install( FILES ${PROJECT_SOURCE_DIR}/output/q-gears.cfg_linux DESTINATION share/q-gears/ RENAME q-gears.cfg PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ GROUP_WRITE WORLD_WRITE WORLD_READ)
-		
-	
-	#attempt to install a simlink to gl rendersystem from ogre
-	if(EXISTS "/usr/lib/x86_64-linux-gnu/OGRE-1.9.0/RenderSystem_GL.so")
-	  EXECUTE_PROCESS( COMMAND ln -s /usr/lib/x86_64-linux-gnu/OGRE-1.9.0/RenderSystem_GL.so ${PROJECT_SOURCE_DIR}/output/RenderSystem_GL.so.1.9.0 )
-	elseif(EXISTS "/usr/lib/i386-linux-gnu/OGRE-1.9.0/RenderSystem_GL.so")
-	  EXECUTE_PROCESS( COMMAND ln -s /usr/lib/i386-linux-gnu/OGRE-1.9.0/RenderSystem_GL.so ${PROJECT_SOURCE_DIR}/output/RenderSystem_GL.so.1.9.0 )
-	endif()
-	
-	install( FILES ${PROJECT_SOURCE_DIR}/output/RenderSystem_GL.so.1.9.0 DESTINATION share/q-gears/plugins/ )
-		
-	SET(CPACK_SOURCE_GENERATOR "TGZ;TZ")
-	SET(CPACK_GENERATOR "TGZ")
-	#detect Distro Family DEB , RPM 
-	if(EXISTS "/etc/lsb-release")
-	    set(DistroType DEB)
-	elseif(EXISTS "/etc/debian_release")
-	    set(DistroType DEB)
-	elseif(EXISTS "/etc/fedora-release")
-	    set(DistroType RPM)
-	endif()
-	message(STATUS "Distro Detected: ${DistroType} ")
-
-	if(DistroType MATCHES "DEB")
-	  # Setup DEB package properties
-	  MESSAGE(STATUS "DEB ADDED TO GENERATION LIST")
-	  SET(CPACK_GENERATOR "${CPACK_GENERATOR};DEB")
-	endif()
-	if(EXISTS "/usr/bin/rpmbuild")
-	  MESSAGE(STATUS "RPM ADDED TO GENERATION LIST (RPM IS DISABLED IN CMAKELISTS)")
-	#  Uncomment to allow for rpm files to be built.   
-	#  SET(CPACK_GENERATOR "${CPACK_GENERATOR};RPM")
-	endif()
-	
-	# Setup DEB package properties
-	SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Chris Rizzitello <sithlord48@gmail.com>")
-	
-	
-	#Set DEBIAN INFO
-	SET(CPACK_DEBIAN_PACKAGE_SECTION games)
-	SET(CPACK_DEBIAN_PACKAGE_PRIORITY extra)
-	#SET(CPACK_PACKAGE_EXECUTABLE )
-	EXECUTE_PROCESS(COMMAND dpkg --print-architecture OUTPUT_VARIABLE CPACK_DEBIAN_PACKAGE_ARCHITECTURE OUTPUT_STRIP_TRAILING_WHITESPACE)
-	MESSAGE (STATUS "Architecture: ${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
-	#we should need no longer need postinst since we have added extra install steps to what it would.
-	#SET(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA ${CMAKE_SOURCE_DIR}/debian/postinst )
-	#set the name to be debian package like.
-	SET(CPACK_PACKAGE_FILE_NAME "q-gears_${CPACK_PACKAGE_VERSION}-${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
-	#SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9, libois,libboost-program-options,libboost-filesystem,libvorbis,libopenal,libboost-test,zlib1g")
-	SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libogre-1.9.0, libois-1.3.0,libboost-program-options1.54.0,libboost-filesystem1.54.0,libvorbis0a,libvorbisfile3,libvorbisenc2,libopenal1,libboost-test1.54.0,zlib1g,liblua5.1-0")
-
-	#Set RPM info
-	  SET(CPACK_RPM_PACKAGE_SUMMARY CPACK_PACKAGE_DESCRIPTION_SUMMARY)
-	  SET(CPACK_RPM_PACKAGE_NAME CPACK_PACKAGE_NAME)
-	  SET(CPACK_RPM_PACKAGE_VERSION CPACK_PACKAGE_VERSION)
-	  SET(CPACK_RPM_PACKAGE_RELEASE 1)
-	  SET(CPACK_RPM_PACKAGE_LICENSE "GPLv3+")
-	  SET(CPACK_RPM_PACKAGE_GROUP games)
-	  SET(CPACK_RPM_PACKAGE_VENDOR)
-	  SET(CPACK_RPM_PACKAGE_DESCRIPTION)
-	  #REQUIREMENTS NEED TO BE CHECKED USING FEDORA.
-	  #SET(CPACK_RPM_PACKAGE_REQUIRES "ogre,ois,boost,vorbis,lua,zlib1g")
-=======
     # On Linux generate TAR.GZ,DEB and RPM packages
     #Find out what architecture are we running on and set the package architecture 
     
@@ -403,7 +329,6 @@ elseif(UNIX)
       SET(CPACK_RPM_PACKAGE_DESCRIPTION)
       #REQUIREMENTS NEED TO BE CHECKED USING FEDORA.
       #SET(CPACK_RPM_PACKAGE_REQUIRES "ogre,ois,boost,vorbis,lua,zlib1g")
->>>>>>> e41cccaa5f4ea95e769138c569a01b867c7f6486
 
 endif()
 
