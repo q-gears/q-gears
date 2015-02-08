@@ -1,0 +1,23 @@
+<metadata>
+	<models>
+		<model name="aaaa" target="n_cloud"></model>
+		<model name="adda" target="sd_red"></model>
+	</models>
+    
+	<animations>
+		<animation name="acfe" target="Idle"></animation>
+		<animation name="aaff" target="Walk"></animation>
+		<animation name="aaga" target="Run"></animation>
+		<animation name="bvjf" target="JumpFromTrain"></animation>
+		
+		<animation name="adcb" target="Idle"></animation>
+		<animation name="adcc" target="Walk"></animation>
+		<animation name="adcd" target="Run"></animation>
+		<animation name="bwaa" target="Invitation"></animation>
+		
+		<animation name="aeae" target="Idle"></animation>
+		<animation name="aeaf" target="Walk"></animation>
+		<animation name="aeba" target="Run"></animation>
+	</animations>
+	
+</metadata>

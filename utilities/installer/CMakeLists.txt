@@ -11,10 +11,12 @@ include_directories(
 # define header and source files
 set(HEADER_FILES
     src/mainwindow.h
+	src/ff7DataInstaller.h
 )
 set(SOURCE_FILES
     src/Main.cpp
     src/mainwindow.cpp
+	src/ff7DataInstaller.cpp
 )
 
 set(INSTALLER_FORMS

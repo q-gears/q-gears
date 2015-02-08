@@ -68,6 +68,7 @@ include_directories(
     ${OGRE_SAMPLES_INCLUDEPATH}
     ${QGearsMain_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../dependencies
 )
 
 #defines
