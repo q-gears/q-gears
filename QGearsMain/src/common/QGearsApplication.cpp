@@ -72,7 +72,7 @@ namespace QGears
 
     //--------------------------------------------------------------------------
     bool
-    Application::initOgre()
+    Application::initOgre(bool hideWindow)
     {
         if( m_initialized )
         {
@@ -81,9 +81,12 @@ namespace QGears
 
         m_initialized = true;
 
-        if( !processCommandLine( m_argc, m_argv ) )
+        if (m_argc && m_argv)
         {
-            return false;
+            if (!processCommandLine(m_argc, m_argv))
+            {
+                return false;
+            }
         }
 
         m_root = std::make_unique<Ogre::Root>( m_plugins_filename, m_config_filename, m_log_filename );
@@ -98,11 +101,22 @@ namespace QGears
         // Show the configuration dialog and initialise the system
         // You can skip this and use root.restoreConfig() to load configuration
         // settings if you were sure there are valid ones saved in ogre.cfg
-        if( !m_root->restoreConfig() && !m_root->showConfigDialog() )
+        if(/* !m_root->restoreConfig() &&*/ !m_root->showConfigDialog() )
         {
             return false;
         }
-        m_render_window = m_root->initialise( true, getWindowTitle() );
+
+        if (hideWindow)
+        {
+            Ogre::NameValuePairList list;
+            list.emplace("hidden", "true");
+            m_root->initialise(false, getWindowTitle());
+            m_render_window = m_root->createRenderWindow(getWindowTitle(), 1, 1, false, &list);
+        }
+        else
+        {
+            m_render_window = m_root->initialise(true, getWindowTitle());
+        }
 
         registerArchiveFactories();
         loadResourcesConfig();

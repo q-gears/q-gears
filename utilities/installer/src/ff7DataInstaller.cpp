@@ -7,6 +7,8 @@
 #include <OgreMeshSerializer.h>
 #include <OgreSkeletonSerializer.h>
 #include <OgreMeshManager.h>
+#include <OgreRenderWindow.h>
+#include <OgreHardwarePixelBuffer.h>
 
 #include "QGearsGameState.h"
 #include "data/QGearsAFileManager.h"
@@ -24,16 +26,16 @@
 #include "data/QGearsLGPArchiveFactory.h"
 #include "common/QGearsStringUtil.h"
 #include "common/FF7NameLookup.h"
+#include "data/QGearsTexCodec.h"
 
 FF7DataInstaller::FF7DataInstaller()
+#ifdef _DEBUG
+    : mApp("plugins_d.cfg", "resources_d.cfg", "install_d.log")
+#else
+    : mApp("plugins.cfg", "resources.cfg", "install.log")
+#endif
 {
-    m_root = std::make_unique<Ogre::Root>("", "", "installer.log");
-    Ogre::ArchiveManager::getSingleton().addArchiveFactory(new QGears::LGPArchiveFactory());
-
-    mResourceManagers.emplace_back(std::make_shared<QGears::HRCFileManager>());
-    mResourceManagers.emplace_back(std::make_shared<QGears::LZSFLevelFileManager>());
-    mResourceManagers.emplace_back(std::make_shared<QGears::AFileManager>());
-    mResourceManagers.emplace_back(std::make_shared<QGears::RSDFileManager>());
+    mApp.initOgre(true);
 }
 
 FF7DataInstaller::~FF7DataInstaller()
@@ -45,12 +47,11 @@ void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, cons
 {
     for (const auto& file : files)
     {
+        // TODO: Comparison will be incorrect on some platforms
         if (file == "field\\char.lgp")
         {
             auto fullPath = inputDir + file;
-         //   m_root->addResourceLocation(inputDir, "FileSystem", "FFVII");
-            m_root->addResourceLocation(fullPath, "LGP", "FFVII");
-
+            mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
             ConvertFieldModels(fullPath, outputDir);
         }
     }
@@ -100,7 +101,15 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
 
     auto meshName = QGears::FF7::NameLookup::model("adda.hrc") + ".mesh";
 
-    // TODO: Crashes as technique index out of bounds in the material
+    /*
+    TODO:
+      To figure out what .a files relate to which .hrc files, we need to enumerate every field
+      and check its model loader data. These are always Idle, Walk, Run and then field specific
+      ordering.
+      Model loader is section 3 of the field file.
+
+    */
+
     Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
     Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
 
@@ -108,3 +117,4 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
     exportMesh(outDir, mesh);
 
 }
+

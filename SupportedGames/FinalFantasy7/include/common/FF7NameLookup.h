@@ -126,14 +126,18 @@ namespace QGears
 
             static const String& animation(const String &key)
             {
-                static FF7FiledModelsAndAnimationMetadata data("field_models_and_animation_metadata.xml");
-                return data.Animation(key);
+                return Data().Animation(key);
             }
 
             static const String& model(const String &key)
             {
+                return Data().Model(key);
+            }
+
+            static FF7FiledModelsAndAnimationMetadata& Data()
+            {
                 static FF7FiledModelsAndAnimationMetadata data("field_models_and_animation_metadata.xml");
-                return data.Model(key);
+                return data;
             }
         };
     }

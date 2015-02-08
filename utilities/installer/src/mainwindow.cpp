@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ff7DataInstaller.h"
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,11 +9,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     /*
-     set any options here
-     */
+    * set any options here
+    */
+
+    // Default output to "home" dir
+    ui->lineOutput->setText(QDir::toNativeSeparators(QDir::homePath() + "/qgears"));
+
 #ifdef _DEBUG
-    ui->lineInput->setText("C:\\Games\\FF7\\data\\");
-    ui->lineOutput->setText("C:\\Users\\paul\\Desktop\\q-gears\\output\\_data\\");
+    // Hard coded prebaked paths for debugging to save time
+    ui->lineInput->setText("C:\\Games\\FF7\\data");
+    ui->lineOutput->setText("C:\\Users\\paul\\Desktop\\q-gears\\output\\_data");
 #endif
 }
 
@@ -49,17 +55,24 @@ void MainWindow::on_btnGO_clicked()
     {
         QMessageBox::information(this,tr("Converting Data"),tr("Attempt to convert with \n Input: %1 \n Output: %2").arg(ui->lineInput->text(),ui->lineOutput->text()));
 
-        FF7DataInstaller conversion;
-        std::vector<std::string> vec;
+        QString input = QDir::fromNativeSeparators(ui->lineInput->text());
+        if (!input.endsWith("/"))
+        {
+            input += "/";
+        }
+
+        QString output = QDir::fromNativeSeparators(ui->lineOutput->text());
+        if (!output.endsWith("/"))
+        {
+            output += "/";
+        }
 
         // TODO: Enumerate files or find some better way to do this :)
-        vec.push_back("field\\char.lgp");
+        std::vector<std::string> vec;
+        vec.push_back(QDir::toNativeSeparators("field/char.lgp").toStdString());
+        vec.push_back(QDir::toNativeSeparators("field/flevel.lgp").toStdString());
 
-        // TODO: Debug build using release qt dlls so toStdString mixes heaps and crashes
-        auto qinput = ui->lineInput->text();
-        std::wstring input = reinterpret_cast<wchar_t*>(qinput.data());
-        auto qoutput = ui->lineOutput->text();
-        std::wstring output = reinterpret_cast<wchar_t*>(qoutput.data());
-        conversion.Convert(std::string(input.begin(), input.end()), std::string(output.begin(), output.end()), vec);
+        FF7DataInstaller conversion;
+        conversion.Convert(QDir::toNativeSeparators(input).toStdString(), QDir::toNativeSeparators(output).toStdString(), vec);
     }
 }
