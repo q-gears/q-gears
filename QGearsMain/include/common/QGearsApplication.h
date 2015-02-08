@@ -27,9 +27,14 @@ namespace QGears
     class Application : public Ogre::Singleton<Application>
     {
     public:
+        Application(Ogre::String pluginsFileName, Ogre::String resourcesFile, Ogre::String logFileName)
+            : m_plugins_filename(pluginsFileName), m_resources_filename(resourcesFile), m_log_filename(logFileName)
+        {
+
+        }
         Application( int argc, char *argv[] );
         virtual ~Application();
-        bool                initOgre( void );
+        bool                initOgre( bool hideWindow = false );
         Ogre::Root*         getRoot( void );
         Ogre::RenderWindow* getRenderWindow( void );
         const String&       getResourcesFilename( void );
@@ -46,7 +51,6 @@ namespace QGears
     private:
         typedef std::vector<std::shared_ptr<Ogre::ResourceManager>> ResourceManagerVector;
 
-        Application();
 
         static const char*      CLI_SECTION_GENERIC;
         static const char*      CLI_HELP;

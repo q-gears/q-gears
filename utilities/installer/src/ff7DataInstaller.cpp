@@ -7,6 +7,8 @@
 #include <OgreMeshSerializer.h>
 #include <OgreSkeletonSerializer.h>
 #include <OgreMeshManager.h>
+#include <OgreRenderWindow.h>
+#include <OgreHardwarePixelBuffer.h>
 
 #include "QGearsGameState.h"
 #include "data/QGearsAFileManager.h"
@@ -27,58 +29,29 @@
 #include "data/QGearsTexCodec.h"
 
 FF7DataInstaller::FF7DataInstaller()
+#ifdef _DEBUG
+    : mApp("plugins_d.cfg", "resources_d.cfg", "install_d.log")
+#else
+    : mApp("plugins.cfg", "resources.cfg", "install.log")
+#endif
 {
-    try
-    {
-        m_root = std::make_unique<Ogre::Root>("plugins_d.cfg", "", "installer.log");
-
-        if (!m_root->showConfigDialog())
-        {
-            //        return false;
-        }
-        m_render_window = m_root->initialise(true, "testing");
-
-
-        Ogre::ArchiveManager::getSingleton().addArchiveFactory(new QGears::LGPArchiveFactory());
-
-        mResourceManagers.emplace_back(std::make_shared<QGears::CameraMatrixFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::PaletteFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::WalkmeshFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::FF7::ModelListFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::HRCFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::RSDFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::AFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::PFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::LZSFLevelFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::BackgroundFileManager>());
-        mResourceManagers.emplace_back(std::make_shared<QGears::Background2DFileManager>());
-
-        QGears::TexCodec::install();
-        QGears::TexCodec::initialise();
-    }
-    catch (const Ogre::Exception& ex)
-    {
-        std::cout << ex.what() << std::endl;
-    }
+    mApp.initOgre(true);
 }
 
 FF7DataInstaller::~FF7DataInstaller()
 {
-    mResourceManagers.clear();
-    QGears::TexCodec::shutdown();
-    QGears::TexCodec::uninstall();
+
 }
 
 void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, const std::vector<std::string>& files)
 {
     for (const auto& file : files)
     {
+        // TODO: Comparison will be incorrect on some platforms
         if (file == "field\\char.lgp")
         {
             auto fullPath = inputDir + file;
-         //   m_root->addResourceLocation(inputDir, "FileSystem", "FFVII");
-            m_root->addResourceLocation(fullPath, "LGP", "FFVII");
-
+            mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
             ConvertFieldModels(fullPath, outputDir);
         }
     }
@@ -128,7 +101,15 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
 
     auto meshName = QGears::FF7::NameLookup::model("adda.hrc") + ".mesh";
 
-    // TODO: Crashes as technique index out of bounds in the material
+    /*
+    TODO:
+      To figure out what .a files relate to which .hrc files, we need to enumerate every field
+      and check its model loader data. These are always Idle, Walk, Run and then field specific
+      ordering.
+      Model loader is section 3 of the field file.
+
+    */
+
     Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
     Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
 

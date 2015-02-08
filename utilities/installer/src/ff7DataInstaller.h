@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include "common/make_unique.h"
-#include <OgreRoot.h>
+#include "common/QGearsApplication.h"
 
 class FF7DataInstaller
 {
@@ -14,9 +14,6 @@ public:
 
 private:
     void ConvertFieldModels(std::string archive, std::string outDir);
-    std::unique_ptr<Ogre::Root> m_root;
 
-    std::vector<std::shared_ptr<Ogre::ResourceManager>> mResourceManagers;
-
-    Ogre::RenderWindow* m_render_window = nullptr; // Not owned
+    QGears::Application mApp;
 };
