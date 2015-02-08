@@ -88,33 +88,41 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
 
 void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDir)
 {
+    // TODO: Find a way to query the file list from the added resource else we're having
+    // to parse/load the LGP archive twice
+    QGears::LGPArchive lgp(archive, "LGP");
+    lgp.open(archive);
+    lgp.load();
+    auto files = lgp.find("*.hrc");
+    for (const auto& file : *files)
+    {
+        try
+        {
+            Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(file, "FFVII");
 
-    //QGears::LZSFLevelFileManager   &fmgr(QGears::LZSFLevelFileManager::getSingleton());
+            Ogre::String baseName;
+            QGears::StringUtil::splitBase(file, baseName);
 
-   // QGears::FLevelFilePtr           f = fmgr.load(archive, "FFVII").staticCast<QGears::FLevelFile>();
+            auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
 
-    Ogre::SceneManager*         scene_manager(Ogre::Root::getSingleton().createSceneManager(Ogre::ST_GENERIC, "Scene"));
-    QGears::AFilePtr            a;
-    Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load("adda.hrc", "FFVII");
-    QGears::HRCFilePtr r = hrc.staticCast<QGears::HRCFile>();
-    QGears::AFileManager       &afl_mgr(QGears::AFileManager::getSingleton());
+            Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
+            Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
+            exportMesh(outDir, mesh);
+        }
+        catch (const Ogre::Exception& ex)
+        {
+            std::cout << "ERROR converting: " << file << " Exception: " << ex.what() << std::endl;
+        }
+    }
 
-    auto meshName = QGears::FF7::NameLookup::model("adda.hrc") + ".mesh";
+
 
     /*
     TODO:
-      To figure out what .a files relate to which .hrc files, we need to enumerate every field
-      and check its model loader data. These are always Idle, Walk, Run and then field specific
-      ordering.
-      Model loader is section 3 of the field file.
-
+    To figure out what .a files relate to which .hrc files, we need to enumerate every field
+    and check its model loader data. These are always Idle, Walk, Run and then field specific
+    ordering.
+    Model loader is section 3 of the field file.
     */
-
-    Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
-    Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
-
-
-    exportMesh(outDir, mesh);
-
 }
 

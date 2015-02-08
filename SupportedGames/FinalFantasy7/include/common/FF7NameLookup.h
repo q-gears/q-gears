@@ -68,7 +68,6 @@ namespace QGears
                 {
                     return it->second;
                 }
-
                 return key;
             }
 
@@ -87,7 +86,6 @@ namespace QGears
                 {
                     return it->second;
                 }
-
                 return key;
             }
 
