@@ -24,21 +24,49 @@
 #include "data/QGearsLGPArchiveFactory.h"
 #include "common/QGearsStringUtil.h"
 #include "common/FF7NameLookup.h"
+#include "data/QGearsTexCodec.h"
 
 FF7DataInstaller::FF7DataInstaller()
 {
-    m_root = std::make_unique<Ogre::Root>("", "", "installer.log");
-    Ogre::ArchiveManager::getSingleton().addArchiveFactory(new QGears::LGPArchiveFactory());
+    try
+    {
+        m_root = std::make_unique<Ogre::Root>("plugins_d.cfg", "", "installer.log");
 
-    mResourceManagers.emplace_back(std::make_shared<QGears::HRCFileManager>());
-    mResourceManagers.emplace_back(std::make_shared<QGears::LZSFLevelFileManager>());
-    mResourceManagers.emplace_back(std::make_shared<QGears::AFileManager>());
-    mResourceManagers.emplace_back(std::make_shared<QGears::RSDFileManager>());
+        if (!m_root->showConfigDialog())
+        {
+            //        return false;
+        }
+        m_render_window = m_root->initialise(true, "testing");
+
+
+        Ogre::ArchiveManager::getSingleton().addArchiveFactory(new QGears::LGPArchiveFactory());
+
+        mResourceManagers.emplace_back(std::make_shared<QGears::CameraMatrixFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::PaletteFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::WalkmeshFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::FF7::ModelListFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::HRCFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::RSDFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::AFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::PFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::LZSFLevelFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::BackgroundFileManager>());
+        mResourceManagers.emplace_back(std::make_shared<QGears::Background2DFileManager>());
+
+        QGears::TexCodec::install();
+        QGears::TexCodec::initialise();
+    }
+    catch (const Ogre::Exception& ex)
+    {
+        std::cout << ex.what() << std::endl;
+    }
 }
 
 FF7DataInstaller::~FF7DataInstaller()
 {
-
+    mResourceManagers.clear();
+    QGears::TexCodec::shutdown();
+    QGears::TexCodec::uninstall();
 }
 
 void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, const std::vector<std::string>& files)
@@ -108,3 +136,4 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
     exportMesh(outDir, mesh);
 
 }
+

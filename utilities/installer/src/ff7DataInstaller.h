@@ -17,4 +17,6 @@ private:
     std::unique_ptr<Ogre::Root> m_root;
 
     std::vector<std::shared_ptr<Ogre::ResourceManager>> mResourceManagers;
+
+    Ogre::RenderWindow* m_render_window = nullptr; // Not owned
 };
