@@ -1,8 +1,8 @@
 [Desktop Entry]
 Categories=Application;Game;
 Encoding=UTF-8
-Exec=/usr/games/q-gears --resources-file=/usr/share/q-gears/resources.cfg --config-file=/usr/share/q-gears/q-gears.cfg --plugins-file=/usr/share/q-gears/plugins.cfg
-Path=/usr/share/q-gears
+Exec=/usr/bin/q-gears-launcher
+#Path=/usr/share/q-gears
 GenericName=Q Gears
 Icon=q-gears.png
 Name=Q Gears
