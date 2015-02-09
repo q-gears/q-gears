@@ -25,25 +25,91 @@ THE SOFTWARE.
 */
 #include <fstream>
 
-#define BOOST_TEST_MODULE QGearsHRCFileSerializer
+//#define BOOST_TEST_MODULE QGearsHRCFileSerializer
 #include <boost/test/unit_test.hpp>
 
-#include "QGearsHRCFileSerializer.h"
+#include <Ogre.h>
 
-BOOST_AUTO_TEST_CASE( read_file )
+#include "data/QGearsHRCFileSerializer.h"
+
+const char* LOG_NAME( "Default Log" );
+
+BOOST_AUTO_TEST_CASE( simple_hrc )
 {
-    const char* file_name( "../../../../output/data_orig/field/char/aaaa.hrc" );
+    class TestFile : public QGears::HRCFile
+    {
+    public:
+        TestFile() : QGears::HRCFile( NULL, "", 0, "" ) {}
+    };
+    Ogre::LogManager            logMgr;
+    logMgr.createLog( LOG_NAME, true, true, true );
+
+    const char* file_name( "misc/test_hrc_simple.hrc" );
     std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
     BOOST_REQUIRE( ifs->is_open() );
     Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
     BOOST_REQUIRE( stream->isReadable() );
 
-    QGears::HRCFile             file;
+    TestFile                    file;
     QGears::HRCFileSerializer   ser;
     ser.importHRCFile( stream, &file );
 
-    BOOST_CHECK_EQUAL( "n_cloud_sk", file.getName() );
-    BOOST_CHECK_EQUAL( 21, file.getBones().size() );
+    BOOST_CHECK_EQUAL( "test_skeleton", file.getSkeletonName() );
+
+    const QGears::HRCFile::BoneList& bones( file.getBones() );
+    BOOST_CHECK_EQUAL( 3, bones.size() );
+    BOOST_CHECK_EQUAL( "bone.1", bones.at(0).name );
+    BOOST_CHECK_EQUAL( "root", bones.at(0).parent );
+    BOOST_CHECK_CLOSE( 1.5f, bones.at(0).length, 0.0001 );
+    BOOST_CHECK_EQUAL( 1, bones.at(0).rsd_names.size() );
+    BOOST_CHECK_EQUAL( "model.1", bones.at(0).rsd_names.at(0) );
+
+    BOOST_CHECK_EQUAL( "bone.1.1", bones.at(1).name );
+    BOOST_CHECK_EQUAL( bones.at(0).name, bones.at(1).parent );
+    BOOST_CHECK_CLOSE( 2.0f, bones.at(1).length, 0.0001 );
+    BOOST_CHECK_EQUAL( 1, bones.at(1).rsd_names.size() );
+    BOOST_CHECK_EQUAL( "model.1.1", bones.at(1).rsd_names.at(0) );
+
+    BOOST_CHECK_EQUAL( "bone.2", bones.at(2).name );
+    BOOST_CHECK_EQUAL( bones.at(0).parent, bones.at(2).parent );
+    BOOST_CHECK_CLOSE( 3.125f, bones.at(2).length, 0.0001 );
+    BOOST_CHECK_EQUAL( 3, bones.at(2).rsd_names.size() );
+    BOOST_CHECK_EQUAL( "model.2-1", bones.at(2).rsd_names.at(0) );
+    BOOST_CHECK_EQUAL( "model.2-2", bones.at(2).rsd_names.at(1) );
+    BOOST_CHECK_EQUAL( "model.2-3", bones.at(2).rsd_names.at(2) );
+
+    ifs->close();
+}
+
+BOOST_AUTO_TEST_CASE( empty_hrc )
+{
+    class TestFile : public QGears::HRCFile
+    {
+    public:
+        TestFile() : QGears::HRCFile( NULL, "", 0, "" ) {}
+    };
+    Ogre::LogManager            logMgr;
+    logMgr.createLog( LOG_NAME, true, true, true );
+
+    const char* file_name( "misc/test_hrc_empty.hrc" );
+    std::ifstream *ifs(  OGRE_NEW_T( std::ifstream, Ogre::MEMCATEGORY_GENERAL )( file_name, std::ifstream::binary ) );
+    BOOST_REQUIRE( ifs->is_open() );
+    Ogre::DataStreamPtr stream( OGRE_NEW Ogre::FileStreamDataStream( ifs ) );
+    BOOST_REQUIRE( stream->isReadable() );
+
+    TestFile                    file;
+    QGears::HRCFileSerializer   ser;
+    ser.importHRCFile( stream, &file );
+
+    BOOST_CHECK_EQUAL( "test_empty_skeleton", file.getSkeletonName() );
+
+    const QGears::HRCFile::BoneList& bones( file.getBones() );
+    BOOST_CHECK_EQUAL( 1, bones.size() );
+    BOOST_CHECK_EQUAL( "null", bones.at(0).name );
+    BOOST_CHECK_EQUAL( "root", bones.at(0).parent );
+    BOOST_CHECK_CLOSE( 1.5f, bones.at(0).length, 0.0001 );
+    BOOST_CHECK_EQUAL( 1, bones.at(0).rsd_names.size() );
+    BOOST_CHECK_EQUAL( "model.1", bones.at(0).rsd_names.at(0) );
 
     ifs->close();
 }

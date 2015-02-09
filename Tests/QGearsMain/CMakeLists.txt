@@ -45,6 +45,15 @@ SET_PROPERTY(TARGET TestQGearsLGPArchive PROPERTY FOLDER "tests")
 target_link_libraries(TestQGearsLGPArchive ${LIBRARIES})
 add_test(TestQGearsLGPArchive TestQGearsLGPArchive)
 
+# HRC archive
+add_executable(TestQGearsHRCSerializer
+    src/test_QGearsHRCSerializer.cpp
+)
+SET_PROPERTY(TARGET TestQGearsHRCSerializer PROPERTY FOLDER "tests")
+
+target_link_libraries(TestQGearsHRCSerializer ${LIBRARIES})
+add_test(TestQGearsHRCSerializer TestQGearsHRCSerializer)
+
 # world map
 add_executable(TestMapSerializer
     src/test_MapSerializer.cpp
