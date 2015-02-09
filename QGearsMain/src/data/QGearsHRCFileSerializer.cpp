@@ -61,7 +61,7 @@ namespace QGears
             readObject( stream, in_tmp );
             pDest.push_back( in_tmp );
         }
-    };
+    }
 
     //---------------------------------------------------------------------
     void
@@ -82,6 +82,13 @@ namespace QGears
         m_header.version    = 0;
         m_header.bone_count = 0;
         m_header.name       = "";
+
+        if( stream->eof() )
+        {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
+            ,"Empty file"
+            ,"HRCFileSerializer::readFileHeader" );
+        }
 
         Block header_block;
         readBlock( stream, header_block );
@@ -158,6 +165,10 @@ namespace QGears
                                      ,HRCFile* pDest )
     {
         readFileHeader( stream );
+        if( m_header.bone_count == 0 )
+        {
+            m_header.bone_count = 1;
+        }
         pDest->setSkeletonName( m_header.name );
         readVector( stream, pDest->getBones(), m_header.bone_count );
     }
