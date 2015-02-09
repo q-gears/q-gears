@@ -84,7 +84,7 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -G"Unix Makefiles" ..; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake ..; fi
 
-- if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then make -j2; fi
+- if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then make all test -j2; fi
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then cpack -C Release; fi
 language: cpp
 after_success: 
