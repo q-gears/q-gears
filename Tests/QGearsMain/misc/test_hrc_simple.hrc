@@ -1,0 +1,18 @@
+:HEADER_BLOCK 2
+:SKELETON test_skeleton
+:BONES 3
+
+bone.1
+root
+1.5
+1 model.1
+
+bone.1.1
+bone.1
+2
+1 model.1.1
+
+bone.2
+root
+3.125
+3 model.2-1 model.2-2 model.2-3
