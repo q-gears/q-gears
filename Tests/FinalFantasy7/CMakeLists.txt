@@ -19,7 +19,7 @@ SET_PROPERTY(TARGET TestFF7FLevelFileSerializer PROPERTY FOLDER "tests")
 
 
 target_link_libraries(TestFF7FLevelFileSerializer ${LIBRARIES})
-add_test(TestFF7FLevelFileSerializer TestFF7FLevelFileSerializer)
+#add_test(TestFF7FLevelFileSerializer TestFF7FLevelFileSerializer)
 
 
 add_executable(TestFF7ModelListFileSerializer
