@@ -1,5 +1,5 @@
 # Define plugin folder
-PluginFolder=/usr/share/q-gears/plugins/
+PluginFolder=/usr/lib/q-gears/plugins/
 #PluginFolder=~/.q-gears/plugins
 
 # Define plugins
