@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "data/QGearsAFileManager.h"
 #include "data/QGearsHRCFileManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
+#include "common/FF7NameLookup.h"
 
 void attachMesh( Ogre::MeshPtr &mesh )
 {
@@ -42,12 +43,12 @@ void attachMesh( Ogre::MeshPtr &mesh )
     Ogre::Entity* entity = scene_manager->createEntity( mesh );
     entity->setDisplaySkeleton( true );
     entity->setDebugDisplayEnabled( true );
-    entity->getAnimationState( "Idle" )->setEnabled( true );
-    entity->getAnimationState( "Idle" )->setLoop( true );
+   // entity->getAnimationState( "Idle" )->setEnabled( true );
+  //  entity->getAnimationState( "Idle" )->setLoop( true );
     Ogre::SceneNode* root_node = scene_manager->getRootSceneNode();
     root_node->showBoundingBox( true );
-    root_node->attachObject( entity );
-    entity->setVisible( false );
+   // root_node->attachObject( entity );
+    entity->setVisible( true );
 
     entitys.push_back( entity );
 }
@@ -79,62 +80,84 @@ void exportMesh( const Ogre::MeshPtr &mesh )
     mat_ser.exportQueued( base_name + QGears::EXT_MATERIAL );
 }
 
-int
-main( int argc, char *argv[] )
+
+
+int main( int argc, char *argv[] )
 {
-    QGears::FF7::FieldModelExporterPC app( argc, argv );
-    if( !app.initOgre() ) return 0;
+    try
+    {
+        QGears::FF7::FieldModelExporterPC app(argc, argv);
+        if (!app.initOgre()) return 0;
 
-    Ogre::SceneManager*         scene_manager( Ogre::Root::getSingleton().getSceneManager( "Scene" ) );
-    QGears::AFilePtr            a;
-    QGears::HRCFilePtr          hrc = QGears::HRCFileManager::getSingleton().load( "adda.hrc", "FFVII" ).staticCast<QGears::HRCFile>();
-    QGears::AFileManager       &afl_mgr( QGears::AFileManager::getSingleton() );
+        Ogre::SceneManager*         scene_manager(Ogre::Root::getSingleton().createSceneManager(Ogre::ST_GENERIC, "Scene"));
+        QGears::AFilePtr            a;
+        QGears::HRCFilePtr          hrc = QGears::HRCFileManager::getSingleton().load("adda.hrc", "FFVII").staticCast<QGears::HRCFile>();
+        QGears::AFileManager       &afl_mgr(QGears::AFileManager::getSingleton());
 
-    Ogre::MeshPtr mesh( Ogre::MeshManager::getSingleton().load( "sd_red.mesh", "FFVII" ) );
-    Ogre::SkeletonPtr skeleton( mesh->getSkeleton() );
+        auto meshName = QGears::FF7::NameLookup::model("adda.hrc") + ".mesh";
 
-    a = afl_mgr.load( "aeae.a", "FFVII" ).staticCast<QGears::AFile>();
-    a->addTo( skeleton, "Idle" );
-    a = afl_mgr.load( "aeaf.a", "FFVII" ).staticCast<QGears::AFile>();
-    a->addTo( skeleton, "Walk" );
-    a = afl_mgr.load( "aeba.a", "FFVII" ).staticCast<QGears::AFile>();
-    a->addTo( skeleton, "Run" );
+        Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
+        Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
 
-    attachMesh( mesh );
-    entitys[0]->setVisible( true );
 
-    QGears::LZSFLevelFileManager   &fmgr( QGears::LZSFLevelFileManager::getSingleton() );
-    QGears::FLevelFilePtr           f = fmgr.load( "ancnt1", "FFVII" ).staticCast<QGears::FLevelFile>();
+        a = afl_mgr.load("aeae.a", "FFVII").staticCast<QGears::AFile>();
+        a->addTo(skeleton, "Idle");
+        a = afl_mgr.load("aeaf.a", "FFVII").staticCast<QGears::AFile>();
+        a->addTo(skeleton, "Walk");
+        a = afl_mgr.load("aeba.a", "FFVII").staticCast<QGears::AFile>();
+        a->addTo(skeleton, "Run");
 
-    mesh = Ogre::MeshManager::getSingleton().load( "n_cloud.mesh", "FFVII" );
-    skeleton = mesh->getSkeleton();
-    a = afl_mgr.load( "bvjf.a", "FFVII" ).staticCast<QGears::AFile>();
-    a->addTo( skeleton, "JumpFromTrain" );
-    attachMesh( mesh );
 
-    // Create background rectangle covering the whole screen
-    Ogre::Rectangle2D* rect = new Ogre::Rectangle2D(true);
-    rect->setCorners(-1.0, 1.0, 1.0, -1.0);
-    rect->setMaterial( "map" );
+        attachMesh(mesh);
+        exportMesh(mesh);
 
-    // Render the background before everything else
-    rect->setRenderQueueGroup( Ogre::RENDER_QUEUE_BACKGROUND );
 
-    // Use infinite AAB to always stay visible
-    Ogre::AxisAlignedBox aabInf;
-    aabInf.setInfinite();
-    rect->setBoundingBox( aabInf );
+        entitys[0]->setVisible(true);
 
-    // Attach background to the scene
-    Ogre::SceneNode* node = scene_manager->getRootSceneNode()->createChildSceneNode("Background");
-    node->attachObject( rect );
+        QGears::LZSFLevelFileManager   &fmgr(QGears::LZSFLevelFileManager::getSingleton());
+        // QGears::FLevelFilePtr           f = fmgr.load( "ancnt1", "FFVII" ).staticCast<QGears::FLevelFile>();
 
-    Ogre::Root::getSingleton().startRendering();
-    skeleton.setNull();
-    mesh.setNull();
-    f.setNull();
-    hrc.setNull();
-    delete rect;
+        /*
+        mesh = Ogre::MeshManager::getSingleton().load(meshName, "FFVII");
+        skeleton = mesh->getSkeleton();
+        a = afl_mgr.load("bvjf.a", "FFVII").staticCast<QGears::AFile>();
+        a->addTo(skeleton, "JumpFromTrain");
+        */
 
-    return 0;
+        //attachMesh( mesh );
+
+
+        // Create background rectangle covering the whole screen
+        //Ogre::Rectangle2D* rect = new Ogre::Rectangle2D(true);
+        //rect->setCorners(-1.0, 1.0, 1.0, -1.0);
+        // rect->setMaterial( "map" );
+
+        // Render the background before everything else
+        //rect->setRenderQueueGroup( Ogre::RENDER_QUEUE_BACKGROUND );
+
+        // Use infinite AAB to always stay visible
+        //Ogre::AxisAlignedBox aabInf;
+        //aabInf.setInfinite();
+        //rect->setBoundingBox( aabInf );
+
+        // Attach background to the scene
+        Ogre::SceneNode* node = scene_manager->getRootSceneNode()->createChildSceneNode("Background");
+
+        node->attachObject(entitys[0]);
+
+        //   node->attachObject( entitys[0] );
+
+        Ogre::Root::getSingleton().startRendering();
+        skeleton.setNull();
+        mesh.setNull();
+        //    f.setNull();
+        hrc.setNull();
+        //delete rect;
+        return 0;
+    }
+    catch (const Ogre::Exception& ex)
+    {
+        std::cout << "Ogre::Exception: " << ex.what() << std::endl;
+        return 1;
+    }
 }

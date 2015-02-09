@@ -73,7 +73,7 @@ namespace QGears
             file_info.uncompressedSize = it->data_size;
             file_info.compressedSize = file_info.uncompressedSize;
 
-            LOG_DEBUG( "add file:" + file_info.filename );
+            //LOG_DEBUG( "add file:" + file_info.filename );
             m_file_infos.push_back( file_info );
             ++it;
         }
