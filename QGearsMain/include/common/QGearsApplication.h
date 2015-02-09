@@ -38,6 +38,7 @@ namespace QGears
         Ogre::Root*         getRoot( void );
         Ogre::RenderWindow* getRenderWindow( void );
         const String&       getResourcesFilename( void );
+        Ogre::ResourceGroupManager* ResMgr() { return mResMgr; }
     protected:
         String  getWindowTitle( void ) const;
         bool    processCommandLine( int argc, char *argv[] );
@@ -76,6 +77,7 @@ namespace QGears
         std::unique_ptr<Ogre::OverlaySystem> m_overlay_system;
         Ogre::RenderWindow* m_render_window = nullptr; // Not owned
         ResourceManagerVector m_resource_managers;
+        Ogre::ResourceGroupManager* mResMgr = nullptr; // Not owned
     };
 }
 
