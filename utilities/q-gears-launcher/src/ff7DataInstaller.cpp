@@ -54,6 +54,12 @@ void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, cons
             mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
             ConvertFieldModels(fullPath, outputDir);
         }
+        else if (file == "field\\flevel.lgp")
+        {
+            auto fullPath = inputDir + file;
+            mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
+            ConvertFields(fullPath, outputDir);
+        }
     }
 }
 
@@ -88,33 +94,30 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
 
 void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDir)
 {
-    // TODO: Find a way to query the file list from the added resource else we're having
-    // to parse/load the LGP archive twice
-    QGears::LGPArchive lgp(archive, "LGP");
-    lgp.open(archive);
-    lgp.load();
-    auto files = lgp.find("*.hrc");
-    for (const auto& file : *files)
+    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVII", "*.hrc");
+    for (auto& resourceName : *resources)
     {
-        try
+        if (QGears::StringUtil::endsWith(resourceName, ".hrc"))
         {
-            Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(file, "FFVII");
+            //try
+            {
+                Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(resourceName, "FFVII");
 
-            Ogre::String baseName;
-            QGears::StringUtil::splitBase(file, baseName);
+                Ogre::String baseName;
+                QGears::StringUtil::splitBase(resourceName, baseName);
 
-            auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
+                auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
 
-            Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
-            Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
-            exportMesh(outDir, mesh);
-        }
-        catch (const Ogre::Exception& ex)
-        {
-            std::cout << "ERROR converting: " << file << " Exception: " << ex.what() << std::endl;
+                Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
+                Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
+                exportMesh(outDir, mesh);
+            }
+           // catch (const Ogre::Exception& ex)
+            {
+               // std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
+            }
         }
     }
-
 
 
     /*
@@ -126,3 +129,7 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
     */
 }
 
+void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
+{
+
+}

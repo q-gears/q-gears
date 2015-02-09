@@ -138,7 +138,7 @@ namespace QGears
         Ogre::ConfigFile::SectionIterator section( config_file.getSectionIterator() );
 
         Ogre::String section_name, archive_type, archive_name;
-        Ogre::ResourceGroupManager &res_gm( Ogre::ResourceGroupManager::getSingleton() );
+        mResMgr = (&Ogre::ResourceGroupManager::getSingleton());
         while( section.hasMoreElements() )
         {
             section_name = section.peekNextKey();
@@ -149,7 +149,7 @@ namespace QGears
             {
                 archive_type = it->first;
                 archive_name = it->second;
-                res_gm.addResourceLocation( archive_name, archive_type, section_name, true );
+                mResMgr->addResourceLocation(archive_name, archive_type, section_name, true);
                 ++it;
             }
         }
