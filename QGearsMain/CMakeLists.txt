@@ -10,51 +10,6 @@ set(HEADER_FILES
   include/common/File.h
   include/common/FileSystem.h
   include/common/make_unique.h
-  include/data/worldmap/MapFile.h
-  include/data/worldmap/MapFileManager.h
-  include/data/worldmap/MapFileSerializer.h
-  include/data/worldmap/TxzFile.h
-  include/data/worldmap/TxzFileManager.h
-  include/data/worldmap/TxzFileSerializer.h
-  include/data/QGearsAFile.h
-  include/data/QGearsAFileManager.h
-  include/data/QGearsAFileSerializer.h
-  include/data/QGearsBackgroundFile.h
-  include/data/QGearsBackgroundFileManager.h
-  include/data/QGearsBackgroundFileSerializer.h
-  include/data/QGearsBackgroundTextureLoader.h
-  include/data/QGearsCameraMatrixFile.h
-  include/data/QGearsCameraMatrixFileManager.h
-  include/data/QGearsCameraMatrixFileSerializer.h
-  include/data/QGearsFLevelBackground2DLoader.h
-  include/data/QGearsFLevelFile.h
-  include/data/QGearsFLevelFileManager.h
-  include/data/QGearsFLevelFileSerializer.h
-  include/data/QGearsFLevelTextureLoader.h
-  include/data/QGearsHRCFile.h
-  include/data/QGearsHRCFileManager.h
-  include/data/QGearsHRCFileSerializer.h
-  include/data/QGearsHRCMeshLoader.h
-  include/data/QGearsHRCSkeletonLoader.h
-  include/data/QGearsLGPArchive.h
-  include/data/QGearsLGPArchiveFactory.h
-  include/data/QGearsLGPArchiveSerializer.h
-  include/data/QGearsLZSDataStream.h
-  include/data/QGearsLZSFLevelFile.h
-  include/data/QGearsLZSFLevelFileManager.h
-  include/data/QGearsPaletteFile.h
-  include/data/QGearsPaletteFileManager.h
-  include/data/QGearsPaletteFileSerializer.h
-  include/data/QGearsPFile.h
-  include/data/QGearsPFileManager.h
-  include/data/QGearsPFileSerializer.h
-  include/data/QGearsRSDFile.h
-  include/data/QGearsRSDFileManager.h
-  include/data/QGearsRSDFileSerializer.h
-  include/data/QGearsSerializer.h
-  include/data/QGearsTexCodec.h
-  include/data/QGearsTexFile.h
-  include/data/QGearsXMLSerializer.h
   include/map/QGearsBackground2DFile.h
   include/map/QGearsBackground2DFileManager.h
   include/map/QGearsBackground2DFileXMLSerializer.h
@@ -145,6 +100,103 @@ set(HEADER_FILES
   include/core/XmlTextsFile.h
   #include/viewer/ViewerModule.h
 )
+
+set(HEADER_FILES_DATA
+include/data/worldmap/MapFile.h
+  include/data/worldmap/MapFileManager.h
+  include/data/worldmap/MapFileSerializer.h
+  include/data/worldmap/TxzFile.h
+  include/data/worldmap/TxzFileManager.h
+  include/data/worldmap/TxzFileSerializer.h
+  include/data/QGearsAFile.h
+  include/data/QGearsAFileManager.h
+  include/data/QGearsAFileSerializer.h
+  include/data/QGearsBackgroundFile.h
+  include/data/QGearsBackgroundFileManager.h
+  include/data/QGearsBackgroundFileSerializer.h
+  include/data/QGearsBackgroundTextureLoader.h
+  include/data/QGearsCameraMatrixFile.h
+  include/data/QGearsCameraMatrixFileManager.h
+  include/data/QGearsCameraMatrixFileSerializer.h
+  include/data/QGearsFLevelBackground2DLoader.h
+  include/data/QGearsFLevelFile.h
+  include/data/QGearsFLevelFileManager.h
+  include/data/QGearsFLevelFileSerializer.h
+  include/data/QGearsFLevelTextureLoader.h
+  include/data/QGearsHRCFile.h
+  include/data/QGearsHRCFileManager.h
+  include/data/QGearsHRCFileSerializer.h
+  include/data/QGearsHRCMeshLoader.h
+  include/data/QGearsHRCSkeletonLoader.h
+  include/data/QGearsLGPArchive.h
+  include/data/QGearsLGPArchiveFactory.h
+  include/data/QGearsLGPArchiveSerializer.h
+  include/data/QGearsLZSDataStream.h
+  include/data/QGearsLZSFLevelFile.h
+  include/data/QGearsLZSFLevelFileManager.h
+  include/data/QGearsPaletteFile.h
+  include/data/QGearsPaletteFileManager.h
+  include/data/QGearsPaletteFileSerializer.h
+  include/data/QGearsPFile.h
+  include/data/QGearsPFileManager.h
+  include/data/QGearsPFileSerializer.h
+  include/data/QGearsRSDFile.h
+  include/data/QGearsRSDFileManager.h
+  include/data/QGearsRSDFileSerializer.h
+  include/data/QGearsSerializer.h
+  include/data/QGearsTexCodec.h
+  include/data/QGearsTexFile.h
+  include/data/QGearsXMLSerializer.h
+)
+
+set(SOURCE_FILES_DATA
+  src/data/QGearsAFile.cpp
+  src/data/QGearsAFileManager.cpp
+  src/data/QGearsAFileSerializer.cpp
+  src/data/worldmap/MapFile.cpp
+  src/data/worldmap/MapFileManager.cpp
+  src/data/worldmap/MapFileSerializer.cpp
+  src/data/worldmap/TxzFile.cpp
+  src/data/worldmap/TxzFileManager.cpp
+  src/data/worldmap/TxzFileSerializer.cpp
+  src/data/QGearsBackgroundFile.cpp
+  src/data/QGearsBackgroundFileManager.cpp
+  src/data/QGearsBackgroundFileSerializer.cpp
+  src/data/QGearsBackgroundTextureLoader.cpp
+  src/data/QGearsCameraMatrixFile.cpp
+  src/data/QGearsCameraMatrixFileManager.cpp
+  src/data/QGearsCameraMatrixFileSerializer.cpp
+  src/data/QGearsFLevelBackground2DLoader.cpp
+  src/data/QGearsFLevelFile.cpp
+  src/data/QGearsFLevelFileManager.cpp
+  src/data/QGearsFLevelFileSerializer.cpp
+  src/data/QGearsFLevelTextureLoader.cpp
+  src/data/QGearsHRCFile.cpp
+  src/data/QGearsHRCFileManager.cpp
+  src/data/QGearsHRCFileSerializer.cpp
+  src/data/QGearsHRCMeshLoader.cpp
+  src/data/QGearsHRCSkeletonLoader.cpp
+  src/data/QGearsLGPArchive.cpp
+  src/data/QGearsLGPArchiveFactory.cpp
+  src/data/QGearsLGPArchiveSerializer.cpp
+  src/data/QGearsLZSDataStream.cpp
+  src/data/QGearsLZSFLevelFile.cpp
+  src/data/QGearsLZSFLevelFileManager.cpp
+  src/data/QGearsPaletteFile.cpp
+  src/data/QGearsPaletteFileManager.cpp
+  src/data/QGearsPaletteFileSerializer.cpp
+  src/data/QGearsPFile.cpp
+  src/data/QGearsPFileManager.cpp
+  src/data/QGearsPFileSerializer.cpp
+  src/data/QGearsRSDFile.cpp
+  src/data/QGearsRSDFileManager.cpp
+  src/data/QGearsRSDFileSerializer.cpp
+  src/data/QGearsSerializer.cpp
+  src/data/QGearsTexCodec.cpp
+  src/data/QGearsTexFile.cpp
+  src/data/QGearsXMLSerializer.cpp
+)
+
 set(SOURCE_FILES
   src/modules/worldmap/WorldMapModule.cpp
   src/common/QGearsApplication.cpp
@@ -213,51 +265,6 @@ set(SOURCE_FILES
   src/core/XmlScriptsFile.cpp
   src/core/XmlTextFile.cpp
   src/core/XmlTextsFile.cpp
-  src/data/QGearsAFile.cpp
-  src/data/QGearsAFileManager.cpp
-  src/data/QGearsAFileSerializer.cpp
-  src/data/worldmap/MapFile.cpp
-  src/data/worldmap/MapFileManager.cpp
-  src/data/worldmap/MapFileSerializer.cpp
-  src/data/worldmap/TxzFile.cpp
-  src/data/worldmap/TxzFileManager.cpp
-  src/data/worldmap/TxzFileSerializer.cpp
-  src/data/QGearsBackgroundFile.cpp
-  src/data/QGearsBackgroundFileManager.cpp
-  src/data/QGearsBackgroundFileSerializer.cpp
-  src/data/QGearsBackgroundTextureLoader.cpp
-  src/data/QGearsCameraMatrixFile.cpp
-  src/data/QGearsCameraMatrixFileManager.cpp
-  src/data/QGearsCameraMatrixFileSerializer.cpp
-  src/data/QGearsFLevelBackground2DLoader.cpp
-  src/data/QGearsFLevelFile.cpp
-  src/data/QGearsFLevelFileManager.cpp
-  src/data/QGearsFLevelFileSerializer.cpp
-  src/data/QGearsFLevelTextureLoader.cpp
-  src/data/QGearsHRCFile.cpp
-  src/data/QGearsHRCFileManager.cpp
-  src/data/QGearsHRCFileSerializer.cpp
-  src/data/QGearsHRCMeshLoader.cpp
-  src/data/QGearsHRCSkeletonLoader.cpp
-  src/data/QGearsLGPArchive.cpp
-  src/data/QGearsLGPArchiveFactory.cpp
-  src/data/QGearsLGPArchiveSerializer.cpp
-  src/data/QGearsLZSDataStream.cpp
-  src/data/QGearsLZSFLevelFile.cpp
-  src/data/QGearsLZSFLevelFileManager.cpp
-  src/data/QGearsPaletteFile.cpp
-  src/data/QGearsPaletteFileManager.cpp
-  src/data/QGearsPaletteFileSerializer.cpp
-  src/data/QGearsPFile.cpp
-  src/data/QGearsPFileManager.cpp
-  src/data/QGearsPFileSerializer.cpp
-  src/data/QGearsRSDFile.cpp
-  src/data/QGearsRSDFileManager.cpp
-  src/data/QGearsRSDFileSerializer.cpp
-  src/data/QGearsSerializer.cpp
-  src/data/QGearsTexCodec.cpp
-  src/data/QGearsTexFile.cpp
-  src/data/QGearsXMLSerializer.cpp
   src/map/QGearsBackground2DFile.cpp
   src/map/QGearsBackground2DFileManager.cpp
   src/map/QGearsBackground2DFileXMLSerializer.cpp
@@ -326,6 +333,14 @@ add_library(QGearsMain STATIC
 )
 SET_PROPERTY(TARGET QGearsMain PROPERTY FOLDER "q-gears")
 
+add_library(q-gears-data STATIC
+ ${HEADER_FILES_DATA}
+ ${SOURCE_FILES_DATA}
+ )
+
+SET_PROPERTY(TARGET q-gears-data PROPERTY FOLDER "q-gears")
+
+
 add_executable(q-gears
   src/Main.cpp
 )
@@ -349,6 +364,7 @@ target_link_libraries(QGearsMain
 	liblua
     TinyXml
     FinalFantasy7
+	q-gears-data
 )
 
 target_link_libraries(q-gears 
