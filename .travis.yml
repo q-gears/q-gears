@@ -7,13 +7,15 @@ matrix:
 # Don't build using gcc on mac
   - os: osx
     compiler: gcc
-# Don't try to do Coverity builds on mac
+# Don't try to do Coverity or coverage builds on mac
   - os: osx
     env: COVERITY=1
-# Only do coverity build on Linux when the compiler is gcc
+	env: COVERAGE=1
+# Only do coverity or coverage build on Linux when the compiler is gcc
   - os: linux
     compiler: clang
     env: COVERITY=1
+	env: COVERAGE=1
 # Don't build with clang on Linux
   - os: linux
     compiler: clang
@@ -24,68 +26,31 @@ compiler:
 before_script: 
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:boost-latest/ppa -y; fi
-- echo $CXX
-- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then wget http://llvm.org/apt/precise/pool/main/l/llvm-toolchain-3.5/clang-3.5_3.5~svn215019-1~exp1_amd64.deb; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then sudo dpkg -i clang-3.5_3.5~svn215019-1~exp1_amd64.deb; fi
-- echo $CXX
-- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX=clang3.5; fi
-
-- echo $CXX
-#- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then sudo apt-get install --allow-unauthenticated clang-3.4; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
-- echo $CXX
-#- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.4"; fi
-#- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.4"; fi
-
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then sudo apt-get install gcc-4.9; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then sudo apt-get install g++-4.9; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.9 90; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then sudo update-alternatives --config gcc; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then sudo update-alternatives --config g++; fi
-
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install boost1.55; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libvorbis-dev; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libalut-dev; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libfreetype6-dev; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libfreeimage-dev; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install zlib1g-dev; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libzzip-dev; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libois-dev; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libglu-dev; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libqt4-dev; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/ogre-build_1.9.0-1_amd64.deb; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo dpkg -i ogre-build_1.9.0-1_amd64.deb; fi
-
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
-#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew doctor; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated wget || brew upgrade wget; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install qt; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreDependencies_OSX_libc._20130610.zip; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/NVIDIA_Cg.tgz; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://github.com/paulsapps/Ogre1.9/releases/download/1.9.0/OgreSDK.zip; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then unzip OgreSDK.zip >> OgreSDK_extract.log; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tar xfzC NVIDIA_Cg.tgz /; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then unzip OgreDependencies_OSX_libc._20130610.zip >> extract.log; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then tar xf lcov_1.11.orig.tar.gz; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then sudo make -C lcov-1.11/ install; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./CIBuid/linux/dependencies.sh; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./CIBuid/osx/dependencies.sh; fi
 - $CXX --version
 
 before_install: 
 script: 
-
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp OgreSDK/lib/macosx/Release/Ogre.framework/Versions/1.9.0/Ogre OgreSDK/lib/macosx/Release/Ogre.framework/Ogre; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp OgreSDK/lib/macosx/Release/OgreOverlay.framework/Versions/1.9.0/OgreOverlay OgreSDK/lib/macosx/Release/OgreOverlay.framework/OgreOverlay; fi
-
 - mkdir build_qgears
 - cd build_qgears
-
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_HOME=/Users/travis/build/q-gears/q-gears/OgreSDK; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_SDK=/Users/travis/build/q-gears/q-gears/OgreSDK; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OIS_HOME=/Users/travis/build/q-gears/q-gears/Dependencies; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -G"Unix Makefiles" ..; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake ..; fi
-
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then- cmake -G"Unix Makefiles" ..; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then- cmake -G"Unix Makefiles" .. -DBOOST_ROOT=${PWD}/../boost/1.55.0_1; fi
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then make -j2; fi
-- if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then cpack -C Release; fi
+- if [[ "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then ../CIBuid/osx/fix_lib_paths.sh ./bin_release; fi
+- if [[ "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" !=1 ]]; then cpack -C Release; fi
+
 language: cpp
 after_success: 
 - hash=`git rev-parse HEAD`
@@ -122,14 +87,19 @@ after_success:
 - chmod 700 ~/.ssh
 - md5sum ~/.ssh/id_rsa
 
-- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/; fi
-- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/; fi
-- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.tar.gz paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" !=1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/linux/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" !=1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.deb paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" !=1 && "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.tar.gz paul@itscovarr.com:/var/www/storage/qgears/$hash/linux/; fi
 
-- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/mac/; fi
-- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.dmg paul@itscovarr.com:/var/www/storage/qgears/$hash/mac/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" !=1 && "$TRAVIS_OS_NAME" == "osx" ]]; then ssh -o StrictHostKeyChecking=no paul@itscovarr.com mkdir -p /var/www/storage/qgears/$hash/mac/; fi
+- if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" !=1 && "$TRAVIS_OS_NAME" == "osx" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.dmg paul@itscovarr.com:/var/www/storage/qgears/$hash/mac/; fi
 
-
+after_success:
+  - if [ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]; then lcov --directory . --capture --output-file coverage.info; fi
+  - if [ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]; then lcov --remove coverage.info '*/googlemock/*' '/usr/*' --output-file coverage.info; fi
+  - if [ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]; then lcov --list coverage.info; fi
+  - if [ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]; then coveralls-lcov coverage.info; fi
+  
 notifications: 
   on_failure: always
   irc: irc.esper.net#qhimm.com
@@ -145,6 +115,7 @@ addons:
     build_command: "make -j4"
     branch_pattern: coverity_scan
 env: 
+  - COVERAGE=1
   global: 
   - secure: "PUtlviIMOxgXYfBiAW+tsDHQPq+XfftHy2Te1qFvkzkqfGtHQMiCM5an1tZW8LuuYLhuRo+piG+XsK5A8THW4At+hsQZFRPK4b952aHGTQNimTPFr3COccKOlGsLDJD+iKEBJbME1u/Kml9IvwVFBLoL6UtjEWPUJ3jVOitfnoA="
   - secure: pc5w4v8EzEtKD+iSZaao9Qq7FoPz2a65cpubHQjD36IN7g4gNaUcv2i/9cgqWk8+au7jKbJg0lFnkXRA/ldzBd30xsXubKWSmvcKt2dQRNJkKVBWsKW2ZiAtID/uibu5kwxdGn1zi4uO+WXygmu/fWSvOkToq87NsGrQYGU+Ahs=

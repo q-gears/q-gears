@@ -16,7 +16,7 @@ add_executable(TestQGearsAFileSerializer
 SET_PROPERTY(TARGET TestQGearsAFileSerializer PROPERTY FOLDER "tests")
 
 target_link_libraries(TestQGearsAFileSerializer ${LIBRARIES})
-add_test(TestQGearsAFileSerializer TestQGearsAFileSerializer)
+add_test(NAME TestQGearsAFileSerializer COMMAND TestQGearsAFileSerializer)
 
 
 add_executable(TestQGearsMapFileXMLSerializer
@@ -25,7 +25,7 @@ add_executable(TestQGearsMapFileXMLSerializer
 SET_PROPERTY(TARGET TestQGearsMapFileXMLSerializer PROPERTY FOLDER "tests")
 
 target_link_libraries(TestQGearsMapFileXMLSerializer ${LIBRARIES})
-add_test(TestQGearsMapFileXMLSerializer TestQGearsMapFileXMLSerializer)
+add_test(NAME TestQGearsMapFileXMLSerializer COMMAND TestQGearsMapFileXMLSerializer)
 
 # field walk mesh
 add_executable(TestQGearsWalkmeshFileXMLSerializer
@@ -34,7 +34,7 @@ add_executable(TestQGearsWalkmeshFileXMLSerializer
 SET_PROPERTY(TARGET TestQGearsWalkmeshFileXMLSerializer PROPERTY FOLDER "tests")
 
 target_link_libraries(TestQGearsWalkmeshFileXMLSerializer ${LIBRARIES})
-add_test(TestQGearsWalkmeshFileXMLSerializer TestQGearsWalkmeshFileXMLSerializer)
+add_test(NAME TestQGearsWalkmeshFileXMLSerializer COMMAND TestQGearsWalkmeshFileXMLSerializer)
 
 # LGP archive
 add_executable(TestQGearsLGPArchive
@@ -43,7 +43,7 @@ add_executable(TestQGearsLGPArchive
 SET_PROPERTY(TARGET TestQGearsLGPArchive PROPERTY FOLDER "tests")
 
 target_link_libraries(TestQGearsLGPArchive ${LIBRARIES})
-add_test(TestQGearsLGPArchive TestQGearsLGPArchive)
+add_test(NAME TestQGearsLGPArchive COMMAND TestQGearsLGPArchive)
 
 # HRC archive
 add_executable(TestQGearsHRCSerializer
@@ -52,7 +52,7 @@ add_executable(TestQGearsHRCSerializer
 SET_PROPERTY(TARGET TestQGearsHRCSerializer PROPERTY FOLDER "tests")
 
 target_link_libraries(TestQGearsHRCSerializer ${LIBRARIES})
-add_test(TestQGearsHRCSerializer TestQGearsHRCSerializer)
+add_test(NAME TestQGearsHRCSerializer COMMAND TestQGearsHRCSerializer)
 
 # world map
 add_executable(TestMapSerializer
