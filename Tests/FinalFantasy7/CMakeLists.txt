@@ -8,9 +8,9 @@ include_directories(
 
 set(LIBRARIES
     ${QGears_TEST_LIBRARIES}
-    QGearsMain
-	q-gears-data
     FinalFantasy7
+	QGearsMain
+	q-gears-data
 )
 
 add_executable(TestFF7FLevelFileSerializer
