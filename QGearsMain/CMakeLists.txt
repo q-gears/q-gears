@@ -364,12 +364,12 @@ target_link_libraries(QGearsMain
 	liblua
     TinyXml
     FinalFantasy7
-	q-gears-data
 )
 
 target_link_libraries(q-gears 
 	QGearsMain
 	${Boost_LIBRARIES}
+    q-gears-data
 )
 
 if(WIN32 OR APPLE)
