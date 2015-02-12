@@ -47,8 +47,8 @@ before_install:
 script: 
 - mkdir build_qgears
 - cd build_qgears
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then- cmake -G"Unix Makefiles" ..; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then- cmake -G"Unix Makefiles" .. -DBOOST_ROOT=${PWD}/../boost/1.55.0_1; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then cmake -G"Unix Makefiles" ..; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then cmake -G"Unix Makefiles" .. -DBOOST_ROOT=${PWD}/../boost/1.55.0_1; fi
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then make -j2; fi
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then ../CIBuid/osx/fix_lib_paths.sh ./bin_release; fi
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" !=1 ]]; then cpack -C Release; fi
