@@ -115,8 +115,8 @@ addons:
     build_command: "make -j4"
     branch_pattern: coverity_scan
 env: 
-  - COVERAGE=1
   global: 
+  - COVERAGE=1
   - secure: "PUtlviIMOxgXYfBiAW+tsDHQPq+XfftHy2Te1qFvkzkqfGtHQMiCM5an1tZW8LuuYLhuRo+piG+XsK5A8THW4At+hsQZFRPK4b952aHGTQNimTPFr3COccKOlGsLDJD+iKEBJbME1u/Kml9IvwVFBLoL6UtjEWPUJ3jVOitfnoA="
   - secure: pc5w4v8EzEtKD+iSZaao9Qq7FoPz2a65cpubHQjD36IN7g4gNaUcv2i/9cgqWk8+au7jKbJg0lFnkXRA/ldzBd30xsXubKWSmvcKt2dQRNJkKVBWsKW2ZiAtID/uibu5kwxdGn1zi4uO+WXygmu/fWSvOkToq87NsGrQYGU+Ahs=
   - secure: fqca/ai9xM7M0TLcZHwr8YqWB2+/+k5Bg5D9C/gTaZQgQvvTbXRdI8LFUTgUYCHiFu/QphvzvXyVHPTVL1xB3xZIMC5G8Cqe2T+Zy+UprK0A8Fmxk/V/qTTMgigAevtCXeVYH7+I0M+LNZrz4oYYa6FRJY79OPv+T1QQ8FUGTqc=
