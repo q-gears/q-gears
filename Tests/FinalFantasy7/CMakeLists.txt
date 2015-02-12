@@ -9,6 +9,7 @@ include_directories(
 set(LIBRARIES
     ${QGears_TEST_LIBRARIES}
     QGearsMain
+	q-gears-data
     FinalFantasy7
 )
 
