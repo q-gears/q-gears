@@ -37,8 +37,9 @@ before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then tar xf lcov_1.11.orig.tar.gz; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then sudo make -C lcov-1.11/ install; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then ../CIBuid/linux/dependencies.sh; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ../CIBuid/osx/dependencies.sh; fi
+- ls
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./CIBuid/linux/dependencies.sh; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then ./CIBuid/osx/dependencies.sh; fi
 - $CXX --version
 
 before_install: 
