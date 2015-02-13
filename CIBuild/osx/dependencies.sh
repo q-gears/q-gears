@@ -11,8 +11,10 @@ unzip OgreSDK.zip >> OgreSDK_extract.log
 sudo tar xfzC NVIDIA_Cg.tgz /
 unzip OgreDependencies_OSX_libc._20130610.zip >> extract.log
 echo "Setup env vars"
-export OGRE_HOME="${PWD}/../OgreSDK"
-export OGRE_SDK="${PWD}/../OgreSDK"
+#export OGRE_HOME="${PWD}/../OgreSDK"
+#export OGRE_SDK="${PWD}/../OgreSDK"
+export OGRE_HOME="/Users/travis/build/q-gears/q-gears/OgreSDK"
+export OGRE_SDK="/Users/travis/build/q-gears/q-gears/OgreSDK"
 export OIS_HOME="/Users/travis/build/q-gears/q-gears/Dependencies"
 
 # /Users/travis/build/q-gears/q-gears/Dependencies;
