@@ -40,6 +40,7 @@ before_script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then chmod +x ./CIBuild/linux/dependencies.sh; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./CIBuild/linux/dependencies.sh; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then chmod +x ./CIBuild/osx/dependencies.sh; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then chmod +x ./CIBuild/osx/fix_lib_paths.sh; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ./CIBuild/osx/dependencies.sh; fi
 - $CXX --version
 
