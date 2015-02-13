@@ -262,9 +262,9 @@ elseif(APPLE)
     SET(CPACK_GENERATOR "DragNDrop")
     install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
     install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
-        install(FILES ${OGRE_CMAKE_MODULE_PATH}/../lib/macosx/Release/Ogre.framework/Ogre DESTINATION ./)
-        install(FILES ${OGRE_CMAKE_MODULE_PATH}/../lib/macosx/Release/RenderSystem_GL.framework/Versions/1.9.0/RenderSystem_GL DESTINATION ./)
-        install(FILES ${OGRE_CMAKE_MODULE_PATH}/../lib/macosx/Release/OgreOverlay.framework/Versions/1.9.0/OgreOverlay DESTINATION ./)
+        install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Ogre DESTINATION ./)
+        install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/RenderSystem_GL DESTINATION ./)
+        install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/OgreOverlay DESTINATION ./)
 
     # TODO: Fix up other files and use "otool" to fix dynlib + framework paths
         #install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OIS.DLL DESTINATION ./)
