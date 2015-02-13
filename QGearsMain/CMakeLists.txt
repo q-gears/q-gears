@@ -372,6 +372,10 @@ target_link_libraries(q-gears
     q-gears-data
 )
 
+target_link_libraries(q-gears-data
+    QGearsMain
+)
+
 if(WIN32 OR APPLE)
   install(TARGETS q-gears DESTINATION .)
 else()
