@@ -103,10 +103,10 @@ after_success:
 - if [[ "$TRAVIS_PULL_REQUEST" == 'false' && "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then scp -o StrictHostKeyChecking=no ~/build/q-gears/q-gears/build_qgears/*.dmg paul@itscovarr.com:/var/www/storage/qgears/$hash/mac/; fi
 
 after_success:
-  - if [ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]; then lcov --directory . --capture --output-file coverage.info; fi
-  - if [ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]; then lcov --remove coverage.info '*/googlemock/*' '/usr/*' --output-file coverage.info; fi
-  - if [ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]; then lcov --list coverage.info; fi
-  - if [ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]; then coveralls-lcov coverage.info; fi
+  - if [[ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then lcov --directory . --capture --output-file coverage.info; fi
+  - if [[ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then lcov --remove coverage.info '*/googlemock/*' '/usr/*' --output-file coverage.info; fi
+  - if [[ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then lcov --list coverage.info; fi
+  - if [[ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then coveralls-lcov coverage.info; fi
   
 notifications: 
   on_failure: always
