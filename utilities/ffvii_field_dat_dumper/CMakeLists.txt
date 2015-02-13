@@ -36,6 +36,8 @@ endif()
 
 set(LIBRARIES
     Utility
+    QGearsMain
+    q-gears-data
 )
 target_link_libraries(ff7_field_dat_dumper    ${LIBRARIES})
 

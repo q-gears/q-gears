@@ -33,6 +33,8 @@ endif()
 
 set(LIBRARIES
     Utility
+    QGearsMain
+    q-gears-data
 )
 target_link_libraries(ff9_script_dumper    ${LIBRARIES})
 

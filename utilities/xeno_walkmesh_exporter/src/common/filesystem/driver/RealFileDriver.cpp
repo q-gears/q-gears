@@ -50,8 +50,13 @@ RealFileDriver::ReadFile(const RString &path, void* buffer, const unsigned int s
     }
 
     fseek(file, start, SEEK_SET);
-    fread(buffer, sizeof(char), length, file);
+    const auto ret = fread(buffer, sizeof(char), length, file);
     fclose(file);
+    if (ret != sizeof(char))
+    {
+        LOGGER->Log(LOGGER_ERROR, "fread failure");
+        return false;
+    }
 
     return true;
 }

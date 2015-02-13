@@ -1,7 +1,7 @@
 # define header and source files for the library
 set(HEADER_FILES
   include/modules/worldmap/WorldMapModule.h
-  include/common/QGearsApplication.h
+
   include/common/QGearsManualObject.h
   include/common/QGearsResource.h
   include/common/QGearsStringUtil.h
@@ -99,9 +99,11 @@ set(HEADER_FILES
   include/core/XmlTextFile.h
   include/core/XmlTextsFile.h
   #include/viewer/ViewerModule.h
+  include/data/QGearsXMLSerializer.h
 )
 
 set(HEADER_FILES_DATA
+  include/common/QGearsApplication.h
 include/data/worldmap/MapFile.h
   include/data/worldmap/MapFileManager.h
   include/data/worldmap/MapFileSerializer.h
@@ -146,10 +148,10 @@ include/data/worldmap/MapFile.h
   include/data/QGearsSerializer.h
   include/data/QGearsTexCodec.h
   include/data/QGearsTexFile.h
-  include/data/QGearsXMLSerializer.h
 )
 
 set(SOURCE_FILES_DATA
+  src/common/QGearsApplication.cpp
   src/data/QGearsAFile.cpp
   src/data/QGearsAFileManager.cpp
   src/data/QGearsAFileSerializer.cpp
@@ -194,12 +196,12 @@ set(SOURCE_FILES_DATA
   src/data/QGearsSerializer.cpp
   src/data/QGearsTexCodec.cpp
   src/data/QGearsTexFile.cpp
-  src/data/QGearsXMLSerializer.cpp
+
 )
 
 set(SOURCE_FILES
   src/modules/worldmap/WorldMapModule.cpp
-  src/common/QGearsApplication.cpp
+
   src/common/QGearsManualObject.cpp
   src/common/QGearsResource.cpp
   src/common/QGearsStringUtil.cpp
@@ -276,6 +278,7 @@ set(SOURCE_FILES
   src/map/QGearsWalkmeshFileXMLSerializer.cpp
   #src/viewer/ViewerModule.cpp
   src/QGearsGameState.cpp
+  src/data/QGearsXMLSerializer.cpp
 )
 if(QGears_SOUND)
     set(HEADER_FILES

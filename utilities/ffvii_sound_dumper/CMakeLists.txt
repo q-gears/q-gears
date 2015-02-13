@@ -41,6 +41,8 @@ endif()
 
 set(LIBRARIES
     Utility
+    QGearsMain
+    q-gears-data
 )
 target_link_libraries(ff7_sound_dumper    ${LIBRARIES})
 

@@ -31,7 +31,9 @@ endif()
 
 set(LIBRARIES
     Utility
-	${ZLIB_LIBRARIES}
+    QGearsMain
+    q-gears-data
+    ${ZLIB_LIBRARIES}
 )
 target_link_libraries(ff7_font_exporter    ${LIBRARIES})
 

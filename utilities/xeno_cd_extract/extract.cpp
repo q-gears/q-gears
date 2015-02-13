@@ -29,8 +29,8 @@ void parse_file(unsigned long start_sector, unsigned long file_size, int id, cha
 
     unsigned char arfile[2352];
     unsigned char type[4];
-    char* extention;
-    unsigned long file_type;
+    const char* extention;
+    unsigned int file_type;
 
     char number[10];
 
@@ -170,7 +170,7 @@ void parse_file(unsigned long start_sector, unsigned long file_size, int id, cha
 
     FILE* desc_file = fopen("description.txt", "a+");
     char desc[ 255 ];
-    sprintf(desc, "%s - 0x%04x, 0x%04x\n", file_name, start_sector, file_size);
+    sprintf(desc, "%s - 0x%04x, 0x%04x\n", file_name, static_cast<unsigned int>(start_sector), static_cast<unsigned int>(file_size));
     fputs (desc, desc_file);
     fclose(desc_file);
 
@@ -308,12 +308,12 @@ void extract(char *filename)
             //mkdir(filename);
             abort();
 
-            printf("number of file %d, in dir %d", -file_size, directory_number);
+            printf("number of file %d, in dir %d", static_cast<int>(-file_size), directory_number);
         }
         // file
         if (start_sector != 0 && file_size < 0xff000000 && file_size > 0)
         {
-            printf("file number %d, size: 0x%x byte - ", i, file_size);
+            printf("file number %d, size: 0x%x byte - ", i, static_cast<unsigned int>(file_size));
             parse_file(start_sector, file_size, i, filename);
         }
     }

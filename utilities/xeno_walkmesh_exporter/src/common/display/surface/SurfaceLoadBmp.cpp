@@ -141,7 +141,13 @@ SurfaceUtils::LoadBMP(const std::string &file, Surface* &img)
     fseek(image, 0, SEEK_SET);
 
     buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
-    fread(buffer, 1, size, image);
+    const auto readRet = fread(buffer, 1, size, image);
+    if (readRet != sizeof(char))
+    {
+        LOGGER->Log(LOGGER_ERROR, "fread failure");
+        fclose(image);
+        return OPEN_FATAL_ERROR;
+    }
 
     SurfaceUtils::OpenResult ret;
 
@@ -151,8 +157,9 @@ SurfaceUtils::LoadBMP(const std::string &file, Surface* &img)
     if (ret != SurfaceUtils::OPEN_OK && img != NULL)
     {
         delete img;
-        img = NULL;
+        img = NULL;;
     }
 
+    fclose(image);
     return ret;
 }
