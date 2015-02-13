@@ -33,6 +33,7 @@ if(WIN32)
 endif()
 
 set(LIBRARIES
+	q-gears-data
     Utility
 )
 target_link_libraries(ff7_field_model_exporter_pc    ${LIBRARIES})
