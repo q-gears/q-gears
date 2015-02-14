@@ -9,6 +9,17 @@ set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 22)
 set(QGears_VERSION_PATCH 0)
 
+string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
+
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
+  # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
+  # differentiation between debug and release builds.
+  set(CMAKE_BUILD_TYPE "RELEASE" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
+  message("CMAKE_BUILD_TYPE was empty defaulting to RELEASE")
+endif ()
+
+message("CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE} CMAKE_BINARY_DIR is ${CMAKE_BINARY_DIR}")
+
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin_release)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin_release)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin_release)
@@ -61,13 +72,6 @@ set(CMAKE_MODULE_PATH
   "${CMAKE_MODULE_PATH}"
   "${QGears_SOURCE_DIR}/CMake" 
 )
-
-if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
-  # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
-  # differentiation between debug and release builds.
-  set(CMAKE_BUILD_TYPE "release" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
-  message("RELEASE set")
-endif ()
 
 set(CMAKE_DEBUG_POSTFIX "_d")
 
@@ -266,10 +270,10 @@ elseif(APPLE)
     # APPLE is also UNIX, so must check for APPLE before UNIX
     SET(CPACK_GENERATOR "DragNDrop")
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "release")
-       set(OSX_BIN_DIR, ${CMAKE_BINARY_DIR}/bin_release)
+       set(OSX_BIN_DIR, "${CMAKE_BINARY_DIR}/bin_release")
        message("DEBUG installer build, OSX_BIN_DIR=${OSX_BIN_DIR}")
     else()
-       set(OSX_BIN_DIR, ${CMAKE_BINARY_DIR}/bin_debug)
+       set(OSX_BIN_DIR, "${CMAKE_BINARY_DIR}/bin_debug")
        message("RELEASE installer build, OSX_BIN_DIR=${OSX_BIN_DIR}")
     endif()
     install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
