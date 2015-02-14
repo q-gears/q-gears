@@ -9,6 +9,17 @@ set(QGears_VERSION_MAJOR 0)
 set(QGears_VERSION_MINOR 22)
 set(QGears_VERSION_PATCH 0)
 
+string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
+
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
+  # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
+  # differentiation between debug and release builds.
+  set(CMAKE_BUILD_TYPE "RELEASE" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
+  message("CMAKE_BUILD_TYPE was empty defaulting to RELEASE")
+endif ()
+
+message("CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE} CMAKE_BINARY_DIR is ${CMAKE_BINARY_DIR}")
+
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin_release)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin_release)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin_release)
@@ -61,13 +72,6 @@ set(CMAKE_MODULE_PATH
   "${CMAKE_MODULE_PATH}"
   "${QGears_SOURCE_DIR}/CMake" 
 )
-
-if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
-  # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
-  # differentiation between debug and release builds.
-  set(CMAKE_BUILD_TYPE "release" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
-  message("RELEASE set")
-endif ()
 
 set(CMAKE_DEBUG_POSTFIX "_d")
 
@@ -191,6 +195,12 @@ else()
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
 endif()
 
+if (UNIX AND $ENV{COVERAGE}==1)
+      message("Setting coverage compiler options")
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0") # debug, no optimisation
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage") # enabling coverage
+endif()
+
 add_definitions(-DTIXML_USE_STL)
 add_subdirectory(dependencies)
 add_subdirectory(QGearsMain)
@@ -228,13 +238,12 @@ MESSAGE( STATUS "BOOST_ROOT:         " ${BOOST_ROOT} )
 if(WIN32)
     # On Windows generate MSI packages
     SET(CPACK_GENERATOR "WIX")
-    
-    set(CPACK_WIX_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/wix.template.in")
+    SET(CPACK_WIX_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/wix.template.in")
     SET(CPACK_WIX_UPGRADE_GUID 8fbb893f-5622-4f6d-a7f6-c221f7be5d52)
 
-# TODO: Set MSI banner image, copyright info etc, also include startmenu/desktop shortcuts
+    # TODO: Set MSI banner image, copyright info etc, also include startmenu/desktop shortcuts
     #set the name of the installer default formating is name-version-os
-    
+
     # If empty assume release
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "release")
         message("RELEASE installer build")
@@ -260,15 +269,29 @@ if(WIN32)
 elseif(APPLE)
     # APPLE is also UNIX, so must check for APPLE before UNIX
     SET(CPACK_GENERATOR "DragNDrop")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "RELEASE")
+       set(OSX_BIN_DIR "${CMAKE_BINARY_DIR}/bin_release")
+       message("DEBUG installer build, CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR} OSX_BIN_DIR=${OSX_BIN_DIR}")
+    else()
+       set(OSX_BIN_DIR "${CMAKE_BINARY_DIR}/bin_debug")
+       message("RELEASE installer build, CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR} OSX_BIN_DIR=${OSX_BIN_DIR}")
+    endif()
     install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
     install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
-        install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Ogre DESTINATION ./)
-        install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/RenderSystem_GL DESTINATION ./)
-        install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/OgreOverlay DESTINATION ./)
-
-    # TODO: Fix up other files and use "otool" to fix dynlib + framework paths
-        #install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OIS.DLL DESTINATION ./)
-        #install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-1_55.DLL" DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/Ogre DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/RenderSystem_GL DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/OgreOverlay DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_thread-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_date_time-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_system-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_atomic-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_chrono-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_program_options-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_filesystem-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_filesystem-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/QtCore DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/QtGui DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/liblua.dylib DESTINATION ./)
 elseif(UNIX)
     # On Linux generate TAR.GZ,DEB and RPM packages
     #Find out what architecture are we running on and set the package architecture 

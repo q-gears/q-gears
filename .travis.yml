@@ -37,11 +37,14 @@ before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then tar xf lcov_1.11.orig.tar.gz; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then sudo make -C lcov-1.11/ install; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then sudo apt-get install ruby1.9.1 ruby1.9.1-dev; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then sudo apt-get install rubygems1.9.1 irb1.9.1 ri1.9.1; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "g++" && "$COVERAGE" == 1 ]]; then rvmsudo  gem install coveralls-lcov; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then chmod +x ./CIBuild/linux/dependencies.sh; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./CIBuild/linux/dependencies.sh; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then chmod +x ./CIBuild/osx/dependencies.sh; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then chmod +x ./CIBuild/osx/fix_lib_paths.sh; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ./CIBuild/osx/dependencies.sh; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./CIBuild/linux/dependencies.sh; fi
 - $CXX --version
 
 before_install: 
@@ -53,10 +56,25 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OGRE_SDK=/Users/travis/build/q-gears/q-gears/OgreSDK; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export OIS_HOME=/Users/travis/build/q-gears/q-gears/Dependencies; fi
 
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then cmake -G"Unix Makefiles" ..; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then cmake -G"Unix Makefiles" .. -DBOOST_ROOT=${PWD}/../boost/1.55.0_1; fi
+# Debug code coverage Linux build
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "${COVERAGE}" == 1 ]]; then cmake -G"Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Debug; fi
+
+# Release Linux build
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "${COVERAGE}" != 1 ]]; then cmake -G"Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Release; fi
+
+# Release OSX build
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then cmake -Wno-dev -G"Unix Makefiles" .. -DBOOST_ROOT=${PWD}/../boost/1.55.0_1 -DCMAKE_BUILD_TYPE=Release; fi
+
+# Do the compile
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then make -j2; fi
+
+# Fix dylib paths on OSX to be relative to the main binary
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then ../CIBuild/osx/fix_lib_paths.sh ./bin_release; fi
+
+# Run unit tests
+- if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then ctest --verbose; fi
+
+# Generate installers
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" != 1 ]]; then cpack -C Release; fi
 
 language: cpp
@@ -119,12 +137,14 @@ addons:
       name: "q-gears/q-gears"
       description: "Build submitted via Travis CI"
     notification_email: coverityscan@paulsapps.com
-    build_command_prepend: "mkdir qgears_build; cd qgears_build; cmake .."
+    build_command_prepend: "mkdir qgears_build; cd qgears_build; cmake .. -DCMAKE_BUILD_TYPE=Release"
     build_command: "make -j4"
     branch_pattern: coverity_scan
 env: 
-  global: 
+  matrix:
   - COVERAGE=1
+  - COVERAGE=0
+  global: 
   - secure: "PUtlviIMOxgXYfBiAW+tsDHQPq+XfftHy2Te1qFvkzkqfGtHQMiCM5an1tZW8LuuYLhuRo+piG+XsK5A8THW4At+hsQZFRPK4b952aHGTQNimTPFr3COccKOlGsLDJD+iKEBJbME1u/Kml9IvwVFBLoL6UtjEWPUJ3jVOitfnoA="
   - secure: pc5w4v8EzEtKD+iSZaao9Qq7FoPz2a65cpubHQjD36IN7g4gNaUcv2i/9cgqWk8+au7jKbJg0lFnkXRA/ldzBd30xsXubKWSmvcKt2dQRNJkKVBWsKW2ZiAtID/uibu5kwxdGn1zi4uO+WXygmu/fWSvOkToq87NsGrQYGU+Ahs=
   - secure: fqca/ai9xM7M0TLcZHwr8YqWB2+/+k5Bg5D9C/gTaZQgQvvTbXRdI8LFUTgUYCHiFu/QphvzvXyVHPTVL1xB3xZIMC5G8Cqe2T+Zy+UprK0A8Fmxk/V/qTTMgigAevtCXeVYH7+I0M+LNZrz4oYYa6FRJY79OPv+T1QQ8FUGTqc=
