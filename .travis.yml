@@ -71,6 +71,9 @@ script:
 # Fix dylib paths on OSX to be relative to the main binary
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then ../CIBuild/osx/fix_lib_paths.sh ./bin_release; fi
 
+# Run unit tests
+- if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then make all test -j2; fi
+
 # Generate installers
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 && "${COVERAGE}" != 1 ]]; then cpack -C Release; fi
 
