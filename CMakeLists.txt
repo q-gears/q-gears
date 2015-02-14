@@ -228,13 +228,12 @@ MESSAGE( STATUS "BOOST_ROOT:         " ${BOOST_ROOT} )
 if(WIN32)
     # On Windows generate MSI packages
     SET(CPACK_GENERATOR "WIX")
-    
-    set(CPACK_WIX_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/wix.template.in")
+    SET(CPACK_WIX_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/wix.template.in")
     SET(CPACK_WIX_UPGRADE_GUID 8fbb893f-5622-4f6d-a7f6-c221f7be5d52)
 
-# TODO: Set MSI banner image, copyright info etc, also include startmenu/desktop shortcuts
+    # TODO: Set MSI banner image, copyright info etc, also include startmenu/desktop shortcuts
     #set the name of the installer default formating is name-version-os
-    
+
     # If empty assume release
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "release")
         message("RELEASE installer build")
@@ -260,15 +259,27 @@ if(WIN32)
 elseif(APPLE)
     # APPLE is also UNIX, so must check for APPLE before UNIX
     SET(CPACK_GENERATOR "DragNDrop")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "release")
+       set(OSX_BIN_DIR, ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE})
+    else()
+       set(OSX_BIN_DIR, ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG)
+    endif()
     install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
     install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
-        install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Ogre DESTINATION ./)
-        install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/RenderSystem_GL DESTINATION ./)
-        install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/OgreOverlay DESTINATION ./)
-
-    # TODO: Fix up other files and use "otool" to fix dynlib + framework paths
-        #install(FILES ${OGRE_CMAKE_MODULE_PATH}/../bin/release/OIS.DLL DESTINATION ./)
-        #install(FILES "${BOOST_ROOT}/stage/lib/BOOST_SYSTEM-VC120-MT-1_55.DLL" DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/Ogre DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/RenderSystem_GL DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/OgreOverlay DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_thread-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_date_time-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_system-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_atomic-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_chrono-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_program_options-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_filesystem-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/libboost_filesystem-mt.dylib DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/QtCore DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/QtGui DESTINATION ./)
+    install(FILES ${OSX_BIN_DIR}/liblua.dylib DESTINATION ./)
 elseif(UNIX)
     # On Linux generate TAR.GZ,DEB and RPM packages
     #Find out what architecture are we running on and set the package architecture 
