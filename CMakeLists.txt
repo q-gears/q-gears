@@ -191,6 +191,12 @@ else()
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
 endif()
 
+if (UNIX)
+      message("Setting coverage compiler options")
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0") # debug, no optimisation
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage") # enabling coverage
+endif()
+
 add_definitions(-DTIXML_USE_STL)
 add_subdirectory(dependencies)
 add_subdirectory(QGearsMain)
@@ -260,9 +266,11 @@ elseif(APPLE)
     # APPLE is also UNIX, so must check for APPLE before UNIX
     SET(CPACK_GENERATOR "DragNDrop")
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "release")
-       set(OSX_BIN_DIR, ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE})
+       set(OSX_BIN_DIR, ${CMAKE_BINARY_DIR}/bin_release)
+       message("DEBUG installer build, OSX_BIN_DIR=${OSX_BIN_DIR}")
     else()
-       set(OSX_BIN_DIR, ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG})
+       set(OSX_BIN_DIR, ${CMAKE_BINARY_DIR}/bin_debug)
+       message("RELEASE installer build, OSX_BIN_DIR=${OSX_BIN_DIR}")
     endif()
     install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
     install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
