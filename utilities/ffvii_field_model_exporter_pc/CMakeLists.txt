@@ -11,13 +11,13 @@ set(SOURCE_FILES
     src/main.cpp
 )
 
-add_definitions(
-    -DQGEARS_ADD_MANAGERS
-)
+#add_definitions(
+#    -DQGEARS_ADD_MANAGERS
+#)
 
 add_executable(ff7_field_model_exporter_pc
-  ${HEADER_FILES}
   ${SOURCE_FILES}
+  ${HEADER_FILES}
 )
 SET_PROPERTY(TARGET ff7_field_model_exporter_pc PROPERTY FOLDER "utilities")
 
@@ -33,7 +33,16 @@ if(WIN32)
 endif()
 
 set(LIBRARIES
-    Utility
+    q-gears-data
+
+    QGearsMain
+
+
+    ${OGRE_LIBRARIES}
+    ${OIS_LIBRARIES}
+    ${ZLIB_LIBRARIES}
+Utility
+
 )
 target_link_libraries(ff7_field_model_exporter_pc    ${LIBRARIES})
 

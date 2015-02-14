@@ -53,12 +53,14 @@ void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, cons
             auto fullPath = inputDir + file;
             mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
             ConvertFieldModels(fullPath, outputDir);
+            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");
         }
         else if (file == "field\\flevel.lgp")
         {
             auto fullPath = inputDir + file;
             mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
             ConvertFields(fullPath, outputDir);
+            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");
         }
     }
 }
@@ -131,5 +133,10 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
 
 void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
 {
+    // Everything in here is a field
+    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVII", "*.hrc");
+    for (auto& resourceName : *resources)
+    {
 
+    }
 }

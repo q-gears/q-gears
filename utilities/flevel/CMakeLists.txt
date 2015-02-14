@@ -29,6 +29,8 @@ endif()
 
 set(LIBRARIES
     Utility
+    QGearsMain
+    q-gears-data
 )
 target_link_libraries(flevel    ${LIBRARIES})
 

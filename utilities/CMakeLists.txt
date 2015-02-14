@@ -40,7 +40,6 @@ add_library(Utility STATIC
 )
 
 target_link_libraries(Utility
-    QGearsMain
     ${OGRE_LIBRARIES}
     ${OIS_LIBRARIES}
     ${ZLIB_LIBRARIES}

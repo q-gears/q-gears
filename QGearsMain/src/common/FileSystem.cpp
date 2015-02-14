@@ -37,8 +37,13 @@ FileSystem::ReadFile(const Ogre::String &path, void* buffer, const unsigned int 
     }
 
     fseek(file, start, SEEK_SET);
-    fread(buffer, sizeof(char), length, file);
+    const auto ret = fread(buffer, sizeof(char), length, file);
     fclose(file);
+    if (ret != sizeof(char))
+    {
+        LOG_ERROR("Failed to read all data\n");
+        return false;
+    }
 
     return true;
 }

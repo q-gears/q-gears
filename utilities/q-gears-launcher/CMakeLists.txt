@@ -49,6 +49,8 @@ endif()
 
 set(LIBRARIES
     Utility
+    QGearsMain
+    q-gears-data
 )
 
 

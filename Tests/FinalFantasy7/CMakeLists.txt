@@ -8,8 +8,9 @@ include_directories(
 
 set(LIBRARIES
     ${QGears_TEST_LIBRARIES}
-    QGearsMain
     FinalFantasy7
+	QGearsMain
+	q-gears-data
 )
 
 add_executable(TestFF7FLevelFileSerializer
@@ -19,7 +20,7 @@ SET_PROPERTY(TARGET TestFF7FLevelFileSerializer PROPERTY FOLDER "tests")
 
 
 target_link_libraries(TestFF7FLevelFileSerializer ${LIBRARIES})
-add_test(TestFF7FLevelFileSerializer TestFF7FLevelFileSerializer)
+add_test(NAME TestFF7FLevelFileSerializer COMMAND TestFF7FLevelFileSerializer)
 
 
 add_executable(TestFF7ModelListFileSerializer
@@ -29,7 +30,7 @@ SET_PROPERTY(TARGET TestFF7ModelListFileSerializer PROPERTY FOLDER "tests")
 
 
 target_link_libraries(TestFF7ModelListFileSerializer ${LIBRARIES})
-add_test(TestFF7ModelListFileSerializer TestFF7ModelListFileSerializer)
+add_test(NAME TestFF7ModelListFileSerializer COMMAND TestFF7ModelListFileSerializer)
 
 
 add_executable(TestFF7WalkmeshFileSerializer
@@ -38,4 +39,4 @@ add_executable(TestFF7WalkmeshFileSerializer
 SET_PROPERTY(TARGET TestFF7WalkmeshFileSerializer PROPERTY FOLDER "tests")
 
 target_link_libraries(TestFF7WalkmeshFileSerializer ${LIBRARIES})
-add_test(TestFF7WalkmeshFileSerializer TestFF7WalkmeshFileSerializer)
+add_test(NAME TestFF7WalkmeshFileSerializer COMMAND TestFF7WalkmeshFileSerializer)
