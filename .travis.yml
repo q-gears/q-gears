@@ -66,7 +66,7 @@ script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cmake -Wno-dev -G"Unix Makefiles" .. -DBOOST_ROOT=${PWD}/../boost/1.55.0_1 -DCMAKE_BUILD_TYPE=Release; fi
 
 # Do the compile
-- if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then make -j3; fi
+- if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then make -j2; fi
 
 # Fix dylib paths on OSX to be relative to the main binary
 - if [[ "${COVERITY_SCAN_BRANCH}" != 1 && "$TRAVIS_OS_NAME" == "osx" ]]; then ../CIBuild/osx/fix_lib_paths.sh ./bin_release; fi
