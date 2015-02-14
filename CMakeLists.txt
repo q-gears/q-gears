@@ -195,7 +195,7 @@ else()
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
 endif()
 
-if (UNIX AND $ENV{COVERAGE} EQUALS 1)
+if (UNIX AND $ENV{COVERAGE}==1)
       message("Setting coverage compiler options")
       SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0") # debug, no optimisation
       SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage") # enabling coverage
@@ -269,7 +269,7 @@ if(WIN32)
 elseif(APPLE)
     # APPLE is also UNIX, so must check for APPLE before UNIX
     SET(CPACK_GENERATOR "DragNDrop")
-    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "release")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "RELEASE")
        set(OSX_BIN_DIR, "${CMAKE_BINARY_DIR}/bin_release")
        message("DEBUG installer build, OSX_BIN_DIR=${OSX_BIN_DIR}")
     else()

@@ -39,6 +39,18 @@ do
    install_name_tool "$file" -change @@HOMEBREW_PREFIX@@/lib/libboost_filesystem-mt.dylib @executable_path/libboost_filesystem-mt.dylib
    install_name_tool "$file" -change @@HOMEBREW_PREFIX@@/lib/libboost_unit_test_framework-mt.dylib @executable_path/libboost_unit_test_framework-mt.dylib
    install_name_tool "$file" -change @@HOMEBREW_PREFIX@@/lib/libboost_chrono-mt.dylib @executable_path/libboost_chrono-mt.dylib
+   
+   install_name_tool "$file" -change /usr/local/lib/libboost_thread-mt.dylib @executable_path/libboost_thread-mt.dylib
+   install_name_tool "$file" -change /usr/local/lib/libboost_date_time-mt.dylib @executable_path/libboost_date_time-mt.dylib
+   install_name_tool "$file" -change /usr/local/lib/libboost_system-mt.dylib @executable_path/libboost_system-mt.dylib
+   install_name_tool "$file" -change /usr/local/lib/libboost_atomic-mt.dylib @executable_path/libboost_atomic-mt.dylib
+   install_name_tool "$file" -change /usr/local/lib/libboost_chrono-mt.dylib @executable_path/libboost_chrono-mt.dylib
+   install_name_tool "$file" -change /usr/local/lib/libboost_program_options-mt.dylib @executable_path/libboost_program_options-mt.dylib
+   install_name_tool "$file" -change /usr/local/lib/libboost_filesystem-mt.dylib @executable_path/libboost_filesystem-mt.dylib
+   install_name_tool "$file" -change /usr/local/lib/libboost_unit_test_framework-mt.dylib @executable_path/libboost_unit_test_framework-mt.dylib
+   install_name_tool "$file" -change /usr/local/lib/libboost_chrono-mt.dylib @executable_path/libboost_chrono-mt.dylib
+   
+   
    install_name_tool "$file" -change ${PWD}/bin_release/liblua.dylib  @executable_path/liblua.dylib
    install_name_tool "$file" -change /usr/local/lib/QtCore.framework/Versions/4/QtCore @executable_path/QtCore
    install_name_tool "$file" -change /usr/local/lib/QtGui.framework/Versions/4/QtGui @executable_path/QtGui
