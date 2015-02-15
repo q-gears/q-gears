@@ -5,25 +5,29 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QMessageBox>
-MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWindow)
-{
-	ui->setupUi(this);
-	//set default paths.
-	// TODO add code for platform detect.
-	//on linux
-	ui->lineConfigDir->setText(QString("%1/.q-gears").arg(QDir::homePath()));
-	ui->lineQGearsExe->setText(QString("/usr/games/q-gears"));
-	ui->lineOutput->setText(QString("%1/.q-gears/data").arg(QDir::homePath()));
 
-	//on windows
-	//	ui->lineConfigDir->setText(QString("%1/q-gears").arg(QDir::homePath()));
-	//	ui->lineQGearsExe->setText(QString("/usr/games/q-gears"));
-	//	ui->lineOutput->setText(QString("%1/q-gears/data").arg(QDir::homePath()));
-  #ifdef _DEBUG
-	  // Hard coded prebaked paths for debugging to save time
-	  ui->lineInput->setText("C:\\Games\\FF7\\data");
-	  ui->lineOutput->setText("C:\\Users\\paul\\Desktop\\q-gears\\output\\_data");
-  #endif
+MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    //set default paths.
+#ifdef Q_OS_WIN
+    //on windows
+    ui->lineConfigDir->setText(QString("%1/q-gears").arg(QDir::homePath()));
+    ui->lineQGearsExe->setText(QDir::currentPath() + "/q-gears.exe");
+    ui->lineOutput->setText(QString("%1/q-gears/data").arg(QDir::homePath()));
+#else
+    //on linux
+    ui->lineConfigDir->setText(QString("%1/.q-gears").arg(QDir::homePath()));
+    ui->lineQGearsExe->setText(QString("/usr/games/q-gears"));
+    ui->lineOutput->setText(QString("%1/.q-gears/data").arg(QDir::homePath()));
+
+#endif
+
+#ifdef _DEBUG
+    // Hard coded prebaked paths for debugging to save time
+    ui->lineInput->setText("C:\\Games\\FF7\\data");
+    ui->lineOutput->setText("C:\\Users\\paul\\Desktop\\q-gears\\output\\_data");
+#endif
 
 }
 

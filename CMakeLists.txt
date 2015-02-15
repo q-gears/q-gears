@@ -16,8 +16,6 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
   message("CMAKE_BUILD_TYPE was empty defaulting to RELEASE")
 endif ()
 
-string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
-
 message("CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE} CMAKE_BINARY_DIR is ${CMAKE_BINARY_DIR}")
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin_release)
@@ -245,7 +243,7 @@ if(WIN32)
     #set the name of the installer default formating is name-version-os
 
     # If empty assume release
-    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "RELEASE")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
         message("RELEASE installer build")
         install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
         install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
@@ -269,7 +267,7 @@ if(WIN32)
 elseif(APPLE)
     # APPLE is also UNIX, so must check for APPLE before UNIX
     SET(CPACK_GENERATOR "DragNDrop")
-    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "RELEASE")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
        set(OSX_BIN_DIR "${CMAKE_BINARY_DIR}/bin_release")
        message("DEBUG installer build, CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR} OSX_BIN_DIR=${OSX_BIN_DIR}")
     else()
