@@ -172,8 +172,8 @@ namespace QGears
 
         readShort( stream, pDest.unknown_1C );
         readShort( stream, pDest.data_page );
-        readShort( stream, pDest.unknown_20 );
-        readShort( stream, pDest.unknown_22 );
+        readShort( stream, pDest.data_page2 );
+        readShort( stream, pDest.colourDepth );
         readObject( stream, pDest.unknown_24 );
         pDest.unknown_24 /= unknown_24_SCALE;
         stream->skip( 2 * 2 ); // 2 * uint16 unused

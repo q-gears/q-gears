@@ -94,19 +94,19 @@ namespace QGears
                     LZSDataStream( const String &name, const Ogre::DataStreamPtr &compressed_stream );
         virtual    ~LZSDataStream();
 
-        virtual size_t 	read( void *buf, size_t count );
+        virtual size_t 	read( void *buf, size_t count ) override;
 
-        virtual bool    eof( void ) const;
+        virtual bool    eof( void ) const override;
 
-		virtual void skip(long count);
-	    virtual void seek( size_t pos );
-	    virtual size_t tell(void) const;
-        virtual void close(void);
+		virtual void skip(long count) override;
+	    virtual void seek( size_t pos ) override;
+	    virtual size_t tell(void) const override;
+        virtual void close(void) override;
 
-        virtual size_t availableCompressed( void ) const { return m_available_compressed; }
-        virtual size_t availableUncompressed( void ) const { return m_buffer.avail(); }
+        size_t availableCompressed( void ) const { return m_available_compressed; }
+        size_t availableUncompressed( void ) const { return m_buffer.avail(); }
 
-        virtual void flipEndian( uint32 &inout_data );
+        void flipEndian( uint32 &inout_data );
 
     protected:
         virtual void init();

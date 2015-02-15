@@ -73,8 +73,8 @@ namespace QGears
             bool   flags_20[2];
             uint16 unknown_1C; // maybe some 'mode'
             uint16 data_page;
-            uint16 unknown_20;
-            uint16 unknown_22;
+            uint16 data_page2; // used for special effects pages, when data_page2 != 0, it must be used instead of data_page
+            uint16 colourDepth;
             Ogre::Vector3 unknown_24;
         };
 

@@ -62,21 +62,21 @@ namespace QGears
         };
 
     protected:
-        virtual void    readFileHeader( Ogre::DataStreamPtr &stream );
+        void    readFileHeader( Ogre::DataStreamPtr &stream );
 
-        virtual void    readSectionData( Ogre::DataStreamPtr &stream, Ogre::DataStreamPtr &out_buffer );
+        void    readSectionData(Ogre::DataStreamPtr &stream, Ogre::DataStreamPtr &out_buffer, size_t sectionSize);
         virtual void    readSection( Ogre::DataStreamPtr &stream, FLevelFile* pDest, const size_t section_index );
 
         template<typename ResourceManagerType>
         Ogre::ResourcePtr createResource( FLevelFile *pDest, const String &extension );
 
-        virtual void    readCameraMatrix( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
-        virtual void    readModelList   ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
-        virtual void    readPalette     ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
-        virtual void    readWalkmesh    ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
-        virtual void    readBackground  ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        void    readCameraMatrix( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        void    readModelList   ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        void    readPalette     ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        void    readWalkmesh    ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        void    readBackground  ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
 
-        virtual void    readEnd( Ogre::DataStreamPtr &stream );
+        void    readEnd( Ogre::DataStreamPtr &stream );
 
         template<typename ValueType> void
         readVector( Ogre::DataStreamPtr &stream, std::vector<ValueType> &pDest, size_t count );

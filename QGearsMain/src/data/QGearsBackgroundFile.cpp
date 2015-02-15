@@ -158,55 +158,65 @@ namespace QGears
             ;++it)
         {
             const Page& data_page( m_pages[it->data_page] );
-            const PaletteFile::Page& palette_page( palette->getPage( it->palette_page ) );
-            const Pixel& src( it->src );
-            if( !data_page.enabled )
+            if (data_page.value_size == 2)
             {
+                // TODO FIX ME
                 Ogre::LogManager::getSingleton().stream()
-                    << "Error: referencing an disabled data page";
+                    << "Error: value_size(RGB16) not implemented";
+                break;
             }
-            for( uint16 y( SPRITE_HEIGHT ); y--; )
+            else if (data_page.value_size == 1)
             {
-                for( uint16 x( SPRITE_WIDTH ); x--; )
+                const PaletteFile::Page& palette_page(palette->getPage(it->palette_page));
+                const Pixel& src(it->src);
+                if (!data_page.enabled)
                 {
-                    size_t data_index( (src.y + y) * PAGE_DATA_WIDTH + src.x + x );
-                    if( data_index >= data_page.data.size() )
-                    {
-                        Ogre::LogManager::getSingleton().stream()
-                            << "Error: data page Index out of Bounds " << data_index;
-                    }
-                    uint8 index( data_page.data.at(data_index) );
-                    if( index >= palette_page.size() )
-                    {
-                        Ogre::LogManager::getSingleton().stream()
-                            << "Error: palette page Index out of Bounds " << index;
-                    }
-
-                    data_index = (dst_y + y ) * row_pitch + dst_x + x;
-                    if( data_index >= pixel_count )
-                    {
-                        Ogre::LogManager::getSingleton().stream()
-                            << "Error: writing Pixel out of Bounds " << data_index
-                            << " " << (dst_x + x) << " x " << dst_y + y;
-                    }
-                    Ogre::ColourValue colour( palette_page[ index ] );
-                    if( index == 0 && colour != Ogre::ColourValue::Black)
-                    {
-                        colour.a = 0;
-                    }
-                    else
-                    {
-                        colour.a = 1;
-                    }
-                    color[data_index] = colour.getAsARGB();
+                    Ogre::LogManager::getSingleton().stream()
+                        << "Error: referencing an disabled data page";
                 }
-            }
+                for (uint16 y(SPRITE_HEIGHT); y--;)
+                {
+                    for (uint16 x(SPRITE_WIDTH); x--;)
+                    {
+                        size_t data_index((src.y + y) * PAGE_DATA_WIDTH + src.x + x);
+                        if (data_index >= data_page.data.size())
+                        {
+                            Ogre::LogManager::getSingleton().stream()
+                                << "Error: data page Index out of Bounds " << data_index;
+                        }
+                        uint8 index(data_page.data.at(data_index));
+                        if (index >= palette_page.size())
+                        {
+                            Ogre::LogManager::getSingleton().stream()
+                                << "Error: palette page Index out of Bounds " << index;
+                        }
 
-            dst_x += SPRITE_WIDTH;
-            if( dst_x >= width )
-            {
-                dst_x = 0;
-                dst_y += SPRITE_HEIGHT;
+                        data_index = (dst_y + y) * row_pitch + dst_x + x;
+                        if (data_index >= pixel_count)
+                        {
+                            Ogre::LogManager::getSingleton().stream()
+                                << "Error: writing Pixel out of Bounds " << data_index
+                                << " " << (dst_x + x) << " x " << dst_y + y;
+                        }
+                        Ogre::ColourValue colour(palette_page[index]);
+                        if (index == 0 && colour != Ogre::ColourValue::Black)
+                        {
+                            colour.a = 0;
+                        }
+                        else
+                        {
+                            colour.a = 1;
+                        }
+                        color[data_index] = colour.getAsARGB();
+                    }
+                }
+
+                dst_x += SPRITE_WIDTH;
+                if (dst_x >= width)
+                {
+                    dst_x = 0;
+                    dst_y += SPRITE_HEIGHT;
+                }
             }
         }
 
