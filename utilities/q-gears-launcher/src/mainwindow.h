@@ -34,12 +34,11 @@ private slots:
 	void on_btnGO_clicked();
 
 private:
-    //private functions;
-    void initSettings(void);
-    //private vars
+	//private functions;
+	void initSettings(void);
+	//private vars
 	Ui::MainWindow *ui;
 	QSettings *settings;
-    bool load;
 };
 
 #endif // MAINWINDOW_H

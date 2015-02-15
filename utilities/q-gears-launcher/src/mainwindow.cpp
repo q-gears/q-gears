@@ -10,7 +10,6 @@
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    load=true;
     initSettings();
 
     ui->lineConfigDir->setText(settings->value("ConfigDir").toString());
@@ -22,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWin
     ui->lineInput->setText("C:\\Games\\FF7\\data");
     ui->lineDataDir->setText("C:\\Users\\paul\\Desktop\\q-gears\\output\\_data");
 #endif
-    load=false;
 }
 
 MainWindow::~MainWindow()
