@@ -138,9 +138,9 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
     Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
     for (auto& resourceName : *resources)
     {
-        if (!QGears::StringUtil::endsWith(resourceName, ".tex"))
+        if (!QGears::StringUtil::endsWith(resourceName, ".tex") /*&& resourceName == "blin67_4"*/)
         {
-            try
+            //try
             {
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
 
@@ -150,6 +150,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
                 bgImage->save(outDir + "/" + field->getName() + ".png");
                 delete bgImage;
             }
+            /*
             catch (const Ogre::Exception& ex)
             {
                 std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
@@ -157,7 +158,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
             catch (const std::exception& ex)
             {
                 std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
-            }
+            }*/
         }
     }
 }

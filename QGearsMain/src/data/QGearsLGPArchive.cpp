@@ -70,6 +70,7 @@ namespace QGears
             file_info.archive = this;
             file_info.filename = it->file_name;
             StringUtil::splitFilename( it->file_name, file_info.basename, file_info.path );
+            // TODO: This is actually still the compressed size!!
             file_info.uncompressedSize = it->data_size;
             file_info.compressedSize = file_info.uncompressedSize;
 

@@ -68,6 +68,7 @@ namespace QGears
         #if OGRE_ENDIAN == OGRE_ENDIAN_BIG
             flipEndian( m_available_compressed );
         #endif
+        mSize = m_available_compressed; // so the base size() works
     }
 
     //---------------------------------------------------------------------

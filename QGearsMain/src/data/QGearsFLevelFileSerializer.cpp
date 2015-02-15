@@ -65,49 +65,68 @@ namespace QGears
 
     //--------------------------------------------------------------------------
     void
-    FLevelFileSerializer::importFLevelFile( Ogre::DataStreamPtr &stream, FLevelFile* pDest )
+        FLevelFileSerializer::importFLevelFile(Ogre::DataStreamPtr &stream, FLevelFile* pDest)
     {
-        size_t start_position( stream->tell() );
-        readFileHeader( stream );
+        // Read header
+        const size_t start_position(stream->tell());
+        readFileHeader(stream);
 
+        // Read section offsets
         std::vector<uint32> section_offsetsVec(m_header.section_count);
+        std::vector<uint32> section_sizesVec(m_header.section_count);
+        readInts(stream, section_offsetsVec.data(), m_header.section_count);
 
-        uint32* section_offsets = section_offsetsVec.data();
+        // Now calculate section sizes
+        size_t fileSize = stream->size();
 
-        readInts( stream, section_offsets, m_header.section_count );
+        for (size_t i = 0; i < section_offsetsVec.size(); i++)
+        {
+            if (i+1 == section_offsetsVec.size())
+            {
+                // We need to know the file size to calculate this, since we don't have it we
+                // just read till end of stream on the final section.
+                section_sizesVec[i] = 0;
+            }
+            else
+            {
+                section_sizesVec[i] = section_offsetsVec[i + 1] - section_offsetsVec[i] - 4;
+            }
+        }
+
 
         Ogre::DataStreamPtr section;
-        for( size_t i(0); i < m_header.section_count; ++i )
+        for (size_t i(0); i < m_header.section_count; ++i)
         {
-            size_t current_offset( stream->tell() - start_position );
-            size_t section_gap( section_offsets[i] - current_offset );
-            if( current_offset > section_offsets[i] )
+            const size_t current_offset(stream->tell() - start_position);
+            const size_t section_gap(section_offsetsVec[i] - current_offset);
+            if (current_offset > section_offsetsVec[i])
             {
                 OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
-                    ,"FLevel sections overlap"
-                    ,"FLevelFileSerializer::importFLevelFile" );
+                    , "FLevel sections overlap"
+                    , "FLevelFileSerializer::importFLevelFile");
             }
-            else if( section_gap )
+            else if (section_gap)
             {
-                stream->skip( section_gap );
+                stream->skip(section_gap);
                 Ogre::LogManager::getSingleton().stream()
                     << "Warning: skiping gap in front of section " << i
                     << " gap size " << section_gap
                     << " FLevelFileSerializer::importFLevelFile";
             }
 
-            readSectionData( stream, section );
-            readSection( section, pDest, i );
+            readSectionData(stream, section, section_sizesVec[i]);
+            readSection(section, pDest, i);
             section->close();
             section.setNull();
         }
-        readEnd( stream );
+        readEnd(stream);
     }
 
     //--------------------------------------------------------------------------
     void
     FLevelFileSerializer::readFileHeader( Ogre::DataStreamPtr &stream )
     {
+        // Read version, check its zero
         readShort( stream, m_header.version );
         if( m_header.version != 0 )
         {
@@ -116,6 +135,7 @@ namespace QGears
                 ,"FLevelFileSerializer::importFLevelFile" );
         }
 
+        // Read number of sections, check its 9
         readUInt32(   stream, m_header.section_count );
         if( m_header.section_count != SECTION_COUNT )
         {
@@ -129,14 +149,25 @@ namespace QGears
     //--------------------------------------------------------------------------
     void
     FLevelFileSerializer::readSectionData( Ogre::DataStreamPtr &stream
-                                          ,Ogre::DataStreamPtr &out_buffer )
+                                          ,Ogre::DataStreamPtr &out_buffer,
+                                          size_t sectionSize )
     {
+        // This can be wrong, we read it so we're at the correct stream position
+        // but use our manually calculated section size instead.
         uint32 length( 0 );
         readUInt32( stream, length );
+
         // TODO: implement SubDataStream class to restrict access size etc
         // so we don't have to copy the whole memory
-        Ogre::MemoryDataStream *buffer( new Ogre::MemoryDataStream( length ) );
-        stream->read( buffer->getPtr(), length );
+        if (sectionSize == 0)
+        {
+            // TODO FIX ME - read to EOS
+            // Hope this is actually correct :)
+            sectionSize = length;
+        }
+
+        Ogre::MemoryDataStream *buffer(new Ogre::MemoryDataStream(sectionSize));
+        stream->read(buffer->getPtr(), sectionSize);
         out_buffer = Ogre::DataStreamPtr( buffer );
     }
 
