@@ -245,7 +245,7 @@ if(WIN32)
     #set the name of the installer default formating is name-version-os
 
     # If empty assume release
-    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "release")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "" OR "${CMAKE_BUILD_TYPE}" STREQUAL "RELEASE")
         message("RELEASE installer build")
         install(FILES ${PROJECT_SOURCE_DIR}/output/resources.cfg DESTINATION ./)
         install(FILES ${PROJECT_SOURCE_DIR}/output/plugins.cfg DESTINATION ./)
