@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>159</height>
+    <height>172</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -110,7 +110,7 @@
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>Data Source:</string>
+             <string>Import Data Source:</string>
             </property>
            </widget>
           </item>
@@ -137,15 +137,15 @@
           <item>
            <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>Output Path:</string>
+             <string>QGears Data Path:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineOutput"/>
+           <widget class="QLineEdit" name="lineDataDir"/>
           </item>
           <item>
-           <widget class="QPushButton" name="btnOutput">
+           <widget class="QPushButton" name="btnDataDir">
             <property name="maximumSize">
              <size>
               <width>24</width>
@@ -178,7 +178,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
