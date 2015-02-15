@@ -175,7 +175,7 @@ namespace QGears
                         Ogre::LogManager::getSingleton().stream()
                             << "Error: data page Index out of Bounds " << data_index;
                     }
-                    uint8 index( data_page.data[ data_index ] );
+                    uint8 index( data_page.data.at(data_index) );
                     if( index >= palette_page.size() )
                     {
                         Ogre::LogManager::getSingleton().stream()
