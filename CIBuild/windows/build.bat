@@ -21,7 +21,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 cpack -C "Release"
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-ctest --verbose
+ctest -C "Release" --verbose
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 cd ..
