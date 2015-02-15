@@ -21,6 +21,9 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 cpack -C "Release"
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+ctest --verbose
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 cd ..
 cd ..
 mkdir %CURRENT%
@@ -29,5 +32,3 @@ mkdir windows
 cd .. 
 dir
 move q-gears\build\*.msi %CURRENT%\windows
-
-ctest --verbose
