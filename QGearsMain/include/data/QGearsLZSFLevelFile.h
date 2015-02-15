@@ -44,7 +44,7 @@ namespace QGears
 
     protected:
         virtual const String& getResourceType( void ) const;
-        virtual Ogre::DataStreamPtr openResource( void );
+        virtual Ogre::DataStreamPtr openResource( void ) override;
 
     private:
     };

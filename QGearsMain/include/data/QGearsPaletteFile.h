@@ -51,7 +51,7 @@ namespace QGears
 
         virtual PageList&  getPages( void ) { return m_pages; }
 
-        virtual const Page& getPage( size_t index ) const { return m_pages[index]; }
+        virtual const Page& getPage( size_t index ) const { return m_pages.at(index); }
 
     protected:
         virtual void loadImpl();

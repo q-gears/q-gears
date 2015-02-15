@@ -49,7 +49,7 @@ namespace QGears
         virtual ~Resource() = default;
 
     protected:
-        Ogre::DataStreamPtr openResource()
+        virtual Ogre::DataStreamPtr openResource()
         {
             return Ogre::ResourceGroupManager::getSingleton().openResource(mName, mGroup, true, this);
         }

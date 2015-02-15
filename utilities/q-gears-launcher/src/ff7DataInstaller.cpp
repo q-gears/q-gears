@@ -50,17 +50,18 @@ void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, cons
         // TODO: Comparison will be incorrect on some platforms
         if (file == "field\\char.lgp")
         {
+            /*
             auto fullPath = inputDir + file;
             mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
             ConvertFieldModels(fullPath, outputDir);
-            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");
+            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");*/
         }
         else if (file == "field\\flevel.lgp")
         {
             auto fullPath = inputDir + file;
-            mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
+            mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVIIFields");
             ConvertFields(fullPath, outputDir);
-            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");
+            mApp.getRoot()->removeResourceLocation(fullPath, "FFVIIFields");
         }
     }
 }
@@ -134,9 +135,29 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
 void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
 {
     // Everything in here is a field
-    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVII", "*.hrc");
+    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
     for (auto& resourceName : *resources)
     {
+        if (!QGears::StringUtil::endsWith(resourceName, ".tex"))
+        {
+            try
+            {
+                QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
 
+                const QGears::BackgroundFilePtr& bg = field->getBackground();
+                const QGears::PaletteFilePtr& pal = field->getPalette();
+                Ogre::Image* bgImage = bg->createImage(pal);
+                bgImage->save(outDir + "/" + field->getName() + ".png");
+                delete bgImage;
+            }
+            catch (const Ogre::Exception& ex)
+            {
+                std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
+            }
+            catch (const std::exception& ex)
+            {
+                std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
+            }
+        }
     }
 }

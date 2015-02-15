@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "data/QGearsHRCFileManager.h"
 #include "map/QGearsBackground2DFileManager.h"
 #include "FF7Common.h"
+#include "core/Logger.h"
 
 namespace QGears
 {
@@ -87,6 +88,11 @@ namespace QGears
     {
         FLevelFileSerializer serializer;
         Ogre::DataStreamPtr stream( openResource() );
+        if (stream.isNull())
+        {
+            LOG_ERROR("Failed to open resource");
+        }
+
         serializer.importFLevelFile( stream, this );
 
         String background_texture_name( getBackgroundTextureName() );
