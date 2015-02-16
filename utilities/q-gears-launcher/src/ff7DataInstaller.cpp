@@ -132,23 +132,46 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
     */
 }
 
+static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::string& outDir)
+{
+    // Save out the tiles as a PNG image
+    const QGears::BackgroundFilePtr& bg = field->getBackground();
+    const QGears::PaletteFilePtr& pal = field->getPalette();
+    std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
+    bgImage->save(outDir + "/" + field->getName() + ".png");
+
+    // Save out the walk mesh as XML
+    const QGears::WalkmeshFilePtr& walkmesh = field->getWalkmesh();
+
+    TiXmlDocument doc;
+    TiXmlElement * element = new TiXmlElement("walkmesh");
+    for (QGears::WalkmeshFile::Triangle& tri : walkmesh->getTriangles())
+    {
+        TiXmlElement * xmlElement = new TiXmlElement("triangle");
+        xmlElement->SetAttribute("a", Ogre::StringConverter::toString(tri.a));
+        xmlElement->SetAttribute("b", Ogre::StringConverter::toString(tri.b));
+        xmlElement->SetAttribute("c", Ogre::StringConverter::toString(tri.c));
+        xmlElement->SetAttribute("a_b", std::to_string(tri.access_side[0]));
+        xmlElement->SetAttribute("b_c", std::to_string(tri.access_side[1]));
+        xmlElement->SetAttribute("c_a", std::to_string(tri.access_side[2]));
+        element->LinkEndChild(xmlElement);
+    }
+    doc.LinkEndChild(element);
+    doc.SaveFile(outDir + "/" + field->getName() +  "_wm.xml");
+}
+
 void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
 {
     // Everything in here is a field
     Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
     for (auto& resourceName : *resources)
     {
-        if (!QGears::StringUtil::endsWith(resourceName, ".tex") /*&& resourceName == "blin67_4"*/)
+        if (!QGears::StringUtil::endsWith(resourceName, ".tex") && resourceName == "md1_2")
         {
             //try
             {
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
-
-                const QGears::BackgroundFilePtr& bg = field->getBackground();
-                const QGears::PaletteFilePtr& pal = field->getPalette();
-                Ogre::Image* bgImage = bg->createImage(pal);
-                bgImage->save(outDir + "/" + field->getName() + ".png");
-                delete bgImage;
+                FF7PcFieldToQGearsField(field, outDir);
             }
             /*
             catch (const Ogre::Exception& ex)
