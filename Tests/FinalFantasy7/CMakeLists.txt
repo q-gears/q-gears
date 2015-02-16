@@ -20,8 +20,8 @@ SET_PROPERTY(TARGET TestFF7FLevelFileSerializer PROPERTY FOLDER "tests")
 
 
 target_link_libraries(TestFF7FLevelFileSerializer ${LIBRARIES})
-# TODO FIX ME - test not currently working
-#add_test(NAME TestFF7FLevelFileSerializer COMMAND TestFF7FLevelFileSerializer)
+TODO FIX ME - test not currently working
+add_test(NAME TestFF7FLevelFileSerializer COMMAND TestFF7FLevelFileSerializer)
 
 
 add_executable(TestFF7ModelListFileSerializer
