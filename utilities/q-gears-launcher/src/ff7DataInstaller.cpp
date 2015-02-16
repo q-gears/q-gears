@@ -144,19 +144,19 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
     const QGears::WalkmeshFilePtr& walkmesh = field->getWalkmesh();
 
     TiXmlDocument doc;
-    TiXmlElement * element = new TiXmlElement("walkmesh");
+    std::unique_ptr<TiXmlElement> element(new TiXmlElement("walkmesh"));
     for (QGears::WalkmeshFile::Triangle& tri : walkmesh->getTriangles())
     {
-        TiXmlElement * xmlElement = new TiXmlElement("triangle");
+        std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("triangle"));
         xmlElement->SetAttribute("a", Ogre::StringConverter::toString(tri.a));
         xmlElement->SetAttribute("b", Ogre::StringConverter::toString(tri.b));
         xmlElement->SetAttribute("c", Ogre::StringConverter::toString(tri.c));
         xmlElement->SetAttribute("a_b", std::to_string(tri.access_side[0]));
         xmlElement->SetAttribute("b_c", std::to_string(tri.access_side[1]));
         xmlElement->SetAttribute("c_a", std::to_string(tri.access_side[2]));
-        element->LinkEndChild(xmlElement);
+        element->LinkEndChild(xmlElement.release());
     }
-    doc.LinkEndChild(element);
+    doc.LinkEndChild(element.release());
     doc.SaveFile(outDir + "/" + field->getName() +  "_wm.xml");
 }
 
