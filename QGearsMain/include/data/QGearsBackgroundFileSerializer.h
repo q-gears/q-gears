@@ -41,6 +41,14 @@ namespace QGears
 
         virtual void    importBackgroundFile( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
 
+        enum {
+            BIT_MASK_RED    = 0xF800
+           ,BIT_MASK_GREEN  = 0x07C0
+           ,BIT_MASK_BLUE   = 0x001F
+           ,BIT_SIZE        = 0x001F
+           ,BIT_MASK_RGB    = BIT_MASK_BLUE | BIT_MASK_GREEN | BIT_MASK_RED
+        };
+
         struct Header
         {
             uint16 unused;

@@ -24,6 +24,7 @@ THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
 #include "data/QGearsBackgroundFileSerializer.h"
+#include "data/QGearsPaletteFileSerializer.h"
 
 #include <OgreException.h>
 #include <OgreLogManager.h>
@@ -211,14 +212,33 @@ namespace QGears
 
         if( pDest.value_size == 2 )
         {
-            Ogre::LogManager::getSingleton().stream()
-                << "Warning: Page value_size == 2 @" << stream->tell();
+            size_t color_count( BackgroundFile::PAGE_DATA_SIZE );
+            pDest.colors.clear();
+            pDest.colors.reserve( color_count );
+            for( size_t i( color_count ); i--; )
+            {
+                uint16 colour;
+                readShort( stream, colour );
+                BackgroundFile::Color colourDest;
+                colourDest.r = static_cast<float>(( colour & BIT_MASK_RED   ) >> 11);
+                colourDest.g = static_cast<float>(( colour & BIT_MASK_GREEN ) >>  6);
+                colourDest.b = static_cast<float>(colour & BIT_MASK_BLUE);
+                colourDest /= BIT_SIZE;
+                colourDest.a = 0.0f;
+                if ( colour == 0 )
+                {
+                    colourDest.a = 1.0f;
+                }
+                pDest.colors.push_back( colourDest );
+            }
         }
-
-        size_t data_size( pDest.value_size * BackgroundFile::PAGE_DATA_SIZE );
-        pDest.data.clear();
-        pDest.data.resize( data_size );
-        stream->read( &pDest.data[0], data_size );
+        else
+        {
+            size_t data_size( pDest.value_size * BackgroundFile::PAGE_DATA_SIZE );
+            pDest.data.clear();
+            pDest.data.resize( data_size );
+            stream->read( &pDest.data[0], data_size );
+        }
     }
 
     //---------------------------------------------------------------------
