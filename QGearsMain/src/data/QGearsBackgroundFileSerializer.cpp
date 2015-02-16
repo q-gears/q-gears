@@ -196,6 +196,23 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
+    BackgroundFileSerializer::readObject( Ogre::DataStreamPtr& stream, Color& pDest )
+    {
+        uint16 colour;
+        readShort( stream, colour );
+        pDest.r = static_cast<float>(( colour & BIT_MASK_RED   ) >> 11);
+        pDest.g = static_cast<float>(( colour & BIT_MASK_GREEN ) >>  6);
+        pDest.b = static_cast<float>(colour & BIT_MASK_BLUE);
+        pDest /= BIT_SIZE;
+        pDest.a = 0.0f;
+        if ( colour == 0 )
+        {
+            pDest.a = 1.0f;
+        }
+    }
+
+    //---------------------------------------------------------------------
+    void
     BackgroundFileSerializer::readObject( Ogre::DataStreamPtr &stream, Page &pDest )
     {
         read2ByteBool( stream, pDest.enabled );
@@ -210,34 +227,24 @@ namespace QGears
                 ,"BackgroundFileSerializer::readObject" );
         }
 
+        size_t color_count( BackgroundFile::PAGE_DATA_SIZE );
+        pDest.colors.clear();
+        pDest.data.clear();
+
         if( pDest.value_size == 2 )
         {
-            size_t color_count( BackgroundFile::PAGE_DATA_SIZE );
-            pDest.colors.clear();
             pDest.colors.reserve( color_count );
             for( size_t i( color_count ); i--; )
             {
-                uint16 colour;
-                readShort( stream, colour );
-                BackgroundFile::Color colourDest;
-                colourDest.r = static_cast<float>(( colour & BIT_MASK_RED   ) >> 11);
-                colourDest.g = static_cast<float>(( colour & BIT_MASK_GREEN ) >>  6);
-                colourDest.b = static_cast<float>(colour & BIT_MASK_BLUE);
-                colourDest /= BIT_SIZE;
-                colourDest.a = 0.0f;
-                if ( colour == 0 )
-                {
-                    colourDest.a = 1.0f;
-                }
+                Color colourDest;
+                readObject( stream, colourDest );
                 pDest.colors.push_back( colourDest );
             }
         }
         else
         {
-            size_t data_size( pDest.value_size * BackgroundFile::PAGE_DATA_SIZE );
-            pDest.data.clear();
-            pDest.data.resize( data_size );
-            stream->read( &pDest.data[0], data_size );
+            pDest.data.resize( color_count );
+            stream->read( &pDest.data[0], color_count );
         }
     }
 
