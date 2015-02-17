@@ -108,9 +108,9 @@ namespace QGears
 
         typedef PaletteFile::Color Color;
 
-        virtual Layer* getLayers ( void ) { return m_layers;  }
-        virtual uint8* getPalette( void ) { return m_palette; }
-        virtual Page*  getPages  ( void ) { return m_pages;   }
+        std::array<Layer, LAYER_COUNT>& getLayers(void) { return m_layers; }
+        std::array<uint8, PALETTE_ENTRY_COUNT>& getPalette(void) { return m_palette; }
+        std::array<Page, PAGE_COUNT>&  getPages(void) { return m_pages; }
 
         virtual Ogre::Image*        createImage     ( const PaletteFilePtr &palette ) const;
 
@@ -124,10 +124,10 @@ namespace QGears
         virtual size_t calculateSize( const Page  &page  ) const;
 
     private:
-        Layer m_layers [ LAYER_COUNT ];
-        uint8 m_palette[ PALETTE_ENTRY_COUNT ];
+        std::array<Layer, LAYER_COUNT> m_layers;
+        std::array<uint8, PALETTE_ENTRY_COUNT> m_palette;
 
-        Page m_pages[ PAGE_COUNT ];
+        std::array<Page, PAGE_COUNT> m_pages;
     };
 
     typedef Ogre::SharedPtr<BackgroundFile> BackgroundFilePtr;

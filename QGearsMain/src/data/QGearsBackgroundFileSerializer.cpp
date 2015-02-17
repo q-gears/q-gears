@@ -105,7 +105,7 @@ namespace QGears
                                           ,BackgroundFile *pDest )
     {
         readSectionHeader( stream, SECTION_NAME_PALETTE );
-        stream->read( pDest->getPalette(), BackgroundFile::PALETTE_ENTRY_COUNT );
+        stream->read( pDest->getPalette().data(), BackgroundFile::PALETTE_ENTRY_COUNT );
     }
 
     //---------------------------------------------------------------------
@@ -114,15 +114,15 @@ namespace QGears
                                              ,BackgroundFile *pDest )
     {
         readSectionHeader( stream, SECTION_NAME_BACK );
-        Layer *layer( pDest->getLayers() );
-        for( size_t i( 0 ); i < BackgroundFile::LAYER_COUNT; ++i, ++layer )
+        auto& layers( pDest->getLayers() );
+        for( size_t i( 0 ); i < BackgroundFile::LAYER_COUNT; ++i )
         {
             if( i != 0 )
             {
-                read1ByteBool( stream, layer->enabled );
+                read1ByteBool( stream, layers[i].enabled );
             }
 
-            readLayer( stream, layer, i );
+            readLayer(stream, &layers[i], i);
         }
     }
 
@@ -186,10 +186,9 @@ namespace QGears
                                           ,BackgroundFile *pDest )
     {
         readSectionHeader( stream, SECTION_NAME_TEXTURE );
-        Page *pages( pDest->getPages() );
-        for( size_t i(0); i < BackgroundFile::PAGE_COUNT; ++i )
+        for (auto& page : pDest->getPages())
         {
-            readObject( stream, pages[i] );
+            readObject(stream, page);
         }
     }
 
