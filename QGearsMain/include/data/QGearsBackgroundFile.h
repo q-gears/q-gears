@@ -93,8 +93,10 @@ namespace QGears
             SpriteList sprites;
         };
 
+        typedef PaletteFile::Color Color;
 
-        typedef std::vector<uint8>  Buffer;
+        typedef std::vector<uint8> Buffer;
+        typedef std::vector<Color> Colors;
 
         struct Page
         {
@@ -104,9 +106,8 @@ namespace QGears
             // uint8 if value_size == 1, uint16 if value_size == 2
             //uint8 data[PAGE_DATA_WIDTH][PAGE_DATA_HEIGHT];
             Buffer data;
+            Colors colors;
         };
-
-        typedef PaletteFile::Color Color;
 
         virtual Layer* getLayers ( void ) { return m_layers;  }
         virtual uint8* getPalette( void ) { return m_palette; }

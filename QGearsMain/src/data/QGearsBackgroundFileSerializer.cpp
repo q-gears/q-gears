@@ -24,6 +24,7 @@ THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
 #include "data/QGearsBackgroundFileSerializer.h"
+#include "data/QGearsPaletteFileSerializer.h"
 
 #include <OgreException.h>
 #include <OgreLogManager.h>
@@ -195,6 +196,23 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
+    BackgroundFileSerializer::readObject( Ogre::DataStreamPtr& stream, Color& pDest )
+    {
+        uint16 colour;
+        readShort( stream, colour );
+        pDest.r = static_cast<float>(( colour & BIT_MASK_RED   ) >> 11);
+        pDest.g = static_cast<float>(( colour & BIT_MASK_GREEN ) >>  6);
+        pDest.b = static_cast<float>(colour & BIT_MASK_BLUE);
+        pDest /= BIT_SIZE;
+        pDest.a = 0.0f;
+        if ( colour == 0 )
+        {
+            pDest.a = 1.0f;
+        }
+    }
+
+    //---------------------------------------------------------------------
+    void
     BackgroundFileSerializer::readObject( Ogre::DataStreamPtr &stream, Page &pDest )
     {
         read2ByteBool( stream, pDest.enabled );
@@ -209,16 +227,25 @@ namespace QGears
                 ,"BackgroundFileSerializer::readObject" );
         }
 
+        size_t color_count( BackgroundFile::PAGE_DATA_SIZE );
+        pDest.colors.clear();
+        pDest.data.clear();
+
         if( pDest.value_size == 2 )
         {
-            Ogre::LogManager::getSingleton().stream()
-                << "Warning: Page value_size == 2 @" << stream->tell();
+            pDest.colors.reserve( color_count );
+            for( size_t i( color_count ); i--; )
+            {
+                Color colourDest;
+                readObject( stream, colourDest );
+                pDest.colors.push_back( colourDest );
+            }
         }
-
-        size_t data_size( pDest.value_size * BackgroundFile::PAGE_DATA_SIZE );
-        pDest.data.clear();
-        pDest.data.resize( data_size );
-        stream->read( &pDest.data[0], data_size );
+        else
+        {
+            pDest.data.resize( color_count );
+            stream->read( &pDest.data[0], color_count );
+        }
     }
 
     //---------------------------------------------------------------------
