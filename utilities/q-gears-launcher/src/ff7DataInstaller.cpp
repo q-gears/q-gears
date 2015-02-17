@@ -47,8 +47,7 @@ void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, cons
 {
     for (const auto& file : files)
     {
-        // TODO: Comparison will be incorrect on some platforms
-        if (file == "field\\char.lgp")
+        if (file == "field/char.lgp")
         {
             /*
             auto fullPath = inputDir + file;
@@ -56,7 +55,7 @@ void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, cons
             ConvertFieldModels(fullPath, outputDir);
             mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");*/
         }
-        else if (file == "field\\flevel.lgp")
+        else if (file == "field/flevel.lgp")
         {
             auto fullPath = inputDir + file;
             mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVIIFields");
@@ -138,7 +137,10 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
     Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
     for (auto& resourceName : *resources)
     {
-        if (!QGears::StringUtil::endsWith(resourceName, ".tex") /*&& resourceName == "blin67_4"*/)
+        if (!QGears::StringUtil::endsWith(resourceName, ".tex")
+         && !QGears::StringUtil::endsWith(resourceName, ".tut")
+         && !QGears::StringUtil::endsWith(resourceName, ".siz")
+         && resourceName != "maplist" /*&& resourceName == "blin67_4"*/)
         {
             //try
             {

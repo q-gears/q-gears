@@ -143,8 +143,8 @@ void MainWindow::on_btnGO_clicked()
 
 		// TODO: Enumerate files or find some better way to do this :)
 		std::vector<std::string> vec;
-		vec.push_back(QDir::toNativeSeparators("field/char.lgp").toStdString());
-		vec.push_back(QDir::toNativeSeparators("field/flevel.lgp").toStdString());
+		vec.push_back(QString("field/char.lgp").toStdString());
+		vec.push_back(QString("field/flevel.lgp").toStdString());
 
 		FF7DataInstaller conversion;
 		conversion.Convert(QDir::toNativeSeparators(input).toStdString(), QDir::toNativeSeparators(output).toStdString(), vec);
