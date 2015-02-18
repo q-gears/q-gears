@@ -50,11 +50,11 @@ void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, cons
         // TODO: Comparison will be incorrect on some platforms
         if (file == "field\\char.lgp")
         {
-            /*
+
             auto fullPath = inputDir + file;
             mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
             ConvertFieldModels(fullPath, outputDir);
-            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");*/
+            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");
         }
         else if (file == "field\\flevel.lgp")
         {
@@ -135,10 +135,18 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
 static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::string& outDir)
 {
     // Save out the tiles as a PNG image
+    
     const QGears::BackgroundFilePtr& bg = field->getBackground();
+    /*
     const QGears::PaletteFilePtr& pal = field->getPalette();
     std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
     bgImage->save(outDir + "/" + field->getName() + ".png");
+    */
+    QGears::BackgroundFile::Layer& layer = bg->getLayers().at(0);
+    const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
+
+    // TODO: Write out the *_BG.XML data
+
 
     // Save out the walk mesh as XML
     const QGears::WalkmeshFilePtr& walkmesh = field->getWalkmesh();
