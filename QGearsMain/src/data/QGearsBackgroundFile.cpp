@@ -191,6 +191,11 @@ namespace QGears
             }
             else if (data_page.value_size == 1)
             {
+                if (it->palette_page >= palette->getPages().size())
+                {
+                    Ogre::LogManager::getSingleton().stream()
+                        << "Error: palette page Index out of Bounds " << it->palette_page;
+                }
                 const PaletteFile::Page& palette_page(palette->getPage(it->palette_page));
                 for (uint16 y(SPRITE_HEIGHT); y--;)
                 {

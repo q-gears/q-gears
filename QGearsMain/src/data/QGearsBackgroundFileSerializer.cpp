@@ -174,6 +174,11 @@ namespace QGears
         readShort( stream, pDest.unknown_1C );
         readShort( stream, pDest.data_page );
         readShort( stream, pDest.data_page2 );
+        // when data_page2 != 0, it must be used instead of data_page
+        if ( pDest.data_page2 )
+        {
+            pDest.data_page = pDest.data_page2;
+        }
         readShort( stream, pDest.colourDepth );
         readObject( stream, pDest.unknown_24 );
         pDest.unknown_24 /= unknown_24_SCALE;
@@ -204,10 +209,10 @@ namespace QGears
         pDest.g = static_cast<float>(( colour & BIT_MASK_GREEN ) >>  6);
         pDest.b = static_cast<float>(colour & BIT_MASK_BLUE);
         pDest /= BIT_SIZE;
-        pDest.a = 0.0f;
+        pDest.a = 1.0f;
         if ( colour == 0 )
         {
-            pDest.a = 1.0f;
+            pDest.a = 0.0f;
         }
     }
 
