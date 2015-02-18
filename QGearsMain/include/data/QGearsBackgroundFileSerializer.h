@@ -41,6 +41,14 @@ namespace QGears
 
         virtual void    importBackgroundFile( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
 
+        enum {
+            BIT_MASK_RED    = 0xF800
+           ,BIT_MASK_GREEN  = 0x07C0
+           ,BIT_MASK_BLUE   = 0x001F
+           ,BIT_SIZE        = 0x001F
+           ,BIT_MASK_RGB    = BIT_MASK_BLUE | BIT_MASK_GREEN | BIT_MASK_RED
+        };
+
         struct Header
         {
             uint16 unused;
@@ -51,6 +59,7 @@ namespace QGears
         typedef BackgroundFile::SpriteData  SpriteData;
         typedef BackgroundFile::SpriteList  SpriteList;
         typedef BackgroundFile::Page        Page;
+        typedef BackgroundFile::Color       Color;
 
     protected:
         virtual void 	readFileHeader( Ogre::DataStreamPtr &stream );
@@ -64,6 +73,7 @@ namespace QGears
         virtual void    readLayer( Ogre::DataStreamPtr &stream, Layer *pDest, size_t layer_index  );
 
         virtual void    readObject( Ogre::DataStreamPtr &stream, SpriteData &pDest  );
+        virtual void    readObject( Ogre::DataStreamPtr &stream, Color &pDest  );
         virtual void    readObject( Ogre::DataStreamPtr &stream, Page &pDest  );
         using Serializer::readObject;
 

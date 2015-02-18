@@ -166,22 +166,45 @@ namespace QGears
             ;++it)
         {
             const Page& data_page( m_pages[it->data_page] );
+            const Pixel& src(it->src);
+            if (!data_page.enabled)
+            {
+                Ogre::LogManager::getSingleton().stream()
+                    << "Error: referencing an disabled data page";
+            }
             if (data_page.value_size == 2)
             {
-                // TODO FIX ME
-                Ogre::LogManager::getSingleton().stream()
-                    << "Error: value_size(RGB16) not implemented";
-                break;
+                for (uint16 y(SPRITE_HEIGHT); y--;)
+                {
+                    for (uint16 x(SPRITE_WIDTH); x--;)
+                    {
+                        size_t data_index((src.y + y) * PAGE_DATA_WIDTH + src.x + x);
+                        if (data_index >= data_page.colors.size())
+                        {
+                            Ogre::LogManager::getSingleton().stream()
+                                << "Error: data page Index out of Bounds " << data_index;
+                        }
+
+                        Color colour(data_page.colors.at(data_index));
+                        data_index = (dst_y + y) * row_pitch + dst_x + x;
+                        if (data_index >= pixel_count)
+                        {
+                            Ogre::LogManager::getSingleton().stream()
+                                << "Error: writing Pixel out of Bounds " << data_index
+                                << " " << (dst_x + x) << " x " << dst_y + y;
+                        }
+                        color[data_index] = colour.getAsARGB();
+                    }
+                }
             }
             else if (data_page.value_size == 1)
             {
-                const PaletteFile::Page& palette_page(palette->getPage(it->palette_page));
-                const Pixel& src(it->src);
-                if (!data_page.enabled)
+                if (it->palette_page >= palette->getPages().size())
                 {
                     Ogre::LogManager::getSingleton().stream()
-                        << "Error: referencing an disabled data page";
+                        << "Error: palette page Index out of Bounds " << it->palette_page;
                 }
+                const PaletteFile::Page& palette_page(palette->getPage(it->palette_page));
                 for (uint16 y(SPRITE_HEIGHT); y--;)
                 {
                     for (uint16 x(SPRITE_WIDTH); x--;)
@@ -206,8 +229,8 @@ namespace QGears
                                 << "Error: writing Pixel out of Bounds " << data_index
                                 << " " << (dst_x + x) << " x " << dst_y + y;
                         }
-                        Ogre::ColourValue colour(palette_page[index]);
-                        if (index == 0 && colour != Ogre::ColourValue::Black)
+                        Color colour(palette_page[index]);
+                        if (index == 0 && colour != Color::Black)
                         {
                             colour.a = 0;
                         }
@@ -218,13 +241,13 @@ namespace QGears
                         color[data_index] = colour.getAsARGB();
                     }
                 }
+            }
 
-                dst_x += SPRITE_WIDTH;
-                if (dst_x >= width)
-                {
-                    dst_x = 0;
-                    dst_y += SPRITE_HEIGHT;
-                }
+            dst_x += SPRITE_WIDTH;
+            if (dst_x >= width)
+            {
+                dst_x = 0;
+                dst_y += SPRITE_HEIGHT;
             }
         }
 
