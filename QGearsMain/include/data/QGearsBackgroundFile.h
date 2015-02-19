@@ -109,9 +109,6 @@ namespace QGears
             Colors colors;
         };
 
-
-        typedef PaletteFile::Color Color;
-
         std::array<Layer, LAYER_COUNT>& getLayers(void) { return m_layers; }
         std::array<uint8, PALETTE_ENTRY_COUNT>& getPalette(void) { return m_palette; }
         std::array<Page, PAGE_COUNT>&  getPages(void) { return m_pages; }
