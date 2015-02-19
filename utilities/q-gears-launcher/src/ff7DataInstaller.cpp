@@ -49,11 +49,11 @@ void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, cons
     {
         if (file == "field/char.lgp")
         {
-
+            /*
             auto fullPath = inputDir + file;
             mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
             ConvertFieldModels(fullPath, outputDir);
-            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");
+            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");*/
         }
         else if (file == "field/flevel.lgp")
         {
@@ -141,30 +141,61 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
     std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
     bgImage->save(outDir + "/" + field->getName() + ".png");
     */
-    QGears::BackgroundFile::Layer& layer = bg->getLayers().at(0);
-    const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
-
-    // TODO: Write out the *_BG.XML data
-
-
-    // Save out the walk mesh as XML
-    const QGears::WalkmeshFilePtr& walkmesh = field->getWalkmesh();
-
-    TiXmlDocument doc;
-    std::unique_ptr<TiXmlElement> element(new TiXmlElement("walkmesh"));
-    for (QGears::WalkmeshFile::Triangle& tri : walkmesh->getTriangles())
     {
-        std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("triangle"));
-        xmlElement->SetAttribute("a", Ogre::StringConverter::toString(tri.a));
-        xmlElement->SetAttribute("b", Ogre::StringConverter::toString(tri.b));
-        xmlElement->SetAttribute("c", Ogre::StringConverter::toString(tri.c));
-        xmlElement->SetAttribute("a_b", std::to_string(tri.access_side[0]));
-        xmlElement->SetAttribute("b_c", std::to_string(tri.access_side[1]));
-        xmlElement->SetAttribute("c_a", std::to_string(tri.access_side[2]));
-        element->LinkEndChild(xmlElement.release());
+        TiXmlDocument doc;
+        std::unique_ptr<TiXmlElement> element(new TiXmlElement("background2d"));
+
+        auto& layers = bg->getLayers();
+        const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
+
+        // TODO: Write out the *_BG.XML data
+        for (auto& layer : layers)
+        {
+          //  if (layer.enabled)
+            {
+               
+                for (QGears::BackgroundFile::SpriteData& sprite : layer.sprites)
+                {
+                    std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("tile"));
+                    xmlElement->SetAttribute("destination", Ogre::StringConverter::toString(sprite.dst.x * 3) + " " + Ogre::StringConverter::toString(sprite.dst.y * 3));
+
+                    // Where to get UVs??
+                    //sprite.dst.x; layer.width
+                    //sprite.dst.y;
+
+                    // sprite.depth;
+
+                    // Where to get blend mode??
+
+                    element->LinkEndChild(xmlElement.release());
+                }
+               
+            }
+        }
+        doc.LinkEndChild(element.release());
+        doc.SaveFile(outDir + "/" + field->getName() + "_bg.xml");
     }
-    doc.LinkEndChild(element.release());
-    doc.SaveFile(outDir + "/" + field->getName() +  "_wm.xml");
+
+    {
+        // Save out the walk mesh as XML
+        const QGears::WalkmeshFilePtr& walkmesh = field->getWalkmesh();
+
+        TiXmlDocument doc;
+        std::unique_ptr<TiXmlElement> element(new TiXmlElement("walkmesh"));
+        for (QGears::WalkmeshFile::Triangle& tri : walkmesh->getTriangles())
+        {
+            std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("triangle"));
+            xmlElement->SetAttribute("a", Ogre::StringConverter::toString(tri.a));
+            xmlElement->SetAttribute("b", Ogre::StringConverter::toString(tri.b));
+            xmlElement->SetAttribute("c", Ogre::StringConverter::toString(tri.c));
+            xmlElement->SetAttribute("a_b", std::to_string(tri.access_side[0]));
+            xmlElement->SetAttribute("b_c", std::to_string(tri.access_side[1]));
+            xmlElement->SetAttribute("c_a", std::to_string(tri.access_side[2]));
+            element->LinkEndChild(xmlElement.release());
+        }
+        doc.LinkEndChild(element.release());
+        doc.SaveFile(outDir + "/" + field->getName() + "_wm.xml");
+    }
 }
 
 void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
@@ -176,7 +207,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
         if (!QGears::StringUtil::endsWith(resourceName, ".tex")
          && !QGears::StringUtil::endsWith(resourceName, ".tut")
          && !QGears::StringUtil::endsWith(resourceName, ".siz")
-         && resourceName != "maplist" /*&& resourceName == "blin67_4"*/)
+         && resourceName != "maplist" && resourceName == "md1_1")
         {
             //try
             {
