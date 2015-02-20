@@ -1,11 +1,9 @@
-#include "core/EntityModel.h"
-
 #include <OgreEntity.h>
 #include <OgreRoot.h>
 
+#include "core/EntityModel.h"
 #include "core/Logger.h"
 #include "core/Timer.h"
-
 
 
 EntityModel::EntityModel( const Ogre::String& name, const Ogre::String file_name, Ogre::SceneNode* node ):
@@ -23,12 +21,10 @@ EntityModel::EntityModel( const Ogre::String& name, const Ogre::String file_name
 }
 
 
-
 EntityModel::~EntityModel()
 {
     Ogre::Root::getSingleton().getSceneManager( "Scene" )->destroyEntity( m_Model );
 }
-
 
 
 void
@@ -43,7 +39,6 @@ EntityModel::Update()
 }
 
 
-
 void
 EntityModel::SetVisible( const bool visible )
 {
@@ -51,13 +46,11 @@ EntityModel::SetVisible( const bool visible )
 }
 
 
-
 bool
 EntityModel::IsVisible() const
 {
     return m_Model->isVisible();
 }
-
 
 
 void
@@ -87,7 +80,6 @@ EntityModel::PlayAnimation( const Ogre::String& animation, Entity::AnimationStat
 }
 
 
-
 void
 EntityModel::PlayAnimationContinue( const Ogre::String& animation )
 {
@@ -99,7 +91,6 @@ EntityModel::PlayAnimationContinue( const Ogre::String& animation )
         PlayAnimation( animation, Entity::AUTO_ANIMATION, Entity::PLAY_LOOPED, 0, -1 );
     }
 }
-
 
 
 void

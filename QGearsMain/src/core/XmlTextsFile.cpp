@@ -1,8 +1,6 @@
-#include "core/XmlTextsFile.h"
-
 #include "core/Logger.h"
 #include "core/XmlTextFile.h"
-
+#include "core/XmlTextsFile.h"
 
 
 XmlTextsFile::XmlTextsFile( const Ogre::String& file ):
@@ -11,11 +9,9 @@ XmlTextsFile::XmlTextsFile( const Ogre::String& file ):
 }
 
 
-
 XmlTextsFile::~XmlTextsFile()
 {
 }
-
 
 
 void

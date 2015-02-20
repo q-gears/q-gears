@@ -1,6 +1,6 @@
-#include "core/EntityCollision.h"
-
 #include <OgreHardwareBufferManager.h>
+
+#include "core/EntityCollision.h"
 
 
 EntityCollision::EntityCollision()
@@ -120,12 +120,10 @@ EntityCollision::EntityCollision()
 }
 
 
-
 EntityCollision::~EntityCollision()
 {
     delete mRenderOp.vertexData;
 }
-
 
 
 Ogre::Real
@@ -133,7 +131,6 @@ EntityCollision::getSquaredViewDepth( const Ogre::Camera* cam ) const
 {
     return 0.0f;
 }
-
 
 
 Ogre::Real

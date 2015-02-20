@@ -1,13 +1,10 @@
-#include "core/EntityPoint.h"
-
 #include "core/ConfigVar.h"
 #include "core/DebugDraw.h"
+#include "core/EntityPoint.h"
 #include "core/ScriptManager.h"
 
 
-
 ConfigVar cv_debug_point( "debug_point", "Draw point debug info", "false" );
-
 
 
 EntityPoint::EntityPoint( const Ogre::String& name ):
@@ -18,11 +15,9 @@ EntityPoint::EntityPoint( const Ogre::String& name ):
 }
 
 
-
 EntityPoint::~EntityPoint()
 {
 }
-
 
 
 void
@@ -43,13 +38,11 @@ EntityPoint::UpdateDebug()
 }
 
 
-
 const Ogre::String&
 EntityPoint::GetName() const
 {
     return m_Name;
 }
-
 
 
 void
@@ -60,13 +53,11 @@ EntityPoint::SetPosition( const Ogre::Vector3& point )
 }
 
 
-
 const Ogre::Vector3&
 EntityPoint::GetPosition() const
 {
     return m_Position;
 }
-
 
 
 void
@@ -78,7 +69,6 @@ EntityPoint::ScriptGetPosition() const
 }
 
 
-
 void
 EntityPoint::SetRotation( const float rotation )
 {
@@ -86,13 +76,11 @@ EntityPoint::SetRotation( const float rotation )
 }
 
 
-
 float
 EntityPoint::GetRotation() const
 {
     return m_Rotation;
 }
-
 
 
 float

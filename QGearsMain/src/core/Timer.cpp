@@ -1,15 +1,9 @@
-#include "core/Timer.h"
-
 #include "core/ConfigVar.h"
-
+#include "core/Timer.h"
 
 
 ConfigVar cv_timer_scale_game( "timer_scale_game", "Timer speed for game related things", "1" );
-
-
-
 template<>Timer *Ogre::Singleton< Timer >::msSingleton = NULL;
-
 
 
 Timer::Timer():
@@ -21,13 +15,11 @@ Timer::Timer():
 }
 
 
-
 float
 Timer::GetSystemTimeTotal()
 {
     return m_SystemTimeTotal;
 }
-
 
 
 float
@@ -37,7 +29,6 @@ Timer::GetSystemTimeDelta()
 }
 
 
-
 float
 Timer::GetGameTimeTotal()
 {
@@ -45,13 +36,11 @@ Timer::GetGameTimeTotal()
 }
 
 
-
 float
 Timer::GetGameTimeDelta()
 {
     return m_GameTimeDelta;
 }
-
 
 
 void

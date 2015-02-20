@@ -1,9 +1,8 @@
-#include "core/XmlMapFile.h"
-
 #include "core/EntityManager.h"
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
 #include "core/XmlBackground2DFile.h"
+#include "core/XmlMapFile.h"
 
 #include "map/QGearsBackground2DFileManager.h"
 #include "map/QGearsWalkmeshFileManager.h"
@@ -15,11 +14,9 @@ XmlMapFile::XmlMapFile( const Ogre::String& file ):
 }
 
 
-
 XmlMapFile::~XmlMapFile()
 {
 }
-
 
 
 void

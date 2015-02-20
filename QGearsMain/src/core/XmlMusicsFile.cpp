@@ -1,8 +1,6 @@
-#include "core/XmlMusicsFile.h"
-
 #include "core/AudioManager.h"
 #include "core/Logger.h"
-
+#include "core/XmlMusicsFile.h"
 
 
 XmlMusicsFile::XmlMusicsFile( const Ogre::String& file ):
@@ -11,11 +9,9 @@ XmlMusicsFile::XmlMusicsFile( const Ogre::String& file ):
 }
 
 
-
 XmlMusicsFile::~XmlMusicsFile()
 {
 }
-
 
 
 void

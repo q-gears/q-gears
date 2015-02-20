@@ -1,5 +1,3 @@
-#include "core/GameFrameListner.h"
-
 #include <OgreStringConverter.h>
 
 #include "QGearsGameState.h"
@@ -8,6 +6,7 @@
 #include "core/Console.h"
 #include "core/DebugDraw.h"
 #include "core/EntityManager.h"
+#include "core/GameFrameListner.h"
 #include "core/InputManager.h"
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
@@ -15,9 +14,7 @@
 #include "core/UiManager.h"
 
 
-
 ConfigVar cv_debug_fps( "debug_fps", "Debug FPS", "false" );
-
 
 
 GameFrameListener::GameFrameListener( Ogre::RenderWindow* win ):
@@ -57,7 +54,6 @@ GameFrameListener::GameFrameListener( Ogre::RenderWindow* win ):
 }
 
 
-
 GameFrameListener::~GameFrameListener()
 {
     m_InputManager->destroyInputObject( m_Keyboard );
@@ -69,7 +65,6 @@ GameFrameListener::~GameFrameListener()
     Ogre::WindowEventUtilities::removeWindowEventListener( m_Window, this );
     windowClosed( m_Window );
 }
-
 
 
 bool
@@ -86,7 +81,6 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
     {
        m_Keyboard->capture();
     }
-
 
     if( m_Mouse )
     {
@@ -125,7 +119,6 @@ GameFrameListener::frameStarted( const Ogre::FrameEvent& evt )
 }
 
 
-
 bool
 GameFrameListener::frameEnded( const Ogre::FrameEvent& evt )
 {
@@ -142,12 +135,10 @@ GameFrameListener::frameEnded( const Ogre::FrameEvent& evt )
 }
 
 
-
 void
 GameFrameListener::windowMoved( Ogre::RenderWindow* rw )
 {
 }
-
 
 
 void
@@ -167,7 +158,6 @@ GameFrameListener::windowResized( Ogre::RenderWindow *rw )
 }
 
 
-
 void
 GameFrameListener::windowClosed( Ogre::RenderWindow* rw )
 {
@@ -175,12 +165,10 @@ GameFrameListener::windowClosed( Ogre::RenderWindow* rw )
 }
 
 
-
 void
 GameFrameListener::windowFocusChange( Ogre::RenderWindow* rw )
 {
 }
-
 
 
 bool
@@ -192,7 +180,6 @@ GameFrameListener::keyPressed( const OIS::KeyEvent& event )
 }
 
 
-
 bool
 GameFrameListener::keyReleased( const OIS::KeyEvent& event )
 {
@@ -200,7 +187,6 @@ GameFrameListener::keyReleased( const OIS::KeyEvent& event )
 
     return true;
 }
-
 
 
 bool
@@ -219,7 +205,6 @@ GameFrameListener::mouseMoved( const OIS::MouseEvent& e )
 }
 
 
-
 bool
 GameFrameListener::mousePressed( const OIS::MouseEvent& e, OIS::MouseButtonID id )
 {
@@ -227,7 +212,6 @@ GameFrameListener::mousePressed( const OIS::MouseEvent& e, OIS::MouseButtonID id
 
     return true;
 }
-
 
 
 bool

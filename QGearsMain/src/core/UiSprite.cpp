@@ -1,10 +1,8 @@
-#include "core/UiSprite.h"
-
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
 #include "core/Logger.h"
-
+#include "core/UiSprite.h"
 
 
 UiSprite::UiSprite( const Ogre::String& name ):
@@ -14,7 +12,6 @@ UiSprite::UiSprite( const Ogre::String& name ):
 }
 
 
-
 UiSprite::UiSprite( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent ):
     UiWidget( name, path_name, parent )
 {
@@ -22,12 +19,10 @@ UiSprite::UiSprite( const Ogre::String& name, const Ogre::String& path_name, UiW
 }
 
 
-
 UiSprite::~UiSprite()
 {
     DestroyVertexBuffer();
 }
-
 
 
 void
@@ -56,13 +51,11 @@ UiSprite::Initialise()
 }
 
 
-
 void
 UiSprite::Update()
 {
     UiWidget::Update();
 }
-
 
 
 void
@@ -88,14 +81,12 @@ UiSprite::Render()
 }
 
 
-
 void
 UiSprite::UpdateTransformation()
 {
     UiWidget::UpdateTransformation();
     UpdateGeometry();
 }
-
 
 
 void
@@ -107,7 +98,6 @@ UiSprite::SetImage( const Ogre::String& image )
 }
 
 
-
 void
 UiSprite::SetVertexShader( const Ogre::String& shader )
 {
@@ -117,7 +107,6 @@ UiSprite::SetVertexShader( const Ogre::String& shader )
 }
 
 
-
 void
 UiSprite::SetFragmentShader( const Ogre::String& shader )
 {
@@ -125,7 +114,6 @@ UiSprite::SetFragmentShader( const Ogre::String& shader )
     pass->setFragmentProgram( shader, true );
     pass->getFragmentProgram()->load();
 }
-
 
 
 void
@@ -252,7 +240,6 @@ UiSprite::UpdateGeometry()
 }
 
 
-
 void
 UiSprite::CreateVertexBuffer()
 {
@@ -274,7 +261,6 @@ UiSprite::CreateVertexBuffer()
     m_RenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
     m_RenderOp.useIndexes = false;
 }
-
 
 
 void

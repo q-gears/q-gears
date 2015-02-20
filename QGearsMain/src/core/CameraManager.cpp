@@ -1,23 +1,17 @@
-#include "core/CameraManager.h"
-#include "core/CameraManagerCommands.h"
-
 #include <OgreRenderWindow.h>
 #include <OgreRoot.h>
 #include <OIS.h>
 
+#include "core/CameraManager.h"
+#include "core/CameraManagerCommands.h"
 #include "common/QGearsApplication.h"
 #include "core/ConfigVar.h"
 #include "core/InputManager.h"
 #include "core/Logger.h"
 
 
-
 ConfigVar cv_cam_speed( "camera_speed", "Camera speed", "0.02" );
-
-
-
 template<>CameraManager* Ogre::Singleton< CameraManager >::msSingleton = NULL;
-
 
 
 CameraManager::CameraManager():
@@ -44,12 +38,10 @@ CameraManager::CameraManager():
 }
 
 
-
 CameraManager::~CameraManager()
 {
     LOG_TRIVIAL( "CameraManager finished." );
 }
-
 
 
 void
@@ -96,12 +88,10 @@ CameraManager::Input(const QGears::Event& event, Ogre::Real timeSinceLastFrame)
 }
 
 
-
 void
 CameraManager::Update()
 {
 }
-
 
 
 void
@@ -109,7 +99,6 @@ CameraManager::OnResize()
 {
     m_Camera->setAspectRatio( Ogre::Real( m_Viewport->getActualWidth() ) / Ogre::Real( m_Viewport->getActualHeight() ) );
 }
-
 
 
 void
@@ -132,7 +121,6 @@ CameraManager::SetCameraFree( const bool enable )
 }
 
 
-
 void
 CameraManager::Set2DCamera( const Ogre::Vector3 position, const Ogre::Quaternion orientation, const Ogre::Radian fov )
 {
@@ -144,7 +132,6 @@ CameraManager::Set2DCamera( const Ogre::Vector3 position, const Ogre::Quaternion
     CameraManager::getSingleton().GetCurrentCamera()->setFOVy( m_2DFOV );
     Set2DScroll( Ogre::Vector2::ZERO );
 }
-
 
 
 void
@@ -168,13 +155,11 @@ CameraManager::Set2DScroll( const Ogre::Vector2& position )
 }
 
 
-
 const Ogre::Vector2&
 CameraManager::Get2DScroll() const
 {
     return m_2DScroll;
 }
-
 
 
 const Ogre::Vector3
@@ -195,21 +180,20 @@ CameraManager::ProjectPointToScreen( const Ogre::Vector3& point )
 }
 
 
-
 Ogre::Camera*
 CameraManager::GetCurrentCamera()
 {
     return m_Camera;
 }
 
-//--------------------------------------------------------------------------
+
 Ogre::Viewport*
 CameraManager::getViewport()
 {
     return m_Viewport;
 }
 
-//--------------------------------------------------------------------------
+
 void CameraManager::EnableWireFrame(bool)
 {
     if ( m_Camera )

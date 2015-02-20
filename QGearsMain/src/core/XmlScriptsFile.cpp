@@ -1,8 +1,6 @@
-#include "core/XmlScriptsFile.h"
-
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
-
+#include "core/XmlScriptsFile.h"
 
 
 XmlScriptsFile::XmlScriptsFile( const Ogre::String& file ):
@@ -11,11 +9,9 @@ XmlScriptsFile::XmlScriptsFile( const Ogre::String& file ):
 }
 
 
-
 XmlScriptsFile::~XmlScriptsFile()
 {
 }
-
 
 
 void

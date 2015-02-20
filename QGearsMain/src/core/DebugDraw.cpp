@@ -1,17 +1,15 @@
 #include "core/DebugDraw.h"
-
 #include <OgreFontManager.h>
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
 #include "core/CameraManager.h"
+#include "core/DebugDraw.h"
 #include "core/Logger.h"
 #include "core/UiTextArea.h"
 
 
-
 template<>DebugDraw *Ogre::Singleton< DebugDraw >::msSingleton = NULL;
-
 
 
 DebugDraw::DebugDraw():
@@ -76,7 +74,6 @@ DebugDraw::DebugDraw():
 }
 
 
-
 DebugDraw::~DebugDraw()
 {
     m_SceneManager->removeRenderQueueListener( this );
@@ -89,13 +86,11 @@ DebugDraw::~DebugDraw()
 }
 
 
-
 void
 DebugDraw::SetColour( const Ogre::ColourValue& colour )
 {
     m_Colour = colour;
 }
-
 
 
 void
@@ -105,13 +100,11 @@ DebugDraw::SetScreenSpace( const bool screen_space )
 }
 
 
-
 void
 DebugDraw::SetZ( const float z )
 {
     m_Z = z;
 }
-
 
 
 void
@@ -122,13 +115,11 @@ DebugDraw::SetFadeDistance( const float fade_s, const float fade_e )
 }
 
 
-
 void
 DebugDraw::SetTextAlignment( TextAlignment alignment )
 {
     m_TextAlignment = alignment;
 }
-
 
 
 void
@@ -174,7 +165,6 @@ DebugDraw::Line( const float x1, const float y1, const float x2, const float y2 
 }
 
 
-
 void
 DebugDraw::Line3d( const Ogre::Vector3& point1, const Ogre::Vector3& point2 )
 {
@@ -207,7 +197,6 @@ DebugDraw::Line3d( const Ogre::Vector3& point1, const Ogre::Vector3& point2 )
 
     m_Line3dVertexBuffer->unlock();
 }
-
 
 
 void
@@ -250,7 +239,6 @@ DebugDraw::Triangle3d( const Ogre::Vector3& point1, const Ogre::Vector3& point2,
 
     m_Triangle3dVertexBuffer->unlock();
 }
-
 
 
 void
@@ -332,7 +320,6 @@ DebugDraw::Quad( const float x1, const float y1, const float x2, const float y2,
 }
 
 
-
 void
 DebugDraw::Text( const float x, const float y, const Ogre::String& text )
 {
@@ -408,7 +395,6 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
 }
 
 
-
 void
 DebugDraw::Text( const Ogre::Vector3& point, const float x, const float y, const Ogre::String& text )
 {
@@ -428,7 +414,6 @@ DebugDraw::Text( const Ogre::Vector3& point, const float x, const float y, const
         }
     }
 }
-
 
 
 void
@@ -485,7 +470,6 @@ DebugDraw::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& invoc
 }
 
 
-
 void
 DebugDraw::CreateLineVertexBuffer()
 {
@@ -508,7 +492,6 @@ DebugDraw::CreateLineVertexBuffer()
 }
 
 
-
 void
 DebugDraw::DestroyLineVertexBuffer()
 {
@@ -517,7 +500,6 @@ DebugDraw::DestroyLineVertexBuffer()
     m_LineVertexBuffer.setNull();
     m_LineMaxVertexCount = 0;
 }
-
 
 
 void
@@ -552,7 +534,6 @@ DebugDraw::DestroyLine3dVertexBuffer()
 }
 
 
-
 void
 DebugDraw::CreateTriangle3dVertexBuffer()
 {
@@ -585,7 +566,6 @@ DebugDraw::DestroyTriangle3dVertexBuffer()
 }
 
 
-
 void
 DebugDraw::CreateQuadVertexBuffer()
 {
@@ -608,7 +588,6 @@ DebugDraw::CreateQuadVertexBuffer()
 }
 
 
-
 void
 DebugDraw::DestroyQuadVertexBuffer()
 {
@@ -617,7 +596,6 @@ DebugDraw::DestroyQuadVertexBuffer()
     m_QuadVertexBuffer.setNull();
     m_QuadMaxVertexCount = 0;
 }
-
 
 
 void
@@ -642,7 +620,6 @@ DebugDraw::CreateTextVertexBuffer()
     m_TextRenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
     m_TextRenderOp.useIndexes = false;
 }
-
 
 
 void

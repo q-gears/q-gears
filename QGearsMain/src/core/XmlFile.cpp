@@ -1,9 +1,7 @@
-#include "core/XmlFile.h"
-
 #include <OgreStringConverter.h>
 
 #include "core/Logger.h"
-
+#include "core/XmlFile.h"
 
 
 XmlFile::XmlFile( const Ogre::String& file ):
@@ -19,11 +17,9 @@ XmlFile::XmlFile( const Ogre::String& file ):
 }
 
 
-
 XmlFile::~XmlFile()
 {
 }
-
 
 
 bool
@@ -44,7 +40,6 @@ XmlFile::GetBool( TiXmlNode* node, const Ogre::String& tag, bool def ) const
 }
 
 
-
 int
 XmlFile::GetInt( TiXmlNode* node, const Ogre::String& tag, int def ) const
 {
@@ -61,7 +56,6 @@ XmlFile::GetInt( TiXmlNode* node, const Ogre::String& tag, int def ) const
 
     return ret;
 }
-
 
 
 float
@@ -82,7 +76,6 @@ XmlFile::GetFloat( TiXmlNode* node, const Ogre::String& tag, float def ) const
 }
 
 
-
 const Ogre::String
 XmlFile::GetString( TiXmlNode* node, const Ogre::String& tag, const Ogre::String& def ) const
 {
@@ -99,7 +92,6 @@ XmlFile::GetString( TiXmlNode* node, const Ogre::String& tag, const Ogre::String
 
     return ret;
 }
-
 
 
 const Ogre::UTFString
@@ -120,7 +112,6 @@ XmlFile::GetUTFString( TiXmlNode* node, const Ogre::String& tag, const Ogre::UTF
 }
 
 
-
 const Ogre::Vector2
 XmlFile::GetVector2( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector2& def ) const
 {
@@ -137,7 +128,6 @@ XmlFile::GetVector2( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vecto
 
     return ret;
 }
-
 
 
 const Ogre::Vector3
@@ -158,7 +148,6 @@ XmlFile::GetVector3( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vecto
 }
 
 
-
 const Ogre::Vector4
 XmlFile::GetVector4( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector4& def ) const
 {
@@ -175,7 +164,6 @@ XmlFile::GetVector4( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vecto
 
     return ret;
 }
-
 
 
 const Ogre::Matrix4
@@ -196,7 +184,6 @@ XmlFile::GetMatrix4( TiXmlNode* node, const Ogre::String& tag, const Ogre::Matri
 }
 
 
-
 const Ogre::Quaternion
 XmlFile::GetQuaternion( TiXmlNode* node, const Ogre::String& tag, const Ogre::Quaternion& def ) const
 {
@@ -213,7 +200,6 @@ XmlFile::GetQuaternion( TiXmlNode* node, const Ogre::String& tag, const Ogre::Qu
 
     return ret;
 }
-
 
 
 const Ogre::ColourValue

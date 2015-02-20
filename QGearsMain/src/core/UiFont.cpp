@@ -1,7 +1,5 @@
-#include "core/UiFont.h"
-
 #include "core/Logger.h"
-
+#include "core/UiFont.h"
 
 
 UiFont::UiFont( const Ogre::String& name ):
@@ -14,11 +12,9 @@ UiFont::UiFont( const Ogre::String& name ):
 }
 
 
-
 UiFont::~UiFont()
 {
 }
-
 
 
 const Ogre::String&
@@ -26,7 +22,6 @@ UiFont::GetName() const
 {
     return m_Name;
 }
-
 
 
 void
@@ -38,13 +33,11 @@ UiFont::SetImage( const Ogre::String& image, const int width, const int height )
 }
 
 
-
 const Ogre::String&
 UiFont::GetImageName() const
 {
     return m_ImageName;
 }
-
 
 
 int
@@ -54,13 +47,11 @@ UiFont::GetImageWidth() const
 }
 
 
-
 int
 UiFont::GetImageHeight() const
 {
     return m_ImageHeight;
 }
-
 
 
 void
@@ -70,7 +61,6 @@ UiFont::SetHeight( const int height )
 }
 
 
-
 int
 UiFont::GetHeight() const
 {
@@ -78,13 +68,11 @@ UiFont::GetHeight() const
 }
 
 
-
 void
 UiFont::AddCharData( const UiCharData& data )
 {
     m_CharData.push_back( data );
 }
-
 
 
 UiCharData

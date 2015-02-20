@@ -1,9 +1,7 @@
 #include "core/ConfigVarManager.h"
 
 
-
 template<>ConfigVarManager *Ogre::Singleton< ConfigVarManager >::msSingleton = NULL;
-
 
 
 ConfigVarManager::ConfigVarManager()
@@ -18,7 +16,6 @@ ConfigVarManager::ConfigVarManager()
         ConfigVar::m_StaticConfigVarList = ( ConfigVar* )0xffffffff;
     }
 }
-
 
 
 ConfigVar*
@@ -36,13 +33,11 @@ ConfigVarManager::Find( const Ogre::String& name ) const
 }
 
 
-
 unsigned int
 ConfigVarManager::GetConfigVarNumber() const
 {
     return m_ConfigVars.size();
 }
-
 
 
 ConfigVar*

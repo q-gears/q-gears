@@ -1,10 +1,9 @@
-#include "core/UiManager.h"
-
 #include <OgreRoot.h>
 #include <OgreStringVector.h>
 
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
+#include "core/UiManager.h"
 #include "core/Utilites.h"
 #include "core/XmlFontsFile.h"
 #include "core/XmlPrototypesFile.h"
@@ -12,16 +11,13 @@
 #include "core/XmlTextsFile.h"
 
 
-
 template<>UiManager *Ogre::Singleton< UiManager >::msSingleton = NULL;
-
 
 
 UiManager::UiManager()
 {
     Ogre::Root::getSingleton().getSceneManager( "Scene" )->addRenderQueueListener( this );
 }
-
 
 
 UiManager::~UiManager()
@@ -42,7 +38,6 @@ UiManager::~UiManager()
 }
 
 
-
 void
 UiManager::Initialise()
 {
@@ -57,21 +52,16 @@ UiManager::Initialise()
 }
 
 
-
 void
 UiManager::Update()
 {
     // update all ui scripts
     ScriptManager::getSingleton().Update( ScriptManager::UI );
-
-
-
     for( unsigned int i = 0; i < m_Widgets.size(); ++i )
     {
         m_Widgets[ i ]->Update();
     }
 }
-
 
 
 void
@@ -84,7 +74,6 @@ UiManager::OnResize()
 }
 
 
-
 void
 UiManager::SetLanguage( const Ogre::String& language )
 {
@@ -93,7 +82,6 @@ UiManager::SetLanguage( const Ogre::String& language )
     XmlTextsFile texts( "./data/texts.xml" );
     texts.LoadTexts( language );
 }
-
 
 
 void
@@ -106,7 +94,6 @@ UiManager::AddText( const Ogre::String& name, TiXmlNode* text )
 }
 
 
-
 void
 UiManager::UnloadTexts()
 {
@@ -116,7 +103,6 @@ UiManager::UnloadTexts()
     }
     m_Texts.clear();
 }
-
 
 
 TiXmlNode*
@@ -134,13 +120,11 @@ UiManager::GetText( const Ogre::String& name ) const
 }
 
 
-
 void
 UiManager::AddFont( UiFont* font )
 {
     m_Fonts.push_back( font );
 }
-
 
 
 UiFont*
@@ -158,7 +142,6 @@ UiManager::GetFont( const Ogre::String& name )
 }
 
 
-
 void
 UiManager::AddPrototype( const Ogre::String& name, TiXmlNode* prototype )
 {
@@ -167,7 +150,6 @@ UiManager::AddPrototype( const Ogre::String& name, TiXmlNode* prototype )
     ui_prototype.node = prototype;
     m_Prototypes.push_back( ui_prototype );
 }
-
 
 
 TiXmlNode*
@@ -185,13 +167,11 @@ UiManager::GetPrototype( const Ogre::String& name ) const
 }
 
 
-
 void
 UiManager::AddWidget( UiWidget* widget )
 {
     m_Widgets.push_back( widget );
 }
-
 
 
 UiWidget*
@@ -221,13 +201,11 @@ UiManager::GetWidget( const Ogre::String& name )
 }
 
 
-
 UiWidget*
 UiManager::ScriptGetWidget( const char* name )
 {
     return GetWidget( Ogre::String( name ) );
 }
-
 
 
 void

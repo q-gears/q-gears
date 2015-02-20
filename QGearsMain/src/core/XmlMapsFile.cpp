@@ -1,7 +1,5 @@
-#include "core/XmlMapsFile.h"
-
 #include "core/Logger.h"
-
+#include "core/XmlMapsFile.h"
 
 
 XmlMapsFile::XmlMapsFile( const Ogre::String& file ):
@@ -10,11 +8,9 @@ XmlMapsFile::XmlMapsFile( const Ogre::String& file ):
 }
 
 
-
 XmlMapsFile::~XmlMapsFile()
 {
 }
-
 
 
 const Ogre::String
@@ -44,7 +40,6 @@ XmlMapsFile::GetMapFileNameByName( const Ogre::String& name )
     LOG_WARNING( "Can't find map \"" + name + "\" in " + m_File.ValueStr() + "." );
     return "";
 }
-
 
 
 void

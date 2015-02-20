@@ -1,9 +1,7 @@
-#include "core/UiAnimation.h"
-
 #include <OgreVector2.h>
 
+#include "core/UiAnimation.h"
 #include "core/UiWidget.h"
-
 
 
 UiAnimation::UiAnimation( const Ogre::String& name, UiWidget* widget ):
@@ -15,11 +13,9 @@ UiAnimation::UiAnimation( const Ogre::String& name, UiWidget* widget ):
 }
 
 
-
 UiAnimation::~UiAnimation()
 {
 }
-
 
 
 void
@@ -30,8 +26,6 @@ UiAnimation::AddTime( const float time )
     {
         m_Time = m_Length;
     }
-
-
 
     // update all
     if( m_Scale.size() > 0 )
@@ -70,8 +64,6 @@ UiAnimation::AddTime( const float time )
         m_Widget->SetScale( value );
     }
 
-
-
     if( m_X.size() > 0 )
     {
         Ogre::Vector2 min_value = m_X[ 0 ].value;
@@ -107,8 +99,6 @@ UiAnimation::AddTime( const float time )
 
         m_Widget->SetX( value.x, value.y );
     }
-
-
 
     if( m_Y.size() > 0 )
     {
@@ -146,8 +136,6 @@ UiAnimation::AddTime( const float time )
         m_Widget->SetY( value.x, value.y );
     }
 
-
-
     if( m_Rotation.size() > 0 )
     {
         float min_value = m_Rotation[ 0 ].value;
@@ -183,8 +171,6 @@ UiAnimation::AddTime( const float time )
 
         m_Widget->SetRotation( value );
     }
-
-
 
     if( m_Alpha.size() > 0 )
     {
@@ -224,13 +210,11 @@ UiAnimation::AddTime( const float time )
 }
 
 
-
 const Ogre::String&
 UiAnimation::GetName() const
 {
     return m_Name;
 }
-
 
 
 void
@@ -240,13 +224,11 @@ UiAnimation::SetTime( const float time )
 }
 
 
-
 float
 UiAnimation::GetTime() const
 {
     return m_Time;
 }
-
 
 
 void
@@ -256,13 +238,11 @@ UiAnimation::SetLength( const float time )
 }
 
 
-
 float
 UiAnimation::GetLength() const
 {
     return m_Length;
 }
-
 
 
 void
@@ -272,13 +252,11 @@ UiAnimation::AddScaleKeyFrame( const UiKeyFrameVector2& key_frame )
 }
 
 
-
 void
 UiAnimation::AddXKeyFrame( const UiKeyFrameVector2& key_frame )
 {
     m_X.push_back( key_frame );
 }
-
 
 
 void
@@ -288,13 +266,11 @@ UiAnimation::AddYKeyFrame( const UiKeyFrameVector2& key_frame )
 }
 
 
-
 void
 UiAnimation::AddRotationKeyFrame( const UiKeyFrameFloat& key_frame )
 {
     m_Rotation.push_back( key_frame );
 }
-
 
 
 void

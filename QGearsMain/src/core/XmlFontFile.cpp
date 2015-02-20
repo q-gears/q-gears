@@ -1,9 +1,7 @@
-#include "core/XmlFontFile.h"
-
 #include "core/Logger.h"
 #include "core/UiManager.h"
 #include "core/UiFont.h"
-
+#include "core/XmlFontFile.h"
 
 
 XmlFontFile::XmlFontFile( const Ogre::String& file ):
@@ -12,11 +10,9 @@ XmlFontFile::XmlFontFile( const Ogre::String& file ):
 }
 
 
-
 XmlFontFile::~XmlFontFile()
 {
 }
-
 
 
 void

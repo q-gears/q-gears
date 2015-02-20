@@ -1,15 +1,12 @@
-#include "core/InputManager.h"
-#include "core/InputManagerCommands.h"
-
 #include "core/ConfigCmdManager.h"
 #include "core/Console.h"
+#include "core/InputManager.h"
+#include "core/InputManagerCommands.h"
 #include "core/Logger.h"
 #include "core/Timer.h"
 
 
-
 template<>InputManager *Ogre::Singleton< InputManager >::msSingleton = NULL;
-
 
 
 InputManager::InputManager():
@@ -22,11 +19,9 @@ InputManager::InputManager():
 }
 
 
-
 InputManager::~InputManager()
 {
 }
-
 
 
 void
@@ -37,7 +32,6 @@ InputManager::Reset()
         m_ButtonState[ button ] = false;
     }
 }
-
 
 
 void
@@ -61,13 +55,11 @@ InputManager::ButtonPressed( int button, char text, bool down )
 }
 
 
-
 void
 InputManager::MousePressed( int button, bool down )
 {
     m_EventQueue.push_back(QGears::Event((down == true) ? QGears::ET_MOUSE_PRESS : QGears::ET_MOUSE_RELEASE, static_cast<float>(button), 0.0f));
 }
-
 
 
 void
@@ -77,13 +69,11 @@ InputManager::MouseMoved( int x, int y )
 }
 
 
-
 void
 InputManager::MouseScrolled( int value )
 {
     m_EventQueue.push_back(QGears::Event(QGears::ET_MOUSE_SCROLL, static_cast<float>(value), 0.0f));
 }
-
 
 
 void
@@ -116,13 +106,11 @@ InputManager::Update()
 }
 
 
-
 bool
 InputManager::IsButtonPressed( int button ) const
 {
     return m_ButtonState[ button ];
 }
-
 
 
 void
@@ -134,14 +122,12 @@ InputManager::GetInputEvents( InputEventArray& input_events )
 }
 
 
-
 void
 InputManager::BindCommand( const Ogre::String& cmd, const ButtonList& buttons )
 {
     BindInfo info = BindInfo( cmd, buttons );
     m_Binds.push_back( info );
 }
-
 
 
 void

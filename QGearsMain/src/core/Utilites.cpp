@@ -1,7 +1,6 @@
-#include "core/Utilites.h"
-
 #include <OgreStringConverter.h>
 
+#include "core/Utilites.h"
 
 
 const Ogre::String
@@ -12,12 +11,12 @@ CreateAutoName(const Ogre::String prefix)
 }
 
 
-
 struct KeyName
 {
     Ogre::String name;
     OIS::KeyCode key;
 };
+
 
 KeyName key_names[] =
 {
@@ -109,7 +108,6 @@ KeyName key_names[] =
 };
 
 
-
 Ogre::String
 KeyToString( OIS::KeyCode key )
 {
@@ -124,7 +122,6 @@ KeyToString( OIS::KeyCode key )
 
     return "UNASSIGNED";
 }
-
 
 
 OIS::KeyCode
@@ -146,7 +143,6 @@ StringToKey( const Ogre::String& str )
 
     return OIS::KC_UNASSIGNED;
 }
-
 
 
 Ogre::StringVector

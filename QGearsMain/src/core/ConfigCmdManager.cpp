@@ -1,12 +1,10 @@
+#include "common/make_unique.h"
+#include "core/Assert.h"
 #include "core/ConfigCmdManager.h"
 #include "core/ConfigCmdManagerCommands.h"
 
-#include "core/Assert.h"
-#include "common/make_unique.h"
-
 
 template<>ConfigCmdManager *Ogre::Singleton< ConfigCmdManager >::msSingleton = NULL;
-
 
 
 ConfigCmdManager::ConfigCmdManager()
@@ -15,12 +13,10 @@ ConfigCmdManager::ConfigCmdManager()
 }
 
 
-
 ConfigCmdManager::~ConfigCmdManager()
 {
 
 }
-
 
 
 void
@@ -39,12 +35,10 @@ ConfigCmdManager::AddCommand( const Ogre::String& name, const Ogre::String& desc
 }
 
 
-
 void
 ConfigCmdManager::ExecuteString( const Ogre::String& cmd_string )
 {
 }
-
 
 
 ConfigCmd*
@@ -61,13 +55,11 @@ ConfigCmdManager::Find( const Ogre::String& name ) const
 }
 
 
-
 int
 ConfigCmdManager::GetConfigCmdNumber()
 {
     return m_Commands.size();
 }
-
 
 
 ConfigCmd*

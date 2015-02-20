@@ -1,7 +1,6 @@
-#include "core/EntityDirection.h"
-
 #include <OgreHardwareBufferManager.h>
 
+#include "core/EntityDirection.h"
 
 
 EntityDirection::EntityDirection()
@@ -37,12 +36,10 @@ EntityDirection::EntityDirection()
 }
 
 
-
 EntityDirection::~EntityDirection()
 {
     delete mRenderOp.vertexData;
 }
-
 
 
 Ogre::Real
@@ -50,7 +47,6 @@ EntityDirection::getSquaredViewDepth( const Ogre::Camera* cam ) const
 {
     return 0.0f;
 }
-
 
 
 Ogre::Real

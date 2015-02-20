@@ -1,10 +1,9 @@
-#include "core/ScriptManager.h"
-#include "core/ScriptManagerBinds.h"
-#include "core/ScriptManagerCommands.h"
-
 #include "core/ConfigVar.h"
 #include "core/DebugDraw.h"
 #include "core/Logger.h"
+#include "core/ScriptManager.h"
+#include "core/ScriptManagerBinds.h"
+#include "core/ScriptManagerCommands.h"
 #include "core/Timer.h"
 #include "core/Utilites.h"
 #include "core/XmlScriptsFile.h"
@@ -12,19 +11,15 @@
 
 
 ConfigVar cv_debug_script( "debug_script", "Debug script flags. 0x01 - System, 0x02 - Entity, 0x04 - Ui.", "0" );
-
+template<>ScriptManager *Ogre::Singleton< ScriptManager >::msSingleton = NULL;
 Ogre::String script_entity_type[] = { "SYSTEM", "ENTITY", "UI" };
+
 
 bool
 priority_queue_compare( QueueScript a, QueueScript b )
 {
     return a.priority < b.priority;
 }
-
-
-
-template<>ScriptManager *Ogre::Singleton< ScriptManager >::msSingleton = NULL;
-
 
 
 ScriptManager::ScriptManager():
@@ -51,14 +46,12 @@ ScriptManager::ScriptManager():
 }
 
 
-
 ScriptManager::~ScriptManager()
 {
     lua_close( m_LuaState );
 
     LOG_TRIVIAL( "ScriptManager closed." );
 }
-
 
 
 void
@@ -93,7 +86,6 @@ ScriptManager::Input(const QGears::Event& event)
 }
 
 
-
 void
 ScriptManager::Update( const ScriptManager::Type type )
 {
@@ -112,8 +104,6 @@ ScriptManager::Update( const ScriptManager::Type type )
             }
         }
     }
-
-
 
     // draw debug before update. This way it will be posible to see scripts that run once
     int debug = cv_debug_script.GetI();
@@ -171,8 +161,6 @@ ScriptManager::Update( const ScriptManager::Type type )
             }
         }
     }
-
-
 
     for( unsigned int i = 0; i < m_ScriptEntity.size(); ++i )
     {
@@ -293,7 +281,6 @@ ScriptManager::Update( const ScriptManager::Type type )
 }
 
 
-
 void
 ScriptManager::RunString( const Ogre::String& lua )
 {
@@ -304,7 +291,6 @@ ScriptManager::RunString( const Ogre::String& lua )
 }
 
 
-
 void
 ScriptManager::RunFile( const Ogre::String& file )
 {
@@ -313,7 +299,6 @@ ScriptManager::RunFile( const Ogre::String& file )
         LOG_ERROR( Ogre::String( lua_tostring( m_LuaState, -1 ) ) );
     }
 }
-
 
 
 void
@@ -377,7 +362,6 @@ ScriptManager::AddEntity( const ScriptManager::Type type, const Ogre::String& en
 }
 
 
-
 void
 ScriptManager::RemoveEntity( const ScriptManager::Type type, const Ogre::String& entity_name )
 {
@@ -398,7 +382,6 @@ ScriptManager::RemoveEntity( const ScriptManager::Type type, const Ogre::String&
 }
 
 
-
 void
 ScriptManager::RemoveEntityTopScript( ScriptEntity& entity )
 {
@@ -416,7 +399,6 @@ ScriptManager::RemoveEntityTopScript( ScriptEntity& entity )
         entity.queue.erase( entity.queue.begin() );
     }
 }
-
 
 
 luabind::object
@@ -451,7 +433,6 @@ ScriptManager::GetTableByEntityName( const ScriptManager::Type type, const Ogre:
 }
 
 
-
 QueueScript*
 ScriptManager::GetScriptByScriptId( const ScriptId& script ) const
 {
@@ -475,7 +456,6 @@ ScriptManager::GetScriptByScriptId( const ScriptId& script ) const
 }
 
 
-
 ScriptEntity*
 ScriptManager::GetScriptEntityByName( const Type type, const Ogre::String& entity_name ) const
 {
@@ -491,13 +471,11 @@ ScriptManager::GetScriptEntityByName( const Type type, const Ogre::String& entit
 }
 
 
-
 const ScriptId
 ScriptManager::GetCurrentScriptId() const
 {
     return m_CurrentScriptId;
 }
-
 
 
 void
@@ -513,7 +491,6 @@ ScriptManager::ContinueScriptExecution( const ScriptId& script )
 
     script_pointer->wait = false;
 }
-
 
 
 int
@@ -540,7 +517,6 @@ ScriptManager::ScriptWait( const float seconds )
 }
 
 
-
 void
 ScriptManager::ScriptRequest( const Type type, const char* entity, const char* function, const int priority )
 {
@@ -561,7 +537,6 @@ ScriptManager::ScriptRequest( const Type type, const char* entity, const char* f
         LOG_WARNING( "Script '" + Ogre::String( function ) + "' for entity '" +  Ogre::String( entity ) + "' doesn't exist." );
     }
 }
-
 
 
 int
@@ -589,7 +564,6 @@ ScriptManager::ScriptRequestStartSync( const Type type, const char* entity, cons
 }
 
 
-
 int
 ScriptManager::ScriptRequestEndSync( const Type type, const char* entity, const char* function, const int priority )
 {
@@ -613,7 +587,6 @@ ScriptManager::ScriptRequestEndSync( const Type type, const char* entity, const 
 
     return -1;
 }
-
 
 
 bool
@@ -649,7 +622,6 @@ ScriptManager::ScriptRequest( ScriptEntity* script_entity, const Ogre::String& f
 
     return false;
 }
-
 
 
 void

@@ -1,8 +1,6 @@
-#include "core/XmlPrototypesFile.h"
-
 #include "core/Logger.h"
 #include "core/UiManager.h"
-
+#include "core/XmlPrototypesFile.h"
 
 
 XmlPrototypesFile::XmlPrototypesFile( const Ogre::String& file ):
@@ -11,11 +9,9 @@ XmlPrototypesFile::XmlPrototypesFile( const Ogre::String& file ):
 }
 
 
-
 XmlPrototypesFile::~XmlPrototypesFile()
 {
 }
-
 
 
 void

@@ -1,10 +1,9 @@
-#include "core/Console.h"
-
 #include <OgreRenderWindow.h>
 
 #include "common/QGearsApplication.h"
 #include "core/ConfigCmdManager.h"
 #include "core/ConfigVarManager.h"
+#include "core/Console.h"
 #include "core/DebugDraw.h"
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
@@ -14,11 +13,7 @@
 
 
 template<>Console *Ogre::Singleton< Console >::msSingleton = NULL;
-
-
-
 ConfigVar cv_console_notification( "console_notification", "Draw console strings even when console is hided", "false" );
-
 
 
 Console::Console():
@@ -61,13 +56,11 @@ Console::Console():
 }
 
 
-
 Console::~Console()
 {
     // remove as listner
     Ogre::LogManager::getSingleton().getDefaultLog()->removeListener( this );
 }
-
 
 
 void
@@ -282,7 +275,6 @@ Console::Input(const QGears::Event& event)
 }
 
 
-
 void
 Console::Update()
 {
@@ -317,7 +309,6 @@ Console::Update()
         UpdateNotification();
     }
 }
-
 
 
 void
@@ -392,7 +383,6 @@ Console::UpdateDraw()
 }
 
 
-
 void
 Console::UpdateNotification()
 {
@@ -421,7 +411,6 @@ Console::UpdateNotification()
 }
 
 
-
 void
 Console::OnResize()
 {
@@ -438,14 +427,12 @@ Console::OnResize()
 }
 
 
-
 void
 Console::SetToVisible()
 {
     m_ToVisible = true;
     m_Visible = true;
 }
-
 
 
 void
@@ -455,13 +442,11 @@ Console::SetToHide()
 }
 
 
-
 bool
 Console::IsVisible() const
 {
     return m_Visible;
 }
-
 
 
 void
@@ -536,7 +521,6 @@ Console::AddTextToOutput( const Ogre::String& text, const Ogre::ColourValue& col
 }
 
 
-
 void
 Console::ExecuteCommand( const Ogre::String& command )
 {
@@ -582,13 +566,11 @@ Console::ExecuteCommand( const Ogre::String& command )
 }
 
 
-
 void
 Console::ExecuteScript()
 {
     ScriptManager::getSingleton().RunString( m_InputLine );
 }
-
 
 
 void
@@ -745,14 +727,12 @@ Console::CompleteInput()
 }
 
 
-
 void
 Console::ResetAutoCompletion()
 {
     m_AutoCompletition.clear();
     m_AutoCompletitionLine = 0;
 }
-
 
 
 void
@@ -765,7 +745,6 @@ Console::AddInputToHistory()
     m_History.push_front( m_InputLine );
     m_HistoryLine = -1;
 }
-
 
 
 void
@@ -784,7 +763,6 @@ Console::SetInputLineFromHistory()
         }
     }
 }
-
 
 
 void

@@ -1,8 +1,6 @@
-#include "core/XmlScreensFile.h"
-
 #include "core/Logger.h"
 #include "core/XmlScreenFile.h"
-
+#include "core/XmlScreensFile.h"
 
 
 XmlScreensFile::XmlScreensFile( const Ogre::String& file ):
@@ -11,11 +9,9 @@ XmlScreensFile::XmlScreensFile( const Ogre::String& file ):
 }
 
 
-
 XmlScreensFile::~XmlScreensFile()
 {
 }
-
 
 
 void

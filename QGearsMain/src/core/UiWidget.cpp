@@ -1,5 +1,3 @@
-#include "core/UiWidget.h"
-
 #include <OgreMath.h>
 #include <OgreRoot.h>
 
@@ -9,11 +7,10 @@
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
 #include "core/Timer.h"
-
+#include "core/UiWidget.h"
 
 
 ConfigVar cv_debug_ui( "debug_ui", "Draw ui debug info", "0" );
-
 
 
 UiWidget::UiWidget( const Ogre::String& name ):
@@ -25,7 +22,6 @@ UiWidget::UiWidget( const Ogre::String& name ):
 }
 
 
-
 UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent ):
     m_Name( name ),
     m_PathName( path_name ),
@@ -33,7 +29,6 @@ UiWidget::UiWidget( const Ogre::String& name, const Ogre::String& path_name, UiW
 {
     Initialise();
 }
-
 
 
 UiWidget::~UiWidget()
@@ -47,7 +42,6 @@ UiWidget::~UiWidget()
 
     RemoveAllChildren();
 }
-
 
 
 void
@@ -105,7 +99,6 @@ UiWidget::Initialise()
 }
 
 
-
 void
 UiWidget::Update()
 {
@@ -150,20 +143,15 @@ UiWidget::Update()
         PlayAnimation( m_AnimationDefault, UiAnimation::DEFAULT, 0, -1 );
     }
 
-
-
     for( size_t i = 0; i < m_Children.size(); ++i )
     {
         m_Children[ i ]->Update();
     }
 
-
-
     if( m_UpdateTransformation == true )
     {
         UpdateTransformation();
     }
-
 
     // debug output
     if( cv_debug_ui.GetI() >= 1 )
@@ -236,7 +224,6 @@ UiWidget::Update()
 }
 
 
-
 void
 UiWidget::OnResize()
 {
@@ -253,7 +240,6 @@ UiWidget::OnResize()
 }
 
 
-
 void
 UiWidget::Render()
 {
@@ -267,13 +253,11 @@ UiWidget::Render()
 }
 
 
-
 void
 UiWidget::SetVisible( const bool visible )
 {
     m_Visible = visible;
 }
-
 
 
 bool
@@ -283,7 +267,6 @@ UiWidget::IsVisible() const
 }
 
 
-
 const Ogre::String&
 UiWidget::GetName() const
 {
@@ -291,13 +274,11 @@ UiWidget::GetName() const
 }
 
 
-
 void
 UiWidget::AddChild( UiWidget *widget )
 {
     m_Children.push_back( widget );
 }
-
 
 
 UiWidget*
@@ -315,7 +296,6 @@ UiWidget::GetChild( const Ogre::String& name )
 }
 
 
-
 void
 UiWidget::RemoveAllChildren()
 {
@@ -327,13 +307,11 @@ UiWidget::RemoveAllChildren()
 }
 
 
-
 void
 UiWidget::AddAnimation( UiAnimation* animation )
 {
     m_Animations.push_back( animation );
 }
-
 
 
 const Ogre::String&
@@ -346,7 +324,6 @@ UiWidget::GetCurrentAnimationName() const
 
     return Ogre::StringUtil::BLANK;
 }
-
 
 
 void
@@ -372,13 +349,11 @@ UiWidget::PlayAnimation( const Ogre::String& animation, UiAnimation::State state
 }
 
 
-
 void
 UiWidget::ScriptPlayAnimation( const char* name )
 {
     PlayAnimation( Ogre::String( name ), UiAnimation::DEFAULT, 0, -1 );
 }
-
 
 
 void
@@ -388,7 +363,6 @@ UiWidget::ScriptPlayAnimationStop( const char* name )
 }
 
 
-
 void
 UiWidget::ScriptPlayAnimation( const char* name, const float start, const float end )
 {
@@ -396,13 +370,11 @@ UiWidget::ScriptPlayAnimation( const char* name, const float start, const float 
 }
 
 
-
 void
 UiWidget::ScriptPlayAnimationStop( const char* name, const float start, const float end )
 {
     PlayAnimation( Ogre::String( name ), UiAnimation::ONCE, start, end );
 }
-
 
 
 void
@@ -413,7 +385,6 @@ UiWidget::ScriptSetDefaultAnimation( const char* animation )
 }
 
 
-
 int
 UiWidget::ScriptAnimationSync()
 {
@@ -421,7 +392,6 @@ UiWidget::ScriptAnimationSync()
     m_AnimationSync.push_back( script );
     return -1;
 }
-
 
 
 void
@@ -447,8 +417,6 @@ UiWidget::UpdateTransformation()
         y = local_x * sin + local_y * cos;
     }
 
-
-
     m_FinalTranslate.x = area_translate.x;
     if( m_Align == RIGHT )
     {
@@ -459,8 +427,6 @@ UiWidget::UpdateTransformation()
         m_FinalTranslate.x = area_translate.x + area_size.x / 2;
     }
     m_FinalTranslate.x += x;
-
-
 
     m_FinalTranslate.y = area_translate.y;
     if( m_VerticalAlign == BOTTOM )
@@ -473,8 +439,6 @@ UiWidget::UpdateTransformation()
     }
     m_FinalTranslate.y += y;
 
-
-
     m_FinalZ = ( m_Parent != NULL ) ? m_Parent->GetFinalZ() + m_Z : m_Z;
     m_FinalScale = area_scale * m_Scale;
     m_FinalSize.x = ( area_size.x * m_WidthPercent * m_Scale.x ) / 100.0f + ( m_Width * m_ScreenHeight / 720.0f ) * m_FinalScale.x;
@@ -482,8 +446,6 @@ UiWidget::UpdateTransformation()
     m_FinalOrigin.x = ( m_FinalSize.x * m_OriginXPercent ) / 100.0f + m_OriginX * m_ScreenHeight * m_FinalScale.x / 720.0f;
     m_FinalOrigin.y = ( m_FinalSize.y * m_OriginYPercent ) / 100.0f + m_OriginY * m_ScreenHeight * m_FinalScale.y / 720.0f;
     m_FinalRotation = area_rotation + m_Rotation;
-
-
 
     // scissor update
     m_ScissorTop = ( m_Parent != NULL ) ? m_Parent->GetScissorTop() : 0;
@@ -534,18 +496,13 @@ UiWidget::UpdateTransformation()
         m_ScissorRight = std::min( m_ScissorRight, std::max( std::max( x1 , x2 ), std::max( x3 , x4 ) ) );
     }
 
-
-
     m_UpdateTransformation = false;
-
-
 
     for( size_t i = 0; i < m_Children.size(); ++i )
     {
         m_Children[ i ]->UpdateTransformation();
     }
 }
-
 
 
 void
@@ -555,13 +512,11 @@ UiWidget::SetAlign( const UiWidget::Align align )
 }
 
 
-
 void
 UiWidget::SetVerticalAlign( const UiWidget::VerticalAlign valign )
 {
     m_VerticalAlign = valign;
 }
-
 
 
 float
@@ -571,13 +526,11 @@ UiWidget::GetFinalZ() const
 }
 
 
-
 Ogre::Vector2
 UiWidget::GetFinalOrigin() const
 {
     return m_FinalOrigin;
 }
-
 
 
 Ogre::Vector2
@@ -587,13 +540,11 @@ UiWidget::GetFinalTranslate() const
 }
 
 
-
 Ogre::Vector2
 UiWidget::GetFinalSize() const
 {
     return m_FinalSize;
 }
-
 
 
 Ogre::Vector2
@@ -603,13 +554,11 @@ UiWidget::GetFinalScale() const
 }
 
 
-
 float
 UiWidget::GetFinalRotation() const
 {
     return m_FinalRotation;
 }
-
 
 
 void
@@ -621,7 +570,6 @@ UiWidget::SetOriginX( const float percent, const float x )
 }
 
 
-
 void
 UiWidget::SetOriginY( const float percent, const float y )
 {
@@ -629,7 +577,6 @@ UiWidget::SetOriginY( const float percent, const float y )
     m_OriginY = y;
     m_UpdateTransformation = true;
 }
-
 
 
 void
@@ -641,7 +588,6 @@ UiWidget::SetX( const float percent, const float x )
 }
 
 
-
 void
 UiWidget::SetY( const float percent, const float y )
 {
@@ -651,14 +597,12 @@ UiWidget::SetY( const float percent, const float y )
 }
 
 
-
 void
 UiWidget::SetZ( const float z )
 {
     m_Z = z;
     m_UpdateTransformation = true;
 }
-
 
 
 void
@@ -670,7 +614,6 @@ UiWidget::SetWidth( const float percent, const float width )
 }
 
 
-
 void
 UiWidget::SetHeight( const float percent, const float height )
 {
@@ -678,7 +621,6 @@ UiWidget::SetHeight( const float percent, const float height )
     m_Height = height;
     m_UpdateTransformation = true;
 }
-
 
 
 void
@@ -689,14 +631,12 @@ UiWidget::SetScale( const Ogre::Vector2& scale )
 }
 
 
-
 void
 UiWidget::SetRotation( const float degree )
 {
     m_Rotation = degree;
     m_UpdateTransformation = true;
 }
-
 
 
 void
@@ -707,13 +647,11 @@ UiWidget::SetScissor( bool scissor )
 }
 
 
-
 int
 UiWidget::GetScissorTop() const
 {
     return m_ScissorTop;
 }
-
 
 
 int
@@ -723,7 +661,6 @@ UiWidget::GetScissorBottom() const
 }
 
 
-
 int
 UiWidget::GetScissorLeft() const
 {
@@ -731,13 +668,11 @@ UiWidget::GetScissorLeft() const
 }
 
 
-
 int
 UiWidget::GetScissorRight() const
 {
     return m_ScissorRight;
 }
-
 
 
 void
@@ -751,7 +686,6 @@ UiWidget::SetColour( const float r, const float g, const float b )
 }
 
 
-
 void
 UiWidget::SetColours( const float r1, const float g1, const float b1, const float r2, const float g2, const float b2, const float r3, const float g3, const float b3, const float r4, const float g4, const float b4 )
 {
@@ -761,7 +695,6 @@ UiWidget::SetColours( const float r1, const float g1, const float b1, const floa
     m_Colour4.r = r4; m_Colour4.g = g4; m_Colour4.b = b4;
     m_UpdateTransformation = true;
 }
-
 
 
 void

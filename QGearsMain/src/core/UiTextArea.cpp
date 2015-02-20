@@ -1,12 +1,10 @@
-#include "core/UiTextArea.h"
-
 #include <OgreFontManager.h>
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
 #include "core/Logger.h"
 #include "core/UiManager.h"
-
+#include "core/UiTextArea.h"
 
 
 UiTextArea::UiTextArea( const Ogre::String& name ):
@@ -16,7 +14,6 @@ UiTextArea::UiTextArea( const Ogre::String& name ):
 }
 
 
-
 UiTextArea::UiTextArea( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent ):
     UiWidget( name, path_name, parent )
 {
@@ -24,12 +21,10 @@ UiTextArea::UiTextArea( const Ogre::String& name, const Ogre::String& path_name,
 }
 
 
-
 UiTextArea::~UiTextArea()
 {
     DestroyVertexBuffer();
 }
-
 
 
 void
@@ -48,13 +43,11 @@ UiTextArea::Initialise()
 }
 
 
-
 void
 UiTextArea::Update()
 {
     UiWidget::Update();
 }
-
 
 
 void
@@ -80,14 +73,12 @@ UiTextArea::Render()
 }
 
 
-
 void
 UiTextArea::UpdateTransformation()
 {
     UiWidget::UpdateTransformation();
     UpdateGeometry();
 }
-
 
 
 void
@@ -97,7 +88,6 @@ UiTextArea::SetTextAlign( const TextAlign align )
 }
 
 
-
 void
 UiTextArea::SetText( const Ogre::UTFString& text )
 {
@@ -105,13 +95,11 @@ UiTextArea::SetText( const Ogre::UTFString& text )
 }
 
 
-
 void
 UiTextArea::SetText( TiXmlNode* text )
 {
     m_TextNode = text;
 }
-
 
 
 void
@@ -141,7 +129,6 @@ UiTextArea::SetFont( const Ogre::String& font )
     tex->setNumMipmaps( -1 );
     tex->setTextureFiltering( Ogre::TFO_NONE );
 }
-
 
 
 void
@@ -177,8 +164,6 @@ UiTextArea::UpdateGeometry()
         }
     }
 
-
-
     TextBlockData data;
     data.local_x1 = -m_FinalOrigin.x - length;
     data.local_y1 = -m_FinalOrigin.y;
@@ -196,7 +181,6 @@ UiTextArea::UpdateGeometry()
         SetTextGeometry( m_Text, data, style );
     }
 }
-
 
 
 float
@@ -232,7 +216,6 @@ UiTextArea::GetTextLengthFromNode( TiXmlNode* node ) const
 }
 
 
-
 float
 UiTextArea::GetTextLength( const Ogre::UTFString& text ) const
 {
@@ -245,7 +228,6 @@ UiTextArea::GetTextLength( const Ogre::UTFString& text ) const
 
     return length;
 }
-
 
 
 void
@@ -285,7 +267,6 @@ UiTextArea::SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const
         node = node->NextSibling();
     }
 }
-
 
 
 void
@@ -369,7 +350,6 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
 }
 
 
-
 void
 UiTextArea::CreateVertexBuffer()
 {
@@ -392,7 +372,6 @@ UiTextArea::CreateVertexBuffer()
     m_RenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
     m_RenderOp.useIndexes = false;
 }
-
 
 
 void

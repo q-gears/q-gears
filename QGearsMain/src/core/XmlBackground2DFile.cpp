@@ -1,12 +1,9 @@
-#include "core/XmlBackground2DFile.h"
-
 #include "core/Background2D.h"
 #include "core/Background2DAnimation.h"
 #include "core/CameraManager.h"
 #include "core/EntityManager.h"
 #include "core/Logger.h"
-
-
+#include "core/XmlBackground2DFile.h"
 
 
 XmlBackground2DFile::XmlBackground2DFile( const Ogre::String& file ):
@@ -15,11 +12,9 @@ XmlBackground2DFile::XmlBackground2DFile( const Ogre::String& file ):
 }
 
 
-
 XmlBackground2DFile::~XmlBackground2DFile()
 {
 }
-
 
 
 void

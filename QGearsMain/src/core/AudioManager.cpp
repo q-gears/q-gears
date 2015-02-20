@@ -1,18 +1,15 @@
-#include "core/AudioManager.h"
-
 #include <list>
 #include <boost/thread.hpp>
 
+#include "core/AudioManager.h"
 #include "core/XmlMusicsFile.h"
 #include "core/Logger.h"
-
 
 
 template<>AudioManager *Ogre::Singleton< AudioManager >::msSingleton = NULL;
 
 ALsizei AudioManager::m_ChannelBufferNumber = 2;
 int AudioManager::m_ChannelBufferSize = 96 * 1024;
-
 
 
 AudioManager::AudioManager():
@@ -53,13 +50,10 @@ AudioManager::AudioManager():
         LOG_ERROR( "AudioManager failed to initialised. There's no default sound device." );
     }
 
-
-
     // Load musics
     XmlMusicsFile musics( "./data/musics.xml" );
     musics.LoadMusics();
 }
-
 
 
 AudioManager::~AudioManager()
@@ -81,7 +75,6 @@ AudioManager::~AudioManager()
 }
 
 
-
 void
 AudioManager::operator()()
 {
@@ -99,7 +92,6 @@ AudioManager::operator()()
 }
 
 
-
 void
 AudioManager::Update()
 {
@@ -109,7 +101,6 @@ AudioManager::Update()
 }
 
 
-
 void
 AudioManager::MusicPause()
 {
@@ -117,7 +108,6 @@ AudioManager::MusicPause()
 
     m_Music.Pause();
 }
-
 
 
 void
@@ -140,7 +130,6 @@ AudioManager::MusicPlay( const Ogre::String& name )
 }
 
 
-
 void
 AudioManager::MusicStop()
 {
@@ -148,7 +137,6 @@ AudioManager::MusicStop()
 
     m_Music.Stop();
 }
-
 
 
 void
@@ -169,7 +157,6 @@ AudioManager::AddMusic( const AudioManager::Music& music )
 }
 
 
-
 AudioManager::Music*
 AudioManager::GetMusic( const Ogre::String& name )
 {
@@ -187,7 +174,6 @@ AudioManager::GetMusic( const Ogre::String& name )
 }
 
 
-
 const char*
 AudioManager::ALError()
 {
@@ -201,7 +187,6 @@ AudioManager::ALError()
         //return alGetString( error_code );
     //}
 }
-
 
 
 const char*
@@ -221,7 +206,6 @@ AudioManager::ALCError( const ALCdevice* device )
 }
 
 
-
 AudioManager::Player::Player( boost::recursive_mutex* mutex ):
     m_Loop( -1.0 ),
     m_VorbisInfo( NULL ),
@@ -232,12 +216,10 @@ AudioManager::Player::Player( boost::recursive_mutex* mutex ):
 }
 
 
-
 AudioManager::Player::~Player()
 {
     Stop();
 }
-
 
 
 void
@@ -247,7 +229,6 @@ AudioManager::Player::Pause()
 
     alSourcePause( m_Source );
 }
-
 
 
 void
@@ -325,7 +306,6 @@ AudioManager::Player::Stop()
 }
 
 
-
 void
 AudioManager::Player::SetLoop( const float loop )
 {
@@ -333,7 +313,6 @@ AudioManager::Player::SetLoop( const float loop )
 
     m_Loop = loop;
 }
-
 
 
 void
@@ -388,7 +367,6 @@ AudioManager::Player::Update()
         }
     }
 }
-
 
 
 ALsizei
@@ -447,7 +425,6 @@ AudioManager::Player::FillBuffer()
 }
 
 
-
 float
 AudioManager::Player::GetPosition()
 {
@@ -457,31 +434,3 @@ AudioManager::Player::GetPosition()
     alGetSourcei( m_Source, AL_SAMPLE_OFFSET, &play_offset );
     return ( ov_pcm_tell( &m_VorbisFile ) - ( m_ChannelBufferNumber * m_ChannelBufferSize / m_VorbisInfo->channels / sizeof( int16_t ) - play_offset ) ) * 1000 / m_VorbisInfo->rate;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

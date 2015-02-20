@@ -1,12 +1,10 @@
-#include "core/XmlScreenFile.h"
-
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
 #include "core/UiManager.h"
 #include "core/UiSprite.h"
 #include "core/UiTextArea.h"
 #include "core/UiWidget.h"
-
+#include "core/XmlScreenFile.h"
 
 
 XmlScreenFile::XmlScreenFile( const Ogre::String& file ):
@@ -15,11 +13,9 @@ XmlScreenFile::XmlScreenFile( const Ogre::String& file ):
 }
 
 
-
 XmlScreenFile::~XmlScreenFile()
 {
 }
-
 
 
 void
@@ -51,7 +47,6 @@ XmlScreenFile::LoadScreen()
 
     UiManager::getSingleton().AddWidget( widget );
 }
-
 
 
 void
@@ -119,8 +114,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         }
                     }
 
-
-
                     if( node->ValueStr() == "text_area" )
                     {
                         Ogre::String text = GetString( node, "text_name", "" );
@@ -143,8 +136,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         }
                     }
 
-
-
                     Ogre::String colours = GetString( node, "colours", "" );
                     if( colours != "" )
                     {
@@ -163,13 +154,8 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         widget2->SetColour( colour.x, colour.y, colour.z );
                     }
 
-
-
                     float alpha = GetFloat( node, "alpha", 1 );
                     widget2->SetAlpha( alpha );
-
-
-
 
                     Ogre::String align = GetString( node, "align" );
                     if( align != "" )
@@ -177,15 +163,11 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         widget2->SetAlign( ( align == "center" ) ? UiWidget::CENTER : ( ( align == "right" ) ? UiWidget::RIGHT : UiWidget::LEFT ) );
                     }
 
-
-
                     Ogre::String valign = GetString( node, "valign" );
                     if( valign != "" )
                     {
                         widget2->SetVerticalAlign( ( valign == "middle" ) ? UiWidget::MIDDLE : ( ( valign == "bottom" ) ? UiWidget::BOTTOM : UiWidget::TOP ) );
                     }
-
-
 
                     Ogre::String origin_x_str = GetString( node, "origin_x" );
                     if( origin_x_str != "" )
@@ -196,8 +178,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         widget2->SetOriginX( x_percent, x );
                     }
 
-
-
                     Ogre::String origin_y_str = GetString( node, "origin_y" );
                     if( origin_y_str != "" )
                     {
@@ -206,8 +186,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         ParsePersent( y_percent, y, origin_y_str );
                         widget2->SetOriginY( y_percent, y );
                     }
-
-
 
                     Ogre::String x_str = GetString( node, "x" );
                     if( x_str != "" )
@@ -218,8 +196,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         widget2->SetX( x_percent, x );
                     }
 
-
-
                     Ogre::String y_str = GetString( node, "y" );
                     if( y_str != "" )
                     {
@@ -228,8 +204,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         ParsePersent( y_percent, y, y_str );
                         widget2->SetY( y_percent, y );
                     }
-
-
 
                     Ogre::String width_str = GetString( node, "width" );
                     if( width_str != "" )
@@ -240,8 +214,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         widget2->SetWidth( width_percent, width );
                     }
 
-
-
                     Ogre::String height_str  = GetString( node, "height" );
                     if( height_str != "" )
                     {
@@ -251,24 +223,11 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         widget2->SetHeight( height_percent, height );
                     }
 
-
-
                     Ogre::Vector2 scale = GetVector2( node, "scale", Ogre::Vector2( 1.0f, 1.0f ) );
                     widget2->SetScale( scale );
-
-
-
                     widget2->SetRotation( GetFloat( node, "rotation", 0.0f ) );
-
-
-
                     widget2->SetScissor( GetBool( node, "scissor", false ) );
-
-
-
                     widget2->SetVisible( GetBool( node, "visible", false ) );
-
-
 
                     if( node->ValueStr() == "sprite" )
                     {
@@ -278,8 +237,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     {
                         ( ( UiTextArea* )widget2 )->UpdateGeometry();
                     }
-
-
 
                     widget->AddChild( widget2 );
 
@@ -324,8 +281,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     }
                 }
 
-
-
                 Ogre::String x = GetString( node, "x", "" );
                 if( x != "" )
                 {
@@ -344,8 +299,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         }
                     }
                 }
-
-
 
                 Ogre::String y = GetString( node, "y", "" );
                 if( y != "" )
@@ -366,8 +319,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     }
                 }
 
-
-
                 Ogre::String rotation = GetString( node, "rotation", "" );
                 if( rotation != "" )
                 {
@@ -387,8 +338,6 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                     }
                 }
 
-
-
                 Ogre::String alpha = GetString( node, "alpha", "" );
                 if( alpha != "" )
                 {
@@ -407,16 +356,12 @@ XmlScreenFile::LoadScreenRecursive( TiXmlNode* node, const Ogre::String& base_na
                         }
                     }
                 }
-
-
-
                 widget->AddAnimation( animation );
             }
         }
         node = node->NextSibling();
     }
 }
-
 
 
 void

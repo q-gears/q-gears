@@ -1,11 +1,10 @@
-#include "core/EntityManager.h"
-
 #include <OgreEntity.h>
 #include <OgreRoot.h>
 
 #include "core/CameraManager.h"
 #include "core/ConfigVar.h"
 #include "core/DebugDraw.h"
+#include "core/EntityManager.h"
 #include "core/EntityModel.h"
 #include "core/InputManager.h"
 #include "core/Logger.h"
@@ -13,14 +12,9 @@
 #include "core/Timer.h"
 
 
-
 template<>EntityManager *Ogre::Singleton< EntityManager >::msSingleton = NULL;
-
-
-
 ConfigVar cv_debug_grid( "debug_grid", "Draw debug grid", "false" );
 ConfigVar cv_debug_axis( "debug_axis", "Draw debug axis", "false" );
-
 
 
 float
@@ -35,7 +29,6 @@ PointElevation( const Ogre::Vector2& point, const Ogre::Vector3& A, const Ogre::
 }
 
 
-
 float
 SideOfVector( const Ogre::Vector2& point, const Ogre::Vector2& p1, const Ogre::Vector2& p2 )
 {
@@ -43,7 +36,6 @@ SideOfVector( const Ogre::Vector2& point, const Ogre::Vector2& p1, const Ogre::V
     Ogre::Vector2 AP = point - p1;
     return AB.x * AP.y - AB.y * AP.x;
 }
-
 
 
 float
@@ -65,7 +57,6 @@ SquareDistanceToLine( const Ogre::Vector3& p, const Ogre::Vector3& p1, const Ogr
 }
 
 
-
 Ogre::Degree
 GetDirectionToPoint( const Ogre::Vector3& current_point, const Ogre::Vector3& direction_point )
 {
@@ -75,7 +66,6 @@ GetDirectionToPoint( const Ogre::Vector3& current_point, const Ogre::Vector3& di
     Ogre::Degree angle( Ogre::Radian( acosf( dir.dotProduct( up ) / ( dir.length() * up.length() ) ) ) );
     return ( dir.x < 0 ) ? Ogre::Degree( 360 ) - angle : angle;
 }
-
 
 
 EntityManager::EntityManager():
@@ -94,7 +84,6 @@ EntityManager::EntityManager():
     m_Axis = Ogre::Root::getSingleton().getSceneManager( "Scene" )->createEntity( "Axis", "system/axis.mesh" );
     m_SceneNode->attachObject( m_Axis );
 }
-
 
 
 EntityManager::~EntityManager()
@@ -116,20 +105,15 @@ EntityManager::~EntityManager()
 }
 
 
-
 void
 EntityManager::Input(const QGears::Event& event)
 {
     m_Background2D.InputDebug( event );
 
-
-
     if( m_Paused == true )
     {
         return;
     }
-
-
 
     if( m_PlayerEntity != NULL && m_PlayerLock == false )
     {
@@ -160,25 +144,18 @@ EntityManager::Input(const QGears::Event& event)
 }
 
 
-
 void
 EntityManager::Update()
 {
     UpdateDebug();
-
-
 
     if( m_Paused == true )
     {
         return;
     }
 
-
-
     // update all entity scripts
     ScriptManager::getSingleton().Update( ScriptManager::ENTITY );
-
-
 
     // set move point for player entity
     if( m_PlayerEntity != NULL && m_PlayerMove != Ogre::Vector3::ZERO )
@@ -192,8 +169,6 @@ EntityManager::Update()
         }
     }
 
-
-
     for( unsigned int i = 0; i < m_Entity.size(); ++i )
     {
         m_Entity[ i ]->Update();
@@ -203,8 +178,6 @@ EntityManager::Update()
         {
             continue;
         }
-
-
 
         // update screen scroll
         Entity* scroll_entity = m_Background2D.GetAutoScrollEntity();
@@ -221,23 +194,17 @@ EntityManager::Update()
             m_Background2D.SetScreenScroll( Ogre::Vector2( -view.x, -view.y ) );
         }
 
-
-
         // update offseting
         if( m_Entity[ i ]->GetOffsetType() != AT_NONE )
         {
             SetNextOffsetStep( m_Entity[ i ] );
         }
 
-
-
         // update turning
         if( m_Entity[ i ]->GetTurnType() != AT_NONE )
         {
             SetNextTurnStep( m_Entity[ i ] );
         }
-
-
 
         // update movement
         switch( m_Entity[ i ]->GetState() )
@@ -298,23 +265,17 @@ EntityManager::Update()
             }
             break;
 
-
-
             case Entity::LINEAR:
             {
                 SetNextLinearStep( m_Entity[ i ] );
             }
             break;
 
-
-
             case Entity::JUMP:
             {
                 SetNextJumpStep( m_Entity[ i ] );
             }
             break;
-
-
 
             case Entity::NONE:
             {
@@ -327,12 +288,8 @@ EntityManager::Update()
         }
     }
 
-
-
     // reset player move. It already must be handled in update
     m_PlayerMove = Ogre::Vector3::ZERO;
-
-
 
     if( m_Background2D.GetScrollType() != Background2D::NONE )
     {
@@ -342,41 +299,30 @@ EntityManager::Update()
 }
 
 
-
 void
 EntityManager::UpdateDebug()
 {
     m_Grid->setVisible( cv_debug_grid.GetB() );
     m_Axis->setVisible( cv_debug_axis.GetB() );
 
-
-
     for( unsigned int i = 0; i < m_Entity.size(); ++i )
     {
         m_Entity[ i ]->UpdateDebug();
     }
-
-
-
 
     for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
     {
         m_EntityTriggers[ i ]->UpdateDebug();
     }
 
-
-
     for( unsigned int i = 0; i < m_EntityPoints.size(); ++i )
     {
         m_EntityPoints[ i ]->UpdateDebug();
     }
 
-
-
     m_Walkmesh.UpdateDebug();
     m_Background2D.UpdateDebug();
 }
-
 
 
 void
@@ -384,7 +330,6 @@ EntityManager::OnResize()
 {
     m_Background2D.OnResize();
 }
-
 
 
 void
@@ -427,13 +372,11 @@ EntityManager::Clear()
 }
 
 
-
 void
 EntityManager::ScriptSetPaused( const bool paused )
 {
     m_Paused = paused;
 }
-
 
 
 Walkmesh*
@@ -443,7 +386,6 @@ EntityManager::GetWalkmesh()
 }
 
 
-
 Background2D*
 EntityManager::GetBackground2D()
 {
@@ -451,36 +393,34 @@ EntityManager::GetBackground2D()
 }
 
 
-    //--------------------------------------------------------------------------
-    void
-    EntityManager::AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& rotation )
-    {
-        AddEntity( name, file_name, position, rotation, Ogre::Vector3::UNIT_SCALE, Ogre::Quaternion::IDENTITY );
-    }
+void
+EntityManager::AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& rotation )
+{
+    AddEntity( name, file_name, position, rotation, Ogre::Vector3::UNIT_SCALE, Ogre::Quaternion::IDENTITY );
+}
 
-    //--------------------------------------------------------------------------
-    void
-    EntityManager::AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& rotation, const Ogre::Vector3& scale, const Ogre::Quaternion& root_orientation )
-    {
-        Ogre::SceneNode* node = m_SceneNode->createChildSceneNode( "Model_" + name );
-        EntityModel* entity = new EntityModel( name, file_name, node );
-        entity->SetPosition( position );
-        entity->SetRotation( rotation );
-        entity->setScale( scale );
-        entity->setRootOrientation( root_orientation );
 
-        m_Entity.push_back( entity );
+void
+EntityManager::AddEntity( const Ogre::String& name, const Ogre::String& file_name, const Ogre::Vector3& position, const Ogre::Degree& rotation, const Ogre::Vector3& scale, const Ogre::Quaternion& root_orientation )
+{
+    Ogre::SceneNode* node = m_SceneNode->createChildSceneNode( "Model_" + name );
+    EntityModel* entity = new EntityModel( name, file_name, node );
+    entity->SetPosition( position );
+    entity->SetRotation( rotation );
+    entity->setScale( scale );
+    entity->setRootOrientation( root_orientation );
 
-        ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, entity->GetName(), entity );
-    }
+    m_Entity.push_back( entity );
 
-//--------------------------------------------------------------------------
+    ScriptManager::getSingleton().AddEntity( ScriptManager::ENTITY, entity->GetName(), entity );
+}
+
+
 void
 EntityManager::ScriptAddEntity( const char* name, const char* file_name, const float x, const float y, const float z, const float rotation )
 {
     AddEntity( name, file_name, Ogre::Vector3( x, y, z ), Ogre::Degree( rotation ) );
 }
-
 
 
 void
@@ -495,7 +435,6 @@ EntityManager::AddEntityTrigger( const Ogre::String& name, const Ogre::Vector3& 
 }
 
 
-
 void
 EntityManager::AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& position, const float rotation )
 {
@@ -506,7 +445,6 @@ EntityManager::AddEntityPoint( const Ogre::String& name, const Ogre::Vector3& po
 }
 
 
-
 void
 EntityManager::AddEntityScript( const Ogre::String& name )
 {
@@ -515,13 +453,11 @@ EntityManager::AddEntityScript( const Ogre::String& name )
 }
 
 
-
 void
 EntityManager::ScriptAddEntityScript( const char* name )
 {
     AddEntityScript( name );
 }
-
 
 
 Entity*
@@ -539,13 +475,11 @@ EntityManager::GetEntity( const Ogre::String& name ) const
 }
 
 
-
 Entity*
 EntityManager::ScriptGetEntity( const char* name ) const
 {
     return GetEntity( Ogre::String( name ) );
 }
-
 
 
 EntityPoint*
@@ -563,7 +497,6 @@ EntityManager::ScriptGetEntityPoint( const char* name ) const
 }
 
 
-
 void
 EntityManager::ScriptSetPlayerEntity( const char* name )
 {
@@ -577,13 +510,11 @@ EntityManager::ScriptSetPlayerEntity( const char* name )
 }
 
 
-
 void
 EntityManager::ScriptUnsetPlayerEntity()
 {
     m_PlayerEntity = NULL;
 }
-
 
 
 void
@@ -597,13 +528,11 @@ EntityManager::ScriptPlayerLock( const bool lock )
 }
 
 
-
 void
 EntityManager::SetPlayerMoveRotation( const Ogre::Radian rotation )
 {
     m_PlayerMoveRotation = rotation;
 }
-
 
 
 bool
@@ -633,15 +562,12 @@ EntityManager::SetEntityOnWalkmesh( Entity* entity )
         }
     }
 
-
-
     // if our coords doesn't match any triangle
     if( triangles.size() == 0 )
     {
         LOG_ERROR( "Can't find any triangle to place entity \"" + entity->GetName() + "\" on walkmesh." );
         return false;
     }
-
 
 /*
     int triangle = m_Models[entity_id]->GetTriangle();
@@ -657,8 +583,6 @@ EntityManager::SetEntityOnWalkmesh( Entity* entity )
         }
     }
 */
-
-
 
     // place entity on fount triangles
     // first try to set on top triangle less than current pos of entity
@@ -689,7 +613,6 @@ EntityManager::SetEntityOnWalkmesh( Entity* entity )
     entity->SetMoveTriangleId( triangle_id );
     return true;
 }
-
 
 
 bool
@@ -762,11 +685,7 @@ EntityManager::PerformWalkmeshMove( Entity* entity, const float speed )
         entity->SetRotation( Ogre::Degree( angle ) );
     }
 
-
-
     float solid = ( entity->IsSolid() == true ) ? entity->GetSolidRadius() : 0.01f;
-
-
 
     // get ending point
     end_point.z = start_point.z;
@@ -864,8 +783,6 @@ EntityManager::PerformWalkmeshMove( Entity* entity, const float speed )
                     direction.y = rotation.y;
                 }
 
-
-
                 // if not both left and right check was fail
                 if( first_triangle_check == false || second_triangle_check == false )
                 {
@@ -926,10 +843,8 @@ EntityManager::PerformWalkmeshMove( Entity* entity, const float speed )
                             direction.y = rotation.y;
                             //LOG_TRIVIAL( "Entity \"" + entity->GetName() + "\" new move vector: " + Ogre::StringConverter::toString( direction.x ) + " " + Ogre::StringConverter::toString( direction.y ) + "." );
                         }
-
                         continue;
                     }
-
                     break;
                 }
             }
@@ -937,8 +852,6 @@ EntityManager::PerformWalkmeshMove( Entity* entity, const float speed )
     }
 
     //LOG_TRIVIAL( "Stop cycle." );
-
-
 
     // set new X, Y and Z
     last_triangle_check = WalkmeshBorderCross( entity, end_point, direction );
@@ -950,16 +863,9 @@ EntityManager::PerformWalkmeshMove( Entity* entity, const float speed )
         return false;
     }
 
-
-
     // check triggers before set entity position because we check move line
     CheckTriggers( entity, end_point );
-
-
-
     entity->SetPosition( end_point );
-
-
 
     // if we come to destination point - finish movement
     Ogre::Vector3 final = entity->GetMovePosition() - end_point;
@@ -970,7 +876,6 @@ EntityManager::PerformWalkmeshMove( Entity* entity, const float speed )
 
     return true;
 }
-
 
 
 bool
@@ -1047,7 +952,6 @@ EntityManager::WalkmeshBorderCross( Entity* entity, Ogre::Vector3& position, con
 }
 
 
-
 bool
 EntityManager::CheckSolidCollisions( Entity* entity, Ogre::Vector3& position )
 {
@@ -1101,7 +1005,6 @@ EntityManager::CheckSolidCollisions( Entity* entity, Ogre::Vector3& position )
     //LOGGER->Log(LOGGER_INFO, "Not collide with entity");
     return false;
 }
-
 
 
 void
@@ -1199,7 +1102,6 @@ EntityManager::CheckTriggers( Entity* entity, Ogre::Vector3& position )
 }
 
 
-
 void
 EntityManager::SetNextOffsetStep( Entity* entity )
 {
@@ -1230,7 +1132,6 @@ EntityManager::SetNextOffsetStep( Entity* entity )
 }
 
 
-
 void
 EntityManager::SetNextTurnStep( Entity* entity )
 {
@@ -1259,7 +1160,6 @@ EntityManager::SetNextTurnStep( Entity* entity )
         entity->SetTurnCurrentSeconds( current );
     }
 }
-
 
 
 void
@@ -1310,8 +1210,6 @@ EntityManager::SetNextLinearStep( Entity* entity )
         is_move = true;
     }
 
-
-
     if( is_move == true )
     {
         Ogre::Vector3 position;
@@ -1355,7 +1253,6 @@ EntityManager::SetNextLinearStep( Entity* entity )
 }
 
 
-
 void
 EntityManager::SetNextJumpStep( Entity* entity )
 {
@@ -1382,7 +1279,6 @@ EntityManager::SetNextJumpStep( Entity* entity )
         entity->SetJumpCurrentSeconds( current );
     }
 }
-
 
 
 void

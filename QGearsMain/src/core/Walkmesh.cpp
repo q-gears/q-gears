@@ -1,13 +1,11 @@
-#include "core/Walkmesh.h"
-
 #include "core/ConfigVar.h"
 #include "core/DebugDraw.h"
 #include "core/Logger.h"
+#include "core/Walkmesh.h"
 #include "map/QGearsWalkmeshFile.h"
 
 
 ConfigVar cv_debug_walkmesh( "debug_walkmesh", "Draw walkmesh and walkmesh debug info", "false" );
-
 
 
 
@@ -16,11 +14,9 @@ Walkmesh::Walkmesh()
 }
 
 
-
 Walkmesh::~Walkmesh()
 {
 }
-
 
 
 void
@@ -84,7 +80,6 @@ Walkmesh::UpdateDebug()
 }
 
 
-
 void
 Walkmesh::Clear()
 {
@@ -92,13 +87,11 @@ Walkmesh::Clear()
 }
 
 
-
 void
 Walkmesh::AddTriangle( const WalkmeshTriangle& triangle )
 {
     m_Triangles.push_back( triangle );
 }
-
 
 
 int
@@ -120,7 +113,6 @@ Walkmesh::GetAccessSide( unsigned int triangle_id, unsigned char side ) const
 }
 
 
-
 const Ogre::Vector3&
 Walkmesh::GetA( unsigned int triangle_id ) const
 {
@@ -132,7 +124,6 @@ Walkmesh::GetA( unsigned int triangle_id ) const
 
     return m_Triangles[ triangle_id ].a;
 }
-
 
 
 const Ogre::Vector3&
@@ -148,7 +139,6 @@ Walkmesh::GetB( unsigned int triangle_id ) const
 }
 
 
-
 const Ogre::Vector3&
 Walkmesh::GetC( unsigned int triangle_id ) const
 {
@@ -162,13 +152,11 @@ Walkmesh::GetC( unsigned int triangle_id ) const
 }
 
 
-
 int
 Walkmesh::GetNumberOfTriangles() const
 {
     return m_Triangles.size();
 }
-
 
 
 void
@@ -184,7 +172,6 @@ Walkmesh::LockWalkmesh( unsigned int triangle_id, bool lock )
 }
 
 
-
 bool
 Walkmesh::IsLocked( unsigned int triangle_id ) const
 {
@@ -197,7 +184,7 @@ Walkmesh::IsLocked( unsigned int triangle_id ) const
     return m_Triangles[ triangle_id ].locked;
 }
 
-//------------------------------------------------------------------------------
+
 void Walkmesh::load(const QGears::WalkmeshFilePtr &walkmesh)
 {
     QGears::WalkmeshFile::TriangleList &triangles( walkmesh->getTriangles() );
@@ -209,5 +196,3 @@ void Walkmesh::load(const QGears::WalkmeshFilePtr &walkmesh)
         ++it;
     }
 }
-
-//------------------------------------------------------------------------------

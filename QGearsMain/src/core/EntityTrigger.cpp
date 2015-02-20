@@ -1,13 +1,11 @@
-#include "core/EntityTrigger.h"
 
 #include "core/DebugDraw.h"
 #include "core/Entity.h"
+#include "core/EntityTrigger.h"
 #include "core/ConfigVar.h"
 
 
-
 ConfigVar cv_debug_trigger( "debug_trigger", "Draw entity trigger debug info", "0" );
-
 
 
 EntityTrigger::EntityTrigger( const Ogre::String& name ):
@@ -19,11 +17,9 @@ EntityTrigger::EntityTrigger( const Ogre::String& name ):
 }
 
 
-
 EntityTrigger::~EntityTrigger()
 {
 }
-
 
 
 void
@@ -63,13 +59,11 @@ EntityTrigger::UpdateDebug()
 }
 
 
-
 const Ogre::String&
 EntityTrigger::GetName() const
 {
     return m_Name;
 }
-
 
 
 void
@@ -84,13 +78,11 @@ EntityTrigger::SetEnabled( const bool enabled )
 }
 
 
-
 bool
 EntityTrigger::IsEnabled() const
 {
     return m_Enabled;
 }
-
 
 
 void
@@ -112,7 +104,6 @@ EntityTrigger::AddActivator( Entity* activator )
 }
 
 
-
 void
 EntityTrigger::RemoveActivator( Entity* activator )
 {
@@ -125,7 +116,6 @@ EntityTrigger::RemoveActivator( Entity* activator )
         }
     }
 }
-
 
 
 bool
@@ -143,7 +133,6 @@ EntityTrigger::IsActivator( Entity* activator )
 }
 
 
-
 void
 EntityTrigger::SetPoints( const Ogre::Vector3& point1, const Ogre::Vector3& point2 )
 {
@@ -152,13 +141,11 @@ EntityTrigger::SetPoints( const Ogre::Vector3& point1, const Ogre::Vector3& poin
 }
 
 
-
 const Ogre::Vector3&
 EntityTrigger::GetPoint1() const
 {
     return m_Point1;
 }
-
 
 
 const Ogre::Vector3&
