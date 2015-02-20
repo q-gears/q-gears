@@ -301,19 +301,15 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
     float x = m_FinalTranslate.x;
     float y = m_FinalTranslate.y;
 
-    for( size_t i = 0; i < text.size(); ++i )
+    for(auto &c : text )
     {
-        UiCharData char_data = m_Font->GetCharData( text[ i ] );
+        UiCharData char_data = m_Font->GetCharData(c);
 
         local_x1 += char_data.pre * m_FinalScale.x * m_ScreenHeight / 720.0f;
         float local_x2 = local_x1 + char_data.width * m_FinalScale.x * m_ScreenHeight / 720.0f;
         float local_y2 = local_y1 + char_data.height * m_FinalScale.y * m_ScreenHeight / 720.0f;
 
         int x1, y1, x2, y2, x3, y3, x4, y4;
-
-        //LOG_ERROR( m_Name );
-        //LOG_ERROR( "local_x1 = " + Ogre::StringConverter::toString( local_x1 ) + ", local_y1 = " + Ogre::StringConverter::toString( local_y1 ) );
-        //LOG_ERROR( "local_x2 = " + Ogre::StringConverter::toString( local_x2 ) + ", local_y2 = " + Ogre::StringConverter::toString( local_y2 ) );
 
         if( m_FinalRotation != 0 )
         {
@@ -341,100 +337,27 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
             y4 = static_cast<int>(local_y2 + y);
         }
 
-        //LOG_ERROR( "x1 = " + Ogre::StringConverter::toString( x1 ) + ", y1 = " + Ogre::StringConverter::toString( y1 ) );
-        //LOG_ERROR( "x2 = " + Ogre::StringConverter::toString( x2 ) + ", y2 = " + Ogre::StringConverter::toString( y2 ) );
-        //LOG_ERROR( "x3 = " + Ogre::StringConverter::toString( x3 ) + ", y3 = " + Ogre::StringConverter::toString( y3 ) );
-        //LOG_ERROR( "x4 = " + Ogre::StringConverter::toString( x4 ) + ", y4 = " + Ogre::StringConverter::toString( y4 ) );
-
-        float new_x1 = ( x1 / m_ScreenWidth ) * 2 - 1;
-        float new_y1 = -( ( y1 / m_ScreenHeight ) * 2 - 1 );
-        float new_x2 = ( x2 / m_ScreenWidth ) * 2 - 1;
-        float new_y2 = -( ( y2 / m_ScreenHeight ) * 2 - 1 );
-        float new_x3 = ( x3 / m_ScreenWidth ) * 2 - 1;
-        float new_y3 = -( ( y3 / m_ScreenHeight ) * 2 - 1 );
-        float new_x4 = ( x4 / m_ScreenWidth ) * 2 - 1;
-        float new_y4 = -( ( y4 / m_ScreenHeight ) * 2 - 1 );
-
         local_x1 += ( char_data.width + char_data.post ) * m_FinalScale.x * m_ScreenHeight / 720.0f;
 
         float width = static_cast<float>(m_Font->GetImageWidth());
         float height = static_cast<float>(m_Font->GetImageHeight());
-        float left = ( float )char_data.x / width;
-        float right = ( float )( char_data.x + char_data.width ) / width;
-        float top = ( float )char_data.y / height;
-        float bottom = ( float )( char_data.y + char_data.height ) / height;
 
-        //LOG_ERROR( "width = " + Ogre::StringConverter::toString( width ) + "." );
-        //LOG_ERROR( "height = " + Ogre::StringConverter::toString( height ) + "." );
-        //LOG_ERROR( "char_data.x = " + Ogre::StringConverter::toString( char_data.x ) + "." );
-        //LOG_ERROR( "char_data.y = " + Ogre::StringConverter::toString( char_data.y ) + "." );
-        //LOG_ERROR( "char_data.width = " + Ogre::StringConverter::toString( char_data.width ) + "." );
-        //LOG_ERROR( "char_data.height = " + Ogre::StringConverter::toString( char_data.height ) + "." );
-        //LOG_ERROR( "left = " + Ogre::StringConverter::toString( left ) + "." );
-        //LOG_ERROR( "right = " + Ogre::StringConverter::toString( right ) + "." );
-        //LOG_ERROR( "top = " + Ogre::StringConverter::toString( top ) + "." );
-        //LOG_ERROR( "bottom = " + Ogre::StringConverter::toString( bottom ) + "." );
+        Ogre::Vector3 coords[4] = {
+            Ogre::Vector3((x1 / m_ScreenWidth) * 2 - 1, -((y1 / m_ScreenHeight) * 2 - 1), m_FinalZ),
+            Ogre::Vector3((x2 / m_ScreenWidth) * 2 - 1, -((y2 / m_ScreenHeight ) * 2 - 1), m_FinalZ),
+            Ogre::Vector3((x3 / m_ScreenWidth) * 2 - 1, -((y3 / m_ScreenHeight ) * 2 - 1), m_FinalZ),
+            Ogre::Vector3((x4 / m_ScreenWidth) * 2 - 1, -((y4 / m_ScreenHeight ) * 2 - 1), m_FinalZ)
+        };
+        auto texture = Ogre::FloatRect(
+            ( float )char_data.x / width, // left
+            ( float )char_data.y / height, // top
+            ( float )( char_data.x + char_data.width ) / width, // right
+            ( float )( char_data.y + char_data.height ) / height // bottom
+        );
+        Ogre::ColourValue colour = style.colour;
 
-        *writeIterator++ = new_x1;
-        *writeIterator++ = new_y1;
-        *writeIterator++ = m_FinalZ;
-        *writeIterator++ = style.colour.r;
-        *writeIterator++ = style.colour.g;
-        *writeIterator++ = style.colour.b;
-        *writeIterator++ = style.colour.a;
-        *writeIterator++ = left;
-        *writeIterator++ = top;
-
-        *writeIterator++ = new_x2;
-        *writeIterator++ = new_y2;
-        *writeIterator++ = m_FinalZ;
-        *writeIterator++ = style.colour.r;
-        *writeIterator++ = style.colour.g;
-        *writeIterator++ = style.colour.b;
-        *writeIterator++ = style.colour.a;
-        *writeIterator++ = right;
-        *writeIterator++ = top;
-
-        *writeIterator++ = new_x3;
-        *writeIterator++ = new_y3;
-        *writeIterator++ = m_FinalZ;
-        *writeIterator++ = style.colour.r;
-        *writeIterator++ = style.colour.g;
-        *writeIterator++ = style.colour.b;
-        *writeIterator++ = style.colour.a;
-        *writeIterator++ = right;
-        *writeIterator++ = bottom;
-
-        *writeIterator++ = new_x1;
-        *writeIterator++ = new_y1;
-        *writeIterator++ = m_FinalZ;
-        *writeIterator++ = style.colour.r;
-        *writeIterator++ = style.colour.g;
-        *writeIterator++ = style.colour.b;
-        *writeIterator++ = style.colour.a;
-        *writeIterator++ = left;
-        *writeIterator++ = top;
-
-        *writeIterator++ = new_x3;
-        *writeIterator++ = new_y3;
-        *writeIterator++ = m_FinalZ;
-        *writeIterator++ = style.colour.r;
-        *writeIterator++ = style.colour.g;
-        *writeIterator++ = style.colour.b;
-        *writeIterator++ = style.colour.a;
-        *writeIterator++ = right;
-        *writeIterator++ = bottom;
-
-        *writeIterator++ = new_x4;
-        *writeIterator++ = new_y4;
-        *writeIterator++ = m_FinalZ;
-        *writeIterator++ = style.colour.r;
-        *writeIterator++ = style.colour.g;
-        *writeIterator++ = style.colour.b;
-        *writeIterator++ = style.colour.a;
-        *writeIterator++ = left;
-        *writeIterator++ = bottom;
-
+        // draw two triangles with a colour and texture.
+        WriteGlyph(writeIterator, coords, colour, texture);
         m_RenderOp.vertexData->vertexCount += 6;
         data.position += 1;
     }
