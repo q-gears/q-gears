@@ -27,6 +27,7 @@
 #include "common/QGearsStringUtil.h"
 #include "common/FF7NameLookup.h"
 #include "data/QGearsTexCodec.h"
+#include "decompiler/sudm.h"
 
 FF7DataInstaller::FF7DataInstaller()
 #ifdef _DEBUG
@@ -131,11 +132,43 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
     */
 }
 
+class FF7FieldScriptFormatter : public SUDM::IScriptFormatter
+{
+public:
+    virtual bool ExcludeFunction(const std::string& ) override
+    {
+        // Include everything for now
+        return false;
+    }
+
+
+    virtual std::string RenameIdentifer(const std::string& name) override
+    {
+        // Don't rename anything for now
+        return name;
+    }
+};
+
 static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::string& outDir)
 {
     // Save out the tiles as a PNG image
     
     const QGears::BackgroundFilePtr& bg = field->getBackground();
+
+    try
+    {
+        // Get the raw script bytes
+        const std::vector<u8> rawFieldData = field->getRawScript();
+
+        // Decompile to LUA
+        FF7FieldScriptFormatter formatter;
+        std::string luaScript = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter);
+    }
+    catch (const ::InternalDecompilerError& ex)
+    {
+        std::cerr << "InternalDecompilerError: " << ex.what() << std::endl;
+    }
+
     /*
     const QGears::PaletteFilePtr& pal = field->getPalette();
     std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
@@ -147,6 +180,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
 
         auto& layers = bg->getLayers();
         const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
+
 
         // TODO: Write out the *_BG.XML data
         for (auto& layer : layers)
