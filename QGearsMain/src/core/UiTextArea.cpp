@@ -7,15 +7,15 @@
 #include "core/UiTextArea.h"
 
 
-UiTextArea::UiTextArea( const Ogre::String& name ):
-    UiWidget( name )
+UiTextArea::UiTextArea(const Ogre::String& name):
+    UiWidget(name)
 {
     Initialise();
 }
 
 
-UiTextArea::UiTextArea( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent ):
-    UiWidget( name, path_name, parent )
+UiTextArea::UiTextArea(const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent):
+    UiWidget(name, path_name, parent)
 {
     Initialise();
 }
@@ -36,7 +36,7 @@ UiTextArea::Initialise()
     m_Text = "";
     m_TextNode = NULL;
 
-    m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
+    m_SceneManager = Ogre::Root::getSingleton().getSceneManager("Scene");
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
 
     CreateVertexBuffer();
@@ -53,19 +53,19 @@ UiTextArea::Update()
 void
 UiTextArea::Render()
 {
-    if( m_Visible == true )
+    if(m_Visible == true)
     {
-        if( m_RenderOp.vertexData->vertexCount != 0 )
+        if(m_RenderOp.vertexData->vertexCount != 0)
         {
-            m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
-            m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
-            m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
+            m_RenderSystem->_setWorldMatrix(Ogre::Matrix4::IDENTITY);
+            m_RenderSystem->_setProjectionMatrix(Ogre::Matrix4::IDENTITY);
+            m_RenderSystem->_setViewMatrix(Ogre::Matrix4::IDENTITY);
 
-            m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
+            m_SceneManager->_setPass(m_Material->getTechnique(0)->getPass(0), true, false);
 
-            m_RenderSystem->setScissorTest( true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom );
-            m_RenderSystem->_render( m_RenderOp );
-            m_RenderSystem->setScissorTest( false );
+            m_RenderSystem->setScissorTest(true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom);
+            m_RenderSystem->_render(m_RenderOp);
+            m_RenderSystem->setScissorTest(false);
         }
     }
 
@@ -82,83 +82,83 @@ UiTextArea::UpdateTransformation()
 
 
 void
-UiTextArea::SetTextAlign( const TextAlign align )
+UiTextArea::SetTextAlign(const TextAlign align)
 {
     m_TextAlign = align;
 }
 
 
 void
-UiTextArea::SetText( const Ogre::UTFString& text )
+UiTextArea::SetText(const Ogre::UTFString& text)
 {
     m_Text = text;
 }
 
 
 void
-UiTextArea::SetText( TiXmlNode* text )
+UiTextArea::SetText(TiXmlNode* text)
 {
     m_TextNode = text;
 }
 
 
 void
-UiTextArea::SetFont( const Ogre::String& font )
+UiTextArea::SetFont(const Ogre::String& font)
 {
-    m_Font = UiManager::getSingleton().GetFont( font );
+    m_Font = UiManager::getSingleton().GetFont(font);
 
-    if( m_Font == NULL )
+    if(m_Font == NULL)
     {
-        LOG_ERROR( "Could not find font \"" + font + "\" for \"" + m_PathName + "\"." );
+        LOG_ERROR("Could not find font \"" + font + "\" for \"" + m_PathName + "\".");
         return;
     }
 
-    m_Material = Ogre::MaterialManager::getSingleton().create( "UiMaterials." + m_PathName, "General" );
-    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
-    pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
-    pass->setCullingMode( Ogre::CULL_NONE );
-    pass->setDepthCheckEnabled( false );
-    pass->setDepthWriteEnabled( false );
-    pass->setLightingEnabled( false );
-    pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+    m_Material = Ogre::MaterialManager::getSingleton().create("UiMaterials." + m_PathName, "General");
+    Ogre::Pass* pass = m_Material->getTechnique(0)->getPass(0);
+    pass->setVertexColourTracking(Ogre::TVC_AMBIENT);
+    pass->setCullingMode(Ogre::CULL_NONE);
+    pass->setDepthCheckEnabled(false);
+    pass->setDepthWriteEnabled(false);
+    pass->setLightingEnabled(false);
+    pass->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
 
-    pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
-    pass->setAlphaRejectValue( 0 );
+    pass->setAlphaRejectFunction(Ogre::CMPF_GREATER);
+    pass->setAlphaRejectValue(0);
     Ogre::TextureUnitState* tex = pass->createTextureUnitState();
-    tex->setTextureName( m_Font->GetImageName() );
-    tex->setNumMipmaps( -1 );
-    tex->setTextureFiltering( Ogre::TFO_NONE );
+    tex->setTextureName(m_Font->GetImageName());
+    tex->setNumMipmaps(-1);
+    tex->setTextureFiltering(Ogre::TFO_NONE);
 }
 
 
 void
 UiTextArea::UpdateGeometry()
 {
-    if( m_Font == NULL )
+    if(m_Font == NULL)
     {
-        LOG_ERROR( "Font for \"" + m_PathName + "\" if not set." );
+        LOG_ERROR("Font for \"" + m_PathName + "\" if not set.");
         return;
     }
 
-    if( m_Text.size() > m_MaxLetters )
+    if(m_Text.size() > m_MaxLetters)
     {
-        LOG_ERROR( "Max number of text reached in \"" + m_PathName + "\". Can't render text \"" + m_Text + "\". Max number of letters is " + Ogre::StringConverter::toString( m_MaxLetters ) + "." );
+        LOG_ERROR("Max number of text reached in \"" + m_PathName + "\". Can't render text \"" + m_Text + "\". Max number of letters is " + Ogre::StringConverter::toString(m_MaxLetters) + ".");
         return;
     }
 
     float length = 0;
-    if( m_TextAlign != LEFT )
+    if(m_TextAlign != LEFT)
     {
-        if( m_TextNode != NULL )
+        if(m_TextNode != NULL)
         {
-            length = GetTextLengthFromNode( m_TextNode );
+            length = GetTextLengthFromNode(m_TextNode);
         }
         else
         {
-            length = GetTextLength( m_Text );
+            length = GetTextLength(m_Text);
         }
 
-        if( m_TextAlign == CENTER )
+        if(m_TextAlign == CENTER)
         {
             length /= 2;
         }
@@ -172,39 +172,39 @@ UiTextArea::UpdateGeometry()
     TextStyle style;
     style.colour = m_Colour1;
 
-    if( m_TextNode != NULL )
+    if(m_TextNode != NULL)
     {
-        SetTextGeometryFromNode( m_TextNode, data, style );
+        SetTextGeometryFromNode(m_TextNode, data, style);
     }
     else
     {
-        SetTextGeometry( m_Text, data, style );
+        SetTextGeometry(m_Text, data, style);
     }
 }
 
 
 float
-UiTextArea::GetTextLengthFromNode( TiXmlNode* node ) const
+UiTextArea::GetTextLengthFromNode(TiXmlNode* node) const
 {
     float length = 0;
 
-    while( node != NULL )
+    while(node != NULL)
     {
-        switch( node->Type() )
+        switch(node->Type())
         {
             case TiXmlNode::TINYXML_TEXT:
             {
                 TiXmlText* childText = node->ToText();
-                if( childText )
+                if(childText)
                 {
-                    length += GetTextLength( childText->Value() );
+                    length += GetTextLength(childText->Value());
                 }
             }
             break;
 
             case TiXmlNode::TINYXML_ELEMENT:
             {
-                length +=GetTextLengthFromNode( node->FirstChild() );
+                length +=GetTextLengthFromNode(node->FirstChild());
             }
             break;
         }
@@ -217,13 +217,13 @@ UiTextArea::GetTextLengthFromNode( TiXmlNode* node ) const
 
 
 float
-UiTextArea::GetTextLength( const Ogre::UTFString& text ) const
+UiTextArea::GetTextLength(const Ogre::UTFString& text) const
 {
     float length = 0;
-    for( size_t i = 0; i < text.size(); ++i )
+    for(size_t i = 0; i < text.size(); ++i)
     {
-        UiCharData char_data = m_Font->GetCharData( text[ i ] );
-        length += ( char_data.pre + char_data.width + char_data.post ) * m_FinalScale.x * m_ScreenHeight / 720.0f;
+        UiCharData char_data = m_Font->GetCharData(text[i]);
+        length += (char_data.pre + char_data.width + char_data.post) * m_FinalScale.x * m_ScreenHeight / 720.0f;
     }
 
     return length;
@@ -231,18 +231,18 @@ UiTextArea::GetTextLength( const Ogre::UTFString& text ) const
 
 
 void
-UiTextArea::SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const TextStyle& style )
+UiTextArea::SetTextGeometryFromNode(TiXmlNode* node, TextBlockData& data, const TextStyle& style)
 {
-    while( node != NULL )
+    while(node != NULL)
     {
-        switch( node->Type() )
+        switch(node->Type())
         {
             case TiXmlNode::TINYXML_TEXT:
             {
                 TiXmlText* childText = node->ToText();
-                if( childText )
+                if(childText)
                 {
-                    SetTextGeometry( childText->Value(), data, style );
+                    SetTextGeometry(childText->Value(), data, style);
                 }
             }
             break;
@@ -253,13 +253,13 @@ UiTextArea::SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const
                 style_child.colour = style.colour;
 
                 Ogre::String name = node->ValueStr();
-                if( name == "colour" )
+                if(name == "colour")
                 {
-                    style_child.colour = Ogre::StringConverter::parseColourValue( node->ToElement()->Attribute( "value" ) );
+                    style_child.colour = Ogre::StringConverter::parseColourValue(node->ToElement()->Attribute("value"));
                 }
 
                 TiXmlNode* node_child = node->FirstChild();
-                SetTextGeometryFromNode( node_child, data, style_child );
+                SetTextGeometryFromNode(node_child, data, style_child);
             }
             break;
         }
@@ -270,9 +270,9 @@ UiTextArea::SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const
 
 
 void
-UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, const TextStyle& style )
+UiTextArea::SetTextGeometry(const Ogre::UTFString& text, TextBlockData& data, const TextStyle& style)
 {
-    float* writeIterator = ( float* ) m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
+    float* writeIterator = (float*) m_VertexBuffer->lock(Ogre::HardwareBuffer::HBL_NORMAL);
     writeIterator += data.position * 9 * 6;
     m_RenderOp.vertexData->vertexCount = data.position * 6;
 
@@ -282,7 +282,7 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
     float x = m_FinalTranslate.x;
     float y = m_FinalTranslate.y;
 
-    for(auto &c : text )
+    for(auto &c : text)
     {
         UiCharData char_data = m_Font->GetCharData(c);
 
@@ -292,10 +292,10 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
 
         int x1, y1, x2, y2, x3, y3, x4, y4;
 
-        if( m_FinalRotation != 0 )
+        if(m_FinalRotation != 0)
         {
-            float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
-            float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
+            float cos = Ogre::Math::Cos(Ogre::Radian(Ogre::Degree(m_FinalRotation)));
+            float sin = Ogre::Math::Sin(Ogre::Radian(Ogre::Degree(m_FinalRotation)));
 
             x1 = static_cast<int>(local_x1 * cos - local_y1 * sin + x);
             y1 = static_cast<int>(local_x1 * sin + local_y1 * cos + y);
@@ -318,23 +318,23 @@ UiTextArea::SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, c
             y4 = static_cast<int>(local_y2 + y);
         }
 
-        local_x1 += ( char_data.width + char_data.post ) * m_FinalScale.x * m_ScreenHeight / 720.0f;
+        local_x1 += (char_data.width + char_data.post) * m_FinalScale.x * m_ScreenHeight / 720.0f;
 
         float width = static_cast<float>(m_Font->GetImageWidth());
         float height = static_cast<float>(m_Font->GetImageHeight());
 
         Ogre::Vector3 coords[4] = {
             Ogre::Vector3((x1 / m_ScreenWidth) * 2 - 1, -((y1 / m_ScreenHeight) * 2 - 1), m_FinalZ),
-            Ogre::Vector3((x2 / m_ScreenWidth) * 2 - 1, -((y2 / m_ScreenHeight ) * 2 - 1), m_FinalZ),
-            Ogre::Vector3((x3 / m_ScreenWidth) * 2 - 1, -((y3 / m_ScreenHeight ) * 2 - 1), m_FinalZ),
-            Ogre::Vector3((x4 / m_ScreenWidth) * 2 - 1, -((y4 / m_ScreenHeight ) * 2 - 1), m_FinalZ)
+            Ogre::Vector3((x2 / m_ScreenWidth) * 2 - 1, -((y2 / m_ScreenHeight) * 2 - 1), m_FinalZ),
+            Ogre::Vector3((x3 / m_ScreenWidth) * 2 - 1, -((y3 / m_ScreenHeight) * 2 - 1), m_FinalZ),
+            Ogre::Vector3((x4 / m_ScreenWidth) * 2 - 1, -((y4 / m_ScreenHeight) * 2 - 1), m_FinalZ)
         };
         auto texture = Ogre::FloatRect(
-            ( float )char_data.x / width, // left
-            ( float )char_data.y / height, // top
-            ( float )( char_data.x + char_data.width ) / width, // right
-            ( float )( char_data.y + char_data.height ) / height // bottom
-        );
+            (float)char_data.x / width, // left
+            (float)char_data.y / height, // top
+            (float)(char_data.x + char_data.width) / width, // right
+            (float)(char_data.y + char_data.height) / height // bottom
+       );
         Ogre::ColourValue colour = style.colour;
 
         // draw two triangles with a colour and texture.
@@ -360,15 +360,15 @@ UiTextArea::CreateVertexBuffer()
     Ogre::VertexDeclaration* vDecl = m_RenderOp.vertexData->vertexDeclaration;
 
     size_t offset = 0;
-    vDecl->addElement( 0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
-    offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT3 );
-    vDecl->addElement( 0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE );
-    offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT4 );
-    vDecl->addElement( 0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES );
+    vDecl->addElement(0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
+    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
+    vDecl->addElement(0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE);
+    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT4);
+    vDecl->addElement(0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES);
 
-    m_VertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), m_MaxLetters * 6, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
+    m_VertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer(vDecl->getVertexSize(0), m_MaxLetters * 6, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false);
 
-    m_RenderOp.vertexData->vertexBufferBinding->setBinding( 0, m_VertexBuffer );
+    m_RenderOp.vertexData->vertexBufferBinding->setBinding(0, m_VertexBuffer);
     m_RenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
     m_RenderOp.useIndexes = false;
 }

@@ -3,8 +3,8 @@
 #include "core/XmlTextFile.h"
 
 
-XmlTextFile::XmlTextFile( const Ogre::String& file ):
-    XmlFile( file )
+XmlTextFile::XmlTextFile(const Ogre::String& file):
+    XmlFile(file)
 {
 }
 
@@ -19,19 +19,19 @@ XmlTextFile::LoadText()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if( node == NULL || node->ValueStr() != "texts" )
+    if(node == NULL || node->ValueStr() != "texts")
     {
-        LOG_ERROR( "UI Manager: " + m_File.ValueStr() + " is not a valid text file! No <texts> in root." );
+        LOG_ERROR("UI Manager: " + m_File.ValueStr() + " is not a valid text file! No <texts> in root.");
         return;
     }
 
     node = node->FirstChild();
-    while( node != NULL )
+    while(node != NULL)
     {
-        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "text" )
+        if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "text")
         {
-            Ogre::String name = GetString( node, "name" );
-            UiManager::getSingleton().AddText( name, node->Clone() );
+            Ogre::String name = GetString(node, "name");
+            UiManager::getSingleton().AddText(name, node->Clone());
         }
 
         node = node->NextSibling();

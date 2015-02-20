@@ -2,15 +2,15 @@
 #include "core/Timer.h"
 
 
-ConfigVar cv_timer_scale_game( "timer_scale_game", "Timer speed for game related things", "1" );
-template<>Timer *Ogre::Singleton< Timer >::msSingleton = NULL;
+ConfigVar cv_timer_scale_game("timer_scale_game", "Timer speed for game related things", "1");
+template<>Timer *Ogre::Singleton<Timer>::msSingleton = NULL;
 
 
 Timer::Timer():
-    m_SystemTimeTotal( 0 ),
-    m_SystemTimeDelta( 0 ),
-    m_GameTimeTotal( 0 ),
-    m_GameTimeDelta( 0 )
+    m_SystemTimeTotal(0),
+    m_SystemTimeDelta(0),
+    m_GameTimeTotal(0),
+    m_GameTimeDelta(0)
 {
 }
 
@@ -44,7 +44,7 @@ Timer::GetGameTimeDelta()
 
 
 void
-Timer::AddTime( float time )
+Timer::AddTime(float time)
 {
     m_SystemTimeDelta = time;
     m_SystemTimeTotal += m_SystemTimeDelta;

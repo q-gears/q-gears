@@ -3,8 +3,8 @@
 #include "core/XmlScreensFile.h"
 
 
-XmlScreensFile::XmlScreensFile( const Ogre::String& file ):
-    XmlFile( file )
+XmlScreensFile::XmlScreensFile(const Ogre::String& file):
+    XmlFile(file)
 {
 }
 
@@ -19,18 +19,18 @@ XmlScreensFile::LoadScreens()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if( node == NULL || node->ValueStr() != "screens" )
+    if(node == NULL || node->ValueStr() != "screens")
     {
-        LOG_ERROR( "UI XML Manager: " + m_File.ValueStr() + " is not a valid screens file! No <screens> in root." );
+        LOG_ERROR("UI XML Manager: " + m_File.ValueStr() + " is not a valid screens file! No <screens> in root.");
         return;
     }
 
     node = node->FirstChild();
-    while( node != NULL )
+    while(node != NULL)
     {
-        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "screen" )
+        if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "screen")
         {
-            XmlScreenFile screen( "./data/" + GetString( node, "file_name" ) );
+            XmlScreenFile screen("./data/" + GetString(node, "file_name"));
             screen.LoadScreen();
         }
         node = node->NextSibling();

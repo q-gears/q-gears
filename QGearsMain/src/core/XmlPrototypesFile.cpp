@@ -3,8 +3,8 @@
 #include "core/XmlPrototypesFile.h"
 
 
-XmlPrototypesFile::XmlPrototypesFile( const Ogre::String& file ):
-    XmlFile( file )
+XmlPrototypesFile::XmlPrototypesFile(const Ogre::String& file):
+    XmlFile(file)
 {
 }
 
@@ -19,19 +19,19 @@ XmlPrototypesFile::LoadPrototypes()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if( node == NULL || node->ValueStr() != "prototypes" )
+    if(node == NULL || node->ValueStr() != "prototypes")
     {
-        LOG_ERROR( "UI Manager: " + m_File.ValueStr() + " is not a valid prototypes file! No <prototypes> in root." );
+        LOG_ERROR("UI Manager: " + m_File.ValueStr() + " is not a valid prototypes file! No <prototypes> in root.");
         return;
     }
 
     node = node->FirstChild();
-    while( node != NULL )
+    while(node != NULL)
     {
-        if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "prototype" )
+        if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "prototype")
         {
-            Ogre::String name = GetString( node, "name" );
-            UiManager::getSingleton().AddPrototype( name, node->Clone() );
+            Ogre::String name = GetString(node, "name");
+            UiManager::getSingleton().AddPrototype(name, node->Clone());
         }
 
         node = node->NextSibling();
