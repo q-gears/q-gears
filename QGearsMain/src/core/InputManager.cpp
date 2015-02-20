@@ -6,7 +6,7 @@
 #include "core/Timer.h"
 
 
-template<>InputManager *Ogre::Singleton<InputManager>::msSingleton = NULL;
+template<>InputManager *Ogre::Singleton<InputManager>::msSingleton = nullptr;
 
 
 InputManager::InputManager():
@@ -178,7 +178,7 @@ InputManager::ActivateBinds(int button)
 
         // handle command
         ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find(params[0]);
-        if(cmd != NULL)
+        if(cmd != nullptr)
         {
             cmd->GetHandler()(params);
         }

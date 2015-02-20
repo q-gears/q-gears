@@ -12,7 +12,7 @@
 #include "core/Timer.h"
 
 
-template<>EntityManager *Ogre::Singleton<EntityManager>::msSingleton = NULL;
+template<>EntityManager *Ogre::Singleton<EntityManager>::msSingleton = nullptr;
 ConfigVar cv_debug_grid("debug_grid", "Draw debug grid", "false");
 ConfigVar cv_debug_axis("debug_axis", "Draw debug axis", "false");
 
@@ -73,7 +73,7 @@ GetDirectionToPoint(const Ogre::Vector3& current_point, const Ogre::Vector3& dir
 
 EntityManager::EntityManager():
     m_Paused(false),
-    m_PlayerEntity(NULL),
+    m_PlayerEntity(nullptr),
     m_PlayerMove(Ogre::Vector3::ZERO),
     m_PlayerMoveRotation(0),
     m_PlayerLock(false)
@@ -91,11 +91,11 @@ EntityManager::EntityManager():
 
 EntityManager::~EntityManager()
 {
-    if(m_Grid != NULL)
+    if(m_Grid != nullptr)
     {
         Ogre::Root::getSingleton().getSceneManager("Scene")->destroyEntity(m_Grid);
     }
-    if(m_Axis != NULL)
+    if(m_Axis != nullptr)
     {
         Ogre::Root::getSingleton().getSceneManager("Scene")->destroyEntity(m_Axis);
     }
@@ -118,7 +118,7 @@ EntityManager::Input(const QGears::Event& event)
         return;
     }
 
-    if(m_PlayerEntity != NULL && m_PlayerLock == false)
+    if(m_PlayerEntity != nullptr && m_PlayerLock == false)
     {
         if ((event.type == QGears::ET_KEY_IMPULSE) && (event.param1 == OIS::KC_LEFT))
         {
@@ -161,7 +161,7 @@ EntityManager::Update()
     ScriptManager::getSingleton().Update(ScriptManager::ENTITY);
 
     // set move point for player entity
-    if(m_PlayerEntity != NULL && m_PlayerMove != Ogre::Vector3::ZERO)
+    if(m_PlayerEntity != nullptr && m_PlayerMove != Ogre::Vector3::ZERO)
     {
         Entity::State state = m_PlayerEntity->GetState();
         if(state == Entity::WALKMESH || state == Entity::NONE)
@@ -347,7 +347,7 @@ EntityManager::Clear()
         delete m_Entity[i];
     }
     m_Entity.clear();
-    m_PlayerEntity = NULL;
+    m_PlayerEntity = nullptr;
     m_PlayerMove = Ogre::Vector3::ZERO;
     m_PlayerMoveRotation = 0;
 
@@ -434,7 +434,7 @@ EntityManager::AddEntityTrigger(const Ogre::String& name, const Ogre::Vector3& p
     trigger->SetEnabled(enabled);
     m_EntityTriggers.push_back(trigger);
 
-    ScriptManager::getSingleton().AddEntity(ScriptManager::ENTITY, trigger->GetName(), NULL);
+    ScriptManager::getSingleton().AddEntity(ScriptManager::ENTITY, trigger->GetName(), nullptr);
 }
 
 
@@ -452,7 +452,7 @@ void
 EntityManager::AddEntityScript(const Ogre::String& name)
 {
     m_EntityScripts.push_back(name);
-    ScriptManager::getSingleton().AddEntity(ScriptManager::ENTITY, name, NULL);
+    ScriptManager::getSingleton().AddEntity(ScriptManager::ENTITY, name, nullptr);
 }
 
 
@@ -474,7 +474,7 @@ EntityManager::GetEntity(const Ogre::String& name) const
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -496,7 +496,7 @@ EntityManager::ScriptGetEntityPoint(const char* name) const
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -516,7 +516,7 @@ EntityManager::ScriptSetPlayerEntity(const char* name)
 void
 EntityManager::ScriptUnsetPlayerEntity()
 {
-    m_PlayerEntity = NULL;
+    m_PlayerEntity = nullptr;
 }
 
 
@@ -1022,7 +1022,7 @@ EntityManager::CheckTriggers(Entity* entity, Ogre::Vector3& position)
     {
         ScriptEntity* scr_entity = ScriptManager::getSingleton().GetScriptEntityByName(ScriptManager::ENTITY, m_EntityTriggers[i]->GetName());
 
-        if(scr_entity != NULL && m_EntityTriggers[i]->IsEnabled() == true)
+        if(scr_entity != nullptr && m_EntityTriggers[i]->IsEnabled() == true)
         {
             Ogre::Vector3 lp1 = m_EntityTriggers[i]->GetPoint1();
             Ogre::Vector3 lp2 = m_EntityTriggers[i]->GetPoint2();

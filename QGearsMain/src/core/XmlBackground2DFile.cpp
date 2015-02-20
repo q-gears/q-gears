@@ -23,7 +23,7 @@ XmlBackground2DFile::Load()
     TiXmlNode* node = m_File.RootElement();
     Background2D* background = EntityManager::getSingleton().GetBackground2D();
 
-    if(node == NULL || node->ValueStr() != "background2d")
+    if(node == nullptr || node->ValueStr() != "background2d")
     {
         LOG_ERROR("XML 2D Background loader: " + m_File.ValueStr() + " is not a valid background2d file! No <background2d> in root.");
         return;
@@ -46,7 +46,7 @@ XmlBackground2DFile::Load()
         int tile_id = 0;
 
         node = node->FirstChild();
-        while(node != NULL)
+        while(node != nullptr)
         {
             if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "tile")
             {
@@ -66,7 +66,7 @@ XmlBackground2DFile::Load()
                 background->AddTile(static_cast<int>(destination.x), static_cast<int>(destination.y), width, height, res.z, uv.x, uv.y, uv.z, uv.w, blending);
 
                 TiXmlNode* node2 = node->FirstChild();
-                while(node2 != NULL)
+                while(node2 != nullptr)
                 {
                     if(node2->Type() == TiXmlNode::TINYXML_ELEMENT && node2->ValueStr() == "animation")
                     {

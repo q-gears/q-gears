@@ -27,7 +27,7 @@ Entity::Entity(const Ogre::String& name, Ogre::SceneNode* node):
     m_MoveWalkSpeed(0.7f),
     m_MoveRunSpeed(0.8f),
     m_MovePosition(Ogre::Vector3(0, 0, 0)),
-    m_MoveEntity(NULL),
+    m_MoveEntity(nullptr),
     m_MoveStopDistance(0.0f),
     m_MoveTriangleId(-1),
     m_MoveAutoRotation(true),
@@ -53,7 +53,7 @@ Entity::Entity(const Ogre::String& name, Ogre::SceneNode* node):
     m_TurnDirection(TD_CLOSEST),
     m_TurnDirectionStart(0),
     m_TurnDirectionEnd(0),
-    m_TurnEntity(NULL),
+    m_TurnEntity(nullptr),
     m_TurnType(AT_NONE),
     m_TurnSeconds(0.0f),
     m_TurnCurrentSeconds(0.0f),
@@ -105,18 +105,16 @@ Entity::~Entity()
 void
 Entity::Update()
 {
-    if(m_MoveEntity != NULL)
+    if(m_MoveEntity != nullptr)
     {
         m_MovePosition = m_MoveEntity->GetPosition();
         m_MoveStopDistance = GetSolidRadius() + m_MoveEntity->GetSolidRadius();
     }
 
-    if(m_TurnEntity != NULL)
+    if(m_TurnEntity != nullptr)
     {
         Ogre::Degree angle = GetDirectionToEntity(m_TurnEntity);
-
         angle = CalculateTurnAngle(m_TurnDirectionStart, angle);
-
         m_TurnDirectionEnd = angle;
     }
 }
@@ -517,7 +515,7 @@ Entity::ScriptMoveToPosition(const float x, const float y)
     m_State = Entity::WALKMESH;
 
     m_MovePosition = Ogre::Vector3(x, y, 0);
-    m_MoveEntity = NULL;
+    m_MoveEntity = nullptr;
     m_MoveStopDistance = 0;
     LOG_TRIVIAL("[SCRIPT] Entity \"" + m_Name + "\" set move to walkmesh position \"" + Ogre::StringConverter::toString(m_MovePosition) + "\".");
 }
@@ -539,10 +537,10 @@ int
 Entity::ScriptMoveSync()
 {
     ScriptId script = ScriptManager::getSingleton().GetCurrentScriptId();
+    m_Sync.push_back(script);
 
     LOG_TRIVIAL("[SCRIPT] Wait entity \"" + m_Name + "\" move for function \"" + script.function + "\" in script entity \"" + script.entity + "\".");
 
-    m_Sync.push_back(script);
     return -1;
 }
 
@@ -551,13 +549,12 @@ void
 Entity::UnsetMove()
 {
     m_State = Entity::NONE;
-
-    m_MoveEntity = NULL;
+    m_MoveEntity = nullptr;
     m_MoveStopDistance = 0;
 
-    for(size_t i = 0; i < m_Sync.size(); ++i)
+    for(const auto &script : m_Sync)
     {
-        ScriptManager::getSingleton().ContinueScriptExecution(m_Sync[i]);
+        ScriptManager::getSingleton().ContinueScriptExecution(script);
     }
     m_Sync.clear();
 }
@@ -814,7 +811,7 @@ Entity::GetOffsetCurrentSeconds() const
 void
 Entity::ScriptTurnToDirection(const float direction, const TurnDirection turn_direction, const ActionType turn_type, const float seconds)
 {
-    SetTurn(Ogre::Degree(direction), NULL, turn_direction, turn_type, seconds);
+    SetTurn(Ogre::Degree(direction), nullptr, turn_direction, turn_type, seconds);
     LOG_TRIVIAL("[SCRIPT] Entity \"" + m_Name + "\" turn to angle \"" + Ogre::StringConverter::toString(direction) + "\".");
 }
 
@@ -822,7 +819,7 @@ Entity::ScriptTurnToDirection(const float direction, const TurnDirection turn_di
 void
 Entity::ScriptTurnToEntity(Entity* entity, const TurnDirection turn_direction, const float seconds)
 {
-    if(entity == NULL || entity == this)
+    if(entity == nullptr || entity == this)
     {
         LOG_ERROR("[SCRIPT] Turn to entity: Invalid entity pointer (NUUL or this).");
         return;

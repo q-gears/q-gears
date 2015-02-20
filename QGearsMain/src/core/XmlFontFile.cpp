@@ -20,7 +20,7 @@ XmlFontFile::LoadFont()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if(node == NULL || node->ValueStr() != "font")
+    if(node == nullptr || node->ValueStr() != "font")
     {
         LOG_ERROR(m_File.ValueStr() + " is not a valid font file! No <font> in root.");
         return;
@@ -39,7 +39,7 @@ XmlFontFile::LoadFont()
 
         node = node->FirstChild();
 
-        while(node != NULL)
+        while(node != nullptr)
         {
             if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "char")
             {

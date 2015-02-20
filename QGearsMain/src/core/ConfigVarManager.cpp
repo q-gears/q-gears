@@ -1,7 +1,7 @@
 #include "core/ConfigVarManager.h"
 
 
-template<>ConfigVarManager *Ogre::Singleton<ConfigVarManager>::msSingleton = NULL;
+template<>ConfigVarManager *Ogre::Singleton<ConfigVarManager>::msSingleton = nullptr;
 
 
 ConfigVarManager::ConfigVarManager()
@@ -29,7 +29,7 @@ ConfigVarManager::Find(const Ogre::String& name) const
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -48,5 +48,5 @@ ConfigVarManager::GetConfigVar(const unsigned int i) const
         return m_ConfigVars[i];
     }
 
-    return NULL;
+    return nullptr;
 }

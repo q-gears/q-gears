@@ -43,7 +43,7 @@ main(int argc, char *argv[])
 
         Ogre::Root         *root(app.getRoot());
         Ogre::RenderWindow *window(app.getRenderWindow());
-        Ogre::SceneManager *scene_manager(NULL);
+        Ogre::SceneManager *scene_manager(nullptr);
 
         auto timer = std::make_unique<Timer>();
         auto particle_system_manager = std::make_unique<ParticleSystemManager>();

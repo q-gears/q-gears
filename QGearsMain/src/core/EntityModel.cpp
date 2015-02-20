@@ -8,7 +8,7 @@
 
 EntityModel::EntityModel(const Ogre::String& name, const Ogre::String file_name, Ogre::SceneNode* node):
     Entity(name, node),
-    m_AnimationCurrent(NULL)
+    m_AnimationCurrent(nullptr)
 {
     Ogre::SceneManager* scene_manager;
     scene_manager = Ogre::Root::getSingleton().getSceneManager("Scene");
@@ -56,7 +56,7 @@ EntityModel::IsVisible() const
 void
 EntityModel::PlayAnimation(const Ogre::String& animation, Entity::AnimationState state, Entity::AnimationPlayType play_type, const float start, const float end)
 {
-    if(m_AnimationCurrent != NULL)
+    if(m_AnimationCurrent != nullptr)
     {
         m_AnimationCurrent->setEnabled(false);
     }
@@ -83,7 +83,7 @@ EntityModel::PlayAnimation(const Ogre::String& animation, Entity::AnimationState
 void
 EntityModel::PlayAnimationContinue(const Ogre::String& animation)
 {
-    if(m_AnimationCurrent == NULL ||                                                 // if animation isn't played
+    if(m_AnimationCurrent == nullptr ||                                                 // if animation isn't played
         (m_Model->getAllAnimationStates()->hasAnimationState(animation) == true && // and we want to play animation that exist (use this to avoid exception)
           (m_AnimationCurrent != m_Model->getAnimationState(animation) ||          // and animation we want is not animation that currently playing
             m_AnimationPlayType != Entity::PLAY_LOOPED)))                                       // or now playing animation we want but it doesn't looped
@@ -96,7 +96,7 @@ EntityModel::PlayAnimationContinue(const Ogre::String& animation)
 void
 EntityModel::UpdateAnimation(const float delta)
 {
-    if(m_AnimationCurrent != NULL)
+    if(m_AnimationCurrent != nullptr)
     {
         float delta_mod = delta * m_AnimationSpeed;
 

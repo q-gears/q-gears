@@ -49,7 +49,7 @@ namespace QGears
     void
     Background2DFileXMLSerializer::readHeader( TiXmlNode *node )
     {
-        if( node == NULL || node->ValueStr() != "background2d" )
+        if( node == nullptr || node->ValueStr() != "background2d" )
         {
             OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
                 ,"not a valid background2d file, no <background2d> in root"
@@ -62,7 +62,7 @@ namespace QGears
     Background2DFileXMLSerializer::readAttribute( TiXmlNode &node, const String &attribute, Blending &pDest, const Blending &pDefault )
     {
         const String *value( readAttribute( node, attribute ) );
-        if( value == NULL )
+        if( value == nullptr )
         {
             pDest = pDefault;
             return false;

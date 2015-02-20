@@ -27,9 +27,9 @@ Walkmesh::UpdateDebug()
         DEBUG_DRAW.SetScreenSpace(true);
         DEBUG_DRAW.SetTextAlignment(DEBUG_DRAW.CENTER);
 
-        for(unsigned int i = 0; i < m_Triangles.size(); ++i)
+        for(const auto &triangle : m_Triangles)
         {
-            if(m_Triangles[i].access_side[0] == -1)
+            if(triangle.access_side[0] == -1)
             {
                 DEBUG_DRAW.SetColour(Ogre::ColourValue(1, 0, 0, 1));
             }
@@ -37,9 +37,9 @@ Walkmesh::UpdateDebug()
             {
                 DEBUG_DRAW.SetColour(Ogre::ColourValue(1, 1, 1, 1));
             }
-            DEBUG_DRAW.Line3d(m_Triangles[i].a, m_Triangles[i].b);
+            DEBUG_DRAW.Line3d(triangle.a, triangle.b);
 
-            if(m_Triangles[i].access_side[1] == -1)
+            if(triangle.access_side[1] == -1)
             {
                 DEBUG_DRAW.SetColour(Ogre::ColourValue(1, 0, 0, 1));
             }
@@ -47,9 +47,9 @@ Walkmesh::UpdateDebug()
             {
                 DEBUG_DRAW.SetColour(Ogre::ColourValue(1, 1, 1, 1));
             }
-            DEBUG_DRAW.Line3d(m_Triangles[i].b, m_Triangles[i].c);
+            DEBUG_DRAW.Line3d(triangle.b, triangle.c);
 
-            if(m_Triangles[i].access_side[2] == -1)
+            if(triangle.access_side[2] == -1)
             {
                 DEBUG_DRAW.SetColour(Ogre::ColourValue(1, 0, 0, 1));
             }
@@ -57,7 +57,7 @@ Walkmesh::UpdateDebug()
             {
                 DEBUG_DRAW.SetColour(Ogre::ColourValue(1, 1, 1, 1));
             }
-            DEBUG_DRAW.Line3d(m_Triangles[i].c, m_Triangles[i].a);
+            DEBUG_DRAW.Line3d(triangle.c, triangle.a);
 
             /*
             if(m_Triangles[i].locked == false)
@@ -73,8 +73,7 @@ Walkmesh::UpdateDebug()
 
             DEBUG_DRAW.SetColour(Ogre::ColourValue(1, 1, 1, 1));
             DEBUG_DRAW.SetFadeDistance(40, 50);
-            Ogre::Vector3 triangle_pos = (m_Triangles[i].a + m_Triangles[i].b + m_Triangles[i].c) / 3;
-            DEBUG_DRAW.Text(triangle_pos, 0, 0, Ogre::StringConverter::toString(i));
+            Ogre::Vector3 triangle_pos = (triangle.a + triangle.b + triangle.c) / 3;
         }
     }
 }
@@ -187,12 +186,8 @@ Walkmesh::IsLocked(unsigned int triangle_id) const
 
 void Walkmesh::load(const QGears::WalkmeshFilePtr &walkmesh)
 {
-    QGears::WalkmeshFile::TriangleList &triangles(walkmesh->getTriangles());
-    QGears::WalkmeshFile::TriangleList::const_iterator it(triangles.begin());
-    QGears::WalkmeshFile::TriangleList::const_iterator it_end(triangles.end());
-    while(it != it_end)
+    for(const auto &triangle : walkmesh->getTriangles())
     {
-        AddTriangle(*it);
-        ++it;
+        AddTriangle(triangle);
     }
 }

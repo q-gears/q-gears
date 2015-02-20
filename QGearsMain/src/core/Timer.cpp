@@ -3,7 +3,7 @@
 
 
 ConfigVar cv_timer_scale_game("timer_scale_game", "Timer speed for game related things", "1");
-template<>Timer *Ogre::Singleton<Timer>::msSingleton = NULL;
+template<>Timer *Ogre::Singleton<Timer>::msSingleton = nullptr;
 
 
 Timer::Timer():

@@ -13,7 +13,7 @@ ParticleSystemTranslatorManager::getNumTranslators() const
 Ogre::ScriptTranslator*
 ParticleSystemTranslatorManager::getTranslator(const Ogre::AbstractNodePtr &node)
 {
-    Ogre::ScriptTranslator* translator = NULL;
+    Ogre::ScriptTranslator* translator = nullptr;
     if (node->type == Ogre::ANT_OBJECT)
     {
         Ogre::ObjectAbstractNode* obj = reinterpret_cast<Ogre::ObjectAbstractNode*>(node.get());

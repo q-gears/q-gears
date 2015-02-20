@@ -30,11 +30,11 @@ UiTextArea::~UiTextArea()
 void
 UiTextArea::Initialise()
 {
-    m_Font = NULL;
+    m_Font = nullptr;
     m_MaxLetters = 0;
     m_TextAlign = UiTextArea::LEFT;
     m_Text = "";
-    m_TextNode = NULL;
+    m_TextNode = nullptr;
 
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager("Scene");
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
@@ -107,7 +107,7 @@ UiTextArea::SetFont(const Ogre::String& font)
 {
     m_Font = UiManager::getSingleton().GetFont(font);
 
-    if(m_Font == NULL)
+    if(m_Font == nullptr)
     {
         LOG_ERROR("Could not find font \"" + font + "\" for \"" + m_PathName + "\".");
         return;
@@ -134,7 +134,7 @@ UiTextArea::SetFont(const Ogre::String& font)
 void
 UiTextArea::UpdateGeometry()
 {
-    if(m_Font == NULL)
+    if(m_Font == nullptr)
     {
         LOG_ERROR("Font for \"" + m_PathName + "\" if not set.");
         return;
@@ -149,7 +149,7 @@ UiTextArea::UpdateGeometry()
     float length = 0;
     if(m_TextAlign != LEFT)
     {
-        if(m_TextNode != NULL)
+        if(m_TextNode != nullptr)
         {
             length = GetTextLengthFromNode(m_TextNode);
         }
@@ -172,7 +172,7 @@ UiTextArea::UpdateGeometry()
     TextStyle style;
     style.colour = m_Colour1;
 
-    if(m_TextNode != NULL)
+    if(m_TextNode != nullptr)
     {
         SetTextGeometryFromNode(m_TextNode, data, style);
     }
@@ -188,7 +188,7 @@ UiTextArea::GetTextLengthFromNode(TiXmlNode* node) const
 {
     float length = 0;
 
-    while(node != NULL)
+    while(node != nullptr)
     {
         switch(node->Type())
         {
@@ -233,7 +233,7 @@ UiTextArea::GetTextLength(const Ogre::UTFString& text) const
 void
 UiTextArea::SetTextGeometryFromNode(TiXmlNode* node, TextBlockData& data, const TextStyle& style)
 {
-    while(node != NULL)
+    while(node != nullptr)
     {
         switch(node->Type())
         {

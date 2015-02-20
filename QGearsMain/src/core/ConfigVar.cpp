@@ -4,7 +4,7 @@
 #include "core/ConfigVar.h"
 
 
-ConfigVar* ConfigVar::m_StaticConfigVarList = NULL;
+ConfigVar* ConfigVar::m_StaticConfigVarList = nullptr;
 
 
 ConfigVar::ConfigVar(const Ogre::String& name, const Ogre::String& description, const Ogre::String& default_value):

@@ -18,14 +18,14 @@ XmlMapsFile::GetMapFileNameByName(const Ogre::String& name)
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if(node == NULL || node->ValueStr() != "maps")
+    if(node == nullptr || node->ValueStr() != "maps")
     {
         LOG_ERROR("Field XML Manager: " + m_File.ValueStr() + " is not a valid maps file! No <maps> in root.");
         return "";
     }
 
     node = node->FirstChild();
-    while(node != NULL)
+    while(node != nullptr)
     {
         if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "map")
         {
@@ -47,14 +47,14 @@ XmlMapsFile::GetMapNames(Ogre::StringVector& complete_params)
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if(node == NULL || node->ValueStr() != "maps")
+    if(node == nullptr || node->ValueStr() != "maps")
     {
         LOG_ERROR("Field XML Manager: " + m_File.ValueStr() + " is not a valid maps file! No <maps> in root.");
         return;
     }
 
     node = node->FirstChild();
-    while(node != NULL)
+    while(node != nullptr)
     {
         if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "map")
         {

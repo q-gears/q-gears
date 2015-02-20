@@ -9,7 +9,7 @@
 #include "core/UiTextArea.h"
 
 
-template<>DebugDraw *Ogre::Singleton<DebugDraw>::msSingleton = NULL;
+template<>DebugDraw *Ogre::Singleton<DebugDraw>::msSingleton = nullptr;
 
 
 DebugDraw::DebugDraw():

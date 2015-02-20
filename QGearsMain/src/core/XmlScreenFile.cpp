@@ -23,7 +23,7 @@ XmlScreenFile::LoadScreen()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if(node == NULL || node->ValueStr() != "screen")
+    if(node == nullptr || node->ValueStr() != "screen")
     {
         LOG_ERROR(m_File.ValueStr() + " is not a valid screen file! No <screen> in root.");
         return;
@@ -40,7 +40,7 @@ XmlScreenFile::LoadScreen()
     widget->SetVisible(GetBool(node, "visible", false));
 
     node = node->FirstChild();
-    if(node != NULL)
+    if(node != nullptr)
     {
         LoadScreenRecursive(node, base_name, widget);
     }
@@ -52,7 +52,7 @@ XmlScreenFile::LoadScreen()
 void
 XmlScreenFile::LoadScreenRecursive(TiXmlNode* node, const Ogre::String& base_name, UiWidget* widget)
 {
-    while(node != NULL)
+    while(node != nullptr)
     {
         // parse widgets
         if(node->Type() == TiXmlNode::TINYXML_ELEMENT && (node->ValueStr() == "widget" || node->ValueStr() == "sprite" || node->ValueStr() == "text_area" || node->ValueStr() == "prototype"))
@@ -63,10 +63,10 @@ XmlScreenFile::LoadScreenRecursive(TiXmlNode* node, const Ogre::String& base_nam
                 if(name != "")
                 {
                     TiXmlNode* node2 = UiManager::getSingleton().GetPrototype(name);
-                    if(node != NULL)
+                    if(node != nullptr)
                     {
                         node2 = node2->FirstChild();
-                        if(node2 != NULL)
+                        if(node2 != nullptr)
                         {
                             LoadScreenRecursive(node2, base_name, widget);
                         }
@@ -241,7 +241,7 @@ XmlScreenFile::LoadScreenRecursive(TiXmlNode* node, const Ogre::String& base_nam
                     widget->AddChild(widget2);
 
                     TiXmlNode* node2 = node->FirstChild();
-                    if(node2 != NULL)
+                    if(node2 != nullptr)
                     {
                         LoadScreenRecursive(node2, base_name + "." + name, widget2);
                     }

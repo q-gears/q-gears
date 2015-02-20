@@ -19,14 +19,14 @@ XmlMusicsFile::LoadMusics()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if(node == NULL || node->ValueStr() != "musics")
+    if(node == nullptr || node->ValueStr() != "musics")
     {
         LOG_ERROR(m_File.ValueStr() + " is not a valid musics file! No <musics> in root.");
         return;
     }
 
     node = node->FirstChild();
-    while(node != NULL)
+    while(node != nullptr)
     {
         if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "music")
         {

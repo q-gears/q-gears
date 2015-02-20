@@ -38,7 +38,7 @@ ConfigFile::Execute(const Ogre::String& name)
                 {
                     // handle command
                     ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find(params[0]);
-                    if(cmd != NULL)
+                    if(cmd != nullptr)
                     {
                         cmd->GetHandler()(params);
                     }
@@ -64,7 +64,7 @@ ConfigFile::Execute(const Ogre::String& name)
             {
                 ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find(params[0]);
 
-                if(cmd != NULL)
+                if(cmd != nullptr)
                 {
                     cmd->GetHandler()(params);
                 }

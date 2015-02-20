@@ -24,14 +24,14 @@ XmlMapFile::LoadMap()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if(node == NULL || node->ValueStr() != "map")
+    if(node == nullptr || node->ValueStr() != "map")
     {
         LOG_ERROR(m_File.ValueStr() + " is not a valid fields map file! No <map> in root.");
         return;
     }
 
     node = node->FirstChild();
-    while(node != NULL)
+    while(node != nullptr)
     {
         if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "walkmesh")
         {
@@ -139,14 +139,14 @@ XmlMapFile::GetWalkmeshFileName()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if(node == NULL || node->ValueStr() != "map")
+    if(node == nullptr || node->ValueStr() != "map")
     {
         LOG_ERROR("Field Map XML Manager: " + m_File.ValueStr() + " is not a valid fields map file! No <map> in root.");
         return "";
     }
 
     node = node->FirstChild();
-    while(node != NULL)
+    while(node != nullptr)
     {
         if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "walkmesh")
         {

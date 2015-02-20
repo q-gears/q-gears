@@ -28,7 +28,7 @@ ParticleEntityRenderer::ParticleEntityRenderer():
 //------------------------------------------------------------------------------
 ParticleEntityRenderer::~ParticleEntityRenderer()
 {
-    if (m_ParentTechnique == NULL)
+    if (m_ParentTechnique == nullptr)
     {
         return;
     }
@@ -70,7 +70,7 @@ ParticleEntityRenderer::SetMeshName(const Ogre::String& mesh_name)
 void
 ParticleEntityRenderer::Clear()
 {
-    if (m_ParentTechnique == NULL)
+    if (m_ParentTechnique == nullptr)
     {
         return;
     }

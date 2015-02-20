@@ -19,7 +19,7 @@ XmlScriptsFile::LoadScripts()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if(node == NULL || node->ValueStr() != "scripts")
+    if(node == nullptr || node->ValueStr() != "scripts")
     {
         LOG_ERROR(m_File.ValueStr() + " is not a valid scripts file! No <scripts> in root.");
         return;
@@ -27,7 +27,7 @@ XmlScriptsFile::LoadScripts()
 
     node = node->FirstChild();
     ScriptManager &script_manager(ScriptManager::getSingleton());
-    while(node != NULL)
+    while(node != nullptr)
     {
         if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "script")
         {
@@ -42,7 +42,7 @@ XmlScriptsFile::LoadScripts()
                 continue;
             }
 
-            script_manager.AddEntity(ScriptManager::SYSTEM, name, NULL);
+            script_manager.AddEntity(ScriptManager::SYSTEM, name, nullptr);
         }
 
         node = node->NextSibling();

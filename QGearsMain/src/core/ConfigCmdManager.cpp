@@ -4,7 +4,7 @@
 #include "core/ConfigCmdManagerCommands.h"
 
 
-template<>ConfigCmdManager *Ogre::Singleton<ConfigCmdManager>::msSingleton = NULL;
+template<>ConfigCmdManager *Ogre::Singleton<ConfigCmdManager>::msSingleton = nullptr;
 
 
 ConfigCmdManager::ConfigCmdManager()

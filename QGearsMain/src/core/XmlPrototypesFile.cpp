@@ -19,14 +19,14 @@ XmlPrototypesFile::LoadPrototypes()
 {
     TiXmlNode* node = m_File.RootElement();
 
-    if(node == NULL || node->ValueStr() != "prototypes")
+    if(node == nullptr || node->ValueStr() != "prototypes")
     {
         LOG_ERROR("UI Manager: " + m_File.ValueStr() + " is not a valid prototypes file! No <prototypes> in root.");
         return;
     }
 
     node = node->FirstChild();
-    while(node != NULL)
+    while(node != nullptr)
     {
         if(node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "prototype")
         {

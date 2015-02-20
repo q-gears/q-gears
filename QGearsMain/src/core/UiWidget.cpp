@@ -16,7 +16,7 @@ ConfigVar cv_debug_ui("debug_ui", "Draw ui debug info", "0");
 UiWidget::UiWidget(const Ogre::String& name):
     m_Name(name),
     m_PathName(name),
-    m_Parent(NULL)
+    m_Parent(nullptr)
 {
     Initialise();
 }
@@ -87,7 +87,7 @@ UiWidget::Initialise()
     m_ScissorLeft = 0;
     m_ScissorRight = static_cast<int>(m_ScreenWidth);
 
-    m_AnimationCurrent = NULL;
+    m_AnimationCurrent = nullptr;
     m_AnimationDefault = "";
     m_AnimationState = UiAnimation::DEFAULT;
     m_Colour1 = Ogre::ColourValue(1, 1, 1, 1);
@@ -95,7 +95,7 @@ UiWidget::Initialise()
     m_Colour3 = Ogre::ColourValue(1, 1, 1, 1);
     m_Colour4 = Ogre::ColourValue(1, 1, 1, 1);
 
-    ScriptManager::getSingleton().AddEntity(ScriptManager::UI, m_PathName, NULL);
+    ScriptManager::getSingleton().AddEntity(ScriptManager::UI, m_PathName, nullptr);
 }
 
 
@@ -107,7 +107,7 @@ UiWidget::Update()
         return;
     }
 
-    if(m_AnimationCurrent != NULL)
+    if(m_AnimationCurrent != nullptr)
     {
         float delta_time = Timer::getSingleton().GetGameTimeDelta();
         float time = m_AnimationCurrent->GetTime();
@@ -138,7 +138,7 @@ UiWidget::Update()
             m_AnimationCurrent->AddTime(delta_time);
         }
     }
-    else if(m_AnimationCurrent == NULL && m_AnimationState == UiAnimation::DEFAULT && m_AnimationDefault != "")
+    else if(m_AnimationCurrent == nullptr && m_AnimationState == UiAnimation::DEFAULT && m_AnimationDefault != "")
     {
         PlayAnimation(m_AnimationDefault, UiAnimation::DEFAULT, 0, -1);
     }
@@ -203,8 +203,8 @@ UiWidget::Update()
 
         // draw translation
         DEBUG_DRAW.SetColour(Ogre::ColourValue(0, 1, 0, 1));
-        Ogre::Vector2 area_origin = (m_Parent != NULL) ? m_Parent->GetFinalOrigin() : Ogre::Vector2::ZERO;
-        Ogre::Vector2 area_translate = (m_Parent != NULL) ? m_Parent->GetFinalTranslate() : Ogre::Vector2::ZERO;
+        Ogre::Vector2 area_origin = (m_Parent != nullptr) ? m_Parent->GetFinalOrigin() : Ogre::Vector2::ZERO;
+        Ogre::Vector2 area_translate = (m_Parent != nullptr) ? m_Parent->GetFinalTranslate() : Ogre::Vector2::ZERO;
         Ogre::Vector2 pos = area_translate - area_origin;
         DEBUG_DRAW.Line(pos.x, pos.y, x, y);
         DEBUG_DRAW.Quad(x - 2, y - 2, x + 2, y - 2, x + 2, y + 2, x - 2, y + 2);
@@ -292,7 +292,7 @@ UiWidget::GetChild(const Ogre::String& name)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -317,7 +317,7 @@ UiWidget::AddAnimation(UiAnimation* animation)
 const Ogre::String&
 UiWidget::GetCurrentAnimationName() const
 {
-    if(m_AnimationCurrent != NULL)
+    if(m_AnimationCurrent != nullptr)
     {
         return m_AnimationCurrent->GetName();
     }
@@ -343,7 +343,7 @@ UiWidget::PlayAnimation(const Ogre::String& animation, UiAnimation::State state,
     }
 
     // stop current state and animation
-    m_AnimationCurrent = NULL;
+    m_AnimationCurrent = nullptr;
     m_AnimationState = UiAnimation::ONCE;
     LOG_ERROR("Widget '" + m_Name + "' doesn't has animation '" + animation + "'.");
 }
@@ -397,11 +397,11 @@ UiWidget::ScriptAnimationSync()
 void
 UiWidget::UpdateTransformation()
 {
-    Ogre::Vector2 area_scale = (m_Parent != NULL) ? m_Parent->GetFinalScale() : Ogre::Vector2(1, 1);
-    Ogre::Vector2 area_origin = (m_Parent != NULL) ? m_Parent->GetFinalOrigin() : Ogre::Vector2::ZERO;
-    Ogre::Vector2 area_translate = (m_Parent != NULL) ? m_Parent->GetFinalTranslate() : Ogre::Vector2::ZERO;
-    Ogre::Vector2 area_size = (m_Parent != NULL) ? m_Parent->GetFinalSize() : Ogre::Vector2(m_ScreenWidth, m_ScreenHeight);
-    float area_rotation = (m_Parent != NULL) ? m_Parent->GetFinalRotation() : 0;
+    Ogre::Vector2 area_scale = (m_Parent != nullptr) ? m_Parent->GetFinalScale() : Ogre::Vector2(1, 1);
+    Ogre::Vector2 area_origin = (m_Parent != nullptr) ? m_Parent->GetFinalOrigin() : Ogre::Vector2::ZERO;
+    Ogre::Vector2 area_translate = (m_Parent != nullptr) ? m_Parent->GetFinalTranslate() : Ogre::Vector2::ZERO;
+    Ogre::Vector2 area_size = (m_Parent != nullptr) ? m_Parent->GetFinalSize() : Ogre::Vector2(m_ScreenWidth, m_ScreenHeight);
+    float area_rotation = (m_Parent != nullptr) ? m_Parent->GetFinalRotation() : 0;
 
     float local_x = ((area_size.x * m_XPercent) / 100.0f + (m_X * m_ScreenHeight / 720.0f) * area_scale.x) - area_origin.x;
     float local_y = ((area_size.y * m_YPercent) / 100.0f + (m_Y * m_ScreenHeight / 720.0f) * area_scale.y) - area_origin.y;
@@ -439,7 +439,7 @@ UiWidget::UpdateTransformation()
     }
     m_FinalTranslate.y += y;
 
-    m_FinalZ = (m_Parent != NULL) ? m_Parent->GetFinalZ() + m_Z : m_Z;
+    m_FinalZ = (m_Parent != nullptr) ? m_Parent->GetFinalZ() + m_Z : m_Z;
     m_FinalScale = area_scale * m_Scale;
     m_FinalSize.x = (area_size.x * m_WidthPercent * m_Scale.x) / 100.0f + (m_Width * m_ScreenHeight / 720.0f) * m_FinalScale.x;
     m_FinalSize.y = (area_size.y * m_HeightPercent * m_Scale.y) / 100.0f + (m_Height * m_ScreenHeight / 720.0f) * m_FinalScale.y;
@@ -448,10 +448,10 @@ UiWidget::UpdateTransformation()
     m_FinalRotation = area_rotation + m_Rotation;
 
     // scissor update
-    m_ScissorTop = (m_Parent != NULL) ? m_Parent->GetScissorTop() : 0;
-    m_ScissorBottom = (m_Parent != NULL) ? m_Parent->GetScissorBottom() : static_cast<int>(m_ScreenHeight);
-    m_ScissorLeft = (m_Parent != NULL) ? m_Parent->GetScissorLeft() : 0;
-    m_ScissorRight = (m_Parent != NULL) ? m_Parent->GetScissorRight() : static_cast<int>(m_ScreenWidth);
+    m_ScissorTop = (m_Parent != nullptr) ? m_Parent->GetScissorTop() : 0;
+    m_ScissorBottom = (m_Parent != nullptr) ? m_Parent->GetScissorBottom() : static_cast<int>(m_ScreenHeight);
+    m_ScissorLeft = (m_Parent != nullptr) ? m_Parent->GetScissorLeft() : 0;
+    m_ScissorRight = (m_Parent != nullptr) ? m_Parent->GetScissorRight() : static_cast<int>(m_ScreenWidth);
 
     if(m_Scissor == true)
     {

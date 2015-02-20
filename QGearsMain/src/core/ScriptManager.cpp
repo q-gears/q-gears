@@ -11,7 +11,7 @@
 
 
 ConfigVar cv_debug_script("debug_script", "Debug script flags. 0x01 - System, 0x02 - Entity, 0x04 - Ui.", "0");
-template<>ScriptManager *Ogre::Singleton<ScriptManager>::msSingleton = NULL;
+template<>ScriptManager *Ogre::Singleton<ScriptManager>::msSingleton = nullptr;
 Ogre::String script_entity_type[] = {"SYSTEM", "ENTITY", "UI"};
 
 
@@ -322,7 +322,7 @@ ScriptManager::AddEntity(const ScriptManager::Type type, const Ogre::String& ent
         script_entity.type = type;
 
         // init entity field for model entity
-        if(entity != NULL)
+        if(entity != nullptr)
         {
             table["entity"] = boost::ref(*entity);
         }
@@ -448,11 +448,11 @@ ScriptManager::GetScriptByScriptId(const ScriptId& script) const
                 }
             }
 
-            return NULL;
+            return nullptr;
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -467,7 +467,7 @@ ScriptManager::GetScriptEntityByName(const Type type, const Ogre::String& entity
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -483,7 +483,7 @@ ScriptManager::ContinueScriptExecution(const ScriptId& script)
 {
     QueueScript* script_pointer = GetScriptByScriptId(script);
 
-    if(script_pointer == NULL)
+    if(script_pointer == nullptr)
     {
         LOG_ERROR("There is no script \"" + script.function + "\" for entity \"" + script.entity + "\". Can't continue script execution.");
         return;
@@ -500,7 +500,7 @@ ScriptManager::ScriptWait(const float seconds)
 
     QueueScript* script = GetScriptByScriptId(m_CurrentScriptId);
 
-    if(script == NULL)
+    if(script == nullptr)
     {
         LOG_ERROR("script:wait: Currently no any script running.");
         return 1;
@@ -524,7 +524,7 @@ ScriptManager::ScriptRequest(const Type type, const char* entity, const char* fu
 
     ScriptEntity* script_entity = GetScriptEntityByName(type, Ogre::String(entity));
 
-    if(script_entity == NULL)
+    if(script_entity == nullptr)
     {
         LOG_WARNING("[SCRIPT] script:request: Entity \"" + Ogre::String(entity) + "\" doesn't exist.");
         return;
@@ -546,7 +546,7 @@ ScriptManager::ScriptRequestStartSync(const Type type, const char* entity, const
 
     ScriptEntity* script_entity = GetScriptEntityByName(type, Ogre::String(entity));
 
-    if(script_entity == NULL)
+    if(script_entity == nullptr)
     {
         LOG_ERROR("[SCRIPT] script:request_start_sync: Entity \"" + Ogre::String(entity) + "\" doesn't exist.");
         return 1;
@@ -571,7 +571,7 @@ ScriptManager::ScriptRequestEndSync(const Type type, const char* entity, const c
 
     ScriptEntity* script_entity = GetScriptEntityByName(type, Ogre::String(entity));
 
-    if(script_entity == NULL)
+    if(script_entity == nullptr)
     {
         LOG_ERROR("[SCRIPT] script:request_end_sync: Entity \"" + Ogre::String(entity) + "\" doesn't exist.");
         return 1;
@@ -628,7 +628,7 @@ void
 ScriptManager::AddValueToStack(const float value)
 {
     QueueScript* script = GetScriptByScriptId(m_CurrentScriptId);
-    if(script != NULL)
+    if(script != nullptr)
     {
         lua_pushnumber(script->state, value);
     }

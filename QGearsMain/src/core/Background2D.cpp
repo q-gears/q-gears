@@ -20,7 +20,7 @@ Background2D::Background2D():
     m_AlphaMaxVertexCount(0),
     m_AddMaxVertexCount(0),
 
-    m_ScrollEntity(NULL),
+    m_ScrollEntity(nullptr),
     m_ScrollPositionStart(Ogre::Vector2::ZERO),
     m_ScrollPositionEnd(Ogre::Vector2::ZERO),
     m_ScrollType(Background2D::NONE),
@@ -291,7 +291,7 @@ Background2D::OnResize()
 void
 Background2D::Clear()
 {
-    m_ScrollEntity = NULL;
+    m_ScrollEntity = nullptr;
     m_ScrollPositionStart = Ogre::Vector2::ZERO;
     m_ScrollPositionEnd = Ogre::Vector2::ZERO;
     m_ScrollSeconds = 0;
@@ -343,7 +343,7 @@ Background2D::ScriptScrollToPosition(const float x, const float y, const ScrollT
 
     Ogre::Vector2 position = Ogre::Vector2(x, y);
 
-    m_ScrollEntity = NULL;
+    m_ScrollEntity = nullptr;
 
     if(type == Background2D::NONE)
     {

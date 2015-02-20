@@ -12,7 +12,7 @@
 #include <OgreFontManager.h>
 
 
-template<>Console *Ogre::Singleton<Console>::msSingleton = NULL;
+template<>Console *Ogre::Singleton<Console>::msSingleton = nullptr;
 ConfigVar cv_console_notification("console_notification", "Draw console strings even when console is hided", "false");
 
 
@@ -529,7 +529,7 @@ Console::ExecuteCommand(const Ogre::String& command)
     // is it cvar
     ConfigVar* cvar = ConfigVarManager::getSingleton().Find(params[0]);
 
-    if(cvar != NULL)
+    if(cvar != nullptr)
     {
         handled = true;
 
@@ -551,7 +551,7 @@ Console::ExecuteCommand(const Ogre::String& command)
     {
         // handle command
         ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find(params[0]);
-        if(cmd != NULL)
+        if(cmd != nullptr)
         {
             cmd->GetHandler()(params);
             return;
@@ -644,7 +644,7 @@ Console::CompleteInput()
                         Ogre::String part = name.substr(input_size, name.size() - input_size);
                         m_AutoCompletition.push_back(part);
                     }
-                    else if(ConfigCmdManager::getSingleton().GetConfigCmd(i)->GetCompletion() != NULL)
+                    else if(ConfigCmdManager::getSingleton().GetConfigCmd(i)->GetCompletion() != nullptr)
                     {
                         m_InputLine += " ";
                         ConfigCmdManager::getSingleton().GetConfigCmd(i)->GetCompletion()(m_AutoCompletition);
@@ -663,11 +663,11 @@ Console::CompleteInput()
 
             // add commands arguments
             ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find(params[0]);
-            if(cmd != NULL)
+            if(cmd != nullptr)
             {
                 add_slash = true;
 
-                if(cmd->GetCompletion() != NULL)
+                if(cmd->GetCompletion() != nullptr)
                 {
                     Ogre::StringVector full_complete;
                     cmd->GetCompletion()(full_complete);

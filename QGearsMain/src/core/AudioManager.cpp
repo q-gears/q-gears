@@ -6,7 +6,7 @@
 #include "core/Logger.h"
 
 
-template<>AudioManager *Ogre::Singleton<AudioManager>::msSingleton = NULL;
+template<>AudioManager *Ogre::Singleton<AudioManager>::msSingleton = nullptr;
 
 ALsizei AudioManager::m_ChannelBufferNumber = 2;
 int AudioManager::m_ChannelBufferSize = 96 * 1024;
@@ -18,11 +18,11 @@ AudioManager::AudioManager():
     m_UpdateMutex(),
     m_Music(&m_UpdateMutex)
 {
-    m_ALDevice = alcOpenDevice(NULL);
-    if(m_ALDevice != NULL)
+    m_ALDevice = alcOpenDevice(nullptr);
+    if(m_ALDevice != nullptr)
     {
-        m_ALContext = alcCreateContext(m_ALDevice, NULL);
-        if(m_ALContext != NULL)
+        m_ALContext = alcCreateContext(m_ALDevice, nullptr);
+        if(m_ALContext != nullptr)
         {
             alcMakeContextCurrent(m_ALContext);
 
@@ -67,7 +67,7 @@ AudioManager::~AudioManager()
         delete m_UpdateThread;
         delete[] m_Buffer;
 
-        alcMakeContextCurrent(NULL);
+        alcMakeContextCurrent(nullptr);
         alcDestroyContext(m_ALContext);
         alcCloseDevice(m_ALDevice);
         LOG_TRIVIAL("AudioManager destroyed.");
@@ -118,7 +118,7 @@ AudioManager::MusicPlay(const Ogre::String& name)
         boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
         AudioManager::Music* music = GetMusic(name);
-        if(music == NULL)
+        if(music == nullptr)
         {
             LOG_ERROR("No music found with name \"" + name + "\".");
             return;
@@ -170,7 +170,7 @@ AudioManager::GetMusic(const Ogre::String& name)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -180,7 +180,7 @@ AudioManager::ALError()
     //ALenum error_code = alGetError();
     //if( error_code == AL_NO_ERROR )
     {
-        return NULL;
+        return nullptr;
     }
     //else
     //{
@@ -192,12 +192,12 @@ AudioManager::ALError()
 const char*
 AudioManager::ALCError(const ALCdevice* device)
 {
-    //const ALCdevice *alc_device = ( ( device == NULL ) ? const_cast< ALCdevice* >( m_ALDevice ) : const_cast< ALCdevice* >( device ) );
+    //const ALCdevice *alc_device = ( ( device == nullptr ) ? const_cast< ALCdevice* >( m_ALDevice ) : const_cast< ALCdevice* >( device ) );
 
     //ALCenum error_code = alcGetError( const_cast< ALCdevice* >( alc_device ) );
     //if( error_code == ALC_NO_ERROR )
     {
-        return NULL;
+        return nullptr;
     }
     //else
     //{
@@ -208,7 +208,7 @@ AudioManager::ALCError(const ALCdevice* device)
 
 AudioManager::Player::Player(boost::recursive_mutex* mutex):
     m_Loop(-1.0),
-    m_VorbisInfo(NULL),
+    m_VorbisInfo(nullptr),
     m_VorbisSection(0),
     m_StreamFinished(false),
     m_UpdateMutex(mutex)

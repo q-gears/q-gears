@@ -11,7 +11,7 @@
 #include "core/XmlTextsFile.h"
 
 
-template<>UiManager *Ogre::Singleton<UiManager>::msSingleton = NULL;
+template<>UiManager *Ogre::Singleton<UiManager>::msSingleton = nullptr;
 
 
 UiManager::UiManager()
@@ -116,7 +116,7 @@ UiManager::GetText(const Ogre::String& name) const
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -138,7 +138,7 @@ UiManager::GetFont(const Ogre::String& name)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -163,7 +163,7 @@ UiManager::GetPrototype(const Ogre::String& name) const
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 
@@ -179,7 +179,7 @@ UiManager::GetWidget(const Ogre::String& name)
 {
     // get real table by name
     Ogre::StringVector table_path = StringTokenise(name, ".");
-    UiWidget* widget = NULL;
+    UiWidget* widget = nullptr;
 
     if(table_path.size() > 0)
     {
@@ -189,7 +189,7 @@ UiManager::GetWidget(const Ogre::String& name)
             {
                 widget = m_Widgets[i];
 
-                for(unsigned int j = 1; (j < table_path.size()) && (widget != NULL); ++j)
+                for(unsigned int j = 1; (j < table_path.size()) && (widget != nullptr); ++j)
                 {
                     widget = widget->GetChild(table_path[j]);
                 }
