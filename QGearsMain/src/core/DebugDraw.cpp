@@ -6,6 +6,7 @@
 
 #include "core/CameraManager.h"
 #include "core/Logger.h"
+#include "core/UiTextArea.h"
 
 
 
@@ -337,11 +338,15 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
 {
     if( m_TextRenderOp.vertexData->vertexCount + text.size() * 6 > m_TextMaxVertexCount )
     {
-        LOG_ERROR( "Max number of text reached. Can't add text \"" + text + "\". Max number of letters is " + Ogre::StringConverter::toString( m_TextMaxVertexCount / 6 ) + "." );
+        LOG_ERROR("Max number of text reached. Can't add text \"" + text + "\". Max number of letters is " +
+                   Ogre::StringConverter::toString( m_TextMaxVertexCount / 6 ) + ".");
         return;
     }
 
+    // get a pointer to the vertex buffer and lock buffer
     float* writeIterator = ( float* ) m_TextVertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
+
+    // move the buffer one line forward
     writeIterator += m_TextRenderOp.vertexData->vertexCount * 9;
 
     Ogre::Viewport *viewport( CameraManager::getSingleton().getViewport() );
@@ -349,14 +354,14 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
     float height = static_cast<float>(viewport->getActualHeight());
 
     float length = 0;
-    if( m_TextAlignment != LEFT )
+    if(m_TextAlignment != LEFT)
     {
-        for( unsigned int i = 0; i < text.size(); ++i )
+        for( auto &c : text )
         {
-            length += ( ( m_Font->getGlyphAspectRatio( text[ i ] ) * m_FontHeight ) / width ) * 2;
+            length += ((m_Font->getGlyphAspectRatio(c) * m_FontHeight) / width) * 2;
         }
 
-        if( m_TextAlignment == CENTER )
+        if(m_TextAlignment == CENTER)
         {
             length /= 2;
         }
@@ -367,9 +372,12 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
     float current_y =  ( m_ScreenSpace == true ) ? -( ( ( int ) y / height ) * 2 - 1 ) : y;
     float char_height = -( m_FontHeight / height ) * 2;
 
-    for( unsigned int i = 0; i < text.size(); ++i )
+    for( auto &c : text )
     {
-        float char_width = ( ( m_Font->getGlyphAspectRatio( text[ i ] ) * m_FontHeight ) / width ) * 2;
+        // for each character, compute the size of the glyph.
+        // create a square from 2 triangles for the glyph and
+        // set x, y, color and texture location
+        float char_width = ((m_Font->getGlyphAspectRatio(c) * m_FontHeight) / width) * 2;
 
         float new_x1 = current_x;
         float new_y1 = current_y;
@@ -383,70 +391,16 @@ DebugDraw::Text( const float x, const float y, const Ogre::String& text )
         float new_x4 = current_x;
         float new_y4 = current_y + char_height;
 
+
+        Ogre::Vector3 coords[4] = {
+            Ogre::Vector3(current_x, current_y, m_Z),
+            Ogre::Vector3(current_x + char_width, current_y, m_Z),
+            Ogre::Vector3(current_x + char_width, current_y + char_height, m_Z),
+            Ogre::Vector3(current_x, current_y + char_height, m_Z),
+        };
         current_x += char_width;
-
-        const Ogre::Font::UVRect& uv = m_Font->getGlyphTexCoords( text[ i ] );
-
-        *writeIterator++ = new_x1;
-        *writeIterator++ = new_y1;
-        *writeIterator++ = m_Z;
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.left;
-        *writeIterator++ = uv.top;
-
-        *writeIterator++ = new_x2;
-        *writeIterator++ = new_y2;
-        *writeIterator++ = m_Z;
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.right;
-        *writeIterator++ = uv.top;
-
-        *writeIterator++ = new_x3;
-        *writeIterator++ = new_y3;
-        *writeIterator++ = m_Z;
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.right;
-        *writeIterator++ = uv.bottom;
-
-        *writeIterator++ = new_x1;
-        *writeIterator++ = new_y1;
-        *writeIterator++ = m_Z;
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.left;
-        *writeIterator++ = uv.top;
-
-        *writeIterator++ = new_x3;
-        *writeIterator++ = new_y3;
-        *writeIterator++ = m_Z;
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.right;
-        *writeIterator++ = uv.bottom;
-
-        *writeIterator++ = new_x4;
-        *writeIterator++ = new_y4;
-        *writeIterator++ = m_Z;
-        *writeIterator++ = m_Colour.r;
-        *writeIterator++ = m_Colour.g;
-        *writeIterator++ = m_Colour.b;
-        *writeIterator++ = m_Colour.a;
-        *writeIterator++ = uv.left;
-        *writeIterator++ = uv.bottom;
-
+        const Ogre::Font::UVRect& uv = m_Font->getGlyphTexCoords(c);
+        WriteGlyph(writeIterator, coords, m_Colour, m_Font->getGlyphTexCoords(c));
         m_TextRenderOp.vertexData->vertexCount += 6;
     }
 
