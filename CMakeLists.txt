@@ -34,7 +34,7 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/qgears_version.h
   COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/configure_version_file.cmake
   DEPENDS
     ${CMAKE_CURRENT_BINARY_DIR}/configure_version_file.cmake
-    ${CMAKE_CURRENT_SOURCE_DIR}/qgears_version.h.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/QGearsMain/include/qgears_version.h.in
   COMMENT "Configuring qgears_version.h"
   VERBATIM)
 add_custom_target(configure_qgears_version ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qgears_version.h)
