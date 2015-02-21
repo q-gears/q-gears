@@ -205,6 +205,10 @@ namespace QGears
                         << "Error: palette page Index out of Bounds " << it->palette_page;
                 }
                 const PaletteFile::Page& palette_page(palette->getPage(it->palette_page));
+                bool firstColorHidden(false);
+                if (it->palette_page < PALETTE_ENTRY_COUNT) {
+                    firstColorHidden = bool(m_palette[it->palette_page]);
+                }
                 for (uint16 y(SPRITE_HEIGHT); y--;)
                 {
                     for (uint16 x(SPRITE_WIDTH); x--;)
@@ -230,7 +234,12 @@ namespace QGears
                                 << " " << (dst_x + x) << " x " << dst_y + y;
                         }
                         Color colour(palette_page[index]);
-                        if (index == 0 && colour != Color::Black)
+                        // Strange PC version behavior: empty colors are replaced by the first color and the first color is hidden by a flag
+                        if (colour == Color::ZERO)
+                        {
+                            colour = palette_page[0];
+                        }
+                        if (index == 0 && firstColorHidden)
                         {
                             colour.a = 0;
                         }
