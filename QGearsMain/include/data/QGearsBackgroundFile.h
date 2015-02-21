@@ -33,6 +33,8 @@ THE SOFTWARE.
 #include "common/TypeDefine.h"
 #include "data/QGearsPaletteFile.h"
 
+#include <array>
+
 namespace QGears
 {
     // TODO inherit from Qgears Ressource

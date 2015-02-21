@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 #include "data/QGearsCameraMatrixFileManager.h"
 
-template<> QGears::CameraMatrixFileManager *Ogre::Singleton<QGears::CameraMatrixFileManager>::msSingleton = NULL;
+template<> QGears::CameraMatrixFileManager *Ogre::Singleton<QGears::CameraMatrixFileManager>::msSingleton = nullptr;
 
 namespace QGears
 {

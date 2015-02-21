@@ -25,14 +25,14 @@ XmlWalkmeshFile::Load()
     TiXmlNode* node = m_File.RootElement();
     Walkmesh* walkmesh = EntityManager::getSingleton().GetWalkmesh();
 
-    if( node == NULL || node->ValueStr() != "walkmesh" )
+    if( node == nullptr || node->ValueStr() != "walkmesh" )
     {
         LOG_ERROR( "Field XML Manager: " + m_File.ValueStr() + " is not a valid walkmesh file! No <walkmesh> in root." );
         return;
     }
 
     node = node->FirstChild();
-    while( node != NULL )
+    while( node != nullptr )
     {
         if( node->Type() == TiXmlNode::TINYXML_ELEMENT && node->ValueStr() == "triangle" )
         {

@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 #include "data/QGearsPaletteFileManager.h"
 
-template<> QGears::PaletteFileManager *Ogre::Singleton<QGears::PaletteFileManager>::msSingleton = NULL;
+template<> QGears::PaletteFileManager *Ogre::Singleton<QGears::PaletteFileManager>::msSingleton = nullptr;
 
 namespace QGears
 {

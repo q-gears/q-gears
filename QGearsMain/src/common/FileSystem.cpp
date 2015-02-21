@@ -10,7 +10,7 @@ FileSystem::GetFileSize(const Ogre::String &path)
 {
     FILE* file = fopen(path.c_str(), "rb");
 
-    if (file == NULL)
+    if (file == nullptr)
     {
         LOG_ERROR("Can't open file " + path + ".\n");
         return 0;
@@ -30,7 +30,7 @@ FileSystem::ReadFile(const Ogre::String &path, void* buffer, const unsigned int 
 {
     FILE* file = fopen(path.c_str(), "rb");
 
-    if (file == NULL)
+    if (file == nullptr)
     {
         LOG_ERROR("Can't open file " + path + ".\n");
         return false;
@@ -55,7 +55,7 @@ FileSystem::WriteFile(const Ogre::String &path, const void* buffer, const unsign
 {
     FILE* file = fopen(path.c_str(), "ab");
 
-    if (file == NULL)
+    if (file == nullptr)
     {
         return false;
     }

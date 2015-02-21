@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 #include "data/QGearsLZSFLevelFileManager.h"
 
-template<> QGears::LZSFLevelFileManager *Ogre::Singleton<QGears::LZSFLevelFileManager>::msSingleton = NULL;
+template<> QGears::LZSFLevelFileManager *Ogre::Singleton<QGears::LZSFLevelFileManager>::msSingleton = nullptr;
 
 namespace QGears
 {
