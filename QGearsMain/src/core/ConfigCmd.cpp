@@ -1,7 +1,6 @@
 #include "core/ConfigCmd.h"
 
 
-
 ConfigCmd::ConfigCmd(const Ogre::String& name, const Ogre::String& description, const Ogre::String& params_description, ConfigCmdHandler handler, ConfigCmdCompletion completion):
     m_Name(name),
     m_Description(description),
@@ -12,13 +11,11 @@ ConfigCmd::ConfigCmd(const Ogre::String& name, const Ogre::String& description, 
 }
 
 
-
 const Ogre::String&
 ConfigCmd::GetName() const
 {
     return m_Name;
 }
-
 
 
 const Ogre::String&
@@ -28,7 +25,6 @@ ConfigCmd::GetDescription() const
 }
 
 
-
 const Ogre::String&
 ConfigCmd::GetParamsDescription() const
 {
@@ -36,13 +32,11 @@ ConfigCmd::GetParamsDescription() const
 }
 
 
-
 ConfigCmdHandler
 ConfigCmd::GetHandler() const
 {
     return m_Handler;
 }
-
 
 
 ConfigCmdCompletion

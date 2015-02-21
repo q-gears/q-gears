@@ -27,6 +27,7 @@
 #include "common/QGearsStringUtil.h"
 #include "common/FF7NameLookup.h"
 #include "data/QGearsTexCodec.h"
+#include "decompiler/sudm.h"
 
 FF7DataInstaller::FF7DataInstaller()
 #ifdef _DEBUG
@@ -131,6 +132,106 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
     */
 }
 
+class FF7FieldScriptFormatter : public SUDM::IScriptFormatter
+{
+public:
+    virtual bool ExcludeFunction(const std::string& ) override
+    {
+        // Include everything for now
+        return false;
+    }
+
+
+    virtual std::string RenameIdentifer(const std::string& name) override
+    {
+        // Don't rename anything for now
+        return name;
+    }
+};
+
+static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::string& outDir)
+{
+    // Save out the tiles as a PNG image
+    
+    const QGears::BackgroundFilePtr& bg = field->getBackground();
+
+    try
+    {
+        // Get the raw script bytes
+        const std::vector<u8> rawFieldData = field->getRawScript();
+
+        // Decompile to LUA
+        FF7FieldScriptFormatter formatter;
+        std::string luaScript = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter);
+    }
+    catch (const ::InternalDecompilerError& ex)
+    {
+        std::cerr << "InternalDecompilerError: " << ex.what() << std::endl;
+    }
+
+    /*
+    const QGears::PaletteFilePtr& pal = field->getPalette();
+    std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
+    bgImage->save(outDir + "/" + field->getName() + ".png");
+    */
+    {
+        TiXmlDocument doc;
+        std::unique_ptr<TiXmlElement> element(new TiXmlElement("background2d"));
+
+        auto& layers = bg->getLayers();
+        const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
+
+
+        // TODO: Write out the *_BG.XML data
+        for (auto& layer : layers)
+        {
+          //  if (layer.enabled)
+            {
+               
+                for (QGears::BackgroundFile::SpriteData& sprite : layer.sprites)
+                {
+                    std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("tile"));
+                    xmlElement->SetAttribute("destination", Ogre::StringConverter::toString(sprite.dst.x * 3) + " " + Ogre::StringConverter::toString(sprite.dst.y * 3));
+
+                    // Where to get UVs??
+                    //sprite.dst.x; layer.width
+                    //sprite.dst.y;
+
+                    // sprite.depth;
+
+                    // Where to get blend mode??
+
+                    element->LinkEndChild(xmlElement.release());
+                }
+               
+            }
+        }
+        doc.LinkEndChild(element.release());
+        doc.SaveFile(outDir + "/" + field->getName() + "_bg.xml");
+    }
+
+    {
+        // Save out the walk mesh as XML
+        const QGears::WalkmeshFilePtr& walkmesh = field->getWalkmesh();
+
+        TiXmlDocument doc;
+        std::unique_ptr<TiXmlElement> element(new TiXmlElement("walkmesh"));
+        for (QGears::WalkmeshFile::Triangle& tri : walkmesh->getTriangles())
+        {
+            std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("triangle"));
+            xmlElement->SetAttribute("a", Ogre::StringConverter::toString(tri.a));
+            xmlElement->SetAttribute("b", Ogre::StringConverter::toString(tri.b));
+            xmlElement->SetAttribute("c", Ogre::StringConverter::toString(tri.c));
+            xmlElement->SetAttribute("a_b", std::to_string(tri.access_side[0]));
+            xmlElement->SetAttribute("b_c", std::to_string(tri.access_side[1]));
+            xmlElement->SetAttribute("c_a", std::to_string(tri.access_side[2]));
+            element->LinkEndChild(xmlElement.release());
+        }
+        doc.LinkEndChild(element.release());
+        doc.SaveFile(outDir + "/" + field->getName() + "_wm.xml");
+    }
+}
+
 void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
 {
     // Everything in here is a field
@@ -140,17 +241,12 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
         if (!QGears::StringUtil::endsWith(resourceName, ".tex")
          && !QGears::StringUtil::endsWith(resourceName, ".tut")
          && !QGears::StringUtil::endsWith(resourceName, ".siz")
-         && resourceName != "maplist" /*&& resourceName == "blin67_4"*/)
+         && resourceName != "maplist" && resourceName == "md1_1")
         {
             //try
             {
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
-
-                const QGears::BackgroundFilePtr& bg = field->getBackground();
-                const QGears::PaletteFilePtr& pal = field->getPalette();
-                Ogre::Image* bgImage = bg->createImage(pal);
-                bgImage->save(outDir + "/" + field->getName() + ".png");
-                delete bgImage;
+                FF7PcFieldToQGearsField(field, outDir);
             }
             /*
             catch (const Ogre::Exception& ex)

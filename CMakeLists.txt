@@ -26,6 +26,19 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin_debug)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin_debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin_debug)
 
+# Generate header containing window title/version information
+set(QGEARS_VERSION "Q-Gears v${QGears_VERSION_MAJOR}.${QGears_VERSION_MINOR}.${QGears_VERSION_PATCH} (pre-alpha walk carefully)")
+configure_file(configure_version_file.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/configure_version_file.cmake @ONLY)
+
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/qgears_version.h
+  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/configure_version_file.cmake
+  DEPENDS
+    ${CMAKE_CURRENT_BINARY_DIR}/configure_version_file.cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/QGearsMain/include/qgears_version.h.in
+  COMMENT "Configuring qgears_version.h"
+  VERBATIM)
+add_custom_target(configure_qgears_version ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qgears_version.h)
+
 # Enable Visual Studio solution "folders"
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON) 
 
@@ -172,6 +185,7 @@ message(SEND_ERROR "Boost_LIBRARIES is not set")
 endif()
 
 set(QGears_INCLUDE_DIRS
+    ${QGears_INCLUDE_DIRS}
     ${OIS_INCLUDE_DIRS}
     ${OGRE_INCLUDE_DIRS}
     ${OGRE_Overlay_INCLUDE_DIRS}
@@ -182,6 +196,7 @@ set(QGears_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind/luabind/detail
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/tinyxml
+	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SUDM
 )
 
 
@@ -368,6 +383,7 @@ SET_PROPERTY(TARGET LuaBind PROPERTY FOLDER "3rdparty")
 SET_PROPERTY(TARGET luajit PROPERTY FOLDER "3rdparty")
 SET_PROPERTY(TARGET minilua PROPERTY FOLDER "3rdparty")
 SET_PROPERTY(TARGET TinyXml PROPERTY FOLDER "3rdparty")
+SET_PROPERTY(TARGET Sudm_Lib PROPERTY FOLDER "q-gears")
 
 
 INCLUDE(CPack)

@@ -12,7 +12,7 @@
 #include "data/worldmap/TxzFileSerializer.h"
 #include "data/worldmap/MapFileManager.h"
 
-template<> QGears::WorldMapModule *Ogre::Singleton< QGears::WorldMapModule >::msSingleton = NULL;
+template<> QGears::WorldMapModule *Ogre::Singleton< QGears::WorldMapModule >::msSingleton = nullptr;
 
 BEGIN_QGEARS
 
@@ -321,7 +321,7 @@ static void createReferenceTextureFileInstance(QGears::TxzFileSerializer& s)
     class TestFile : public QGears::TxzFile
     {
     public:
-        TestFile() : QGears::TxzFile( NULL, "", 0, "" ) {}
+        TestFile() : QGears::TxzFile( nullptr, "", 0, "" ) {}
     };
 
     const char* file_name = "/home/paul/qgears/data/cd1/world/wm0.txz";
@@ -342,7 +342,7 @@ static void createReferenceFileInstance(std::function<void(Ogre::DataStreamPtr& 
     class TestFile : public QGears::WorldMapFile
     {
     public:
-        TestFile() : QGears::WorldMapFile( NULL, "", 0, "" ) {}
+        TestFile() : QGears::WorldMapFile( nullptr, "", 0, "" ) {}
     };
 
     const char* file_name = "./data/wm/WM0.MAP";

@@ -1,78 +1,76 @@
-#include "core/ConfigFile.h"
-
 #include "core/ConfigCmdManager.h"
+#include "core/ConfigFile.h"
 #include "core/Logger.h"
 #include "core/Utilites.h"
 
 
-
 void
-ConfigFile::Execute( const Ogre::String& name )
+ConfigFile::Execute(const Ogre::String& name)
 {
     // Open the configuration file
     std::ifstream fp;
     // Always open in binary mode
-    fp.open( name.c_str(), std::ios::in | std::ios::binary );
-    if( !fp )
+    fp.open(name.c_str(), std::ios::in | std::ios::binary);
+    if(!fp)
     {
-        LOG_WARNING( "Config file\"" + name + "\" not found!" );
+        LOG_WARNING("Config file\"" + name + "\" not found!");
     }
     else
     {
         Ogre::String command = "";
 
-        while( true )
+        while(true)
         {
             char c = fp.get(); // get character from file
-            if( fp.good() == false )
+            if(fp.good() == false)
             {
                 break;
             }
 
-            if( c == '\r' || ( c == '\n' && command.size() == 0 ) )
+            if(c == '\r' || (c == '\n' && command.size() == 0))
             {
             }
-            else if( c == '\n' && command.size() > 0 )
+            else if(c == '\n' && command.size() > 0)
             {
-                Ogre::StringVector params = StringTokenise( command );
+                Ogre::StringVector params = StringTokenise(command);
 
-                if( params.size() > 0 )
+                if(params.size() > 0)
                 {
                     // handle command
-                    ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find( params[ 0 ] );
-                    if( cmd != NULL )
+                    ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find(params[0]);
+                    if(cmd != nullptr)
                     {
-                        cmd->GetHandler()( params );
+                        cmd->GetHandler()(params);
                     }
                     else
                     {
-                        LOG_ERROR( "Can't find command \"" + params[ 0 ] + "\"." );
+                        LOG_ERROR("Can't find command \"" + params[0] + "\".");
                     }
                 }
 
                 command = "";
             }
-            else if( c >= 0 ) // use only ascii characters
+            else if(c >= 0) // use only ascii characters
             {
                 command += c;
             }
         }
 
-        if( command.size() > 0 )
+        if(command.size() > 0)
         {
-            Ogre::StringVector params = StringTokenise( command );
+            Ogre::StringVector params = StringTokenise(command);
 
-            if( params.size() > 0 )
+            if(params.size() > 0)
             {
-                ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find( params[ 0 ] );
+                ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find(params[0]);
 
-                if( cmd != NULL )
+                if(cmd != nullptr)
                 {
-                    cmd->GetHandler()( params );
+                    cmd->GetHandler()(params);
                 }
                 else
                 {
-                    LOG_ERROR( "Can't find command \"" + params[ 0 ] + "\"." );
+                    LOG_ERROR("Can't find command \"" + params[0] + "\".");
                 }
             }
         }

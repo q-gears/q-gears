@@ -61,20 +61,21 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
-        virtual const BackgroundFilePtr&    getBackground  ( void ) const;
-        virtual const CameraMatrixFilePtr&  getCameraMatrix( void ) const;
-        virtual const ModelListFilePtr&     getModelList   ( void ) const;
-        virtual const PaletteFilePtr&       getPalette     ( void ) const;
-        virtual const WalkmeshFilePtr&      getWalkmesh    ( void ) const;
+        std::vector<u8> getRawScript();
+        const BackgroundFilePtr&    getBackground  ( void ) const;
+        const CameraMatrixFilePtr&  getCameraMatrix( void ) const;
+        const ModelListFilePtr&     getModelList   ( void ) const;
+        const PaletteFilePtr&       getPalette     ( void ) const;
+        const WalkmeshFilePtr&      getWalkmesh    ( void ) const;
 
-        virtual void setBackground  ( const BackgroundFilePtr      &background    );
-        virtual void setCameraMatrix( const CameraMatrixFilePtr    &camera_matrix );
-        virtual void setModelList   ( const ModelListFilePtr       &model_list    );
-        virtual void setPalette     ( const PaletteFilePtr         &palette       );
-        virtual void setWalkmesh    ( const WalkmeshFilePtr        &walkmesh      );
+        void setBackground  ( const BackgroundFilePtr      &background    );
+        void setCameraMatrix( const CameraMatrixFilePtr    &camera_matrix );
+        void setModelList   ( const ModelListFilePtr       &model_list    );
+        void setPalette     ( const PaletteFilePtr         &palette       );
+        void setWalkmesh    ( const WalkmeshFilePtr        &walkmesh      );
 
-        virtual String getBackground2DName( void ) const;
-        virtual String getBackgroundTextureName( void ) const;
+        String getBackground2DName( void ) const;
+        String getBackgroundTextureName( void ) const;
 
     protected:
         typedef std::vector<HRCFilePtr>         HRCList;
@@ -84,11 +85,11 @@ namespace QGears
         static const String SUFFIX_BACKGROUND_TEXTURE;
         static const String SUFFIX_BACKGROUND_2D;
 
-        virtual void loadImpl( void );
-        virtual void loadModels( void );
-        virtual void loadAnimations( const HRCFilePtr &model, const AnimationList &animations );
-        virtual void unloadImpl( void );
-        virtual size_t calculateSize( void ) const;
+        virtual void loadImpl( void ) override;
+        void loadModels( void );
+        void loadAnimations( const HRCFilePtr &model, const AnimationList &animations );
+        virtual void unloadImpl( void ) override;
+        virtual size_t calculateSize( void ) const override;
 
         virtual const String& getResourceType( void ) const;
 

@@ -3,12 +3,12 @@
 
 //------------------------------------------------------------------------------
 Particle::Particle():
-    m_ParentEmitter(NULL),
+    m_ParentEmitter(nullptr),
     m_ParticleType(PT_VISUAL),
     m_Enabled(true),
     m_Emittable(false),
 
-    additional_data(NULL),
+    additional_data(nullptr),
     position(Ogre::Vector3::ZERO),
     direction(Ogre::Vector3::ZERO),
     time_to_live(10),

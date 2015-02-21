@@ -20,7 +20,7 @@ ParticleRendererTranslator::translate(Ogre::ScriptCompiler *compiler, const Ogre
     ParticleTechnique* tech = Ogre::any_cast<ParticleTechnique*>(obj->parent->context);
 
     ParticleRenderer* rend = tech->CreateRenderer(obj->name);
-    if (rend == NULL)
+    if (rend == nullptr)
     {
         compiler->addError(Ogre::ScriptCompiler::CE_OBJECTALLOCATIONERROR, obj->file, obj->line);
         return;

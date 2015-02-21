@@ -340,6 +340,7 @@ add_library(q-gears-data STATIC
  ${HEADER_FILES_DATA}
  ${SOURCE_FILES_DATA}
  )
+add_dependencies(q-gears-data configure_qgears_version)
 
 SET_PROPERTY(TARGET q-gears-data PROPERTY FOLDER "q-gears")
 

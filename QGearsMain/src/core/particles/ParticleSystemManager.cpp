@@ -8,7 +8,7 @@
 #include "core/particles/renderer/ParticleEntityRendererFactory.h"
 
 //------------------------------------------------------------------------------
-template<> ParticleSystemManager* Ogre::Singleton<ParticleSystemManager>::msSingleton = NULL;
+template<> ParticleSystemManager* Ogre::Singleton<ParticleSystemManager>::msSingleton = nullptr;
 
 //------------------------------------------------------------------------------
 ParticleSystemManager::ParticleSystemManager()
@@ -135,9 +135,9 @@ ParticleSystemManager::CreateTechnique()
 ParticleTechnique*
 ParticleSystemManager::CloneTechnique(ParticleTechnique* technique)
 {
-    if (technique == NULL)
+    if (technique == nullptr)
     {
-        return NULL;
+        return nullptr;
     }
 
     ParticleTechnique* cloned_technique = CreateTechnique();
@@ -172,7 +172,7 @@ ParticleSystemManager::CloneEmitter(ParticleEmitter* emitter)
 {
     if (!emitter)
     {
-        return NULL;
+        return nullptr;
     }
 
     ParticleEmitter* cloned_emitter = CreateEmitter(emitter->GetEmitterType());
@@ -212,9 +212,9 @@ ParticleSystemManager::CreateRenderer(const Ogre::String& renderer_type)
 ParticleRenderer*
 ParticleSystemManager::CloneRenderer(ParticleRenderer* renderer)
 {
-    if (renderer == NULL)
+    if (renderer == nullptr)
     {
-        return NULL;
+        return nullptr;
     }
 
     ParticleRenderer* cloned_renderer = CreateRenderer(renderer->GetRendererType());

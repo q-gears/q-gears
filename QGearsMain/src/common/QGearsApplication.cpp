@@ -36,6 +36,7 @@ GNU General Public License for more details.
 #include "data/FF7ModelListFileManager.h"
 #include "data/QGearsLGPArchiveFactory.h"
 #include "common/make_unique.h"
+#include "qgears_version.h"
 
 template<> QGears::Application *Ogre::Singleton<QGears::Application>::msSingleton = nullptr;
 

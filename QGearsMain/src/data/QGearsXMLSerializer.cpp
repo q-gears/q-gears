@@ -61,7 +61,7 @@ namespace QGears
     XMLSerializer::readAttribute( TiXmlNode &node, const String &attribute, bool &pDest, const bool &pDefault)
     {
         const String *value( readAttribute( node, attribute ) );
-        if( value == NULL )
+        if( value == nullptr )
         {
             pDest = pDefault;
             return false;
@@ -75,7 +75,7 @@ namespace QGears
     XMLSerializer::readAttribute( TiXmlNode &node, const String &attribute, int &pDest, const int &pDefault)
     {
         const String *value( readAttribute( node, attribute ) );
-        if( value == NULL )
+        if( value == nullptr )
         {
             pDest = pDefault;
             return false;
@@ -90,7 +90,7 @@ namespace QGears
                                 , String &pDest, const String &pDefault )
     {
         const String *value( readAttribute( node, attribute ) );
-        if( value == NULL )
+        if( value == nullptr )
         {
             pDest = pDefault;
             return false;
@@ -104,7 +104,7 @@ namespace QGears
     XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Real &pDest, const Ogre::Real &pDefault)
     {
         const String *value( readAttribute( node, attribute ) );
-        if( value == NULL )
+        if( value == nullptr )
         {
             pDest = pDefault;
             return false;
@@ -118,7 +118,7 @@ namespace QGears
     XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Vector2 &pDest, const Ogre::Vector2 &pDefault)
     {
         const String *value( readAttribute( node, attribute ) );
-        if( value == NULL )
+        if( value == nullptr )
         {
             pDest = pDefault;
             return false;
@@ -132,7 +132,7 @@ namespace QGears
     XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Vector3 &pDest, const Ogre::Vector3 &pDefault)
     {
         const String *value( readAttribute( node, attribute ) );
-        if( value == NULL )
+        if( value == nullptr )
         {
             pDest = pDefault;
             return false;
@@ -146,7 +146,7 @@ namespace QGears
     XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Vector4 &pDest, const Ogre::Vector4 &pDefault)
     {
         const String *value( readAttribute( node, attribute ) );
-        if( value == NULL )
+        if( value == nullptr )
         {
             pDest = pDefault;
             return false;
@@ -160,7 +160,7 @@ namespace QGears
     XMLSerializer::readAttribute(TiXmlNode &node, const String &attribute, Ogre::Quaternion &pDest, const Ogre::Quaternion &pDefault)
     {
         const String *value( readAttribute( node, attribute ) );
-        if( value == NULL )
+        if( value == nullptr )
         {
             pDest = pDefault;
             return false;
@@ -174,7 +174,7 @@ namespace QGears
     XMLSerializer::findChildNode( TiXmlNode &node, const String &tag )
     {
         TiXmlNode* child( node.FirstChild() );
-        while( child != NULL && child->ValueStr() != tag )
+        while( child != nullptr && child->ValueStr() != tag )
         {
             child = child->NextSibling();
         }

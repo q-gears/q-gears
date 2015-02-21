@@ -31,7 +31,7 @@ ParticleSystem::CopyAttributesTo( ParticleSystem* ps )
     ps->DestroyAllTechniques();
 
     // Copy techniques
-    ParticleTechnique* cloned_technique = NULL;
+    ParticleTechnique* cloned_technique = nullptr;
     for( unsigned int i = 0; i < m_Techniques.size(); ++i )
     {
         cloned_technique = ParticleSystemManager::getSingletonPtr()->CloneTechnique( m_Techniques[ i ] );

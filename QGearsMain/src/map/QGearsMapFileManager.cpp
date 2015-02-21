@@ -16,7 +16,7 @@ GNU General Public License for more details.
 */
 #include "map/QGearsMapFileManager.h"
 
-template<> QGears::MapFileManager *Ogre::Singleton<QGears::MapFileManager>::msSingleton = NULL;
+template<> QGears::MapFileManager *Ogre::Singleton<QGears::MapFileManager>::msSingleton = nullptr;
 
 namespace QGears
 {

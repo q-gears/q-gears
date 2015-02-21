@@ -76,6 +76,33 @@ private:
     TiXmlNode*                          m_TextNode;
 };
 
+inline
+void WriteTriangleVertex(float *&writeIterator, const Ogre::Vector3 &coord,
+                const Ogre::ColourValue &colour, const float u, const float v)
+{
+    *writeIterator++ = coord.x;
+    *writeIterator++ = coord.y;
+    *writeIterator++ = coord.z;
+    *writeIterator++ = colour.r;
+    *writeIterator++ = colour.g;
+    *writeIterator++ = colour.b;
+    *writeIterator++ = colour.a;
+    *writeIterator++ = u;
+    *writeIterator++ = v;
+}
 
+inline void
+WriteGlyph(float *&writeIterator, const Ogre::Vector3 coords[],
+           const Ogre::ColourValue &colour, const Ogre::FloatRect &texture)
+{
+    // draw two triangles with a colour and texture.
+    WriteTriangleVertex(writeIterator, coords[0], colour, texture.left, texture.top);
+    WriteTriangleVertex(writeIterator, coords[1], colour, texture.right, texture.top);
+    WriteTriangleVertex(writeIterator, coords[2], colour, texture.right, texture.bottom);
+    // Triangle two
+    WriteTriangleVertex(writeIterator, coords[0], colour, texture.left, texture.top);
+    WriteTriangleVertex(writeIterator, coords[2], colour, texture.right, texture.bottom);
+    WriteTriangleVertex(writeIterator, coords[3], colour, texture.left, texture.bottom);
+}
 
 #endif // UI_TEXT_AREA_H
