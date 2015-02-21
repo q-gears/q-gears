@@ -10,7 +10,7 @@
 //-------------------------------------------------------------------------
 File::File(const Ogre::String& file):
   m_FileName(file),
-  m_Buffer(NULL),
+  m_Buffer(nullptr),
   m_BufferSize(0)
 {
     LOG_TRIVIAL("Loading file: " + m_FileName + "\n");
@@ -25,11 +25,11 @@ File::File(const Ogre::String& file):
 }
 
 //-------------------------------------------------------------------------
-File::File( const File* pFile, u32 offset, u32 length):
-  m_Buffer(NULL),
+File::File(const File* pFile, u32 offset, u32 length):
+  m_Buffer(nullptr),
   m_BufferSize(length)
 {
-    assert(pFile != NULL);
+    assert(pFile != nullptr);
 
     m_FileName = pFile->GetFileName();
 
@@ -40,19 +40,19 @@ File::File( const File* pFile, u32 offset, u32 length):
 //-------------------------------------------------------------------------
 File::File(const u8* pBuffer, u32 offset, u32 length):
   m_FileName("BUFFER"),
-  m_Buffer(NULL),
+  m_Buffer(nullptr),
   m_BufferSize(length)
 {
-    assert(pBuffer != NULL);
+    assert(pBuffer != nullptr);
 
     m_Buffer = (u8*)malloc(sizeof(u8) * m_BufferSize);
     memcpy(m_Buffer, pBuffer + offset, m_BufferSize);
 }
 
 //-------------------------------------------------------------------------
-File::File( const File* pFile )
+File::File(const File* pFile)
 {
-    assert(pFile != NULL);
+    assert(pFile != nullptr);
 
     m_BufferSize = pFile->GetFileSize();
     m_FileName   = pFile->GetFileName();

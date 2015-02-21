@@ -14,7 +14,7 @@ VisualParticle::InitForExpiration()
 {
     Particle::InitForExpiration();
 
-    if (additional_data != NULL)
+    if (additional_data != nullptr)
     {
         additional_data->SetVisible(false);
     }

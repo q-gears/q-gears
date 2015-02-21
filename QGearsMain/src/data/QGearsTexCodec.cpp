@@ -90,13 +90,13 @@ namespace QGears
     }
 
     //---------------------------------------------------------------------
-    TexCodec *TexCodec::ms_tex_codex( NULL );
+    TexCodec *TexCodec::ms_tex_codex( nullptr );
 
     //---------------------------------------------------------------------
     void TexCodec::install()
     {
         //install called - create stuff here
-        if( ms_tex_codex == NULL )
+        if( ms_tex_codex == nullptr )
         {
             ms_tex_codex = OGRE_NEW TexCodec();
         }
@@ -124,10 +124,10 @@ namespace QGears
     void TexCodec::uninstall()
     {
         //uninstall called - delete stuff here
-        if( ms_tex_codex != NULL )
+        if( ms_tex_codex != nullptr )
         {
             OGRE_DELETE ms_tex_codex;
-            ms_tex_codex = NULL;
+            ms_tex_codex = nullptr;
         }
     }
 }

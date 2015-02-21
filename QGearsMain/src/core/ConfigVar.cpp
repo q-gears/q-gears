@@ -1,13 +1,10 @@
-#include "core/ConfigVar.h"
-
 #include <OgreStringConverter.h>
 
 #include "core/Assert.h"
+#include "core/ConfigVar.h"
 
 
-
-ConfigVar* ConfigVar::m_StaticConfigVarList = NULL;
-
+ConfigVar* ConfigVar::m_StaticConfigVarList = nullptr;
 
 
 ConfigVar::ConfigVar(const Ogre::String& name, const Ogre::String& description, const Ogre::String& default_value):
@@ -35,13 +32,11 @@ ConfigVar::ConfigVar(const Ogre::String& name, const Ogre::String& description, 
 }
 
 
-
 int
 ConfigVar::GetI() const
 {
     return m_ValueI;
 }
-
 
 
 float
@@ -51,13 +46,11 @@ ConfigVar::GetF() const
 }
 
 
-
 bool
 ConfigVar::GetB() const
 {
     return m_ValueB;
 }
-
 
 
 Ogre::String
@@ -76,14 +69,12 @@ ConfigVar::SetI(int value)
 }
 
 
-
 void
 ConfigVar::SetF(float value)
 {
     m_ValueS = Ogre::StringConverter::toString(value);
     UpdateVariables();
 }
-
 
 
 void
@@ -94,14 +85,12 @@ ConfigVar::SetB(bool value)
 }
 
 
-
 void
 ConfigVar::SetS(const Ogre::String& value)
 {
     m_ValueS = value;
     UpdateVariables();
 }
-
 
 
 const Ogre::String&
@@ -111,7 +100,6 @@ ConfigVar::GetName() const
 }
 
 
-
 const Ogre::String&
 ConfigVar::GetDescription() const
 {
@@ -119,13 +107,11 @@ ConfigVar::GetDescription() const
 }
 
 
-
 const Ogre::String&
 ConfigVar::GetDefaultValue() const
 {
     return m_DefaultValue;
 }
-
 
 
 void

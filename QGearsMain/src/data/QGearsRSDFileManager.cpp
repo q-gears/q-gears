@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 #include "data/QGearsRSDFileManager.h"
 
-template<> QGears::RSDFileManager *Ogre::Singleton<QGears::RSDFileManager>::msSingleton = NULL;
+template<> QGears::RSDFileManager *Ogre::Singleton<QGears::RSDFileManager>::msSingleton = nullptr;
 
 namespace QGears
 {

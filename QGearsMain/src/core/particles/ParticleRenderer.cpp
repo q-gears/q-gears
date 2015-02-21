@@ -2,7 +2,7 @@
 
 //------------------------------------------------------------------------------
 ParticleRenderer::ParticleRenderer():
-    m_ParentTechnique(NULL),
+    m_ParentTechnique(nullptr),
     m_RendererInitialised(false)
 {
 }

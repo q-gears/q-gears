@@ -35,7 +35,7 @@ namespace QGears
     //--------------------------------------------------------------------------
     void MapFileXMLSerializer::readHeader( TiXmlNode *node )
     {
-        if( node == NULL || node->ValueStr() != "map" )
+        if( node == nullptr || node->ValueStr() != "map" )
         {
             OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
                 ,"not a valid map file, no <map> in root"
@@ -66,7 +66,7 @@ namespace QGears
     MapFileXMLSerializer::readScript( TiXmlNode &node, MapFile *pDest )
     {
         TiXmlNode *child( findChildNode( node, "script" ) );
-        if( child != NULL )
+        if( child != nullptr )
         {
             String file_name;
             readAttribute( *child, "file_name", file_name );
@@ -79,7 +79,7 @@ namespace QGears
     MapFileXMLSerializer::readBackground2D( TiXmlNode &node, MapFile *pDest )
     {
         TiXmlNode *child( findChildNode( node, "background2d" ) );
-        if( child != NULL )
+        if( child != nullptr )
         {
             String file_name;
             readAttribute( *child, "file_name", file_name );
@@ -92,7 +92,7 @@ namespace QGears
     MapFileXMLSerializer::readWalkmesh( TiXmlNode &node, MapFile *pDest )
     {
         TiXmlNode *child( findChildNode( node, "walkmesh" ) );
-        if( child != NULL )
+        if( child != nullptr )
         {
             String file_name;
             readAttribute( *child, "file_name", file_name );
@@ -105,7 +105,7 @@ namespace QGears
     MapFileXMLSerializer::readForwardDirection( TiXmlNode &node, MapFile *pDest )
     {
         TiXmlNode *child( findChildNode( node, "movement_rotation" ) );
-        if( child != NULL )
+        if( child != nullptr )
         {
             Ogre::Real degree;
             readAttribute( *child, "degree", degree );
@@ -155,7 +155,7 @@ namespace QGears
     {
         pDest.clear();
         TiXmlNode* child( node.FirstChild() );
-        while( child != NULL )
+        while( child != nullptr )
         {
             if( child->Type() == TiXmlNode::TINYXML_ELEMENT && child->ValueStr() == tag )
             {
