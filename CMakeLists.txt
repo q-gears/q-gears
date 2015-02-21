@@ -182,6 +182,7 @@ set(QGears_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/luabind/luabind/detail
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/tinyxml
+	${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SUDM
 )
 
 
@@ -368,6 +369,7 @@ SET_PROPERTY(TARGET LuaBind PROPERTY FOLDER "3rdparty")
 SET_PROPERTY(TARGET luajit PROPERTY FOLDER "3rdparty")
 SET_PROPERTY(TARGET minilua PROPERTY FOLDER "3rdparty")
 SET_PROPERTY(TARGET TinyXml PROPERTY FOLDER "3rdparty")
+SET_PROPERTY(TARGET Sudm_Lib PROPERTY FOLDER "q-gears")
 
 
 INCLUDE(CPack)

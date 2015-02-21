@@ -13,3 +13,6 @@
 	path = dependencies/luajit
 	url = https://github.com/q-gears/luajit.git
 	branch = master
+[submodule "dependencies/SUDM"]
+	path = dependencies/SUDM
+	url = https://github.com/paulsapps/SUDM.git

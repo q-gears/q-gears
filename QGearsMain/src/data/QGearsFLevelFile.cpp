@@ -179,6 +179,12 @@ namespace QGears
         return 0;
     }
 
+    std::vector<u8> FLevelFile::getRawScript()
+    {
+        // TODO
+        return std::vector<u8>();
+    }
+
     //--------------------------------------------------------------------------
     const BackgroundFilePtr&
     FLevelFile::getBackground( void ) const
