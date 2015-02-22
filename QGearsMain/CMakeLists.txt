@@ -334,7 +334,11 @@ add_library(QGearsMain STATIC
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+
+# Coverage uses more memory, combined with PCH can cause OOM/ICE
+if ($ENV{COVERAGE}!=1)
 cotire(QGearsMain)
+endif()
 SET_PROPERTY(TARGET QGearsMain PROPERTY FOLDER "q-gears")
 
 add_library(q-gears-data STATIC
@@ -342,7 +346,10 @@ add_library(q-gears-data STATIC
  ${SOURCE_FILES_DATA}
  )
 add_dependencies(q-gears-data configure_qgears_version)
+# Coverage uses more memory, combined with PCH can cause OOM/ICE
+if ($ENV{COVERAGE}!=1)
 cotire(q-gears-data)
+endif()
 SET_PROPERTY(TARGET q-gears-data PROPERTY FOLDER "q-gears")
 
 
