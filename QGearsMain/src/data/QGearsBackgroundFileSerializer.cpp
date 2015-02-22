@@ -37,7 +37,7 @@ namespace QGears
     const String        BackgroundFileSerializer::SECTION_NAME_BACK   ("BACK");
     const String        BackgroundFileSerializer::SECTION_NAME_TEXTURE("TEXTURE");
     const String        BackgroundFileSerializer::TAG_FILE_END        ("END");
-    const Ogre::Real    BackgroundFileSerializer::unknown_24_SCALE( 10000000.0 );
+    const Ogre::Real    BackgroundFileSerializer::src_big_SCALE( 10000000.0 );
 
     //---------------------------------------------------------------------
     BackgroundFileSerializer::BackgroundFileSerializer() :
@@ -160,28 +160,34 @@ namespace QGears
         readObject( stream, pDest.dst );
         readShorts( stream, pDest.unknown_04, 2 );
         readObject( stream, pDest.src );
-        readShorts( stream, pDest.unknown_0C, 4 );
+        readObject( stream, pDest.src2 );
+        readShort( stream, pDest.width );
+        readShort( stream, pDest.height );
 
         readShort( stream, pDest.palette_page );
         readShort( stream, pDest.depth );
 
-        stream->read( pDest.flags_18, sizeof( pDest.flags_18 ) );
-        uint8 flags[2];
-        stream->read( flags, sizeof( flags ) );
-        pDest.flags_20[0] = flags[0] > 0;
-        pDest.flags_20[1] = flags[1] > 0;
+        uint8 animation[2];
+        stream->read( animation, sizeof( animation ) );
+        pDest.animation_id = animation[0];
+        pDest.animation_frame = animation[1];
+        uint8 has_blending[2];
+        stream->read( has_blending, sizeof( has_blending ) );
+        pDest.has_blending[0] = has_blending[0] > 0;
+        pDest.has_blending[1] = has_blending[1] > 0;
 
-        readShort( stream, pDest.unknown_1C );
+        readShort( stream, pDest.blending );
         readShort( stream, pDest.data_page );
         readShort( stream, pDest.data_page2 );
         // when data_page2 != 0, it must be used instead of data_page
         if ( pDest.data_page2 )
         {
+            pDest.src = pDest.src2;
             pDest.data_page = pDest.data_page2;
         }
-        readShort( stream, pDest.colourDepth );
-        readObject( stream, pDest.unknown_24 );
-        pDest.unknown_24 /= unknown_24_SCALE;
+        readShort( stream, pDest.colour_depth );
+        readObject( stream, pDest.src_big );
+        pDest.src_big /= src_big_SCALE;
         stream->skip( 2 * 2 ); // 2 * uint16 unused
     }
 
