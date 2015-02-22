@@ -95,7 +95,7 @@ namespace QGears
         static const String     SECTION_NAME_BACK;
         static const String     SECTION_NAME_TEXTURE;
         static const String     TAG_FILE_END;
-        static const Ogre::Real unknown_24_SCALE;
+        static const Ogre::Real src_big_SCALE;
 
     private:
         Header  m_header;

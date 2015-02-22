@@ -122,6 +122,12 @@ private:
     unsigned int                          m_AddMaxVertexCount;
     Ogre::MaterialPtr                     m_AddMaterial;
 
+    // subtract blended
+    Ogre::RenderOperation                 m_SubtractRenderOp;
+    Ogre::HardwareVertexBufferSharedPtr   m_SubtractVertexBuffer;
+    unsigned int                          m_SubtractMaxVertexCount;
+    Ogre::MaterialPtr                     m_SubtractMaterial;
+
     Entity*                               m_ScrollEntity;
     Ogre::Vector2                         m_ScrollPositionStart;
     Ogre::Vector2                         m_ScrollPositionEnd;

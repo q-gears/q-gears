@@ -3338,6 +3338,14 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
     {
         blending_str = "add";
     }
+    else if( tile.blending == 2 )
+    {
+        blending_str = "subtract";
+    }
+    // else if( tile.blending == 3 )
+    // {
+    //     blending_str = "add"; // source + 0.25 * destination
+    // }
     else
     {
         LOGGER->Log( "Tile blending with type \"" + Ogre::StringConverter::toString( tile.blending ) + "\" not supported." );
