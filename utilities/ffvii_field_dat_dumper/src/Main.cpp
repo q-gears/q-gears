@@ -168,9 +168,17 @@ main( int argc, char *argv[] )
 
     fill_names();
 
+    /*
+    // can use this for debugging if not using export.cfg
     Field f = {};
-    f.name = "C:\\Users\\paul\\Downloads\\data\\data\\en\\nmkin_1";
+    f.tex_width = 1024;
+    f.tex_height = 512;
+    // Note: Must create path CWD\export_en\maps\ffvii_field
+    f.name = "md1_2"; // DO NOT put a full path here, else it will attempt to save with full output path and fail
     fields.push_back(f);
+    */
+
+
 /*
     for (int f = 0; f < fields.size(); ++f)
     {

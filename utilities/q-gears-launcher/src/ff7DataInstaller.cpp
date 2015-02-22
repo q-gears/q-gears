@@ -163,17 +163,18 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         // Decompile to LUA
         FF7FieldScriptFormatter formatter;
         std::string luaScript = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter);
+        std::cout << luaScript << std::endl;
     }
     catch (const ::InternalDecompilerError& ex)
     {
         std::cerr << "InternalDecompilerError: " << ex.what() << std::endl;
     }
 
-    /*
+    
     const QGears::PaletteFilePtr& pal = field->getPalette();
     std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
     bgImage->save(outDir + "/" + field->getName() + ".png");
-    */
+
     {
         TiXmlDocument doc;
         std::unique_ptr<TiXmlElement> element(new TiXmlElement("background2d"));
@@ -241,7 +242,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
         if (!QGears::StringUtil::endsWith(resourceName, ".tex")
          && !QGears::StringUtil::endsWith(resourceName, ".tut")
          && !QGears::StringUtil::endsWith(resourceName, ".siz")
-         && resourceName != "maplist" && resourceName == "md1_1")
+         && resourceName != "maplist" && resourceName == "md1_2")
         {
             //try
             {
