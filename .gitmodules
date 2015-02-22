@@ -16,3 +16,6 @@
 [submodule "dependencies/SUDM"]
 	path = dependencies/SUDM
 	url = https://github.com/paulsapps/SUDM.git
+[submodule "dependencies/cotire"]
+	path = dependencies/cotire
+	url = https://github.com/sakra/cotire
