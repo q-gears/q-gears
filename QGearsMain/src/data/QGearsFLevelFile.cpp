@@ -179,10 +179,9 @@ namespace QGears
         return 0;
     }
 
-    std::vector<u8> FLevelFile::getRawScript()
+    const std::vector<u8>& FLevelFile::getRawScript() const
     {
-        // TODO
-        return std::vector<u8>();
+        return m_rawScript;
     }
 
     //--------------------------------------------------------------------------
@@ -190,6 +189,11 @@ namespace QGears
     FLevelFile::getBackground( void ) const
     {
         return m_background;
+    }
+
+    void FLevelFile::setRawScript(const std::vector<u8>& scriptData)
+    {
+        m_rawScript = scriptData;
     }
 
     //--------------------------------------------------------------------------

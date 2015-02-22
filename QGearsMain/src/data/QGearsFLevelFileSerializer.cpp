@@ -177,8 +177,16 @@ namespace QGears
                                       ,FLevelFile *pDest
                                       ,const size_t section_index )
     {
-        switch( section_index )
+        switch (section_index)
         {
+            case SECTION_SCRIPT:
+                {
+                    std::vector<u8> buffer(stream->size());
+                    stream->read(buffer.data(), buffer.size());
+                    pDest->setRawScript(buffer);
+                }
+                break;
+
             case SECTION_CAMERA_MATRIX:
                 readCameraMatrix( stream, pDest );
                 break;
