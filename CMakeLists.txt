@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 2.6)
-
 project(QGears)
 set (CMAKE_PACKAGE_ICON q-gears.png)
 #set( CMAKE_VERBOSE_MAKEFILE on )
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/dependencies/cotire/CMake")
+include(cotire)
 
 # The version number.
 set(QGears_VERSION_MAJOR 0)
@@ -201,8 +203,8 @@ set(QGears_INCLUDE_DIRS
 
 
 if (MSVC)
-# Build cpp files on all cores
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+# Build cpp files on all cores, up virtual mem for PCH's as cotire really makes the compiler scream
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /Zm193")
 else()
 # Enable C++11, you may need to use -std=c++0x if using an older gcc compiler
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")

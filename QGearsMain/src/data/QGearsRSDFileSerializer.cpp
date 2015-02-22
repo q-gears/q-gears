@@ -31,7 +31,6 @@ THE SOFTWARE.
 
 namespace QGears
 {
-    typedef Ogre::StringUtil        StringUtil;
     typedef Ogre::StringConverter   StringConverter;
 
     //---------------------------------------------------------------------
@@ -58,7 +57,7 @@ namespace QGears
     RSDFileSerializer::readFileHeader( Ogre::DataStreamPtr &stream )
     {
         String line( getLine( stream ) );
-        if( !StringUtil::startsWith( line, TAG_HEADER, false ) )
+        if( !Ogre::StringUtil::startsWith( line, TAG_HEADER, false ) )
         {
             Ogre::LogManager::getSingleton().stream() << line;
             OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
@@ -73,7 +72,7 @@ namespace QGears
     {
         if( line.empty() ) return;
 
-        Ogre::StringVector parts( StringUtil::split( line, PARSE_DELIMITER ));
+        Ogre::StringVector parts( Ogre::StringUtil::split( line, PARSE_DELIMITER ));
         if( parts.size() < 2 )
         {
             Ogre::LogManager::getSingleton().stream() << "line is: '" << line << "'";
