@@ -334,6 +334,7 @@ add_library(QGearsMain STATIC
   ${HEADER_FILES}
   ${SOURCE_FILES}
 )
+cotire(QGearsMain)
 SET_PROPERTY(TARGET QGearsMain PROPERTY FOLDER "q-gears")
 
 add_library(q-gears-data STATIC
@@ -341,7 +342,7 @@ add_library(q-gears-data STATIC
  ${SOURCE_FILES_DATA}
  )
 add_dependencies(q-gears-data configure_qgears_version)
-
+cotire(q-gears-data)
 SET_PROPERTY(TARGET q-gears-data PROPERTY FOLDER "q-gears")
 
 
