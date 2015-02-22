@@ -12,6 +12,8 @@ namespace QGears
     {
         B_ALPHA
        ,B_ADD
+       ,B_SUBTRACT
+       ,B_MULTIPLY
     };
 
     struct KeyFrame
