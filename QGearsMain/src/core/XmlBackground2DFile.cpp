@@ -72,10 +72,6 @@ XmlBackground2DFile::Load()
                 {
                     blending = QGears::B_SUBTRACT;
                 }
-                else if ( blending_str == "multiply" )
-                {
-                    blending = QGears::B_MULTIPLY;
-                }
                 else
                 {
                     blending = QGears::B_ALPHA;

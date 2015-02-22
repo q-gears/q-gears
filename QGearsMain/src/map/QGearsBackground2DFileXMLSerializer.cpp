@@ -34,7 +34,6 @@ namespace QGears
     const String Background2DFileXMLSerializer::BLENDING_ALPHA   ( "alpha"    );
     const String Background2DFileXMLSerializer::BLENDING_ADD     ( "add"      );
     const String Background2DFileXMLSerializer::BLENDING_SUBTRACT( "subtract" );
-    const String Background2DFileXMLSerializer::BLENDING_MULTIPLY( "multiply" );
 
     //---------------------------------------------------------------------
     Background2DFileXMLSerializer::Background2DFileXMLSerializer() :
@@ -82,11 +81,6 @@ namespace QGears
         if( *value == BLENDING_SUBTRACT )
         {
             pDest = B_SUBTRACT;
-            return true;
-        }
-        if( *value == BLENDING_MULTIPLY )
-        {
-            pDest = B_MULTIPLY;
             return true;
         }
         pDest = pDefault;

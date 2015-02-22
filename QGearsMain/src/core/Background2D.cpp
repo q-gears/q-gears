@@ -22,7 +22,6 @@ Background2D::Background2D():
     m_AlphaMaxVertexCount( 0 ),
     m_AddMaxVertexCount( 0 ),
     m_SubtractMaxVertexCount( 0 ),
-    m_MultiplyMaxVertexCount( 0 ),
 
     m_ScrollEntity( NULL ),
     m_ScrollPositionStart( Ogre::Vector2::ZERO ),
@@ -79,23 +78,9 @@ Background2D::Background2D():
     pass->setDepthCheckEnabled( true );
     pass->setDepthWriteEnabled( true );
     pass->setLightingEnabled( false );
-    pass->setSceneBlending( Ogre::SBF_ONE, Ogre::SBF_ONE_MINUS_SOURCE_COLOUR ); // FIXME: SUBTRACT
+    pass->setSceneBlending( Ogre::SBT_ADD );
+    pass->setSceneBlendingOperation( Ogre::SBO_SUBTRACT );
     pass->setAlphaRejectFunction( Ogre::CMPF_LESS );
-    pass->setAlphaRejectValue( 0 );
-    tex = pass->createTextureUnitState();
-    tex->setTextureName( "system/blank.png" );
-    tex->setNumMipmaps( -1 );
-    tex->setTextureFiltering( Ogre::TFO_NONE );
-
-    m_MultiplyMaterial = Ogre::MaterialManager::getSingleton().create( "Background2DMultiply", "General" );
-    pass = m_MultiplyMaterial->getTechnique( 0 )->getPass( 0 );
-    pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
-    pass->setCullingMode( Ogre::CULL_NONE );
-    pass->setDepthCheckEnabled( true );
-    pass->setDepthWriteEnabled( true );
-    pass->setLightingEnabled( false );
-    pass->setSceneBlending( Ogre::SBT_ADD ); // FIXME: MULTIPLY
-    pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
     pass->setAlphaRejectValue( 0 );
     tex = pass->createTextureUnitState();
     tex->setTextureName( "system/blank.png" );
@@ -291,10 +276,6 @@ Background2D::OnResize()
         else if( m_Tiles[ i ].blending == QGears::B_SUBTRACT )
         {
             vertex_buffer = m_SubtractVertexBuffer;
-        }
-        else if( m_Tiles[ i ].blending == QGears::B_MULTIPLY )
-        {
-            vertex_buffer = m_MultiplyVertexBuffer;
         }
 
         float* writeIterator = ( float* )vertex_buffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
@@ -537,9 +518,6 @@ Background2D::SetImage( const Ogre::String& image )
     pass = m_SubtractMaterial->getTechnique( 0 )->getPass( 0 );
     tex = pass->getTextureUnitState( 0 );
     tex->setTextureName( image );
-    pass = m_MultiplyMaterial->getTechnique( 0 )->getPass( 0 );
-    tex = pass->getTextureUnitState( 0 );
-    tex->setTextureName( image );
 }
 
 //------------------------------------------------------------------------------
@@ -635,12 +613,6 @@ Background2D::AddTile( const int x, const int y, const int width, const int heig
         render_op = m_SubtractRenderOp;
         vertex_buffer = m_SubtractVertexBuffer;
         max_vertex_count = m_SubtractMaxVertexCount;
-    }
-    else if( blending == QGears::B_MULTIPLY )
-    {
-        render_op = m_MultiplyRenderOp;
-        vertex_buffer = m_MultiplyVertexBuffer;
-        max_vertex_count = m_MultiplyMaxVertexCount;
     }
     else
     {
@@ -777,10 +749,6 @@ Background2D::UpdateTileUV( const unsigned int tile_id, const float u1, const fl
     else if( m_Tiles[ tile_id ].blending == QGears::B_SUBTRACT )
     {
         vertex_buffer = m_SubtractVertexBuffer;
-    }
-    else if( m_Tiles[ tile_id ].blending == QGears::B_MULTIPLY )
-    {
-        vertex_buffer = m_MultiplyVertexBuffer;
     }
 
     float* writeIterator = ( float* )vertex_buffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
@@ -924,12 +892,6 @@ Background2D::renderQueueEnded( Ogre::uint8 queueGroupId, const Ogre::String& in
             m_SceneManager->_setPass( m_SubtractMaterial->getTechnique( 0 )->getPass( 0 ), true, false );
             m_RenderSystem->_render( m_SubtractRenderOp );
         }
-
-        if( m_MultiplyRenderOp.vertexData->vertexCount != 0 )
-        {
-            m_SceneManager->_setPass( m_MultiplyMaterial->getTechnique( 0 )->getPass( 0 ), true, false );
-            m_RenderSystem->_render( m_MultiplyRenderOp );
-        }
     }
 }
 
@@ -997,27 +959,6 @@ Background2D::CreateVertexBuffers()
     m_SubtractRenderOp.vertexData->vertexBufferBinding->setBinding( 0, m_SubtractVertexBuffer );
     m_SubtractRenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
     m_SubtractRenderOp.useIndexes = false;
-
-
-
-    m_MultiplyMaxVertexCount = 256 * TILE_VERTEX_COUNT; // FIXME: 256?
-    m_MultiplyRenderOp.vertexData = new Ogre::VertexData;
-    m_MultiplyRenderOp.vertexData->vertexStart = 0;
-
-    vDecl = m_MultiplyRenderOp.vertexData->vertexDeclaration;
-
-    offset = 0;
-    vDecl->addElement( 0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
-    offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT3 );
-    vDecl->addElement( 0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE );
-    offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT4 );
-    vDecl->addElement( 0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES );
-
-    m_MultiplyVertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), m_MultiplyMaxVertexCount, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
-
-    m_MultiplyRenderOp.vertexData->vertexBufferBinding->setBinding( 0, m_AMultiplyVertexBuffer );
-    m_MultiplyRenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
-    m_MultiplyRenderOp.useIndexes = false;
 }
 
 //------------------------------------------------------------------------------
@@ -1038,11 +979,6 @@ Background2D::DestroyVertexBuffers()
     m_SubtractRenderOp.vertexData = 0;
     m_SubtractVertexBuffer.setNull();
     m_SubtractMaxVertexCount = 0;
-
-    delete m_MultiplyRenderOp.vertexData;
-    m_MultiplyRenderOp.vertexData = 0;
-    m_MultiplyVertexBuffer.setNull();
-    m_MultiplyMaxVertexCount = 0;
 }
 
 //------------------------------------------------------------------------------
