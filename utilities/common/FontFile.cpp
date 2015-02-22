@@ -88,7 +88,7 @@ FontFile::GetSurface(void)
                 color.g = (((data >> i) & 0x01) == 1) ? 0 : 255;
                 color.b = (((data >> i) & 0x01) == 1) ? 0 : 255;
                 color.a = (((data >> i) & 0x01) == 1) ? 255 : 255;
-                memcpy(glyth->pixels + 64 * y + j, &color, sizeof(ClutColor));
+                memcpy(glyth->pixels.data() + 64 * y + j, &color, sizeof(ClutColor));
                 j += 4;
             }
 
@@ -100,7 +100,7 @@ FontFile::GetSurface(void)
                 color.g = ((data >> i) & 0x01 == 1) ? 0 : 255;
                 color.b = ((data >> i) & 0x01 == 1) ? 0 : 255;
                 color.a = ((data >> i) & 0x01 == 1) ? 255 : 255;
-                memcpy(glyth->pixels + 64 * y + j, &color, sizeof(ClutColor));
+                memcpy(glyth->pixels.data() + 64 * y + j, &color, sizeof(ClutColor));
                 j += 4;
             }
         }

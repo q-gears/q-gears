@@ -23,8 +23,7 @@ Surface::Surface( const Surface &copy ):
 {
     if( width && height )
     {
-        pixels = new unsigned char[ width * height * 4 ];
-        memcpy( pixels, copy.pixels, width * height * 4 );
+        pixels = copy.pixels;
     }
 }
 
@@ -33,18 +32,12 @@ Surface::Surface( const Surface &copy ):
 Surface&
 Surface::operator =( const Surface &copy )
 {
-    if( width && height )
-    {
-        delete[] pixels;
-    }
-
     if( copy.width && copy.height )
     {
         width  = copy.width;
         height = copy.height;
 
-        pixels = new unsigned char[ width * height * 4 ];
-        memcpy( pixels, copy.pixels, width * height * 4 );
+        pixels = copy.pixels;
     }
 
     return *this;
@@ -54,10 +47,7 @@ Surface::operator =( const Surface &copy )
 
 Surface::~Surface()
 {
-    if( width && height )
-    {
-        delete[] pixels;
-    }
+
 }
 
 
@@ -69,7 +59,7 @@ CreateSurface( const int width, const int height )
 
     image->width   = width;
     image->height  = height;
-    image->pixels  = new unsigned char[ width * height * 4 ];
+    image->pixels.resize( width * height * 4 );
 
     return image;
 }
@@ -86,7 +76,7 @@ CopyToSurface( Surface* dest, const int x_d, const int y_d, Surface* src )
 
     for( int y_from = y_d, y_to = y_d + src->height; y_from < y_to; ++y_from )
     {
-        memcpy( dest->pixels + y_from * dest->width * 4 + x_d * 4, src->pixels + ( y_from - y_d ) * src->width * 4, src->width * 4 );
+        memcpy( dest->pixels.data() + y_from * dest->width * 4 + x_d * 4, src->pixels.data() + ( y_from - y_d ) * src->width * 4, src->width * 4 );
     }
 }
 
@@ -101,7 +91,7 @@ CreateSubSurface( const int x, const int y, const int width, const int height, S
     {
         for( int y_from = y, y_to = y + image->height; y_from < y_to; ++y_from )
         {
-            memcpy( image->pixels + ( y_from - y ) * image->width * 4, surface->pixels + ( y_from * surface->width + x ) * 4, image->width * 4) ;
+            memcpy( image->pixels.data() + ( y_from - y ) * image->width * 4, surface->pixels.data() + ( y_from * surface->width + x ) * 4, image->width * 4) ;
         }
     }
 
@@ -114,34 +104,9 @@ Surface*
 CreateSurfaceFrom( const int width, const int height, unsigned char* pixels )
 {
     Surface* image = CreateSurface( width, height );
-
     if( pixels != NULL )
     {
-        memcpy( image->pixels, pixels, width * height * 4 );
+        memcpy( image->pixels.data(), pixels, width * height * 4 );
     }
-
     return image;
-}
-
-
-
-void
-SetSurfaceSize( Surface* &surface, const int &width, const int &height )
-{
-    unsigned char* pixels = new unsigned char[ width * height * 4 ];
-    memset( pixels, 0x00, width * height * 4 );
-
-    for( int y = 0; y < height; y++ )
-    {
-        if( y < surface->height )
-        {
-            int size_to_copy = ( surface->width < width ) ? surface->width * 4 : width * 4;
-            memcpy( pixels + y * width * 4, surface->pixels + y * surface->width * 4, size_to_copy );
-        }
-    }
-
-    delete surface;
-    surface = CreateSurfaceFrom( width, height, pixels );
-
-    delete[] pixels;
 }
