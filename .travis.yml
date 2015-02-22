@@ -80,7 +80,7 @@ script:
 language: cpp
 after_success: 
 - if [[ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then lcov --directory . --capture --output-file coverage.info; fi
-- if [[ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then lcov --remove coverage.info '*/googlemock/*' '/usr/*' --output-file coverage.info; fi
+- if [[ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then lcov --remove coverage.info '*/dependencies/*' '/usr/*' --output-file coverage.info; fi
 - if [[ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then lcov --list coverage.info; fi
 - if [[ "$CXX" == "g++" && "${COVERAGE}" == 1 && "$TRAVIS_OS_NAME" == "linux" ]]; then coveralls-lcov coverage.info; fi
 - hash=`git rev-parse HEAD`
