@@ -264,11 +264,11 @@ Background2D::OnResize()
         {
             vertex_buffer = m_AlphaVertexBuffer;
         }
-        else if(m_Tiles[i].blending == QGears::B_ADD )
+        else if(m_Tiles[i].blending == QGears::B_ADD)
         {
             vertex_buffer = m_AddVertexBuffer;
         }
-        else if( m_Tiles[ i ].blending == QGears::B_SUBTRACT )
+        else if(m_Tiles[i].blending == QGears::B_SUBTRACT)
         {
             vertex_buffer = m_SubtractVertexBuffer;
         }
@@ -603,7 +603,7 @@ Background2D::AddTile(const int x, const int y, const int width, const int heigh
         vertex_buffer = m_AddVertexBuffer;
         max_vertex_count = m_AddMaxVertexCount;
     }
-    else if( blending == QGears::B_SUBTRACT )
+    else if(blending == QGears::B_SUBTRACT)
     {
         render_op = m_SubtractRenderOp;
         vertex_buffer = m_SubtractVertexBuffer;
@@ -742,7 +742,7 @@ Background2D::UpdateTileUV(const unsigned int tile_id, const float u1, const flo
     {
         vertex_buffer = m_AddVertexBuffer;
     }
-    else if( m_Tiles[ tile_id ].blending == QGears::B_SUBTRACT )
+    else if(m_Tiles[tile_id].blending == QGears::B_SUBTRACT)
     {
         vertex_buffer = m_SubtractVertexBuffer;
     }
@@ -882,10 +882,10 @@ Background2D::renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::String& inv
             m_RenderSystem->_render(m_AddRenderOp);
         }
 
-        if( m_SubtractRenderOp.vertexData->vertexCount != 0 )
+        if(m_SubtractRenderOp.vertexData->vertexCount != 0)
         {
-            m_SceneManager->_setPass( m_SubtractMaterial->getTechnique( 0 )->getPass( 0 ), true, false );
-            m_RenderSystem->_render( m_SubtractRenderOp );
+            m_SceneManager->_setPass(m_SubtractMaterial->getTechnique(0)->getPass(0), true, false);
+            m_RenderSystem->_render(m_SubtractRenderOp);
         }
     }
 }
@@ -941,15 +941,15 @@ Background2D::CreateVertexBuffers()
     vDecl = m_SubtractRenderOp.vertexData->vertexDeclaration;
 
     offset = 0;
-    vDecl->addElement( 0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
-    offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT3 );
-    vDecl->addElement( 0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE );
-    offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT4 );
-    vDecl->addElement( 0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES );
+    vDecl->addElement(0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
+    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
+    vDecl->addElement(0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE);
+    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT4);
+    vDecl->addElement(0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES);
 
-    m_SubtractVertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), m_SubtractMaxVertexCount, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
+    m_SubtractVertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer(vDecl->getVertexSize(0), m_SubtractMaxVertexCount, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false);
 
-    m_SubtractRenderOp.vertexData->vertexBufferBinding->setBinding( 0, m_SubtractVertexBuffer );
+    m_SubtractRenderOp.vertexData->vertexBufferBinding->setBinding(0, m_SubtractVertexBuffer);
     m_SubtractRenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
     m_SubtractRenderOp.useIndexes = false;
 }
