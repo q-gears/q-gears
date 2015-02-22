@@ -1,26 +1,22 @@
-#include "core/UiSprite.h"
-
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterialManager.h>
 
 #include "core/Logger.h"
+#include "core/UiSprite.h"
 
 
-
-UiSprite::UiSprite( const Ogre::String& name ):
-    UiWidget( name )
+UiSprite::UiSprite(const Ogre::String& name):
+    UiWidget(name)
 {
     Initialise();
 }
 
 
-
-UiSprite::UiSprite( const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent ):
-    UiWidget( name, path_name, parent )
+UiSprite::UiSprite(const Ogre::String& name, const Ogre::String& path_name, UiWidget* parent):
+    UiWidget(name, path_name, parent)
 {
     Initialise();
 }
-
 
 
 UiSprite::~UiSprite()
@@ -29,32 +25,30 @@ UiSprite::~UiSprite()
 }
 
 
-
 void
 UiSprite::Initialise()
 {
-    m_SceneManager = Ogre::Root::getSingleton().getSceneManager( "Scene" );
+    m_SceneManager = Ogre::Root::getSingleton().getSceneManager("Scene");
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
 
-    m_Material = Ogre::MaterialManager::getSingleton().create( "UiMaterials." + m_PathName, "General" );
-    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
-    pass->setVertexColourTracking( Ogre::TVC_AMBIENT );
-    pass->setCullingMode( Ogre::CULL_NONE );
-    pass->setDepthCheckEnabled( true );
-    pass->setDepthWriteEnabled( true );
-    pass->setLightingEnabled( false );
-    pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+    m_Material = Ogre::MaterialManager::getSingleton().create("UiMaterials." + m_PathName, "General");
+    Ogre::Pass* pass = m_Material->getTechnique(0)->getPass(0);
+    pass->setVertexColourTracking(Ogre::TVC_AMBIENT);
+    pass->setCullingMode(Ogre::CULL_NONE);
+    pass->setDepthCheckEnabled(true);
+    pass->setDepthWriteEnabled(true);
+    pass->setLightingEnabled(false);
+    pass->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
 
-    pass->setAlphaRejectFunction( Ogre::CMPF_GREATER );
-    pass->setAlphaRejectValue( 0 );
+    pass->setAlphaRejectFunction(Ogre::CMPF_GREATER);
+    pass->setAlphaRejectValue(0);
     Ogre::TextureUnitState* tex = pass->createTextureUnitState();
-    tex->setTextureName( "system/blank.png" );
-    tex->setNumMipmaps( -1 );
-    tex->setTextureFiltering( Ogre::TFO_NONE );
+    tex->setTextureName("system/blank.png");
+    tex->setNumMipmaps(-1);
+    tex->setTextureFiltering(Ogre::TFO_NONE);
 
     CreateVertexBuffer();
 }
-
 
 
 void
@@ -64,29 +58,27 @@ UiSprite::Update()
 }
 
 
-
 void
 UiSprite::Render()
 {
-    if( m_Visible == true )
+    if(m_Visible == true)
     {
-        if( m_RenderOp.vertexData->vertexCount != 0 )
+        if(m_RenderOp.vertexData->vertexCount != 0)
         {
-            m_RenderSystem->_setWorldMatrix( Ogre::Matrix4::IDENTITY );
-            m_RenderSystem->_setProjectionMatrix( Ogre::Matrix4::IDENTITY );
-            m_RenderSystem->_setViewMatrix( Ogre::Matrix4::IDENTITY );
+            m_RenderSystem->_setWorldMatrix(Ogre::Matrix4::IDENTITY);
+            m_RenderSystem->_setProjectionMatrix(Ogre::Matrix4::IDENTITY);
+            m_RenderSystem->_setViewMatrix(Ogre::Matrix4::IDENTITY);
 
-            m_SceneManager->_setPass( m_Material->getTechnique( 0 )->getPass( 0 ), true, false );
+            m_SceneManager->_setPass(m_Material->getTechnique(0)->getPass(0), true, false);
 
-            m_RenderSystem->setScissorTest( true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom );
-            m_RenderSystem->_render( m_RenderOp );
-            m_RenderSystem->setScissorTest( false );
+            m_RenderSystem->setScissorTest(true, m_ScissorLeft, m_ScissorTop, m_ScissorRight, m_ScissorBottom);
+            m_RenderSystem->_render(m_RenderOp);
+            m_RenderSystem->setScissorTest(false);
         }
     }
 
     UiWidget::Render();
 }
-
 
 
 void
@@ -97,35 +89,31 @@ UiSprite::UpdateTransformation()
 }
 
 
-
 void
-UiSprite::SetImage( const Ogre::String& image )
+UiSprite::SetImage(const Ogre::String& image)
 {
-    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
-    Ogre::TextureUnitState* tex = pass->getTextureUnitState( 0 );
-    tex->setTextureName( image );
+    Ogre::Pass* pass = m_Material->getTechnique(0)->getPass(0);
+    Ogre::TextureUnitState* tex = pass->getTextureUnitState(0);
+    tex->setTextureName(image);
 }
 
 
-
 void
-UiSprite::SetVertexShader( const Ogre::String& shader )
+UiSprite::SetVertexShader(const Ogre::String& shader)
 {
-    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
-    pass->setVertexProgram( shader, true );
+    Ogre::Pass* pass = m_Material->getTechnique(0)->getPass(0);
+    pass->setVertexProgram(shader, true);
     pass->getVertexProgram()->load();
 }
 
 
-
 void
-UiSprite::SetFragmentShader( const Ogre::String& shader )
+UiSprite::SetFragmentShader(const Ogre::String& shader)
 {
-    Ogre::Pass* pass = m_Material->getTechnique( 0 )->getPass( 0 );
-    pass->setFragmentProgram( shader, true );
+    Ogre::Pass* pass = m_Material->getTechnique(0)->getPass(0);
+    pass->setFragmentProgram(shader, true);
     pass->getFragmentProgram()->load();
 }
-
 
 
 void
@@ -140,14 +128,14 @@ UiSprite::UpdateGeometry()
 
     int x1, y1, x2, y2, x3, y3, x4, y4;
 
-    //LOG_ERROR( m_Name + ", rotation = " + Ogre::StringConverter::toString( rotation ) );
-    //LOG_ERROR( "local_x1 = " + Ogre::StringConverter::toString( local_x1 ) + ", local_y1 = " + Ogre::StringConverter::toString( local_y1 ) );
-    //LOG_ERROR( "local_x2 = " + Ogre::StringConverter::toString( local_x2 ) + ", local_y2 = " + Ogre::StringConverter::toString( local_y2 ) );
+    //LOG_ERROR(m_Name + ", rotation = " + Ogre::StringConverter::toString(rotation));
+    //LOG_ERROR("local_x1 = " + Ogre::StringConverter::toString(local_x1) + ", local_y1 = " + Ogre::StringConverter::toString(local_y1));
+    //LOG_ERROR("local_x2 = " + Ogre::StringConverter::toString(local_x2) + ", local_y2 = " + Ogre::StringConverter::toString(local_y2));
 
-    if( m_FinalRotation != 0 )
+    if(m_FinalRotation != 0)
     {
-        float cos = Ogre::Math::Cos( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
-        float sin = Ogre::Math::Sin( Ogre::Radian( Ogre::Degree( m_FinalRotation ) ) );
+        float cos = Ogre::Math::Cos(Ogre::Radian(Ogre::Degree(m_FinalRotation)));
+        float sin = Ogre::Math::Sin(Ogre::Radian(Ogre::Degree(m_FinalRotation)));
 
         x1 = static_cast<int>(local_x1 * cos - local_y1 * sin + x);
         y1 = static_cast<int>(local_x1 * sin + local_y1 * cos + y);
@@ -170,22 +158,22 @@ UiSprite::UpdateGeometry()
         y4 = static_cast<int>(local_y2 + y);
     }
 
-    //LOG_ERROR( "x1 = " + Ogre::StringConverter::toString( x1 ) + ", y1 = " + Ogre::StringConverter::toString( y1 ) );
-    //LOG_ERROR( "x2 = " + Ogre::StringConverter::toString( x2 ) + ", y2 = " + Ogre::StringConverter::toString( y2 ) );
-    //LOG_ERROR( "x3 = " + Ogre::StringConverter::toString( x3 ) + ", y3 = " + Ogre::StringConverter::toString( y3 ) );
-    //LOG_ERROR( "x4 = " + Ogre::StringConverter::toString( x4 ) + ", y4 = " + Ogre::StringConverter::toString( y4 ) );
+    //LOG_ERROR("x1 = " + Ogre::StringConverter::toString(x1) + ", y1 = " + Ogre::StringConverter::toString(y1));
+    //LOG_ERROR("x2 = " + Ogre::StringConverter::toString(x2) + ", y2 = " + Ogre::StringConverter::toString(y2));
+    //LOG_ERROR("x3 = " + Ogre::StringConverter::toString(x3) + ", y3 = " + Ogre::StringConverter::toString(y3));
+    //LOG_ERROR("x4 = " + Ogre::StringConverter::toString(x4) + ", y4 = " + Ogre::StringConverter::toString(y4));
 
-    float new_x1 = ( x1 / m_ScreenWidth ) * 2 - 1;
-    float new_y1 = -( ( y1 / m_ScreenHeight ) * 2 - 1 );
-    float new_x2 = ( x2 / m_ScreenWidth ) * 2 - 1;
-    float new_y2 = -( ( y2 / m_ScreenHeight ) * 2 - 1 );
-    float new_x3 = ( x3 / m_ScreenWidth ) * 2 - 1;
-    float new_y3 = -( ( y3 / m_ScreenHeight ) * 2 - 1 );
-    float new_x4 = ( x4 / m_ScreenWidth ) * 2 - 1;
-    float new_y4 = -( ( y4 / m_ScreenHeight ) * 2 - 1 );
+    float new_x1 = (x1 / m_ScreenWidth) * 2 - 1;
+    float new_y1 = -((y1 / m_ScreenHeight) * 2 - 1);
+    float new_x2 = (x2 / m_ScreenWidth) * 2 - 1;
+    float new_y2 = -((y2 / m_ScreenHeight) * 2 - 1);
+    float new_x3 = (x3 / m_ScreenWidth) * 2 - 1;
+    float new_y3 = -((y3 / m_ScreenHeight) * 2 - 1);
+    float new_x4 = (x4 / m_ScreenWidth) * 2 - 1;
+    float new_y4 = -((y4 / m_ScreenHeight) * 2 - 1);
 
-    float* writeIterator = ( float* ) m_VertexBuffer->lock( Ogre::HardwareBuffer::HBL_NORMAL );
-
+    float* writeIterator = (float*) m_VertexBuffer->lock(Ogre::HardwareBuffer::HBL_NORMAL);
+    // TODO: use WriteGlyph (should probably rename and move to utils)
     *writeIterator++ = new_x1;
     *writeIterator++ = new_y1;
     *writeIterator++ = m_FinalZ;
@@ -252,7 +240,6 @@ UiSprite::UpdateGeometry()
 }
 
 
-
 void
 UiSprite::CreateVertexBuffer()
 {
@@ -262,19 +249,18 @@ UiSprite::CreateVertexBuffer()
     Ogre::VertexDeclaration* vDecl = m_RenderOp.vertexData->vertexDeclaration;
 
     size_t offset = 0;
-    vDecl->addElement( 0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION );
-    offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT3 );
-    vDecl->addElement( 0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE );
-    offset += Ogre::VertexElement::getTypeSize( Ogre::VET_FLOAT4 );
-    vDecl->addElement( 0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES );
+    vDecl->addElement(0, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
+    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
+    vDecl->addElement(0, offset, Ogre::VET_FLOAT4, Ogre::VES_DIFFUSE);
+    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT4);
+    vDecl->addElement(0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES);
 
-    m_VertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer( vDecl->getVertexSize( 0 ), 6, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false );
+    m_VertexBuffer = Ogre::HardwareBufferManager::getSingletonPtr()->createVertexBuffer(vDecl->getVertexSize(0), 6, Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY, false);
 
-    m_RenderOp.vertexData->vertexBufferBinding->setBinding( 0, m_VertexBuffer );
+    m_RenderOp.vertexData->vertexBufferBinding->setBinding(0, m_VertexBuffer);
     m_RenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_LIST;
     m_RenderOp.useIndexes = false;
 }
-
 
 
 void

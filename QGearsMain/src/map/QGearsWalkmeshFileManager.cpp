@@ -16,7 +16,7 @@ GNU General Public License for more details.
 */
 #include "map/QGearsWalkmeshFileManager.h"
 
-template<> QGears::WalkmeshFileManager *Ogre::Singleton<QGears::WalkmeshFileManager>::msSingleton = NULL;
+template<> QGears::WalkmeshFileManager *Ogre::Singleton<QGears::WalkmeshFileManager>::msSingleton = nullptr;
 
 namespace QGears
 {

@@ -36,14 +36,14 @@ namespace QGears
     //-------------------------------------------------------------------------
     ManualObject::ManualObject( Ogre::Mesh *mesh ) :
         m_mesh( mesh )
-       ,m_section( NULL )
+       ,m_section( nullptr )
        ,m_bbox( mesh->getBounds() )
        ,m_radius( mesh->getBoundingSphereRadius() )
-       ,m_position( NULL )
-       ,m_normal( NULL )
-       ,m_colour( NULL )
-       ,m_texture_coordinate( NULL )
-       ,m_index( NULL )
+       ,m_position( nullptr )
+       ,m_normal( nullptr )
+       ,m_colour( nullptr )
+       ,m_texture_coordinate( nullptr )
+       ,m_index( nullptr )
        ,colour_type( Ogre::VertexElement::getBestColourVertexElementType() )
     {
     }
@@ -142,11 +142,11 @@ namespace QGears
         }
 
         resetBuffer( m_index_buffer );
-        m_position = NULL;
-        m_normal = NULL;
-        m_colour = NULL;
-        m_texture_coordinate = NULL;
-        m_index = NULL;
+        m_position = nullptr;
+        m_normal = nullptr;
+        m_colour = nullptr;
+        m_texture_coordinate = nullptr;
+        m_index = nullptr;
     }
 
     //-------------------------------------------------------------------------
@@ -154,14 +154,14 @@ namespace QGears
     ManualObject::begin( const String &name, const String &material_name
                         ,size_t vertex_count, size_t index_count )
     {
-        if( m_mesh == NULL )
+        if( m_mesh == nullptr )
         {
 			OGRE_EXCEPT( Ogre::Exception::ERR_INVALIDPARAMS,
 				"You cannot begin a section without a Mesh",
 				"ManualObject::begin");
         }
 
-        if( m_section != NULL )
+        if( m_section != nullptr )
         {
 			OGRE_EXCEPT( Ogre::Exception::ERR_INVALIDPARAMS,
 				"You cannot begin a section without ending the old one first",
@@ -191,7 +191,7 @@ namespace QGears
     void
     ManualObject::position( const Ogre::Vector3 &position )
     {
-        if( m_position == NULL )
+        if( m_position == nullptr )
         {
             createPositionBuffer();
         }
@@ -205,7 +205,7 @@ namespace QGears
     void
     ManualObject::normal( const Ogre::Vector3 &normal )
     {
-        if( m_normal == NULL )
+        if( m_normal == nullptr )
         {
             createNormalBuffer();
         }
@@ -216,7 +216,7 @@ namespace QGears
     void
     ManualObject::colour( const Ogre::ColourValue &colour )
     {
-        if( m_colour == NULL )
+        if( m_colour == nullptr )
         {
             createColourBuffer();
         }
@@ -227,7 +227,7 @@ namespace QGears
     void
     ManualObject::textureCoord( const Ogre::Vector2 &texture_coordinate )
     {
-        if( m_texture_coordinate == NULL )
+        if( m_texture_coordinate == nullptr )
         {
             createTextureCoordinateBuffer();
         }
@@ -238,7 +238,7 @@ namespace QGears
     void
     ManualObject::index( const uint32 idx )
     {
-        if( m_index == NULL )
+        if( m_index == nullptr )
         {
             createIndexBuffer();
         }
@@ -261,7 +261,7 @@ namespace QGears
     void
     ManualObject::end()
     {
-        if( m_section == NULL )
+        if( m_section == nullptr )
         {
 			OGRE_EXCEPT( Ogre::Exception::ERR_INVALIDPARAMS,
 				"You cannot end a section without beginning one first",
@@ -270,7 +270,7 @@ namespace QGears
 
         m_mesh->_setBounds( m_bbox );
         m_mesh->_setBoundingSphereRadius( m_radius );
-        m_section = NULL;
+        m_section = nullptr;
         resetBuffers();
     }
 

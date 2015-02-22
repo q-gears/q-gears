@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 #include "map/QGearsBackground2DFileManager.h"
 
-template<> QGears::Background2DFileManager *Ogre::Singleton<QGears::Background2DFileManager>::msSingleton = NULL;
+template<> QGears::Background2DFileManager *Ogre::Singleton<QGears::Background2DFileManager>::msSingleton = nullptr;
 
 namespace QGears
 {

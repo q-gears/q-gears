@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 #include "data/QGearsPFileManager.h"
 
-template<> QGears::PFileManager *Ogre::Singleton<QGears::PFileManager>::msSingleton = NULL;
+template<> QGears::PFileManager *Ogre::Singleton<QGears::PFileManager>::msSingleton = nullptr;
 
 namespace QGears
 {

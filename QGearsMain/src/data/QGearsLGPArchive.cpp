@@ -98,7 +98,7 @@ namespace QGears
     LGPArchive::open( const String& filename, bool readOnly ) const
     {
         LOG_DEBUG( "file:" + filename + " readOnly: " + Ogre::StringConverter::toString(readOnly) );
-        Ogre::MemoryDataStream* buffer( NULL );
+        Ogre::MemoryDataStream* buffer( nullptr );
         if( !m_lgp_file.isNull() )
         {
             FileList::const_iterator it( m_files.begin() );

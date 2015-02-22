@@ -52,8 +52,8 @@ namespace QGears
                  ,const String &group, bool isManual
                  ,Ogre::ManualResourceLoader *loader ) :
         Resource( creator, name, handle, group, isManual, loader )
-       ,m_background_texture_loader( NULL )
-       ,m_background_2d_loader( NULL )
+       ,m_background_texture_loader( nullptr )
+       ,m_background_2d_loader( nullptr )
     {
         createParamDictionary( getResourceType() );
     }
@@ -66,7 +66,7 @@ namespace QGears
             assert( !m_background_texture.isNull() );
             Ogre::TextureManager::getSingleton().remove( m_background_texture->getHandle() );
             delete m_background_texture_loader;
-            m_background_texture_loader = NULL;
+            m_background_texture_loader = nullptr;
         }
         m_background_texture.setNull();
 
@@ -75,7 +75,7 @@ namespace QGears
             assert( !m_background_2d.isNull() );
             Background2DFileManager::getSingleton().remove( m_background_2d->getHandle() );
             delete m_background_2d_loader;
-            m_background_2d_loader = NULL;
+            m_background_2d_loader = nullptr;
         }
         m_background_2d.setNull();
 
@@ -96,14 +96,14 @@ namespace QGears
         serializer.importFLevelFile( stream, this );
 
         String background_texture_name( getBackgroundTextureName() );
-        if( m_background_texture_loader == NULL )
+        if( m_background_texture_loader == nullptr )
         {
             m_background_texture_loader = new FLevelTextureLoader( *this );
             m_background_texture = Ogre::TextureManager::getSingleton().create( background_texture_name, mGroup, true, m_background_texture_loader );
         }
 
         String background_2d_name( getBackground2DName() );
-        if( m_background_2d_loader == NULL )
+        if( m_background_2d_loader == nullptr )
         {
             m_background_2d_loader = new FLevelBackground2DLoader( *this );
             m_background_2d = Background2DFileManager::getSingleton().createResource( background_2d_name, mGroup, true, m_background_2d_loader ).staticCast<Background2DFile>();
@@ -177,6 +177,12 @@ namespace QGears
     {
         // data is only stored in section resources
         return 0;
+    }
+
+    std::vector<u8> FLevelFile::getRawScript()
+    {
+        // TODO
+        return std::vector<u8>();
     }
 
     //--------------------------------------------------------------------------

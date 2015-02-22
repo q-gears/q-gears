@@ -14,7 +14,7 @@ ParticleEmitterDictionary::Direction        ParticleEmitter::m_DirectionDictiona
 //------------------------------------------------------------------------------
 ParticleEmitter::ParticleEmitter(void) :
     Particle(),
-    m_ParentTechnique(NULL),
+    m_ParentTechnique(nullptr),
     m_Name(Ogre::StringUtil::BLANK),
     m_EmitsName(Ogre::StringUtil::BLANK),
     m_EmitsType(PT_VISUAL),

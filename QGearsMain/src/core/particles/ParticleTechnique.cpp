@@ -8,7 +8,7 @@
 
 //------------------------------------------------------------------------------
 ParticleTechnique::ParticleTechnique():
-    m_Renderer(NULL),
+    m_Renderer(nullptr),
 
     m_VisualParticleQuota(10),
     m_VisualParticlePoolIncreased(false),
@@ -87,7 +87,7 @@ ParticleTechnique::Initialize()
         if (m_VisualParticleQuota > old_size)
         {
             // Create new visual particles
-            VisualParticle* particle = NULL;
+            VisualParticle* particle = nullptr;
             for (int i = old_size; i < m_VisualParticleQuota; ++i)
             {
                 particle = new VisualParticle();
@@ -173,7 +173,7 @@ ParticleTechnique::Update(Ogre::Real time_elapsed)
         VisualParticle* particle = m_VisualParticlesPool.GetFirst();
         while (!m_VisualParticlesPool.End())
         {
-            if (particle != NULL)
+            if (particle != nullptr)
             {
                 Ogre::LogManager::getSingletonPtr()->logMessage("ParticleTechnique::Update found particle with ttl " + Ogre::StringConverter::toString(particle->time_to_live));
                 if (particle->time_to_live > time_elapsed)
@@ -276,7 +276,7 @@ ParticleTechnique::DestroyRenderer()
     if (m_Renderer)
     {
         ParticleSystemManager::getSingletonPtr()->DestroyRenderer(m_Renderer);
-        m_Renderer = NULL;
+        m_Renderer = nullptr;
     }
 }
 
@@ -284,7 +284,7 @@ ParticleTechnique::DestroyRenderer()
 ParticleEmitter*
 ParticleTechnique::CreateEmitter(const Ogre::String& emitter_type)
 {
-    ParticleEmitter* emitter = NULL;
+    ParticleEmitter* emitter = nullptr;
 
     if (emitter_type != Ogre::StringUtil::BLANK)
     {
@@ -301,7 +301,7 @@ ParticleTechnique::CreateEmitter(const Ogre::String& emitter_type)
 void
 ParticleTechnique::AddEmitter(ParticleEmitter* emitter)
 {
-    if (emitter != NULL)
+    if (emitter != nullptr)
     {
         m_Emitters.push_back(emitter);
         emitter->SetParentTechnique(this);
@@ -379,7 +379,7 @@ ParticleTechnique::ExecuteEmitParticles(ParticleEmitter* emitter, int requested,
     for (int j = 0; j < requested; ++j)
     {
         // Create a new particle & init using emitter
-        Particle* particle = NULL;
+        Particle* particle = nullptr;
         switch (emitter->GetEmitsType())
         {
             case Particle::PT_VISUAL: particle = m_VisualParticlesPool.ReleaseElement(); break;
@@ -387,7 +387,7 @@ ParticleTechnique::ExecuteEmitParticles(ParticleEmitter* emitter, int requested,
         }
 
         // Return if there is no particle left anymore, or the name cannot be found
-        if (particle == NULL)
+        if (particle == nullptr)
         {
             Ogre::LogManager::getSingletonPtr()->logMessage("ParticleTechnique::ExecuteEmitParticles request there is no particles left.");
             return;
@@ -406,7 +406,7 @@ ParticleTechnique::ResetVisualParticles()
 {
     for( unsigned int i = 0; i < m_VisualParticles.size(); ++i )
     {
-        m_VisualParticles[i]->additional_data = NULL;
+        m_VisualParticles[i]->additional_data = nullptr;
     }
     m_VisualParticlesPool.LockAllElements();
 }

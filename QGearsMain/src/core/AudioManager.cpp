@@ -1,191 +1,177 @@
-#include "core/AudioManager.h"
-
 #include <list>
 #include <boost/thread.hpp>
 
+#include "core/AudioManager.h"
 #include "core/XmlMusicsFile.h"
 #include "core/Logger.h"
 
 
-
-template<>AudioManager *Ogre::Singleton< AudioManager >::msSingleton = NULL;
+template<>AudioManager *Ogre::Singleton<AudioManager>::msSingleton = nullptr;
 
 ALsizei AudioManager::m_ChannelBufferNumber = 2;
 int AudioManager::m_ChannelBufferSize = 96 * 1024;
 
 
-
 AudioManager::AudioManager():
-    m_Initialized( false ),
-    m_ThreadContinue( true ),
+    m_Initialized(false),
+    m_ThreadContinue(true),
     m_UpdateMutex(),
-    m_Music( &m_UpdateMutex )
+    m_Music(&m_UpdateMutex)
 {
-    m_ALDevice = alcOpenDevice( NULL );
-    if( m_ALDevice != NULL )
+    m_ALDevice = alcOpenDevice(nullptr);
+    if(m_ALDevice != nullptr)
     {
-        m_ALContext = alcCreateContext( m_ALDevice, NULL );
-        if( m_ALContext != NULL )
+        m_ALContext = alcCreateContext(m_ALDevice, nullptr);
+        if(m_ALContext != nullptr)
         {
-            alcMakeContextCurrent( m_ALContext );
+            alcMakeContextCurrent(m_ALContext);
 
             // listeners
-            ALfloat position[ 3 ] = { 0.0f, 0.0f, 0.0f };
-            ALfloat velocity[ 3 ] = { 0.0f, 0.0f, 0.0f };
-            ALfloat orientation[ 6 ] = { 0.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f };
+            ALfloat position[3] = { 0.0f, 0.0f, 0.0f };
+            ALfloat velocity[3] = { 0.0f, 0.0f, 0.0f };
+            ALfloat orientation[6] = { 0.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f };
             alListenerfv( AL_POSITION, position );
             alListenerfv( AL_VELOCITY, velocity );
             alListenerfv( AL_ORIENTATION, orientation );
             m_Initialized = true;
 
-            m_Buffer       = new char[ m_ChannelBufferSize ];
-            m_UpdateThread = new boost::thread( boost::ref( *this ) );
+            m_Buffer       = new char[m_ChannelBufferSize];
+            m_UpdateThread = new boost::thread(boost::ref(*this));
 
-            LOG_TRIVIAL( "AudioManager initialised." );
+            LOG_TRIVIAL("AudioManager initialised.");
         }
         else
         {
-            LOG_ERROR( "AudioManager failed to initialised. Could not create context for sound device." );
+            LOG_ERROR("AudioManager failed to initialised. Could not create context for sound device.");
         }
     }
     else
     {
-        LOG_ERROR( "AudioManager failed to initialised. There's no default sound device." );
+        LOG_ERROR("AudioManager failed to initialised. There's no default sound device.");
     }
 
-
-
     // Load musics
-    XmlMusicsFile musics( "./data/musics.xml" );
+    XmlMusicsFile musics("./data/musics.xml");
     musics.LoadMusics();
 }
-
 
 
 AudioManager::~AudioManager()
 {
     MusicStop();
 
-    if( m_Initialized )
+    if(m_Initialized)
     {
         m_ThreadContinue = false;
         m_UpdateThread->join();
         delete m_UpdateThread;
         delete[] m_Buffer;
 
-        alcMakeContextCurrent( NULL );
-        alcDestroyContext( m_ALContext );
-        alcCloseDevice( m_ALDevice );
-        LOG_TRIVIAL( "AudioManager destroyed." );
+        alcMakeContextCurrent(nullptr);
+        alcDestroyContext(m_ALContext);
+        alcCloseDevice(m_ALDevice);
+        LOG_TRIVIAL("AudioManager destroyed.");
     }
 }
-
 
 
 void
 AudioManager::operator()()
 {
-    while( m_ThreadContinue )
+    while(m_ThreadContinue)
     {
         Update();
 
         boost::xtime xt;
-        boost::xtime_get( &xt, boost::TIME_UTC_ );
+        boost::xtime_get(&xt, boost::TIME_UTC_);
         xt.nsec += 250000000; // sleep for 250 ms
-        boost::thread::sleep( xt );
+        boost::thread::sleep(xt);
 
         m_UpdateThread->yield();
     }
 }
 
 
-
 void
 AudioManager::Update()
 {
-    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
     m_Music.Update();
 }
 
 
-
 void
 AudioManager::MusicPause()
 {
-    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
     m_Music.Pause();
 }
 
 
-
 void
-AudioManager::MusicPlay( const Ogre::String& name )
+AudioManager::MusicPlay(const Ogre::String& name)
 {
-    if( m_Initialized )
+    if(m_Initialized)
     {
-        boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
+        boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
-        AudioManager::Music* music = GetMusic( name );
-        if( music == NULL )
+        AudioManager::Music* music = GetMusic(name);
+        if(music == nullptr)
         {
-            LOG_ERROR( "No music found with name \"" + name + "\"." );
+            LOG_ERROR("No music found with name \"" + name + "\".");
             return;
         }
 
-        m_Music.SetLoop( music->loop );
-        m_Music.Play( music->file );
+        m_Music.SetLoop(music->loop);
+        m_Music.Play(music->file);
     }
 }
-
 
 
 void
 AudioManager::MusicStop()
 {
-    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
     m_Music.Stop();
 }
 
 
-
 void
-AudioManager::AddMusic( const AudioManager::Music& music )
+AudioManager::AddMusic(const AudioManager::Music& music)
 {
-    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
-    for( std::list< AudioManager::Music >::iterator it = m_MusicList.begin(); it != m_MusicList.end(); ++it )
+    for(std::list<AudioManager::Music>::iterator it = m_MusicList.begin(); it != m_MusicList.end(); ++it )
     {
-        if( it->name == music.name )
+        if(it->name == music.name)
         {
             LOG_ERROR( "Music with name '" + music.name + "' already exists." );
             return;
         }
     }
 
-    m_MusicList.push_back( music );
+    m_MusicList.push_back(music);
 }
-
 
 
 AudioManager::Music*
-AudioManager::GetMusic( const Ogre::String& name )
+AudioManager::GetMusic(const Ogre::String& name)
 {
-    boost::recursive_mutex::scoped_lock lock( m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(m_UpdateMutex);
 
-    for( auto it = m_MusicList.begin(); it != m_MusicList.end(); ++it )
+    for(auto it = m_MusicList.begin(); it != m_MusicList.end(); ++it)
     {
-        if( it->name == name )
+        if(it->name == name)
         {
-            return &( *it );
+            return &(*it);
         }
     }
 
-    return NULL;
+    return nullptr;
 }
-
 
 
 const char*
@@ -194,7 +180,7 @@ AudioManager::ALError()
     //ALenum error_code = alGetError();
     //if( error_code == AL_NO_ERROR )
     {
-        return NULL;
+        return nullptr;
     }
     //else
     //{
@@ -203,16 +189,15 @@ AudioManager::ALError()
 }
 
 
-
 const char*
-AudioManager::ALCError( const ALCdevice* device )
+AudioManager::ALCError(const ALCdevice* device)
 {
-    //const ALCdevice *alc_device = ( ( device == NULL ) ? const_cast< ALCdevice* >( m_ALDevice ) : const_cast< ALCdevice* >( device ) );
+    //const ALCdevice *alc_device = ( ( device == nullptr ) ? const_cast< ALCdevice* >( m_ALDevice ) : const_cast< ALCdevice* >( device ) );
 
     //ALCenum error_code = alcGetError( const_cast< ALCdevice* >( alc_device ) );
     //if( error_code == ALC_NO_ERROR )
     {
-        return NULL;
+        return nullptr;
     }
     //else
     //{
@@ -221,16 +206,14 @@ AudioManager::ALCError( const ALCdevice* device )
 }
 
 
-
-AudioManager::Player::Player( boost::recursive_mutex* mutex ):
-    m_Loop( -1.0 ),
-    m_VorbisInfo( NULL ),
-    m_VorbisSection( 0 ),
-    m_StreamFinished( false ),
-    m_UpdateMutex( mutex )
+AudioManager::Player::Player(boost::recursive_mutex* mutex):
+    m_Loop(-1.0),
+    m_VorbisInfo(nullptr),
+    m_VorbisSection(0),
+    m_StreamFinished(false),
+    m_UpdateMutex(mutex)
 {
 }
-
 
 
 AudioManager::Player::~Player()
@@ -239,101 +222,100 @@ AudioManager::Player::~Player()
 }
 
 
-
 void
 AudioManager::Player::Pause()
 {
-    boost::recursive_mutex::scoped_lock lock( *m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(*m_UpdateMutex);
 
-    alSourcePause( m_Source );
+    alSourcePause(m_Source);
 }
 
 
-
 void
-AudioManager::Player::Play( const Ogre::String &file )
+AudioManager::Player::Play(const Ogre::String &file)
 {
-    boost::recursive_mutex::scoped_lock lock( *m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(*m_UpdateMutex);
 
     // open vorbis file
-    if( ov_fopen( const_cast< char* >( file.c_str() ), &m_VorbisFile ) )
+    if(ov_fopen(const_cast<char*>(file.c_str()), &m_VorbisFile))
     {
-        LOG_ERROR( "Can't play file \"" + file + "\"." );
+        LOG_ERROR("Can't play file \"" + file + "\".");
         return;
     }
 
     // get file info
-    m_VorbisInfo = ov_info( &m_VorbisFile, -1.0f );
+    m_VorbisInfo = ov_info(&m_VorbisFile, -1.0f);
 
     // create sound source
-    alGenSources( 1, &m_Source );
+    alGenSources(1, &m_Source);
 
     // create buffers
-    ALuint buffers[ m_ChannelBufferNumber ];
-    alGenBuffers( m_ChannelBufferNumber, buffers );
+    ALuint buffers[m_ChannelBufferNumber];
+    alGenBuffers(m_ChannelBufferNumber, buffers);
 
     // set source parameters
-    alSourcei( m_Source, AL_LOOPING, AL_FALSE );
+    alSourcei(m_Source, AL_LOOPING, AL_FALSE);
 
     // fill buffers
-    for( int i = 0; i < m_ChannelBufferNumber; ++i )
+    for(int i = 0; i < m_ChannelBufferNumber; ++i)
     {
         ALsizei buffer_size = FillBuffer();
 
-        if( buffer_size )
+        if(buffer_size)
         {
-            alBufferData( buffers[ i ], m_VorbisInfo->channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, ( const ALvoid* )AudioManager::getSingleton().m_Buffer, ( ALsizei )buffer_size, ( ALsizei )m_VorbisInfo->rate );
-            alSourceQueueBuffers( m_Source, 1, &buffers[ i ] );
+            alBufferData(buffers[i], m_VorbisInfo->channels ==
+                         1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,
+                         (const ALvoid*)AudioManager::getSingleton().m_Buffer,
+                         (ALsizei)buffer_size, (ALsizei)m_VorbisInfo->rate);
+            alSourceQueueBuffers(m_Source, 1, &buffers[i]);
         }
         else
         {
             m_StreamFinished = true;
-            alDeleteBuffers( 1, &buffers[ i ] );
+            alDeleteBuffers(1, &buffers[i]);
         }
     }
 
     // start playback
-    alSourcePlay( m_Source );
+    alSourcePlay(m_Source);
 }
 
 
 void
 AudioManager::Player::Stop()
 {
-    boost::recursive_mutex::scoped_lock lock( *m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(*m_UpdateMutex);
 
     // stop source
-    alSourceStop( m_Source );
+    alSourceStop(m_Source);
 
     // get source buffers
     int queued_count = 0;
-    alGetSourcei( m_Source, AL_BUFFERS_QUEUED, &queued_count );
+    alGetSourcei(m_Source, AL_BUFFERS_QUEUED, &queued_count);
 
     // unqueue and delete buffers
-    for( int i = 0; i < queued_count; ++i )
+    for(int i = 0; i < queued_count; ++i)
     {
         ALuint buffer_id;
-        alSourceUnqueueBuffers( m_Source, 1, &buffer_id );
-        alDeleteBuffers( 1, &buffer_id );
+        alSourceUnqueueBuffers(m_Source, 1, &buffer_id);
+        alDeleteBuffers(1, &buffer_id);
     }
 
     // delete source
-    alDeleteSources( 1, &m_Source );
+    alDeleteSources(1, &m_Source);
 
     // rest cleanup
-    ov_clear( &m_VorbisFile );
+    ov_clear(&m_VorbisFile);
 }
-
 
 
 void
-AudioManager::Player::SetLoop( const float loop )
+AudioManager::Player::SetLoop(const float loop)
 {
-    boost::recursive_mutex::scoped_lock lock( *m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(*m_UpdateMutex);
 
     m_Loop = loop;
 }
-
 
 
 void
@@ -342,19 +324,22 @@ AudioManager::Player::Update()
     // try to fill processed buffers
     {
         int processed;
-        alGetSourcei( m_Source, AL_BUFFERS_PROCESSED, &processed );
+        alGetSourcei(m_Source, AL_BUFFERS_PROCESSED, &processed);
 
-        for( int i = 0; i < processed; ++i )
+        for(int i = 0; i < processed; ++i)
         {
             // try fill buffer
             ALsizei buffer_size = FillBuffer();
 
-            if( buffer_size )
+            if(buffer_size)
             {
                 ALuint buffer_id;
-                alSourceUnqueueBuffers( m_Source, 1, &buffer_id );
-                alBufferData( buffer_id, m_VorbisInfo->channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, ( const ALvoid* )AudioManager::getSingleton().m_Buffer, ( ALsizei )buffer_size, ( ALsizei )m_VorbisInfo->rate );
-                alSourceQueueBuffers( m_Source, 1, &buffer_id );
+                alSourceUnqueueBuffers(m_Source, 1, &buffer_id);
+                alBufferData(buffer_id, m_VorbisInfo->channels ==
+                             1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,
+                             (const ALvoid*)AudioManager::getSingleton().m_Buffer,
+                             (ALsizei)buffer_size, (ALsizei)m_VorbisInfo->rate);
+                alSourceQueueBuffers(m_Source, 1, &buffer_id);
             }
             // finished reading stream
             else
@@ -368,27 +353,26 @@ AudioManager::Player::Update()
     // manage source state
     {
         int processed;
-        alGetSourcei( m_Source, AL_BUFFERS_PROCESSED, &processed );
+        alGetSourcei(m_Source, AL_BUFFERS_PROCESSED, &processed);
 
         int queued;
-        alGetSourcei( m_Source, AL_BUFFERS_QUEUED, &queued );
+        alGetSourcei(m_Source, AL_BUFFERS_QUEUED, &queued);
 
-        if( m_StreamFinished && processed == queued )
+        if(m_StreamFinished && processed == queued)
         {
             Stop();
         }
         else
         {
             ALenum source_state;
-            alGetSourcei( m_Source, AL_SOURCE_STATE, &source_state );
-            if( source_state == AL_STOPPED )
+            alGetSourcei(m_Source, AL_SOURCE_STATE, &source_state);
+            if(source_state == AL_STOPPED)
             {
-                alSourcePlay( m_Source );
+                alSourcePlay(m_Source);
             }
         }
     }
 }
-
 
 
 ALsizei
@@ -396,7 +380,7 @@ AudioManager::Player::FillBuffer()
 {
     ALsizei read = 0;
 
-    if( m_StreamFinished )
+    if(m_StreamFinished)
     {
         return read;
     }
@@ -406,9 +390,11 @@ AudioManager::Player::FillBuffer()
     bool finished = false;
     do
     {
-        long result = ov_read( &m_VorbisFile, buffer + read, m_ChannelBufferSize - read, 0, 2, 1, &m_VorbisSection );
+        long result = ov_read(&m_VorbisFile, buffer + read,
+                              m_ChannelBufferSize - read, 0, 2, 1,
+                              &m_VorbisSection);
 
-        switch( result )
+        switch(result)
         {
             // error
             case OV_HOLE:
@@ -423,7 +409,7 @@ AudioManager::Player::FillBuffer()
             case 0:
             {
                 // if there isn't loop point or can't seek
-                if( m_Loop < 0.0f || ov_time_seek( &m_VorbisFile, m_Loop ) )
+                if(m_Loop < 0.0f || ov_time_seek(&m_VorbisFile, m_Loop))
                 {
                     finished = true;
                 }
@@ -434,54 +420,28 @@ AudioManager::Player::FillBuffer()
             default:
             {
                 read += result;
-                if( read == m_ChannelBufferSize )
+                if(read == m_ChannelBufferSize)
                 {
                     finished = true;
                 }
             }
         }
     }
-    while( finished == false );
+    while(finished == false);
 
     return read;
 }
 
 
-
 float
 AudioManager::Player::GetPosition()
 {
-    boost::recursive_mutex::scoped_lock lock( *m_UpdateMutex );
+    boost::recursive_mutex::scoped_lock lock(*m_UpdateMutex);
 
     int play_offset;
-    alGetSourcei( m_Source, AL_SAMPLE_OFFSET, &play_offset );
-    return ( ov_pcm_tell( &m_VorbisFile ) - ( m_ChannelBufferNumber * m_ChannelBufferSize / m_VorbisInfo->channels / sizeof( int16_t ) - play_offset ) ) * 1000 / m_VorbisInfo->rate;
+    alGetSourcei(m_Source, AL_SAMPLE_OFFSET, &play_offset);
+    return (ov_pcm_tell(&m_VorbisFile) -
+            (m_ChannelBufferNumber * m_ChannelBufferSize /
+             m_VorbisInfo->channels / sizeof(int16_t) -
+             play_offset)) * 1000 / m_VorbisInfo->rate;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

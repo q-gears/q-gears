@@ -20,7 +20,7 @@ ParticleEmitterTranslator::translate(Ogre::ScriptCompiler *compiler, const Ogre:
     ParticleTechnique* tech = Ogre::any_cast<ParticleTechnique*>(obj->parent->context);
 
     ParticleEmitter* emitter = tech->CreateEmitter(obj->name);
-    if (emitter == NULL)
+    if (emitter == nullptr)
     {
         compiler->addError(Ogre::ScriptCompiler::CE_OBJECTALLOCATIONERROR, obj->file, obj->line);
         return;

@@ -19,11 +19,11 @@
 
 
 ViewerModule::ViewerModule():
-    m_Entity( NULL ),
-    m_Walkmesh( NULL ),
+    m_Entity( nullptr ),
+    m_Walkmesh( nullptr ),
 
-    m_Grid( NULL ),
-    m_Axis( NULL )
+    m_Grid( nullptr ),
+    m_Axis( nullptr )
 {
     m_SceneNode = Ogre::Root::getSingleton().getSceneManager( "Scene" )->getRootSceneNode()->createChildSceneNode( "ViewerModule" );
 
@@ -130,11 +130,11 @@ ViewerModule::ViewerModule():
 
 ViewerModule::~ViewerModule()
 {
-    if( m_Grid != NULL )
+    if( m_Grid != nullptr )
     {
         Ogre::Root::getSingleton().getSceneManager( "Scene" )->destroyEntity( m_Grid );
     }
-    if( m_Axis != NULL )
+    if( m_Axis != nullptr )
     {
         Ogre::Root::getSingleton().getSceneManager( "Scene" )->destroyEntity( m_Axis );
     }
@@ -154,9 +154,9 @@ ViewerModule::Input( const Event& event )
     if (event.type == ET_KEY_PRESS && event.param1 == OIS::KC_DOWN)
     {
         bool change = false;
-        if (m_Entity != NULL)
+        if (m_Entity != nullptr)
         {
-            if (m_Entity->getAllAnimationStates() != NULL)
+            if (m_Entity->getAllAnimationStates() != nullptr)
             {
                 Ogre::AnimationStateIterator animations = m_Entity->getAllAnimationStates()->getAnimationStateIterator();
 
@@ -184,7 +184,7 @@ ViewerModule::Input( const Event& event )
     else if (event.type == ET_KEY_PRESS && event.param1 == OIS::KC_UP)
     {
         bool change = false;
-        if (m_Entity != NULL && m_Entity->getAllAnimationStates() != NULL)
+        if (m_Entity != nullptr && m_Entity->getAllAnimationStates() != nullptr)
         {
             Ogre::AnimationStateIterator animations = m_Entity->getAllAnimationStates()->getAnimationStateIterator();
 
@@ -217,7 +217,7 @@ ViewerModule::Update()
 {
     float delta_time = Timer::getSingleton().GetGameTimeDelta();
 
-    if (m_Entity != NULL && m_Entity->getAllAnimationStates() != NULL)
+    if (m_Entity != nullptr && m_Entity->getAllAnimationStates() != nullptr)
     {
         Ogre::AnimationStateIterator animations = m_Entity->getAllAnimationStates()->getAnimationStateIterator();
 
@@ -240,11 +240,11 @@ ViewerModule::Update()
 void
 ViewerModule::PlayAnimation(const Ogre::String& name)
 {
-    if (m_Entity != NULL)
+    if (m_Entity != nullptr)
     {
         Ogre::String info_text = "Model: " + m_Entity->getName();
 
-        if (m_Entity->getAllAnimationStates() != NULL && m_Entity->getAllAnimationStates()->hasAnimationState(name))
+        if (m_Entity->getAllAnimationStates() != nullptr && m_Entity->getAllAnimationStates()->hasAnimationState(name))
         {
             Ogre::AnimationStateIterator animations = m_Entity->getAllAnimationStates()->getAnimationStateIterator();
             while (animations.hasMoreElements() == true)
@@ -277,15 +277,15 @@ ViewerModule::PlayAnimation(const Ogre::String& name)
 void
 ViewerModule::Clear()
 {
-    if (m_Entity != NULL)
+    if (m_Entity != nullptr)
     {
         Ogre::Root::getSingleton().getSceneManager("Scene")->destroyEntity(m_Entity);
-        m_Entity = NULL;
+        m_Entity = nullptr;
     }
-    if (m_Walkmesh != NULL)
+    if (m_Walkmesh != nullptr)
     {
         delete m_Walkmesh;
-        m_Walkmesh = NULL;
+        m_Walkmesh = nullptr;
     }
 
     m_SceneNode->removeAndDestroyAllChildren();

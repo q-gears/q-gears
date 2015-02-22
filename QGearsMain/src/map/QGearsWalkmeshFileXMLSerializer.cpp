@@ -19,7 +19,7 @@ namespace QGears
     //--------------------------------------------------------------------------
     void WalkmeshFileXMLSerializer::readHeader( TiXmlNode *node )
     {
-        if( node == NULL || node->ValueStr() != "walkmesh" )
+        if( node == nullptr || node->ValueStr() != "walkmesh" )
         {
             OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
                 ,"not a valid walkmesh file, no <walkmesh> in root"

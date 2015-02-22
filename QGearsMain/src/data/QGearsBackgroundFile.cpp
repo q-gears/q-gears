@@ -64,8 +64,16 @@ namespace QGears
     void
     BackgroundFile::unloadImpl()
     {
-        memset( m_layers , 0, sizeof( m_layers  ) );
-        memset( m_palette, 0, sizeof( m_palette ) );
+        for (auto& layer : m_layers)
+        {
+            memset(&layer, 0, sizeof(layer));
+        }
+
+        for (auto& pal : m_palette)
+        {
+            memset(&pal, 0, sizeof(pal));
+        }
+
         for( size_t i(PAGE_COUNT); i--; )
         {
             m_pages[i].enabled = false;
