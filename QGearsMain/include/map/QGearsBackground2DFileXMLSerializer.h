@@ -52,6 +52,7 @@ namespace QGears
 
         static const String BLENDING_ALPHA;
         static const String BLENDING_ADD;
+        static const String BLENDING_SUBTRACT;
 
         template<typename ValueType> void
         readVector( TiXmlNode &node, const String &tag, std::vector<ValueType> &pDest )
