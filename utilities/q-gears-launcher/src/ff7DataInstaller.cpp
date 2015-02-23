@@ -192,16 +192,29 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                 for (QGears::BackgroundFile::SpriteData& sprite : layer.sprites)
                 {
                     std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("tile"));
+
+                    // Not sure why it needs to be * 3
                     xmlElement->SetAttribute("destination", Ogre::StringConverter::toString(sprite.dst.x * 3) + " " + Ogre::StringConverter::toString(sprite.dst.y * 3));
 
-                    // Where to get UVs??
-                    //sprite.dst.x; layer.width
-                    //sprite.dst.y;
+                    // Each tile is added to a big texture atlas with hard coded size of 1024x1024
+                    const float u0 = static_cast<float>(sprite.dst.x) / 1024.0f;
+                    const float v0 = static_cast<float>(sprite.dst.y) / 1024.0f;
 
-                    // sprite.depth;
+                    const float u1 = static_cast<float>(sprite.dst.x+sprite.width) / 1024.0f;
+                    const float v1 = static_cast<float>(sprite.dst.y+sprite.height) / 1024.0f;
 
-                    // Where to get blend mode??
+                    xmlElement->SetAttribute("uv", 
+                        Ogre::StringConverter::toString(u0) + " " + Ogre::StringConverter::toString(v0) + " " +
+                        Ogre::StringConverter::toString(u1) + " " + Ogre::StringConverter::toString(v1)
+                        );
 
+                    // TODO: Needs converting somehow
+                    xmlElement->SetAttribute("depth", "999"/* Ogre::StringConverter::toString(sprite.depth)*/);
+
+
+                    // TODO: Convert properly
+                    xmlElement->SetAttribute("blending", "alpha" /* Ogre::StringConverter::toString(sprite.blending)*/);
+                    
                     element->LinkEndChild(xmlElement.release());
                 }
                
