@@ -2840,6 +2840,8 @@ DatFile::DumpBackground( const Ogre::String& export_path, const Field& field, Mi
     export_text->Log( " clip=\"" + IntToString( 320 * 3 ) + " " + IntToString( 240 * 3 ) + "\"" );
     export_text->Log( ">\n" );
 
+    assert(width != 0);
+    assert(height != 0);
     full_image = CreateSurface( width, height );
     x_32 = 0; y_32 = 0; x_16 = 0; y_16 = 0; n_16 = 0;
 

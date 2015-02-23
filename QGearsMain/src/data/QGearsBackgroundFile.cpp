@@ -206,8 +206,9 @@ namespace QGears
                 }
                 const PaletteFile::Page& palette_page(palette->getPage(it->palette_page));
                 bool firstColorHidden(false);
-                if (it->palette_page < PALETTE_ENTRY_COUNT) {
-                    firstColorHidden = bool(m_palette[it->palette_page]);
+                if (it->palette_page < PALETTE_ENTRY_COUNT) 
+                {
+                    firstColorHidden = m_palette[it->palette_page] > 0;
                 }
                 for (uint16 y(SPRITE_HEIGHT); y--;)
                 {

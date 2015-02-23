@@ -96,7 +96,7 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                     color.a = 255;
                 }
 
-                memcpy( ret->pixels + x * 8 + ret->width * 4 * y + 0x00, &color, sizeof( ClutColor ) );
+                memcpy( ret->pixels.data() + x * 8 + ret->width * 4 * y + 0x00, &color, sizeof( ClutColor ) );
 
 
 
@@ -129,7 +129,7 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                     color.a = 255;
                 }
 
-                memcpy( ret->pixels + x * 8 + ret->width * 4 * y + 0x04, &color, sizeof( ClutColor ) );
+                memcpy( ret->pixels.data() + x * 8 + ret->width * 4 * y + 0x04, &color, sizeof( ClutColor ) );
             }
         }
     }
@@ -175,7 +175,7 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
                     color.a = 255;
                 }
 
-                memcpy( ret->pixels + x * 4 + ret->width * 4 * y, &color, sizeof( ClutColor ) );
+                memcpy( ret->pixels.data() + x * 4 + ret->width * 4 * y, &color, sizeof( ClutColor ) );
             }
         }
     }
