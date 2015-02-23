@@ -160,7 +160,10 @@ namespace QGears
         Ogre::LogManager::getSingleton().stream()
             << "Image Size: " << width << " x " << height
             << " sprite_count " << sprite_count;
-        size_t dst_x( 0 ), dst_y( 0 );
+        size_t dst_x(0), dst_y(0),
+                dst_x_16(0), dst_y_16(0),
+                dst_x_32(0), dst_y_32(0);
+        size_t dst_n_16(0);
         for( SpriteList::const_iterator it( sprites.begin() )
             ;it != sprites.end()
             ;++it)
@@ -172,6 +175,60 @@ namespace QGears
                 Ogre::LogManager::getSingleton().stream()
                     << "Error: referencing an disabled data page";
             }
+
+            // Position sprites in 32x32 blocks
+            if (it->width == 32)
+            {
+                dst_x = dst_x_32;
+                dst_y = dst_y_32;
+
+                dst_x_32 += 32;
+                if (dst_x_32 == width)
+                {
+                    dst_y_32 += 32;
+                    dst_x_32 = 0;
+                }
+            }
+            else if (it->width == 16)
+            {
+                // if we start new 16x16*4 block
+                if (dst_n_16 == 0)
+                {
+                    dst_x_16 = dst_x_32;
+                    dst_y_16 = dst_y_32;
+
+                    dst_x_32 += 32;
+                    if (dst_x_32 == width)
+                    {
+                        dst_y_32 += 32;
+                        dst_x_32 = 0;
+                    }
+                }
+
+                dst_x = dst_x_16;
+                dst_y = dst_y_16;
+
+                ++dst_n_16;
+                if (dst_n_16 == 1 || dst_n_16 == 3)
+                {
+                    dst_x_16 += 16;
+                }
+                else if (dst_n_16 == 2)
+                {
+                    dst_x_16 -= 16;
+                    dst_y_16 += 16;
+                }
+                else if (dst_n_16 == 4)
+                {
+                    dst_n_16 = 0;
+                }
+            }
+            else
+            {
+                Ogre::LogManager::getSingleton().stream()
+                    << "Error: sprite data with invalid size";
+            }
+
             if (data_page.value_size == 2)
             {
                 for (uint16 y(it->height); y--;)
@@ -251,13 +308,6 @@ namespace QGears
                         color[data_index] = colour.getAsARGB();
                     }
                 }
-            }
-
-            dst_x += it->width;
-            if (dst_x >= width)
-            {
-                dst_x = 0;
-                dst_y += it->height;
             }
         }
 
