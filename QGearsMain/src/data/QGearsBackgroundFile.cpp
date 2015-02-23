@@ -174,9 +174,9 @@ namespace QGears
             }
             if (data_page.value_size == 2)
             {
-                for (uint16 y(SPRITE_HEIGHT); y--;)
+                for (uint16 y(it->height); y--;)
                 {
-                    for (uint16 x(SPRITE_WIDTH); x--;)
+                    for (uint16 x(it->width); x--;)
                     {
                         size_t data_index((src.y + y) * PAGE_DATA_WIDTH + src.x + x);
                         if (data_index >= data_page.colors.size())
@@ -210,9 +210,9 @@ namespace QGears
                 {
                     firstColorHidden = m_palette[it->palette_page] > 0;
                 }
-                for (uint16 y(SPRITE_HEIGHT); y--;)
+                for (uint16 y(it->height); y--;)
                 {
-                    for (uint16 x(SPRITE_WIDTH); x--;)
+                    for (uint16 x(it->width); x--;)
                     {
                         size_t data_index((src.y + y) * PAGE_DATA_WIDTH + src.x + x);
                         if (data_index >= data_page.data.size())
@@ -253,11 +253,11 @@ namespace QGears
                 }
             }
 
-            dst_x += SPRITE_WIDTH;
+            dst_x += it->width;
             if (dst_x >= width)
             {
                 dst_x = 0;
-                dst_y += SPRITE_HEIGHT;
+                dst_y += it->height;
             }
         }
 
