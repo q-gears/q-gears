@@ -27,8 +27,8 @@ Console::Console():
     m_CursorPosition(0),
     m_CursorBlinkTime(0),
 
-    m_HistoryLine(-1),
-    m_HistorySize(32),
+    m_HistoryLineCycleIndex(-1),
+    m_MaxHistorySize(32),
 
     m_AutoCompletitionLine(0)
 {
@@ -51,17 +51,56 @@ Console::Console():
 
     LOG_TRIVIAL("Created console width " + Ogre::StringConverter::toString(m_ConsoleWidth) + ", height " + Ogre::StringConverter::toString(m_ConsoleHeight));
 
-    // add as frame and log listner
+    // add as frame and log listener
     Ogre::LogManager::getSingleton().getDefaultLog()->addListener(this);
+
+    LoadHistory();
 }
 
 
 Console::~Console()
 {
-    // remove as listner
+    // remove as listener
     Ogre::LogManager::getSingleton().getDefaultLog()->removeListener(this);
+    SaveHistory();
 }
 
+void Console::LoadHistory()
+{
+    LOG_TRIVIAL("Loading console_history.txt ...");
+
+    std::ifstream file("console_history.txt");
+    std::string historyLine;
+    while (std::getline(file, historyLine))
+    {
+        AddToHistory(historyLine);
+    }
+    std::reverse(m_History.begin(), m_History.end());
+}
+
+void Console::SaveHistory()
+{
+    std::ofstream file("console_history.txt");
+    if (!file.is_open())
+    {
+        LOG_ERROR("Failed to open console_history.txt for writing");
+        return;
+    }
+    for (auto& historyLine : m_History)
+    {
+        file << historyLine << "\r\n";
+    }
+}
+
+void Console::AddToHistory(const Ogre::String& history)
+{
+    if (m_History.size() >= m_MaxHistorySize)
+    {
+        m_History.pop_back();
+    }
+    m_History.push_front(history);
+    m_HistoryLineCycleIndex = -1;
+}
 
 void
 Console::Input(const QGears::Event& event)
@@ -120,18 +159,18 @@ Console::Input(const QGears::Event& event)
     // history up
     else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_UP)
     {
-        if(m_HistoryLine < (int)m_History.size() - 1)
+        if(m_HistoryLineCycleIndex < (int)m_History.size() - 1)
         {
-            ++m_HistoryLine;
+            ++m_HistoryLineCycleIndex;
             SetInputLineFromHistory();
         }
     }
     // history down
     else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_DOWN)
     {
-        if(m_HistoryLine > 0)
+        if(m_HistoryLineCycleIndex > 0)
         {
-            --m_HistoryLine;
+            --m_HistoryLineCycleIndex;
             SetInputLineFromHistory();
         }
     }
@@ -736,12 +775,7 @@ Console::ResetAutoCompletion()
 void
 Console::AddInputToHistory()
 {
-    if(m_History.size() >= m_HistorySize)
-    {
-        m_History.pop_back();
-    }
-    m_History.push_front(m_InputLine);
-    m_HistoryLine = -1;
+    AddToHistory(m_InputLine);
 }
 
 
@@ -753,7 +787,7 @@ Console::SetInputLineFromHistory()
     std::list<Ogre::String>::iterator i = m_History.begin();
     for(int count = 0; i != m_History.end(); ++i, ++count)
     {
-        if(count == m_HistoryLine)
+        if(count == m_HistoryLineCycleIndex)
         {
             m_InputLine = (*i);
             m_CursorPosition = m_InputLine.size();
