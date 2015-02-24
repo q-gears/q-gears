@@ -2,8 +2,9 @@
 #include "core/UiFont.h"
 
 
-UiFont::UiFont(const Ogre::String& name):
+UiFont::UiFont(const Ogre::String& name, const Ogre::String& language):
     m_Name(name),
+    m_Language(language),
     m_ImageName(""),
     m_ImageWidth(0),
     m_ImageHeight(0),
@@ -21,6 +22,13 @@ const Ogre::String&
 UiFont::GetName() const
 {
     return m_Name;
+}
+
+
+const Ogre::String&
+UiFont::GetLanguage() const
+{
+    return m_Language;
 }
 
 

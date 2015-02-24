@@ -21,10 +21,11 @@ struct UiCharData
 class UiFont
 {
 public:
-    UiFont( const Ogre::String& name );
+    UiFont( const Ogre::String& name, const Ogre::String& language );
     virtual ~UiFont();
 
     const Ogre::String& GetName() const;
+    const Ogre::String& GetLanguage() const;
 
     void SetImage( const Ogre::String& image, const int width, const int height );
     const Ogre::String& GetImageName() const;
@@ -39,6 +40,7 @@ public:
 
 private:
     Ogre::String              m_Name;
+    Ogre::String              m_Language;
 
     Ogre::String              m_ImageName;
     int                       m_ImageWidth;

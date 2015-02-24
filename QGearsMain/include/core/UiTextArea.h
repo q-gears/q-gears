@@ -11,21 +11,6 @@
 #include "UiSprite.h"
 #include "UiWidget.h"
 
-
-struct TextStyle
-{
-    Ogre::ColourValue colour;
-};
-
-
-
-struct TextBlockData
-{
-    float local_x1;
-    float local_y1;
-    int position;
-};
-
 enum TextState
 {
     TS_SHOW_TEXT,
@@ -76,6 +61,7 @@ struct TextVariable
 };
 
 
+
 class UiTextArea : public UiWidget
 {
 public:
@@ -88,28 +74,27 @@ public:
     virtual void Render();
     virtual void UpdateTransformation();
 
+    void UpdateGeometry();
+
+    void InputPressed();
+    void InputRepeated();
+
     enum TextAlign
     {
         LEFT,
         RIGHT,
         CENTER
     };
-
-    void InputPressed();
-    void InputRepeated();
     void SetTextAlign( const TextAlign align );
+    void SetPadding( const float top, const float right, const float bottom, const float left );
     void SetText( const Ogre::UTFString& text );
     void SetText( TiXmlNode* text );
-    void SetTextPrintSpeed(const float speed);
-    void SetTextScrollTime(const float time);
+    void TextClear();
+    void RemoveSpritesFromText( const unsigned int end );
     void SetFont( const Ogre::String& font );
     const UiFont* GetFont() const;
-    void UpdateGeometry();
-    float GetTextLengthFromNode( TiXmlNode* node ) const;
-    float GetTextLength( const Ogre::UTFString& text ) const;
-    float GetTextWidth() const;
-    void SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const TextStyle& style );
-    void SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, const TextStyle& style );
+    void SetTextPrintSpeed( const float speed );
+    void SetTextScrollTime( const float time );
     void SetVariable( const Ogre::String& name, const Ogre::UTFString& value );
     Ogre::UTFString GetVariable( const Ogre::String& name ) const;
     TextState GetTextState() const;
@@ -118,6 +103,10 @@ public:
     float GetPauseTime() const;
 
 private:
+    float GetTextWidth() const;
+    void PrepareTextFromNode( TiXmlNode* node, const Ogre::ColourValue& colour );
+    void PrepareTextFromText( const Ogre::UTFString& text, const Ogre::ColourValue& colour );
+
     UiTextArea();
     void CreateVertexBuffer();
     void DestroyVertexBuffer();
@@ -133,10 +122,8 @@ private:
 
     UiFont*                             m_Font;
     TextAlign                           m_TextAlign;
-    Ogre::UTFString                     m_Text;
-    TiXmlNode*                          m_TextNode;
 
-    //std::vector< TextChar >             m_Text;
+    std::vector< TextChar >             m_Text;
     float                               m_TextLimit;
     float                               m_TextPrintSpeed;
     float                               m_TextPrintSpeedMod;
@@ -160,6 +147,7 @@ private:
     bool                                m_Timer;
     int                                 m_TimerTime;
 };
+
 
 inline
 void WriteTriangleVertex(float *&writeIterator, const Ogre::Vector3 &coord,
