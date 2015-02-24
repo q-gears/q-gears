@@ -68,8 +68,8 @@ namespace QGears
             uint16 unknown_04[2]; // Unused
             Pixel src;
             Pixel src2; // used for special effects pages, when data_page2 != 0, it must be used instead of src
-            uint16 width; // Do not use
-            uint16 height; // Do not use
+            uint16 width;
+            uint16 height;
 
             uint16 palette_page;
             uint16 depth; // <=> Z
