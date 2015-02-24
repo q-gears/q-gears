@@ -99,6 +99,7 @@ namespace QGears
 
     private:
         Header  m_header;
+        size_t m_layer_index;
     };
 }
 

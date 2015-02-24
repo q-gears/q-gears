@@ -41,7 +41,7 @@ namespace QGears
 
     //---------------------------------------------------------------------
     BackgroundFileSerializer::BackgroundFileSerializer() :
-        Serializer()
+        Serializer(), m_layer_index(BackgroundFile::LAYER_COUNT)
     {
     }
 
@@ -150,6 +150,7 @@ namespace QGears
             readShorts( stream, pDest->unknown_0E, 4 );
         }
         stream->skip( 2 * 2 ); // 2 * uint16 unused;
+        m_layer_index = layer_index;
         readVector( stream, pDest->sprites, sprite_count );
     }
 
@@ -163,6 +164,19 @@ namespace QGears
         readObject( stream, pDest.src2 );
         readShort( stream, pDest.width );
         readShort( stream, pDest.height );
+
+        uint16 size;
+        // width and height are sometimes incorrect in the file
+        if ( m_layer_index < 2 ) {
+            size = 16;
+        } else if ( m_layer_index < BackgroundFile::LAYER_COUNT) {
+            size = 32;
+        } else {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
+                ,"m_layer_index not set correctly"
+                ,"BackgroundFileSerializer::readObject" );
+        }
+        pDest.width = pDest.height = size;
 
         readShort( stream, pDest.palette_page );
         readShort( stream, pDest.depth );
