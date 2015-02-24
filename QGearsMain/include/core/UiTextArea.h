@@ -8,8 +8,8 @@
 #include <tinyxml/tinyxml.h>
 
 #include "UiFont.h"
+#include "UiSprite.h"
 #include "UiWidget.h"
-
 
 
 struct TextStyle
@@ -26,6 +26,54 @@ struct TextBlockData
     int position;
 };
 
+enum TextState
+{
+    TS_SHOW_TEXT,
+    TS_SCROLL_TEXT,
+    TS_PAUSE_OK,
+    TS_PAUSE_TIME,
+    TS_DONE,
+    TS_OVERFLOW,
+    TS_NEXT_PAGE,
+};
+
+
+
+struct TextChar
+{
+    TextChar():
+        char_code( 0 ),
+        colour( Ogre::ColourValue::White ),
+        skip( false ),
+        variable( "" ),
+        variable_len( 0 ),
+        pause_ok( false ),
+        pause_time( 0.0f ),
+        next_page( false ),
+        sprite( NULL ),
+        sprite_y( 0 )
+    {
+    }
+
+    int char_code;
+    Ogre::ColourValue colour;
+    bool skip;
+    Ogre::String variable;
+    unsigned int variable_len;
+    bool pause_ok;
+    float pause_time;
+    bool next_page;
+    UiSprite* sprite;
+    float sprite_y;
+};
+
+
+
+struct TextVariable
+{
+    Ogre::String name;
+    Ogre::UTFString value;
+};
 
 
 class UiTextArea : public UiWidget
@@ -46,15 +94,28 @@ public:
         RIGHT,
         CENTER
     };
+
+    void InputPressed();
+    void InputRepeated();
     void SetTextAlign( const TextAlign align );
     void SetText( const Ogre::UTFString& text );
     void SetText( TiXmlNode* text );
+    void SetTextPrintSpeed(const float speed);
+    void SetTextScrollTime(const float time);
     void SetFont( const Ogre::String& font );
+    const UiFont* GetFont() const;
     void UpdateGeometry();
     float GetTextLengthFromNode( TiXmlNode* node ) const;
     float GetTextLength( const Ogre::UTFString& text ) const;
+    float GetTextWidth() const;
     void SetTextGeometryFromNode( TiXmlNode* node, TextBlockData& data, const TextStyle& style );
     void SetTextGeometry( const Ogre::UTFString& text, TextBlockData& data, const TextStyle& style );
+    void SetVariable( const Ogre::String& name, const Ogre::UTFString& value );
+    Ogre::UTFString GetVariable( const Ogre::String& name ) const;
+    TextState GetTextState() const;
+    float GetTextLimit() const;
+    unsigned int GetTextSize() const;
+    float GetPauseTime() const;
 
 private:
     UiTextArea();
@@ -74,6 +135,30 @@ private:
     TextAlign                           m_TextAlign;
     Ogre::UTFString                     m_Text;
     TiXmlNode*                          m_TextNode;
+
+    //std::vector< TextChar >             m_Text;
+    float                               m_TextLimit;
+    float                               m_TextPrintSpeed;
+    float                               m_TextPrintSpeedMod;
+    TextState                           m_TextState;
+    std::vector< TextVariable >         m_TextVariable;
+
+    float                               m_TextScrollTime;
+    float                               m_TextYOffset;
+    float                               m_TextYOffsetTarget;
+    float                               m_PauseTime;
+    unsigned int                        m_NextPageStart;
+
+    bool                                m_NextPressed;
+    bool                                m_NextRepeated;
+
+    float                               m_PaddingTop;
+    float                               m_PaddingRight;
+    float                               m_PaddingBottom;
+    float                               m_PaddingLeft;
+
+    bool                                m_Timer;
+    int                                 m_TimerTime;
 };
 
 inline

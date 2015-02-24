@@ -10,7 +10,6 @@
 #include "UiWidget.h"
 
 
-
 class UiManager : public Ogre::RenderQueueListener, public Ogre::Singleton< UiManager >
 {
 public:
@@ -39,6 +38,7 @@ public:
     void renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation );
 
 private:
+    std::vector< UiWidget* > m_Widgets;
     struct UiText
     {
         Ogre::String name;
@@ -52,9 +52,7 @@ private:
         TiXmlNode* node;
     };
     std::vector< UiPrototype > m_Prototypes;
-    std::vector< UiWidget* > m_Widgets;
 };
-
 
 
 #endif // UI_MANAGER_H

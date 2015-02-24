@@ -32,10 +32,33 @@ UiTextArea::Initialise()
 {
     m_Font = nullptr;
     m_MaxLetters = 0;
-    m_TextAlign = UiTextArea::LEFT;
     m_Text = "";
+    m_TextAlign = UiTextArea::LEFT;
     m_TextNode = nullptr;
+    m_TextLimit = 0;
+    m_TextPrintSpeed = -1; // -1 instant
+    m_TextPrintSpeedMod = 1;
+    m_TextState = TS_DONE;
+    m_TextYOffset = 0;
+    m_TextYOffsetTarget = 0;
+    m_PauseTime = 0;
+    m_NextPageStart = 0;
 
+    m_PaddingTop = 0;
+    m_PaddingRight = 0;
+    m_PaddingBottom = 0;
+    m_PaddingLeft = 0;
+
+    m_NextPressed = false;
+    m_NextRepeated = false;
+
+    m_Timer = false;
+    m_TimerTime = 0;
+
+    TextVariable var;
+    var.name = "UITextAreaTimer";
+    var.value = "00:00";
+    m_TextVariable.push_back( var );
     m_SceneManager = Ogre::Root::getSingleton().getSceneManager("Scene");
     m_RenderSystem = Ogre::Root::getSingletonPtr()->getRenderSystem();
 
@@ -82,6 +105,21 @@ UiTextArea::UpdateTransformation()
 
 
 void
+UiTextArea::InputPressed()
+{
+    m_NextPressed = true;
+}
+
+
+
+void
+UiTextArea::InputRepeated()
+{
+    m_NextRepeated = true;
+}
+
+
+void
 UiTextArea::SetTextAlign(const TextAlign align)
 {
     m_TextAlign = align;
@@ -92,6 +130,15 @@ void
 UiTextArea::SetText(const Ogre::UTFString& text)
 {
     m_Text = text;
+//    TiXmlDocument doc;
+//    Ogre::UTFString xml_text = "<container>" + text + "</container>";
+//    doc.Parse( xml_text.asUTF8_c_str(), 0, TIXML_ENCODING_UTF8 );
+//    if( doc.Error() == true )
+//    {
+//        LOG_ERROR( "Can't parse text \"" + text + "\". TinyXml Error: " + doc.ErrorDesc() );
+//        return;
+//    }
+//    SetText( doc.RootElement() );
 }
 
 
@@ -99,6 +146,20 @@ void
 UiTextArea::SetText(TiXmlNode* text)
 {
     m_TextNode = text;
+}
+
+
+void
+UiTextArea::SetTextPrintSpeed(const float speed)
+{
+    m_TextPrintSpeed = speed;
+}
+
+
+void
+UiTextArea::SetTextScrollTime(const float time)
+{
+    m_TextScrollTime = time;
 }
 
 
@@ -131,6 +192,140 @@ UiTextArea::SetFont(const Ogre::String& font)
 }
 
 
+const UiFont*
+UiTextArea::GetFont() const
+{
+    return m_Font;
+}
+
+
+void
+UiTextArea::SetVariable( const Ogre::String& name, const Ogre::UTFString& value )
+{
+//    if( name == "" )
+//    {
+//        return;
+//    }
+
+//    bool update = false;
+
+//    for( unsigned int i = 0; i < m_TextVariable.size(); ++i )
+//    {
+//        if( m_TextVariable[ i ].name == name )
+//        {
+//            m_TextVariable[ i ].value = value;
+//            update = true;
+
+//            for( unsigned int j = 0; j < m_Text.size(); ++j )
+//            {
+//                if( m_Text[ j ].variable == name )
+//                {
+//                    m_Text.erase( m_Text.begin() + j + 1, m_Text.begin() + j + 1 + m_Text[ j ].variable_len );
+//                }
+//            }
+//        }
+//    }
+
+//    if( update == false )
+//    {
+//        TextVariable var;
+//        var.name = name;
+//        var.value = value;
+//        m_TextVariable.push_back( var );
+//    }
+
+//    for( unsigned int i = 0; i < m_Text.size(); ++i )
+//    {
+//        if( m_Text[ i ].variable == name )
+//        {
+//            m_Text[ i ].variable_len = value.size();
+//            unsigned int j = 0;
+//            for( ; j < m_Text[ i ].variable_len; ++j )
+//            {
+//                TextChar text_char;
+//                text_char.char_code = value[ j ];
+//                text_char.colour = m_Text[ i ].colour;
+//                m_Text.insert( m_Text.begin() + i + 1 + j, text_char );
+//            }
+
+//            i += j;
+//        }
+//    }
+
+//    m_UpdateTransformation = true;
+}
+
+
+
+Ogre::UTFString
+UiTextArea::GetVariable( const Ogre::String& name ) const
+{
+//    for( unsigned int i = 0; i < m_TextVariable.size(); ++i )
+//    {
+//        if( m_TextVariable[ i ].name == name )
+//        {
+//            return m_TextVariable[ i ].value;
+//        }
+//    }
+
+//    return "";
+}
+
+
+TextState
+UiTextArea::GetTextState() const
+{
+    return m_TextState;
+}
+
+
+float
+UiTextArea::GetTextLimit() const
+{
+    return m_TextLimit;
+}
+
+
+unsigned int
+UiTextArea::GetTextSize() const
+{
+    return m_Text.size();
+}
+
+
+//float
+//UiTextArea::GetTextWidth() const
+//{
+//    float width = 0;
+//    float width_max = 0;
+
+//    for( unsigned int i = 0; i < m_Text.size(); ++i )
+//    {
+//        UiCharData char_data = m_Font->GetCharData( m_Text[ i ].char_code );
+
+//        // if we go to next row store max previous row width
+//        if( char_data.char_code == 10 )
+//        {
+//            width_max = ( width > width_max ) ? width : width_max;
+//            width = 0;
+//        }
+//        else
+//        {
+//            width += char_data.pre + char_data.width + char_data.post;
+//        }
+//    }
+
+//    return ( width > width_max ) ? width : width_max;
+//}
+
+
+float
+UiTextArea::GetPauseTime() const
+{
+    return m_PauseTime;
+}
+
+
 void
 UiTextArea::UpdateGeometry()
 {
@@ -145,7 +340,6 @@ UiTextArea::UpdateGeometry()
         LOG_ERROR("Max number of text reached in \"" + m_PathName + "\". Can't render text \"" + m_Text + "\". Max number of letters is " + Ogre::StringConverter::toString(m_MaxLetters) + ".");
         return;
     }
-
     float length = 0;
     if(m_TextAlign != LEFT)
     {
@@ -157,21 +351,17 @@ UiTextArea::UpdateGeometry()
         {
             length = GetTextLength(m_Text);
         }
-
         if(m_TextAlign == CENTER)
         {
             length /= 2;
         }
     }
-
     TextBlockData data;
     data.local_x1 = -m_FinalOrigin.x - length;
     data.local_y1 = -m_FinalOrigin.y;
     data.position = 0;
-
     TextStyle style;
     style.colour = m_Colour1;
-
     if(m_TextNode != nullptr)
     {
         SetTextGeometryFromNode(m_TextNode, data, style);
@@ -181,6 +371,8 @@ UiTextArea::UpdateGeometry()
         SetTextGeometry(m_Text, data, style);
     }
 }
+
+
 
 
 float
@@ -220,9 +412,9 @@ float
 UiTextArea::GetTextLength(const Ogre::UTFString& text) const
 {
     float length = 0;
-    for(size_t i = 0; i < text.size(); ++i)
+    for(const auto &c : text)
     {
-        UiCharData char_data = m_Font->GetCharData(text[i]);
+        UiCharData char_data = m_Font->GetCharData(c);
         length += (char_data.pre + char_data.width + char_data.post) * m_FinalScale.x * m_ScreenHeight / 720.0f;
     }
 
@@ -338,7 +530,7 @@ UiTextArea::SetTextGeometry(const Ogre::UTFString& text, TextBlockData& data, co
         Ogre::ColourValue colour = style.colour;
 
         // draw two triangles with a colour and texture.
-        WriteGlyph(writeIterator, coords, colour, texture);
+        WriteGlyph(writeIterator, coords, Ogre::ColourValue::White, texture);
         m_RenderOp.vertexData->vertexCount += 6;
         data.position += 1;
     }

@@ -4,6 +4,7 @@
 #include "core/CameraManager.h"
 #include "core/ConfigVar.h"
 #include "core/DebugDraw.h"
+#include "core/DialogsManager.h"
 #include "core/EntityManager.h"
 #include "core/EntityModel.h"
 #include "core/InputManager.h"
@@ -340,6 +341,7 @@ EntityManager::Clear()
 {
     m_Walkmesh.Clear();
     m_Background2D.Clear();
+    DialogsManager::getSingleton().Clear();
 
     for(unsigned int i = 0; i < m_Entity.size(); ++i)
     {

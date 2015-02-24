@@ -1,5 +1,6 @@
 #include "Console.h"
 #include "Logger.h"
+#include "DialogsManager.h"
 #include "Entity.h"
 #include "EntityManager.h"
 #include "Timer.h"
@@ -153,6 +154,27 @@ ScriptManager::InitBinds()
             ]
     ];
 
+    // dialogs
+    luabind::module( m_LuaState )
+    [
+        luabind::class_< DialogsManager >( "Dialog" )
+            .def( "show_dialog", ( void( DialogsManager::* )( const char*, const char*, const int, const int ) ) &DialogsManager::ShowDialog )
+            .def( "show_text", ( void( DialogsManager::* )( const char*, const char*, const int, const int, const int, const int ) ) &DialogsManager::ShowText )
+            .def( "sync", ( int( DialogsManager::* )( const char* ) ) &DialogsManager::Sync, luabind::yield )
+            .def( "set_variable", ( void( DialogsManager::* )( const char*, const char*, const char* ) ) &DialogsManager::SetVariable )
+            .def( "hide", ( void( DialogsManager::* )( const char* ) ) &DialogsManager::Hide )
+            .def( "set_clickable", ( void( DialogsManager::* )( const char*, const bool ) ) &DialogsManager::SetClickable )
+            .def( "set_cursor", ( void( DialogsManager::* )( const char*, const int, const int ) ) &DialogsManager::SetCursor )
+            .def( "get_cursor", ( int( DialogsManager::* )( const char* ) ) &DialogsManager::GetCursor )
+
+            .enum_("constants")
+            [
+                luabind::value("SOLID", MSL_SOLID),
+                luabind::value("TRANSPARENT", MSL_TRANSPARENT),
+                luabind::value("NONE", MSL_NONE)
+            ]
+    ];
+
     // ui widget access
     luabind::module( m_LuaState )
     [
@@ -212,7 +234,5 @@ ScriptManager::InitBinds()
     luabind::globals( m_LuaState )[ "world_map_module" ] = boost::ref( *( QGears::WorldMapModule::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "timer" ] = boost::ref( *( Timer::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "script" ] = boost::ref( *this );
-
-
-
+    luabind::globals( m_LuaState )[ "message" ] = boost::ref( *( DialogsManager::getSingletonPtr() ) );
 }
