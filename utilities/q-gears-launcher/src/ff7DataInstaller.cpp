@@ -183,14 +183,47 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         auto& layers = bg->getLayers();
         const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
 
+       
+
+        // TODO: Should be the width/height of the actual field image, not the texture atlas
+        int width = bgImage->getWidth();
+        int height = bgImage->getHeight();
+
+        // set camera for depth calculation
+        Ogre::Vector3 position = camMatrix->getPosition();
+        Ogre::Quaternion orientation = camMatrix->getOrientation();
+        Ogre::Degree fov = camMatrix->getFov(90);
+
+
+        // TODO: Needs to be loaded from "doors and gateways" section
+        int min_x = 0;
+        int min_y = 0;
+        int max_x = 0;
+        int max_y = 0;
+        //GetScreenRange(min_x, min_y, max_x, max_y);
+
+        // <background2d image="md1_2.png" position="-4990.38 -29075.1 -3384.11" orientation="0.887914 0.381507 0.101529 0.23619" fov="90" range="0 0 0 0" clip="960 720">
+
+        // <background2d image="maps/ffvii/field/md1_2.png" position="39.027 227.173 26.4208" orientation="0.887914 0.381507 0.101529 0.23619" fov="14.3239" range="-768 -768 768 768" clip="960 720">
+
+        // TODO: These are not fully correct yet, some need to be scaled down etc
+        element->SetAttribute("image", (outDir + "/" + field->getName() + ".png"));
+        element->SetAttribute("position", Ogre::StringConverter::toString(position));
+        element->SetAttribute("orientation", Ogre::StringConverter::toString(orientation));
+        element->SetAttribute("fov", Ogre::StringConverter::toString(fov));
+        element->SetAttribute("range", std::to_string(min_x) + " " + std::to_string(min_y) + " " + std::to_string(max_x) + " " + std::to_string(max_y));
+        element->SetAttribute("clip", std::to_string(320 * 3) + " " + std::to_string(240 * 3));
+   
+
+
         // Write out the *_BG.XML data
-        for (auto& layer : layers)
+        for (const auto& layer : layers)
         {
             // TODO: Should we only output tiles to construct enabled layers?
           //  if (layer.enabled)
             {
                
-                for (QGears::BackgroundFile::SpriteData& sprite : layer.sprites)
+                for (const QGears::BackgroundFile::SpriteData& sprite : layer.sprites)
                 {
                     std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("tile"));
 
