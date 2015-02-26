@@ -179,13 +179,14 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         TiXmlDocument doc;
         std::unique_ptr<TiXmlElement> element(new TiXmlElement("background2d"));
 
+        // TODO: Write out the required attributes: image, position, orientation, fov, range and clip
         auto& layers = bg->getLayers();
         const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
 
-
-        // TODO: Write out the *_BG.XML data
+        // Write out the *_BG.XML data
         for (auto& layer : layers)
         {
+            // TODO: Should we only output tiles to construct enabled layers?
           //  if (layer.enabled)
             {
                
@@ -194,30 +195,50 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                     std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("tile"));
 
                     // Not sure why it needs to be * 3
-                    xmlElement->SetAttribute("destination", Ogre::StringConverter::toString(sprite.dst.x * 3) + " " + Ogre::StringConverter::toString(sprite.dst.y * 3));
+                    xmlElement->SetAttribute("destination",
+                        Ogre::StringConverter::toString(sprite.dst.x * 3) + " " + 
+                        Ogre::StringConverter::toString(sprite.dst.y * 3));
 
-                    // Each tile is added to a big texture atlas with hard coded size of 1024x1024
-                    const float u0 = static_cast<float>(sprite.dst.x) / 1024.0f;
-                    const float v0 = static_cast<float>(sprite.dst.y) / 1024.0f;
+                    xmlElement->SetAttribute("width", Ogre::StringConverter::toString(sprite.width * 3));
+                    xmlElement->SetAttribute("height", Ogre::StringConverter::toString(sprite.height * 3));
 
-                    const float u1 = static_cast<float>(sprite.dst.x+sprite.width) / 1024.0f;
-                    const float v1 = static_cast<float>(sprite.dst.y+sprite.height) / 1024.0f;
+                    // Each tile is added to a big texture atlas with hard coded size of 1024x1024, convert UV's to the 0.0f to 1.0f range
+                    const float u0 = static_cast<float>(sprite.src.x) / bgImage->getWidth();
+                    const float v0 = static_cast<float>(sprite.src.y) / bgImage->getHeight();
+
+                    const float u1 = static_cast<float>(sprite.src.x + sprite.width) / bgImage->getWidth();
+                    const float v1 = static_cast<float>(sprite.src.y + sprite.height) / bgImage->getHeight();
 
                     xmlElement->SetAttribute("uv", 
                         Ogre::StringConverter::toString(u0) + " " + Ogre::StringConverter::toString(v0) + " " +
                         Ogre::StringConverter::toString(u1) + " " + Ogre::StringConverter::toString(v1)
                         );
 
-                    // TODO: Needs converting somehow
-                    xmlElement->SetAttribute("depth", "999"/* Ogre::StringConverter::toString(sprite.depth)*/);
+                    // TODO: Figure out how to scale this value correctly
+                    xmlElement->SetAttribute("depth", "999" /* Ogre::StringConverter::toString(static_cast<float>(sprite.depth) / (4096.0f/10.0f))*/);
 
-
-                    // TODO: Convert properly
-                    xmlElement->SetAttribute("blending", "alpha" /* Ogre::StringConverter::toString(sprite.blending)*/);
+                    // TODO: Copied from DatFile::AddTile - add to common method
+                    Ogre::String blending_str = "";
+                    if (sprite.blending == 0)
+                    {
+                        blending_str = "alpha";
+                    }
+                    else if (sprite.blending == 1)
+                    {
+                        blending_str = "add";
+                    }
+                    else if (sprite.blending == 2)
+                    {
+                        blending_str = "subtract";
+                    }
+                    else
+                    {
+                        blending_str = "unknown";
+                    }
+                    xmlElement->SetAttribute("blending", blending_str);
                     
                     element->LinkEndChild(xmlElement.release());
                 }
-               
             }
         }
         doc.LinkEndChild(element.release());

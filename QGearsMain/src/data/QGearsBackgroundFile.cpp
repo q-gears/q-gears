@@ -126,23 +126,27 @@ namespace QGears
 
     //---------------------------------------------------------------------
     void
-    BackgroundFile::addAllSprites( SpriteList& sprites ) const
+        BackgroundFile::addAllSprites(SpritePtrList& sprites)
     {
         for( size_t i(0); i < LAYER_COUNT; ++i )
         {
             if( m_layers[i].enabled )
             {
-                sprites.insert( sprites.end(), m_layers[i].sprites.begin(), m_layers[i].sprites.end() );
+                for (auto& it : m_layers[i].sprites)
+                {
+                    SpriteData* ptr = &it;
+                    sprites.push_back(ptr);
+                }
             }
         }
     }
 
     //---------------------------------------------------------------------
     Ogre::Image*
-    BackgroundFile::createImage( const PaletteFilePtr &palette ) const
+    BackgroundFile::createImage( const PaletteFilePtr &palette )
     {
         assert( !palette.isNull() );
-        SpriteList sprites;
+        SpritePtrList sprites;
         addAllSprites( sprites );
 
         size_t sprite_count( sprites.size() );
@@ -160,16 +164,19 @@ namespace QGears
         Ogre::LogManager::getSingleton().stream()
             << "Image Size: " << width << " x " << height
             << " sprite_count " << sprite_count;
-        size_t dst_x(0), dst_y(0),
+        int dst_x(0), dst_y(0),
                 dst_x_16(0), dst_y_16(0),
                 dst_x_32(0), dst_y_32(0);
-        size_t dst_n_16(0);
-        for( SpriteList::const_iterator it( sprites.begin() )
-            ;it != sprites.end()
+        int dst_n_16(0);
+
+        for (auto it(sprites.begin())
+            ; it != sprites.end()
             ;++it)
         {
-            const Page& data_page( m_pages[it->data_page] );
-            const Pixel& src(it->src);
+            SpriteData& sprite = **it;
+
+            const Page& data_page(m_pages[sprite.data_page]);
+            const Pixel& src(sprite.src);
             if (!data_page.enabled)
             {
                 Ogre::LogManager::getSingleton().stream()
@@ -177,7 +184,7 @@ namespace QGears
             }
 
             // Position sprites in 32x32 blocks
-            if (it->width == 32)
+            if (sprite.width == 32)
             {
                 dst_x = dst_x_32;
                 dst_y = dst_y_32;
@@ -189,7 +196,7 @@ namespace QGears
                     dst_x_32 = 0;
                 }
             }
-            else if (it->width == 16)
+            else if (sprite.width == 16)
             {
                 // if we start new 16x16*4 block
                 if (dst_n_16 == 0)
@@ -231,9 +238,9 @@ namespace QGears
 
             if (data_page.value_size == 2)
             {
-                for (uint16 y(it->height); y--;)
+                for (uint16 y((*it)->height); y--;)
                 {
-                    for (uint16 x(it->width); x--;)
+                    for (uint16 x((*it)->width); x--;)
                     {
                         size_t data_index((src.y + y) * PAGE_DATA_WIDTH + src.x + x);
                         if (data_index >= data_page.colors.size())
@@ -256,26 +263,24 @@ namespace QGears
             }
             else if (data_page.value_size == 1)
             {
-                if (it->palette_page >= palette->getPages().size())
+                if (sprite.palette_page >= palette->getPages().size())
                 {
-                    Ogre::LogManager::getSingleton().stream()
-                        << "Error: palette page Index out of Bounds " << it->palette_page;
+                    Ogre::LogManager::getSingleton().stream() << "Error: palette page Index out of Bounds " << sprite.palette_page;
                 }
-                const PaletteFile::Page& palette_page(palette->getPage(it->palette_page));
+                const PaletteFile::Page& palette_page(palette->getPage(sprite.palette_page));
                 bool firstColorHidden(false);
-                if (it->palette_page < PALETTE_ENTRY_COUNT) 
+                if (sprite.palette_page < PALETTE_ENTRY_COUNT)
                 {
-                    firstColorHidden = m_palette[it->palette_page] > 0;
+                    firstColorHidden = m_palette[sprite.palette_page] > 0;
                 }
-                for (uint16 y(it->height); y--;)
+                for (uint16 y(sprite.height); y--;)
                 {
-                    for (uint16 x(it->width); x--;)
+                    for (uint16 x(sprite.width); x--;)
                     {
                         size_t data_index((src.y + y) * PAGE_DATA_WIDTH + src.x + x);
                         if (data_index >= data_page.data.size())
                         {
-                            Ogre::LogManager::getSingleton().stream()
-                                << "Error: data page Index out of Bounds " << data_index;
+                            Ogre::LogManager::getSingleton().stream() << "Error: data page Index out of Bounds " << data_index;
                         }
                         uint8 index(data_page.data.at(data_index));
                         if (index >= palette_page.size())
@@ -308,7 +313,13 @@ namespace QGears
                         color[data_index] = colour.getAsARGB();
                     }
                 }
+                
             }
+
+            // Source in the texture atlas is where we just copied it to
+            sprite.src.x = dst_x;
+            sprite.src.y = dst_y;
+
         }
 
         Ogre::DataStreamPtr stream( buffer );

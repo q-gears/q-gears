@@ -85,6 +85,7 @@ namespace QGears
 
 
         typedef std::vector<SpriteData> SpriteList;
+        typedef std::vector<SpriteData*> SpritePtrList;
 
         struct Layer
         {
@@ -118,9 +119,9 @@ namespace QGears
         std::array<uint8, PALETTE_ENTRY_COUNT>& getPalette(void) { return m_palette; }
         std::array<Page, PAGE_COUNT>&  getPages(void) { return m_pages; }
 
-        virtual Ogre::Image*        createImage     ( const PaletteFilePtr &palette ) const;
+        Ogre::Image*        createImage     ( const PaletteFilePtr &palette );
 
-        virtual void addAllSprites( SpriteList& sprites ) const;
+        void addAllSprites( SpritePtrList& sprites ) ;
 
     protected:
         virtual void loadImpl();

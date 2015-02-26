@@ -67,18 +67,18 @@ namespace QGears
 
         TileList& tiles( background_2d->getTiles() );
         BackgroundFilePtr background( m_flevel_file.getBackground() );
-        SpriteList sprites;
+        BackgroundFile::SpritePtrList sprites;
         background->addAllSprites( sprites );
 
-        SpriteList::const_iterator it    ( sprites.begin() );
-        SpriteList::const_iterator it_end( sprites.end() );
+        auto it    ( sprites.begin() );
+        auto it_end( sprites.end() );
         Ogre::Real step( BackgroundFile::SPRITE_WIDTH / 1024.0 );
         Ogre::Vector4   uv( 0, 0, step, step );
         Ogre::Vector4   col( step, 0, step, 0 );
         Ogre::Vector4   row( 0, step, 0, step );
         while( it != it_end )
         {
-            const SpriteData& sprite( *it );
+            const SpriteData& sprite( **it );
             Tile tile;
             tile.width  = BackgroundFile::SPRITE_WIDTH;
             tile.height = BackgroundFile::SPRITE_HEIGHT;
