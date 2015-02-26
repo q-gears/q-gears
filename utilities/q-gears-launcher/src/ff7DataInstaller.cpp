@@ -179,15 +179,14 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         TiXmlDocument doc;
         std::unique_ptr<TiXmlElement> element(new TiXmlElement("background2d"));
 
-
-
+        // TODO: Write out the required attributes: image, position, orientation, fov, range and clip
         auto& layers = bg->getLayers();
         const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
 
-
-        // TODO: Write out the *_BG.XML data
+        // Write out the *_BG.XML data
         for (auto& layer : layers)
         {
+            // TODO: Should we only output tiles to construct enabled layers?
           //  if (layer.enabled)
             {
                
@@ -203,22 +202,22 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                     xmlElement->SetAttribute("width", Ogre::StringConverter::toString(sprite.width * 3));
                     xmlElement->SetAttribute("height", Ogre::StringConverter::toString(sprite.height * 3));
 
-                    // Each tile is added to a big texture atlas with hard coded size of 1024x1024
-                    const float u0 = static_cast<float>(sprite.dst.x) / bgImage->getWidth();
-                    const float v0 = static_cast<float>(sprite.dst.y) / bgImage->getHeight();
+                    // Each tile is added to a big texture atlas with hard coded size of 1024x1024, convert UV's to the 0.0f to 1.0f range
+                    const float u0 = static_cast<float>(sprite.src.x) / bgImage->getWidth();
+                    const float v0 = static_cast<float>(sprite.src.y) / bgImage->getHeight();
 
-                    const float u1 = static_cast<float>(sprite.dst.x + sprite.width) / bgImage->getWidth();
-                    const float v1 = static_cast<float>(sprite.dst.y + sprite.height) / bgImage->getHeight();
+                    const float u1 = static_cast<float>(sprite.src.x + sprite.width) / bgImage->getWidth();
+                    const float v1 = static_cast<float>(sprite.src.y + sprite.height) / bgImage->getHeight();
 
                     xmlElement->SetAttribute("uv", 
                         Ogre::StringConverter::toString(u0) + " " + Ogre::StringConverter::toString(v0) + " " +
                         Ogre::StringConverter::toString(u1) + " " + Ogre::StringConverter::toString(v1)
                         );
 
-                    // TODO: Needs converting somehow
-                    xmlElement->SetAttribute("depth", "999"/* Ogre::StringConverter::toString(sprite.depth)*/);
+                    // TODO: Figure out how to scale this value correctly
+                    xmlElement->SetAttribute("depth", "999" /* Ogre::StringConverter::toString(static_cast<float>(sprite.depth) / (4096.0f/10.0f))*/);
 
-                    // TODO: Copied from DatFile::AddTile
+                    // TODO: Copied from DatFile::AddTile - add to common method
                     Ogre::String blending_str = "";
                     if (sprite.blending == 0)
                     {
@@ -240,7 +239,6 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                     
                     element->LinkEndChild(xmlElement.release());
                 }
-               
             }
         }
         doc.LinkEndChild(element.release());
