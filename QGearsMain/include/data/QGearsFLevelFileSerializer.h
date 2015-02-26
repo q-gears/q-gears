@@ -75,6 +75,7 @@ namespace QGears
         void    readPalette     ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
         void    readWalkmesh    ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
         void    readBackground  ( Ogre::DataStreamPtr &stream, FLevelFile* pDest );
+        void    readTriggers    (Ogre::DataStreamPtr &stream, FLevelFile* pDest);
 
         void    readEnd( Ogre::DataStreamPtr &stream );
 

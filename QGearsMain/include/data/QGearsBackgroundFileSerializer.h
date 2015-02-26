@@ -39,7 +39,7 @@ namespace QGears
                         BackgroundFileSerializer();
         virtual        ~BackgroundFileSerializer();
 
-        virtual void    importBackgroundFile( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
+        void    importBackgroundFile( Ogre::DataStreamPtr &stream, BackgroundFile *pDest );
 
         enum {
             BIT_MASK_RED    = 0xF800

@@ -60,7 +60,7 @@ namespace QGears
     extern const String    EXT_TIM;
     extern const String    EXT_TEX;
 
-
+    extern const String    EXT_TRIGGERS;
     extern const String    EXT_BACKGROUND;
     extern const String    EXT_CAMERA_MATRIX;
     extern const String    EXT_MODEL_LIST;

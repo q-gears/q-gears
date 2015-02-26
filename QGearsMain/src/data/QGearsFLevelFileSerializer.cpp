@@ -41,6 +41,7 @@ THE SOFTWARE.
 #include "data/QGearsPaletteFileSerializer.h"
 #include "map/QGearsWalkmeshFileManager.h"
 #include "map/FF7WalkmeshFileSerializer.h"
+#include "data/QGearsTriggersFile.h"
 
 namespace QGears
 {
@@ -206,6 +207,18 @@ namespace QGears
             case SECTION_BACKGROUND:
                 readBackground( stream, pDest );
                 break;
+
+            case SECTION_TILE_MAP:
+                // TODO
+                break;
+
+            case SECTION_ENCOUNTER:
+                // TODO
+                break;
+
+            case SECTION_TRIGGER:
+                readTriggers(stream, pDest);
+                break;
         }
     }
 
@@ -284,6 +297,17 @@ namespace QGears
         ser.importBackgroundFile( stream, background.getPointer() );
         pDest->setBackground( background );
     }
+
+    void FLevelFileSerializer::readTriggers(Ogre::DataStreamPtr &stream, FLevelFile* pDest)
+    {
+        TriggersFilePtr triggers = createResource<TriggersFileManager>(pDest, EXT_TRIGGERS).staticCast<TriggersFile>();
+
+        TriggerFileSerializer ser;
+        ser.importTriggerFile(stream, triggers.getPointer());
+
+        pDest->setTriggers(triggers);
+    }
+
 
     //--------------------------------------------------------------------------
     String

@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "QGearsCameraMatrixFile.h"
 #include "QGearsPaletteFile.h"
 #include "QGearsHRCFile.h"
+#include "QGearsTriggersFile.h"
 
 namespace QGears
 {
@@ -67,6 +68,7 @@ namespace QGears
         const ModelListFilePtr&     getModelList() const;
         const PaletteFilePtr&       getPalette() const;
         const WalkmeshFilePtr&      getWalkmesh() const;
+        const TriggersFilePtr&      getTriggers() const;
 
         void setRawScript(const std::vector<u8>& scriptData);
         void setBackground  ( const BackgroundFilePtr      &background    );
@@ -74,6 +76,7 @@ namespace QGears
         void setModelList   ( const ModelListFilePtr       &model_list    );
         void setPalette     ( const PaletteFilePtr         &palette       );
         void setWalkmesh    ( const WalkmeshFilePtr        &walkmesh      );
+        void setTriggers(const TriggersFilePtr& triggers);
 
         String getBackground2DName( void ) const;
         String getBackgroundTextureName( void ) const;
@@ -100,6 +103,7 @@ namespace QGears
         ModelListFilePtr            m_model_list;
         PaletteFilePtr              m_palette;
         WalkmeshFilePtr             m_walkmesh;
+        TriggersFilePtr             m_triggers;
         std::vector<u8>             m_rawScript;
 
         FLevelTextureLoader        *m_background_texture_loader;
