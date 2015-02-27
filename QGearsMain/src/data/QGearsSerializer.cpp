@@ -89,6 +89,11 @@ namespace QGears
         flipFromLittleEndian( &pDest, 2, 2 );
     }
 
+    void Serializer::readChars(Ogre::DataStreamPtr& stream, char* pDest, size_t count)
+    {
+        stream->read(pDest, count);
+    }
+
     //---------------------------------------------------------------------
     void
     Serializer::read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest )
@@ -139,6 +144,11 @@ namespace QGears
     Serializer::readUInt32( Ogre::DataStreamPtr &stream, uint32 &pDest )
     {
         readInts( stream, &pDest, 1 );
+    }
+
+    void Serializer::readSInt32(Ogre::DataStreamPtr &stream, sint32 &pDest)
+    {
+        stream->read(&pDest, sizeof(sint32));
     }
 
     void Serializer::readUInt32( Ogre::DataStream &stream, uint32 &pDest )

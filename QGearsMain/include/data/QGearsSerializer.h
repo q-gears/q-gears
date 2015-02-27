@@ -52,6 +52,7 @@ namespace QGears
         void    readObject( Ogre::DataStreamPtr &stream, Ogre::AxisAlignedBox &pDest );
         void    readObject( Ogre::DataStreamPtr &stream, Pixel &pDest );
 
+        void readChars(Ogre::DataStreamPtr& stream, char* pDest, size_t count);
         void    read1ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
         void    read2ByteBool( Ogre::DataStreamPtr &stream, bool &pDest );
         void    readShort( Ogre::DataStreamPtr &stream, uint16 &pDest );
@@ -60,6 +61,7 @@ namespace QGears
         void    readInt16( Ogre::DataStreamPtr &stream, sint16 &pDest );
         void    readUInt16( Ogre::DataStreamPtr &stream, uint16 &pDest );
         void    readUInt32( Ogre::DataStreamPtr &stream, uint32 &pDest );
+        void    readSInt32(Ogre::DataStreamPtr &stream, sint32 &pDest);
         void    readUInt32( Ogre::DataStream &stream, uint32 &pDest );
         void    readUInt8( Ogre::DataStream& stream, uint8 &pDest );
         void    readUInt8(Ogre::DataStreamPtr &stream, uint8 &pDest );

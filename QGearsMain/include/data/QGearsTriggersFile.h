@@ -59,7 +59,7 @@ namespace QGears
 
         struct Exit
         {
-            Vertex_s exit_line[2];
+            std::array<Vertex_s, 2> exit_line;
             Vertex_s destination;
             u16 fieldID;
             u8 dir, dir_copy1, dir_copy2, dir_copy3;
@@ -67,7 +67,7 @@ namespace QGears
 
         struct Trigger
         {
-            Vertex_s trigger_line[2];
+            std::array<Vertex_s, 2> trigger_line;
             u8 background_parameter;
             u8 background_state;
             u8 behavior;
@@ -91,7 +91,7 @@ namespace QGears
 
         struct TriggerData
         {
-            char name[9];
+            std::array<char,9> name;
             u8 control;
             s16 cameraFocusHeight;
             Range camera_range; // 8 bytes
@@ -103,18 +103,18 @@ namespace QGears
             s16 bg_layer3_height;
             s16 bg_layer4_width;
             s16 bg_layer4_height;
-            u8 unknown[24];
-            Exit doors[12];// 24 * 12 bytes
-            Trigger triggers[12];// 16 * 12 bytes
+            std::array<u8,24> unknown;
+            std::array<Exit,12> doors;// 24 * 12 bytes
+            std::array<Trigger, 12> triggers;// 16 * 12 bytes
             // Only in occidental/international version
-            u8 display_arrow[12];
-            Arrow arrows[12];// 16 * 12 bytes
+            std::array<u8,12> display_arrow;
+            std::array<Arrow,12> arrows;// 16 * 12 bytes
         };
         
-        // TODO: Fails!
-       // static_assert( sizeof(TriggerData) != 740, "Wrong size, check type defines and alignment");
 
-        TriggerData mData;
+        std::unique_ptr<TriggerData> mData;
+
+        friend class TriggerFileSerializer;
     };
     
     class TriggerFileSerializer : public Serializer
@@ -122,6 +122,12 @@ namespace QGears
     public:
         TriggerFileSerializer();
         void importTriggerFile(Ogre::DataStreamPtr &stream, TriggersFile *pDest);
+    private:
+        void ReadVertex_s(Ogre::DataStreamPtr& stream, TriggersFile::Vertex_s& vertex);
+        void ReadRange(Ogre::DataStreamPtr& stream, TriggersFile::Range& range);
+        void ReadExit(Ogre::DataStreamPtr& stream, TriggersFile::Exit& exit);
+        void ReadArrow(Ogre::DataStreamPtr& stream, TriggersFile::Arrow& arrow);
+        void ReadTrigger(Ogre::DataStreamPtr& stream, TriggersFile::Trigger& trigger);
     };
 
     typedef Ogre::SharedPtr<TriggersFile> TriggersFilePtr;
