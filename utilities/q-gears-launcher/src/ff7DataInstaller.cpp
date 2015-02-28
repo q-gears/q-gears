@@ -153,7 +153,6 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
 {
     // Save out the tiles as a PNG image
     
-    const QGears::BackgroundFilePtr& bg = field->getBackground();
 
     try
     {
@@ -170,8 +169,13 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         std::cerr << "InternalDecompilerError: " << ex.what() << std::endl;
     }
 
-    
+
+    //const QGears::ModelListFilePtr& models = field->getModelList();
+    //const QGears::ModelListFile::ModelDescription& desc = models->getModels().at(0);
+
+
     const QGears::PaletteFilePtr& pal = field->getPalette();
+    const QGears::BackgroundFilePtr& bg = field->getBackground();
     std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
     bgImage->save(outDir + "/" + field->getName() + ".png");
 
@@ -179,44 +183,35 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         TiXmlDocument doc;
         std::unique_ptr<TiXmlElement> element(new TiXmlElement("background2d"));
 
-        // TODO: Write out the required attributes: image, position, orientation, fov, range and clip
-        auto& layers = bg->getLayers();
+        // Magic constants
+        const int kScaleUpFactor = 3;
+        const int kPsxScreenWidth = 320;
+        const int kPsxScreenHeight = 240;
+
+        // Get texture atlas size
+        const int width = bgImage->getWidth();
+        const int height = bgImage->getHeight();
+
         const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
+        const Ogre::Vector3 position = camMatrix->getPosition();
+        const Ogre::Quaternion orientation = camMatrix->getOrientation();
+        const Ogre::Degree fov = camMatrix->getFov(static_cast<float>(kPsxScreenHeight));
 
-       
+        const QGears::TriggersFilePtr& triggers = field->getTriggers();
+        const int min_x = triggers->getCameraRange().left * kScaleUpFactor;
+        const int min_y = triggers->getCameraRange().top * kScaleUpFactor;
+        const int max_x = triggers->getCameraRange().right * kScaleUpFactor;
+        const int max_y = triggers->getCameraRange().bottom * kScaleUpFactor;
 
-        // TODO: Should be the width/height of the actual field image, not the texture atlas
-        int width = bgImage->getWidth();
-        int height = bgImage->getHeight();
-
-        // set camera for depth calculation
-        Ogre::Vector3 position = camMatrix->getPosition();
-        Ogre::Quaternion orientation = camMatrix->getOrientation();
-        Ogre::Degree fov = camMatrix->getFov(90);
-
-
-        // TODO: Needs to be loaded from "doors and gateways" section
-        int min_x = 0;
-        int min_y = 0;
-        int max_x = 0;
-        int max_y = 0;
-        //GetScreenRange(min_x, min_y, max_x, max_y);
-
-        // <background2d image="md1_2.png" position="-4990.38 -29075.1 -3384.11" orientation="0.887914 0.381507 0.101529 0.23619" fov="90" range="0 0 0 0" clip="960 720">
-
-        // <background2d image="maps/ffvii/field/md1_2.png" position="39.027 227.173 26.4208" orientation="0.887914 0.381507 0.101529 0.23619" fov="14.3239" range="-768 -768 768 768" clip="960 720">
-
-        // TODO: These are not fully correct yet, some need to be scaled down etc
-        element->SetAttribute("image", (outDir + "/" + field->getName() + ".png"));
+        element->SetAttribute("image", field->getName() + ".png");
         element->SetAttribute("position", Ogre::StringConverter::toString(position));
         element->SetAttribute("orientation", Ogre::StringConverter::toString(orientation));
         element->SetAttribute("fov", Ogre::StringConverter::toString(fov));
         element->SetAttribute("range", std::to_string(min_x) + " " + std::to_string(min_y) + " " + std::to_string(max_x) + " " + std::to_string(max_y));
-        element->SetAttribute("clip", std::to_string(320 * 3) + " " + std::to_string(240 * 3));
+        element->SetAttribute("clip", std::to_string(kPsxScreenWidth * kScaleUpFactor) + " " + std::to_string(kPsxScreenHeight * kScaleUpFactor));
    
-
-
         // Write out the *_BG.XML data
+        auto& layers = bg->getLayers();
         for (const auto& layer : layers)
         {
             // TODO: Should we only output tiles to construct enabled layers?
@@ -227,13 +222,12 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                 {
                     std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("tile"));
 
-                    // Not sure why it needs to be * 3
                     xmlElement->SetAttribute("destination",
-                        Ogre::StringConverter::toString(sprite.dst.x * 3) + " " + 
-                        Ogre::StringConverter::toString(sprite.dst.y * 3));
+                        Ogre::StringConverter::toString(sprite.dst.x * kScaleUpFactor) + " " +
+                        Ogre::StringConverter::toString(sprite.dst.y * kScaleUpFactor));
 
-                    xmlElement->SetAttribute("width", Ogre::StringConverter::toString(sprite.width * 3));
-                    xmlElement->SetAttribute("height", Ogre::StringConverter::toString(sprite.height * 3));
+                    xmlElement->SetAttribute("width", Ogre::StringConverter::toString(sprite.width * kScaleUpFactor));
+                    xmlElement->SetAttribute("height", Ogre::StringConverter::toString(sprite.height * kScaleUpFactor));
 
                     // Each tile is added to a big texture atlas with hard coded size of 1024x1024, convert UV's to the 0.0f to 1.0f range
                     const float u0 = static_cast<float>(sprite.src.x) / bgImage->getWidth();

@@ -45,30 +45,57 @@ namespace QGears
     void
     CameraMatrixFileSerializer::importCameraMatrixFile( Ogre::DataStreamPtr &stream, CameraMatrixFile* pDest )
     {
+        // Read matrix
         sint16 matrix_sint16[CAMERA_MATRIX_ROW_COUNT][CAMERA_MATRIX_COL_COUNT];
-        readShorts( stream, reinterpret_cast< uint16* >( matrix_sint16 ), CAMERA_MATRIX_ENTRY_COUNT  );
+        readInt16(stream, matrix_sint16[0][0]);
+        readInt16(stream, matrix_sint16[1][0]);
+        readInt16(stream, matrix_sint16[2][0]);
+        readInt16(stream, matrix_sint16[0][1]);
+        readInt16(stream, matrix_sint16[1][1]);
+        readInt16(stream, matrix_sint16[2][1]);
+        readInt16(stream, matrix_sint16[0][2]);
+        readInt16(stream, matrix_sint16[1][2]);
+        readInt16(stream, matrix_sint16[2][2]);
         stream->skip( 2 ); // unused
-
-        sint32 pos[CAMERA_MATRIX_ROW_COUNT];
-        readInts( stream, reinterpret_cast< uint32* >( pos ), CAMERA_MATRIX_ROW_COUNT );
-
+    
+        // Array to matrix
         Ogre::Matrix3 camera_matrix;
+        camera_matrix[0][0] = static_cast<float>(matrix_sint16[0][0]) / 4096.0f;
+        camera_matrix[1][0] = static_cast<float>(matrix_sint16[1][0]) / 4096.0f;
+        camera_matrix[2][0] = static_cast<float>(matrix_sint16[2][0]) / 4096.0f;
+        camera_matrix[0][1] = static_cast<float>(matrix_sint16[0][1]) / 4096.0f;
+        camera_matrix[1][1] = static_cast<float>(matrix_sint16[1][1]) / 4096.0f;
+        camera_matrix[2][1] = static_cast<float>(matrix_sint16[2][1]) / 4096.0f;
+        camera_matrix[0][2] = static_cast<float>(matrix_sint16[0][2]) / 4096.0f;
+        camera_matrix[1][2] = static_cast<float>(matrix_sint16[1][2]) / 4096.0f;
+        camera_matrix[2][2] = static_cast<float>(matrix_sint16[2][2]) / 4096.0f;
+
+        // Read POS
+        sint32 pos[CAMERA_MATRIX_ROW_COUNT];
+        readInts(stream, reinterpret_cast<uint32*>(pos), CAMERA_MATRIX_ROW_COUNT);
+
+        // Array to vector
         Ogre::Vector3 position;
-        for( size_t i(0); i < CAMERA_MATRIX_ROW_COUNT; ++i )
+        for (int i = 0; i < 3; i++)
         {
-            position[i] = Ogre::Real(pos[i]);
-            for( size_t j(0); j < CAMERA_MATRIX_COL_COUNT; ++j )
-            {
-                camera_matrix[j][i] = matrix_sint16[i][j] / 4096.0f;
-            }
+            position[i] = -Ogre::Real(pos[i]);
         }
-        position = camera_matrix * position;
-        camera_matrix[0][1] *= -1;
-        camera_matrix[1][1] *= -1;
-        camera_matrix[2][1] *= -1;
-        camera_matrix[0][2] *= -1;
-        camera_matrix[1][2] *= -1;
-        camera_matrix[2][2] *= -1;
+
+        Ogre::Quaternion orientation;
+        orientation.FromRotationMatrix(camera_matrix);
+        position = orientation * (position / 128.0f);
+
+        // Matrix fix up
+        camera_matrix[0][0] = camera_matrix[0][0];
+        camera_matrix[1][0] = camera_matrix[1][0];
+        camera_matrix[2][0] = camera_matrix[2][0];
+        camera_matrix[0][1] = -camera_matrix[0][1];
+        camera_matrix[1][1] = -camera_matrix[1][1];
+        camera_matrix[2][1] = -camera_matrix[2][1];
+        camera_matrix[0][2] = -camera_matrix[0][2];
+        camera_matrix[1][2] = -camera_matrix[1][2];
+        camera_matrix[2][2] = -camera_matrix[2][2];
+
         pDest->setMatrix( camera_matrix );
         pDest->setPosition( position );
 

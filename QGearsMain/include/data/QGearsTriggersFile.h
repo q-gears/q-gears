@@ -37,18 +37,25 @@ namespace QGears
             Ogre::ManualResourceLoader* loader = nullptr);
         virtual ~TriggersFile();
         static const String RESOURCE_TYPE;
-    protected:
-        virtual void loadImpl(void) override;
-        virtual void unloadImpl(void) override;
-        virtual size_t calculateSize(void) const override;
-    private:
-        struct Range 
+       
+        struct Range
         {
             s16 left;
             s16 top;
             s16 right;
             s16 bottom;
         };
+
+        const Range& getCameraRange() const
+        {
+            return mData->camera_range;
+        }
+
+    protected:
+        virtual void loadImpl(void) override;
+        virtual void unloadImpl(void) override;
+        virtual size_t calculateSize(void) const override;
+    private:
 
         struct Vertex_s 
         {
