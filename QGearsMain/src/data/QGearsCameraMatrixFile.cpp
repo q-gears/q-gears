@@ -155,7 +155,7 @@ namespace QGears
 
     //---------------------------------------------------------------------
     Ogre::Radian
-    CameraMatrixFile::getFov( const Ogre::Real& width ) const
+    CameraMatrixFile::getFov( Ogre::Real width ) const
     {
         return 2 * Ogre::Math::ATan( width / (2 * m_focal_length ) );
     }

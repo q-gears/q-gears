@@ -44,23 +44,23 @@ namespace QGears
 
         static const String RESOURCE_TYPE;
 
-        virtual const Ogre::Matrix3&    getMatrix() const;
-        virtual void                    setMatrix( const Ogre::Matrix3& matrix );
+        const Ogre::Matrix3&    getMatrix() const;
+        void                    setMatrix( const Ogre::Matrix3& matrix );
 
-        virtual const Ogre::Vector3&    getPosition() const;
-        virtual void                    setPosition( const Ogre::Vector3& position );
+        const Ogre::Vector3&    getPosition() const;
+        void                    setPosition( const Ogre::Vector3& position );
 
-        virtual const Pixel&            getOffset() const;
-        virtual void                    setOffset( const Pixel& offset );
+        const Pixel&            getOffset() const;
+        void                    setOffset( const Pixel& offset );
 
-        virtual const size_t&           getCount() const;
-        virtual void                    setCount( const size_t count );
+        const size_t&           getCount() const;
+        void                    setCount( const size_t count );
 
-        virtual const Ogre::Real&       getFocalLength() const;
-        virtual void                    setFocalLength( const Ogre::Real );
+        const Ogre::Real&       getFocalLength() const;
+        void                    setFocalLength( const Ogre::Real );
 
-        virtual Ogre::Quaternion        getOrientation() const;
-        virtual Ogre::Radian            getFov( const Ogre::Real& width ) const;
+        Ogre::Quaternion        getOrientation() const;
+        Ogre::Radian            getFov( Ogre::Real width ) const;
 
     protected:
         virtual void loadImpl( void );

@@ -148,6 +148,7 @@ include/data/worldmap/MapFile.h
   include/data/QGearsSerializer.h
   include/data/QGearsTexCodec.h
   include/data/QGearsTexFile.h
+  include/data/QGearsTriggersFile.h
 )
 
 set(SOURCE_FILES_DATA
@@ -196,7 +197,7 @@ set(SOURCE_FILES_DATA
   src/data/QGearsSerializer.cpp
   src/data/QGearsTexCodec.cpp
   src/data/QGearsTexFile.cpp
-
+  src/data/QGearsTriggersFile.cpp
 )
 
 set(SOURCE_FILES
@@ -336,9 +337,9 @@ add_library(QGearsMain STATIC
 )
 
 # Coverage uses more memory, combined with PCH can cause OOM/ICE
-if ($ENV{COVERAGE}!=1)
+#if ($ENV{COVERAGE}!=1)
 cotire(QGearsMain)
-endif()
+#endif()
 SET_PROPERTY(TARGET QGearsMain PROPERTY FOLDER "q-gears")
 
 add_library(q-gears-data STATIC

@@ -162,6 +162,7 @@ namespace QGears
         m_model_list.setNull();
         m_walkmesh.setNull();
         m_hrc_files.clear();
+        m_triggers.setNull();
     }
 
     //--------------------------------------------------------------------------
@@ -252,11 +253,21 @@ namespace QGears
         return m_walkmesh;
     }
 
+    const TriggersFilePtr& FLevelFile::getTriggers() const
+    {
+        return m_triggers;
+    }
+
     //--------------------------------------------------------------------------
     void
     FLevelFile::setWalkmesh( const WalkmeshFilePtr &walkmesh )
     {
         m_walkmesh = walkmesh;
+    }
+
+    void FLevelFile::setTriggers(const TriggersFilePtr& triggers)
+    {
+        m_triggers = triggers;
     }
 
     //--------------------------------------------------------------------------
