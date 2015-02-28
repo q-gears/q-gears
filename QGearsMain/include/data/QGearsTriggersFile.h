@@ -5,6 +5,7 @@
 #include "common/QGearsResource.h"
 #include "QGearsSerializer.h"
 #include <memory>
+#include <array>
 
 namespace QGears
 {
