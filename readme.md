@@ -196,7 +196,9 @@ Again Extract to the root of C drive.
 
 **Build Qt:**
 
-Open a Visual Studio 2013 command prompt and enter:
+Open a Visual Studio 2013 command prompt:
+
+cd to extracted source location and enter:
 
 ```
 configure -platform win32-msvc2013 -no-webkit -debug-and-release -no-phonon -no-qt3support -mp -no-scripttools -nomake demos -nomake examples -no-openssl 
