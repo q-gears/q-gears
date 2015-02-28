@@ -163,16 +163,54 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         // Decompile to LUA
         FF7FieldScriptFormatter formatter;
         std::string luaScript = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter);
-        std::cout << luaScript << std::endl;
+        std::ofstream scriptFile(outDir + "/" + field->getName() + ".lua");
+        if (scriptFile.is_open())
+        {
+            scriptFile << luaScript;
+        }
+        else
+        {
+            std::cerr << "Failed to open script file for writing" << std::endl;
+        }
     }
     catch (const ::InternalDecompilerError& ex)
     {
         std::cerr << "InternalDecompilerError: " << ex.what() << std::endl;
     }
 
-
+    // TODO: Insert triggers into LUA script
     //const QGears::ModelListFilePtr& models = field->getModelList();
     //const QGears::ModelListFile::ModelDescription& desc = models->getModels().at(0);
+
+    // Write out the map file which links all the other files together for a given field
+    {
+        TiXmlDocument doc;
+        std::unique_ptr<TiXmlElement> element(new TiXmlElement("map"));
+
+        // Script
+        std::unique_ptr<TiXmlElement> xmlScriptElement(new TiXmlElement("script"));
+        xmlScriptElement->SetAttribute("file_name", field->getName() + ".lua");
+        element->LinkEndChild(xmlScriptElement.release());
+
+        // Background
+        std::unique_ptr<TiXmlElement> xmlBackground2d(new TiXmlElement("background2d"));
+        xmlBackground2d->SetAttribute("file_name", field->getName() + "_bg.xml");
+        element->LinkEndChild(xmlBackground2d.release());
+        
+        // walkmesh
+        std::unique_ptr<TiXmlElement> xmlWalkmesh(new TiXmlElement("walkmesh"));
+        xmlWalkmesh->SetAttribute("file_name", field->getName() + "_wm.xml");
+        element->LinkEndChild(xmlWalkmesh.release());
+
+        // TODO: movement_rotation - degree
+        // TODO: entity_script - name
+        // TODO: entity_model - name, file_name,  position, direction
+        // TODO: entity_trigger - name, point1, point2, enabled
+        // TODO: entity_point - name, position, rotation
+
+        doc.LinkEndChild(element.release());
+        doc.SaveFile(outDir + "/" + field->getName() + ".xml");
+    }
 
 
     const QGears::PaletteFilePtr& pal = field->getPalette();
