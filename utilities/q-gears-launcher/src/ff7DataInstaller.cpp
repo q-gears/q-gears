@@ -28,6 +28,7 @@
 #include "common/FF7NameLookup.h"
 #include "data/QGearsTexCodec.h"
 #include "decompiler/sudm.h"
+#include <memory>
 
 FF7DataInstaller::FF7DataInstaller()
 #ifdef _DEBUG
