@@ -180,6 +180,37 @@ MimFile::GetSurface( const u16 page_x, const u16 page_y, const u16 clut_x, const
         }
     }
 
+
+
+    else if ( bpp == 2 )
+    {
+        for( int y = 0; y < 256; ++y )
+        {
+            for( int x = 0; x < 256; ++x )
+            {
+                u16 real_x = mImageVramPositionX + page_x * 128 + x * 2;
+                u16 real_y = mImageVramPositionY + page_y * 256 + y;
+
+                u16 col = m_Vram->GetU16(real_x, real_y);
+
+                color.r = ( ( col       ) & 31 ) * 255 / 31;
+                color.g = ( ( col >>  5 ) & 31 ) * 255 / 31;
+                color.b = ( ( col >> 10 ) & 31 ) * 255 / 31;
+
+                if( col == 0x0000 )
+                {
+                    color.a = 0;
+                }
+                else
+                {
+                    color.a = 255;
+                }
+
+                memcpy( ret->pixels.data() + x * 4 + ret->width * 4 * y, &color, sizeof( ClutColor ) );
+            }
+        }
+    }
+
     return ret;
 }
 

@@ -295,7 +295,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                     {
                         blending_str = "alpha";
                     }
-                    else if (sprite.blending == 1)
+                    else if (sprite.blending == 1 || sprite.blending == 3) // 3 is source + 0.25 * destination
                     {
                         blending_str = "add";
                     }

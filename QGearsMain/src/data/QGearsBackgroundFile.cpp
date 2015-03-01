@@ -306,6 +306,10 @@ namespace QGears
                         {
                             colour.a = 0;
                         }
+                        else if (colour.a && (colour.r != 0 || colour.g != 0 || colour.b != 0))
+                        {
+                            colour.a = 0.5;
+                        }
                         else
                         {
                             colour.a = 1;
