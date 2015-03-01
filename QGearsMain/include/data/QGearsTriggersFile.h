@@ -48,31 +48,14 @@ namespace QGears
             s16 bottom;
         };
 
-        const Range& getCameraRange() const
-        {
-            return mData->camera_range;
-        }
-
-        float MovementRotation() const
-        {
-            // This is the angle in which the player moves when "up" is pressed
-            return 180.0f * (static_cast<float>(mData->control) - 128.0f) / 128.0f;
-        }
-
-    protected:
-        virtual void loadImpl(void) override;
-        virtual void unloadImpl(void) override;
-        virtual size_t calculateSize(void) const override;
-    private:
-
-        struct Vertex_s 
+        struct Vertex_s
         {
             u16 x;
             u16 y;
             u16 z;
         };
 
-        struct Exit
+        struct Gateway
         {
             std::array<Vertex_s, 2> exit_line;
             Vertex_s destination;
@@ -106,7 +89,7 @@ namespace QGears
 
         struct TriggerData
         {
-            std::array<char,9> name;
+            std::array<char, 9> name;
             u8 control;
             s16 cameraFocusHeight;
             Range camera_range; // 8 bytes
@@ -118,15 +101,34 @@ namespace QGears
             s16 bg_layer3_height;
             s16 bg_layer4_width;
             s16 bg_layer4_height;
-            std::array<u8,24> unknown;
-            std::array<Exit,12> doors;// 24 * 12 bytes
+            std::array<u8, 24> unknown;
+            std::array<Gateway, 12> doors;// 24 * 12 bytes
             std::array<Trigger, 12> triggers;// 16 * 12 bytes
             // Only in occidental/international version
-            std::array<u8,12> display_arrow;
-            std::array<Arrow,12> arrows;// 16 * 12 bytes
+            std::array<u8, 12> display_arrow;
+            std::array<Arrow, 12> arrows;// 16 * 12 bytes
         };
-        
 
+        const Range& getCameraRange() const
+        {
+            return mData->camera_range;
+        }
+
+        float MovementRotation() const
+        {
+            // This is the angle in which the player moves when "up" is pressed
+            return 180.0f * (static_cast<float>(mData->control) - 128.0f) / 128.0f;
+        }
+
+
+
+    protected:
+        virtual void loadImpl(void) override;
+        virtual void unloadImpl(void) override;
+        virtual size_t calculateSize(void) const override;
+    private:
+
+ 
         std::unique_ptr<TriggerData> mData;
 
         friend class TriggerFileSerializer;
@@ -140,7 +142,7 @@ namespace QGears
     private:
         void ReadVertex_s(Ogre::DataStreamPtr& stream, TriggersFile::Vertex_s& vertex);
         void ReadRange(Ogre::DataStreamPtr& stream, TriggersFile::Range& range);
-        void ReadExit(Ogre::DataStreamPtr& stream, TriggersFile::Exit& exit);
+        void ReadGateway(Ogre::DataStreamPtr& stream, TriggersFile::Gateway& exit);
         void ReadArrow(Ogre::DataStreamPtr& stream, TriggersFile::Arrow& arrow);
         void ReadTrigger(Ogre::DataStreamPtr& stream, TriggersFile::Trigger& trigger);
     };

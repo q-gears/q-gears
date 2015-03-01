@@ -210,9 +210,20 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         element->LinkEndChild(xmlMovementRotation.release());
 
         // TODO: entity_script - name
+        
         // TODO: entity_model - name, file_name,  position, direction
+        // We set char 1 position to be position of first entity_point so player is spawned in sane
+        // position if map is manually loaded via console.
+        // None player chars set their first position in the init scripts. We know its a entity_model
+        // because it uses PC opcode in init script.
+
+        // entity_manager:get_entity("cl") is done via CHAR opcode
+
         // TODO: entity_trigger - name, point1, point2, enabled
+        // comes from triggers in this field
+
         // TODO: entity_point - name, position, rotation
+        // more complicated, comes from triggers in fields that link to this field
 
         doc.LinkEndChild(element.release());
         doc.SaveFile(outDir + "/" + field->getName() + ".xml");
