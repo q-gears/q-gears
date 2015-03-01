@@ -167,11 +167,16 @@ namespace QGears
 
         uint16 size;
         // width and height are sometimes incorrect in the file
-        if ( m_layer_index < 2 ) {
+        if ( m_layer_index < 2 )
+        {
             size = 16;
-        } else if ( m_layer_index < BackgroundFile::LAYER_COUNT) {
+        }
+        else if ( m_layer_index < BackgroundFile::LAYER_COUNT)
+        {
             size = 32;
-        } else {
+        }
+        else
+        {
             OGRE_EXCEPT(Ogre::Exception::ERR_INVALIDPARAMS
                 ,"m_layer_index not set correctly"
                 ,"BackgroundFileSerializer::readObject" );
@@ -180,6 +185,20 @@ namespace QGears
 
         readShort( stream, pDest.palette_page );
         readShort( stream, pDest.depth );
+
+        // Force depth values
+        switch ( m_layer_index )
+        {
+          case 0:
+            pDest.depth = 4095;
+            break;
+          case 2:
+            pDest.depth = 4096;
+            break;
+          case 3:
+            pDest.depth = 0;
+            break;
+        }
 
         uint8 animation[2];
         stream->read( animation, sizeof( animation ) );
