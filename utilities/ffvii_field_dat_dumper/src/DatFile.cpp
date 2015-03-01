@@ -2766,9 +2766,9 @@ DatFile::GetCamera( Ogre::Vector3& position, Ogre::Quaternion& orientation, Ogre
     matrix[ 1 ][ 2 ] = ( s16 )GetU16LE( offset_to_camera + 0x0e ) / 4096.0f;
     matrix[ 2 ][ 2 ] = ( s16 )GetU16LE( offset_to_camera + 0x12 ) / 4096.0f;
     // get camera position in camera space
-    position.x  = -( s32 )GetU32LE( offset_to_camera + 0x14 ) / downscaler;
-    position.y  = -( s32 )GetU32LE( offset_to_camera + 0x18 ) / downscaler;
-    position.z  = -( s32 )GetU32LE( offset_to_camera + 0x1c ) / downscaler;
+    position.x = -(s32)GetU32LE(offset_to_camera + 0x14);// / downscaler;
+    position.y = -(s32)GetU32LE(offset_to_camera + 0x18);// / downscaler;
+    position.z = -(s32)GetU32LE(offset_to_camera + 0x1c);// / downscaler;
 
     orientation.FromRotationMatrix( matrix );
     position = orientation * position;
@@ -3634,8 +3634,9 @@ DatFile::DumpTriggersMovements( const Ogre::String& export_path, const Field& fi
 
 
     // movement rotation
-    u32 movement = GetU32LE( offset_to_triggers + 0x08 );
-    export_script->Log( "<movement_rotation degree=\"" + Ogre::StringConverter::toString( 180.0f * ( ( float )movement - 32768.0f ) / 32768.0f ) + "\" />\n" );
+    const u8 movement = GetU8(offset_to_triggers + 0x09);
+    const float movementDegree = 180.0f * (static_cast<float>(movement) - 128.0f) / 128.0f;
+    export_script->Log( "<movement_rotation degree=\"" + Ogre::StringConverter::toString( movementDegree ) + "\" />\n" );
 
 
 
