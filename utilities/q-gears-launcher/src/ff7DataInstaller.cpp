@@ -219,11 +219,54 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
 
         // entity_manager:get_entity("cl") is done via CHAR opcode
 
-        // TODO: entity_trigger - name, point1, point2, enabled
-        // comes from triggers in this field
 
-        // TODO: entity_point - name, position, rotation
-        // more complicated, comes from triggers in fields that link to this field
+        // TODO: Get these scales from the field game data,  1024 for md1_1 and 512 for md1_2, DAT CFG has them as 2 and 1
+        const float downscaler_next = 128.0f; //  * MapIdToScale( map_id );
+        const float downscaler_this = 128.0f; // * field.scale
+
+        const auto& gateways = triggers->GetGateways();
+        for (size_t i = 0; i < gateways.size(); i++)
+        {
+            const QGears::TriggersFile::Gateway& gateway = gateways[i];
+            // if not inactive gateway
+            if (gateway.fieldID != 32767)
+            {
+                // entity_trigger
+                {
+                    std::unique_ptr<TiXmlElement> xmlEntityTrigger(new TiXmlElement("entity_trigger"));
+
+                    xmlEntityTrigger->SetAttribute("name", "Gateway" + std::to_string(i));
+
+                    xmlEntityTrigger->SetAttribute("point1",
+                        Ogre::StringConverter::toString(
+                        Ogre::Vector3(gateway.exit_line[0].x, gateway.exit_line[0].y, gateway.exit_line[0].z) / downscaler_this));
+
+                    xmlEntityTrigger->SetAttribute("point2",
+                        Ogre::StringConverter::toString(
+                        Ogre::Vector3(gateway.exit_line[1].x, gateway.exit_line[1].y, gateway.exit_line[1].z) / downscaler_this));
+
+                    // enabled hard coded to true
+                    xmlEntityTrigger->SetAttribute("enabled", "true");
+                    element->LinkEndChild(xmlEntityTrigger.release());
+                }
+
+                // entity_point
+                {
+                    std::unique_ptr<TiXmlElement> xmlEntityPoint(new TiXmlElement("entity_point"));
+                    xmlEntityPoint->SetAttribute("name", "Spawn_" + std::to_string(gateway.fieldID)); // TODO: Meta data for field name
+
+                    xmlEntityPoint->SetAttribute("position",
+                        Ogre::StringConverter::toString(
+                        Ogre::Vector3(gateway.destination.x, gateway.destination.y, gateway.destination.z) / downscaler_next));
+
+                    const float rotation = (360.0f * static_cast<float>(gateway.dir)) / 255.0f;
+                    xmlEntityPoint->SetAttribute("rotation", std::to_string(rotation));
+
+                    element->LinkEndChild(xmlEntityPoint.release());
+                }
+            }
+
+        }
 
         doc.LinkEndChild(element.release());
         doc.SaveFile(outDir + "/" + field->getName() + ".xml");
@@ -316,6 +359,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                     }
                     else
                     {
+                        // TODO: Should probably throw to fail conversion
                         blending_str = "unknown";
                     }
                     xmlElement->SetAttribute("blending", blending_str);

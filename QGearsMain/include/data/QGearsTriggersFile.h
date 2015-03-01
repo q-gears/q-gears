@@ -120,7 +120,10 @@ namespace QGears
             return 180.0f * (static_cast<float>(mData->control) - 128.0f) / 128.0f;
         }
 
-
+        const std::array<Gateway, 12>& GetGateways() const
+        {
+            return mData->doors;
+        }
 
     protected:
         virtual void loadImpl(void) override;
