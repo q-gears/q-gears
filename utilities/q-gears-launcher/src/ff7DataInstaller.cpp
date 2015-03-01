@@ -253,8 +253,14 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                 // entity_point
                 {
                     std::unique_ptr<TiXmlElement> xmlEntityPoint(new TiXmlElement("entity_point"));
-                    xmlEntityPoint->SetAttribute("name", "Spawn_" + std::to_string(gateway.fieldID)); // TODO: Meta data for field name
+                    xmlEntityPoint->SetAttribute("name", "Spawn_" + std::to_string(gateway.fieldID)); // TODO: Meta data for field name, maplist file in PC has the names 2 bytes for count of maps, the 32bytes per map name
 
+                    // TODO: These are wrong because game data says when going from this field to gateway.fieldID
+                    // spawn at position and rotation in gateway.fieldID.
+                    // But QGears data is reversed, it means when entering this field from gateway.fieldID 
+                    // spawn at position and rotation in gateway.fieldID.
+                    // However I think this adds limit of one entrance from gateway.fieldID to this field as there can only be
+                    // one Spawn_FieldName entity_point.
                     xmlEntityPoint->SetAttribute("position",
                         Ogre::StringConverter::toString(
                         Ogre::Vector3(gateway.destination.x, gateway.destination.y, gateway.destination.z) / downscaler_next));
