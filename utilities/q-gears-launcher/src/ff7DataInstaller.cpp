@@ -181,6 +181,8 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
     // TODO: Insert triggers into LUA script
     //const QGears::ModelListFilePtr& models = field->getModelList();
     //const QGears::ModelListFile::ModelDescription& desc = models->getModels().at(0);
+    
+    const QGears::TriggersFilePtr& triggers = field->getTriggers();
 
     // Write out the map file which links all the other files together for a given field
     {
@@ -202,7 +204,11 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         xmlWalkmesh->SetAttribute("file_name", field->getName() + "_wm.xml");
         element->LinkEndChild(xmlWalkmesh.release());
 
-        // TODO: movement_rotation - degree
+
+        std::unique_ptr<TiXmlElement> xmlMovementRotation(new TiXmlElement("movement_rotation"));
+        xmlMovementRotation->SetAttribute("degree", std::to_string(triggers->MovementRotation()));
+        element->LinkEndChild(xmlMovementRotation.release());
+
         // TODO: entity_script - name
         // TODO: entity_model - name, file_name,  position, direction
         // TODO: entity_trigger - name, point1, point2, enabled
@@ -236,7 +242,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         const Ogre::Quaternion orientation = camMatrix->getOrientation();
         const Ogre::Degree fov = camMatrix->getFov(static_cast<float>(kPsxScreenHeight));
 
-        const QGears::TriggersFilePtr& triggers = field->getTriggers();
+     
         const int min_x = triggers->getCameraRange().left * kScaleUpFactor;
         const int min_y = triggers->getCameraRange().top * kScaleUpFactor;
         const int max_x = triggers->getCameraRange().right * kScaleUpFactor;

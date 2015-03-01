@@ -53,6 +53,12 @@ namespace QGears
             return mData->camera_range;
         }
 
+        float MovementRotation() const
+        {
+            // This is the angle in which the player moves when "up" is pressed
+            return 180.0f * (static_cast<float>(mData->control) - 128.0f) / 128.0f;
+        }
+
     protected:
         virtual void loadImpl(void) override;
         virtual void unloadImpl(void) override;
