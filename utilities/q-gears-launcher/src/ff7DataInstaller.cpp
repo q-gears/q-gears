@@ -27,6 +27,7 @@
 #include "common/QGearsStringUtil.h"
 #include "common/FF7NameLookup.h"
 #include "data/QGearsTexCodec.h"
+#include "data/QGearsMapListFile.h"
 #include "decompiler/sudm.h"
 #include <memory>
 
@@ -150,7 +151,38 @@ public:
     }
 };
 
-static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::string& outDir)
+const int kInactiveGateWayId = 32767;
+
+class SpawnPointDb
+{
+public:
+    // Id of the field the gateways records from N other number of fields are linking to
+    u16 mTargetFieldId = 0;
+
+    class Record
+    {
+    public:
+        u16 mFieldId = 0;
+        u32 GatewayIndex = 0;
+        QGears::TriggersFile::Gateway mGateway;
+    };
+    std::vector<Record> mGatewaysToThisField;
+};
+typedef std::map<u16, SpawnPointDb> FieldSpawnPointsMap;
+
+static size_t FieldId(const std::string& name, const std::vector<std::string>& fieldIdToNameLookup)
+{
+    for (size_t i = 0; i < fieldIdToNameLookup.size(); i++)
+    {
+        if (fieldIdToNameLookup[i] == name)
+        {
+            return i;
+        }
+    }
+    throw std::runtime_error("No Id found for field name");
+}
+
+static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::string& outDir, const std::vector<std::string>& fieldIdToNameLookup, const FieldSpawnPointsMap& spawnMap)
 {
     // Save out the tiles as a PNG image
     
@@ -210,9 +242,76 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         element->LinkEndChild(xmlMovementRotation.release());
 
         // TODO: entity_script - name
+        
         // TODO: entity_model - name, file_name,  position, direction
-        // TODO: entity_trigger - name, point1, point2, enabled
-        // TODO: entity_point - name, position, rotation
+        // We set char 1 position to be position of first entity_point so player is spawned in sane
+        // position if map is manually loaded via console.
+        // None player chars set their first position in the init scripts. We know its a entity_model
+        // because it uses PC opcode in init script.
+
+        // entity_manager:get_entity("cl") is done via CHAR opcode
+
+
+        // TODO: Get these scales from the field game data,  1024 for md1_1 and 512 for md1_2, DAT CFG has them as 2 and 1?
+        const float downscaler_next = 128.0f; //  * MapIdToScale( map_id );
+        const float downscaler_this = 128.0f; // * field.scale
+
+        const auto& gateways = triggers->GetGateways();
+        for (size_t i = 0; i < gateways.size(); i++)
+        {
+            const QGears::TriggersFile::Gateway& gateway = gateways[i];
+            // if not inactive gateway
+            if (gateway.destinationFieldId != kInactiveGateWayId)
+            {
+                std::unique_ptr<TiXmlElement> xmlEntityTrigger(new TiXmlElement("entity_trigger"));
+
+                xmlEntityTrigger->SetAttribute("name", "Gateway" + std::to_string(i));
+
+                xmlEntityTrigger->SetAttribute("point1",
+                    Ogre::StringConverter::toString(
+                    Ogre::Vector3(gateway.exit_line[0].x, gateway.exit_line[0].y, gateway.exit_line[0].z) / downscaler_this));
+
+                xmlEntityTrigger->SetAttribute("point2",
+                    Ogre::StringConverter::toString(
+                    Ogre::Vector3(gateway.exit_line[1].x, gateway.exit_line[1].y, gateway.exit_line[1].z) / downscaler_this));
+
+                // enabled hard coded to true
+                xmlEntityTrigger->SetAttribute("enabled", "true");
+                element->LinkEndChild(xmlEntityTrigger.release());
+            }
+        }
+
+        // Get this fields Id
+        const size_t thisFieldId = FieldId(field->getName(), fieldIdToNameLookup);
+
+        // Use that to find the pre-computed list of gateways in all other fields that link to this field
+        auto spawnIterator = spawnMap.find(thisFieldId);
+
+        // If not found that it probably just means no other fields have doors to this one
+        if (spawnIterator != std::end(spawnMap))
+        {
+            const std::vector<SpawnPointDb::Record>& spawnPointRecords = spawnIterator->second.mGatewaysToThisField;
+
+            for (size_t i = 0; i < spawnPointRecords.size(); i++)
+            {
+                const QGears::TriggersFile::Gateway& gateway = spawnPointRecords[i].mGateway;
+                // entity_point
+                std::unique_ptr<TiXmlElement> xmlEntityPoint(new TiXmlElement("entity_point"));
+
+                // Must also include the gateway index for the case where 2 fields have more than one door linking to each other
+                xmlEntityPoint->SetAttribute("name", "Spawn_" + fieldIdToNameLookup.at(spawnPointRecords[i].mFieldId) + "_" + std::to_string(spawnPointRecords[i].GatewayIndex));
+
+
+                xmlEntityPoint->SetAttribute("position",
+                    Ogre::StringConverter::toString(
+                    Ogre::Vector3(gateway.destination.x, gateway.destination.y, gateway.destination.z) / downscaler_next));
+
+                const float rotation = (360.0f * static_cast<float>(gateway.dir)) / 255.0f;
+                xmlEntityPoint->SetAttribute("rotation", std::to_string(rotation));
+
+                element->LinkEndChild(xmlEntityPoint.release());
+            }
+        }
 
         doc.LinkEndChild(element.release());
         doc.SaveFile(outDir + "/" + field->getName() + ".xml");
@@ -305,6 +404,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                     }
                     else
                     {
+                        // TODO: Should probably throw to fail conversion
                         blending_str = "unknown";
                     }
                     xmlElement->SetAttribute("blending", blending_str);
@@ -339,31 +439,86 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
     }
 }
 
-void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
+
+
+static void CollectSpawnPoints(QGears::FLevelFilePtr& field, const std::vector<std::string>& fieldIdToNameLookup, FieldSpawnPointsMap& spawnPoints)
 {
-    // Everything in here is a field
-    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
-    for (auto& resourceName : *resources)
+    const size_t thisFieldId = FieldId(field->getName(), fieldIdToNameLookup);
+    const QGears::TriggersFilePtr& triggers = field->getTriggers();
+    const auto& gateways = triggers->GetGateways();
+    for (size_t i = 0; i < gateways.size(); i++)
     {
-        if (!QGears::StringUtil::endsWith(resourceName, ".tex")
-         && !QGears::StringUtil::endsWith(resourceName, ".tut")
-         && !QGears::StringUtil::endsWith(resourceName, ".siz")
-         && resourceName != "maplist" && resourceName == "md1_2")
+        const QGears::TriggersFile::Gateway& gateway = gateways[i];
+        if (gateway.destinationFieldId != kInactiveGateWayId)
         {
-            //try
+            auto it = spawnPoints.find(gateway.destinationFieldId);
+            if (it != std::end(spawnPoints))
             {
-                QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
-                FF7PcFieldToQGearsField(field, outDir);
+                // Add to the list of gateways that link to destinationFieldId
+                SpawnPointDb::Record rec;
+                rec.mFieldId = thisFieldId;
+                rec.mGateway = gateway;
+                rec.GatewayIndex = i;
+                it->second.mGatewaysToThisField.push_back(rec);
             }
-            /*
-            catch (const Ogre::Exception& ex)
+            else
             {
-                std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
+                // Create a new record for destinationFieldId
+                SpawnPointDb db;
+                db.mTargetFieldId = gateway.destinationFieldId;
+
+                SpawnPointDb::Record rec;
+                rec.mFieldId = thisFieldId;
+                rec.mGateway = gateway;
+                rec.GatewayIndex = i;
+                db.mGatewaysToThisField.push_back(rec);
+
+                spawnPoints.insert(std::make_pair(db.mTargetFieldId, db));
             }
-            catch (const std::exception& ex)
-            {
-                std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
-            }*/
         }
     }
+}
+
+static bool IsAFieldFile(Ogre::String& resourceName)
+{
+    return (!QGears::StringUtil::endsWith(resourceName, ".tex")
+        && !QGears::StringUtil::endsWith(resourceName, ".tut")
+        && !QGears::StringUtil::endsWith(resourceName, ".siz")
+        && resourceName != "maplist");
+}
+
+void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
+{
+    // List whats in the LGP archive
+    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
+
+    // Load the map list field
+    QGears::MapListFilePtr mapList = QGears::MapListFileManager::getSingleton().load("maplist", "FFVIIFields").staticCast<QGears::MapListFile>();
+
+    // On the first pass collate required field information
+    FieldSpawnPointsMap spawnPoints;
+    for (auto& resourceName : *resources)
+    {
+        // Exclude things that are not fields
+        if (IsAFieldFile(resourceName))
+        {
+            QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
+            CollectSpawnPoints(field, mapList->GetMapList(), spawnPoints);
+        }
+    }
+
+    // Now we can do the full conversion with the collated data
+    for (auto& resourceName : *resources)
+    {
+        // Exclude things that are not fields
+        if (IsAFieldFile(resourceName))
+        {
+            if (resourceName == "md1_2") // Testing conversion only on this field for now
+            {
+                QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
+                FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints);
+            }
+        }
+    }
+    
 }

@@ -101,14 +101,14 @@ namespace QGears
         readInt16(stream, range.bottom);
     }
 
-    void TriggerFileSerializer::ReadExit(Ogre::DataStreamPtr& stream, TriggersFile::Exit& exit)
+    void TriggerFileSerializer::ReadGateway(Ogre::DataStreamPtr& stream, TriggersFile::Gateway& exit)
     {
         for (size_t i = 0; i < exit.exit_line.size(); i++)
         {
             ReadVertex_s(stream, exit.exit_line[i]);
         }
         ReadVertex_s(stream, exit.destination);
-        readShort(stream, exit.fieldID);
+        readShort(stream, exit.destinationFieldId);
         readUInt8(stream, exit.dir);
         readUInt8(stream, exit.dir_copy1);
         readUInt8(stream, exit.dir_copy2);
@@ -159,8 +159,8 @@ namespace QGears
 
         for (size_t i = 0; i < data->doors.size(); i++)
         {
-            TriggersFile::Exit& exit = data->doors[i];
-            ReadExit(stream, exit);
+            TriggersFile::Gateway& exit = data->doors[i];
+            ReadGateway(stream, exit);
         }
         
         for (size_t i = 0; i < data->triggers.size(); i++)
