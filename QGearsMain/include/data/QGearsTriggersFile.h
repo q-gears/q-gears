@@ -59,7 +59,7 @@ namespace QGears
         {
             std::array<Vertex_s, 2> exit_line;
             Vertex_s destination;
-            u16 fieldID;
+            u16 destinationFieldId;
             u8 dir, dir_copy1, dir_copy2, dir_copy3;
         };
 

@@ -108,7 +108,7 @@ namespace QGears
             ReadVertex_s(stream, exit.exit_line[i]);
         }
         ReadVertex_s(stream, exit.destination);
-        readShort(stream, exit.fieldID);
+        readShort(stream, exit.destinationFieldId);
         readUInt8(stream, exit.dir);
         readUInt8(stream, exit.dir_copy1);
         readUInt8(stream, exit.dir_copy2);
