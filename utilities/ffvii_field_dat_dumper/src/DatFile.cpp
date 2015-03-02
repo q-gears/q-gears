@@ -3336,7 +3336,7 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
     {
         blending_str = "alpha";
     }
-    else if( tile.blending == 1 )
+    else if( tile.blending == 1 || tile.blending == 3 ) // 3 is source + 0.25 * destination
     {
         blending_str = "add";
     }
@@ -3344,10 +3344,6 @@ DatFile::AddTile( const Tile& tile, MimFile& mim, Logger* export_text )
     {
         blending_str = "subtract";
     }
-    // else if( tile.blending == 3 )
-    // {
-    //     blending_str = "add"; // source + 0.25 * destination
-    // }
     else
     {
         LOGGER->Log( "Tile blending with type \"" + Ogre::StringConverter::toString( tile.blending ) + "\" not supported." );
