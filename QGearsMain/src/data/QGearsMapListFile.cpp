@@ -1,4 +1,5 @@
 #include "data/QGearsMapListFile.h"
+#include <array>
 
 template<> QGears::MapListFileManager *Ogre::Singleton<QGears::MapListFileManager>::msSingleton = nullptr;
 
