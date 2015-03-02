@@ -27,6 +27,7 @@
 #include "common/QGearsStringUtil.h"
 #include "common/FF7NameLookup.h"
 #include "data/QGearsTexCodec.h"
+#include "data/QGearsMapListFile.h"
 #include "decompiler/sudm.h"
 #include <memory>
 
@@ -261,6 +262,11 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
                     // spawn at position and rotation in gateway.fieldID.
                     // However I think this adds limit of one entrance from gateway.fieldID to this field as there can only be
                     // one Spawn_FieldName entity_point.
+                    // cosin1 field has 2 links to cos_btm
+                    // for fix we put in gateway name, so script calls:
+                    // load_field_map_request( "ffvii_nrthmk", "Spawn_md1_2_Gateway1" )
+                    // Instead of:
+                    // load_field_map_request( "ffvii_nrthmk", "Spawn_md1_2" )
                     xmlEntityPoint->SetAttribute("position",
                         Ogre::StringConverter::toString(
                         Ogre::Vector3(gateway.destination.x, gateway.destination.y, gateway.destination.z) / downscaler_next));
@@ -404,6 +410,13 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
 {
     // Everything in here is a field
     Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
+
+    QGears::MapListFilePtr mapList = QGears::MapListFileManager::getSingleton().load("maplist", "FFVIIFields").staticCast<QGears::MapListFile>();
+    for (const auto& fieldName : mapList->GetMapList())
+    {
+        std::cout << fieldName << std::endl;
+    }
+
     for (auto& resourceName : *resources)
     {
         if (!QGears::StringUtil::endsWith(resourceName, ".tex")

@@ -149,6 +149,7 @@ include/data/worldmap/MapFile.h
   include/data/QGearsTexCodec.h
   include/data/QGearsTexFile.h
   include/data/QGearsTriggersFile.h
+  include/data/QGearsMapListFile.h
 )
 
 set(SOURCE_FILES_DATA
@@ -198,6 +199,7 @@ set(SOURCE_FILES_DATA
   src/data/QGearsTexCodec.cpp
   src/data/QGearsTexFile.cpp
   src/data/QGearsTriggersFile.cpp
+  src/data/QGearsMapListFile.cpp
 )
 
 set(SOURCE_FILES
