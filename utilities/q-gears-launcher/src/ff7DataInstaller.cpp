@@ -137,18 +137,36 @@ void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDi
 class FF7FieldScriptFormatter : public SUDM::IScriptFormatter
 {
 public:
-    virtual bool ExcludeFunction(const std::string& ) override
+    // Renames a variable, return empty string for generated name
+    virtual std::string VarName(unsigned int bank, unsigned int addr) override
     {
-        // Include everything for now
-        return false;
+        return "";
     }
 
-
-    virtual std::string RenameIdentifer(const std::string& name) override
+    // Renames an entity
+    virtual std::string EntityName(const std::string& entity) override
     {
-        // Don't rename anything for now
-        return name;
+        return entity;
     }
+
+    // Renames an animation, return empty string for generated name
+    virtual std::string AnimationName(int id) override
+    {
+        return "";
+    }
+
+    // Renames a function in an entity
+    virtual std::string FunctionName(const std::string& entity, const std::string& funcName) override
+    {
+        return funcName;
+    }
+
+    // Sets the header comment for a function in an entity
+    virtual std::string FunctionComment(const std::string& entity, const std::string& funcName) override
+    {
+        return "";
+    }
+
 };
 
 const int kInactiveGateWayId = 32767;
@@ -194,11 +212,11 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
 
         // Decompile to LUA
         FF7FieldScriptFormatter formatter;
-        std::string luaScript = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter);
+        const SUDM::FF7::Field::DecompiledScript decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter);
         std::ofstream scriptFile(outDir + "/" + field->getName() + ".lua");
         if (scriptFile.is_open())
         {
-            scriptFile << luaScript;
+            scriptFile << decompiled.luaScript;
         }
         else
         {
