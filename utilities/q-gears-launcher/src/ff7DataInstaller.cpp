@@ -202,9 +202,11 @@ static size_t FieldId(const std::string& name, const std::vector<std::string>& f
 
 static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::string& outDir, const std::vector<std::string>& fieldIdToNameLookup, const FieldSpawnPointsMap& spawnMap)
 {
-    // Save out the tiles as a PNG image
-    
 
+    // TODO: Insert triggers into LUA script
+  
+
+    SUDM::FF7::Field::DecompiledScript decompiled;
     try
     {
         // Get the raw script bytes
@@ -212,7 +214,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
 
         // Decompile to LUA
         FF7FieldScriptFormatter formatter;
-        const SUDM::FF7::Field::DecompiledScript decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter);
+        decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter);
         std::ofstream scriptFile(outDir + "/" + field->getName() + ".lua");
         if (scriptFile.is_open())
         {
@@ -228,10 +230,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         std::cerr << "InternalDecompilerError: " << ex.what() << std::endl;
     }
 
-    // TODO: Insert triggers into LUA script
-    //const QGears::ModelListFilePtr& models = field->getModelList();
-    //const QGears::ModelListFile::ModelDescription& desc = models->getModels().at(0);
-    
+
     const QGears::TriggersFilePtr& triggers = field->getTriggers();
 
     // Write out the map file which links all the other files together for a given field
@@ -254,21 +253,45 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         xmlWalkmesh->SetAttribute("file_name", field->getName() + "_wm.xml");
         element->LinkEndChild(xmlWalkmesh.release());
 
-
+        // Angle player moves when "up" is pressed
         std::unique_ptr<TiXmlElement> xmlMovementRotation(new TiXmlElement("movement_rotation"));
         xmlMovementRotation->SetAttribute("degree", std::to_string(triggers->MovementRotation()));
         element->LinkEndChild(xmlMovementRotation.release());
 
-        // TODO: entity_script - name
-        
-        // TODO: entity_model - name, file_name,  position, direction
-        // We set char 1 position to be position of first entity_point so player is spawned in sane
-        // position if map is manually loaded via console.
-        // None player chars set their first position in the init scripts. We know its a entity_model
-        // because it uses PC opcode in init script.
+        const QGears::ModelListFilePtr& models = field->getModelList();
+        for (const auto& it : decompiled.entities)
+        {
+            const int charId = it.second;
+            if (charId != -1)
+            {
+                const QGears::ModelListFile::ModelDescription& desc = models->getModels().at(charId);
 
-        // entity_manager:get_entity("cl") is done via CHAR opcode
+                std::unique_ptr<TiXmlElement> xmlEntityScript(new TiXmlElement("entity_model"));
+                xmlEntityScript->SetAttribute("name", it.first);
 
+                // TODO: Add to list of HRC's to convert, obtain name of target converted .mesh file
+                xmlEntityScript->SetAttribute("file_name", desc.hrc_name);
+
+                // TODO: entity_model - name, file_name,  position, direction
+                // We set char 1 position to be position of first entity_point so player is spawned in sane
+                // position if map is manually loaded via console.
+                // None player chars set their first position in the init scripts. We know its a entity_model
+                // because it uses PC opcode in init script.
+                // entity_manager:get_entity("cl") is done via CHAR opcode
+                xmlEntityScript->SetAttribute("position", "0 0 0");
+
+                xmlEntityScript->SetAttribute("direction", "0");
+
+                element->LinkEndChild(xmlEntityScript.release());
+
+            }
+            else
+            {
+                std::unique_ptr<TiXmlElement> xmlEntityScript(new TiXmlElement("entity_script"));
+                xmlEntityScript->SetAttribute("name", it.first);
+                element->LinkEndChild(xmlEntityScript.release());
+            }
+        }
 
         // TODO: Get these scales from the field game data,  1024 for md1_1 and 512 for md1_2, DAT CFG has them as 2 and 1?
         const float downscaler_next = 128.0f; //  * MapIdToScale( map_id );
