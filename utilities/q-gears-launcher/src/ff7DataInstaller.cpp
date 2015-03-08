@@ -169,6 +169,31 @@ public:
 
 };
 
+static std::string CreateGateWayScript(const std::string& gatewayEntityName, const std::string& targetMapName, const std::string& sourceSpawnPointName)
+{
+    return "\nEntityContainer[ \"" + gatewayEntityName + "\" ] = {\n"
+        "on_start = function(self)\n"
+        "   return 0\n"
+        "end,\n"
+        "on_enter_line = function(self, entity)\n"
+        "    return 0\n"
+        "end,\n\n"
+        "on_move_to_line = function(self, entity)\n"
+        "   return 0\n"
+        "end,\n\n"
+        "on_cross_line = function(self, entity)\n"
+        "   if entity == \"Cloud\" then\n"
+        "       load_field_map_request(\"" + targetMapName + "\", \"" + sourceSpawnPointName + "\")\n"
+        "   end\n\n"
+        "   return 0\n"
+        "end,\n\n"
+        "on_leave_line = function(self, entity)\n"
+        "   return 0\n"
+        "end,\n"
+        "}\n\n";
+
+}
+
 const int kInactiveGateWayId = 32767;
 
 class SpawnPointDb
@@ -205,6 +230,18 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
 
     // TODO: Insert triggers into LUA script
   
+    std::string gatewayScriptData;
+    const QGears::TriggersFilePtr& triggers = field->getTriggers();
+    const auto& gateways = triggers->GetGateways();
+    for (size_t i = 0; i < gateways.size(); i++)
+    {
+        const QGears::TriggersFile::Gateway& gateway = gateways[i];
+
+        const std::string gatewayEntityName = "Gateway" + std::to_string(i);
+
+        // TODO: Obtain correct params
+        gatewayScriptData += CreateGateWayScript(gatewayEntityName, "target map name", "this map spawn point name in target map");
+    }
 
     SUDM::FF7::Field::DecompiledScript decompiled;
     try
@@ -214,7 +251,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
 
         // Decompile to LUA
         FF7FieldScriptFormatter formatter;
-        decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter);
+        decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter, gatewayScriptData, "EntityContainer = {}\n\n");
         std::ofstream scriptFile(outDir + "/" + field->getName() + ".lua");
         if (scriptFile.is_open())
         {
@@ -230,8 +267,6 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         std::cerr << "InternalDecompilerError: " << ex.what() << std::endl;
     }
 
-
-    const QGears::TriggersFilePtr& triggers = field->getTriggers();
 
     // Write out the map file which links all the other files together for a given field
     {
