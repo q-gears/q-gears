@@ -233,14 +233,17 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
     std::string gatewayScriptData;
     const QGears::TriggersFilePtr& triggers = field->getTriggers();
     const auto& gateways = triggers->GetGateways();
+
     for (size_t i = 0; i < gateways.size(); i++)
     {
         const QGears::TriggersFile::Gateway& gateway = gateways[i];
+        if (gateway.destinationFieldId != kInactiveGateWayId)
+        {
+            const std::string gatewayEntityName = "Gateway" + std::to_string(i);
 
-        const std::string gatewayEntityName = "Gateway" + std::to_string(i);
-
-        // TODO: Obtain correct params
-        gatewayScriptData += CreateGateWayScript(gatewayEntityName, "target map name", "this map spawn point name in target map");
+            // TODO: Obtain correct params
+            gatewayScriptData += CreateGateWayScript(gatewayEntityName, "ffvii_" + fieldIdToNameLookup.at(gateway.destinationFieldId), "Spawn_" + field->getName() + "_" + std::to_string(i));
+        }
     }
 
     SUDM::FF7::Field::DecompiledScript decompiled;
