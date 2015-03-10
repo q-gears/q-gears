@@ -240,8 +240,6 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         if (gateway.destinationFieldId != kInactiveGateWayId)
         {
             const std::string gatewayEntityName = "Gateway" + std::to_string(i);
-
-            // TODO: Obtain correct params
             gatewayScriptData += CreateGateWayScript(gatewayEntityName, "ffvii_" + fieldIdToNameLookup.at(gateway.destinationFieldId), "Spawn_" + field->getName() + "_" + std::to_string(i));
         }
     }
