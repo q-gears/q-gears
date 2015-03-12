@@ -14,7 +14,7 @@ public:
 
 private:
     void ConvertFieldModels(std::string archive, std::string outDir);
-    void ConvertFields(std::string archive, std::string outDir);
+    void ConvertFields(std::string archive, std::string inDir, std::string outDir);
 
     QGears::Application mApp;
 };

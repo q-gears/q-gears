@@ -48,21 +48,14 @@ FF7DataInstaller::~FF7DataInstaller()
 
 void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, const std::vector<std::string>& files)
 {
+    // TODO: Just valiate required files are present
     for (const auto& file : files)
     {
-        if (file == "field/char.lgp")
-        {
-            /*
-            auto fullPath = inputDir + file;
-            mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
-            ConvertFieldModels(fullPath, outputDir);
-            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");*/
-        }
-        else if (file == "field/flevel.lgp")
+        if (file == "field/flevel.lgp")
         {
             auto fullPath = inputDir + file;
             mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVIIFields");
-            ConvertFields(fullPath, outputDir);
+            ConvertFields(fullPath, inputDir, outputDir);
             mApp.getRoot()->removeResourceLocation(fullPath, "FFVIIFields");
         }
     }
@@ -96,43 +89,6 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
     mat_ser.exportQueued(outdir + base_name + QGears::EXT_MATERIAL);
 }
 
-
-void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDir)
-{
-    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVII", "*.hrc");
-    for (auto& resourceName : *resources)
-    {
-        if (QGears::StringUtil::endsWith(resourceName, ".hrc"))
-        {
-            //try
-            {
-                Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(resourceName, "FFVII");
-
-                Ogre::String baseName;
-                QGears::StringUtil::splitBase(resourceName, baseName);
-
-                auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
-
-                Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
-                Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
-                exportMesh(outDir, mesh);
-            }
-           // catch (const Ogre::Exception& ex)
-            {
-               // std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
-            }
-        }
-    }
-
-
-    /*
-    TODO:
-    To figure out what .a files relate to which .hrc files, we need to enumerate every field
-    and check its model loader data. These are always Idle, Walk, Run and then field specific
-    ordering.
-    Model loader is section 3 of the field file.
-    */
-}
 
 class FF7FieldScriptFormatter : public SUDM::IScriptFormatter
 {
@@ -213,6 +169,46 @@ public:
 };
 typedef std::map<u16, SpawnPointDb> FieldSpawnPointsMap;
 
+typedef std::map<std::string, std::set<std::string>> ModelAnimationMap;
+class ModelsAndAnimationsDb
+{
+public:
+    std::string NormalizeAnimationName(const std::string& name)
+    {
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(name, baseName);
+        std::transform(baseName.begin(), baseName.end(), baseName.begin(), ::tolower);
+        return baseName + ".a";
+    }
+
+    std::set<std::string>& ModelAnimations(const std::string model)
+    {
+        // HACK FIX LGP READING
+        std::string modelLower = model;
+        std::transform(modelLower.begin(), modelLower.end(), modelLower.begin(), ::tolower);
+
+        return mMap[modelLower];
+    }
+
+    std::string ModelMetaDataName(const std::string& modelName)
+    {
+        // TODO: Convert to name thats in the meta data
+        return modelName;
+    }
+
+    std::string AnimationMetaDataName(const std::string& /*modelName*/, const std::string& animationName)
+    {
+        // TODO: Same as above
+        return animationName;
+    }
+
+//private:
+    ModelAnimationMap mMap;
+};
+
+typedef std::set<std::string> MapCollection;
+
+
 static size_t FieldId(const std::string& name, const std::vector<std::string>& fieldIdToNameLookup)
 {
     for (size_t i = 0; i < fieldIdToNameLookup.size(); i++)
@@ -225,7 +221,13 @@ static size_t FieldId(const std::string& name, const std::vector<std::string>& f
     throw std::runtime_error("No Id found for field name");
 }
 
-static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::string& outDir, const std::vector<std::string>& fieldIdToNameLookup, const FieldSpawnPointsMap& spawnMap)
+static void FF7PcFieldToQGearsField(
+    QGears::FLevelFilePtr& field,
+    const std::string& outDir,
+    const std::vector<std::string>& fieldIdToNameLookup,
+    const FieldSpawnPointsMap& spawnMap,
+    ModelsAndAnimationsDb& modelAnimationDb,
+    MapCollection& maps)
 {
 
     // TODO: Insert triggers into LUA script
@@ -302,11 +304,17 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
             {
                 const QGears::ModelListFile::ModelDescription& desc = models->getModels().at(charId);
 
+                auto& animVec = modelAnimationDb.ModelAnimations(desc.hrc_name);
+                for (auto& anim : desc.animations)
+                {
+                    animVec.insert(modelAnimationDb.NormalizeAnimationName(anim.name));
+                }
+
                 std::unique_ptr<TiXmlElement> xmlEntityScript(new TiXmlElement("entity_model"));
                 xmlEntityScript->SetAttribute("name", it.first);
 
                 // TODO: Add to list of HRC's to convert, obtain name of target converted .mesh file
-                xmlEntityScript->SetAttribute("file_name", desc.hrc_name);
+                xmlEntityScript->SetAttribute("file_name", modelAnimationDb.ModelMetaDataName(desc.hrc_name));
 
                 // TODO: entity_model - name, file_name,  position, direction
                 // We set char 1 position to be position of first entity_point so player is spawned in sane
@@ -514,6 +522,8 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         doc.LinkEndChild(element.release());
         doc.SaveFile(outDir + "/" + field->getName() + "_wm.xml");
     }
+
+    maps.insert(field->getName());
 }
 
 
@@ -564,7 +574,46 @@ static bool IsAFieldFile(Ogre::String& resourceName)
         && resourceName != "maplist");
 }
 
-void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
+// TODO: Can be removed
+void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDir)
+{
+    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVII", "*.hrc");
+    for (auto& resourceName : *resources)
+    {
+        if (QGears::StringUtil::endsWith(resourceName, ".hrc"))
+        {
+            //try
+            {
+                Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(resourceName, "FFVII");
+
+                Ogre::String baseName;
+                QGears::StringUtil::splitBase(resourceName, baseName);
+
+                auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
+
+                Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
+                Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
+                exportMesh(outDir, mesh);
+            }
+            // catch (const Ogre::Exception& ex)
+            {
+                // std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
+            }
+        }
+    }
+
+
+    /*
+    TODO:
+    To figure out what .a files relate to which .hrc files, we need to enumerate every field
+    and check its model loader data. These are always Idle, Walk, Run and then field specific
+    ordering.
+    Model loader is section 3 of the field file.
+    */
+}
+
+
+void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, std::string outDir)
 {
     // List whats in the LGP archive
     Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
@@ -584,6 +633,9 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
         }
     }
 
+    ModelsAndAnimationsDb modelAnimationDb;
+    MapCollection maps;
+
     // Now we can do the full conversion with the collated data
     for (auto& resourceName : *resources)
     {
@@ -593,9 +645,46 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
             if (resourceName == "md1_2") // Testing conversion only on this field for now
             {
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
-                FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints);
+                FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints, modelAnimationDb, maps);
             }
         }
     }
     
+    // TODO: Write out maps.xml
+
+    // TODO: Convert models and animations in modelAnimationDb
+    auto fullPath = inputDir + "field/char.lgp";
+    mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
+    Ogre::StringVectorPtr resources2 = mApp.ResMgr()->listResourceNames("FFVII", "*");
+
+
+    for (auto& name : modelAnimationDb.mMap)
+    {
+        Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(name.first, "FFVII");
+
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(name.first, baseName);
+
+        auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
+
+        Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
+        Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
+        
+        for (auto& anim : name.second)
+        {
+            QGears::AFileManager       &afl_mgr(QGears::AFileManager::getSingleton());
+            QGears::AFilePtr  a = afl_mgr.load(anim, "FFVII").staticCast<QGears::AFile>();
+            a->addTo(skeleton, anim); // TODO: Set "friendly" name, also update this name in the scripts
+        }
+
+        exportMesh(outDir, mesh);
+
+    }
+
+    //ConvertFieldModels(fullPath, outputDir);
+
+
+    mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");
+
+
 }
