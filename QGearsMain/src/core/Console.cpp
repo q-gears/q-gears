@@ -117,7 +117,7 @@ Console::Input(const QGears::Event& event)
     }
 
     // input command
-    else if (event.type == QGears::ET_KEY_PRESS && event.param1 == OIS::KC_RETURN && m_InputLine.size())
+    else if (event.type == QGears::ET_KEY_PRESS && (event.param1 == OIS::KC_RETURN || event.param1 == OIS::KC_NUMPADENTER) && m_InputLine.size())
     {
         if(m_AutoCompletition.size() > 0)
         {
@@ -297,9 +297,10 @@ Console::Input(const QGears::Event& event)
     // input ascii character
     else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && m_InputLine.size() < m_LineWidth)
     {
-        char legalchars[] = "ABCDEFGHIJKLMNOPQRSTUVWXUZabcdefghijklmnopqrstuvwxyz1234567890~!@#$%^&*()-_=+?{[]}|\\;:'\"<>,./? ";
-        char txt = static_cast<char>(event.param2);
-        for(unsigned int c = 0; c < sizeof(legalchars ) - 1; ++c)
+        char legalchars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890~!@#$%^&*()-_=+?{[]}|\\;:'\"<>,./? ";
+        char txt = TranslateNumpad(event);
+
+        for (unsigned int c = 0; c < sizeof(legalchars) - 1; ++c)
         {
             if(legalchars[c] == txt)
             {
@@ -313,6 +314,45 @@ Console::Input(const QGears::Event& event)
     }
 }
 
+
+char
+Console::TranslateNumpad(const QGears::Event& event)
+{
+    switch (static_cast<int>(event.param1))
+    {
+    case OIS::KC_NUMPAD0:
+        return '0';
+    case OIS::KC_NUMPAD1:
+        return '1';
+    case OIS::KC_NUMPAD2:
+        return '2';
+    case OIS::KC_NUMPAD3:
+        return '3';
+    case OIS::KC_NUMPAD4:
+        return '4';
+    case OIS::KC_NUMPAD5:
+        return '5';
+    case OIS::KC_NUMPAD6:
+        return '6';
+    case OIS::KC_NUMPAD7:
+        return '7';
+    case OIS::KC_NUMPAD8:
+        return '8';
+    case OIS::KC_NUMPAD9:
+        return '9';
+    case OIS::KC_DECIMAL:
+        return '.';
+    case OIS::KC_ADD:
+        return '+';
+    case OIS::KC_SUBTRACT:
+        return '-';
+    case OIS::KC_MULTIPLY:
+        return '*';
+    case OIS::KC_DIVIDE:
+        return '/';
+    }
+    return static_cast<char>(event.param2);
+}
 
 void
 Console::Update()

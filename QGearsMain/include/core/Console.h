@@ -43,6 +43,7 @@ private:
     void LoadHistory();
     void SaveHistory();
     void AddToHistory(const Ogre::String& history);
+    char TranslateNumpad(const QGears::Event& event);
 
     int                           m_ConsoleWidth;
     int                           m_ConsoleHeight;
