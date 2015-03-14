@@ -284,9 +284,20 @@ ScriptManager::Update(const ScriptManager::Type type)
 void
 ScriptManager::RunString(const Ogre::String& lua)
 {
+    int preEvalIndex = lua_gettop(m_LuaState);
     if(luaL_dostring(m_LuaState, lua.c_str()) == 1)
     {
         LOG_ERROR(Ogre::String(lua_tostring(m_LuaState, -1)));
+    }
+    else
+    {
+        int index = lua_gettop(m_LuaState);
+        if (index > 0 && index != preEvalIndex)
+        {
+            auto str = lua_tostring(m_LuaState, index);
+            LOG_CONSOLE(str != nullptr ? str : "(nullptr; try tostring(...)?)");
+            lua_pop(m_LuaState, 1);
+        }
     }
 }
 
