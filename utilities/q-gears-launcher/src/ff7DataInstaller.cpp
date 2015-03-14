@@ -48,7 +48,7 @@ FF7DataInstaller::~FF7DataInstaller()
 
 void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, const std::vector<std::string>& files)
 {
-    // TODO: Just valiate required files are present
+    // TODO: Just validate required files are present
     for (const auto& file : files)
     {
         if (file == "field/flevel.lgp")
@@ -229,9 +229,7 @@ static void FF7PcFieldToQGearsField(
     ModelsAndAnimationsDb& modelAnimationDb,
     MapCollection& maps)
 {
-
-    // TODO: Insert triggers into LUA script
-  
+    // Generate triggers script to insert into main decompiled FF7 field -> LUA script
     std::string gatewayScriptData;
     const QGears::TriggersFilePtr& triggers = field->getTriggers();
     const auto& gateways = triggers->GetGateways();
@@ -574,44 +572,25 @@ static bool IsAFieldFile(Ogre::String& resourceName)
         && resourceName != "maplist");
 }
 
-// TODO: Can be removed
-void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDir)
+static bool IsTestField(Ogre::String& resourceName)
 {
-    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVII", "*.hrc");
-    for (auto& resourceName : *resources)
+    if (
+        resourceName == "startmap" ||
+        resourceName == "md1stin" ||
+        resourceName == "md1_1" ||
+        resourceName == "md1_2" ||
+        resourceName == "nrthmk" ||
+        resourceName == "nmkin_1" ||
+        resourceName == "elevtr1" ||
+        resourceName == "nmkin_2" ||
+        resourceName == "nmkin_3" ||
+        resourceName == "tin_2"
+        )
     {
-        if (QGears::StringUtil::endsWith(resourceName, ".hrc"))
-        {
-            //try
-            {
-                Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(resourceName, "FFVII");
-
-                Ogre::String baseName;
-                QGears::StringUtil::splitBase(resourceName, baseName);
-
-                auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
-
-                Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
-                Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
-                exportMesh(outDir, mesh);
-            }
-            // catch (const Ogre::Exception& ex)
-            {
-                // std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
-            }
-        }
+        return true;
     }
-
-
-    /*
-    TODO:
-    To figure out what .a files relate to which .hrc files, we need to enumerate every field
-    and check its model loader data. These are always Idle, Walk, Run and then field specific
-    ordering.
-    Model loader is section 3 of the field file.
-    */
+    return false;
 }
-
 
 void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, std::string outDir)
 {
@@ -642,7 +621,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
         // Exclude things that are not fields
         if (IsAFieldFile(resourceName))
         {
-            if (resourceName == "md1_2") // Testing conversion only on this field for now
+            if (IsTestField(resourceName))
             {
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
                 FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints, modelAnimationDb, maps);
@@ -650,7 +629,24 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
         }
     }
     
-    // TODO: Write out maps.xml
+    {
+        // Write out maps.xml
+        TiXmlDocument doc;
+        std::unique_ptr<TiXmlElement> element(new TiXmlElement("maps"));
+
+        // TODO: Probably need to inject "empty" and "test" fields
+
+        for (const auto& map : maps)
+        {
+            std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("map"));
+            xmlElement->SetAttribute("name", "ffvii_" + map);
+            xmlElement->SetAttribute("file_name", map + ".xml");
+            element->LinkEndChild(xmlElement.release());
+        }
+        doc.LinkEndChild(element.release());
+        doc.SaveFile(outDir + "/maps.xml");
+    }
+
 
     // TODO: Convert models and animations in modelAnimationDb
     auto fullPath = inputDir + "field/char.lgp";

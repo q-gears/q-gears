@@ -13,7 +13,6 @@ public:
     void Convert(std::string inputDir, std::string outputDir, const std::vector<std::string>& files);
 
 private:
-    void ConvertFieldModels(std::string archive, std::string outDir);
     void ConvertFields(std::string archive, std::string inDir, std::string outDir);
 
     QGears::Application mApp;
