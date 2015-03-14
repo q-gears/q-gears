@@ -31,6 +31,8 @@
 #include "decompiler/sudm.h"
 #include <memory>
 
+#include <QDir>
+
 FF7DataInstaller::FF7DataInstaller()
 #ifdef _DEBUG
     : mApp("plugins_d.cfg", "resources_d.cfg", "install_d.log")
@@ -48,21 +50,14 @@ FF7DataInstaller::~FF7DataInstaller()
 
 void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, const std::vector<std::string>& files)
 {
+    // TODO: Just validate required files are present
     for (const auto& file : files)
     {
-        if (file == "field/char.lgp")
-        {
-            /*
-            auto fullPath = inputDir + file;
-            mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
-            ConvertFieldModels(fullPath, outputDir);
-            mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");*/
-        }
-        else if (file == "field/flevel.lgp")
+        if (file == "field/flevel.lgp")
         {
             auto fullPath = inputDir + file;
             mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVIIFields");
-            ConvertFields(fullPath, outputDir);
+            ConvertFields(fullPath, inputDir, outputDir);
             mApp.getRoot()->removeResourceLocation(fullPath, "FFVIIFields");
         }
     }
@@ -81,12 +76,43 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
     Ogre::Mesh::SubMeshIterator it(mesh->getSubMeshIterator());
     Ogre::MaterialSerializer    mat_ser;
     size_t i(0);
+    std::set<std::string> textures;
     while (it.hasMoreElements())
     {
         Ogre::SubMesh *sub_mesh(it.getNext());
         Ogre::MaterialPtr mat(Ogre::MaterialManager::getSingleton().getByName(sub_mesh->getMaterialName()));
         if (!mat.isNull())
         {
+            for (size_t techNum = 0; techNum < mat->getNumTechniques(); techNum++)
+            {
+                Ogre::Technique* tech = mat->getTechnique(techNum);
+                if (tech)
+                {
+                    for (size_t passNum = 0; passNum < tech->getNumPasses(); passNum++)
+                    {
+                        Ogre::Pass* pass = tech->getPass(passNum);
+                        if (pass)
+                        {
+                            for (size_t textureUnitNum = 0; textureUnitNum < pass->getNumTextureUnitStates(); textureUnitNum++)
+                            {
+                                Ogre::TextureUnitState* unit = pass->getTextureUnitState(textureUnitNum);
+                                if (unit)
+                                {
+                                    if (unit->getTextureName().empty() == false)
+                                    {
+                                        // Ensure the output material script references png files rather than tex files
+                                        textures.insert(unit->getTextureName());
+                                        Ogre::String baseName;
+                                        QGears::StringUtil::splitBase(unit->getTextureName(), baseName);
+                                        unit->setTextureName(baseName + ".png");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             mat_ser.queueForExport(mat);
         }
         ++i;
@@ -94,44 +120,42 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
     QGears::String base_name;
     QGears::StringUtil::splitFull(mesh->getName(), base_name);
     mat_ser.exportQueued(outdir + base_name + QGears::EXT_MATERIAL);
+
+    for (auto& textureName : textures)
+    {
+        Ogre::TexturePtr texturePtr = Ogre::TextureManager::getSingleton().load(textureName.c_str(), "FFVII");
+        Ogre::Image image;
+        texturePtr->convertToImage(image);
+
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(textureName, baseName);
+        image.save(outdir + baseName + ".png");
+    }
 }
 
-
-void FF7DataInstaller::ConvertFieldModels(std::string archive, std::string outDir)
+static std::string FieldName(const std::string& name)
 {
-    Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVII", "*.hrc");
-    for (auto& resourceName : *resources)
+    return "ffvii_" + name;
+}
+
+void FF7DataInstaller::CreateDir(const std::string& path)
+{
+    QString target = QString::fromStdString(mOutputDir + path);
+    QDir dir(target);
+    if (!dir.mkpath("."))
     {
-        if (QGears::StringUtil::endsWith(resourceName, ".hrc"))
-        {
-            //try
-            {
-                Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(resourceName, "FFVII");
-
-                Ogre::String baseName;
-                QGears::StringUtil::splitBase(resourceName, baseName);
-
-                auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
-
-                Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
-                Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
-                exportMesh(outDir, mesh);
-            }
-           // catch (const Ogre::Exception& ex)
-            {
-               // std::cout << "ERROR converting: " << resourceName << " Exception: " << ex.what() << std::endl;
-            }
-        }
+        throw std::runtime_error("Failed to mkpath");
     }
+}
 
+static std::string FieldMapDir()
+{
+    return "maps/ffvii/field";
+}
 
-    /*
-    TODO:
-    To figure out what .a files relate to which .hrc files, we need to enumerate every field
-    and check its model loader data. These are always Idle, Walk, Run and then field specific
-    ordering.
-    Model loader is section 3 of the field file.
-    */
+static std::string FieldModelDir()
+{
+    return "models/ffvii/field/units";
 }
 
 class FF7FieldScriptFormatter : public SUDM::IScriptFormatter
@@ -213,6 +237,51 @@ public:
 };
 typedef std::map<u16, SpawnPointDb> FieldSpawnPointsMap;
 
+typedef std::map<std::string, std::set<std::string>> ModelAnimationMap;
+class ModelsAndAnimationsDb
+{
+public:
+    std::string NormalizeAnimationName(const std::string& name)
+    {
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(name, baseName);
+        std::transform(baseName.begin(), baseName.end(), baseName.begin(), ::tolower);
+        return baseName + ".a";
+    }
+
+    std::set<std::string>& ModelAnimations(const std::string model)
+    {
+        // HACK FIX LGP READING
+        std::string modelLower = model;
+        std::transform(modelLower.begin(), modelLower.end(), modelLower.begin(), ::tolower);
+
+        return mMap[modelLower];
+    }
+
+    std::string ModelMetaDataName(const std::string& modelName)
+    {
+        // TODO: Convert to name thats in the meta data
+
+        // If not in meta data then just replace .hrc with .mesh
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(modelName, baseName);
+
+        return baseName + ".mesh";
+    }
+
+    std::string AnimationMetaDataName(const std::string& /*modelName*/, const std::string& animationName)
+    {
+        // TODO: Same as above
+        return animationName;
+    }
+
+//private:
+    ModelAnimationMap mMap;
+};
+
+typedef std::set<std::string> MapCollection;
+
+
 static size_t FieldId(const std::string& name, const std::vector<std::string>& fieldIdToNameLookup)
 {
     for (size_t i = 0; i < fieldIdToNameLookup.size(); i++)
@@ -225,11 +294,15 @@ static size_t FieldId(const std::string& name, const std::vector<std::string>& f
     throw std::runtime_error("No Id found for field name");
 }
 
-static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::string& outDir, const std::vector<std::string>& fieldIdToNameLookup, const FieldSpawnPointsMap& spawnMap)
+static void FF7PcFieldToQGearsField(
+    QGears::FLevelFilePtr& field,
+    const std::string& outDir,
+    const std::vector<std::string>& fieldIdToNameLookup,
+    const FieldSpawnPointsMap& spawnMap,
+    ModelsAndAnimationsDb& modelAnimationDb,
+    MapCollection& maps)
 {
-
-    // TODO: Insert triggers into LUA script
-  
+    // Generate triggers script to insert into main decompiled FF7 field -> LUA script
     std::string gatewayScriptData;
     const QGears::TriggersFilePtr& triggers = field->getTriggers();
     const auto& gateways = triggers->GetGateways();
@@ -240,9 +313,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         if (gateway.destinationFieldId != kInactiveGateWayId)
         {
             const std::string gatewayEntityName = "Gateway" + std::to_string(i);
-
-            // TODO: Obtain correct params
-            gatewayScriptData += CreateGateWayScript(gatewayEntityName, "ffvii_" + fieldIdToNameLookup.at(gateway.destinationFieldId), "Spawn_" + field->getName() + "_" + std::to_string(i));
+            gatewayScriptData += CreateGateWayScript(gatewayEntityName, FieldName(fieldIdToNameLookup.at(gateway.destinationFieldId)), "Spawn_" + field->getName() + "_" + std::to_string(i));
         }
     }
 
@@ -255,7 +326,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         // Decompile to LUA
         FF7FieldScriptFormatter formatter;
         decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter, gatewayScriptData, "EntityContainer = {}\n\n");
-        std::ofstream scriptFile(outDir + "/" + field->getName() + ".lua");
+        std::ofstream scriptFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/script.lua");
         if (scriptFile.is_open())
         {
             scriptFile << decompiled.luaScript;
@@ -278,17 +349,17 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
 
         // Script
         std::unique_ptr<TiXmlElement> xmlScriptElement(new TiXmlElement("script"));
-        xmlScriptElement->SetAttribute("file_name", field->getName() + ".lua");
+        xmlScriptElement->SetAttribute("file_name", FieldMapDir() + "/" + field->getName() + "/script.lua");
         element->LinkEndChild(xmlScriptElement.release());
 
         // Background
         std::unique_ptr<TiXmlElement> xmlBackground2d(new TiXmlElement("background2d"));
-        xmlBackground2d->SetAttribute("file_name", field->getName() + "_bg.xml");
+        xmlBackground2d->SetAttribute("file_name", FieldMapDir() + "/" + field->getName() + "/bg.xml");
         element->LinkEndChild(xmlBackground2d.release());
         
         // walkmesh
         std::unique_ptr<TiXmlElement> xmlWalkmesh(new TiXmlElement("walkmesh"));
-        xmlWalkmesh->SetAttribute("file_name", field->getName() + "_wm.xml");
+        xmlWalkmesh->SetAttribute("file_name", FieldMapDir() + "/" + field->getName() + "/wm.xml");
         element->LinkEndChild(xmlWalkmesh.release());
 
         // Angle player moves when "up" is pressed
@@ -304,11 +375,17 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
             {
                 const QGears::ModelListFile::ModelDescription& desc = models->getModels().at(charId);
 
+                auto& animVec = modelAnimationDb.ModelAnimations(desc.hrc_name);
+                for (auto& anim : desc.animations)
+                {
+                    animVec.insert(modelAnimationDb.NormalizeAnimationName(anim.name));
+                }
+
                 std::unique_ptr<TiXmlElement> xmlEntityScript(new TiXmlElement("entity_model"));
                 xmlEntityScript->SetAttribute("name", it.first);
 
                 // TODO: Add to list of HRC's to convert, obtain name of target converted .mesh file
-                xmlEntityScript->SetAttribute("file_name", desc.hrc_name);
+                xmlEntityScript->SetAttribute("file_name", FieldModelDir() + "/" + modelAnimationDb.ModelMetaDataName(desc.hrc_name));
 
                 // TODO: entity_model - name, file_name,  position, direction
                 // We set char 1 position to be position of first entity_point so player is spawned in sane
@@ -393,14 +470,14 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         }
 
         doc.LinkEndChild(element.release());
-        doc.SaveFile(outDir + "/" + field->getName() + ".xml");
+        doc.SaveFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/map.xml");
     }
 
 
     const QGears::PaletteFilePtr& pal = field->getPalette();
     const QGears::BackgroundFilePtr& bg = field->getBackground();
     std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
-    bgImage->save(outDir + "/" + field->getName() + ".png");
+    bgImage->save(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/tiles.png");
 
     {
         TiXmlDocument doc;
@@ -426,7 +503,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
         const int max_x = triggers->getCameraRange().right * kScaleUpFactor;
         const int max_y = triggers->getCameraRange().bottom * kScaleUpFactor;
 
-        element->SetAttribute("image", field->getName() + ".png");
+        element->SetAttribute("image", FieldMapDir() + "/" + field->getName() + "/tiles.png");
         element->SetAttribute("position", Ogre::StringConverter::toString(position));
         element->SetAttribute("orientation", Ogre::StringConverter::toString(orientation));
         element->SetAttribute("fov", Ogre::StringConverter::toString(fov));
@@ -493,7 +570,7 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
             }
         }
         doc.LinkEndChild(element.release());
-        doc.SaveFile(outDir + "/" + field->getName() + "_bg.xml");
+        doc.SaveFile(outDir + "/" + FieldMapDir() + "/" + field->getName() +"/bg.xml");
     }
 
     {
@@ -514,8 +591,10 @@ static void FF7PcFieldToQGearsField(QGears::FLevelFilePtr& field, const std::str
             element->LinkEndChild(xmlElement.release());
         }
         doc.LinkEndChild(element.release());
-        doc.SaveFile(outDir + "/" + field->getName() + "_wm.xml");
+        doc.SaveFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/wm.xml");
     }
+
+    maps.insert(field->getName());
 }
 
 
@@ -566,8 +645,33 @@ static bool IsAFieldFile(Ogre::String& resourceName)
         && resourceName != "maplist");
 }
 
-void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
+static bool IsTestField(Ogre::String& resourceName)
 {
+    if (
+        resourceName == "startmap" ||
+        resourceName == "md1stin" ||
+        resourceName == "md1_1" ||
+        resourceName == "md1_2" ||
+        resourceName == "nrthmk" ||
+        resourceName == "nmkin_1" ||
+        resourceName == "elevtr1" ||
+        resourceName == "nmkin_2" ||
+        resourceName == "nmkin_3" ||
+        resourceName == "tin_2"
+        )
+    {
+        return true;
+    }
+    return false;
+}
+
+void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, std::string outDir)
+{
+    mOutputDir = outDir;
+
+    CreateDir(FieldMapDir());
+    CreateDir(FieldModelDir());
+
     // List whats in the LGP archive
     Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
 
@@ -586,18 +690,73 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string outDir)
         }
     }
 
+    ModelsAndAnimationsDb modelAnimationDb;
+    MapCollection maps;
+
     // Now we can do the full conversion with the collated data
     for (auto& resourceName : *resources)
     {
         // Exclude things that are not fields
         if (IsAFieldFile(resourceName))
         {
-            if (resourceName == "md1_2") // Testing conversion only on this field for now
+            if (IsTestField(resourceName))
             {
+                CreateDir(FieldMapDir() + "/" + resourceName);
+
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
-                FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints);
+                FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints, modelAnimationDb, maps);
             }
         }
     }
     
+    {
+        // Write out maps.xml
+        TiXmlDocument doc;
+        std::unique_ptr<TiXmlElement> element(new TiXmlElement("maps"));
+
+        // TODO: Probably need to inject "empty" and "test" fields
+
+        for (const auto& map : maps)
+        {
+            std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("map"));
+            xmlElement->SetAttribute("name", FieldName(map));
+            xmlElement->SetAttribute("file_name", FieldMapDir() + "/" + map + "/map.xml");
+            element->LinkEndChild(xmlElement.release());
+        }
+        doc.LinkEndChild(element.release());
+        doc.SaveFile(outDir + "/maps.xml");
+    }
+
+    // TODO: Convert models and animations in modelAnimationDb
+    auto fullPath = inputDir + "field/char.lgp";
+    mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
+    Ogre::StringVectorPtr resources2 = mApp.ResMgr()->listResourceNames("FFVII", "*");
+
+
+    for (auto& name : modelAnimationDb.mMap)
+    {
+        Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(name.first, "FFVII");
+
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(name.first, baseName);
+
+        auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
+
+        Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
+        Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
+        
+        for (auto& anim : name.second)
+        {
+            QGears::AFileManager       &afl_mgr(QGears::AFileManager::getSingleton());
+            QGears::AFilePtr  a = afl_mgr.load(anim, "FFVII").staticCast<QGears::AFile>();
+            a->addTo(skeleton, anim); // TODO: Set "friendly" name, also update this name in the scripts
+        }
+
+        exportMesh(outDir + "/" + FieldModelDir() + "/", mesh);
+
+    }
+
+    mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");
+
+
 }
