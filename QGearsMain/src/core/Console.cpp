@@ -297,7 +297,7 @@ Console::Input(const QGears::Event& event)
     // input ascii character
     else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && m_InputLine.size() < m_LineWidth)
     {
-        char legalchars[] = "ABCDEFGHIJKLMNOPQRSTUVWXUZabcdefghijklmnopqrstuvwxyz1234567890~!@#$%^&*()-_=+?{[]}|\\;:'\"<>,./? ";
+        char legalchars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890~!@#$%^&*()-_=+?{[]}|\\;:'\"<>,./? ";
         char txt = TranslateNumpad(event);
 
         for (unsigned int c = 0; c < sizeof(legalchars) - 1; ++c)
