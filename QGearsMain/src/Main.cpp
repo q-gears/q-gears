@@ -14,10 +14,12 @@
 #include "core/ConfigVarManager.h"
 #include "core/Console.h"
 #include "core/DebugDraw.h"
+#include "core/DialogsManager.h"
 #include "core/EntityManager.h"
 #include "core/GameFrameListner.h"
 #include "core/InputManager.h"
 #include "core/Logger.h"
+#include "core/TextManager.h"
 #include "core/ScriptManager.h"
 #include "core/Timer.h"
 #include "core/UiManager.h"
@@ -94,8 +96,9 @@ main(int argc, char *argv[])
 
 
         auto entity_manager = std::make_unique<EntityManager>();
+        auto text_manager = std::make_unique<TextManager>();
         auto ui_manager = std::make_unique<UiManager>();
-
+        auto dialogs_manager = std::make_unique<DialogsManager>();
         auto worldMapModule = std::make_unique<QGears::WorldMapModule>();
 
         ui_manager->SetLanguage("English");
@@ -107,9 +110,6 @@ main(int argc, char *argv[])
         auto frame_listener = std::make_unique<GameFrameListener>(window);
         root->addFrameListener(frame_listener.get());
 
-
-
-
         // execute config
         {
             ConfigFile config;
@@ -118,6 +118,7 @@ main(int argc, char *argv[])
 
         // init ui and run it scripts
         ui_manager->Initialise();
+        dialogs_manager->Initialise();
 
 
         // run application cycle

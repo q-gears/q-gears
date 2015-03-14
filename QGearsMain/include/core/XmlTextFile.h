@@ -12,6 +12,7 @@ public:
     virtual ~XmlTextFile();
 
     void LoadText();
+    void LoadTexts();
 };
 
 

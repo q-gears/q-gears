@@ -61,6 +61,7 @@ set(HEADER_FILES
   include/core/ConfigVarManager.h
   include/core/Console.h
   include/core/DebugDraw.h
+  include/core/DialogsManager.h
   include/core/Entity.h
   include/core/EntityCollision.h
   include/core/EntityDirection.h
@@ -77,6 +78,8 @@ set(HEADER_FILES
   include/core/ScriptManager.h
   include/core/ScriptManagerBinds.h
   include/core/ScriptManagerCommands.h
+  include/core/TextManager.h
+  include/core/TextManagerCommands.h
   include/core/Timer.h
   include/core/UiAnimation.h
   include/core/UiFont.h
@@ -239,6 +242,7 @@ set(SOURCE_FILES
   src/core/ConfigVarManager.cpp
   src/core/Console.cpp
   src/core/DebugDraw.cpp
+  src/core/DialogsManager.cpp
   src/core/Entity.cpp
   src/core/EntityCollision.cpp
   src/core/EntityDirection.cpp
@@ -249,6 +253,7 @@ set(SOURCE_FILES
   src/core/GameFrameListner.cpp
   src/core/InputManager.cpp
   src/core/ScriptManager.cpp
+  src/core/TextManager.cpp
   src/core/Timer.cpp
   src/core/UiAnimation.cpp
   src/core/UiFont.cpp

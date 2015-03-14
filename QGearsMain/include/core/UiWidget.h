@@ -30,6 +30,8 @@ public:
 
     void AddChild( UiWidget* widget );
     UiWidget* GetChild( const Ogre::String& name );
+    UiWidget* GetChild(const unsigned int id);
+    unsigned int GetNumberOfChildren();
     void RemoveAllChildren();
 
     // animation related
@@ -72,10 +74,15 @@ public:
     void SetX( const float percent, const float x );
     void SetY( const float percent, const float y );
     void SetZ( const float z );
+    void GetX( float &percent, float &x );
+    void GetY( float &percent, float &y );
     void SetWidth( const float percent, const float width );
+    void GetWidth( float& percent, float& width );
     void SetHeight( const float percent, const float height );
+    void GetHeight( float& percent, float& height );
     void SetScale( const Ogre::Vector2& scale );
     void SetRotation( const float degree );
+    void SetUpdateTransformation();
 
     void SetScissor( bool scissor );
     int GetScissorTop() const;
@@ -94,8 +101,8 @@ protected:
     Ogre::String             m_Name;
     Ogre::String             m_PathName;
 
-    UiWidget*                m_Parent;
     std::vector< UiWidget* > m_Children;
+    UiWidget*                m_Parent;
 
     float                    m_ScreenWidth;
     float                    m_ScreenHeight;

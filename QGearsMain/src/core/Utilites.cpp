@@ -2,12 +2,265 @@
 
 #include "core/Utilites.h"
 
+bool
+GetBool( TiXmlNode* node, const Ogre::String& tag, bool def )
+{
+    bool ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseBool( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+int
+GetInt( TiXmlNode* node, const Ogre::String& tag, int def )
+{
+    int ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseInt( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+float
+GetFloat( TiXmlNode* node, const Ogre::String& tag, float def )
+{
+    float ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseReal( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+const Ogre::String
+GetString( TiXmlNode* node, const Ogre::String& tag, const Ogre::String& def )
+{
+    Ogre::String ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = *string;
+        }
+    }
+
+    return ret;
+}
+
+
+
+const Ogre::UTFString
+GetUTFString( TiXmlNode* node, const Ogre::String& tag, const Ogre::UTFString& def )
+{
+    Ogre::UTFString ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = ( *string ).c_str();
+        }
+    }
+
+    return ret;
+}
+
+
+
+const Ogre::Vector2
+GetVector2( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector2& def )
+{
+    Ogre::Vector2 ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseVector2( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+const Ogre::Vector3
+GetVector3( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector3& def )
+{
+    Ogre::Vector3 ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseVector3( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+const Ogre::Vector4
+GetVector4( TiXmlNode* node, const Ogre::String& tag, const Ogre::Vector4& def )
+{
+    Ogre::Vector4 ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseVector4( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+const Ogre::Matrix4
+GetMatrix4( TiXmlNode* node, const Ogre::String& tag, const Ogre::Matrix4& def )
+{
+    Ogre::Matrix4 ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseMatrix4( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+const Ogre::Quaternion
+GetQuaternion( TiXmlNode* node, const Ogre::String& tag, const Ogre::Quaternion& def )
+{
+    Ogre::Quaternion ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseQuaternion( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+const Ogre::ColourValue
+GetColourValue( TiXmlNode* node, const Ogre::String& tag, const Ogre::ColourValue& def )
+{
+    Ogre::ColourValue ret = def;
+
+    if( node->Type() == TiXmlNode::TINYXML_ELEMENT )
+    {
+        const std::string* string = node->ToElement()->Attribute( tag );
+        if( string != NULL )
+        {
+            ret = Ogre::StringConverter::parseColourValue( *string );
+        }
+    }
+
+    return ret;
+}
+
+
+
+void
+ParsePersent( float& value_percent, float& value, const Ogre::String& string )
+{
+    if( string.at( string.size() - 1 ) == '%' )
+    {
+        value_percent = Ogre::StringConverter::parseReal( string.substr( 0, string.size() - 1 ) );
+        value = 0;
+    }
+    else
+    {
+        Ogre::StringVector param = Ogre::StringUtil::split( string, "%" );
+        if( param.size() > 1 )
+        {
+            value_percent = Ogre::StringConverter::parseReal( param[ 0 ] );
+            value = Ogre::StringConverter::parseReal( param[ 1 ] );
+        }
+        else
+        {
+            value_percent = 0;
+            value = Ogre::StringConverter::parseReal( string );
+        }
+    }
+}
+
+
+
+float
+ParseKeyFrameTime( const float length, const Ogre::String& string )
+{
+    float res = 0;
+
+    if( string.at( string.size() - 1 ) == '%' )
+    {
+        res = length * Ogre::StringConverter::parseReal( string.substr( 0, string.size() - 1 ) ) / 100;
+    }
+    else
+    {
+        res = Ogre::StringConverter::parseReal( string );
+    }
+
+    return res;
+}
+
+
 
 const Ogre::String
 CreateAutoName(const Ogre::String prefix)
 {
     static int enumerator = 0;
-    return prefix + Ogre::StringConverter::toString(enumerator++);
+    return prefix + Ogre::StringConverter::toString( enumerator++ );
 }
 
 

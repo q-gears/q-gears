@@ -12,6 +12,9 @@ public:
     virtual ~XmlTextsFile();
 
     void LoadTexts( const Ogre::String& language );
+
+    void GetAvailableLanguages( Ogre::StringVector& languages );
+    void LoadTexts();
 };
 
 

@@ -236,7 +236,7 @@ UiWidget::OnResize()
         m_Children[i]->OnResize();
     }
 
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -293,6 +293,25 @@ UiWidget::GetChild(const Ogre::String& name)
     }
 
     return nullptr;
+}
+
+
+UiWidget*
+UiWidget::GetChild(const unsigned int id)
+{
+    if( id >= m_Children.size() )
+    {
+        return NULL;
+    }
+
+    return m_Children[id];
+}
+
+
+unsigned int
+UiWidget::GetNumberOfChildren()
+{
+    return m_Children.size();
 }
 
 
@@ -392,6 +411,19 @@ UiWidget::ScriptAnimationSync()
     m_AnimationSync.push_back(script);
     return -1;
 }
+
+
+void
+UiWidget::SetUpdateTransformation()
+{
+    for(auto &child : m_Children)
+    {
+        child->SetUpdateTransformation();
+    }
+
+    m_UpdateTransformation = true;
+}
+
 
 
 void
@@ -496,7 +528,7 @@ UiWidget::UpdateTransformation()
         m_ScissorRight = std::min(m_ScissorRight, std::max(std::max(x1 , x2), std::max(x3 , x4)));
     }
 
-    m_UpdateTransformation = false;
+    SetUpdateTransformation();
 
     for(size_t i = 0; i < m_Children.size(); ++i)
     {
@@ -566,7 +598,7 @@ UiWidget::SetOriginX(const float percent, const float x)
 {
     m_OriginXPercent = percent;
     m_OriginX = x;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -575,7 +607,7 @@ UiWidget::SetOriginY(const float percent, const float y)
 {
     m_OriginYPercent = percent;
     m_OriginY = y;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -584,7 +616,15 @@ UiWidget::SetX(const float percent, const float x)
 {
     m_XPercent = percent;
     m_X = x;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
+}
+
+
+void
+UiWidget::GetX(float& percent, float& x)
+{
+    percent = m_XPercent;
+    x = m_X;
 }
 
 
@@ -593,7 +633,15 @@ UiWidget::SetY(const float percent, const float y)
 {
     m_YPercent = percent;
     m_Y = y;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
+}
+
+
+void
+UiWidget::GetY(float& percent, float& y)
+{
+    percent = m_YPercent;
+    y = m_Y;
 }
 
 
@@ -601,7 +649,7 @@ void
 UiWidget::SetZ(const float z)
 {
     m_Z = z;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -610,7 +658,15 @@ UiWidget::SetWidth(const float percent, const float width)
 {
     m_WidthPercent = percent;
     m_Width = width;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
+}
+
+
+void
+UiWidget::GetWidth(float &percent, float &width)
+{
+    percent = m_WidthPercent;
+    width = m_Width;
 }
 
 
@@ -619,7 +675,15 @@ UiWidget::SetHeight(const float percent, const float height)
 {
     m_HeightPercent = percent;
     m_Height = height;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
+}
+
+
+void
+UiWidget::GetHeight(float &percent, float &height)
+{
+    percent = m_HeightPercent;
+    height = m_Height;
 }
 
 
@@ -627,7 +691,7 @@ void
 UiWidget::SetScale(const Ogre::Vector2& scale)
 {
     m_Scale = scale;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -635,7 +699,7 @@ void
 UiWidget::SetRotation(const float degree)
 {
     m_Rotation = degree;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -643,7 +707,7 @@ void
 UiWidget::SetScissor(bool scissor)
 {
     m_Scissor = scissor;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -682,7 +746,7 @@ UiWidget::SetColour(const float r, const float g, const float b)
     m_Colour2.r = r; m_Colour2.g = g; m_Colour2.b = b;
     m_Colour3.r = r; m_Colour3.g = g; m_Colour3.b = b;
     m_Colour4.r = r; m_Colour4.g = g; m_Colour4.b = b;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -693,7 +757,7 @@ UiWidget::SetColours(const float r1, const float g1, const float b1, const float
     m_Colour2.r = r2; m_Colour2.g = g2; m_Colour2.b = b2;
     m_Colour3.r = r3; m_Colour3.g = g3; m_Colour3.b = b3;
     m_Colour4.r = r4; m_Colour4.g = g4; m_Colour4.b = b4;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -704,5 +768,5 @@ UiWidget::SetAlpha(const float a)
     m_Colour2.a = a;
     m_Colour3.a = a;
     m_Colour4.a = a;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }

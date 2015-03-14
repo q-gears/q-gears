@@ -47,5 +47,6 @@ namespace QGears
         EventType type;
         float param1;
         float param2;
+        Ogre::String event;
     };
 }

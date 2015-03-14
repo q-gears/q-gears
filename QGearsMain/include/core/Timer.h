@@ -15,13 +15,18 @@ public:
     float GetGameTimeTotal();
     float GetGameTimeDelta();
 
-    void AddTime( float time );
+    void AddTime( const float time );
+
+    void SetGameTimer( const float timer );
+    int GetGameTimer() const;
 
 private:
     float m_SystemTimeTotal;
     float m_SystemTimeDelta;
     float m_GameTimeTotal;
     float m_GameTimeDelta;
+
+    float m_GameTimer;
 };
 
 

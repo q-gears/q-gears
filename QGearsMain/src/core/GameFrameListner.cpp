@@ -5,6 +5,7 @@
 #include "core/ConfigVar.h"
 #include "core/Console.h"
 #include "core/DebugDraw.h"
+#include "core/DialogsManager.h"
 #include "core/EntityManager.h"
 #include "core/GameFrameListner.h"
 #include "core/InputManager.h"
@@ -103,6 +104,7 @@ GameFrameListener::frameStarted(const Ogre::FrameEvent& evt)
         if(console_active != true)
         {
             EntityManager::getSingleton().Input(input_event_array[ i ]);
+            DialogsManager::getSingleton().Input(input_event_array[ i ]);
             ScriptManager::getSingleton().Input(input_event_array[ i ]);
             CameraManager::getSingleton().Input(input_event_array[ i ], evt.timeSinceLastFrame);
         }
@@ -114,6 +116,7 @@ GameFrameListener::frameStarted(const Ogre::FrameEvent& evt)
     UiManager::getSingleton().Update();
     CameraManager::getSingleton().Update();
     EntityManager::getSingleton().Update();
+    DialogsManager::getSingleton().Update();
 
     return true;
 }
