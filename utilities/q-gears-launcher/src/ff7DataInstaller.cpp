@@ -31,6 +31,8 @@
 #include "decompiler/sudm.h"
 #include <memory>
 
+#include <QDir>
+
 FF7DataInstaller::FF7DataInstaller()
 #ifdef _DEBUG
     : mApp("plugins_d.cfg", "resources_d.cfg", "install_d.log")
@@ -89,6 +91,30 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
     mat_ser.exportQueued(outdir + base_name + QGears::EXT_MATERIAL);
 }
 
+static std::string FieldName(const std::string& name)
+{
+    return "ffvii_" + name;
+}
+
+void FF7DataInstaller::CreateDir(const std::string& path)
+{
+    QString target = QString::fromStdString(mOutputDir + path);
+    QDir dir(target);
+    if (!dir.mkpath("."))
+    {
+        throw std::runtime_error("Failed to mkpath");
+    }
+}
+
+static std::string FieldMapDir()
+{
+    return "maps/ffvii/field";
+}
+
+static std::string FieldModelDir()
+{
+    return "models/ffvii/field/units";
+}
 
 class FF7FieldScriptFormatter : public SUDM::IScriptFormatter
 {
@@ -193,7 +219,12 @@ public:
     std::string ModelMetaDataName(const std::string& modelName)
     {
         // TODO: Convert to name thats in the meta data
-        return modelName;
+
+        // If not in meta data then just replace .hrc with .mesh
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(modelName, baseName);
+
+        return baseName + ".mesh";
     }
 
     std::string AnimationMetaDataName(const std::string& /*modelName*/, const std::string& animationName)
@@ -240,7 +271,7 @@ static void FF7PcFieldToQGearsField(
         if (gateway.destinationFieldId != kInactiveGateWayId)
         {
             const std::string gatewayEntityName = "Gateway" + std::to_string(i);
-            gatewayScriptData += CreateGateWayScript(gatewayEntityName, "ffvii_" + fieldIdToNameLookup.at(gateway.destinationFieldId), "Spawn_" + field->getName() + "_" + std::to_string(i));
+            gatewayScriptData += CreateGateWayScript(gatewayEntityName, FieldName(fieldIdToNameLookup.at(gateway.destinationFieldId)), "Spawn_" + field->getName() + "_" + std::to_string(i));
         }
     }
 
@@ -253,7 +284,7 @@ static void FF7PcFieldToQGearsField(
         // Decompile to LUA
         FF7FieldScriptFormatter formatter;
         decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter, gatewayScriptData, "EntityContainer = {}\n\n");
-        std::ofstream scriptFile(outDir + "/" + field->getName() + ".lua");
+        std::ofstream scriptFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/script.lua");
         if (scriptFile.is_open())
         {
             scriptFile << decompiled.luaScript;
@@ -276,17 +307,17 @@ static void FF7PcFieldToQGearsField(
 
         // Script
         std::unique_ptr<TiXmlElement> xmlScriptElement(new TiXmlElement("script"));
-        xmlScriptElement->SetAttribute("file_name", field->getName() + ".lua");
+        xmlScriptElement->SetAttribute("file_name", FieldMapDir() + "/" + field->getName() + "/script.lua");
         element->LinkEndChild(xmlScriptElement.release());
 
         // Background
         std::unique_ptr<TiXmlElement> xmlBackground2d(new TiXmlElement("background2d"));
-        xmlBackground2d->SetAttribute("file_name", field->getName() + "_bg.xml");
+        xmlBackground2d->SetAttribute("file_name", FieldMapDir() + "/" + field->getName() + "/bg.xml");
         element->LinkEndChild(xmlBackground2d.release());
         
         // walkmesh
         std::unique_ptr<TiXmlElement> xmlWalkmesh(new TiXmlElement("walkmesh"));
-        xmlWalkmesh->SetAttribute("file_name", field->getName() + "_wm.xml");
+        xmlWalkmesh->SetAttribute("file_name", FieldMapDir() + "/" + field->getName() + "/wm.xml");
         element->LinkEndChild(xmlWalkmesh.release());
 
         // Angle player moves when "up" is pressed
@@ -312,7 +343,7 @@ static void FF7PcFieldToQGearsField(
                 xmlEntityScript->SetAttribute("name", it.first);
 
                 // TODO: Add to list of HRC's to convert, obtain name of target converted .mesh file
-                xmlEntityScript->SetAttribute("file_name", modelAnimationDb.ModelMetaDataName(desc.hrc_name));
+                xmlEntityScript->SetAttribute("file_name", FieldModelDir() + "/" + modelAnimationDb.ModelMetaDataName(desc.hrc_name));
 
                 // TODO: entity_model - name, file_name,  position, direction
                 // We set char 1 position to be position of first entity_point so player is spawned in sane
@@ -397,14 +428,14 @@ static void FF7PcFieldToQGearsField(
         }
 
         doc.LinkEndChild(element.release());
-        doc.SaveFile(outDir + "/" + field->getName() + ".xml");
+        doc.SaveFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/map.xml");
     }
 
 
     const QGears::PaletteFilePtr& pal = field->getPalette();
     const QGears::BackgroundFilePtr& bg = field->getBackground();
     std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
-    bgImage->save(outDir + "/" + field->getName() + ".png");
+    bgImage->save(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/tiles.png");
 
     {
         TiXmlDocument doc;
@@ -430,7 +461,7 @@ static void FF7PcFieldToQGearsField(
         const int max_x = triggers->getCameraRange().right * kScaleUpFactor;
         const int max_y = triggers->getCameraRange().bottom * kScaleUpFactor;
 
-        element->SetAttribute("image", field->getName() + ".png");
+        element->SetAttribute("image", FieldMapDir() + "/" + field->getName() + "/tiles.png");
         element->SetAttribute("position", Ogre::StringConverter::toString(position));
         element->SetAttribute("orientation", Ogre::StringConverter::toString(orientation));
         element->SetAttribute("fov", Ogre::StringConverter::toString(fov));
@@ -497,7 +528,7 @@ static void FF7PcFieldToQGearsField(
             }
         }
         doc.LinkEndChild(element.release());
-        doc.SaveFile(outDir + "/" + field->getName() + "_bg.xml");
+        doc.SaveFile(outDir + "/" + FieldMapDir() + "/" + field->getName() +"/bg.xml");
     }
 
     {
@@ -518,7 +549,7 @@ static void FF7PcFieldToQGearsField(
             element->LinkEndChild(xmlElement.release());
         }
         doc.LinkEndChild(element.release());
-        doc.SaveFile(outDir + "/" + field->getName() + "_wm.xml");
+        doc.SaveFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/wm.xml");
     }
 
     maps.insert(field->getName());
@@ -594,6 +625,11 @@ static bool IsTestField(Ogre::String& resourceName)
 
 void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, std::string outDir)
 {
+    mOutputDir = outDir;
+
+    CreateDir(FieldMapDir());
+    CreateDir(FieldModelDir());
+
     // List whats in the LGP archive
     Ogre::StringVectorPtr resources = mApp.ResMgr()->listResourceNames("FFVIIFields", "*");
 
@@ -623,6 +659,8 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
         {
             if (IsTestField(resourceName))
             {
+                CreateDir(FieldMapDir() + "/" + resourceName);
+
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
                 FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints, modelAnimationDb, maps);
             }
@@ -639,8 +677,8 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
         for (const auto& map : maps)
         {
             std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("map"));
-            xmlElement->SetAttribute("name", "ffvii_" + map);
-            xmlElement->SetAttribute("file_name", map + ".xml");
+            xmlElement->SetAttribute("name", FieldName(map));
+            xmlElement->SetAttribute("file_name", FieldMapDir() + "/" + map + "/map.xml");
             element->LinkEndChild(xmlElement.release());
         }
         doc.LinkEndChild(element.release());
@@ -673,7 +711,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
             a->addTo(skeleton, anim); // TODO: Set "friendly" name, also update this name in the scripts
         }
 
-        exportMesh(outDir, mesh);
+        exportMesh(outDir + "/" + FieldModelDir() + "/", mesh);
 
     }
 
