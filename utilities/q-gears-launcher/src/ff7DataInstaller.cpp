@@ -76,12 +76,43 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
     Ogre::Mesh::SubMeshIterator it(mesh->getSubMeshIterator());
     Ogre::MaterialSerializer    mat_ser;
     size_t i(0);
+    std::set<std::string> textures;
     while (it.hasMoreElements())
     {
         Ogre::SubMesh *sub_mesh(it.getNext());
         Ogre::MaterialPtr mat(Ogre::MaterialManager::getSingleton().getByName(sub_mesh->getMaterialName()));
         if (!mat.isNull())
         {
+            for (size_t techNum = 0; techNum < mat->getNumTechniques(); techNum++)
+            {
+                Ogre::Technique* tech = mat->getTechnique(techNum);
+                if (tech)
+                {
+                    for (size_t passNum = 0; passNum < tech->getNumPasses(); passNum++)
+                    {
+                        Ogre::Pass* pass = tech->getPass(passNum);
+                        if (pass)
+                        {
+                            for (size_t textureUnitNum = 0; textureUnitNum < pass->getNumTextureUnitStates(); textureUnitNum++)
+                            {
+                                Ogre::TextureUnitState* unit = pass->getTextureUnitState(textureUnitNum);
+                                if (unit)
+                                {
+                                    if (unit->getTextureName().empty() == false)
+                                    {
+                                        // Ensure the output material script references png files rather than tex files
+                                        textures.insert(unit->getTextureName());
+                                        Ogre::String baseName;
+                                        QGears::StringUtil::splitBase(unit->getTextureName(), baseName);
+                                        unit->setTextureName(baseName + ".png");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             mat_ser.queueForExport(mat);
         }
         ++i;
@@ -89,6 +120,17 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
     QGears::String base_name;
     QGears::StringUtil::splitFull(mesh->getName(), base_name);
     mat_ser.exportQueued(outdir + base_name + QGears::EXT_MATERIAL);
+
+    for (auto& textureName : textures)
+    {
+        Ogre::TexturePtr texturePtr = Ogre::TextureManager::getSingleton().load(textureName.c_str(), "FFVII");
+        Ogre::Image image;
+        texturePtr->convertToImage(image);
+
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(textureName, baseName);
+        image.save(outdir + baseName + ".png");
+    }
 }
 
 static std::string FieldName(const std::string& name)
@@ -685,7 +727,6 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
         doc.SaveFile(outDir + "/maps.xml");
     }
 
-
     // TODO: Convert models and animations in modelAnimationDb
     auto fullPath = inputDir + "field/char.lgp";
     mApp.getRoot()->addResourceLocation(fullPath, "LGP", "FFVII");
@@ -714,9 +755,6 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
         exportMesh(outDir + "/" + FieldModelDir() + "/", mesh);
 
     }
-
-    //ConvertFieldModels(fullPath, outputDir);
-
 
     mApp.getRoot()->removeResourceLocation(fullPath, "FFVII");
 
