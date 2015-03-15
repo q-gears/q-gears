@@ -37,43 +37,69 @@ InputManager::Reset()
 void
 InputManager::ButtonPressed(int button, char text, bool down)
 {
-    if(m_ButtonState[button] != down)
+    if( m_ButtonState[ button ] != down )
     {
-        m_ButtonState[button] = down;
-        m_ButtonText[button] = text;
+        m_ButtonState[ button ] = down;
+        m_ButtonText[ button ] = text;
 
-        m_EventQueue.push_back(QGears::Event((down == true) ? QGears::ET_KEY_PRESS : QGears::ET_KEY_RELEASE, static_cast<float>(button), static_cast<float>(text)));
+        QGears::Event event;
+        event.type = (down == true) ? QGears::ET_KEY_PRESS : QGears::ET_KEY_RELEASE;
+        event.param1 = button;
+        event.param2 = text;
+        m_EventQueue.push_back( event );
 
         m_RepeatFirstWait = true;
         m_RepeatTimer = 0;
     }
 
-    if(down == true && Console::getSingleton().IsVisible() != true)
+    if( Console::getSingleton().IsVisible() != true )
     {
-        ActivateBinds(button);
+        if( down == true )
+        {
+            ActivateBinds( button );
+            AddGameEvents(button, QGears::ET_KEY_PRESS);
+        }
+        else
+        {
+            AddGameEvents(button, QGears::ET_KEY_RELEASE);
+        }
     }
 }
 
 
+
 void
-InputManager::MousePressed(int button, bool down)
+InputManager::MousePressed( int button, bool down )
 {
-    m_EventQueue.push_back(QGears::Event((down == true) ? QGears::ET_MOUSE_PRESS : QGears::ET_MOUSE_RELEASE, static_cast<float>(button), 0.0f));
+    QGears::Event event;
+    event.type = (down == true) ? QGears::ET_KEY_PRESS : QGears::ET_KEY_RELEASE;
+    event.param1 = button;
+    m_EventQueue.push_back( event );
 }
 
 
+
 void
-InputManager::MouseMoved(int x, int y)
+InputManager::MouseMoved( int x, int y )
 {
-    m_EventQueue.push_back(QGears::Event(QGears::ET_MOUSE_MOVE, static_cast<float>(x), static_cast<float>(y)));
+    QGears::Event event;
+    event.type = QGears::ET_MOUSE_MOVE;
+    event.param1 = x;
+    event.param2 = y;
+    m_EventQueue.push_back( event );
 }
 
 
+
 void
-InputManager::MouseScrolled(int value)
+InputManager::MouseScrolled( int value )
 {
-    m_EventQueue.push_back(QGears::Event(QGears::ET_MOUSE_SCROLL, static_cast<float>(value), 0.0f));
+    QGears::Event event;
+    event.type = QGears::ET_MOUSE_SCROLL;
+    event.param1 = value;
+    m_EventQueue.push_back( event );
 }
+
 
 
 void
@@ -81,13 +107,22 @@ InputManager::Update()
 {
     m_RepeatTimer += Timer::getSingleton().GetSystemTimeDelta();
 
-    if((m_RepeatFirstWait == true && m_RepeatTimer >= 0.5) || (m_RepeatFirstWait == false && m_RepeatTimer >= 0.05))
+    if( ( m_RepeatFirstWait == true && m_RepeatTimer >= 0.5 ) || ( m_RepeatFirstWait == false && m_RepeatTimer >= 0.05 ) )
     {
-        for(int button = 0; button < 256; ++button)
+        for( int button = 0; button < 256; ++button )
         {
-            if(m_ButtonState[button] == true)
+            if( m_ButtonState[ button ] == true )
             {
-                m_EventQueue.push_back(QGears::Event(QGears::ET_KEY_REPEAT, static_cast<float>(button), static_cast<float>(m_ButtonText[button])));
+                QGears::Event event;
+                event.type = QGears::ET_KEY_REPEAT_WAIT;
+                event.param1 = button;
+                event.param2 = m_ButtonText[ button ];
+                m_EventQueue.push_back( event );
+
+                if( Console::getSingleton().IsVisible() != true )
+                {
+                    AddGameEvents(button, QGears::ET_KEY_REPEAT_WAIT);
+                }
             }
         }
 
@@ -95,96 +130,166 @@ InputManager::Update()
         m_RepeatTimer = 0;
     }
 
-    // send impulses
-    for(int button = 0; button < 256; ++button)
+    for( int button = 0; button < 256; ++button )
     {
-        if(m_ButtonState[button] == true)
+        if( m_ButtonState[ button ] == true )
         {
-            m_EventQueue.push_back(QGears::Event(QGears::ET_KEY_IMPULSE, static_cast<float>(button), static_cast<float>(m_ButtonText[button])));
+            QGears::Event event;
+            event.type = QGears::ET_KEY_REPEAT;
+            event.param1 = button;
+            event.param2 = m_ButtonText[ button ];
+            m_EventQueue.push_back( event );
+
+            if( Console::getSingleton().IsVisible() != true )
+            {
+                AddGameEvents(button, QGears::ET_KEY_REPEAT);
+            }
         }
     }
 }
 
 
+
 bool
-InputManager::IsButtonPressed(int button) const
+InputManager::IsButtonPressed( int button ) const
 {
-    return m_ButtonState[button];
+    return m_ButtonState[ button ];
 }
 
 
+
 void
-InputManager::GetInputEvents(InputEventArray& input_events)
+InputManager::GetInputEvents( InputEventArray& input_events )
 {
     input_events = m_EventQueue;
-
     m_EventQueue.clear();
 }
 
 
+
 void
-InputManager::BindCommand(const Ogre::String& cmd, const ButtonList& buttons)
+InputManager::BindCommand( ConfigCmd* cmd, const Ogre::StringVector& params, const ButtonList& buttons )
 {
-    BindInfo info = BindInfo(cmd, buttons);
-    m_Binds.push_back(info);
+    BindInfo info;
+    info.cmd = cmd;
+    info.params = params;
+    info.buttons = buttons;
+    m_Binds.push_back( info );
 }
 
 
+
 void
-InputManager::ActivateBinds(int button)
+InputManager::BindGameEvent( const Ogre::String& event, const ButtonList& buttons )
+{
+    BindGameEventInfo info;
+    info.event = event;
+    info.buttons = buttons;
+    m_BindGameEvents.push_back( info );
+}
+
+
+
+void
+InputManager::ActivateBinds( const int button )
 {
     std::vector< int > binds_indexes;
-    for(size_t i = 0; i < m_Binds.size(); ++i)
+    for( unsigned int i = 0; i < m_Binds.size(); ++i )
     {
         // if we found pressed button in this bind
-        if(std::find(m_Binds[i].key_set.begin(), m_Binds[i].key_set.end(), button) != m_Binds[i].key_set.end())
+        if( std::find( m_Binds[ i ].buttons.begin(), m_Binds[ i ].buttons.end(), button ) != m_Binds[ i ].buttons.end() )
         {
-            size_t j = 0;
-            for(; j < m_Binds[i].key_set.size(); ++j)
+            unsigned int j = 0;
+            for( ; j < m_Binds[ i ].buttons.size(); ++j )
             {
-                if(IsButtonPressed(m_Binds[i].key_set[j]) == false)
+                if( IsButtonPressed( m_Binds[ i ].buttons[ j ] ) == false )
                 {
                     break;
                 }
             }
 
-            if(j >= m_Binds[i].key_set.size())
+            if( j >= m_Binds[ i ].buttons.size() )
             {
-                binds_indexes.push_back(i);
+                binds_indexes.push_back( i );
             }
         }
     }
 
     std::vector< int > binds_to_activate;
-    size_t max_size = 0;
-    for(size_t i = 0; i < binds_indexes.size(); ++i)
+    unsigned int max_size = 0;
+    for( unsigned int i = 0; i < binds_indexes.size(); ++i )
     {
-        if(max_size < m_Binds[binds_indexes[i]].key_set.size())
+        if( max_size < m_Binds[ binds_indexes[ i ] ].buttons.size() )
         {
-            max_size = m_Binds[binds_indexes[i]].key_set.size();
+            max_size = m_Binds[ binds_indexes[ i ] ].buttons.size();
 
             binds_to_activate.clear();
-            binds_to_activate.push_back(binds_indexes[i]);
+            binds_to_activate.push_back( binds_indexes[ i ] );
         }
-        else if(max_size == m_Binds[binds_indexes[i]].key_set.size())
+        else if( max_size == m_Binds[ binds_indexes[ i ] ].buttons.size() )
         {
-            binds_to_activate.push_back(binds_indexes[i]);
+            binds_to_activate.push_back( binds_indexes[ i ] );
         }
     }
 
-    for(size_t i = 0; i < binds_to_activate.size(); ++i)
+    for( unsigned int i = 0; i < binds_to_activate.size(); ++i )
     {
-        Ogre::StringVector params = StringTokenise(m_Binds[binds_to_activate[i]].cmd);
+         m_Binds[ binds_to_activate[ i ] ].cmd->GetHandler()( m_Binds[ binds_to_activate[ i ] ].params );
+    }
+}
 
-        // handle command
-        ConfigCmd* cmd = ConfigCmdManager::getSingleton().Find(params[0]);
-        if(cmd != nullptr)
+
+
+void
+InputManager::AddGameEvents(const int button, const QGears::EventType type)
+{
+    std::vector< int > binds_indexes;
+    for( unsigned int i = 0; i < m_BindGameEvents.size(); ++i )
+    {
+        // if we found button in this bind
+        if( std::find( m_BindGameEvents[ i ].buttons.begin(), m_BindGameEvents[ i ].buttons.end(), button ) != m_BindGameEvents[ i ].buttons.end() )
         {
-            cmd->GetHandler()(params);
+            unsigned int j = 0;
+            for( ; j < m_BindGameEvents[ i ].buttons.size(); ++j )
+            {
+                if( m_BindGameEvents[ i ].buttons[ j ] != button )
+                {
+                    if( IsButtonPressed( m_BindGameEvents[ i ].buttons[ j ] ) == false )
+                    {
+                        break;
+                    }
+                }
+            }
+
+            if( j >= m_BindGameEvents[ i ].buttons.size() )
+            {
+                binds_indexes.push_back( i );
+            }
         }
-        else
+    }
+
+    std::vector< int > binds_to_activate;
+    unsigned int max_size = 0;
+    for( unsigned int i = 0; i < binds_indexes.size(); ++i )
+    {
+        if( max_size < m_BindGameEvents[ binds_indexes[ i ] ].buttons.size() )
         {
-            LOG_ERROR("Can't find command \"" + params[0] + "\" in bind command \"" + m_Binds[i].cmd + "\".");
+            max_size = m_BindGameEvents[ binds_indexes[ i ] ].buttons.size();
+
+            binds_to_activate.clear();
+            binds_to_activate.push_back( binds_indexes[ i ] );
         }
+        else if( max_size == m_BindGameEvents[ binds_indexes[ i ] ].buttons.size() )
+        {
+            binds_to_activate.push_back( binds_indexes[ i ] );
+        }
+    }
+
+    for( unsigned int i = 0; i < binds_to_activate.size(); ++i )
+    {
+        QGears::Event event;
+        event.type = type;
+        event.event = m_BindGameEvents[ binds_to_activate[ i ] ].event;
+        m_EventQueue.push_back( event );
     }
 }

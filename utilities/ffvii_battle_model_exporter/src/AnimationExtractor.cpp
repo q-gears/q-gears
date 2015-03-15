@@ -74,24 +74,24 @@ ReadEncryptedRotationBits(File* file, const int offset, int &readed_bits, const 
 {
     int ret = 0;
 
-    int control_bit = ReadBitStream(file, offset, readed_bits, 1, 1);
+    int control_bit = static_cast<int>(ReadBitStream(file, offset, readed_bits, 1, 1));
     //LOGGER->Log(LOGGER_INFO, "ReadEncryptedRotationBits control_bit = %x", control_bit);
     if (control_bit != 0)
     {
-        control_bit = ReadBitStream(file, offset, readed_bits, 3, 3);
+        control_bit = static_cast<int>(ReadBitStream(file, offset, readed_bits, 3, 3));
         control_bit &= 7;
         //LOGGER->Log(LOGGER_INFO, "ReadEncryptedRotationBits control_bit = %x", control_bit);
         if (control_bit == 0)
         {
-            ret = -1.0f;
+            ret = -1;
         }
         else if (control_bit == 7)
         {
-            ret = ReadBitStream(file, offset, readed_bits, 12 - compression, 12);
+            ret = static_cast<int>(ReadBitStream(file, offset, readed_bits, 12 - compression, 12));
         }
         else
         {
-            int data = ReadBitStream(file, offset, readed_bits, control_bit, control_bit);
+            int data = static_cast<int>(ReadBitStream(file, offset, readed_bits, control_bit, control_bit));
             //LOGGER->Log(LOGGER_INFO, "ReadEncryptedRotationBits data = %x", data);
             if (data >= 0)
             {
@@ -118,7 +118,7 @@ AnimationExtractor(File* file, const Ogre::SkeletonPtr& skeleton, const EnemyInf
 {
     float weapon_tx, weapon_ty, weapon_tz, weapon_rx, weapon_ry, weapon_rz = 0;
 
-    for (int i = 0; i < info.animations.size(); ++i)
+    for (size_t i = 0; i < info.animations.size(); ++i)
     {
         if (info.animations[i] == "")
         {
@@ -180,7 +180,7 @@ AnimationExtractor(File* file, const Ogre::SkeletonPtr& skeleton, const EnemyInf
                 frame2 = track2->createNodeKeyFrame(time);
                 frame2->setTranslate(Ogre::Vector3(tx, ty, tz) / 512);
 
-                for (int bone = 0; bone < skeleton_data.size(); ++bone)
+                for (size_t bone = 0; bone < skeleton_data.size(); ++bone)
                 {
                     skeleton_data[bone].rx = (ReadBitStream(file, offset_to_animation + 5, readed_bits, 12 - compression, 12) / 4096.0f) * 360;
                     skeleton_data[bone].ry = (ReadBitStream(file, offset_to_animation + 5, readed_bits, 12 - compression, 12) / 4096.0f) * 360;
@@ -194,7 +194,7 @@ AnimationExtractor(File* file, const Ogre::SkeletonPtr& skeleton, const EnemyInf
                     track2->removeAllKeyFrames();
                     frame1 = track1->createNodeKeyFrame(time);
                     frame2 = track2->createNodeKeyFrame(time);
-                    frame2->setTranslate(Ogre::Vector3(0, 0, skeleton_data[bone].length) / 512);
+                    frame2->setTranslate(Ogre::Vector3(0.0f, 0.0f, static_cast<float>(skeleton_data[bone].length) / 512));
                     mat.FromEulerAnglesYXZ(Ogre::Radian(Ogre::Degree(skeleton_data[bone].ry)), Ogre::Radian(Ogre::Degree(skeleton_data[bone].rx)), Ogre::Radian(Ogre::Degree(skeleton_data[bone].rz)));
                     rot.FromRotationMatrix(mat);
                     frame1->setRotation(rot);
@@ -245,7 +245,7 @@ AnimationExtractor(File* file, const Ogre::SkeletonPtr& skeleton, const EnemyInf
                 frame2 = track2->createNodeKeyFrame(time);
                 frame2->setTranslate(Ogre::Vector3(tx, ty, tz) / 512);
 
-                for (int bone = 0; bone < skeleton_data.size(); ++bone)
+                for (size_t bone = 0; bone < skeleton_data.size(); ++bone)
                 {
                     skeleton_data[bone].rx += (ReadEncryptedRotationBits(file, offset_to_animation + 5, readed_bits, compression) / 4096.0f) * 360;
                     skeleton_data[bone].ry += (ReadEncryptedRotationBits(file, offset_to_animation + 5, readed_bits, compression) / 4096.0f) * 360;
@@ -256,7 +256,7 @@ AnimationExtractor(File* file, const Ogre::SkeletonPtr& skeleton, const EnemyInf
                     track2 = anim->getNodeTrack(bone * 2 + 3);
                     frame1 = track1->createNodeKeyFrame(time);
                     frame2 = track2->createNodeKeyFrame(time);
-                    frame2->setTranslate(Ogre::Vector3(0, 0, skeleton_data[bone].length) / 512);
+                    frame2->setTranslate(Ogre::Vector3(0.0f, 0.0f, static_cast<float>(skeleton_data[bone].length) / 512));
                     mat.FromEulerAnglesYXZ(Ogre::Radian(Ogre::Degree(skeleton_data[bone].ry)), Ogre::Radian(Ogre::Degree(skeleton_data[bone].rx)), Ogre::Radian(Ogre::Degree(skeleton_data[bone].rz)));
                     rot.FromRotationMatrix(mat);
                     frame1->setRotation(rot);

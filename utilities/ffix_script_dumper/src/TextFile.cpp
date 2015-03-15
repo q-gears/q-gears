@@ -205,7 +205,7 @@ TextFile::DumpTexts()
 
 
 
-    for( int i = 0; i < number_of_texts; ++i )
+    for( u32 i = 0; i < number_of_texts; ++i )
     {
         u32 pointer_to_text = 0x04 + GetU16LE( 0x04 +  i * 0x04 );
 

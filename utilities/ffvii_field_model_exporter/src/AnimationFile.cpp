@@ -61,7 +61,7 @@ AnimationFile::GetData( std::vector< s16 >& skeleton_length, const Unit& unit, c
         m_AnimationHeaders.push_back(header);
     }
 
-    for (u32 i = 0; (i < number_of_animation) && (start_animation + i < unit.animations.size()); ++i)
+    for (size_t i = 0; (i < static_cast<size_t>(number_of_animation)) && (start_animation + i < unit.animations.size()); ++i)
     {
         if (unit.animations[start_animation + i] == "" || unit.animations[start_animation + i] == " ")
         {
@@ -149,29 +149,29 @@ AnimationFile::GetData( std::vector< s16 >& skeleton_length, const Unit& unit, c
 
                 if (flag & 0x10)
                 {
-                    position.translation_x = -(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_frames_translation_data + tx * m_AnimationHeaders[i].number_of_frames * 2 + j * 2);
+                    position.translation_x = static_cast<float>( -(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_frames_translation_data + tx * m_AnimationHeaders[i].number_of_frames * 2 + j * 2));
                 }
                 else if (tx != 0xFF)
                 {
-                    position.translation_x = -(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_static_translation_data + tx * 2);
+                    position.translation_x = static_cast<float>(-(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_static_translation_data + tx * 2));
                 }
 
                 if (flag & 0x20)
                 {
-                    position.translation_y = -(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_frames_translation_data + ty * m_AnimationHeaders[i].number_of_frames * 2 + j * 2);
+                    position.translation_y = static_cast<float>(-(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_frames_translation_data + ty * m_AnimationHeaders[i].number_of_frames * 2 + j * 2));
                 }
                 else if (ty != 0xFF)
                 {
-                    position.translation_y = -(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_static_translation_data + ty * 2);
+                    position.translation_y = static_cast<float>(-(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_static_translation_data + ty * 2));
                 }
 
                 if (flag & 0x40)
                 {
-                    position.translation_z = -(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_frames_translation_data + tz * m_AnimationHeaders[i].number_of_frames * 2 + j * 2);
+                    position.translation_z = static_cast<float>(-(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_frames_translation_data + tz * m_AnimationHeaders[i].number_of_frames * 2 + j * 2));
                 }
                 else if (tz != 0xFF)
                 {
-                    position.translation_z = -(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_static_translation_data + tz * 2);
+                    position.translation_z = static_cast<float>(-(s16)GetU16LE(m_AnimationHeaders[i].offset_to_animation_data + m_AnimationHeaders[i].offset_to_static_translation_data + tz * 2));
                 }
 
                 //LOGGER->Log(LOGGER_INFO, "%d %d", m_AnimationHeaders[i].number_of_frames, j);

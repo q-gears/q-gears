@@ -82,10 +82,20 @@ UiWidget::Initialise()
     m_Rotation = 0.0f;
 
     m_Scissor = false;
+    m_LocalScissor = false;
+    m_GlobalScissor = true;
     m_ScissorTop = 0;
-    m_ScissorBottom = static_cast<int>(m_ScreenHeight);
+    m_ScissorXPercentTop = 0;
+    m_ScissorXTop = 0;
+    m_ScissorBottom = m_ScreenHeight;
+    m_ScissorXPercentBottom = 100;
+    m_ScissorXBottom = 0;
     m_ScissorLeft = 0;
-    m_ScissorRight = static_cast<int>(m_ScreenWidth);
+    m_ScissorYPercentLeft = 0;
+    m_ScissorYLeft = 0;
+    m_ScissorRight = m_ScreenWidth;
+    m_ScissorYPercentRight = 100;
+    m_ScissorYRight = 0;
 
     m_AnimationCurrent = nullptr;
     m_AnimationDefault = "";
@@ -132,26 +142,35 @@ UiWidget::Update()
                 time = time + delta_time - m_AnimationCurrent->GetLength();
                 PlayAnimation(m_AnimationDefault, UiAnimation::DEFAULT, time, -1);
             }
+            else
+            {
+                m_AnimationCurrent = NULL;
+            }
         }
         else
         {
             m_AnimationCurrent->AddTime(delta_time);
         }
     }
-    else if(m_AnimationCurrent == nullptr && m_AnimationState == UiAnimation::DEFAULT && m_AnimationDefault != "")
+    else if( m_AnimationCurrent == NULL && m_AnimationState == UiAnimation::DEFAULT && m_AnimationDefault != "" )
     {
-        PlayAnimation(m_AnimationDefault, UiAnimation::DEFAULT, 0, -1);
+        PlayAnimation( m_AnimationDefault, UiAnimation::DEFAULT, 0, -1 );
     }
 
-    for(size_t i = 0; i < m_Children.size(); ++i)
-    {
-        m_Children[i]->Update();
-    }
 
-    if(m_UpdateTransformation == true)
+
+    if( m_UpdateTransformation == true )
     {
         UpdateTransformation();
     }
+
+
+
+    for( unsigned int i = 0; i < m_Children.size(); ++i )
+    {
+        m_Children[ i ]->Update();
+    }
+
 
     // debug output
     if(cv_debug_ui.GetI() >= 1)
@@ -282,19 +301,39 @@ UiWidget::AddChild(UiWidget *widget)
 
 
 UiWidget*
-UiWidget::GetChild(const Ogre::String& name)
+UiWidget::GetChild( const Ogre::String& name )
 {
-    for(size_t i = 0; i < m_Children.size(); ++i)
+    for( unsigned int i = 0; i < m_Children.size(); ++i )
     {
-        if(m_Children[i]->GetName() == name)
+        if( m_Children[ i ]->GetName() == name )
         {
-            return m_Children[i];
+            return m_Children[ i ];
         }
     }
 
-    return nullptr;
+    return NULL;
 }
 
+
+
+UiWidget*
+UiWidget::GetChild( const unsigned int id )
+{
+    if( id >= m_Children.size() )
+    {
+        return NULL;
+    }
+
+    return m_Children[ id ];
+}
+
+
+
+unsigned int
+UiWidget::GetNumberOfChildren()
+{
+    return m_Children.size();
+}
 
 void
 UiWidget::RemoveAllChildren()
@@ -394,6 +433,18 @@ UiWidget::ScriptAnimationSync()
 }
 
 
+
+void
+UiWidget::SetUpdateTransformation()
+{
+    for( unsigned int i = 0; i < m_Children.size(); ++i )
+    {
+        m_Children[ i ]->SetUpdateTransformation();
+    }
+
+    m_UpdateTransformation = true;
+}
+
 void
 UiWidget::UpdateTransformation()
 {
@@ -439,26 +490,25 @@ UiWidget::UpdateTransformation()
     }
     m_FinalTranslate.y += y;
 
-    m_FinalZ = (m_Parent != nullptr) ? m_Parent->GetFinalZ() + m_Z : m_Z;
+
+
+    m_FinalZ = ( m_Parent != NULL ) ? m_Parent->GetFinalZ() + m_Z : m_Z;
     m_FinalScale = area_scale * m_Scale;
-    m_FinalSize.x = (area_size.x * m_WidthPercent * m_Scale.x) / 100.0f + (m_Width * m_ScreenHeight / 720.0f) * m_FinalScale.x;
-    m_FinalSize.y = (area_size.y * m_HeightPercent * m_Scale.y) / 100.0f + (m_Height * m_ScreenHeight / 720.0f) * m_FinalScale.y;
-    m_FinalOrigin.x = (m_FinalSize.x * m_OriginXPercent) / 100.0f + m_OriginX * m_ScreenHeight * m_FinalScale.x / 720.0f;
-    m_FinalOrigin.y = (m_FinalSize.y * m_OriginYPercent) / 100.0f + m_OriginY * m_ScreenHeight * m_FinalScale.y / 720.0f;
+    m_FinalSize.x = ( area_size.x * m_WidthPercent * m_Scale.x ) / 100.0f + ( m_Width * m_ScreenHeight / 720.0f ) * m_FinalScale.x;
+    m_FinalSize.y = ( area_size.y * m_HeightPercent * m_Scale.y ) / 100.0f + ( m_Height * m_ScreenHeight / 720.0f ) * m_FinalScale.y;
+    m_FinalOrigin.x = ( m_FinalSize.x * m_OriginXPercent ) / 100.0f + m_OriginX * m_ScreenHeight * m_FinalScale.x / 720.0f;
+    m_FinalOrigin.y = ( m_FinalSize.y * m_OriginYPercent ) / 100.0f + m_OriginY * m_ScreenHeight * m_FinalScale.y / 720.0f;
     m_FinalRotation = area_rotation + m_Rotation;
 
-    // scissor update
-    m_ScissorTop = (m_Parent != nullptr) ? m_Parent->GetScissorTop() : 0;
-    m_ScissorBottom = (m_Parent != nullptr) ? m_Parent->GetScissorBottom() : static_cast<int>(m_ScreenHeight);
-    m_ScissorLeft = (m_Parent != nullptr) ? m_Parent->GetScissorLeft() : 0;
-    m_ScissorRight = (m_Parent != nullptr) ? m_Parent->GetScissorRight() : static_cast<int>(m_ScreenWidth);
 
-    if(m_Scissor == true)
+
+    // scissor update
+    if( m_LocalScissor == true )
     {
-        float local_x1 = -m_FinalOrigin.x;
-        float local_y1 = -m_FinalOrigin.y;
-        float local_x2 = m_FinalSize.x + local_x1;
-        float local_y2 = m_FinalSize.y + local_y1;
+        float local_x1 = m_FinalSize.x * m_ScissorXPercentTop / 100.0f + m_ScissorXTop * m_ScreenHeight * m_FinalScale.x / 720.0f - m_FinalOrigin.x;
+        float local_y1 = m_FinalSize.y * m_ScissorYPercentLeft / 100.0f + m_ScissorYLeft * m_ScreenHeight * m_FinalScale.y / 720.0f - m_FinalOrigin.y;
+        float local_x2 = m_FinalSize.x * m_ScissorXPercentBottom / 100.0f + m_ScissorXBottom * m_ScreenHeight * m_FinalScale.x / 720.0f - m_FinalOrigin.x;
+        float local_y2 = m_FinalSize.y * m_ScissorYPercentRight / 100.0f + m_ScissorYRight * m_ScreenHeight * m_FinalScale.y / 720.0f - m_FinalOrigin.y;
         float x = m_FinalTranslate.x;
         float y = m_FinalTranslate.y;
 
@@ -490,18 +540,39 @@ UiWidget::UpdateTransformation()
             y4 = static_cast<int>(local_y2 + y);
         }
 
-        m_ScissorTop = std::max(m_ScissorTop, std::min(std::min(y1 , y2), std::min(y3 , y4)));
-        m_ScissorBottom = std::min(m_ScissorBottom, std::max(std::max(y1 , y2), std::max(y3 , y4)));
-        m_ScissorLeft = std::max(m_ScissorLeft, std::min(std::min(x1 , x2), std::min(x3 , x4)));
-        m_ScissorRight = std::min(m_ScissorRight, std::max(std::max(x1 , x2), std::max(x3 , x4)));
+        m_Scissor = true;
+        m_ScissorTop = std::min( std::min( y1 , y2 ), std::min( y3 , y4 ) );
+        m_ScissorBottom = std::max( std::max( y1 , y2 ), std::max( y3 , y4 ) );
+        m_ScissorLeft = std::min( std::min( x1 , x2 ), std::min( x3 , x4 ) );
+        m_ScissorRight = std::max( std::max( x1 , x2 ), std::max( x3 , x4 ) );
     }
+    if( m_Parent != NULL && m_GlobalScissor == true )
+    {
+        bool use_scissor;
+        Ogre::Vector4 scissor = m_Parent->GetFinalScissor( use_scissor );
+        if( use_scissor == true )
+        {
+            m_Scissor = true;
+            if( m_LocalScissor == true )
+            {
+                m_ScissorTop = std::max( (float) m_ScissorTop, scissor.x );
+                m_ScissorBottom = std::min( (float) m_ScissorBottom, scissor.y );
+                m_ScissorLeft = std::max( (float) m_ScissorLeft, scissor.z );
+                m_ScissorRight = std::min( (float) m_ScissorRight, scissor.w );
+            }
+            else
+            {
+                m_ScissorTop = scissor.x;
+                m_ScissorBottom = scissor.y;
+                m_ScissorLeft = scissor.z;
+                m_ScissorRight = scissor.w;
+            }
+        }
+    }
+
+
 
     m_UpdateTransformation = false;
-
-    for(size_t i = 0; i < m_Children.size(); ++i)
-    {
-        m_Children[i]->UpdateTransformation();
-    }
 }
 
 
@@ -554,6 +625,19 @@ UiWidget::GetFinalScale() const
 }
 
 
+
+Ogre::Vector4
+UiWidget::GetFinalScissor( bool& scissor ) const
+{
+    if( m_Scissor == true )
+    {
+        scissor = true;
+        return Ogre::Vector4( m_ScissorTop, m_ScissorBottom, m_ScissorLeft, m_ScissorRight );
+    }
+
+    scissor = false;
+    return Ogre::Vector4::ZERO;
+}
 float
 UiWidget::GetFinalRotation() const
 {
@@ -566,7 +650,7 @@ UiWidget::SetOriginX(const float percent, const float x)
 {
     m_OriginXPercent = percent;
     m_OriginX = x;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
@@ -575,134 +659,172 @@ UiWidget::SetOriginY(const float percent, const float y)
 {
     m_OriginYPercent = percent;
     m_OriginY = y;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
+
 void
-UiWidget::SetX(const float percent, const float x)
+UiWidget::SetX( const float percent, const float x )
 {
     m_XPercent = percent;
     m_X = x;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
+
 void
-UiWidget::SetY(const float percent, const float y)
+UiWidget::GetX( float& percent, float& x )
+{
+    percent = m_XPercent;
+    x = m_X;
+}
+
+
+
+void
+UiWidget::SetY( const float percent, const float y )
 {
     m_YPercent = percent;
     m_Y = y;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
+
 void
-UiWidget::SetZ(const float z)
+UiWidget::GetY( float& percent, float& y )
+{
+    percent = m_YPercent;
+    y = m_Y;
+}
+
+
+
+void
+UiWidget::SetZ( const float z )
 {
     m_Z = z;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
+
 void
-UiWidget::SetWidth(const float percent, const float width)
+UiWidget::SetWidth( const float percent, const float width )
 {
     m_WidthPercent = percent;
     m_Width = width;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
+
 void
-UiWidget::SetHeight(const float percent, const float height)
+UiWidget::GetWidth( float& percent, float& width )
+{
+    percent = m_WidthPercent;
+    width = m_Width;
+}
+
+
+
+void
+UiWidget::SetHeight( const float percent, const float height )
 {
     m_HeightPercent = percent;
     m_Height = height;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
+
 void
-UiWidget::SetScale(const Ogre::Vector2& scale)
+UiWidget::GetHeight( float& percent, float& height )
+{
+    percent = m_HeightPercent;
+    height = m_Height;
+}
+
+
+
+void
+UiWidget::SetScale( const Ogre::Vector2& scale )
 {
     m_Scale = scale;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
+
 void
-UiWidget::SetRotation(const float degree)
+UiWidget::SetRotation( const float degree )
 {
     m_Rotation = degree;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
+
 
 
 void
-UiWidget::SetScissor(bool scissor)
+UiWidget::SetScissorArea( const float percent_x1, const float x1, const float percent_y1, const float y1, const float percent_x2, const float x2, const float percent_y2, const float y2 )
 {
-    m_Scissor = scissor;
-    m_UpdateTransformation = true;
+    m_LocalScissor = true;
+
+    m_ScissorXPercentTop = percent_x1;
+    m_ScissorXTop = x1;
+    m_ScissorXPercentBottom = percent_x2;
+    m_ScissorXBottom = x2;
+    m_ScissorYPercentLeft = percent_y1;
+    m_ScissorYLeft = y1;
+    m_ScissorYPercentRight = percent_y2;
+    m_ScissorYRight = y2;
+
+    SetUpdateTransformation();
 }
 
-
-int
-UiWidget::GetScissorTop() const
-{
-    return m_ScissorTop;
-}
-
-
-int
-UiWidget::GetScissorBottom() const
-{
-    return m_ScissorBottom;
-}
-
-
-int
-UiWidget::GetScissorLeft() const
-{
-    return m_ScissorLeft;
-}
-
-
-int
-UiWidget::GetScissorRight() const
-{
-    return m_ScissorRight;
-}
 
 
 void
-UiWidget::SetColour(const float r, const float g, const float b)
+UiWidget::SetGlobalScissor( const bool global )
+{
+    m_GlobalScissor = global;
+    SetUpdateTransformation();
+}
+
+
+
+void
+UiWidget::SetColour( const float r, const float g, const float b )
 {
     m_Colour1.r = r; m_Colour1.g = g; m_Colour1.b = b;
     m_Colour2.r = r; m_Colour2.g = g; m_Colour2.b = b;
     m_Colour3.r = r; m_Colour3.g = g; m_Colour3.b = b;
     m_Colour4.r = r; m_Colour4.g = g; m_Colour4.b = b;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
+
 void
-UiWidget::SetColours(const float r1, const float g1, const float b1, const float r2, const float g2, const float b2, const float r3, const float g3, const float b3, const float r4, const float g4, const float b4)
+UiWidget::SetColours( const float r1, const float g1, const float b1, const float r2, const float g2, const float b2, const float r3, const float g3, const float b3, const float r4, const float g4, const float b4 )
 {
     m_Colour1.r = r1; m_Colour1.g = g1; m_Colour1.b = b1;
     m_Colour2.r = r2; m_Colour2.g = g2; m_Colour2.b = b2;
     m_Colour3.r = r3; m_Colour3.g = g3; m_Colour3.b = b3;
     m_Colour4.r = r4; m_Colour4.g = g4; m_Colour4.b = b4;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }
 
 
+
 void
-UiWidget::SetAlpha(const float a)
+UiWidget::SetAlpha( const float a )
 {
     m_Colour1.a = a;
     m_Colour2.a = a;
     m_Colour3.a = a;
     m_Colour4.a = a;
-    m_UpdateTransformation = true;
+    SetUpdateTransformation();
 }

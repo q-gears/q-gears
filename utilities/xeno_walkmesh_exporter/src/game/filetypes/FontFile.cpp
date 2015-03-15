@@ -83,10 +83,10 @@ FontFile::GetSurface(void)
             int j = 0;
             for (int i = 7; i >= 0; --i)
             {
-                color.r = ((data >> i) & 0x01 == 1) ? 0 : 255;
-                color.g = ((data >> i) & 0x01 == 1) ? 0 : 255;
-                color.b = ((data >> i) & 0x01 == 1) ? 0 : 255;
-                color.a = ((data >> i) & 0x01 == 1) ? 255 : 255;
+                color.r = (((data >> i) & 0x01) == 1) ? 0 : 255;
+                color.g = (((data >> i) & 0x01) == 1) ? 0 : 255;
+                color.b = (((data >> i) & 0x01) == 1) ? 0 : 255;
+                color.a = (((data >> i) & 0x01) == 1) ? 255 : 255;
                 memcpy(glyth->pixels + 64 * y + j, &color, sizeof(ClutColor));
                 j += 4;
             }
@@ -95,10 +95,10 @@ FontFile::GetSurface(void)
             //LOGGER->Log(LOGGER_INFO, "%02x", data);
             for (int i = 7; i >= 0; --i)
             {
-                color.r = ((data >> i) & 0x01 == 1) ? 0 : 255;
-                color.g = ((data >> i) & 0x01 == 1) ? 0 : 255;
-                color.b = ((data >> i) & 0x01 == 1) ? 0 : 255;
-                color.a = ((data >> i) & 0x01 == 1) ? 255 : 255;
+                color.r = (((data >> i) & 0x01) == 1) ? 0 : 255;
+                color.g = (((data >> i) & 0x01) == 1) ? 0 : 255;
+                color.b = (((data >> i) & 0x01) == 1) ? 0 : 255;
+                color.a = (((data >> i) & 0x01) == 1) ? 255 : 255;
                 memcpy(glyth->pixels + 64 * y + j, &color, sizeof(ClutColor));
                 j += 4;
             }
@@ -123,11 +123,11 @@ FontFile::GetSurface(void)
     buffer->lock(Ogre::HardwareBuffer::HBL_DISCARD);
     const Ogre::PixelBox& pb = buffer->getCurrentLock();
 
-    for (Uint32 y = 0; y < ret->height; ++y)
+    for (int y = 0; y < ret->height; ++y)
     {
         Uint32* data = static_cast<Uint32*>(pb.data) + y * pb.rowPitch;
 
-        for (Uint32 x = 0; x < ret->width; ++x)
+        for (int x = 0; x < ret->width; ++x)
         {
             Uint32 clut = ret->pixels[y * ret->width * 4 + x * 4 + 3] | (ret->pixels[y * ret->width * 4 + x * 4 + 2] << 8) | (ret->pixels[y * ret->width * 4 + x * 4 + 1] << 16) | (ret->pixels[y * ret->width * 4 + x * 4 + 0] << 24);
             data[x] = clut;

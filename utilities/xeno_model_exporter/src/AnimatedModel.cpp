@@ -112,7 +112,7 @@ AnimatedModel::Export( const ModelInfo& info )
     {
         Vram* vram = Vram::MakeInstance().release();
 
-        for( int i = 0; i < texture->GetU32LE( 0 ); ++i )
+        for( u32 i = 0; i < texture->GetU32LE( 0 ); ++i )
         {
             int offset_to_tex = texture->GetU32LE( 0x04 + i * 0x04 );
 

@@ -11,6 +11,7 @@ namespace QGears
         ET_NULL = 0,
         ET_KEY_PRESS,
         ET_KEY_REPEAT,
+		ET_KEY_REPEAT_WAIT,
         ET_KEY_IMPULSE,
         ET_KEY_RELEASE,
         ET_MOUSE_PRESS,
@@ -47,5 +48,6 @@ namespace QGears
         EventType type;
         float param1;
         float param2;
+        Ogre::String event;
     };
 }

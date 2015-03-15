@@ -147,7 +147,7 @@ FieldModel::Export( const Ogre::String& model_file, const Ogre::String& texture_
                 }
 
                 // move pointer to start of next texture
-                i += ceil( ( float )( texture_header_width * 2 * height) / 0x0800 ) * 0x0800;
+                i += static_cast<u32>(ceil( ( float )( texture_header_width * 2 * height) / 0x0800 ) * 0x0800);
                 // update height
                 texture_header_height += height;
                 vram_y += height;

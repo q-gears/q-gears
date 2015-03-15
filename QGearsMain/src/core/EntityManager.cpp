@@ -10,6 +10,7 @@
 #include "core/Logger.h"
 #include "core/ScriptManager.h"
 #include "core/Timer.h"
+#include "core/DialogsManager.h"
 
 
 template<>EntityManager *Ogre::Singleton<EntityManager>::msSingleton = nullptr;
@@ -76,7 +77,8 @@ EntityManager::EntityManager():
     m_PlayerEntity(nullptr),
     m_PlayerMove(Ogre::Vector3::ZERO),
     m_PlayerMoveRotation(0),
-    m_PlayerLock(false)
+    m_PlayerLock( false ),
+    m_PlayerRun( false )
 {
     LOG_TRIVIAL("EntityManager created.");
 
@@ -118,27 +120,48 @@ EntityManager::Input(const QGears::Event& event)
         return;
     }
 
-    if(m_PlayerEntity != nullptr && m_PlayerLock == false)
+    if( m_PlayerEntity != NULL && m_PlayerLock == false )
     {
-        if ((event.type == QGears::ET_KEY_IMPULSE) && (event.param1 == OIS::KC_LEFT))
+        if ((event.type == QGears::ET_KEY_REPEAT) && (event.event == "walk_left"))
         {
             m_PlayerMove.x = -1;
         }
-        else if ((event.type == QGears::ET_KEY_IMPULSE) && (event.param1 == OIS::KC_RIGHT))
+        else if ((event.type == QGears::ET_KEY_REPEAT) && (event.event == "walk_right"))
         {
             m_PlayerMove.x = 1;
         }
 
-        if ((event.type == QGears::ET_KEY_IMPULSE) && (event.param1 == OIS::KC_DOWN))
+        if ((event.type == QGears::ET_KEY_REPEAT) && (event.event == "walk_down"))
         {
             m_PlayerMove.y = -1;
         }
-
-        if ((event.type == QGears::ET_KEY_IMPULSE) && (event.param1 == OIS::KC_UP))
+        else if ((event.type == QGears::ET_KEY_REPEAT) && (event.event == "walk_up"))
         {
             m_PlayerMove.y = 1;
         }
 
+        if ((event.type == QGears::ET_KEY_REPEAT) && (event.event == "run"))
+        {
+            m_PlayerRun = true;
+        }
+
+        if ((event.type == QGears::ET_KEY_PRESS) && (event.event == "interact"))
+        {
+            CheckEntityInteract();
+
+            for( unsigned int i = 0; i < m_EntityTriggers.size(); ++i )
+            {
+                if( m_EntityTriggers[ i ]->IsEnabled() == true && m_EntityTriggers[ i ]->IsActivator( m_PlayerEntity ) == true )
+                {
+                    ScriptEntity* scr_entity = ScriptManager::getSingleton().GetScriptEntityByName( ScriptManager::ENTITY, m_EntityTriggers[ i ]->GetName() );
+                    bool added = ScriptManager::getSingleton().ScriptRequest( scr_entity, "on_interact", 1, "", "", false, false );
+                    if( added == false )
+                    {
+                        LOG_WARNING( "Script \"on_interact\" for entity \"" +  m_EntityTriggers[ i ]->GetName() + "\" doesn't exist." );
+                    }
+                }
+            }
+        }
         //rotate move vector to field move rotation
         Ogre::Quaternion q1;
         q1.FromAngleAxis(m_PlayerMoveRotation, Ogre::Vector3::UNIT_Z);
@@ -234,7 +257,7 @@ EntityManager::Update()
                     {
                         speed = m_Entity[i]->GetMoveWalkSpeed();
 
-                        if(InputManager::getSingleton().IsButtonPressed(OIS::KC_LCONTROL) == true)
+                        if( m_PlayerRun == true )
                         {
                             speed *= 4;
                         }
@@ -293,6 +316,7 @@ EntityManager::Update()
 
     // reset player move. It already must be handled in update
     m_PlayerMove = Ogre::Vector3::ZERO;
+    m_PlayerRun = false;
 
     if(m_Background2D.GetScrollType() != Background2D::NONE)
     {
@@ -340,6 +364,7 @@ EntityManager::Clear()
 {
     m_Walkmesh.Clear();
     m_Background2D.Clear();
+    DialogsManager::getSingleton().Clear();
 
     for(unsigned int i = 0; i < m_Entity.size(); ++i)
     {
@@ -1104,6 +1129,71 @@ EntityManager::CheckTriggers(Entity* entity, Ogre::Vector3& position)
     }
 }
 
+
+
+void
+EntityManager::CheckEntityInteract()
+{
+    if( m_PlayerEntity == NULL || m_PlayerLock == true || m_PlayerEntity->IsSolid() == false )
+    {
+        return;
+    }
+
+    Ogre::Degree angle_pc = m_PlayerEntity->GetRotation();
+    Entity* entity_to_interact = NULL;
+    Ogre::Degree less_angle( 90 );
+
+    for( unsigned int i = 0; i < m_Entity.size(); ++i )
+    {
+        if( m_Entity[ i ]->IsTalkable() == false )
+        {
+            continue;
+        }
+
+        if( m_Entity[ i ] == m_PlayerEntity )
+        {
+            continue;
+        }
+
+        Ogre::Vector3 pos1 =  m_Entity[ i ]->GetPosition();
+        float interact_range =  m_Entity[ i ]->GetTalkRadius();
+        Ogre::Vector3 pos2 = m_PlayerEntity->GetPosition();
+        float solid_range = m_PlayerEntity->GetSolidRadius();
+
+        int height = ( pos1.z < pos2.z ) ?  m_Entity[ i ]->GetHeight() : m_PlayerEntity->GetHeight();
+
+        if( ( ( pos1.z - pos2.z + height ) < ( height * 2 ) ) && ( ( pos1.z - pos2.z + height ) >= 0 ) )
+        {
+            interact_range = ( interact_range + solid_range ) * ( interact_range + solid_range );
+            float distance = ( pos1.x - pos2.x ) * ( pos1.x - pos2.x ) + ( pos1.y - pos2.y ) * ( pos1.y - pos2.y );
+
+            if( distance < interact_range + solid_range )
+            {
+                Ogre::Degree angle_to_model = GetDirectionToPoint( pos2, pos1 );
+                Ogre::Degree angle = angle_pc - angle_to_model;
+                angle = ( angle < Ogre::Degree( 0 ) ) ? -angle : angle;
+                angle = ( angle >= Ogre::Degree( 180 ) ) ? Ogre::Degree( 360 ) - angle : angle;
+
+                if( angle < less_angle )
+                {
+                    angle = less_angle;
+                    entity_to_interact = m_Entity[ i ];
+                }
+            }
+        }
+    }
+
+    if( entity_to_interact != NULL )
+    {
+        Ogre::String name = entity_to_interact->GetName();
+        ScriptEntity* scr_entity = ScriptManager::getSingleton().GetScriptEntityByName( ScriptManager::ENTITY, name );
+        bool added = ScriptManager::getSingleton().ScriptRequest( scr_entity, "on_interact", 1, "", "", false, false );
+        if( added == false )
+        {
+            LOG_WARNING( "Script \"on_interact\" for entity \"" +  name + "\" doesn't exist." );
+        }
+    }
+}
 
 void
 EntityManager::SetNextOffsetStep(Entity* entity)

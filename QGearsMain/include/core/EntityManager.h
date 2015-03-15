@@ -54,6 +54,7 @@ private:
     bool CheckSolidCollisions( Entity* entity, Ogre::Vector3& position );
     void SetEntityDirectionByVector( Entity* entity, const Ogre::Vector2& vector );
     void CheckTriggers( Entity* entity, Ogre::Vector3& position );
+    void CheckEntityInteract();
 
     void SetNextOffsetStep( Entity* entity );
     void SetNextTurnStep( Entity* entity );
@@ -73,6 +74,7 @@ private:
     Ogre::Vector3                 m_PlayerMove;
     Ogre::Radian                  m_PlayerMoveRotation;
     bool                          m_PlayerLock;
+    bool                          m_PlayerRun;
 
     std::vector< EntityTrigger* > m_EntityTriggers;
     std::vector< EntityPoint* >   m_EntityPoints;

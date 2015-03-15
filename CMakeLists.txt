@@ -205,6 +205,8 @@ set(QGears_INCLUDE_DIRS
 if (MSVC)
 # Build cpp files on all cores, up virtual mem for PCH's as cotire really makes the compiler scream
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /Zm193")
+# Shut up about insecure functions, as this is cross platform code we can't use the Win32 specifc functions
+add_definitions( -D_CRT_SECURE_NO_WARNINGS )
 else()
 # Enable C++11, you may need to use -std=c++0x if using an older gcc compiler
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")

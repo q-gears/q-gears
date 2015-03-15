@@ -21,10 +21,6 @@ public:
     void Update();
     void OnResize();
 
-    void SetLanguage( const Ogre::String& language );
-    void AddText( const Ogre::String& name, TiXmlNode* text );
-    void UnloadTexts();
-    TiXmlNode* GetText( const Ogre::String& name ) const;
 
     void AddFont( UiFont* font );
     UiFont* GetFont( const Ogre::String& name );
@@ -39,12 +35,6 @@ public:
     void renderQueueStarted( Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation );
 
 private:
-    struct UiText
-    {
-        Ogre::String name;
-        TiXmlNode* node;
-    };
-    std::vector< UiText > m_Texts;
     std::vector< UiFont* > m_Fonts;
     struct UiPrototype
     {

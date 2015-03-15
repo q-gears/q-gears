@@ -98,6 +98,10 @@ set(HEADER_FILES
   include/core/XmlScriptsFile.h
   include/core/XmlTextFile.h
   include/core/XmlTextsFile.h
+  include/core/DialogsManager.h
+  include/core/ScriptManagerBinds.h
+  include/core/TextManager.h
+  include/core/TextManagerCommands.h
   #include/viewer/ViewerModule.h
   include/data/QGearsXMLSerializer.h
 )
@@ -270,6 +274,8 @@ set(SOURCE_FILES
   src/core/XmlScriptsFile.cpp
   src/core/XmlTextFile.cpp
   src/core/XmlTextsFile.cpp
+  src/core/DialogsManager.cpp
+  src/core/TextManager.cpp
   src/map/QGearsBackground2DFile.cpp
   src/map/QGearsBackground2DFileManager.cpp
   src/map/QGearsBackground2DFileXMLSerializer.cpp

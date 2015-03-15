@@ -13,7 +13,7 @@
 typedef std::vector< QGears::Event > InputEventArray;
 typedef std::vector< int > ButtonList;
 
-
+class ConfigCmd;
 
 class InputManager : public Ogre::Singleton< InputManager >
 {
@@ -34,21 +34,12 @@ public:
 
     // binds
     void                InitCmd();
-    void                BindCommand( const Ogre::String& cmd, const ButtonList& buttons );
-    void                ActivateBinds( int button );
+    void                BindCommand( ConfigCmd* cmd, const Ogre::StringVector& params, const ButtonList& buttons );
+    void                BindGameEvent( const Ogre::String& event, const ButtonList& buttons );
+    void                ActivateBinds( const int button );
+    void                AddGameEvents( const int button, const QGears::EventType type );
 
 private:
-    struct BindInfo
-    {
-        BindInfo( const Ogre::String& _cmd, const ButtonList& _key_set ):
-            cmd( _cmd ),
-            key_set( _key_set )
-        {}
-
-        ButtonList      key_set;
-        Ogre::String    cmd;
-    };
-
     bool                    m_ButtonState[ 256 ];
     char                    m_ButtonText[ 256 ];
 
@@ -58,7 +49,23 @@ private:
     InputEventArray         m_EventQueue;
 
     // binds
+    struct BindInfo
+    {
+        BindInfo():
+            cmd( NULL )
+        {}
+
+        ConfigCmd* cmd;
+        Ogre::StringVector params;
+        ButtonList buttons;
+    };
     std::vector< BindInfo > m_Binds;
+    struct BindGameEventInfo
+    {
+        Ogre::String event;
+        ButtonList buttons;
+    };
+    std::vector< BindGameEventInfo > m_BindGameEvents;
 };
 
 

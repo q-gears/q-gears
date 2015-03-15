@@ -657,6 +657,7 @@ Background2D::AddTile(const int x, const int y, const int width, const int heigh
     writeIterator += render_op.vertexData->vertexCount * TILE_VERTEX_INDEX_SIZE;
 
     // TODO: Can use WriteGlyph
+
     *writeIterator++ = new_x1;
     *writeIterator++ = new_y1;
     *writeIterator++ = depth;

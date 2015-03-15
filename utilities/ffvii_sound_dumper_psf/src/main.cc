@@ -331,7 +331,7 @@ int main(int argc, char *argv[])
 		ifstream iF(argument.c_str(), ios::binary);
 		if(iF.is_open())
 		{
-			u32 frame_size = file_get_size(iF);
+			u32 frame_size = static_cast<u32>(file_get_size(iF));
 			u8 *frame = new u8[frame_size];
 			iF.read((char *)frame, frame_size);
 			iF.close();
@@ -368,7 +368,7 @@ int main(int argc, char *argv[])
 			// create audio tracks
 			int dump_psf = 0;
 			int dump_pcm = 0;
-			float ogg_quality = 0.4;
+			float ogg_quality = 0.4f;
 			if(config_node->QueryIntAttribute("dump_psf", &dump_psf) != TIXML_SUCCESS)
 				cout << "error: dump_psf isn't integer" << endl;
 			if(config_node->QueryIntAttribute("dump_pcm", &dump_pcm) != TIXML_SUCCESS)
@@ -381,7 +381,7 @@ int main(int argc, char *argv[])
 				config_node->Attribute("music_xml"),
 				config_node->Attribute("music_directory"),
 				config_node->Attribute("custom_bios"),
-				ogg_quality, dump_psf, dump_pcm);
+				ogg_quality, dump_psf > 0, dump_pcm > 0);
 			cout << endl;
 		}
 		else
@@ -557,7 +557,7 @@ void akao_extract_cb(void *a_data, path a_file)
 	}
 
 	// read full file to memory
-	u32 buffer_size = file_get_size(iF);
+	u32 buffer_size = static_cast<u32>(file_get_size(iF));
 	u8 *buffer = new u8[buffer_size];
 	iF.read((char *)buffer, buffer_size);
 	iF.close();
@@ -662,7 +662,7 @@ void files_delete_duplicates(list<path> &r_file_list)
 			continue;
 		}
 
-		u32 buffer1_size = file_get_size(iF1);
+		u32 buffer1_size = static_cast<u32>(file_get_size(iF1));
 		u8 *buffer1 = new u8[buffer1_size];
 		iF1.read((char *)buffer1, buffer1_size);
 		iF1.close();
@@ -676,7 +676,7 @@ void files_delete_duplicates(list<path> &r_file_list)
 			ifstream iF2(jt->string().c_str(), ios::binary);
 			if(iF2.is_open())
 			{
-				u32 buffer2_size = file_get_size(iF2);
+				u32 buffer2_size = static_cast<u32>(file_get_size(iF2));
 				if(buffer1_size == buffer2_size)
 				{
 					u8 *buffer2 = new u8[buffer2_size];

@@ -27,7 +27,7 @@ Walkmesh::Walkmesh(void)
 
 Walkmesh::~Walkmesh(void)
 {
-    for (int i = 0; i < m_TriangleTexts.size(); ++i)
+    for (size_t i = 0; i < m_TriangleTexts.size(); ++i)
     {
         m_Overlay->remove2D((Ogre::OverlayContainer*)m_TriangleTexts[i]);
         delete m_TriangleTexts[i];
@@ -52,7 +52,7 @@ Walkmesh::AddTriangle(const WalkmeshTriangle& triangle)
 const int
 Walkmesh::GetAccessSide(const int triangle_id, const unsigned char side) const
 {
-    if (triangle_id >= m_Triangles.size() || triangle_id < 0)
+    if (triangle_id >= static_cast<int>(m_Triangles.size()) || triangle_id < 0)
     {
         Ogre::LogManager::getSingletonPtr()->logMessage("Walkmesh::GetAccessSide: triangle_id greater than number of triangles in walkmesh or less than zero.");
         return -1;
@@ -72,7 +72,7 @@ Walkmesh::GetAccessSide(const int triangle_id, const unsigned char side) const
 const Ogre::Vector3&
 Walkmesh::GetA(const int triangle_id) const
 {
-    if (triangle_id >= m_Triangles.size() || triangle_id < 0)
+    if (triangle_id >= static_cast<int>(m_Triangles.size()) || triangle_id < 0)
     {
         Ogre::LogManager::getSingletonPtr()->logMessage("Walkmesh::GetA: triangle_id greater than number of triangles in walkmesh or less than zero.");
         return Ogre::Vector3::ZERO;
@@ -86,7 +86,7 @@ Walkmesh::GetA(const int triangle_id) const
 const Ogre::Vector3&
 Walkmesh::GetB(const int triangle_id) const
 {
-    if (triangle_id >= m_Triangles.size() || triangle_id < 0)
+    if (triangle_id >= static_cast<int>(m_Triangles.size()) || triangle_id < 0)
     {
         Ogre::LogManager::getSingletonPtr()->logMessage("Walkmesh::GetB: triangle_id greater than number of triangles in walkmesh or less than zero.");
         return Ogre::Vector3::ZERO;
@@ -100,7 +100,7 @@ Walkmesh::GetB(const int triangle_id) const
 const Ogre::Vector3&
 Walkmesh::GetC(const int triangle_id) const
 {
-    if (triangle_id >= m_Triangles.size() || triangle_id < 0)
+    if (triangle_id >= static_cast<int>(m_Triangles.size()) || triangle_id < 0)
     {
         Ogre::LogManager::getSingletonPtr()->logMessage("Walkmesh::GetC: triangle_id greater than number of triangles in walkmesh or less than zero.");
         return Ogre::Vector3::ZERO;
@@ -114,7 +114,7 @@ Walkmesh::GetC(const int triangle_id) const
 void
 Walkmesh::LockWalkmesh(const int triangle_id, const bool lock)
 {
-    if (triangle_id >= m_Triangles.size() || triangle_id < 0)
+    if (triangle_id >= static_cast<int>(m_Triangles.size()) || triangle_id < 0)
     {
         Ogre::LogManager::getSingletonPtr()->logMessage("Walkmesh::SetAccessible: triangle_id greater than number of triangles in walkmesh or less than zero.");
         return;
@@ -160,10 +160,10 @@ Walkmesh::LockWalkmesh(const int triangle_id, const bool lock)
 const bool
 Walkmesh::IsLocked(const int triangle_id) const
 {
-    if (triangle_id >= m_Triangles.size() || triangle_id < 0)
+    if (triangle_id >= static_cast<int>(m_Triangles.size()) || triangle_id < 0)
     {
         Ogre::LogManager::getSingletonPtr()->logMessage("Walkmesh::IsAccessible: triangle_id greater than number of triangles in walkmesh or less than zero.");
-        return -1;
+        return true;
     }
 
     return m_Triangles[triangle_id].locked;
@@ -228,7 +228,7 @@ Walkmesh::SetUpWalkmeshVertices(void)
     Ogre::ColourValue c_access = Ogre::ColourValue(1, 1, 1);
     Ogre::ColourValue c_deny   = Ogre::ColourValue(1, 0, 0);
 
-    for (int i = 0; i < m_Triangles.size(); ++i)
+    for (size_t i = 0; i < m_Triangles.size(); ++i)
     {
         // line 0
         *pPos++ = m_Triangles[i].a.x; *pPos++ = m_Triangles[i].a.y; *pPos++ = m_Triangles[i].a.z;

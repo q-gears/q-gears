@@ -53,15 +53,15 @@ BOOST_AUTO_TEST_CASE( read_file )
     BOOST_REQUIRE_EQUAL( 1, points.size() );
     QGears::MapFile::PointList::value_type    &point( points.at(0) );
     BOOST_CHECK_EQUAL( "Spawn_md1_1", point.GetName() );
-    BOOST_CHECK( Ogre::Vector3( 29.0547, 229.234, 2.56082 ).positionEquals( point.GetPosition() ) );
+    BOOST_CHECK( Ogre::Vector3( 29.0547f, 229.234f, 2.56082f ).positionEquals( point.GetPosition() ) );
     BOOST_CHECK_CLOSE( 67.7647, point.GetRotation(), 0.001 );
 
     QGears::MapFile::TriggerList   &triggers( f.getTriggers() );
     BOOST_REQUIRE_EQUAL( 1, triggers.size() );
     QGears::MapFile::TriggerList::value_type    &trigger( triggers.at(0) );
     BOOST_CHECK_EQUAL( "Gateway0", trigger.GetName() );
-    BOOST_CHECK( Ogre::Vector3( 28.6016, 228.562, 2.75781 ).positionEquals( trigger.GetPoint1() ) );
-    BOOST_CHECK( Ogre::Vector3( 28.6641, 229.438, 2.75781 ).positionEquals( trigger.GetPoint2() ) );
+    BOOST_CHECK( Ogre::Vector3( 28.6016f, 228.562f, 2.75781f ).positionEquals( trigger.GetPoint1() ) );
+    BOOST_CHECK( Ogre::Vector3( 28.6641f, 229.438f, 2.75781f ).positionEquals( trigger.GetPoint2() ) );
     BOOST_CHECK_EQUAL( true, trigger.IsEnabled() );
 
     logMgr.destroyLog( "Default Log" );

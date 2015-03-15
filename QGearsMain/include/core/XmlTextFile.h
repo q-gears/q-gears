@@ -11,7 +11,7 @@ public:
     XmlTextFile( const Ogre::String& file );
     virtual ~XmlTextFile();
 
-    void LoadText();
+    void LoadTexts();
 };
 
 

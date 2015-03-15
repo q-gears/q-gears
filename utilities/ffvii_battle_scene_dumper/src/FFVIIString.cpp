@@ -32,7 +32,7 @@ StringToFFVIIString( const Ogre::String& string )
 {
     FFVIIString ret;
 
-    for( int i = 0; i < string.size(); ++i )
+    for( size_t i = 0; i < string.size(); ++i )
     {
         ret.push_back( ascii[ string[ i ] ] );
     }
@@ -47,7 +47,7 @@ FFVIIStringToString( const FFVIIString& string )
 {
     Ogre::String ret;
 
-    for( int i = 0; i < string.size(); ++i )
+    for( size_t i = 0; i < string.size(); ++i )
     {
         Ogre::String l = "";
 

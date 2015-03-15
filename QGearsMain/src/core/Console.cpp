@@ -157,7 +157,7 @@ Console::Input(const QGears::Event& event)
         SetToHide();
     }
     // history up
-    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_UP)
+    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) && event.param1 == OIS::KC_UP)
     {
         if(m_HistoryLineCycleIndex < (int)m_History.size() - 1)
         {
@@ -166,7 +166,7 @@ Console::Input(const QGears::Event& event)
         }
     }
     // history down
-    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_DOWN)
+    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) && event.param1 == OIS::KC_DOWN)
     {
         if(m_HistoryLineCycleIndex > 0)
         {
@@ -192,7 +192,7 @@ Console::Input(const QGears::Event& event)
 
     }
     // scroll display to previous row
-    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_PGUP)
+    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) && event.param1 == OIS::KC_PGUP)
     {
         if(m_DisplayLine > 0)
         {
@@ -200,7 +200,7 @@ Console::Input(const QGears::Event& event)
         }
     }
     // scroll display to next row
-    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_PGDOWN)
+    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) && event.param1 == OIS::KC_PGDOWN)
     {
         if(m_DisplayLine < m_OutputLine.size())
         {
@@ -208,7 +208,7 @@ Console::Input(const QGears::Event& event)
         }
     }
     // delete character after cursor
-    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_DELETE)
+    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) && event.param1 == OIS::KC_DELETE)
     {
         if(m_AutoCompletition.size() > 0)
         {
@@ -223,7 +223,7 @@ Console::Input(const QGears::Event& event)
         }
     }
     // delete character before cursor
-    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_BACK)
+    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) && event.param1 == OIS::KC_BACK)
     {
         if(m_AutoCompletition.size() > 0)
         {
@@ -239,7 +239,7 @@ Console::Input(const QGears::Event& event)
         }
     }
     // move cursor to left
-    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_LEFT)
+    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) && event.param1 == OIS::KC_LEFT)
     {
         if(m_AutoCompletition.size() > 0)
         {
@@ -253,7 +253,7 @@ Console::Input(const QGears::Event& event)
         }
     }
     // move cursor to right
-    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && event.param1 == OIS::KC_RIGHT)
+    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) && event.param1 == OIS::KC_RIGHT)
     {
         if(m_AutoCompletition.size() > 0)
         {
@@ -295,7 +295,7 @@ Console::Input(const QGears::Event& event)
         m_CursorPosition = m_InputLine.size();
     }
     // input ascii character
-    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) && m_InputLine.size() < m_LineWidth)
+    else if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) && m_InputLine.size() < m_LineWidth)
     {
         char legalchars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890~!@#$%^&*()-_=+?{[]}|\\;:'\"<>,./? ";
         char txt = TranslateNumpad(event);

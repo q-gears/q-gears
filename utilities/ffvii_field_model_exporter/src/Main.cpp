@@ -42,7 +42,7 @@ fill_names()
 
                     Ogre::StringVector animations = Ogre::StringUtil::split( export_data[ 1 ], ",", 0 );
                     //LOGGER->Log(LOGGER_INFO, "Export %s: %s", field.name.c_str(), unit.name.c_str());
-                    for( int i = 0; i < animations.size(); ++i )
+                    for( size_t i = 0; i < animations.size(); ++i )
                     {
                         unit.animations.push_back( animations[ i ] );
                     }
@@ -73,17 +73,17 @@ main( int argc, char *argv[] )
 
 
 
-    for( int f = 0; f < fields.size(); ++f )
+    for( size_t f = 0; f < fields.size(); ++f )
     {
         BsxFile model( "data/field/" + fields[ f ].name + ".bsx" );
         DatFile dat( "data/field/" + fields[ f ].name + ".dat" );
 
-        for( int i = 0; i < fields[ f ].units.size(); ++i )
+        for( size_t i = 0; i < fields[ f ].units.size(); ++i )
         {
             if( fields[ f ].units[ i ].name != "" )
             {
                 Ogre::Entity* entity = NULL;
-                for( int j = 0; j < entitys.size(); ++j )
+                for( size_t j = 0; j < entitys.size(); ++j )
                 {
                     if( fields[ f ].units[ i ].name == entitys[ j ]->getName() )
                     {

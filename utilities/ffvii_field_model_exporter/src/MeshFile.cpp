@@ -142,9 +142,9 @@ MeshFile::readPart( const Ogre::String& name, const u32 i, const u32 offset_to_p
         u16 offset_to_vertex = offset_to_vertexes + j * 0x08;
 
         Ogre::Vector3 point;
-        point.x = -( s16 )GetU16LE( offset_to_vertex + 4 + 0x00 );
-        point.z = -( s16 )GetU16LE( offset_to_vertex + 4 + 0x02 );
-        point.y = -( s16 )GetU16LE( offset_to_vertex + 4 + 0x04 );
+        point.x = static_cast<float>(-( s16 )GetU16LE( offset_to_vertex + 4 + 0x00 ));
+        point.z = static_cast<float>(-(s16)GetU16LE(offset_to_vertex + 4 + 0x02));
+        point.y = static_cast<float>(-(s16)GetU16LE(offset_to_vertex + 4 + 0x04));
         point /= 1024.0f;
         vertexes.push_back( point );
     }
@@ -402,9 +402,9 @@ MeshFile::readPart( const Ogre::String& name, const u32 i, const u32 offset_to_p
     {
         readTriangle( offset_to_poly, vertexes, pPos, cur_index, cur_vertex, cur_colour, false );
 
-        Ogre::Vector2 at(0.99, 0.99);
-        Ogre::Vector2 bt(0.99, 0.99);
-        Ogre::Vector2 ct(0.99, 0.99);
+        Ogre::Vector2 at(0.99f, 0.99f);
+        Ogre::Vector2 bt(0.99f, 0.99f);
+        Ogre::Vector2 ct(0.99f, 0.99f);
         *tPos++ = at.x; *tPos++ = at.y;
         *tPos++ = bt.x; *tPos++ = bt.y;
         *tPos++ = ct.x; *tPos++ = ct.y;
@@ -417,10 +417,10 @@ MeshFile::readPart( const Ogre::String& name, const u32 i, const u32 offset_to_p
     {
         readQuad( offset_to_poly, vertexes, pPos, cur_index, cur_vertex, cur_colour, false );
 
-        Ogre::Vector2 at(0.99, 0.99);
-        Ogre::Vector2 bt(0.99, 0.99);
-        Ogre::Vector2 ct(0.99, 0.99);
-        Ogre::Vector2 dt(0.99, 0.99);
+        Ogre::Vector2 at(0.99f, 0.99f);
+        Ogre::Vector2 bt(0.99f, 0.99f);
+        Ogre::Vector2 ct(0.99f, 0.99f);
+        Ogre::Vector2 dt(0.99f, 0.99f);
         *tPos++ = at.x; *tPos++ = at.y;
         *tPos++ = bt.x; *tPos++ = bt.y;
         *tPos++ = ct.x; *tPos++ = ct.y;
@@ -434,9 +434,9 @@ MeshFile::readPart( const Ogre::String& name, const u32 i, const u32 offset_to_p
     {
         readTriangle( offset_to_poly, vertexes, pPos, cur_index, cur_vertex, cur_colour, true );
 
-        Ogre::Vector2 at(0.99, 0.99);
-        Ogre::Vector2 bt(0.99, 0.99);
-        Ogre::Vector2 ct(0.99, 0.99);
+        Ogre::Vector2 at(0.99f, 0.99f);
+        Ogre::Vector2 bt(0.99f, 0.99f);
+        Ogre::Vector2 ct(0.99f, 0.99f);
         *tPos++ = at.x; *tPos++ = at.y;
         *tPos++ = bt.x; *tPos++ = bt.y;
         *tPos++ = ct.x; *tPos++ = ct.y;
@@ -449,10 +449,10 @@ MeshFile::readPart( const Ogre::String& name, const u32 i, const u32 offset_to_p
     {
         readQuad( offset_to_poly, vertexes, pPos, cur_index, cur_vertex, cur_colour, true );
 
-        Ogre::Vector2 a(0.99, 0.99);
-        Ogre::Vector2 b(0.99, 0.99);
-        Ogre::Vector2 c(0.99, 0.99);
-        Ogre::Vector2 d(0.99, 0.99);
+        Ogre::Vector2 a(0.99f, 0.99f);
+        Ogre::Vector2 b(0.99f, 0.99f);
+        Ogre::Vector2 c(0.99f, 0.99f);
+        Ogre::Vector2 d(0.99f, 0.99f);
         *tPos++ = a.x; *tPos++ = a.y;
         *tPos++ = b.x; *tPos++ = b.y;
         *tPos++ = c.x; *tPos++ = c.y;
@@ -489,7 +489,7 @@ MeshFile::GetData(const Ogre::String& name, const int offset_to_parts, const int
     int part_end( number_of_parts );
     int part_begin = 0;
 
-    for (u32 i = part_begin; i < number_of_parts && i < part_end; ++i)
+    for (int i = part_begin; i < number_of_parts && i < part_end; ++i)
     {
         u32 offset_to_part   = offset_to_parts + i * 0x20;
         readPart( name, i, offset_to_part, mesh, textures );
@@ -521,7 +521,7 @@ MeshFile::AddTexture( TexForGenBsx& texture, VectorTexForGenBsx& textures )
     texture.bpp = ( BPP )bpp;
     texture.type = type;
 
-    for( int i = 0; i < textures.size(); i++ )
+    for( size_t i = 0; i < textures.size(); i++ )
     {
         if( texture == textures[ i ] )
         {
@@ -535,7 +535,7 @@ MeshFile::AddTexture( TexForGenBsx& texture, VectorTexForGenBsx& textures )
 
     texture.start_x = 0;
     texture.start_y = 0;
-    for (int i = 0; i < textures.size(); i++)
+    for (size_t i = 0; i < textures.size(); i++)
     {
         if (texture.start_x <= textures[i].start_x)
         {
