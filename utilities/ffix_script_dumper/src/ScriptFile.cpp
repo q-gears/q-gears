@@ -53,7 +53,7 @@ ScriptFile::DumpScripts()
     export_script = new Logger("scripts.txt");
 
     u32 number_of_entity = GetU8( 0x03 );
-    for ( int entity = 0; entity < number_of_entity; ++entity )
+    for (u32 entity = 0; entity < number_of_entity; ++entity)
     {
         if ( GetU16LE( 0x80 + entity * 0x8 + 0x2) == 0 )
         {
@@ -66,7 +66,7 @@ ScriptFile::DumpScripts()
 
         u32 number_of_scripts = GetU8(script_offset + 1);
 
-        for ( int i = 0; i < number_of_scripts; ++i )
+        for (u32 i = 0; i < number_of_scripts; ++i)
         {
             raw_script = "";
             u16 script_type = GetU16LE( script_offset + 2 + i * 0x4 );

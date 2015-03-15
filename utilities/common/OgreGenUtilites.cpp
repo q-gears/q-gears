@@ -23,12 +23,12 @@ CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, 
                 u32 ogre_pixel1 = ( ( ( clut1 & 0x1f ) * 255 / 31 ) << 0x18 ) | ( ( ( ( clut1 >>  5 ) & 0x1f ) * 255 / 31 ) << 0x10 ) | ( ( ( ( clut1 >> 10 ) & 0x1f ) * 255 / 31 ) << 0x8 ) | 0;
 
                 u8 stp = ( clut1 & 0x8000 ) >> 15;
-                AddTransparency( ogre_pixel1, transparency, stp );
+                AddTransparency( ogre_pixel1, transparency, stp > 0 );
 
                 u32 ogre_pixel2 = ( ( ( clut2 & 0x1f ) * 255 / 31 ) << 0x18 ) | ( ( ( ( clut2 >>  5 ) & 0x1f ) * 255 / 31 ) << 0x10 ) | ( ( ( ( clut2 >> 10 ) & 0x1f ) * 255 / 31 ) << 0x8 ) | 0;
 
                 stp = ( clut2 & 0x8000 ) >> 15;
-                AddTransparency( ogre_pixel2, transparency, stp );
+                AddTransparency( ogre_pixel2, transparency, stp > 0 );
 
                 data[ start_x + x ] = ogre_pixel1;
                 ++x;
@@ -42,7 +42,7 @@ CreateTextureFromVram( const Ogre::PixelBox& pb, Vram* vram, const int start_x, 
                 u32 ogre_pixel = ( ( ( clut & 0x1f ) * 255 / 31 ) << 0x18 ) | ( ( ( ( clut >>  5 ) & 0x1f ) * 255 / 31 ) << 0x10 ) | ( ( ( ( clut >> 10 ) & 0x1f ) * 255 / 31 ) << 0x8 ) | 0;
 
                 u8 stp = ( clut & 0x8000 ) >> 15;
-                AddTransparency( ogre_pixel, transparency, stp );
+                AddTransparency( ogre_pixel, transparency, stp > 0 );
 
                 data[ start_x + x ] = ogre_pixel;
             }
@@ -161,8 +161,8 @@ AddTexture( TexForGen& texture, const MeshData& data, VectorTexForGen& textures,
             start_x += 256;
         }
     }
-    texture.start_x = start_x;
-    texture.start_y = start_y;
+    texture.start_x = static_cast<int>(start_x);
+    texture.start_y = static_cast<int>(start_y);
     textures.push_back( texture );
 
     if( logger != NULL )

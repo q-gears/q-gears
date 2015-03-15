@@ -37,9 +37,9 @@ WalkmeshFile::GetWalkmesh(Walkmesh* walkmesh)
 
         for (u32 i = 0; i < block_size;)
         {
-            u16 a_offset = block_vertex + GetU16LE(block_start + i + 0x00) * 0x08;
-            u16 b_offset = block_vertex + GetU16LE(block_start + i + 0x02) * 0x08;
-            u16 c_offset = block_vertex + GetU16LE(block_start + i + 0x04) * 0x08;
+            u16 a_offset = static_cast<u16>(block_vertex + GetU16LE(block_start + i + 0x00) * 0x08);
+            u16 b_offset = static_cast<u16>(block_vertex + GetU16LE(block_start + i + 0x02) * 0x08);
+            u16 c_offset = static_cast<u16>(block_vertex + GetU16LE(block_start + i + 0x04) * 0x08);
 
             WalkmeshTriangle triangle;
             triangle.a = Ogre::Vector3((s16)GetU16LE(0x00 + a_offset),

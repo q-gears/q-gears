@@ -31,6 +31,9 @@
 #include <cstdarg>
 
 #ifdef _MSC_VER
+#ifdef va_copy
+#undef va_copy
+#endif
 #define va_copy(a,b) (a=b)
 #define snprintf _snprintf
 #endif

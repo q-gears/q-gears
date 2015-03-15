@@ -94,7 +94,7 @@ EnemyFile::GetModel( const EnemyInfo& info )
 
 
 
-    for (int bone = 0; bone < m_Skeleton.size(); ++bone)
+    for (size_t bone = 0; bone < m_Skeleton.size(); ++bone)
     {
         int offset = m_Skeleton[bone].offset;
         if (offset != 0)
@@ -181,7 +181,7 @@ EnemyFile::DumpSettings(const Ogre::String& file)
 
     int model_settings_offset = GetU32LE(0x08);
 
-    m_WithWeapon = GetU8( model_settings_offset + 2 ) & 0x80;
+    m_WithWeapon = (GetU8( model_settings_offset + 2 ) & 0x80) > 0;
     LOGGER->Log( "Model With Weapon '" + Ogre::StringConverter::toString(m_WithWeapon) + "'\n" );
 
     settings->Log("// animation scripts\n");

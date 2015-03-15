@@ -111,7 +111,7 @@ ModelFile::GetModelPart( const int part_id, Ogre::MeshPtr mesh, const MeshData& 
         sub_mesh->indexData->indexCount = sub_mesh->vertexData->vertexCount;
         sub_mesh->indexData->indexBuffer = Ogre::HardwareBufferManager::getSingleton().createIndexBuffer(Ogre::HardwareIndexBuffer::IT_16BIT, sub_mesh->indexData->indexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
         u16* idata = static_cast<u16*>(sub_mesh->indexData->indexBuffer->lock(Ogre::HardwareBuffer::HBL_DISCARD));
-        for( int i = 0; i < sub_mesh->vertexData->vertexCount; ++i )
+        for( unsigned int i = 0; i < sub_mesh->vertexData->vertexCount; ++i )
         {
             idata[ i ] = i;
         }

@@ -66,8 +66,8 @@ BOOST_AUTO_TEST_CASE( read_file )
 
     QGears::AFile::FrameList &frames( f.getFrames() );
     BOOST_CHECK_EQUAL( 80, frames.size() );
-    BOOST_CHECK( Ogre::Vector3( -63.86031, 71.90821, -10.97811    ).positionEquals( frames.front().root_translation ) );
-    BOOST_CHECK( Ogre::Vector3(   0      , 13.53528,   0.07706928 ).positionEquals( frames.back ().root_translation ) );
+    BOOST_CHECK( Ogre::Vector3( -63.86031f, 71.90821f, -10.97811f    ).positionEquals( frames.front().root_translation ) );
+    BOOST_CHECK( Ogre::Vector3(   0.0f      , 13.53528f,   0.07706928f ).positionEquals( frames.back ().root_translation ) );
 
     logMgr.destroyLog( "Default Log" );
 

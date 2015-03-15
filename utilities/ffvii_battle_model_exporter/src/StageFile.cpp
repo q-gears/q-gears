@@ -72,7 +72,7 @@ StageFile::GetModel( const StageInfo& info )
 
 
 
-    for (int i = 1; i < number_of_files - 1; ++i)
+    for (u32 i = 1; i < number_of_files - 1; ++i)
     {
         int offset_to_vertex = GetU32LE(0x04 + i * 0x04);
         MeshExtractor(info.data, "ffvii/battle_stage/" + info.data.name, this, offset_to_vertex, textures, mesh, Ogre::StringConverter::toString(i), 1);

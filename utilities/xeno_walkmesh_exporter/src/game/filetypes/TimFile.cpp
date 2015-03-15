@@ -71,7 +71,7 @@ TimFile::GetSurface(const u32& clutNumber)
             {
                 u16 real_x = mImageVramPositionX + x;
                 u16 real_y = mImageVramPositionY + y;
-                u16 clut_y = clutNumber + mClutVramPositionY;
+                u16 clut_y = static_cast<u16>(clutNumber + mClutVramPositionY);
 
                 u8 data = mVram.GetU8(real_x, real_y) & 0x0F;
                 u16 col = mVram.GetU16(data * 2 + mClutVramPositionX, clut_y);
@@ -141,7 +141,7 @@ TimFile::GetSurface(const u32& clutNumber)
             {
                 u16 real_x = mImageVramPositionX + x;
                 u16 real_y = mImageVramPositionY + y;
-                u16 clut_y = clutNumber + mClutVramPositionY;
+                u16 clut_y = static_cast<u16>(clutNumber + mClutVramPositionY);
 
                 u8 data = mVram.GetU8(real_x, real_y);
                 u16 col = mVram.GetU16(data * 2 + mClutVramPositionX, clut_y);

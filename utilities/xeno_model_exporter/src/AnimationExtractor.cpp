@@ -96,7 +96,7 @@ AnimationExtractor( const Ogre::SkeletonPtr& skeleton, const ModelInfo& info, Sk
             u16 rot_num = 0;
             u16 trans_num = 0;
 
-            for( int bone = 0; bone < skeleton_data.size(); ++bone )
+            for( size_t bone = 0; bone < skeleton_data.size(); ++bone )
             {
                 tx = 0; ty = 0; tz = 0;
                 rx = 0; ry = 0; rz = 0;

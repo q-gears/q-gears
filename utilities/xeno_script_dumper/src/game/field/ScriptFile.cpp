@@ -47,7 +47,7 @@ ScriptFile::GetScripts()
     u32 number_of_entity = GetU8(0x80);
     u32 offset_to_script = 0x84 + number_of_entity * 0x40;
 
-    for (int i = 0; i < number_of_entity; ++i)
+    for (u32 i = 0; i < number_of_entity; ++i)
     {
         LOGGER->Log("Entity: 0x%02x\n", i);
 
@@ -64,7 +64,7 @@ ScriptFile::GetScripts()
 
 
             u32 script_pointer_end = 0;
-            for (int l = i; l < number_of_entity; ++l)
+            for (u32 l = i; l < number_of_entity; ++l)
             {
                 u32 offset_in_next_script = 0;
                 for (int script_id = 0; script_id < 0x20; ++script_id)

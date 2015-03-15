@@ -60,19 +60,19 @@ BOOST_AUTO_TEST_CASE( simple_hrc )
     BOOST_CHECK_EQUAL( 3, bones.size() );
     BOOST_CHECK_EQUAL( "bone.1", bones.at(0).name );
     BOOST_CHECK_EQUAL( "root", bones.at(0).parent );
-    BOOST_CHECK_CLOSE( 1.5f, bones.at(0).length, 0.0001 );
+    BOOST_CHECK_CLOSE( 1.5f, bones.at(0).length, 0.0001f );
     BOOST_CHECK_EQUAL( 1, bones.at(0).rsd_names.size() );
     BOOST_CHECK_EQUAL( "model.1", bones.at(0).rsd_names.at(0) );
 
     BOOST_CHECK_EQUAL( "bone.1.1", bones.at(1).name );
     BOOST_CHECK_EQUAL( bones.at(0).name, bones.at(1).parent );
-    BOOST_CHECK_CLOSE( 2.0f, bones.at(1).length, 0.0001 );
+    BOOST_CHECK_CLOSE( 2.0f, bones.at(1).length, 0.0001f );
     BOOST_CHECK_EQUAL( 1, bones.at(1).rsd_names.size() );
     BOOST_CHECK_EQUAL( "model.1.1", bones.at(1).rsd_names.at(0) );
 
     BOOST_CHECK_EQUAL( "bone.2", bones.at(2).name );
     BOOST_CHECK_EQUAL( bones.at(0).parent, bones.at(2).parent );
-    BOOST_CHECK_CLOSE( 3.125f, bones.at(2).length, 0.0001 );
+    BOOST_CHECK_CLOSE( 3.125f, bones.at(2).length, 0.0001f );
     BOOST_CHECK_EQUAL( 3, bones.at(2).rsd_names.size() );
     BOOST_CHECK_EQUAL( "model.2-1", bones.at(2).rsd_names.at(0) );
     BOOST_CHECK_EQUAL( "model.2-2", bones.at(2).rsd_names.at(1) );
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE( empty_hrc )
     BOOST_CHECK_EQUAL( 1, bones.size() );
     BOOST_CHECK_EQUAL( "null", bones.at(0).name );
     BOOST_CHECK_EQUAL( "root", bones.at(0).parent );
-    BOOST_CHECK_CLOSE( 1.5f, bones.at(0).length, 0.0001 );
+    BOOST_CHECK_CLOSE( 1.5f, bones.at(0).length, 0.0001f );
     BOOST_CHECK_EQUAL( 1, bones.at(0).rsd_names.size() );
     BOOST_CHECK_EQUAL( "model.1", bones.at(0).rsd_names.at(0) );
 

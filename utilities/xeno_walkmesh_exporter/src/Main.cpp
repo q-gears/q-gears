@@ -104,7 +104,7 @@ public:
         input_event_array.clear();
         m_InputFilter.GetInputEvents(input_event_array);
 
-        for (int i = 0; i < input_event_array.size(); ++i)
+        for (size_t i = 0; i < input_event_array.size(); ++i)
         {
             if (input_event_array[i].name == "quit" && input_event_array[i].type == IE_PRESSED)
             {
@@ -141,8 +141,8 @@ public:
 
             if (m_CameraFreeRotate && input_event_array[i].name == "mouse_move")
             {
-                scene_manager->getCamera("Camera")->rotate(Ogre::Vector3::UNIT_Y, Ogre::Radian(Ogre::Degree(input_event_array[i].x * 0.13)));
-                scene_manager->getCamera("Camera")->pitch(Ogre::Degree(-input_event_array[i].y * 0.13));
+                scene_manager->getCamera("Camera")->rotate(Ogre::Vector3::UNIT_Y, Ogre::Radian(Ogre::Degree(input_event_array[i].x * 0.13f)));
+                scene_manager->getCamera("Camera")->pitch(Ogre::Degree(-input_event_array[i].y * 0.13f));
             }
 
 

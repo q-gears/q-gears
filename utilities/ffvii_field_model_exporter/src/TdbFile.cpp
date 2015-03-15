@@ -183,7 +183,7 @@ TdbFile::CreateTexture( const Ogre::PixelBox& pb, const int face_id, const int s
 */
 
 
-    if( face_id >= face_row.size() || face_row[ face_id ].size() == 0 )
+    if( face_id >= static_cast<int>(face_row.size()) || face_row[ face_id ].size() == 0 )
     {
         LOGGER->Log( "[ERROR] There is no data for face id: 0x" + HexToString( face_id, 2, '0' ) );
         return;
@@ -197,7 +197,7 @@ TdbFile::CreateTexture( const Ogre::PixelBox& pb, const int face_id, const int s
     // eyes should be created twice
     bool second_eye = false;
 
-    for( int i = 1; i < face_row[ face_id ].size(); ++i )
+    for( size_t i = 1; i < face_row[ face_id ].size(); ++i )
     {
         int offset_to_image = GetU32LE( 0x8 ) + face_row[ face_id ][ i ] * 512;
 

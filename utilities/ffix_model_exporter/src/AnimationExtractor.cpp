@@ -75,7 +75,7 @@ AnimationExtractor( const Ogre::SkeletonPtr& skeleton, const ModelInfo& info, Sk
             u32 high_angle_offset = file->GetU32LE( 0xc );
             u32 low_angle_offset = file->GetU32LE( 0x10 );
 
-            for( int bone = 0; bone < skeleton_data.size(); ++bone )
+            for( size_t bone = 0; bone < skeleton_data.size(); ++bone )
             {
                 tx = 0; ty = 0; tz = 0;
                 rx = 0; ry = 0; rz = 0;

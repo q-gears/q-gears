@@ -136,7 +136,7 @@ main(int argc, char *argv[])
 
 
 
-    for (int i = 0; i < models_all.size(); ++i)
+    for (size_t i = 0; i < models_all.size(); ++i)
     {
         EnemyFile model("data/" + models_all[i].file_name + ".LZS");
 
@@ -149,7 +149,7 @@ main(int argc, char *argv[])
         }
     }
 
-    for (int i = 0; i < effects_all.size(); ++i)
+    for (size_t i = 0; i < effects_all.size(); ++i)
     {
         RamEffectFile effect("data/ram.bin");
         Ogre::Entity* exported_entity = effect.GetModel(effects_all[i]);
@@ -159,7 +159,7 @@ main(int argc, char *argv[])
         }
     }
 
-    for (int i = 0; i < stages_all.size(); ++i)
+    for (size_t i = 0; i < stages_all.size(); ++i)
     {
         StageFile model("data/" + stages_all[i].file_name + ".LZS");
 
