@@ -1,6 +1,6 @@
-#include "core\TextManager.h"
-#include "core\TextManagerCommands.h"
-#include "core\XmlTextsFile.h"
+#include "core/TextManager.h"
+#include "core/TextManagerCommands.h"
+#include "core/XmlTextsFile.h"
 
 
 
