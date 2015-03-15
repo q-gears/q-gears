@@ -12,6 +12,7 @@
 #include "core/ScriptManager.h"
 #include "core/Timer.h"
 #include "core/UiManager.h"
+#include "core/DialogsManager.h"
 
 
 ConfigVar cv_debug_fps("debug_fps", "Debug FPS", "false");
@@ -103,6 +104,7 @@ GameFrameListener::frameStarted(const Ogre::FrameEvent& evt)
         if(console_active != true)
         {
             EntityManager::getSingleton().Input(input_event_array[ i ]);
+            DialogsManager::getSingleton().Input( input_event_array[ i ] );
             ScriptManager::getSingleton().Input(input_event_array[ i ]);
             CameraManager::getSingleton().Input(input_event_array[ i ], evt.timeSinceLastFrame);
         }
@@ -114,6 +116,7 @@ GameFrameListener::frameStarted(const Ogre::FrameEvent& evt)
     UiManager::getSingleton().Update();
     CameraManager::getSingleton().Update();
     EntityManager::getSingleton().Update();
+    DialogsManager::getSingleton().Update();
 
     return true;
 }

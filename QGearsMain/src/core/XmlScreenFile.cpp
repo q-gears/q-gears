@@ -4,7 +4,10 @@
 #include "core/UiSprite.h"
 #include "core/UiTextArea.h"
 #include "core/UiWidget.h"
+#include "core/TextManager.h"
 #include "core/XmlScreenFile.h"
+#include "core/Utilites.h"
+
 
 
 XmlScreenFile::XmlScreenFile(const Ogre::String& file):
@@ -119,8 +122,11 @@ XmlScreenFile::LoadScreenRecursive(TiXmlNode* node, const Ogre::String& base_nam
                         Ogre::String text = GetString(node, "text_name", "");
                         if(text != "")
                         {
-                            TiXmlNode* utf = UiManager::getSingleton().GetText(text);
-                            ((UiTextArea*)widget2)->SetText(utf);
+                            TiXmlNode* utf = TextManager::getSingleton().GetText( text );
+                            if( utf != nullptr )
+                            {
+                                ( ( UiTextArea* )widget2 )->SetText( utf );
+                            }
                         }
 
                         Ogre::String font = GetString(node, "font", "");
@@ -133,6 +139,11 @@ XmlScreenFile::LoadScreenRecursive(TiXmlNode* node, const Ogre::String& base_nam
                         if(align != "")
                         {
                             ((UiTextArea*)widget2)->SetTextAlign((align == "center") ? UiTextArea::CENTER : ((align == "right") ? UiTextArea::RIGHT : UiTextArea::LEFT));
+                        }
+                        Ogre::Vector4 padding = GetVector4( node, "padding", Ogre::Vector4::ZERO );
+                        if( padding != Ogre::Vector4::ZERO )
+                        {
+                            ( ( UiTextArea* )widget2 )->SetPadding( padding.x, padding.y, padding.z, padding.w );
                         }
                     }
 
@@ -226,7 +237,26 @@ XmlScreenFile::LoadScreenRecursive(TiXmlNode* node, const Ogre::String& base_nam
                     Ogre::Vector2 scale = GetVector2(node, "scale", Ogre::Vector2(1.0f, 1.0f));
                     widget2->SetScale(scale);
                     widget2->SetRotation(GetFloat(node, "rotation", 0.0f));
-                    widget2->SetScissor(GetBool(node, "scissor", false));
+
+                    Ogre::String scissor_area  = GetString( node, "scissor_area" );
+                    if( scissor_area != "" )
+                    {
+                        Ogre::StringVector coords = Ogre::StringUtil::split( scissor_area, " " );
+                        if( coords.size() == 4 )
+                        {
+                            float percent_x1, x1, percent_y1, y1, percent_x2, x2, percent_y2, y2 = 0;
+                            ParsePersent( percent_x1, x1, coords[ 0 ] );
+                            ParsePersent( percent_y1, y1, coords[ 1 ] );
+                            ParsePersent( percent_x2, x2, coords[ 2 ] );
+                            ParsePersent( percent_y2, y2, coords[ 3 ] );
+                            widget2->SetScissorArea( percent_x1, x1, percent_y1, y1, percent_x2, x2, percent_y2, y2 );
+                        }
+                    }
+
+
+
+                    widget2->SetGlobalScissor( GetBool( node, "global_scissor", true ) );
+
                     widget2->SetVisible(GetBool(node, "visible", false));
 
                     if(node->ValueStr() == "sprite")
@@ -260,7 +290,8 @@ XmlScreenFile::LoadScreenRecursive(TiXmlNode* node, const Ogre::String& base_nam
             {
                 UiAnimation* animation = new UiAnimation(name, widget);
 
-                animation->SetLength(GetFloat(node, "length", 0));
+                float anim_length = GetFloat( node, "length", 0 );
+                animation->SetLength( anim_length );
 
                 Ogre::String scale = GetString(node, "scale", "");
                 if(scale != "")
@@ -274,116 +305,173 @@ XmlScreenFile::LoadScreenRecursive(TiXmlNode* node, const Ogre::String& base_nam
                         if(data.size() > 1)
                         {
                             UiKeyFrameVector2 key;
-                            key.time = Ogre::StringConverter::parseReal(data[0]);
-                            key.value = Ogre::StringConverter::parseVector2(data[1]);
-                            animation->AddScaleKeyFrame(key);
+                            key.time = ParseKeyFrameTime( anim_length, data[ 0 ] );
+                            key.value = Ogre::StringConverter::parseVector2( data[ 1 ] );
+                            animation->AddScaleKeyFrame( key );
                         }
                     }
                 }
 
-                Ogre::String x = GetString(node, "x", "");
-                if(x != "")
-                {
-                    Ogre::StringVector key_frame = Ogre::StringUtil::split(x, ",");
-                    for(unsigned int i = 0; i < key_frame.size(); ++i)
-                    {
-                        Ogre::StringUtil::trim(key_frame[i]);
 
-                        Ogre::StringVector data = Ogre::StringUtil::split(key_frame[i], ":");
-                        if(data.size() > 1)
+
+                Ogre::String x = GetString( node, "x", "" );
+                if( x != "" )
+                {
+                    Ogre::StringVector key_frame = Ogre::StringUtil::split( x, "," );
+                    for( unsigned int i = 0; i < key_frame.size(); ++i )
+                    {
+                        Ogre::StringUtil::trim( key_frame[ i ] );
+
+                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                        if( data.size() > 1 )
                         {
                             UiKeyFrameVector2 key;
-                            key.time = Ogre::StringConverter::parseReal(data[0]);
-                            key.value = Ogre::StringConverter::parseVector2(data[1]);
-                            animation->AddXKeyFrame(key);
+                            key.time = ParseKeyFrameTime( anim_length, data[ 0 ] );
+                            ParsePersent( key.value.x, key.value.y, data[ 1 ] );
+                            animation->AddXKeyFrame( key );
                         }
                     }
                 }
 
-                Ogre::String y = GetString(node, "y", "");
-                if(y != "")
-                {
-                    Ogre::StringVector key_frame = Ogre::StringUtil::split(y, ",");
-                    for(unsigned int i = 0; i < key_frame.size(); ++i)
-                    {
-                        Ogre::StringUtil::trim(key_frame[i]);
 
-                        Ogre::StringVector data = Ogre::StringUtil::split(key_frame[i], ":");
-                        if(data.size() > 1)
+
+                Ogre::String y = GetString( node, "y", "" );
+                if( y != "" )
+                {
+                    Ogre::StringVector key_frame = Ogre::StringUtil::split( y, "," );
+                    for( unsigned int i = 0; i < key_frame.size(); ++i )
+                    {
+                        Ogre::StringUtil::trim( key_frame[ i ] );
+
+                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                        if( data.size() > 1 )
                         {
                             UiKeyFrameVector2 key;
-                            key.time = Ogre::StringConverter::parseReal(data[0]);
-                            key.value = Ogre::StringConverter::parseVector2(data[1]);
-                            animation->AddYKeyFrame(key);
+                            key.time = ParseKeyFrameTime( anim_length, data[ 0 ] );
+                            ParsePersent( key.value.x, key.value.y, data[ 1 ] );
+                            animation->AddYKeyFrame( key );
                         }
                     }
                 }
 
-                Ogre::String rotation = GetString(node, "rotation", "");
-                if(rotation != "")
-                {
-                    Ogre::StringVector key_frame = Ogre::StringUtil::split(rotation, ",");
-                    for(unsigned int i = 0; i < key_frame.size(); ++i)
-                    {
-                        Ogre::StringUtil::trim(key_frame[i]);
 
-                        Ogre::StringVector data = Ogre::StringUtil::split(key_frame[i], ":");
-                        if(data.size() > 1)
+
+                Ogre::String width = GetString( node, "width", "" );
+                if( width != "" )
+                {
+                    Ogre::StringVector key_frame = Ogre::StringUtil::split( width, "," );
+                    for( unsigned int i = 0; i < key_frame.size(); ++i )
+                    {
+                        Ogre::StringUtil::trim( key_frame[ i ] );
+
+                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                        if( data.size() > 1 )
+                        {
+                            UiKeyFrameVector2 key;
+                            key.time = ParseKeyFrameTime( anim_length, data[ 0 ] );
+                            ParsePersent( key.value.x, key.value.y, data[ 1 ] );
+                            animation->AddWidthKeyFrame( key );
+                        }
+                    }
+                }
+
+
+
+                Ogre::String height = GetString( node, "height", "" );
+                if( height != "" )
+                {
+                    Ogre::StringVector key_frame = Ogre::StringUtil::split( height, "," );
+                    for( unsigned int i = 0; i < key_frame.size(); ++i )
+                    {
+                        Ogre::StringUtil::trim( key_frame[ i ] );
+
+                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                        if( data.size() > 1 )
+                        {
+                            UiKeyFrameVector2 key;
+                            key.time = ParseKeyFrameTime( anim_length, data[ 0 ] );
+                            ParsePersent( key.value.x, key.value.y, data[ 1 ] );
+                            animation->AddHeightKeyFrame( key );
+                        }
+                    }
+                }
+
+
+
+                Ogre::String rotation = GetString( node, "rotation", "" );
+                if( rotation != "" )
+                {
+                    Ogre::StringVector key_frame = Ogre::StringUtil::split( rotation, "," );
+                    for( unsigned int i = 0; i < key_frame.size(); ++i )
+                    {
+                        Ogre::StringUtil::trim( key_frame[ i ] );
+
+                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                        if( data.size() > 1 )
                         {
                             UiKeyFrameFloat key;
-                            key.time = Ogre::StringConverter::parseReal(data[0]);
-                            key.value = Ogre::StringConverter::parseReal(data[1]);
-                            animation->AddRotationKeyFrame(key);
+                            key.time = ParseKeyFrameTime( anim_length, data[ 0 ] );
+                            key.value = Ogre::StringConverter::parseReal( data[ 1 ] );
+                            animation->AddRotationKeyFrame( key );
                         }
                     }
                 }
 
-                Ogre::String alpha = GetString(node, "alpha", "");
-                if(alpha != "")
-                {
-                    Ogre::StringVector key_frame = Ogre::StringUtil::split(alpha, ",");
-                    for(unsigned int i = 0; i < key_frame.size(); ++i)
-                    {
-                        Ogre::StringUtil::trim(key_frame[i]);
 
-                        Ogre::StringVector data = Ogre::StringUtil::split(key_frame[i], ":");
-                        if(data.size() > 1)
+
+                Ogre::String alpha = GetString( node, "alpha", "" );
+                if( alpha != "" )
+                {
+                    Ogre::StringVector key_frame = Ogre::StringUtil::split( alpha, "," );
+                    for( unsigned int i = 0; i < key_frame.size(); ++i )
+                    {
+                        Ogre::StringUtil::trim( key_frame[ i ] );
+
+                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                        if( data.size() > 1 )
                         {
                             UiKeyFrameFloat key;
-                            key.time = Ogre::StringConverter::parseReal(data[0]);
-                            key.value = Ogre::StringConverter::parseReal(data[1]);
-                            animation->AddAlphaKeyFrame(key);
+                            key.time = ParseKeyFrameTime( anim_length, data[ 0 ] );
+                            key.value = Ogre::StringConverter::parseReal( data[ 1 ] );
+                            animation->AddAlphaKeyFrame( key );
                         }
                     }
                 }
-                widget->AddAnimation(animation);
+
+
+
+                Ogre::String scissor_area = GetString( node, "scissor_area", "" );
+                if( scissor_area != "" )
+                {
+                    Ogre::StringVector key_frame = Ogre::StringUtil::split( scissor_area, "," );
+                    for( unsigned int i = 0; i < key_frame.size(); ++i )
+                    {
+                        Ogre::StringUtil::trim( key_frame[ i ] );
+
+                        Ogre::StringVector data = Ogre::StringUtil::split( key_frame[ i ], ":" );
+                        if( data.size() > 1 )
+                        {
+                            UiKeyFrameVector2 key1, key2, key3, key4;
+                            key1.time = ParseKeyFrameTime( anim_length, data[ 0 ] );
+                            key2.time = key1.time;
+                            key3.time = key1.time;
+                            key4.time = key1.time;
+                            Ogre::StringVector keys = Ogre::StringUtil::split( data[ 1 ], " " );
+                            float percent_x1, x1, percent_y1, y1, percent_x2, x2, percent_y2, y2 = 0;
+                            ParsePersent( key1.value.x, key1.value.y, keys[ 0 ] );
+                            ParsePersent( key2.value.x, key2.value.y, keys[ 1 ] );
+                            ParsePersent( key3.value.x, key3.value.y, keys[ 2 ] );
+                            ParsePersent( key4.value.x, key4.value.y, keys[ 3 ] );
+                            animation->AddScissorKeyFrame( key1, key2, key3, key4 );
+                        }
+                    }
+                }
+
+
+
+                widget->AddAnimation( animation );
             }
         }
         node = node->NextSibling();
-    }
-}
-
-
-void
-XmlScreenFile::ParsePersent(float& value_percent, float& value, const Ogre::String& string)
-{
-    if(string.at(string.size() - 1) == '%')
-    {
-        value_percent = Ogre::StringConverter::parseReal(string.substr(0, string.size() - 1));
-        value = 0;
-    }
-    else
-    {
-        Ogre::StringVector param = Ogre::StringUtil::split(string, "%");
-        if(param.size() > 1)
-        {
-            value_percent = Ogre::StringConverter::parseReal(param[0]);
-            value = Ogre::StringConverter::parseReal(param[1]);
-        }
-        else
-        {
-            value_percent = 0;
-            value = Ogre::StringConverter::parseReal(string);
-        }
     }
 }

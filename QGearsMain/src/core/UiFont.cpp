@@ -2,13 +2,24 @@
 #include "core/UiFont.h"
 
 
-UiFont::UiFont(const Ogre::String& name):
+UiFont::UiFont( const Ogre::String& name, const Ogre::String& language ):
     m_Name(name),
+    m_Language( language ),
     m_ImageName(""),
     m_ImageWidth(0),
     m_ImageHeight(0),
     m_Height(0)
 {
+    // Insets special symbol of next row
+    UiCharData data;
+    data.char_code = 10;
+    data.x = 0;
+    data.y = 0;
+    data.width = 0;
+    data.height = 0;
+    data.pre = 0;
+    data.post = 0;
+    m_CharData.push_back( data );
 }
 
 
@@ -24,6 +35,12 @@ UiFont::GetName() const
 }
 
 
+
+const Ogre::String&
+UiFont::GetLanguage() const
+{
+    return m_Language;
+}
 void
 UiFont::SetImage(const Ogre::String& image, const int width, const int height)
 {

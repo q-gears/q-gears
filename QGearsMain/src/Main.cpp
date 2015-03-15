@@ -22,7 +22,8 @@
 #include "core/Timer.h"
 #include "core/UiManager.h"
 #include "core/particles/ParticleSystemManager.h"
-
+#include "core/TextManager.h"
+#include "core/DialogsManager.h"
 #include "data/QGearsLZSFLevelFileManager.h"
 #include "common/make_unique.h"
 #include <OgreFontManager.h>
@@ -89,16 +90,16 @@ main(int argc, char *argv[])
 
         // create This earlier than DisplayFrameListener cause it can fire event there
         auto camera_manager = std::make_unique<CameraManager>();
+        auto text_manager = std::make_unique<TextManager>();
+
+        auto ui_manager = std::make_unique<UiManager>();
+        auto dialogs_manager = std::make_unique<DialogsManager>();
+        auto entity_manager = std::make_unique<EntityManager>();
 
         auto console = std::make_unique<Console>();
 
-
-        auto entity_manager = std::make_unique<EntityManager>();
-        auto ui_manager = std::make_unique<UiManager>();
-
         auto worldMapModule = std::make_unique<QGears::WorldMapModule>();
 
-        ui_manager->SetLanguage("English");
 
         // init after game managers because it attach them to script
         auto script_manager = std::make_unique<ScriptManager>();
@@ -118,6 +119,7 @@ main(int argc, char *argv[])
 
         // init ui and run it scripts
         ui_manager->Initialise();
+    dialogs_manager->Initialise();
 
 
         // run application cycle

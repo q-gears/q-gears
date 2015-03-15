@@ -57,7 +57,7 @@ ScriptManager::~ScriptManager()
 void
 ScriptManager::Input(const QGears::Event& event)
 {
-    if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT) &&
+    if ((event.type == QGears::ET_KEY_PRESS || event.type == QGears::ET_KEY_REPEAT_WAIT) &&
                                       (
                                         event.param1 == OIS::KC_RETURN ||
                                         event.param1 == OIS::KC_ESCAPE ||
@@ -76,7 +76,7 @@ ScriptManager::Input(const QGears::Event& event)
             {
                 argument2 = "Press";
             }
-            else if (event.type == QGears::ET_KEY_REPEAT)
+            else if (event.type == QGears::ET_KEY_REPEAT_WAIT)
             {
                 argument2 = "Repeat";
             }

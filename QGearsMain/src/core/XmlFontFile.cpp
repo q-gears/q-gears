@@ -27,13 +27,14 @@ XmlFontFile::LoadFont()
     }
 
     Ogre::String name = GetString(node, "name", "");
+    Ogre::String language = GetString( node, "language", "" );
     Ogre::String image = GetString(node, "image", "");
     Ogre::Vector2 size = GetVector2(node, "image_size", Ogre::Vector2::ZERO);
     int height = GetInt(node, "height", 0);
 
     if(name != "" && image != "" && size.x != 0 && size.y != 0)
     {
-        UiFont* font = new UiFont(name);
+        UiFont* font = new UiFont( name, language );
         font->SetImage(image, (int)size.x, (int)size.y);
         font->SetHeight(height);
 

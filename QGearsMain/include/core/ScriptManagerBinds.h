@@ -7,7 +7,7 @@
 #include "UiWidget.h"
 #include "XmlMapFile.h"
 #include "XmlMapsFile.h"
-
+#include "DialogsManager.h"
 
 #include "modules/worldmap/WorldMapModule.h"
 
@@ -66,6 +66,10 @@ ScriptManager::InitBinds()
             .def( "is_solid", ( bool( Entity::* )() ) &Entity::IsSolid )
             .def( "set_talk_radius", ( void( Entity::* )( const float ) ) &Entity::SetTalkRadius )
             .def( "get_talk_radius", ( float( Entity::* )() ) &Entity::GetTalkRadius )
+            
+            // Some old test script use this, its just an alias for SetTalkable
+            .def("set_interactable", (void(Entity::*)(const bool)) &Entity::SetTalkable)
+
             .def( "set_talkable", ( void( Entity::* )( const bool ) ) &Entity::SetTalkable )
             .def( "is_talkable", ( bool( Entity::* )() ) &Entity::IsTalkable )
             .def( "set_visible", ( void( Entity::* )( const bool ) ) &Entity::SetVisible )
@@ -153,6 +157,33 @@ ScriptManager::InitBinds()
             ]
     ];
 
+    // walkmesh access
+    luabind::module( m_LuaState )
+    [
+        luabind::class_< Walkmesh >( "Walkmesh" )
+            .def( "lock_walkmesh", ( void( Walkmesh ::* )( unsigned int, bool ) ) &Walkmesh ::LockWalkmesh)
+            .def( "is_locked", ( bool( Walkmesh ::* )( unsigned int ) ) &Walkmesh ::IsLocked)
+    ];
+
+    luabind::module( m_LuaState )
+    [
+        luabind::class_< DialogsManager >( "Dialog" )
+            .def( "show_dialog", ( void( DialogsManager::* )( const char*, const char*, const int, const int ) ) &DialogsManager::ShowDialog )
+            .def( "show_text", ( void( DialogsManager::* )( const char*, const char*, const int, const int, const int, const int ) ) &DialogsManager::ShowText )
+            .def( "sync", ( int( DialogsManager::* )( const char* ) ) &DialogsManager::Sync, luabind::yield )
+            .def( "set_variable", ( void( DialogsManager::* )( const char*, const char*, const char* ) ) &DialogsManager::SetVariable )
+            .def( "hide", ( void( DialogsManager::* )( const char* ) ) &DialogsManager::Hide )
+            .def( "set_clickable", ( void( DialogsManager::* )( const char*, const bool ) ) &DialogsManager::SetClickable )
+            .def( "set_cursor", ( void( DialogsManager::* )( const char*, const int, const int ) ) &DialogsManager::SetCursor )
+            .def( "get_cursor", ( int( DialogsManager::* )( const char* ) ) &DialogsManager::GetCursor )
+
+            .enum_("constants")
+            [
+                luabind::value("SOLID", MSL_SOLID),
+                luabind::value("TRANSPARENT", MSL_TRANSPARENT),
+                luabind::value("NONE", MSL_NONE)
+            ]
+    ];
     // ui widget access
     luabind::module( m_LuaState )
     [
@@ -167,7 +198,11 @@ ScriptManager::InitBinds()
             .def( "animation_sync", ( int( UiWidget::* )() ) &UiWidget::ScriptAnimationSync, luabind::yield )
             .def( "set_colour", ( void( UiWidget::* )( const float, const float, const float ) ) &UiWidget::SetColour )
             .def( "set_alpha", ( void( UiWidget::* )( const float ) ) &UiWidget::SetAlpha )
+            .def( "set_x", ( void( UiWidget::* )( const float, const float ) ) &UiWidget::SetX )
+            .def( "set_y", ( void( UiWidget::* )( const float, const float ) ) &UiWidget::SetY )
             .def( "set_z", ( void( UiWidget::* )( const float ) ) &UiWidget::SetZ )
+            .def( "set_width", ( void( UiWidget::* )( const float, const float ) ) &UiWidget::SetWidth )
+            .def( "set_height", ( void( UiWidget::* )( const float, const float ) ) &UiWidget::SetHeight )
     ];
 
     // ui access
@@ -182,6 +217,8 @@ ScriptManager::InitBinds()
     [
         luabind::class_< Timer >( "Timer" )
             .def( "get_game_time_total", ( float( Timer::* )() ) &Timer::GetGameTimeTotal )
+            .def( "set_timer", ( float( Timer::* )( const float ) ) &Timer::SetGameTimer )
+            .def( "get_timer", ( int( Timer::* )() ) &Timer::GetGameTimer )
     ];
 
     // script access
@@ -208,6 +245,8 @@ ScriptManager::InitBinds()
 
     luabind::globals( m_LuaState )[ "entity_manager" ] = boost::ref( *( EntityManager::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "background2d" ] = boost::ref( *( EntityManager::getSingletonPtr()->GetBackground2D() ) );
+    luabind::globals( m_LuaState )[ "walkmesh" ] = boost::ref( *( EntityManager::getSingletonPtr()->GetWalkmesh() ) );
+    luabind::globals( m_LuaState )[ "message" ] = boost::ref( *( DialogsManager::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "ui_manager" ] = boost::ref( *( UiManager::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "world_map_module" ] = boost::ref( *( QGears::WorldMapModule::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "timer" ] = boost::ref( *( Timer::getSingletonPtr() ) );
