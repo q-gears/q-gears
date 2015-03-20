@@ -63,15 +63,24 @@ void FF7DataInstaller::Convert(std::string inputDir, std::string outputDir, cons
     }
 }
 
+static std::string FieldModelDir()
+{
+    return "models/ffvii/field/units";
+}
+
+
 // TOOD: Share with pc model exporter
 static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
 {
     Ogre::MeshSerializer        mesh_ser;
-    mesh_ser.exportMesh(mesh.getPointer(), outdir +  mesh->getName());
 
     Ogre::SkeletonPtr           skeleton(mesh->getSkeleton());
     Ogre::SkeletonSerializer    sk_ser;
     sk_ser.exportSkeleton(skeleton.getPointer(), outdir +  skeleton->getName());
+
+    mesh->setSkeletonName(FieldModelDir() + "/" + mesh->getSkeletonName());
+    mesh_ser.exportMesh(mesh.getPointer(), outdir + mesh->getName());
+
 
     Ogre::Mesh::SubMeshIterator it(mesh->getSubMeshIterator());
     Ogre::MaterialSerializer    mat_ser;
@@ -104,7 +113,7 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
                                         textures.insert(unit->getTextureName());
                                         Ogre::String baseName;
                                         QGears::StringUtil::splitBase(unit->getTextureName(), baseName);
-                                        unit->setTextureName(baseName + ".png");
+                                        unit->setTextureName(FieldModelDir() + "/" + baseName + ".png");
                                     }
                                 }
                             }
@@ -153,44 +162,53 @@ static std::string FieldMapDir()
     return "maps/ffvii/field";
 }
 
-static std::string FieldModelDir()
-{
-    return "models/ffvii/field/units";
-}
 
 class FF7FieldScriptFormatter : public SUDM::IScriptFormatter
 {
 public:
+    FF7FieldScriptFormatter(const std::string& fieldName, const QGears::ModelListFilePtr& models)
+        : mFieldName(fieldName), mModelLoader(models)
+    {
+
+    }
+
     // Renames a variable, return empty string for generated name
     virtual std::string VarName(unsigned int bank, unsigned int addr) override
     {
-        return "";
+        return QGears::FF7::NameLookup::FieldScriptVarName(bank, addr);
     }
 
     // Renames an entity
     virtual std::string EntityName(const std::string& entity) override
     {
-        return entity;
+        return QGears::FF7::NameLookup::FieldScriptEntityName(entity);
     }
 
     // Renames an animation, return empty string for generated name
     virtual std::string AnimationName(int id) override
     {
+        // TODO: How do we get this info?
+        //mModelLoader->getModels().at(???).animations.at(id);
         return "";
     }
+
+    // TODO: Add CharacterId to the interface
 
     // Renames a function in an entity
     virtual std::string FunctionName(const std::string& entity, const std::string& funcName) override
     {
-        return funcName;
+        return QGears::FF7::NameLookup::FieldScriptFunctionName(mFieldName, entity, funcName);
     }
 
     // Sets the header comment for a function in an entity
     virtual std::string FunctionComment(const std::string& entity, const std::string& funcName) override
     {
-        return "";
+        return QGears::FF7::NameLookup::FieldScriptFunctionComment(mFieldName, entity, funcName);
     }
 
+private:
+    std::string mFieldName;
+    const QGears::ModelListFilePtr& mModelLoader;
 };
 
 static std::string CreateGateWayScript(const std::string& gatewayEntityName, const std::string& targetMapName, const std::string& sourceSpawnPointName)
@@ -317,6 +335,7 @@ static void FF7PcFieldToQGearsField(
         }
     }
 
+    const QGears::ModelListFilePtr& models = field->getModelList();
     SUDM::FF7::Field::DecompiledScript decompiled;
     try
     {
@@ -324,7 +343,7 @@ static void FF7PcFieldToQGearsField(
         const std::vector<u8> rawFieldData = field->getRawScript();
 
         // Decompile to LUA
-        FF7FieldScriptFormatter formatter;
+        FF7FieldScriptFormatter formatter(field->getName(), models);
         decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter, gatewayScriptData, "EntityContainer = {}\n\n");
         std::ofstream scriptFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/script.lua");
         if (scriptFile.is_open())
@@ -367,7 +386,6 @@ static void FF7PcFieldToQGearsField(
         xmlMovementRotation->SetAttribute("degree", std::to_string(triggers->MovementRotation()));
         element->LinkEndChild(xmlMovementRotation.release());
 
-        const QGears::ModelListFilePtr& models = field->getModelList();
         for (const auto& it : decompiled.entities)
         {
             const int charId = it.second;
@@ -648,16 +666,8 @@ static bool IsAFieldFile(Ogre::String& resourceName)
 static bool IsTestField(Ogre::String& resourceName)
 {
     if (
-        resourceName == "startmap" ||
-        resourceName == "md1stin" ||
-        resourceName == "md1_1" ||
-        resourceName == "md1_2" ||
-        resourceName == "nrthmk" ||
-        resourceName == "nmkin_1" ||
-        resourceName == "elevtr1" ||
-        resourceName == "nmkin_2" ||
-        resourceName == "nmkin_3" ||
-        resourceName == "tin_2"
+       // resourceName == "startmap" ||
+        resourceName == "md1stin"
         )
     {
         return true;
