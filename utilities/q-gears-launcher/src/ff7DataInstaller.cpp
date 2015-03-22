@@ -184,15 +184,18 @@ public:
         return QGears::FF7::NameLookup::FieldScriptEntityName(entity);
     }
 
-    // Renames an animation, return empty string for generated name
-    virtual std::string AnimationName(int id) override
+    // Names an animation, can't return empty
+    virtual std::string AnimationName(int charId, int id) override
     {
-        // TODO: How do we get this info?
-        //mModelLoader->getModels().at(???).animations.at(id);
-        return "";
+        // Get the animation file name, then look up the friendly name of the "raw" animation
+        return QGears::FF7::NameLookup::animation(mModelLoader->getModels().at(charId).animations.at(id).name);
     }
 
-    // TODO: Add CharacterId to the interface
+    // Get name of char from its id, can't return empty
+    virtual std::string CharName(int charId) override
+    {
+        return QGears::FF7::NameLookup::CharName(charId);
+    }
 
     // Renames a function in an entity
     virtual std::string FunctionName(const std::string& entity, const std::string& funcName) override

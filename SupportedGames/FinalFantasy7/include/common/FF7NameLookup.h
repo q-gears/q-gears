@@ -257,6 +257,16 @@ namespace QGears
         public:
             NameLookup() = delete;
 
+            static String CharName(int charId)
+            {
+                auto it = Data().mCharacterIds.find(charId);
+                if (it != std::end(Data().mCharacterIds))
+                {
+                    return it->second;
+                }
+                return std::to_string(charId);
+            }
+
             static const String& animation(const String &key)
             {
                 return Data().Animation(key);
