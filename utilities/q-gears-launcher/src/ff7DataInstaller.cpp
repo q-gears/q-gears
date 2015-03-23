@@ -79,6 +79,7 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
     sk_ser.exportSkeleton(skeleton.getPointer(), outdir +  skeleton->getName());
 
     mesh->setSkeletonName(FieldModelDir() + "/" + mesh->getSkeletonName());
+
     mesh_ser.exportMesh(mesh.getPointer(), outdir + mesh->getName());
 
 
@@ -162,7 +163,6 @@ static std::string FieldMapDir()
     return "maps/ffvii/field";
 }
 
-
 class FF7FieldScriptFormatter : public SUDM::IScriptFormatter
 {
 public:
@@ -188,7 +188,15 @@ public:
     virtual std::string AnimationName(int charId, int id) override
     {
         // Get the animation file name, then look up the friendly name of the "raw" animation
-        return QGears::FF7::NameLookup::animation(mModelLoader->getModels().at(charId).animations.at(id).name);
+        const auto& modelInfo = mModelLoader->getModels().at(charId);
+        const auto rawName = modelInfo.animations.at(id).name;
+
+        // Trim off ".yos" or whatever other crazy extension the model loader adds in
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(rawName, baseName);
+
+        QGears::StringUtil::toLowerCase(baseName);
+        return QGears::FF7::NameLookup::animation(baseName);
     }
 
     // Get name of char from its id, can't return empty
@@ -281,19 +289,10 @@ public:
 
     std::string ModelMetaDataName(const std::string& modelName)
     {
-        // TODO: Convert to name thats in the meta data
-
         // If not in meta data then just replace .hrc with .mesh
         Ogre::String baseName;
         QGears::StringUtil::splitBase(modelName, baseName);
-
-        return baseName + ".mesh";
-    }
-
-    std::string AnimationMetaDataName(const std::string& /*modelName*/, const std::string& animationName)
-    {
-        // TODO: Same as above
-        return animationName;
+        return QGears::FF7::NameLookup::model(baseName) + ".mesh";
     }
 
 //private:
@@ -406,7 +405,9 @@ static void FF7PcFieldToQGearsField(
                 xmlEntityScript->SetAttribute("name", it.first);
 
                 // TODO: Add to list of HRC's to convert, obtain name of target converted .mesh file
-                xmlEntityScript->SetAttribute("file_name", FieldModelDir() + "/" + modelAnimationDb.ModelMetaDataName(desc.hrc_name));
+                auto lowerCaseHrcName = desc.hrc_name;
+                QGears::StringUtil::toLowerCase(lowerCaseHrcName);
+                xmlEntityScript->SetAttribute("file_name", FieldModelDir() + "/" + modelAnimationDb.ModelMetaDataName(lowerCaseHrcName));
 
                 // TODO: entity_model - name, file_name,  position, direction
                 // We set char 1 position to be position of first entity_point so player is spawned in sane
@@ -762,7 +763,11 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
         {
             QGears::AFileManager       &afl_mgr(QGears::AFileManager::getSingleton());
             QGears::AFilePtr  a = afl_mgr.load(anim, "FFVII").staticCast<QGears::AFile>();
-            a->addTo(skeleton, anim); // TODO: Set "friendly" name, also update this name in the scripts
+
+            // Convert the FF7 name to a more readble name set in the meta data
+            Ogre::String baseName;
+            QGears::StringUtil::splitBase(anim, baseName);
+            a->addTo(skeleton, QGears::FF7::NameLookup::animation(baseName));
         }
 
         exportMesh(outDir + "/" + FieldModelDir() + "/", mesh);
