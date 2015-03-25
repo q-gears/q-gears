@@ -75,7 +75,11 @@ EntityModel::PlayAnimation(const Ogre::String& animation, Entity::AnimationState
     }
     else
     {
-        LOG_ERROR("Animation '" + animation + "' doesn't exist in model '" + m_Model->getName() + "'.");
+        // Idle is hard coded to the default animation, so don't spam crazy amounts of errors if its not found.
+        if (animation != "Idle")
+        {
+            LOG_ERROR("Animation '" + animation + "' doesn't exist in model '" + m_Model->getName() + "'.");
+        }
     }
 }
 
