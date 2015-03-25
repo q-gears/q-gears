@@ -40,6 +40,7 @@ namespace QGears
     class HRCFile : public Ogre::Resource
     {
     public:
+        static const float kDownScaler;
 
         HRCFile( Ogre::ResourceManager *creator, const String &name
                 ,Ogre::ResourceHandle handle, const String &group
