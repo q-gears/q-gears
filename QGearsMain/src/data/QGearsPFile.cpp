@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include "common/QGearsStringUtil.h"
 #include "data/QGearsPFileSerializer.h"
+#include "data/QGearsHRCFile.h"
 
 namespace QGears
 {
@@ -208,14 +209,15 @@ namespace QGears
                       ,t( group.texture_coordinate_start_index
                          +polygon.vertex[i] );
                 Ogre::Vector3 pos( m_vertices[ v ] );
-                mo.position( ( STATIC_ROTATION *  pos ) + bone_position );
+                mo.position((STATIC_ROTATION *  (pos / HRCFile::kDownScaler)) + bone_position);
                 mo.colour( m_vertex_colors[ v ] );
                 mo.normal( STATIC_ROTATION * m_normals[ n ] );
                 if( group.has_texture )
                 {
-                    mo.textureCoord( m_texture_coordinates[t] );
+                    mo.textureCoord(m_texture_coordinates[t]);
                 }
-                mo.bone( index, bone_handle ); mo.index( index++ );
+                mo.bone( index, bone_handle );
+                mo.index( index++ );
             }
         }
         mo.end();

@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include <OgreException.h>
 #include <OgreLogManager.h>
+#include "data/QGearsHRCFile.h"
 
 namespace QGears
 {
@@ -73,6 +74,7 @@ namespace QGears
     {
         readObject( stream, pDest.root_rotation );
         readObject( stream, pDest.root_translation );
+        pDest.root_translation = pDest.root_translation / HRCFile::kDownScaler;
         readVector( stream, pDest.bone_rotations, m_header.bone_count );
     }
 

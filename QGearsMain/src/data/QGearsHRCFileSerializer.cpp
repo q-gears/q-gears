@@ -131,7 +131,7 @@ namespace QGears
         Block::const_iterator it( bone_block.begin() );
         pDest.name          = *(it++);
         pDest.parent        = *(it++);
-        pDest.length        = Ogre::StringConverter::parseReal( *(it++) );
+        pDest.length = Ogre::StringConverter::parseReal(*(it++)) / HRCFile::kDownScaler;
 
         Ogre::StringVector rsd_list( Ogre::StringUtil::split( *it ) );
         size_t rsd_count( Ogre::StringConverter::parseUnsignedInt( rsd_list.front() ) );
