@@ -41,7 +41,7 @@ namespace QGears
 {
     //---------------------------------------------------------------------
     /*static*/ const String    HRCFile::RESOURCE_TYPE( "QGearsHRCFile" );
-    /*static*/ const float     HRCFile::kDownScaler = 33.0f;
+    /*static*/ const float     HRCFile::kDownScaler = 1.0f; //33.0f; TODO fix unit tests before changing me
 
     //---------------------------------------------------------------------
     HRCFile::HRCFile( Ogre::ResourceManager *creator
