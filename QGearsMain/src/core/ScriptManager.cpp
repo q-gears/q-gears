@@ -338,21 +338,6 @@ ScriptManager::AddEntity(const ScriptManager::Type type, const Ogre::String& ent
             table["entity"] = boost::ref(*entity);
         }
 
-        // check "on_init" script
-        if (luabind::type(table["on_init"]) == LUA_TFUNCTION)
-        {
-            QueueScript script;
-            script.function = "on_init";
-            script.priority = 0;
-            script.state = lua_newthread(m_LuaState);
-            // we dont want thread to be garbage collected so we store it
-            script.state_id = luaL_ref(m_LuaState, LUA_REGISTRYINDEX);
-            script.seconds_to_wait = 0;
-            script.wait = false;
-            script.yield = false;
-            script_entity.queue.push_back(script);
-        }
-
         // check "on_start" script
         if(luabind::type(table["on_start"]) == LUA_TFUNCTION)
         {

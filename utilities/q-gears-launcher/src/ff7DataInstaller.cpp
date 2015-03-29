@@ -419,6 +419,11 @@ static void FF7PcFieldToQGearsField(
 
                 xmlEntityScript->SetAttribute("direction", "0");
 
+                // TODO: This isn't quite right, the models animation translation seems to be inverted?
+                xmlEntityScript->SetAttribute("scale", "0.03125 0.03125 0.03125");
+                xmlEntityScript->SetAttribute("root_orientation", "0.7071067811865476 0.7071067811865476 0 0");
+
+
                 element->LinkEndChild(xmlEntityScript.release());
 
             }
@@ -670,8 +675,16 @@ static bool IsAFieldFile(Ogre::String& resourceName)
 static bool IsTestField(Ogre::String& resourceName)
 {
     if (
-       // resourceName == "startmap" ||
-        resourceName == "md1stin"
+        resourceName == "startmap" ||
+        resourceName == "md1stin" ||
+        resourceName == "md1_1" ||
+        resourceName == "md1_2" ||
+        resourceName == "nmkin_1" ||
+        resourceName == "nmkin_2" ||
+        resourceName == "nmkin_3" ||
+        resourceName == "nrthmk" ||
+        resourceName == "elevtr1" ||
+        resourceName == "tin_2"
         )
     {
         return true;
