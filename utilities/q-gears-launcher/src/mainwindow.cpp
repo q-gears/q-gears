@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWin
 #ifdef _DEBUG
     // Hard coded prebaked paths for debugging to save time
     ui->lineInput->setText("C:\\Games\\FF7\\data");
-    ui->lineDataDir->setText("C:\\Users\\paul\\Desktop\\q-gears\\output\\_data");
+    ui->lineDataDir->setText("C:\\Users\\paul\\Desktop\\q-gears\\output\\data");
 #endif
 }
 
@@ -127,7 +127,7 @@ void MainWindow::on_btnGO_clicked()
 	}
 	else
 	{
-		QMessageBox::information(this,tr("Converting Data"),tr("Attempt to convert with \n Input: %1 \n Output: %2").arg(ui->lineInput->text(),ui->lineDataDir->text()));
+		//QMessageBox::information(this,tr("Converting Data"),tr("Attempt to convert with \n Input: %1 \n Output: %2").arg(ui->lineInput->text(),ui->lineDataDir->text()));
 
 		QString input = QDir::fromNativeSeparators(ui->lineInput->text());
 		if (!input.endsWith("/"))
