@@ -689,16 +689,16 @@ static bool IsAFieldFile(Ogre::String& resourceName)
 static bool IsTestField(Ogre::String& resourceName)
 {
     if (
-       // resourceName == "startmap" ||
+        resourceName == "startmap" ||
         resourceName == "md1stin" ||
-        resourceName == "md1_1" //||
-        //resourceName == "md1_2"// ||
-       // resourceName == "nmkin_1" ||
-        //resourceName == "nmkin_2" ||
-       // resourceName == "nmkin_3" ||
-       // resourceName == "nrthmk" ||
-       // resourceName == "elevtr1" ||
-       // resourceName == "tin_2"
+        resourceName == "md1_1" ||
+        resourceName == "md1_2" ||
+        resourceName == "nmkin_1" ||
+        resourceName == "nmkin_2" ||
+        resourceName == "nmkin_3" ||
+        resourceName == "nrthmk" ||
+        resourceName == "elevtr1" ||
+        resourceName == "tin_2"
         )
     {
         return true;
