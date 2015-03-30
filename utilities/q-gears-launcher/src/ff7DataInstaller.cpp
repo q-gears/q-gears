@@ -265,6 +265,8 @@ public:
     std::vector<Record> mGatewaysToThisField;
 };
 typedef std::map<u16, SpawnPointDb> FieldSpawnPointsMap;
+typedef std::map<u16, float> FieldScaleFactorMap;
+
 
 typedef std::map<std::string, std::set<std::string>> ModelAnimationMap;
 class ModelsAndAnimationsDb
@@ -314,11 +316,22 @@ static size_t FieldId(const std::string& name, const std::vector<std::string>& f
     throw std::runtime_error("No Id found for field name");
 }
 
+static float FieldScaleFactor(const FieldScaleFactorMap& scaleFactorMap, size_t fieldId)
+{
+    auto it = scaleFactorMap.find(fieldId);
+    if (it == std::end(scaleFactorMap))
+    {
+        throw std::runtime_error("Scale factor not found for field id");
+    }
+    return it->second;
+}
+
 static void FF7PcFieldToQGearsField(
     QGears::FLevelFilePtr& field,
     const std::string& outDir,
     const std::vector<std::string>& fieldIdToNameLookup,
     const FieldSpawnPointsMap& spawnMap,
+    const FieldScaleFactorMap& scaleFactorMap,
     ModelsAndAnimationsDb& modelAnimationDb,
     MapCollection& maps)
 {
@@ -435,9 +448,10 @@ static void FF7PcFieldToQGearsField(
             }
         }
 
-        // TODO: Get these scales from the field game data,  1024 for md1_1 and 512 for md1_2, DAT CFG has them as 2 and 1?
-        const float downscaler_next = 128.0f; //  * MapIdToScale( map_id );
-        const float downscaler_this = 128.0f; // * field.scale
+        // Get this fields Id
+        const size_t thisFieldId = FieldId(field->getName(), fieldIdToNameLookup);
+
+        const float downscaler_this = 128.0f * FieldScaleFactor(scaleFactorMap, thisFieldId);
 
         const auto& gateways = triggers->GetGateways();
         for (size_t i = 0; i < gateways.size(); i++)
@@ -464,8 +478,6 @@ static void FF7PcFieldToQGearsField(
             }
         }
 
-        // Get this fields Id
-        const size_t thisFieldId = FieldId(field->getName(), fieldIdToNameLookup);
 
         // Use that to find the pre-computed list of gateways in all other fields that link to this field
         auto spawnIterator = spawnMap.find(thisFieldId);
@@ -484,6 +496,7 @@ static void FF7PcFieldToQGearsField(
                 // Must also include the gateway index for the case where 2 fields have more than one door linking to each other
                 xmlEntityPoint->SetAttribute("name", "Spawn_" + fieldIdToNameLookup.at(spawnPointRecords[i].mFieldId) + "_" + std::to_string(spawnPointRecords[i].GatewayIndex));
 
+                const float downscaler_next = 128.0f * FieldScaleFactor(scaleFactorMap, gateway.destinationFieldId);
 
                 xmlEntityPoint->SetAttribute("position",
                     Ogre::StringConverter::toString(
@@ -498,107 +511,108 @@ static void FF7PcFieldToQGearsField(
 
         doc.LinkEndChild(element.release());
         doc.SaveFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/map.xml");
-    }
 
+        const QGears::PaletteFilePtr& pal = field->getPalette();
+        const QGears::BackgroundFilePtr& bg = field->getBackground();
+        std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
+        bgImage->save(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/tiles.png");
 
-    const QGears::PaletteFilePtr& pal = field->getPalette();
-    const QGears::BackgroundFilePtr& bg = field->getBackground();
-    std::unique_ptr<Ogre::Image> bgImage(bg->createImage(pal));
-    bgImage->save(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/tiles.png");
-
-    {
-        TiXmlDocument doc;
-        std::unique_ptr<TiXmlElement> element(new TiXmlElement("background2d"));
-
-        // Magic constants
-        const int kScaleUpFactor = 3;
-        const int kPsxScreenWidth = 320;
-        const int kPsxScreenHeight = 240;
-
-        // Get texture atlas size
-        const int width = bgImage->getWidth();
-        const int height = bgImage->getHeight();
-
-        const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
-        const Ogre::Vector3 position = camMatrix->getPosition();
-        const Ogre::Quaternion orientation = camMatrix->getOrientation();
-        const Ogre::Degree fov = camMatrix->getFov(static_cast<float>(kPsxScreenHeight));
-
-     
-        const int min_x = triggers->getCameraRange().left * kScaleUpFactor;
-        const int min_y = triggers->getCameraRange().top * kScaleUpFactor;
-        const int max_x = triggers->getCameraRange().right * kScaleUpFactor;
-        const int max_y = triggers->getCameraRange().bottom * kScaleUpFactor;
-
-        element->SetAttribute("image", FieldMapDir() + "/" + field->getName() + "/tiles.png");
-        element->SetAttribute("position", Ogre::StringConverter::toString(position));
-        element->SetAttribute("orientation", Ogre::StringConverter::toString(orientation));
-        element->SetAttribute("fov", Ogre::StringConverter::toString(fov));
-        element->SetAttribute("range", std::to_string(min_x) + " " + std::to_string(min_y) + " " + std::to_string(max_x) + " " + std::to_string(max_y));
-        element->SetAttribute("clip", std::to_string(kPsxScreenWidth * kScaleUpFactor) + " " + std::to_string(kPsxScreenHeight * kScaleUpFactor));
-   
-        // Write out the *_BG.XML data
-        auto& layers = bg->getLayers();
-        for (const auto& layer : layers)
         {
-            // TODO: Should we only output tiles to construct enabled layers?
-          //  if (layer.enabled)
+            TiXmlDocument doc;
+            std::unique_ptr<TiXmlElement> element(new TiXmlElement("background2d"));
+
+            // Magic constants
+            const int kScaleUpFactor = 3;
+            const int kPsxScreenWidth = 320;
+            const int kPsxScreenHeight = 240;
+
+            // Get texture atlas size
+            const int width = bgImage->getWidth();
+            const int height = bgImage->getHeight();
+
+            const QGears::CameraMatrixFilePtr& camMatrix = field->getCameraMatrix();
+            const Ogre::Vector3 position = camMatrix->getPosition() / FieldScaleFactor(scaleFactorMap, thisFieldId);
+            const Ogre::Quaternion orientation = camMatrix->getOrientation();
+            const Ogre::Degree fov = camMatrix->getFov(static_cast<float>(kPsxScreenHeight));
+
+
+            const int min_x = triggers->getCameraRange().left * kScaleUpFactor;
+            const int min_y = triggers->getCameraRange().top * kScaleUpFactor;
+            const int max_x = triggers->getCameraRange().right * kScaleUpFactor;
+            const int max_y = triggers->getCameraRange().bottom * kScaleUpFactor;
+
+            element->SetAttribute("image", FieldMapDir() + "/" + field->getName() + "/tiles.png");
+            element->SetAttribute("position", Ogre::StringConverter::toString(position));
+            element->SetAttribute("orientation", Ogre::StringConverter::toString(orientation));
+            element->SetAttribute("fov", Ogre::StringConverter::toString(fov));
+            element->SetAttribute("range", std::to_string(min_x) + " " + std::to_string(min_y) + " " + std::to_string(max_x) + " " + std::to_string(max_y));
+            element->SetAttribute("clip", std::to_string(kPsxScreenWidth * kScaleUpFactor) + " " + std::to_string(kPsxScreenHeight * kScaleUpFactor));
+
+            // Write out the *_BG.XML data
+            auto& layers = bg->getLayers();
+            for (const auto& layer : layers)
             {
-               
-                for (const QGears::BackgroundFile::SpriteData& sprite : layer.sprites)
+                // TODO: Should we only output tiles to construct enabled layers?
+                //  if (layer.enabled)
                 {
-                    std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("tile"));
 
-                    xmlElement->SetAttribute("destination",
-                        Ogre::StringConverter::toString(sprite.dst.x * kScaleUpFactor) + " " +
-                        Ogre::StringConverter::toString(sprite.dst.y * kScaleUpFactor));
-
-                    xmlElement->SetAttribute("width", Ogre::StringConverter::toString(sprite.width * kScaleUpFactor));
-                    xmlElement->SetAttribute("height", Ogre::StringConverter::toString(sprite.height * kScaleUpFactor));
-
-                    // Each tile is added to a big texture atlas with hard coded size of 1024x1024, convert UV's to the 0.0f to 1.0f range
-                    const float u0 = static_cast<float>(sprite.src.x) / bgImage->getWidth();
-                    const float v0 = static_cast<float>(sprite.src.y) / bgImage->getHeight();
-
-                    const float u1 = static_cast<float>(sprite.src.x + sprite.width) / bgImage->getWidth();
-                    const float v1 = static_cast<float>(sprite.src.y + sprite.height) / bgImage->getHeight();
-
-                    xmlElement->SetAttribute("uv", 
-                        Ogre::StringConverter::toString(u0) + " " + Ogre::StringConverter::toString(v0) + " " +
-                        Ogre::StringConverter::toString(u1) + " " + Ogre::StringConverter::toString(v1)
-                        );
-
-                    // TODO: Figure out how to scale this value correctly
-                    xmlElement->SetAttribute("depth", "999" /* Ogre::StringConverter::toString(static_cast<float>(sprite.depth) / (4096.0f/10.0f))*/);
-
-                    // TODO: Copied from DatFile::AddTile - add to common method
-                    Ogre::String blending_str = "";
-                    if (sprite.blending == 0)
+                    for (const QGears::BackgroundFile::SpriteData& sprite : layer.sprites)
                     {
-                        blending_str = "alpha";
+                        std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("tile"));
+
+                        xmlElement->SetAttribute("destination",
+                            Ogre::StringConverter::toString(sprite.dst.x * kScaleUpFactor) + " " +
+                            Ogre::StringConverter::toString(sprite.dst.y * kScaleUpFactor));
+
+                        xmlElement->SetAttribute("width", Ogre::StringConverter::toString(sprite.width * kScaleUpFactor));
+                        xmlElement->SetAttribute("height", Ogre::StringConverter::toString(sprite.height * kScaleUpFactor));
+
+                        // Each tile is added to a big texture atlas with hard coded size of 1024x1024, convert UV's to the 0.0f to 1.0f range
+                        const float u0 = static_cast<float>(sprite.src.x) / bgImage->getWidth();
+                        const float v0 = static_cast<float>(sprite.src.y) / bgImage->getHeight();
+
+                        const float u1 = static_cast<float>(sprite.src.x + sprite.width) / bgImage->getWidth();
+                        const float v1 = static_cast<float>(sprite.src.y + sprite.height) / bgImage->getHeight();
+
+                        xmlElement->SetAttribute("uv",
+                            Ogre::StringConverter::toString(u0) + " " + Ogre::StringConverter::toString(v0) + " " +
+                            Ogre::StringConverter::toString(u1) + " " + Ogre::StringConverter::toString(v1)
+                            );
+
+                        // TODO: Figure out how to scale this value correctly
+                        xmlElement->SetAttribute("depth", "999" /* Ogre::StringConverter::toString(static_cast<float>(sprite.depth) / (4096.0f/10.0f))*/);
+
+                        // TODO: Copied from DatFile::AddTile - add to common method
+                        Ogre::String blending_str = "";
+                        if (sprite.blending == 0)
+                        {
+                            blending_str = "alpha";
+                        }
+                        else if (sprite.blending == 1 || sprite.blending == 3) // 3 is source + 0.25 * destination
+                        {
+                            blending_str = "add";
+                        }
+                        else if (sprite.blending == 2)
+                        {
+                            blending_str = "subtract";
+                        }
+                        else
+                        {
+                            // TODO: Should probably throw to fail conversion
+                            blending_str = "unknown";
+                        }
+                        xmlElement->SetAttribute("blending", blending_str);
+
+                        element->LinkEndChild(xmlElement.release());
                     }
-                    else if (sprite.blending == 1 || sprite.blending == 3) // 3 is source + 0.25 * destination
-                    {
-                        blending_str = "add";
-                    }
-                    else if (sprite.blending == 2)
-                    {
-                        blending_str = "subtract";
-                    }
-                    else
-                    {
-                        // TODO: Should probably throw to fail conversion
-                        blending_str = "unknown";
-                    }
-                    xmlElement->SetAttribute("blending", blending_str);
-                    
-                    element->LinkEndChild(xmlElement.release());
                 }
             }
+            doc.LinkEndChild(element.release());
+            doc.SaveFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/bg.xml");
         }
-        doc.LinkEndChild(element.release());
-        doc.SaveFile(outDir + "/" + FieldMapDir() + "/" + field->getName() +"/bg.xml");
+
     }
+
 
     {
         // Save out the walk mesh as XML
@@ -675,21 +689,26 @@ static bool IsAFieldFile(Ogre::String& resourceName)
 static bool IsTestField(Ogre::String& resourceName)
 {
     if (
-        resourceName == "startmap" ||
+       // resourceName == "startmap" ||
         resourceName == "md1stin" ||
-        resourceName == "md1_1" ||
-        resourceName == "md1_2" ||
-        resourceName == "nmkin_1" ||
-        resourceName == "nmkin_2" ||
-        resourceName == "nmkin_3" ||
-        resourceName == "nrthmk" ||
-        resourceName == "elevtr1" ||
-        resourceName == "tin_2"
+        resourceName == "md1_1" //||
+        //resourceName == "md1_2"// ||
+       // resourceName == "nmkin_1" ||
+        //resourceName == "nmkin_2" ||
+       // resourceName == "nmkin_3" ||
+       // resourceName == "nrthmk" ||
+       // resourceName == "elevtr1" ||
+       // resourceName == "tin_2"
         )
     {
         return true;
     }
     return false;
+}
+
+static void CollectFieldScaleFactors(QGears::FLevelFilePtr& field, FieldScaleFactorMap& scaleFactors, const std::vector<std::string>& fieldIdToNameLookup)
+{
+    scaleFactors[FieldId(field->getName(), fieldIdToNameLookup)] = ::SUDM::FF7::Field::ScaleFactor(field->getRawScript());
 }
 
 void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, std::string outDir)
@@ -707,13 +726,15 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
 
     // On the first pass collate required field information
     FieldSpawnPointsMap spawnPoints;
+    FieldScaleFactorMap scaleFactors;
     for (auto& resourceName : *resources)
     {
         // Exclude things that are not fields
-        if (IsAFieldFile(resourceName))
+        if (IsAFieldFile(resourceName) && IsTestField(resourceName))
         {
             QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
             CollectSpawnPoints(field, mapList->GetMapList(), spawnPoints);
+            CollectFieldScaleFactors(field, scaleFactors, mapList->GetMapList());
         }
     }
 
@@ -731,7 +752,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
                 CreateDir(FieldMapDir() + "/" + resourceName);
 
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
-                FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints, modelAnimationDb, maps);
+                FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints, scaleFactors, modelAnimationDb, maps);
             }
         }
     }
