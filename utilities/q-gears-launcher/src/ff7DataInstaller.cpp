@@ -188,7 +188,19 @@ public:
     virtual std::string AnimationName(int charId, int id) override
     {
         // Get the animation file name, then look up the friendly name of the "raw" animation
+        if (charId >= mModelLoader->getModels().size())
+        {
+            std::cout << "ERROR CHAR ID IS OUT OF BOUNDS" << std::endl;
+            return std::to_string(id);
+        }
+
         const auto& modelInfo = mModelLoader->getModels().at(charId);
+        if (id >= modelInfo.animations.size())
+        {
+            std::cout << "ERROR ANIMATION ID IS OUT OF BOUNDS" << std::endl;
+            return std::to_string(id);
+        }
+
         const auto rawName = modelInfo.animations.at(id).name;
 
         // Trim off ".yos" or whatever other crazy extension the model loader adds in
@@ -690,6 +702,32 @@ static bool IsAFieldFile(Ogre::String& resourceName)
         && resourceName != "maplist");
 }
 
+// Exclude fields which cause fatal crash bugs :)
+// this can be removed when whatever is causing the crash(s) is fixed
+static bool WillCrash(Ogre::String& resourceName)
+{
+    if (
+        // crashes in back ground image generation
+        resourceName == "bugin1a" ||
+
+        // Hangs in decompliation
+        resourceName == "frcyo" ||
+
+        // bg image crash
+        resourceName == "fr_e" ||
+        resourceName == "las4_2" ||
+        resourceName == "las4_3" ||
+        resourceName == "lastmap" ||
+        resourceName == "md_e1" ||
+        resourceName == "trnad_3"
+        )
+    {
+        // NOTE: Even so, conversion of all models will fail with a bone index out of bounds
+        return true;
+    }
+    return false;
+}
+
 static bool IsTestField(Ogre::String& resourceName)
 {
     if (
@@ -734,7 +772,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
     for (auto& resourceName : *resources)
     {
         // Exclude things that are not fields
-        if (IsAFieldFile(resourceName) && IsTestField(resourceName))
+        if (IsAFieldFile(resourceName) /*&& IsTestField(resourceName)*/)
         {
             QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
             CollectSpawnPoints(field, mapList->GetMapList(), spawnPoints);
@@ -751,12 +789,18 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
         // Exclude things that are not fields
         if (IsAFieldFile(resourceName))
         {
-            if (IsTestField(resourceName))
+            if (IsTestField(resourceName) &&
+                !WillCrash(resourceName))
             {
+                std::cout << "Converting: " << resourceName << std::endl;
                 CreateDir(FieldMapDir() + "/" + resourceName);
 
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
                 FF7PcFieldToQGearsField(field, outDir, mapList->GetMapList(), spawnPoints, scaleFactors, modelAnimationDb, maps);
+            }
+            else
+            {
+                std::cout << "Skip: " << resourceName << " as it has a crash or hang issue" << std::endl;
             }
         }
     }
