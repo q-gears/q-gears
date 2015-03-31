@@ -498,9 +498,13 @@ static void FF7PcFieldToQGearsField(
 
                 const float downscaler_next = 128.0f * FieldScaleFactor(scaleFactorMap, gateway.destinationFieldId);
 
-                xmlEntityPoint->SetAttribute("position",
-                    Ogre::StringConverter::toString(
-                    Ogre::Vector3(gateway.destination.x, gateway.destination.y, gateway.destination.z) / downscaler_next));
+                // Position Z is actually the target walkmesh triangle ID, so this is tiny bit more
+                // complex as we have to say "get the Z value of the triangle with that ID". Note that ID actually just means index.
+                const float zOfTriangleWithId = field->getWalkmesh()->getTriangles().at(static_cast<unsigned int>(gateway.destination.z)).a.z;
+
+                const Ogre::Vector3 posVec(gateway.destination.x / downscaler_next, gateway.destination.y / downscaler_next, zOfTriangleWithId);
+
+                xmlEntityPoint->SetAttribute("position", Ogre::StringConverter::toString(posVec));
 
                 const float rotation = (360.0f * static_cast<float>(gateway.dir)) / 255.0f;
                 xmlEntityPoint->SetAttribute("rotation", std::to_string(rotation));
