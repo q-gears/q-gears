@@ -50,9 +50,9 @@ namespace QGears
 
         struct Vertex_s
         {
-            u16 x;
-            u16 y;
-            u16 z;
+            s16 x;
+            s16 y;
+            s16 z;
         };
 
         struct Gateway

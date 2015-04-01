@@ -88,9 +88,9 @@ namespace QGears
 
     void TriggerFileSerializer::ReadVertex_s(Ogre::DataStreamPtr& stream, TriggersFile::Vertex_s& vertex)
     {
-        readShort(stream, vertex.x);
-        readShort(stream, vertex.y);
-        readShort(stream, vertex.z);
+        readInt16(stream, vertex.x);
+        readInt16(stream, vertex.y);
+        readInt16(stream, vertex.z);
     }
 
     void TriggerFileSerializer::ReadRange(Ogre::DataStreamPtr& stream, TriggersFile::Range& range)
