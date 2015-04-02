@@ -264,6 +264,11 @@ namespace QGears
                 {
                     return it->second;
                 }
+                if (charId == 254)
+                {
+                    // Empty becomes lua "nil" value for this special case
+                    return "";
+                }
                 return std::to_string(charId);
             }
 

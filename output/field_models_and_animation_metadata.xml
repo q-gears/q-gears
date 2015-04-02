@@ -73,11 +73,57 @@
 		</var_names>
 
 		<entity_names>
+     		<entity name="mapinit" new="Director"/>
+			<entity name="directr" new="Director"/>
+		    <entity name="produce" new="Director"/>
+			<entity name="init" new="Director"/>
+    		<entity name="dic" new="Director"/>
 			<entity name="dir" new="Director"/>
+			
+			<entity name="cloud" new="Cloud"/>
 			<entity name="cl" new="Cloud"/>
+			
+			<entity name="ba" new="Barret"/>
+			<entity name="bal" new="Barret"/>
+			<entity name="ballet" new="Barret"/>
+			<entity name="balette" new="Barret"/>
+		
+			<entity name="earith" new="Aerith"/>
+			<entity name="ea" new="Aerith"/>
+			
+			<entity name="cid" new="Cid"/>
+			
+			<entity name="big" new="Biggs"/>
+			<entity name="bigs" new="Biggs"/>
+			<entity name="av_m" new="Biggs"/>
 			<entity name="av_b" new="Biggs"/>
+			<entity name="aval" new="Biggs"/>
+		
+			<entity name="je" new="Jessie"/>
+			<entity name="jecy" new="Jessie"/>
+			<entity name="jesy" new="Jessie"/>
+			<entity name="av_l" new="Jessie"/>
 			<entity name="av_c" new="Jessie"/>
+			<entity name="av_j" new="Jessie"/>
+			<entity name="avaw" new="Jessie"/>
+		
+			<entity name="wedge" new="Wedge"/>
+			<entity name="weadge" new="Wedge"/>
+			<entity name="av_s" new="Wedge"/>
 			<entity name="av_w" new="Wedge"/>
+			<entity name="avaf" new="Wedge"/>
+			
+			<entity name="ti" new="Tifa"/>
+			<entity name="tifa" new="Tifa"/>
+			
+			<entity name="fe0" new="Chest"/>
+		
+			<entity name="marine" new="Marlene"/>
+			
+			<entity name="drL" new="door_left"/>
+			<entity name="drR" new="door_right"/>
+		
+			
 		</entity_names>
 		
 		<!-- Apply only to the given field, overrides the "global data -->
