@@ -163,13 +163,54 @@ static std::string FieldMapDir()
     return "maps/ffvii/field";
 }
 
-class FF7FieldScriptFormatter : public SUDM::IScriptFormatter
+typedef std::set<std::string> MapCollection;
+
+class SpawnPointDb
 {
 public:
-    FF7FieldScriptFormatter(const std::string& fieldName, const QGears::ModelListFilePtr& models)
-        : mFieldName(fieldName), mModelLoader(models)
+    // Id of the field the gateways records from N other number of fields are linking to
+    u16 mTargetFieldId = 0;
+
+    class Record
+    {
+    public:
+        // Field that wants to link to mTargetFieldId
+        u16 mFieldId = 0;
+
+        // Index of the gateway in mFieldId
+        u32 GatewayIndexOrMapJumpAddress = 0;
+
+        // Gateway data
+        QGears::TriggersFile::Gateway mGateway;
+
+        bool mFromScript = false;
+
+        // Only used from script calls
+        std::string mEntityName;
+        std::string mScriptFunctionName;
+    };
+
+    std::vector<Record> mGatewaysToThisField;
+};
+typedef std::map<u16, SpawnPointDb> FieldSpawnPointsMap;
+
+class BaseFF7FieldScriptFormatter : public SUDM::IScriptFormatter
+{
+public:
+    BaseFF7FieldScriptFormatter(const std::string& fieldName, const std::vector<std::string>& fieldIdToNameLookup, FieldSpawnPointsMap& spawnPoints)
+        : mFieldName(fieldName), mFieldIdToNameLookup(fieldIdToNameLookup), mSpawnPoints(spawnPoints)
     {
 
+    }
+
+    virtual std::string SpawnPointName(unsigned int targetMapId, const std::string& entity, const std::string& funcName, unsigned int address) override
+    {
+        return mFieldIdToNameLookup[targetMapId] + "_" + entity + "_" + funcName + "_addr_" + std::to_string(address);
+    }
+
+    virtual std::string MapName(unsigned int mapId) override
+    {
+        return FieldName(mFieldIdToNameLookup[mapId]);
     }
 
     // Renames a variable, return empty string for generated name
@@ -182,33 +223,6 @@ public:
     virtual std::string EntityName(const std::string& entity) override
     {
         return QGears::FF7::NameLookup::FieldScriptEntityName(entity);
-    }
-
-    // Names an animation, can't return empty
-    virtual std::string AnimationName(int charId, int id) override
-    {
-        // Get the animation file name, then look up the friendly name of the "raw" animation
-        if (charId >= mModelLoader->getModels().size())
-        {
-            std::cout << "ERROR CHAR ID IS OUT OF BOUNDS" << std::endl;
-            return std::to_string(id);
-        }
-
-        const auto& modelInfo = mModelLoader->getModels().at(charId);
-        if (id >= modelInfo.animations.size())
-        {
-            std::cout << "ERROR ANIMATION ID IS OUT OF BOUNDS" << std::endl;
-            return std::to_string(id);
-        }
-
-        const auto rawName = modelInfo.animations.at(id).name;
-
-        // Trim off ".yos" or whatever other crazy extension the model loader adds in
-        Ogre::String baseName;
-        QGears::StringUtil::splitBase(rawName, baseName);
-
-        QGears::StringUtil::toLowerCase(baseName);
-        return QGears::FF7::NameLookup::animation(baseName);
     }
 
     // Get name of char from its id, can't return empty
@@ -229,8 +243,49 @@ public:
         return QGears::FF7::NameLookup::FieldScriptFunctionComment(mFieldName, entity, funcName);
     }
 
-private:
+protected:
     std::string mFieldName;
+    FieldSpawnPointsMap& mSpawnPoints;
+    const std::vector<std::string>& mFieldIdToNameLookup;
+};
+
+class FF7FieldScriptFormatter : public BaseFF7FieldScriptFormatter
+{
+public:
+    FF7FieldScriptFormatter(const std::string& fieldName, const QGears::ModelListFilePtr& models, const std::vector<std::string>& fieldIdToNameLookup, FieldSpawnPointsMap& spawnPoints)
+        : BaseFF7FieldScriptFormatter(fieldName, fieldIdToNameLookup, spawnPoints), mModelLoader(models)
+    {
+
+    }
+
+    // Names an animation, can't return empty
+    virtual std::string AnimationName(int charId, int id) override
+    {
+        // Get the animation file name, then look up the friendly name of the "raw" animation
+        if (static_cast<unsigned int>(charId) >= mModelLoader->getModels().size())
+        {
+            std::cout << "ERROR CHAR ID IS OUT OF BOUNDS" << std::endl;
+            return std::to_string(id);
+        }
+
+        const auto& modelInfo = mModelLoader->getModels().at(charId);
+        if (static_cast<unsigned int>(id) >= modelInfo.animations.size())
+        {
+            std::cout << "ERROR ANIMATION ID IS OUT OF BOUNDS" << std::endl;
+            return std::to_string(id);
+        }
+
+        const auto rawName = modelInfo.animations.at(id).name;
+
+        // Trim off ".yos" or whatever other crazy extension the model loader adds in
+        Ogre::String baseName;
+        QGears::StringUtil::splitBase(rawName, baseName);
+
+        QGears::StringUtil::toLowerCase(baseName);
+        return QGears::FF7::NameLookup::animation(baseName);
+    }
+
+private:
     const QGears::ModelListFilePtr& mModelLoader;
 };
 
@@ -248,7 +303,9 @@ static std::string CreateGateWayScript(const std::string& gatewayEntityName, con
         "end,\n\n"
         "on_cross_line = function(self, entity)\n"
         "   if entity == \"Cloud\" then\n"
-        "       load_field_map_request(\"" + targetMapName + "\", \"" + sourceSpawnPointName + "\")\n"
+        "       if not FFVII.Data.DisableGateways then\n"
+        "           load_field_map_request(\"" + targetMapName + "\", \"" + sourceSpawnPointName + "\")\n"
+        "       end\n"
         "   end\n\n"
         "   return 0\n"
         "end,\n\n"
@@ -261,22 +318,7 @@ static std::string CreateGateWayScript(const std::string& gatewayEntityName, con
 
 const int kInactiveGateWayId = 32767;
 
-class SpawnPointDb
-{
-public:
-    // Id of the field the gateways records from N other number of fields are linking to
-    u16 mTargetFieldId = 0;
 
-    class Record
-    {
-    public:
-        u16 mFieldId = 0;
-        u32 GatewayIndex = 0;
-        QGears::TriggersFile::Gateway mGateway;
-    };
-    std::vector<Record> mGatewaysToThisField;
-};
-typedef std::map<u16, SpawnPointDb> FieldSpawnPointsMap;
 typedef std::map<u16, float> FieldScaleFactorMap;
 
 
@@ -313,7 +355,6 @@ public:
     ModelAnimationMap mMap;
 };
 
-typedef std::set<std::string> MapCollection;
 
 
 static size_t FieldId(const std::string& name, const std::vector<std::string>& fieldIdToNameLookup)
@@ -342,7 +383,7 @@ static void FF7PcFieldToQGearsField(
     QGears::FLevelFilePtr& field,
     const std::string& outDir,
     const std::vector<std::string>& fieldIdToNameLookup,
-    const FieldSpawnPointsMap& spawnMap,
+    FieldSpawnPointsMap& spawnMap,
     const FieldScaleFactorMap& scaleFactorMap,
     ModelsAndAnimationsDb& modelAnimationDb,
     MapCollection& maps)
@@ -364,13 +405,13 @@ static void FF7PcFieldToQGearsField(
 
     const QGears::ModelListFilePtr& models = field->getModelList();
     SUDM::FF7::Field::DecompiledScript decompiled;
+    FF7FieldScriptFormatter formatter(field->getName(), models, fieldIdToNameLookup, spawnMap);
     try
     {
         // Get the raw script bytes
         const std::vector<u8> rawFieldData = field->getRawScript();
 
         // Decompile to LUA
-        FF7FieldScriptFormatter formatter(field->getName(), models);
         decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter, gatewayScriptData, "EntityContainer = {}\n\n");
         std::ofstream scriptFile(outDir + "/" + FieldMapDir() + "/" + field->getName() + "/script.lua");
         if (scriptFile.is_open())
@@ -505,8 +546,16 @@ static void FF7PcFieldToQGearsField(
                 // entity_point
                 std::unique_ptr<TiXmlElement> xmlEntityPoint(new TiXmlElement("entity_point"));
 
-                // Must also include the gateway index for the case where 2 fields have more than one door linking to each other
-                xmlEntityPoint->SetAttribute("name", "Spawn_" + fieldIdToNameLookup.at(spawnPointRecords[i].mFieldId) + "_" + std::to_string(spawnPointRecords[i].GatewayIndex));
+                if (spawnPointRecords[i].mFromScript)
+                {
+                    // Spawn points from map jumps have a another algorithm
+                    xmlEntityPoint->SetAttribute("name", formatter.SpawnPointName(spawnPointRecords[i].mFieldId, spawnPointRecords[i].mEntityName, spawnPointRecords[i].mScriptFunctionName, spawnPointRecords[i].GatewayIndexOrMapJumpAddress));
+                }
+                else
+                {
+                    // Must also include the gateway index for the case where 2 fields have more than one door linking to each other
+                    xmlEntityPoint->SetAttribute("name", "Spawn_" + fieldIdToNameLookup.at(spawnPointRecords[i].mFieldId) + "_" + std::to_string(spawnPointRecords[i].GatewayIndexOrMapJumpAddress));
+                }
 
                 const float downscaler_next = 128.0f * FieldScaleFactor(scaleFactorMap, gateway.destinationFieldId);
 
@@ -654,11 +703,82 @@ static void FF7PcFieldToQGearsField(
     maps.insert(field->getName());
 }
 
+class FF7FieldScriptGatewayCollector : public BaseFF7FieldScriptFormatter
+{
+public:
+    FF7FieldScriptGatewayCollector(const std::string& fieldName, const std::vector<std::string>& fieldIdToNameLookup, FieldSpawnPointsMap& spawnPoints, size_t thisFieldId)
+        : BaseFF7FieldScriptFormatter(fieldName, fieldIdToNameLookup, spawnPoints), mThisFieldId(thisFieldId)
+    {
 
+    }
+
+    virtual void AddSpawnPoint(unsigned int targetMapId, const std::string& entity, const std::string& funcName, unsigned int address, int x, int y, int z, int angle) override
+    {
+        auto it = mSpawnPoints.find(targetMapId);
+
+        QGears::TriggersFile::Gateway gw = {};
+        gw.destinationFieldId = targetMapId;
+        gw.destination.x = x;
+        gw.destination.y = y;
+        gw.destination.z = z;
+        gw.dir = angle;
+
+        if (it != std::end(mSpawnPoints))
+        {
+            // Add to the list of gateways that link to destinationFieldId
+            SpawnPointDb::Record rec;
+            rec.mFromScript = true;
+            rec.mFieldId = mThisFieldId;
+            rec.mGateway = gw;
+            rec.mEntityName = entity;
+            rec.mScriptFunctionName = funcName;
+            rec.GatewayIndexOrMapJumpAddress = address;
+            it->second.mGatewaysToThisField.push_back(rec);
+        }
+        else
+        {
+            // Create a new record for destinationFieldId
+            SpawnPointDb db;
+            db.mTargetFieldId = targetMapId;
+
+            SpawnPointDb::Record rec;
+            rec.mFromScript = true;
+            rec.mFieldId = mThisFieldId;
+            rec.mGateway = gw;
+            rec.mEntityName = entity;
+            rec.mScriptFunctionName = funcName;
+            rec.GatewayIndexOrMapJumpAddress = address;
+            db.mGatewaysToThisField.push_back(rec);
+
+            mSpawnPoints.insert(std::make_pair(db.mTargetFieldId, db));
+        }
+    }
+private:
+    size_t mThisFieldId;
+
+};
 
 static void CollectSpawnPoints(QGears::FLevelFilePtr& field, const std::vector<std::string>& fieldIdToNameLookup, FieldSpawnPointsMap& spawnPoints)
 {
     const size_t thisFieldId = FieldId(field->getName(), fieldIdToNameLookup);
+
+    // Decompile the script just so we can collect up the MAPJUMP's we need this to construct the full list of entries
+    // to each field
+    try
+    {
+        // Get the raw script bytes
+        SUDM::FF7::Field::DecompiledScript decompiled;
+        const std::vector<u8> rawFieldData = field->getRawScript();
+
+        // Decompile to LUA
+        FF7FieldScriptGatewayCollector formatter(field->getName(), fieldIdToNameLookup, spawnPoints, thisFieldId);
+        decompiled = SUDM::FF7::Field::Decompile(field->getName(), rawFieldData, formatter, "", "EntityContainer = {}\n\n");
+    }
+    catch (const ::InternalDecompilerError& ex)
+    {
+        std::cerr << "InternalDecompilerError: " << ex.what() << std::endl;
+    }
+
     const QGears::TriggersFilePtr& triggers = field->getTriggers();
     const auto& gateways = triggers->GetGateways();
     for (size_t i = 0; i < gateways.size(); i++)
@@ -673,7 +793,7 @@ static void CollectSpawnPoints(QGears::FLevelFilePtr& field, const std::vector<s
                 SpawnPointDb::Record rec;
                 rec.mFieldId = thisFieldId;
                 rec.mGateway = gateway;
-                rec.GatewayIndex = i;
+                rec.GatewayIndexOrMapJumpAddress = i;
                 it->second.mGatewaysToThisField.push_back(rec);
             }
             else
@@ -685,7 +805,7 @@ static void CollectSpawnPoints(QGears::FLevelFilePtr& field, const std::vector<s
                 SpawnPointDb::Record rec;
                 rec.mFieldId = thisFieldId;
                 rec.mGateway = gateway;
-                rec.GatewayIndex = i;
+                rec.GatewayIndexOrMapJumpAddress = i;
                 db.mGatewaysToThisField.push_back(rec);
 
                 spawnPoints.insert(std::make_pair(db.mTargetFieldId, db));
@@ -773,7 +893,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
     for (auto& resourceName : *resources)
     {
         // Exclude things that are not fields
-        if (IsAFieldFile(resourceName) /*&& IsTestField(resourceName)*/)
+        if (IsAFieldFile(resourceName) && /*IsTestField(resourceName) &&*/ !WillCrash(resourceName))
         {
             QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
             CollectSpawnPoints(field, mapList->GetMapList(), spawnPoints);
