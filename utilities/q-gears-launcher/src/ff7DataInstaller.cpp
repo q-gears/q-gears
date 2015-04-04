@@ -203,9 +203,9 @@ public:
 
     }
 
-    virtual std::string SpawnPointName(unsigned int targetMapId, const std::string& entity, const std::string& funcName, unsigned int address) override
+    virtual std::string SpawnPointName(unsigned int /*targetMapId*/, const std::string& entity, const std::string& funcName, unsigned int address) override
     {
-        return mFieldIdToNameLookup[targetMapId] + "_" + entity + "_" + funcName + "_addr_" + std::to_string(address);
+        return mFieldName + "_" + entity + "_" + funcName + "_addr_" + std::to_string(address);
     }
 
     virtual std::string MapName(unsigned int mapId) override
@@ -549,7 +549,9 @@ static void FF7PcFieldToQGearsField(
                 if (spawnPointRecords[i].mFromScript)
                 {
                     // Spawn points from map jumps have a another algorithm
-                    xmlEntityPoint->SetAttribute("name", formatter.SpawnPointName(spawnPointRecords[i].mFieldId, spawnPointRecords[i].mEntityName, spawnPointRecords[i].mScriptFunctionName, spawnPointRecords[i].GatewayIndexOrMapJumpAddress));
+                    
+
+                    xmlEntityPoint->SetAttribute("name", fieldIdToNameLookup.at(spawnPointRecords[i].mFieldId) + "_" + spawnPointRecords[i].mEntityName + "_" + spawnPointRecords[i].mScriptFunctionName + "_addr_" + std::to_string(spawnPointRecords[i].GatewayIndexOrMapJumpAddress));
                 }
                 else
                 {
@@ -868,6 +870,7 @@ static bool IsTestField(Ogre::String& resourceName)
         resourceName == "elevtr1" ||
         resourceName == "tin_1" ||
         resourceName == "tin_2" ||
+        resourceName == "rootmap" ||
         resourceName == "md8_4"
         )
     {
