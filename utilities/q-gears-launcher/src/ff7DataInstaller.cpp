@@ -561,7 +561,13 @@ static void FF7PcFieldToQGearsField(
 
                 // Position Z is actually the target walkmesh triangle ID, so this is tiny bit more
                 // complex as we have to say "get the Z value of the triangle with that ID". Note that ID actually just means index.
-                const float zOfTriangleWithId = field->getWalkmesh()->getTriangles().at(static_cast<unsigned int>(gateway.destination.z)).a.z;
+                unsigned int triIndex = static_cast<unsigned int>(gateway.destination.z);
+                if (triIndex >= field->getWalkmesh()->getTriangles().size())
+                {
+                    std::cout << "WARNING MAP JUMP TRIANGLE OUT OF BOUNDS" << std::endl;
+                    triIndex = 0;
+                }
+                const float zOfTriangleWithId = field->getWalkmesh()->getTriangles().at(triIndex).a.z;
 
                 const Ogre::Vector3 posVec(gateway.destination.x / downscaler_next, gateway.destination.y / downscaler_next, zOfTriangleWithId);
 
@@ -860,6 +866,7 @@ static bool IsTestField(Ogre::String& resourceName)
         resourceName == "nmkin_3" ||
         resourceName == "nrthmk" ||
         resourceName == "elevtr1" ||
+        resourceName == "tin_1" ||
         resourceName == "tin_2" ||
         resourceName == "md8_4"
         )
