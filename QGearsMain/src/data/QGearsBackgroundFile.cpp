@@ -265,7 +265,22 @@ namespace QGears
             {
                 if (sprite.palette_page >= palette->getPages().size())
                 {
-                    Ogre::LogManager::getSingleton().stream() << "Error: palette page Index out of Bounds " << sprite.palette_page;
+                    // fr_e substrative blending hack
+                    if (mName.compare("fr_e.background") == 0 && sprite.has_blending && palette->getPages().size() == 2)
+                    {
+                        sprite.palette_page = sprite.data_page > 16; // Repair palette id
+                        sprite.blending = 2; // Substrative blending
+                    }
+                    // lastmap hack
+                    else if (mName.compare("lastmap.background") == 0 && sprite.has_blending && palette->getPages().size() >= 7)
+                    {
+                        sprite.palette_page = 6; // Repair palette id
+                        sprite.blending = 2; // Substrative blending
+                    }
+                    else
+                    {
+                        Ogre::LogManager::getSingleton().stream() << "Error: palette page Index out of Bounds " << sprite.palette_page;
+                    }
                 }
                 const PaletteFile::Page& palette_page(palette->getPage(sprite.palette_page));
                 bool firstColorHidden(false);
