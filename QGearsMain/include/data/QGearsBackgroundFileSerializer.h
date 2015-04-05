@@ -47,6 +47,7 @@ namespace QGears
            ,BIT_MASK_BLUE   = 0x001F
            ,BIT_SIZE        = 0x001F
            ,BIT_MASK_RGB    = BIT_MASK_BLUE | BIT_MASK_GREEN | BIT_MASK_RED
+           ,SPRITE_DST_MAX      = 1024
         };
 
         struct Header
@@ -98,6 +99,8 @@ namespace QGears
         static const Ogre::Real src_big_SCALE;
 
     private:
+        void removeBuggySprites( SpriteList &sprites );
+
         Header  m_header;
         size_t m_layer_index;
     };

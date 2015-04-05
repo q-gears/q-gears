@@ -152,6 +152,29 @@ namespace QGears
         stream->skip( 2 * 2 ); // 2 * uint16 unused;
         m_layer_index = layer_index;
         readVector( stream, pDest->sprites, sprite_count );
+
+        removeBuggySprites( pDest->sprites );
+    }
+
+    //---------------------------------------------------------------------
+    void
+    BackgroundFileSerializer::removeBuggySprites( SpriteList &sprites )
+    {
+        auto it = sprites.begin();
+        while (it != sprites.end())
+        {
+            const SpriteData &sprite = (*it);
+
+            if (std::abs(sprite.dst.x) > SPRITE_DST_MAX
+                    || std::abs(sprite.dst.y) > SPRITE_DST_MAX)
+            {
+                it = sprites.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
+        }
     }
 
     //---------------------------------------------------------------------
@@ -212,8 +235,8 @@ namespace QGears
         readShort( stream, pDest.blending );
         readShort( stream, pDest.data_page );
         readShort( stream, pDest.data_page2 );
-        // when data_page2 != 0, it must be used instead of data_page
-        if ( pDest.data_page2 )
+        // when data_page2 != 0, it must be used instead of data_page (not for the first layer)
+        if ( m_layer_index > 0 && pDest.data_page2 )
         {
             pDest.src = pDest.src2;
             pDest.data_page = pDest.data_page2;
