@@ -212,8 +212,8 @@ namespace QGears
         readShort( stream, pDest.blending );
         readShort( stream, pDest.data_page );
         readShort( stream, pDest.data_page2 );
-        // when data_page2 != 0, it must be used instead of data_page
-        if ( pDest.data_page2 )
+        // when data_page2 != 0, it must be used instead of data_page (not for the first layer)
+        if ( m_layer_index > 0 && pDest.data_page2 )
         {
             pDest.src = pDest.src2;
             pDest.data_page = pDest.data_page2;
