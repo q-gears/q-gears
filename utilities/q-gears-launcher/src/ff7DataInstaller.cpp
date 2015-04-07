@@ -863,6 +863,7 @@ static bool IsTestField(Ogre::String& resourceName)
         resourceName == "md1stin" ||
         resourceName == "md1_1" ||
         resourceName == "md1_2" ||
+        resourceName == "md8_1" ||
         resourceName == "nmkin_1" ||
         resourceName == "nmkin_2" ||
         resourceName == "nmkin_3" ||
