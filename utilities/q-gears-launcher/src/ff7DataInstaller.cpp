@@ -72,13 +72,16 @@ static std::string FieldModelDir()
 // TOOD: Share with pc model exporter
 static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
 {
+    QGears::String baseMeshName;
+    QGears::StringUtil::splitFull(mesh->getName(), baseMeshName);
+
     Ogre::MeshSerializer        mesh_ser;
 
     Ogre::SkeletonPtr           skeleton(mesh->getSkeleton());
     Ogre::SkeletonSerializer    sk_ser;
-    sk_ser.exportSkeleton(skeleton.getPointer(), outdir +  skeleton->getName());
+    sk_ser.exportSkeleton(skeleton.getPointer(), outdir + baseMeshName + ".skeleton");
 
-    mesh->setSkeletonName(FieldModelDir() + "/" + mesh->getSkeletonName());
+    mesh->setSkeletonName(FieldModelDir() + "/" + baseMeshName + ".skeleton");
 
     mesh_ser.exportMesh(mesh.getPointer(), outdir + mesh->getName());
 
@@ -114,7 +117,7 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
                                         textures.insert(unit->getTextureName());
                                         Ogre::String baseName;
                                         QGears::StringUtil::splitBase(unit->getTextureName(), baseName);
-                                        unit->setTextureName(FieldModelDir() + "/" + baseName + ".png");
+                                        unit->setTextureName(FieldModelDir() + "/" + baseMeshName + "_" + baseName + ".png");
                                     }
                                 }
                             }
@@ -127,9 +130,8 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
         }
         ++i;
     }
-    QGears::String base_name;
-    QGears::StringUtil::splitFull(mesh->getName(), base_name);
-    mat_ser.exportQueued(outdir + base_name + QGears::EXT_MATERIAL);
+
+    mat_ser.exportQueued(outdir + baseMeshName + QGears::EXT_MATERIAL);
 
     for (auto& textureName : textures)
     {
@@ -139,7 +141,7 @@ static void exportMesh(std::string outdir, const Ogre::MeshPtr &mesh)
 
         Ogre::String baseName;
         QGears::StringUtil::splitBase(textureName, baseName);
-        image.save(outdir + baseName + ".png");
+        image.save(outdir + baseMeshName + "_" + baseName + ".png");
     }
 }
 
@@ -863,6 +865,7 @@ static bool IsTestField(Ogre::String& resourceName)
         resourceName == "md1stin" ||
         resourceName == "md1_1" ||
         resourceName == "md1_2" ||
+        resourceName == "md8_1" ||
         resourceName == "nmkin_1" ||
         resourceName == "nmkin_2" ||
         resourceName == "nmkin_3" ||
@@ -977,7 +980,7 @@ void FF7DataInstaller::ConvertFields(std::string archive, std::string inputDir, 
             QGears::AFileManager       &afl_mgr(QGears::AFileManager::getSingleton());
             QGears::AFilePtr  a = afl_mgr.load(anim, "FFVII").staticCast<QGears::AFile>();
 
-            // Convert the FF7 name to a more readble name set in the meta data
+            // Convert the FF7 name to a more readable name set in the meta data
             Ogre::String baseName;
             QGears::StringUtil::splitBase(anim, baseName);
             a->addTo(skeleton, QGears::FF7::NameLookup::animation(baseName));
