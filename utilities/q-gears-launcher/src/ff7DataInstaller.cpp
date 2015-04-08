@@ -456,6 +456,64 @@ static void FF7PcFieldToQGearsField(
         xmlMovementRotation->SetAttribute("degree", std::to_string(triggers->MovementRotation()));
         element->LinkEndChild(xmlMovementRotation.release());
 
+        // Get this fields Id
+        const size_t thisFieldId = FieldId(field->getName(), fieldIdToNameLookup);
+
+        // Use that to find the pre-computed list of gateways in all other fields that link to this field
+        auto spawnIterator = spawnMap.find(thisFieldId);
+
+        Ogre::Vector3 firstEntityPoint = Ogre::Vector3::ZERO;
+
+        // If not found that it probably just means no other fields have doors to this one
+        if (spawnIterator != std::end(spawnMap))
+        {
+            const std::vector<SpawnPointDb::Record>& spawnPointRecords = spawnIterator->second.mGatewaysToThisField;
+
+            for (size_t i = 0; i < spawnPointRecords.size(); i++)
+            {
+                const QGears::TriggersFile::Gateway& gateway = spawnPointRecords[i].mGateway;
+                // entity_point
+                std::unique_ptr<TiXmlElement> xmlEntityPoint(new TiXmlElement("entity_point"));
+
+                if (spawnPointRecords[i].mFromScript)
+                {
+                    // Spawn points from map jumps have a another algorithm
+                    xmlEntityPoint->SetAttribute("name", fieldIdToNameLookup.at(spawnPointRecords[i].mFieldId) + "_" + spawnPointRecords[i].mEntityName + "_" + spawnPointRecords[i].mScriptFunctionName + "_addr_" + std::to_string(spawnPointRecords[i].GatewayIndexOrMapJumpAddress));
+                }
+                else
+                {
+                    // Must also include the gateway index for the case where 2 fields have more than one door linking to each other
+                    xmlEntityPoint->SetAttribute("name", "Spawn_" + fieldIdToNameLookup.at(spawnPointRecords[i].mFieldId) + "_" + std::to_string(spawnPointRecords[i].GatewayIndexOrMapJumpAddress));
+                }
+
+                const float downscaler_next = 128.0f * FieldScaleFactor(scaleFactorMap, gateway.destinationFieldId);
+
+                // Position Z is actually the target walkmesh triangle ID, so this is tiny bit more
+                // complex as we have to say "get the Z value of the triangle with that ID". Note that ID actually just means index.
+                unsigned int triIndex = static_cast<unsigned int>(gateway.destination.z);
+                if (triIndex >= field->getWalkmesh()->getTriangles().size())
+                {
+                    std::cout << "WARNING MAP JUMP TRIANGLE OUT OF BOUNDS" << std::endl;
+                    triIndex = 0;
+                }
+                const float zOfTriangleWithId = field->getWalkmesh()->getTriangles().at(triIndex).a.z;
+
+                const Ogre::Vector3 posVec(gateway.destination.x / downscaler_next, gateway.destination.y / downscaler_next, zOfTriangleWithId);
+                if (posVec != Ogre::Vector3::ZERO && firstEntityPoint == Ogre::Vector3::ZERO)
+                {
+                    firstEntityPoint = posVec;
+                }
+
+                xmlEntityPoint->SetAttribute("position", Ogre::StringConverter::toString(posVec));
+
+                const float rotation = (360.0f * static_cast<float>(gateway.dir)) / 255.0f;
+                xmlEntityPoint->SetAttribute("rotation", std::to_string(rotation));
+
+                element->LinkEndChild(xmlEntityPoint.release());
+            }
+        }
+
+
         for (const auto& it : decompiled.entities)
         {
             const int charId = it.second;
@@ -477,13 +535,17 @@ static void FF7PcFieldToQGearsField(
                 QGears::StringUtil::toLowerCase(lowerCaseHrcName);
                 xmlEntityScript->SetAttribute("file_name", FieldModelDir() + "/" + modelAnimationDb.ModelMetaDataName(lowerCaseHrcName));
 
-                // TODO: entity_model - name, file_name,  position, direction
-                // We set char 1 position to be position of first entity_point so player is spawned in sane
-                // position if map is manually loaded via console.
-                // None player chars set their first position in the init scripts. We know its a entity_model
-                // because it uses PC opcode in init script.
-                // entity_manager:get_entity("cl") is done via CHAR opcode
-                xmlEntityScript->SetAttribute("position", "0 0 0");
+                if (desc.type == QGears::ModelListFile::PLAYER)
+                {
+                    // For player models we set the position in the xml because if a map is loaded manually this is where the player
+                    // will end up. Hence we set the position to the first entity_point that we have
+                    xmlEntityScript->SetAttribute("position", Ogre::StringConverter::toString(firstEntityPoint));
+                }
+                else
+                {
+                    xmlEntityScript->SetAttribute("position", Ogre::StringConverter::toString(Ogre::Vector3::ZERO));
+                }
+
 
                 xmlEntityScript->SetAttribute("direction", "0");
 
@@ -503,8 +565,6 @@ static void FF7PcFieldToQGearsField(
             }
         }
 
-        // Get this fields Id
-        const size_t thisFieldId = FieldId(field->getName(), fieldIdToNameLookup);
 
         const float downscaler_this = 128.0f * FieldScaleFactor(scaleFactorMap, thisFieldId);
 
@@ -530,57 +590,6 @@ static void FF7PcFieldToQGearsField(
                 // enabled hard coded to true
                 xmlEntityTrigger->SetAttribute("enabled", "true");
                 element->LinkEndChild(xmlEntityTrigger.release());
-            }
-        }
-
-
-        // Use that to find the pre-computed list of gateways in all other fields that link to this field
-        auto spawnIterator = spawnMap.find(thisFieldId);
-
-        // If not found that it probably just means no other fields have doors to this one
-        if (spawnIterator != std::end(spawnMap))
-        {
-            const std::vector<SpawnPointDb::Record>& spawnPointRecords = spawnIterator->second.mGatewaysToThisField;
-
-            for (size_t i = 0; i < spawnPointRecords.size(); i++)
-            {
-                const QGears::TriggersFile::Gateway& gateway = spawnPointRecords[i].mGateway;
-                // entity_point
-                std::unique_ptr<TiXmlElement> xmlEntityPoint(new TiXmlElement("entity_point"));
-
-                if (spawnPointRecords[i].mFromScript)
-                {
-                    // Spawn points from map jumps have a another algorithm
-                    
-
-                    xmlEntityPoint->SetAttribute("name", fieldIdToNameLookup.at(spawnPointRecords[i].mFieldId) + "_" + spawnPointRecords[i].mEntityName + "_" + spawnPointRecords[i].mScriptFunctionName + "_addr_" + std::to_string(spawnPointRecords[i].GatewayIndexOrMapJumpAddress));
-                }
-                else
-                {
-                    // Must also include the gateway index for the case where 2 fields have more than one door linking to each other
-                    xmlEntityPoint->SetAttribute("name", "Spawn_" + fieldIdToNameLookup.at(spawnPointRecords[i].mFieldId) + "_" + std::to_string(spawnPointRecords[i].GatewayIndexOrMapJumpAddress));
-                }
-
-                const float downscaler_next = 128.0f * FieldScaleFactor(scaleFactorMap, gateway.destinationFieldId);
-
-                // Position Z is actually the target walkmesh triangle ID, so this is tiny bit more
-                // complex as we have to say "get the Z value of the triangle with that ID". Note that ID actually just means index.
-                unsigned int triIndex = static_cast<unsigned int>(gateway.destination.z);
-                if (triIndex >= field->getWalkmesh()->getTriangles().size())
-                {
-                    std::cout << "WARNING MAP JUMP TRIANGLE OUT OF BOUNDS" << std::endl;
-                    triIndex = 0;
-                }
-                const float zOfTriangleWithId = field->getWalkmesh()->getTriangles().at(triIndex).a.z;
-
-                const Ogre::Vector3 posVec(gateway.destination.x / downscaler_next, gateway.destination.y / downscaler_next, zOfTriangleWithId);
-
-                xmlEntityPoint->SetAttribute("position", Ogre::StringConverter::toString(posVec));
-
-                const float rotation = (360.0f * static_cast<float>(gateway.dir)) / 255.0f;
-                xmlEntityPoint->SetAttribute("rotation", std::to_string(rotation));
-
-                element->LinkEndChild(xmlEntityPoint.release());
             }
         }
 
