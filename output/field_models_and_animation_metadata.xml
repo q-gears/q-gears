@@ -90,13 +90,17 @@
 			<entity name="cloud" new="Cloud"/>
 			<entity name="cl" new="Cloud"/>
 			
+			<entity name="f_cloud" new="DressedCloud"/>
+
 			<entity name="ba" new="Barret"/>
 			<entity name="bal" new="Barret"/>
 			<entity name="ballet" new="Barret"/>
 			<entity name="balette" new="Barret"/>
 		
-			<entity name="earith" new="Aerith"/>
-			<entity name="ea" new="Aerith"/>
+			<entity name="earith" new="Aeris"/>
+			<entity name="ea" new="Aeris"/>
+			
+			<entity name="fearis" new="DressedAeris"/>
 			
 			<entity name="cid" new="Cid"/>
 			
@@ -203,13 +207,27 @@
 	<models>
 		<model name="aaaa" target="cloud"></model>
 		<model name="acgd" target="barret"></model>
+		<model name="aagb" target="tifa"></model>
+		<model name="abjb" target="yuffie"></model>
+		<model name="abda" target="cid"></model>
 		<model name="bxbe" target="wedge"></model>
 		<model name="bwfd" target="biggs"></model>
 		<model name="axdc" target="jessie"></model>
 		<model name="bwab" target="soldier"></model>
 		<model name="azhe" target="guard"></model>
 		<model name="adda" target="sd_red"></model>
-		
+		<model name="byib" target="blue_materia"></model>
+		<model name="cahc" target="aerisflowers"></model>
+		<model name="cbfe" target="md8_2_midgar_woman"></model>
+		<!--<model name="ccbc" target="md8_2_midgar_man"></model>-->
+		<model name="cdja" target="shinra_train_conductor"></model>
+		<model name="awcb" target="shinra_train_employee"></model>
+		<model name="cfbb" target="midgar_beggar"></model>
+		<model name="cfha" target="market_usan"></model>
+		<model name="cgda" target="midgar_child_boy1"></model>
+		<model name="cgif" target="midgar_child_boy2"></model>
+		<model name="ched" target="midgar_child_girl"></model>
+		<model name="ciac" target="midgar_man14"></model>
 	</models>
 
 	<!-- Renames for animations to something more readable -->
