@@ -62,6 +62,13 @@
 			<var Bank="3" Address="217" Name="act1_7_flags1"/>
 			<var Bank="3" Address="223" Name="act1_1_flags4"/>
 			
+			<var Bank="6" Address="0" Name="triangleId"/>
+			<var Bank="6" Address="6" Name="expectedTriangleId"/>
+			<var Bank="6" Address="9" Name="movieFrameNumber"/>
+			
+			<var Bank="5" Address="21" Name="bMoviePlaying"/>
+			<var Bank="5" Address="11" Name="bMoviePastFrame30"/>
+		
 			<var Bank="13" Address="30" Name="pointer"/>
 			<var Bank="13" Address="31" Name="materia_full"/>
 			<var Bank="13" Address="91" Name="save_flag"/>
@@ -83,13 +90,17 @@
 			<entity name="cloud" new="Cloud"/>
 			<entity name="cl" new="Cloud"/>
 			
+			<entity name="f_cloud" new="DressedCloud"/>
+
 			<entity name="ba" new="Barret"/>
 			<entity name="bal" new="Barret"/>
 			<entity name="ballet" new="Barret"/>
 			<entity name="balette" new="Barret"/>
 		
-			<entity name="earith" new="Aerith"/>
-			<entity name="ea" new="Aerith"/>
+			<entity name="earith" new="Aeris"/>
+			<entity name="ea" new="Aeris"/>
+			
+			<entity name="fearis" new="DressedAeris"/>
 			
 			<entity name="cid" new="Cid"/>
 			
@@ -120,14 +131,16 @@
 		
 			<entity name="marine" new="Marlene"/>
 			
-			<entity name="drL" new="door_left"/>
-			<entity name="drR" new="door_right"/>
+			<entity name="drL" new="DoorLeft"/>
+			<entity name="drR" new="DoorRight"/>
 		
 			
 		</entity_names>
 		
 		<!-- Apply only to the given field, overrides the "global data -->
 		<field name="md1stin">
+				
+			<!-- TODO correct namess -->
 			<function entity_name="test" name="f1" new="action1" />
 			
 			<function entity_name="test" name="f2" new="action1" Comment="Barret run from train and invite Cloud" />
@@ -159,27 +172,33 @@
 		</field>
 		
 		<field name="md1_1">
-			<function name="f1" new="scene_part_1" Comment="Move Cloud to talk position for the scene." />
-			<function name="f2" new="scene_part_5" Comment="Cloud reply his name to Avalanche." />
-			<function name="f3" new="scene_part_9" />
-			<function name="f4" new="scene_part_14" />
-			<function name="f5" new="scene_part_16" Comment="look at reactor and run after Barret and others." />
+			<!-- TODO not applied -->
+			<entity name="entity_8" new="Movie" />
+
+			<function entity_name="Cloud" name="script_3" new="scene_part_1" Comment="Move Cloud to talk position for the scene." />
+			<function entity_name="Cloud" name="script_5" new="scene_part_5" Comment="Cloud reply his name to Avalanche." />
+			<function entity_name="Cloud" name="script_6" new="scene_part_6" Comment="Cloud tells Biggs that he didn't care about names." />
+			<function entity_name="Cloud" name="script_7" new="scene_part_9" />
+			<function entity_name="Cloud" name="script_8" new="scene_part_14" />
+			<function entity_name="Cloud" name="script_9" new="scene_part_16" Comment="look at reactor and run after Barret and others." />
 			
-			<function name="f6" new="scene_part_8" />
-			<function name="f7" new="scene_part_13" />
-			<function name="f8" new="scene_part_15" />
+			<function entity_name="Barret" name="script_3" new="scene_part_8" />
+			<function entity_name="Barret" name="script_4" new="scene_part_13" />
+			<function entity_name="Barret" name="script_5" new="scene_part_15" />
 			
-			<function name="f9" new="scene_part_2" Comment="Turn to Cloud and start talk to him." />
-			<function name="f10" new="scene_part_4" Comment="Dialog with Jessie and Cloud. We input Cloud name during this scene and call Cloud reply." />
-			
-			<function name="f11" new="scene_part_7" />
-			<function name="f12" new="scene_part_11" />
+			<function entity_name="Biggs" name="script_3" new="scene_part_2" Comment="Turn to Cloud and start talk to him." />
+			<function entity_name="Biggs" name="script_4" new="scene_part_4" Comment="Dialog with Jessie and Cloud. We input Cloud name during this scene and call Cloud reply." />
+			<function entity_name="Biggs" name="script_5" new="scene_part_7" />
+			<function entity_name="Biggs" name="script_6" new="scene_part_11" />
 		
-			<function name="f13" new="scene_part_3" Comment="Stop breaking gate for a while and talk." />
-			<function name="f14" new="scene_part_10" />
+			<function entity_name="Jessie" name="script_3" new="scene_part_3" Comment="Stop breaking gate for a while and talk." />
+			<function entity_name="Jessie" name="script_4" new="scene_part_10" />
 			
-			<function name="f15" new="scene_part_12" />
-		
+			<function entity_name="Wedge" name="script_3" new="scene_part_12" />
+			
+			<function entity_name="DoorLeft" name="script_3" new="open" />
+			<function entity_name="DoorRight" name="script_3" new="open" />
+			
 		</field>
 		
 	</scripts>
@@ -188,13 +207,27 @@
 	<models>
 		<model name="aaaa" target="cloud"></model>
 		<model name="acgd" target="barret"></model>
+		<model name="aagb" target="tifa"></model>
+		<model name="abjb" target="yuffie"></model>
+		<model name="abda" target="cid"></model>
 		<model name="bxbe" target="wedge"></model>
 		<model name="bwfd" target="biggs"></model>
 		<model name="axdc" target="jessie"></model>
 		<model name="bwab" target="soldier"></model>
 		<model name="azhe" target="guard"></model>
 		<model name="adda" target="sd_red"></model>
-		
+		<model name="byib" target="blue_materia"></model>
+		<model name="cahc" target="aerisflowers"></model>
+		<model name="cbfe" target="md8_2_midgar_woman"></model>
+		<!--<model name="ccbc" target="md8_2_midgar_man"></model>-->
+		<model name="cdja" target="shinra_train_conductor"></model>
+		<model name="awcb" target="shinra_train_employee"></model>
+		<model name="cfbb" target="midgar_beggar"></model>
+		<model name="cfha" target="market_usan"></model>
+		<model name="cgda" target="midgar_child_boy1"></model>
+		<model name="cgif" target="midgar_child_boy2"></model>
+		<model name="ched" target="midgar_child_girl"></model>
+		<model name="ciac" target="midgar_man14"></model>
 	</models>
 
 	<!-- Renames for animations to something more readable -->
@@ -211,6 +244,17 @@
 		<animation name="bxhe" target="Kicked"></animation>
 		<animation name="bxhf" target="Dead2"></animation>
 		<animation name="bxia" target="Throwed"></animation>
+	
+		<animation name="auee" target="LookAtPeople"></animation>
+		<animation name="ajdd" target="TalkNo"></animation>
+		<animation name="bxib" target="Idle"></animation>
+		<animation name="bxic" target="TalkGesture"></animation>
+		<animation name="bxid" target="BreakUp"></animation>
+		<animation name="bxie" target="BreakUpLookBack"></animation>
+		<animation name="bxif" target="BreakUpGetUp"></animation>
+		<animation name="bxja" target="LookAround"></animation>
+	
+		<animation name="bxjf" target="DoorIdle"></animation>
 	
 		
 		<animation name="adcb" target="Idle"></animation>
