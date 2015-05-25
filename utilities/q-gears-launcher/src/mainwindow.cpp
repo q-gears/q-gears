@@ -8,6 +8,8 @@
 #include <QMessageBox>
 #include <QTimer>
 
+static bool installerCreated = false;
+
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), mUi(new Ui::MainWindow)
 {
     mUi->setupUi(this);
@@ -162,9 +164,16 @@ void MainWindow::on_btnGO_clicked()
             }
         }
 
+        if (installerCreated)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Due to use of singletons install function can only be used once, please restart the application :("));
+            return;
+        }
+
         // Start data conversion
         try
         {
+            installerCreated = true;
             mInstaller = std::make_unique<FF7DataInstaller>(QDir::toNativeSeparators(input).toStdString(), QDir::toNativeSeparators(output).toStdString());
             OnInstallStarted();
         }
