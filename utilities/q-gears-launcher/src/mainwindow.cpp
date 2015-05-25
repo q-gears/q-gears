@@ -6,87 +6,93 @@
 #include <QDir>
 #include <QSettings>
 #include <QMessageBox>
+#include <QTimer>
 
-MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWindow)
+static bool installerCreated = false;
+
+MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), mUi(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    mUi->setupUi(this);
     initSettings();
 
-    ui->lineConfigDir->setText(settings->value("ConfigDir").toString());
-    ui->lineDataDir->setText(settings->value("DataDir").toString());
-    ui->lineQGearsExe->setText(settings->value("QGearsEXE").toString());
+    mUi->lineConfigDir->setText(mSettings->value("ConfigDir").toString());
+    mUi->lineDataDir->setText(mSettings->value("DataDir").toString());
+    mUi->lineQGearsExe->setText(mSettings->value("QGearsEXE").toString());
 
 #ifdef _DEBUG
     // Hard coded prebaked paths for debugging to save time
-    ui->lineInput->setText("C:\\Games\\FF7\\data");
-    ui->lineDataDir->setText("C:\\Users\\paul\\Desktop\\q-gears\\output\\data");
+    mUi->lineInput->setText("C:\\Games\\FF7\\data");
+    mUi->lineDataDir->setText("C:\\Users\\paul\\Desktop\\q-gears\\output\\data");
 #endif
+
+    mTimer = new QTimer(this);
+    connect(mTimer, SIGNAL(timeout()), this, SLOT(DoProgress()));
 }
 
 MainWindow::~MainWindow()
 {
-	delete ui;
+	delete mUi;
 }
 void MainWindow::initSettings(void)
 {
     bool win=false;
     #ifdef Q_OS_WIN
-        settings= new QSettings(QCoreApplication::applicationDirPath() +"/" + "launcherSettings.ini",QSettings::IniFormat);
+        mSettings= new QSettings(QCoreApplication::applicationDirPath() +"/" + "launcherSettings.ini",QSettings::IniFormat);
         win=true;
     #else
-        settings= new QSettings(QSettings::NativeFormat,QSettings::UserScope,"q-gears","launcher",0);
+        mSettings= new QSettings(QSettings::NativeFormat,QSettings::UserScope,"q-gears","launcher",0);
     #endif
     //Check settings
-    if(settings->value("ConfigDir").isNull())
+    if(mSettings->value("ConfigDir").isNull())
     {
-        if(win){settings->setValue("ConfigDir",QString("%1/q-gears").arg(QDir::homePath()));}
-        else{settings->setValue("ConfigDir",QString("%1/.q-gears").arg(QDir::homePath()));}
+        if(win){mSettings->setValue("ConfigDir",QString("%1/q-gears").arg(QDir::homePath()));}
+        else{mSettings->setValue("ConfigDir",QString("%1/.q-gears").arg(QDir::homePath()));}
     }
 
-    if(settings->value("DataDir").isNull())
+    if(mSettings->value("DataDir").isNull())
     {
-        if(win){settings->setValue("DataDir",QString("%1/q-gears/data").arg(QDir::homePath()));}
-        else{settings->setValue("DataDir",QString("%1/.q-gears/data").arg(QDir::homePath()));}
+        if(win){mSettings->setValue("DataDir",QString("%1/q-gears/data").arg(QDir::homePath()));}
+        else{mSettings->setValue("DataDir",QString("%1/.q-gears/data").arg(QDir::homePath()));}
     }
 
-    if(settings->value("QGearsEXE").isNull())
+    if(mSettings->value("QGearsEXE").isNull())
     {
-        if(win){settings->setValue("QGearsEXE",QString("%1/q-gears.exe").arg(QCoreApplication::applicationDirPath()));}
-        else{settings->setValue("QGearsEXE",QString("/usr/games/q-gears"));}
+        if(win){mSettings->setValue("QGearsEXE",QString("%1/q-gears.exe").arg(QCoreApplication::applicationDirPath()));}
+        else{mSettings->setValue("QGearsEXE",QString("/usr/games/q-gears"));}
     }
 }
 
-void MainWindow::on_lineConfigDir_editingFinished(){settings->setValue("ConfigDir",ui->lineConfigDir->text());}
+void MainWindow::on_lineConfigDir_editingFinished(){mSettings->setValue("ConfigDir",mUi->lineConfigDir->text());}
 void MainWindow::on_btnConfigDir_clicked()
 {
-    QString temp = QFileDialog::getExistingDirectory(this,tr("Select Location of QGears Configuration Data,"),settings->value("ConfigDir").toString());
+    QString temp = QFileDialog::getExistingDirectory(this,tr("Select Location of QGears Configuration Data,"),mSettings->value("ConfigDir").toString());
     if(!temp.isNull())
     {
-        settings->setValue("ConfigDir",temp);
-        ui->lineConfigDir->setText(temp);
+        mSettings->setValue("ConfigDir",temp);
+        mUi->lineConfigDir->setText(temp);
     }
 
 }
-void MainWindow::on_lineQGearsExe_editingFinished(){settings->setValue("QGearsEXE",ui->lineQGearsExe->text());}
+void MainWindow::on_lineQGearsExe_editingFinished(){mSettings->setValue("QGearsEXE",mUi->lineQGearsExe->text());}
 void MainWindow::on_btnQGearsExe_clicked()
 {
     QString temp = QFileDialog::getOpenFileName(this,tr("Location of QGears Executable,"),QDir::rootPath());
     if(!temp.isNull())
     {
-        settings->setValue("QGearsEXE",temp);
-        ui->lineQGearsExe->setText(temp);
+        mSettings->setValue("QGearsEXE",temp);
+        mUi->lineQGearsExe->setText(temp);
     }
 }
 
 void MainWindow::on_btnLaunch_clicked()
 {
-	QString configDir(ui->lineConfigDir->text());
-	QString exe(ui->lineQGearsExe->text());
+	QString configDir(mUi->lineConfigDir->text());
+	QString exe(mUi->lineQGearsExe->text());
 
 	QStringList args;
-	args.append(QString("--resources-file=%1/resources.cfg").arg(ui->lineConfigDir->text()));
-	args.append(QString("--config-file=%1/q-gears.cfg").arg(ui->lineConfigDir->text()));
-	args.append(QString("--plugins-file=/%1/plugins.cfg").arg(ui->lineConfigDir->text()));
+	args.append(QString("--resources-file=%1/resources.cfg").arg(mUi->lineConfigDir->text()));
+	args.append(QString("--config-file=%1/q-gears.cfg").arg(mUi->lineConfigDir->text()));
+	args.append(QString("--plugins-file=/%1/plugins.cfg").arg(mUi->lineConfigDir->text()));
 
 	// Check that the config dir is set up correctly
 
@@ -99,17 +105,17 @@ void MainWindow::on_btnLaunch_clicked()
 void MainWindow::on_btnInput_clicked()
 {
     QString temp = QFileDialog::getExistingDirectory(this,tr("Location of Game Data),"),QDir::homePath());
-	ui->lineInput->setText(temp);
+	mUi->lineInput->setText(temp);
 }
 
-void MainWindow::on_lineDataDir_editingFinished(){settings->setValue("DataDir",ui->lineDataDir->text());}
+void MainWindow::on_lineDataDir_editingFinished(){mSettings->setValue("DataDir",mUi->lineDataDir->text());}
 void MainWindow::on_btnDataDir_clicked()
 {
-    QString temp = QFileDialog::getExistingDirectory(this,tr("Location of QGears Data),"),settings->value("DataDir").toString());
+    QString temp = QFileDialog::getExistingDirectory(this,tr("Location of QGears Data),"),mSettings->value("DataDir").toString());
     if(!temp.isNull())
     {
-        settings->setValue("DataDir",temp);
-        ui->lineDataDir->setText(temp);
+        mSettings->setValue("DataDir",temp);
+        mUi->lineDataDir->setText(temp);
     }
 }
 
@@ -117,37 +123,109 @@ void MainWindow::on_btnDataDir_clicked()
 
 void MainWindow::on_btnGO_clicked()
 {
-	if (ui->lineInput->text().isEmpty())
-	{
-		QMessageBox::critical(this,tr("Input Error"),tr("No Input Provided"));
-	}
-	else if(ui->lineDataDir->text().isEmpty())
-	{
-		QMessageBox::critical(this,tr("Output Error"),tr("No Output Path Provided"));
-	}
-	else
-	{
-		//QMessageBox::information(this,tr("Converting Data"),tr("Attempt to convert with \n Input: %1 \n Output: %2").arg(ui->lineInput->text(),ui->lineDataDir->text()));
+    if (mUi->lineInput->text().isEmpty())
+    {
+        QMessageBox::critical(this, tr("Input error"), tr("No input to installed FF7 PC data provided"));
+    }
+    else if (mUi->lineDataDir->text().isEmpty())
+    {
+        QMessageBox::critical(this, tr("Output error"), tr("No output path provided"));
+    }
+    else
+    {
+        // Normalize the paths so its in / format seperators
+        QString input = QDir::fromNativeSeparators(mUi->lineInput->text());
+        if (!input.endsWith("/"))
+        {
+            input += "/";
+        }
 
-		QString input = QDir::fromNativeSeparators(ui->lineInput->text());
-		if (!input.endsWith("/"))
-		{
-			input += "/";
-		}
+        QString output = QDir::fromNativeSeparators(mUi->lineDataDir->text());
+        if (!output.endsWith("/"))
+        {
+            output += "/";
+        }
 
-		QString output = QDir::fromNativeSeparators(ui->lineDataDir->text());
-		if (!output.endsWith("/"))
-		{
-			output += "/";
-		}
+        // TODO: Enumerate files or find some better way to do this :)
+        const std::vector<std::string> requiredFiles = 
+        {
+            "field/char.lgp",
+            "field/flevel.lgp"
+        };
 
-		// TODO: Enumerate files or find some better way to do this :)
-		std::vector<std::string> vec;
-		vec.push_back(QString("field/char.lgp").toStdString());
-		vec.push_back(QString("field/flevel.lgp").toStdString());
+        // Ensure required files are in the input dir
+        for (auto& file : requiredFiles)
+        {
+            QString fullPath = input + QString::fromStdString(file);
+            if (!QFile::exists(fullPath))
+            {
+                QMessageBox::critical(this, tr("Missing input file"), tr("File not found: ") + fullPath);
+                return;
+            }
+        }
 
-		FF7DataInstaller conversion;
-		conversion.Convert(QDir::toNativeSeparators(input).toStdString(), QDir::toNativeSeparators(output).toStdString(), vec);
-	}
+        if (installerCreated)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Due to use of singletons install function can only be used once, please restart the application :("));
+            return;
+        }
+
+        // Start data conversion
+        try
+        {
+            installerCreated = true;
+            mInstaller = std::make_unique<FF7DataInstaller>(QDir::toNativeSeparators(input).toStdString(), QDir::toNativeSeparators(output).toStdString());
+            OnInstallStarted();
+        }
+        catch (const std::exception&)
+        {
+            OnInstallStopped();
+        }
+    }
 }
 
+void MainWindow::EnableUi(bool enable)
+{
+    mUi->btnGO->setEnabled(enable);
+    mUi->lineInput->setEnabled(enable);
+    mUi->btnInput->setEnabled(enable);
+    mUi->lineDataDir->setEnabled(enable);
+    mUi->btnDataDir->setEnabled(enable);
+    mUi->progressBar->setValue(0);
+    if (!enable)
+    {
+        mTimer->start(0);
+    }
+    else
+    {
+        mTimer->stop();
+    }
+}
+
+void MainWindow::OnInstallStarted()
+{
+    EnableUi(false);
+}
+
+void MainWindow::OnInstallStopped()
+{
+    EnableUi(true);
+}
+
+void MainWindow::DoProgress()
+{
+    try
+    {
+        const int progress = mInstaller->Progress();
+        mUi->progressBar->setValue(progress);
+        if (progress >= 100)
+        {
+            OnInstallStopped();
+        }
+    }
+    catch (const std::exception& ex)
+    {
+        OnInstallStopped();
+        QMessageBox::critical(this, tr("Data conversion exception"), ex.what());
+    }
+}

@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <OgreLogManager.h>
 
 #include "data/QGearsAFileSerializer.h"
+#include "core/Logger.h"
 
 namespace QGears
 {
@@ -120,16 +121,24 @@ namespace QGears
         }
         for( uint32 i(0); i < m_bone_count; ++i )
         {
-            bone = skeleton->getBone( i + 1 );
-            track = anim->createNodeTrack( track_handle++, bone );
-            time = 0;
-            for( FrameList::const_iterator frame( m_frames.begin())
-                ;frame != m_frames.end(); ++frame )
+            if (i + 1 >= skeleton->getNumBones())
             {
-                const Ogre::Vector3& rot( frame->bone_rotations[i] );
-                Ogre::TransformKeyFrame* key_frame( track->createNodeKeyFrame( time ) );
-                setFrameRotation( key_frame, rot );
-                time += FRAME_DURATION;
+                // TODO: Figure out why this happens/fix it
+                LOG_ERROR("Bone " + std::to_string(i + 1) + "  is out of bounds " + std::to_string(skeleton->getNumBones()) + " for: " + name + " in: " + skeleton->getName());
+            }
+            else
+            {
+                bone = skeleton->getBone(i + 1);
+                track = anim->createNodeTrack(track_handle++, bone);
+                time = 0;
+                for (FrameList::const_iterator frame(m_frames.begin())
+                    ; frame != m_frames.end(); ++frame)
+                {
+                    const Ogre::Vector3& rot(frame->bone_rotations[i]);
+                    Ogre::TransformKeyFrame* key_frame(track->createNodeKeyFrame(time));
+                    setFrameRotation(key_frame, rot);
+                    time += FRAME_DURATION;
+                }
             }
         }
     }
