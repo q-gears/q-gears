@@ -42,7 +42,7 @@ FF7DataInstaller::FF7DataInstaller(std::string inputDir, std::string outputDir)
 {
     if (!mApp.initOgre(true))
     {
-        throw std::exception("Ogre init failure");
+        throw std::runtime_error("Ogre init failure");
     }
 
 }
