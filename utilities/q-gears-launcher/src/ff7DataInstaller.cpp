@@ -32,13 +32,15 @@
 #include <QDir>
 #include "common/make_unique.h"
 
-FF7DataInstaller::FF7DataInstaller(std::string inputDir, std::string outputDir)
+FF7DataInstaller::FF7DataInstaller(std::string inputDir, std::string outputDir, std::function<void(std::string)> fnWriteOutputLine)
 #ifdef _DEBUG
     : mApp("plugins_d.cfg", "resources_d.cfg", "install_d.log"),
 #else
     : mApp("plugins.cfg", "resources.cfg", "install.log"),
 #endif
-    mInputDir(inputDir), mOutputDir(outputDir)
+    mInputDir(inputDir),
+    mOutputDir(outputDir),
+    mfnWriteOutputLine(fnWriteOutputLine)
 {
     if (!mApp.initOgre(true))
     {
@@ -65,12 +67,14 @@ int FF7DataInstaller::Progress()
     switch (mState)
     {
     case eIdle:
+        mfnWriteOutputLine("Loading flevel.lgp");
         mProgressStepNumElements = 1;
         mIteratorCounter = 0;
         mFieldsLgp = std::make_unique<ScopedLgp>(mApp.getRoot(), mInputDir + "field/flevel.lgp", "LGP", "FFVIIFields");
         mState = eInitCollectFieldSpawnPointsAndScaleFactors;
         return CalcProgress();
     case eInitCollectFieldSpawnPointsAndScaleFactors:
+        mfnWriteOutputLine("Collecting spawn points and scale factors");
         InitCollectSpawnAndScaleFactors();
         return CalcProgress();
     case eCollectFieldSpawnPointsAndScaleFactors:
@@ -80,6 +84,7 @@ int FF7DataInstaller::Progress()
         ConvertFieldsIteration();
         return CalcProgress();
     case eWriteMapListOfConvertedFieldsStart:
+        mfnWriteOutputLine("Write fields");
         WriteMapsXmlBegin();
         return CalcProgress();
     case eWriteMapListOfConvertedFieldsIteration:
@@ -89,6 +94,7 @@ int FF7DataInstaller::Progress()
         EndWriteMapsXml();
         return CalcProgress();
     case eConvertFieldModelsBegin:
+        mfnWriteOutputLine("Converting field models");
         ConvertFieldModelsBegin();
         return CalcProgress();
     case eConvertFieldModelsIteration:
@@ -358,7 +364,8 @@ static void FF7PcFieldToQGearsField(
     FieldSpawnPointsMap& spawnMap,
     const FieldScaleFactorMap& scaleFactorMap,
     ModelsAndAnimationsDb& modelAnimationDb,
-    MapCollection& maps)
+    MapCollection& maps,
+    std::function<void(std::string)> fnWriteOutputLine)
 {
     // Generate triggers script to insert into main decompiled FF7 field -> LUA script
     std::string gatewayScriptData;
@@ -392,11 +399,13 @@ static void FF7PcFieldToQGearsField(
         }
         else
         {
+            fnWriteOutputLine("[ERROR] Failed to open script file for writing");
             std::cerr << "Failed to open script file for writing" << std::endl;
         }
     }
     catch (const ::InternalDecompilerError& ex)
-    {
+    { 
+        fnWriteOutputLine("[ERROR] internal decompiler error");
         std::cerr << "InternalDecompilerError: " << ex.what() << std::endl;
     }
 
@@ -900,17 +909,20 @@ void FF7DataInstaller::CollectionFieldSpawnAndScaleFactors()
             if (mConversionStep == 1)
             {
                 mField = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
+                mfnWriteOutputLine("Load field " + resourceName);
                 return;
             }
 
             if (mConversionStep == 2)
             {
+                mfnWriteOutputLine("Read spawn points from scripts");
                 CollectSpawnPoints(mField, mMapList, mCollectedSpawnPoints);
                 return;
             }
            
             if (mConversionStep == 3)
             {
+                mfnWriteOutputLine("Read scale factor");
                 CollectFieldScaleFactors(mField, mCollectedScaleFactors, mMapList);
                 mConversionStep = 0;
                 mIteratorCounter++;
@@ -946,14 +958,16 @@ void FF7DataInstaller::ConvertFieldsIteration()
             if (/*IsTestField(resourceName) &&*/
                 !WillCrash(resourceName))
             {
+                mfnWriteOutputLine("Converting field " + resourceName);
                 std::cout << "Converting: " << resourceName << std::endl;
                 CreateDir(FieldMapDir() + "/" + resourceName);
 
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
-                FF7PcFieldToQGearsField(field, mOutputDir, mMapList, mCollectedSpawnPoints, mCollectedScaleFactors, mModelsAndAnimationsUsedByConvertedFields, mConvertedMapList);
+                FF7PcFieldToQGearsField(field, mOutputDir, mMapList, mCollectedSpawnPoints, mCollectedScaleFactors, mModelsAndAnimationsUsedByConvertedFields, mConvertedMapList, mfnWriteOutputLine);
             }
             else
             {
+                mfnWriteOutputLine("[ERROR] Skip field " + resourceName + " due to crash or hang issue");
                 std::cout << "Skip: " << resourceName << " as it has a crash or hang issue" << std::endl;
             }
         }
@@ -988,6 +1002,8 @@ void FF7DataInstaller::WriteMapsXmlIteration()
     if (mConvertedMapListIt != mConvertedMapList.end())
     {
         auto map = *mConvertedMapListIt;
+
+        mfnWriteOutputLine("Writing field " + FieldName(map));
         std::unique_ptr<TiXmlElement> xmlElement(new TiXmlElement("map"));
         xmlElement->SetAttribute("name", FieldName(map));
         xmlElement->SetAttribute("file_name", FieldMapDir() + "/" + map + "/map.xml");
@@ -1019,6 +1035,7 @@ void FF7DataInstaller::ConvertFieldModelsBegin()
     mIteratorCounter = 0;
     mState = eConvertFieldModelsIteration;
     mIteratorCounter = 0;
+    mConversionStep = 0;
     mModelAnimationMapIterator = mModelsAndAnimationsUsedByConvertedFields.mMap.begin();
 }
 
@@ -1027,31 +1044,50 @@ void FF7DataInstaller::ConvertFieldModelsIteration()
     mProgressStepNumElements = mModelsAndAnimationsUsedByConvertedFields.mMap.size();
     if (mModelAnimationMapIterator != mModelsAndAnimationsUsedByConvertedFields.mMap.end())
     {
-        Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(mModelAnimationMapIterator->first, "FFVII");
-
-        Ogre::String baseName;
-        QGears::StringUtil::splitBase(mModelAnimationMapIterator->first, baseName);
-
-        auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
-
-        Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
-        Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
-
-        for (auto& anim : mModelAnimationMapIterator->second)
+        if (mConversionStep == 0)
         {
-            QGears::AFileManager       &afl_mgr(QGears::AFileManager::getSingleton());
-            QGears::AFilePtr  a = afl_mgr.load(anim, "FFVII").staticCast<QGears::AFile>();
-
-            // Convert the FF7 name to a more readable name set in the meta data
-            Ogre::String baseName;
-            QGears::StringUtil::splitBase(anim, baseName);
-            a->addTo(skeleton, QGears::FF7::NameLookup::animation(baseName));
+            mfnWriteOutputLine("Converting model " + mModelAnimationMapIterator->first);
+            mConversionStep++;
         }
+        else
+        {
+            try
+            {
+                Ogre::ResourcePtr hrc = QGears::HRCFileManager::getSingleton().load(mModelAnimationMapIterator->first, "FFVII");
 
-        exportMesh(mOutputDir + "/" + FieldModelDir() + "/", mesh);
+                Ogre::String baseName;
+                QGears::StringUtil::splitBase(mModelAnimationMapIterator->first, baseName);
 
-        mIteratorCounter++;
-        mModelAnimationMapIterator++;
+                auto meshName = QGears::FF7::NameLookup::model(baseName) + ".mesh";
+
+                Ogre::MeshPtr mesh(Ogre::MeshManager::getSingleton().load(meshName, "FFVII"));
+                Ogre::SkeletonPtr skeleton(mesh->getSkeleton());
+
+                for (auto& anim : mModelAnimationMapIterator->second)
+                {
+                    QGears::AFileManager       &afl_mgr(QGears::AFileManager::getSingleton());
+                    QGears::AFilePtr  a = afl_mgr.load(anim, "FFVII").staticCast<QGears::AFile>();
+
+                    // Convert the FF7 name to a more readable name set in the meta data
+                    Ogre::String baseName;
+                    QGears::StringUtil::splitBase(anim, baseName);
+                    a->addTo(skeleton, QGears::FF7::NameLookup::animation(baseName));
+                }
+
+                exportMesh(mOutputDir + "/" + FieldModelDir() + "/", mesh);
+            }
+            catch (const Ogre::Exception& ex)
+            {
+                mfnWriteOutputLine("[ERROR] converting model " + mModelAnimationMapIterator->first + " msg: " + ex.what());
+            }
+            catch (const std::exception& ex)
+            {
+                mfnWriteOutputLine("[ERROR] converting model " + mModelAnimationMapIterator->first + " msg: " + ex.what());
+            }
+            mIteratorCounter++;
+            mModelAnimationMapIterator++;
+            mConversionStep = 0;
+        }
     }
     else
     {

@@ -181,7 +181,13 @@ void MainWindow::on_btnGO_clicked()
         try
         {
             installerCreated = true;
-            mInstaller = std::make_unique<FF7DataInstaller>(QDir::toNativeSeparators(input).toStdString(), QDir::toNativeSeparators(output).toStdString());
+            mInstaller = std::make_unique<FF7DataInstaller>(
+                QDir::toNativeSeparators(input).toStdString(), 
+                QDir::toNativeSeparators(output).toStdString(),
+                [this](std::string outputLine)
+                {
+                mUi->txtOutput->append(outputLine.c_str());
+                } );
             OnInstallStarted();
         }
         catch (const std::exception&)

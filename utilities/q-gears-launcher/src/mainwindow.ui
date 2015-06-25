@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>734</width>
-    <height>217</height>
+    <width>720</width>
+    <height>375</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -170,6 +170,23 @@
          </widget>
         </item>
         <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Output</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="txtOutput">
+          <property name="undoRedoEnabled">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="btnGO">
           <property name="text">
            <string>Install data</string>
@@ -187,7 +204,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>734</width>
+     <width>720</width>
      <height>21</height>
     </rect>
    </property>
