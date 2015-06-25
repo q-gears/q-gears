@@ -4,7 +4,7 @@ os:
 
 matrix:
  allow_failures:
-  - env: COVERITY=1
+  - env: COVERAGE=1
  exclude:
 # Don't build using gcc on mac
   - os: osx
