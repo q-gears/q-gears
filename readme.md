@@ -1,3 +1,13 @@
+|  Build |   status | 
+|:---:|:---:|
+|Linux/OSX|[![Build Status](https://travis-ci.org/q-gears/q-gears.svg?branch=master)](https://travis-ci.org/q-gears/q-gears)  |
+|Windows 32 |  [![Win32 status](https://paulsapps.visualstudio.com/DefaultCollection/_apis/public/build/definitions/8a250c8d-747e-4705-b4ff-802acb5a79d9/4/badge)]() | 
+| Windows 64| [![Win64 status](https://paulsapps.visualstudio.com/DefaultCollection/_apis/public/build/definitions/8a250c8d-747e-4705-b4ff-802acb5a79d9/5/badge)]()  |
+| Coverage   |[![Coverage Status](https://coveralls.io/repos/q-gears/q-gears/badge.svg)](https://coveralls.io/r/q-gears/q-gears)  |
+| Coverity   |[![Coverity scan status](https://scan.coverity.com/projects/3861/badge.svg)](https://scan.coverity.com/projects/3861) |
+
+
+
 # What is QGears?  [![Build Status](https://travis-ci.org/q-gears/q-gears.svg?branch=master)](https://travis-ci.org/q-gears/q-gears) [![Coverity scan status](https://scan.coverity.com/projects/3861/badge.svg)](https://scan.coverity.com/projects/3861) [![Coverage Status](https://coveralls.io/repos/q-gears/q-gears/badge.svg)](https://coveralls.io/r/q-gears/q-gears)
 
 Q-Gears is an RPG engine for games like Squaresoft's Final Fantasy 7, Final Fantasy IX or Xenogears. It is designed to be cross-platfrom and run on modern operating systems such as Win32 and Linux.
