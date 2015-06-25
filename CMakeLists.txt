@@ -251,6 +251,8 @@ SET(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING.txt")
 MESSAGE( STATUS "CMAKE_BUILD_TYPE:         " ${CMAKE_BUILD_TYPE} )
 MESSAGE( STATUS "BOOST_ROOT:         " ${BOOST_ROOT} )
 
+INSTALL(FILES "${CMAKE_CURRENT_SOURCE_DIR}/output/field_models_and_animation_metadata.xml" DESTINATION ".")
+
 #OS SPECIFIC 
 if(WIN32)
     # On Windows generate MSI packages

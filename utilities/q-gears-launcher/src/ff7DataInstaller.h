@@ -109,7 +109,7 @@ public:
 class FF7DataInstaller
 {
 public:
-    FF7DataInstaller(std::string inputDir, std::string outputDir);
+    FF7DataInstaller(std::string inputDir, std::string outputDir, std::function<void(std::string)> fnWriteOutputLine);
     ~FF7DataInstaller();
     int Progress();
 private:
@@ -167,4 +167,6 @@ private:
     std::unique_ptr<TiXmlElement> mElement;
 
     ModelAnimationMap::iterator mModelAnimationMapIterator;
+
+    std::function<void(std::string)> mfnWriteOutputLine;
 };
