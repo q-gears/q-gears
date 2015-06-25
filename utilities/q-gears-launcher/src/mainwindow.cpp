@@ -13,6 +13,13 @@ static bool installerCreated = false;
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), mUi(new Ui::MainWindow)
 {
     mUi->setupUi(this);
+
+    // Goto the data tab by default
+    mUi->tabWidget->setCurrentIndex(1);
+
+    // Turn off the launcher tab for now since it dosen't actually work
+    mUi->tabWidget->setTabEnabled(0, false);
+
     initSettings();
 
     mUi->lineConfigDir->setText(mSettings->value("ConfigDir").toString());
