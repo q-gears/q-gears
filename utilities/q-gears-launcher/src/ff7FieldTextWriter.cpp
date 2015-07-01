@@ -210,7 +210,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
 
         mLogger->Log(dialog);
         dialog.clear();
-        mLogger->LogW("<dialog id=\"" + fieldName + "_" + std::to_string(i) + "\">");
+        mLogger->LogW("<dialog name=\"" + fieldName + "_" + std::to_string(i) + "\">");
 
         for (unsigned char temp = 0x00;; ++offset)
         {
@@ -411,35 +411,36 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
 
                 unsigned char temp2 = GetU8(offset);
 
+                // TODO: I think value must be RGB?
                 if (temp2 == 0xD4)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour id=\"red\" />");
+                    mLogger->LogW("<colour value=\"red\">");
                 }
                 else if (temp2 == 0xD5)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour id=\"purple\" />");
+                    mLogger->LogW("<colour value=\"purple\" >");
                 }
                 else if (temp2 == 0xD6)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour id=\"green\" />");
+                    mLogger->LogW("<colour value=\"green\" >");
                 }
                 else if (temp2 == 0xD7)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour id=\"cyan\" />");
+                    mLogger->LogW("<colour value=\"cyan\" >");
                 }
                 else if (temp2 == 0xD8)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour id=\"yellow\" />");
+                    mLogger->LogW("<colour value=\"yellow\">");
                 }
                 else if (temp2 == 0xD9)
                 {
@@ -451,7 +452,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<pause_ok />");
+                    mLogger->LogW("<pause_ok >");
                 }
                 else if (temp2 == 0xDD)
                 {
