@@ -168,11 +168,11 @@ ScriptManager::InitBinds()
     luabind::module( m_LuaState )
     [
         luabind::class_< DialogsManager >( "Dialog" )
-            .def( "show_dialog", ( void( DialogsManager::* )( const char*, const char*, const int, const int ) ) &DialogsManager::ShowDialog )
-            .def( "show_text", ( void( DialogsManager::* )( const char*, const char*, const int, const int, const int, const int ) ) &DialogsManager::ShowText )
-            .def( "sync", ( int( DialogsManager::* )( const char* ) ) &DialogsManager::Sync, luabind::yield )
-            .def( "set_variable", ( void( DialogsManager::* )( const char*, const char*, const char* ) ) &DialogsManager::SetVariable )
-            .def( "hide", ( void( DialogsManager::* )( const char* ) ) &DialogsManager::Hide )
+            .def( "dialog_open", ( void( DialogsManager::* )( const char*, int, int, int, int ) ) &DialogsManager::OpenDialog )
+            .def( "dialog_set_text", ( void( DialogsManager::* )( const char*, const char* ) ) &DialogsManager::SetText )
+            .def( "dialog_wait_for_close", ( int( DialogsManager::* )( const char* ) ) &DialogsManager::Sync, luabind::yield )
+            .def( "dialog_close", (void(DialogsManager::*)(const char*)) &DialogsManager::Hide)
+            .def( "set_variable", ( void( DialogsManager::* )( const char*, const char*, const char* ) ) &DialogsManager::SetVariable )           
             .def( "set_clickable", ( void( DialogsManager::* )( const char*, const bool ) ) &DialogsManager::SetClickable )
             .def( "set_cursor", ( void( DialogsManager::* )( const char*, const int, const int ) ) &DialogsManager::SetCursor )
             .def( "get_cursor", ( int( DialogsManager::* )( const char* ) ) &DialogsManager::GetCursor )
@@ -246,7 +246,7 @@ ScriptManager::InitBinds()
     luabind::globals( m_LuaState )[ "entity_manager" ] = boost::ref( *( EntityManager::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "background2d" ] = boost::ref( *( EntityManager::getSingletonPtr()->GetBackground2D() ) );
     luabind::globals( m_LuaState )[ "walkmesh" ] = boost::ref( *( EntityManager::getSingletonPtr()->GetWalkmesh() ) );
-    luabind::globals( m_LuaState )[ "message" ] = boost::ref( *( DialogsManager::getSingletonPtr() ) );
+    luabind::globals( m_LuaState )[ "dialog" ] = boost::ref( *( DialogsManager::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "ui_manager" ] = boost::ref( *( UiManager::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "world_map_module" ] = boost::ref( *( QGears::WorldMapModule::getSingletonPtr() ) );
     luabind::globals( m_LuaState )[ "timer" ] = boost::ref( *( Timer::getSingletonPtr() ) );

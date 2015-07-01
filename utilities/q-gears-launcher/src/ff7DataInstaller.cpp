@@ -902,7 +902,7 @@ void FF7DataInstaller::CollectionFieldSpawnAndScaleFactors()
     {
         auto resourceName = (*mFLevelFileList)[mIteratorCounter];
         // Exclude things that are not fields
-        if (IsAFieldFile(resourceName) /*&& IsTestField(resourceName)*/)
+        if (IsAFieldFile(resourceName) && IsTestField(resourceName))
         {
             mConversionStep++;
 
@@ -955,7 +955,7 @@ void FF7DataInstaller::ConvertFieldsIteration()
         {
             mIteratorCounter++;
 
-            if (/*IsTestField(resourceName) &&*/
+            if (IsTestField(resourceName) &&
                 !WillCrash(resourceName))
             {
                 mfnWriteOutputLine("Converting field " + resourceName);
