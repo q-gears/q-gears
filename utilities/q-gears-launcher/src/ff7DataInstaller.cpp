@@ -357,7 +357,9 @@ static float FieldScaleFactor(const FieldScaleFactorMap& scaleFactorMap, size_t 
     return it->second;
 }
 
+
 static void FF7PcFieldToQGearsField(
+    FF7FieldTextWriter& fieldTextWriter,
     QGears::FLevelFilePtr& field,
     const std::string& outDir,
     const std::vector<std::string>& fieldIdToNameLookup,
@@ -396,6 +398,7 @@ static void FF7PcFieldToQGearsField(
         if (scriptFile.is_open())
         {
             scriptFile << decompiled.luaScript;
+            fieldTextWriter.Write(rawFieldData, field->getName());
         }
         else
         {
@@ -939,6 +942,7 @@ void FF7DataInstaller::CollectionFieldSpawnAndScaleFactors()
         mField.setNull();
         mIteratorCounter = 0;
         mState = eConvertFieldsIteration;
+        mFieldTextWriter.Begin(mOutputDir + "/texts/english/dialogs_mission1.xml");
     }
 }
 
@@ -963,7 +967,7 @@ void FF7DataInstaller::ConvertFieldsIteration()
                 CreateDir(FieldMapDir() + "/" + resourceName);
 
                 QGears::FLevelFilePtr field = QGears::LZSFLevelFileManager::getSingleton().load(resourceName, "FFVIIFields").staticCast<QGears::FLevelFile>();
-                FF7PcFieldToQGearsField(field, mOutputDir, mMapList, mCollectedSpawnPoints, mCollectedScaleFactors, mModelsAndAnimationsUsedByConvertedFields, mConvertedMapList, mfnWriteOutputLine);
+                FF7PcFieldToQGearsField(mFieldTextWriter, field, mOutputDir, mMapList, mCollectedSpawnPoints, mCollectedScaleFactors, mModelsAndAnimationsUsedByConvertedFields, mConvertedMapList, mfnWriteOutputLine);
             }
             else
             {
@@ -980,6 +984,7 @@ void FF7DataInstaller::ConvertFieldsIteration()
     {
         mIteratorCounter = 0;
         mState = eWriteMapListOfConvertedFieldsStart;
+        mFieldTextWriter.End();
     }
 }
 

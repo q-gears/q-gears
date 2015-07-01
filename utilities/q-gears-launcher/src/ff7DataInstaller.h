@@ -8,6 +8,7 @@
 #include "data/QGearsTriggersFile.h"
 #include "common/QGearsStringUtil.h"
 #include "data/QGearsFLevelFile.h"
+#include "ff7FieldTextWriter.h"
 
 class ScopedLgp
 {
@@ -169,4 +170,6 @@ private:
     ModelAnimationMap::iterator mModelAnimationMapIterator;
 
     std::function<void(std::string)> mfnWriteOutputLine;
+
+    FF7FieldTextWriter mFieldTextWriter;
 };

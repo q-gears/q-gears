@@ -335,7 +335,7 @@ DatFile::DumpText( const Ogre::String& export_path, const Field& field, bool eng
 
         export_text->Log(dialog);
         dialog.clear();
-        export_text->LogW( "<dialog id=\"" + IntToString(m_Dialogs[i]) + "\">" );
+        export_text->LogW( "<dialog id=\"" + std::to_string(m_Dialogs[i]) + "\">" );
 
         for (unsigned char temp = 0x00; ; ++offset)
         {
