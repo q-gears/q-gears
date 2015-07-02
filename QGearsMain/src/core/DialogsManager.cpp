@@ -268,54 +268,65 @@ DialogsManager::Clear()
 
 
 void
-DialogsManager::ShowDialog( const char* d_name, const char* name, const int x, const int y )
+DialogsManager::OpenDialog(const char* d_name, int x, int y, int w, int h)
 {
     int id = GetMessageId( d_name );
     if( id == -1 )
     {
-        LOG_TRIVIAL( "[SCRIPT] show_dialog: dialog \"" + Ogre::String( d_name ) + "\" doesn't exist." );
+        LOG_TRIVIAL( "[SCRIPT] dialog_open: dialog \"" + Ogre::String( d_name ) + "\" doesn't exist." );
         return;
     }
 
-    if( m_Messages[ id ]->state != MS_CLOSED )
+    MessageData* data = m_Messages[id];
+    if( data->state != MS_CLOSED )
     {
-        LOG_TRIVIAL( "[SCRIPT] show_dialog: dialog \"" + Ogre::String( d_name ) + " already shown. Close it first." );
+        LOG_TRIVIAL( "[SCRIPT] dialog_open: dialog \"" + Ogre::String( d_name ) + " already created. Close it first." );
         return;
     }
 
-    float width, height;
-    TiXmlNode* text = TextManager::getSingleton().GetDialog( name, width, height );
-    if( text != NULL )
-    {
-        m_Messages[ id ]->text_area->SetText( text );
-        ShowMessage( id, x, y, width, height );
-    }
-    else
-    {
-        LOG_TRIVIAL( "[SCRIPT] show_dialog: dialog text \"" + Ogre::String( name ) + "\" doesn't exist." );
-    }
+    data->x = x;
+    data->y = y;
+    data->w = w;
+    data->h = h;
+
+    LOG_TRIVIAL( "[SCRIPT] dialog_open: dialog(" +
+        std::to_string(x) + "," + std::to_string(y) + "," + 
+        std::to_string(w) + "," + std::to_string(h) + ")");
+    
 }
 
 
 
 void
-DialogsManager::ShowText( const char* d_name, const char* text, const int x, const int y, const int width, const int height )
+DialogsManager::SetText(const char* d_name, const char* text)
 {
-    int id = GetMessageId( d_name );
-    if( id == -1 )
+    int id = GetMessageId(d_name);
+    if (id == -1)
     {
-        LOG_TRIVIAL( "[SCRIPT] show_text: dialog \"" + Ogre::String( d_name ) + "\" doesn't exist." );
+        LOG_TRIVIAL("[SCRIPT] show_text: dialog \"" + Ogre::String(d_name) + "\" doesn't exist.");
         return;
     }
 
-    if( m_Messages[ id ]->state != MS_CLOSED )
+    MessageData* data = m_Messages[id];
+
+
+    // XML data can change dialog w/h VS whats in the lua script
+    float width = 0.0f;
+    float height = 0.0f;
+    TiXmlNode* xmlText = TextManager::getSingleton().GetDialog(text, width, height);
+    if (xmlText != NULL)
     {
-        LOG_TRIVIAL( "[SCRIPT] show_dialog: dialog \"" + Ogre::String( d_name ) + " already shown. Close it first." );
-        return;
+        m_Messages[id]->text_area->SetText(xmlText);
+        ShowMessage(id, data->x, data->y, 
+            width == 0.0f ? data->w : width, 
+            height == 0.0f ? data->h : height);
+    }
+    else
+    {
+        m_Messages[id]->text_area->SetText(std::string("[ERROR string not found:] ") + text);
+        ShowMessage(id, data->x, data->y, data->w, data->h);
     }
 
-    m_Messages[ id ]->text_area->SetText( text );
-    ShowMessage( id, x, y, width, height );
 }
 
 
@@ -334,22 +345,6 @@ DialogsManager::Sync( const char* d_name )
     m_Messages[ id ]->sync.push_back( script );
     return -1;
 }
-
-
-
-void
-DialogsManager::SetVariable( const char* d_name, const char* name, const char* value )
-{
-    int id = GetMessageId( d_name );
-    if( id == -1 )
-    {
-        LOG_TRIVIAL( "[SCRIPT] set_variable: dialog \"" + Ogre::String( d_name ) + "\" doesn't exist." );
-        return;
-    }
-
-    m_Messages[ id ]->text_area->SetVariable( name, value );
-}
-
 
 
 void
@@ -372,6 +367,18 @@ DialogsManager::Hide( const char* d_name )
 }
 
 
+void
+DialogsManager::SetVariable(const char* d_name, const char* name, const char* value)
+{
+    int id = GetMessageId(d_name);
+    if (id == -1)
+    {
+        LOG_TRIVIAL("[SCRIPT] set_variable: dialog \"" + Ogre::String(d_name) + "\" doesn't exist.");
+        return;
+    }
+
+    m_Messages[id]->text_area->SetVariable(name, value);
+}
 
 void
 DialogsManager::SetClickable( const char* d_name, const bool clickable )

@@ -7,12 +7,14 @@ include_directories (
 set ( q-gears-launcher_HDRS
 	src/mainwindow.h
 	src/ff7DataInstaller.h
+    src/ff7FieldTextWriter.h
 	)
 
 set ( q-gears-launcher_SRCS
 	src/main.cpp
 	src/mainwindow.cpp
 	src/ff7DataInstaller.cpp
+    src/ff7FieldTextWriter.cpp
 	)
 
 set ( q-gears-launcher_UIS

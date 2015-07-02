@@ -60,6 +60,10 @@ struct MessageData
     UiWidget* cursor;
 
     MessageState state;
+    int x = 0;
+    int y = 0;
+    int w = 0;
+    int h = 0;
 
     std::vector< ScriptId > sync;
 
@@ -89,11 +93,13 @@ public:
     void Update();
     void Clear();
 
-    void ShowDialog( const char* d_name, const char* name, const int x, const int y );
-    void ShowText( const char* d_name, const char* text, const int x, const int y, const int width, const int height );
-    int Sync( const char* d_name );
+    void OpenDialog(const char* d_name, int x, int y, int w, int h); // aka dialog_open
+    void SetText( const char* d_name, const char* text ); // aka dialog_set_text
+    int Sync( const char* d_name ); // aka dialog_wait_for_close
+    void Hide(const char* d_name); // aka dialog_close
+
     void SetVariable( const char* d_name, const char* name, const char* value );
-    void Hide( const char* d_name );
+
     void SetClickable( const char* d_name, const bool clickable );
     void SetCursor( const char* d_name, const int first_row, const int last_row );
     int GetCursor( const char* d_name ) const;
