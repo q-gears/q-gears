@@ -398,7 +398,14 @@ static void FF7PcFieldToQGearsField(
         if (scriptFile.is_open())
         {
             scriptFile << decompiled.luaScript;
-            fieldTextWriter.Write(rawFieldData, field->getName());
+            try
+            {
+                fieldTextWriter.Write(rawFieldData, field->getName());
+            }
+            catch (const std::out_of_range&)
+            {
+                fnWriteOutputLine("Failed to read texts");
+            }
         }
         else
         {
@@ -905,7 +912,7 @@ void FF7DataInstaller::CollectionFieldSpawnAndScaleFactors()
     {
         auto resourceName = (*mFLevelFileList)[mIteratorCounter];
         // Exclude things that are not fields
-        if (IsAFieldFile(resourceName) && IsTestField(resourceName))
+        if (IsAFieldFile(resourceName) /*&& IsTestField(resourceName)*/)
         {
             mConversionStep++;
 
@@ -959,7 +966,7 @@ void FF7DataInstaller::ConvertFieldsIteration()
         {
             mIteratorCounter++;
 
-            if (IsTestField(resourceName) &&
+            if (/*IsTestField(resourceName) &&*/
                 !WillCrash(resourceName))
             {
                 mfnWriteOutputLine("Converting field " + resourceName);

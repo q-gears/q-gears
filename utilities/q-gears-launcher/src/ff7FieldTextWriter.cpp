@@ -161,12 +161,13 @@ void FF7FieldTextWriter::Begin(std::string fileName)
     mLogger = std::make_unique<Logger>(fileName);
 
     // Write BOM
+    /* FIX ME - need to write data as UTF8
     std::vector< unsigned char > bomBytes;
     bomBytes.push_back(0xFF);
     bomBytes.push_back(0xFE);
     mLogger->Log(bomBytes);
-
-    mLogger->LogW("<texts>\n");
+    */
+    mLogger->Log("<texts>\n");
 }
 
 u16 FF7FieldTextWriter::GetU16LE(u32 offset)
@@ -210,7 +211,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
 
         mLogger->Log(dialog);
         dialog.clear();
-        mLogger->LogW("<dialog name=\"" + fieldName + "_" + std::to_string(i) + "\">");
+        mLogger->Log("<dialog name=\"" + fieldName + "_" + std::to_string(i) + "\">");
 
         for (unsigned char temp = 0x00;; ++offset)
         {
@@ -222,130 +223,130 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
 
             if (temp == 0xE0 && english == true)
             {
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
             }
             else if (temp == 0xE1 && english == true)
             {
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
             }
             else if (temp == 0xE2 && english == true)
             {
-                dialog.push_back(english_chars[0x0C] >> 8); dialog.push_back(english_chars[0x0C] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x0C] >> 8); //dialog.push_back(english_chars[0x0C] & 0xFF);
+                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
             }
             else if (temp == 0xE8)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<next_page />");
+                mLogger->Log("<next_page />");
             }
             else if (temp == 0xEA)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<include name=\"char_cloud\" />");
+                mLogger->Log("<include name=\"char_cloud\" />");
             }
             else if (temp == 0xEB)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<include name=\"char_barret\" />");
+                mLogger->Log("<include name=\"char_barret\" />");
             }
             else if (temp == 0xEC)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character id=\"2\" />");
+                mLogger->Log("<character id=\"2\" />");
             }
             else if (temp == 0xED)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character id=\"3\" />");
+                mLogger->Log("<character id=\"3\" />");
             }
             else if (temp == 0xEE)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character id=\"4\" />");
+                mLogger->Log("<character id=\"4\" />");
             }
             else if (temp == 0xEF)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character id=\"5\" />");
+                mLogger->Log("<character id=\"5\" />");
             }
             else if (temp == 0xF0)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character id=\"6\" />");
+                mLogger->Log("<character id=\"6\" />");
             }
             else if (temp == 0xF1)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character id=\"7\" />");
+                mLogger->Log("<character id=\"7\" />");
             }
             else if (temp == 0xF2)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character id=\"8\" />");
+                mLogger->Log("<character id=\"8\" />");
             }
             else if (temp == 0xF3)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character party_id=\"0\" />");
+                mLogger->Log("<character party_id=\"0\" />");
             }
             else if (temp == 0xF4)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character party_id=\"1\" />");
+                mLogger->Log("<character party_id=\"1\" />");
             }
             else if (temp == 0xF5)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<character party_id=\"2\" />");
+                mLogger->Log("<character party_id=\"2\" />");
             }
             else if (temp == 0xF6)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<image sprite=\"ButtonCircle\" />");
+                mLogger->Log("<image sprite=\"ButtonCircle\" />");
             }
             else if (temp == 0xF7)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<image sprite=\"ButtonTriangle\" />");
+                mLogger->Log("<image sprite=\"ButtonTriangle\" />");
             }
             else if (temp == 0xF8)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<image sprite=\"ButtonSquare\" />");
+                mLogger->Log("<image sprite=\"ButtonSquare\" />");
             }
             else if (temp == 0xF9)
             {
                 mLogger->Log(dialog);
                 dialog.clear();
-                mLogger->LogW("<image sprite=\"ButtonCross\" />");
+                mLogger->Log("<image sprite=\"ButtonCross\" />");
             }
             else if ((temp == 0xFA || temp == 0xFB || temp == 0xFC || temp == 0xFD) && english == false)
             {
@@ -362,7 +363,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     {
                         mLogger->Log(dialog);
                         dialog.clear();
-                        mLogger->LogW("[MISSING 0xFA " + HexToString(temp2, 2, '0') + "]");
+                        mLogger->Log("[MISSING 0xFA " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
                 else if (temp == 0xFB)
@@ -375,7 +376,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     {
                         mLogger->Log(dialog);
                         dialog.clear();
-                        mLogger->LogW("[MISSING 0xFB " + HexToString(temp2, 2, '0') + "]");
+                        mLogger->Log("[MISSING 0xFB " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
                 else if (temp == 0xFC)
@@ -388,7 +389,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     {
                         mLogger->Log(dialog);
                         dialog.clear();
-                        mLogger->LogW("[MISSING 0xFC " + HexToString(temp2, 2, '0') + "]");
+                        mLogger->Log("[MISSING 0xFC " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
                 else if (temp == 0xFD)
@@ -401,7 +402,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     {
                         mLogger->Log(dialog);
                         dialog.clear();
-                        mLogger->LogW("[MISSING 0xFD " + HexToString(temp2, 2, '0') + "]");
+                        mLogger->Log("[MISSING 0xFD " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
             }
@@ -416,43 +417,43 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour value=\"red\">");
+                    mLogger->Log("<colour value=\"red\">");
                 }
                 else if (temp2 == 0xD5)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour value=\"purple\" >");
+                    mLogger->Log("<colour value=\"purple\" >");
                 }
                 else if (temp2 == 0xD6)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour value=\"green\" >");
+                    mLogger->Log("<colour value=\"green\" >");
                 }
                 else if (temp2 == 0xD7)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour value=\"cyan\" >");
+                    mLogger->Log("<colour value=\"cyan\" >");
                 }
                 else if (temp2 == 0xD8)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<colour value=\"yellow\">");
+                    mLogger->Log("<colour value=\"yellow\">");
                 }
                 else if (temp2 == 0xD9)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("</colour>");
+                    mLogger->Log("</colour>");
                 }
                 else if (temp2 == 0xDC)
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<pause_ok >");
+                    mLogger->Log("<pause_ok >");
                 }
                 else if (temp2 == 0xDD)
                 {
@@ -461,7 +462,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     ++offset;
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("<pause time=\"" + IntToString(wait) + "\" />");
+                    mLogger->Log("<pause time=\"" + IntToString(wait) + "\" />");
                 }
                 else
                 {
@@ -473,7 +474,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     {
                         mLogger->Log(dialog);
                         dialog.clear();
-                        mLogger->LogW("[MISSING 0xFE " + HexToString(temp2, 2, '0') + "]");
+                        mLogger->Log("[MISSING 0xFE " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
             }
@@ -481,24 +482,24 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
             {
                 if (japanese_chars[temp] != 0x0000 && english == false)
                 {
-                    dialog.push_back(japanese_chars[temp] >> 8); dialog.push_back(japanese_chars[temp] & 0xFF);
+                    dialog.push_back(japanese_chars[temp] >> 8);// dialog.push_back(japanese_chars[temp] & 0xFF);
                 }
                 else if (english_chars[temp] != 0x0000 && english == true)
                 {
-                    dialog.push_back(english_chars[temp] >> 8); dialog.push_back(english_chars[temp] & 0xFF);
+                    dialog.push_back(english_chars[temp] >> 8); //dialog.push_back(english_chars[temp] & 0xFF);
                 }
                 else
                 {
                     mLogger->Log(dialog);
                     dialog.clear();
-                    mLogger->LogW("[MISSING CHAR " + HexToString(temp, 2, '0') + "]");
+                    mLogger->Log("[MISSING CHAR " + HexToString(temp, 2, '0') + "]");
                 }
             }
         }
 
         mLogger->Log(dialog);
         dialog.clear();
-        mLogger->LogW("</dialog>\n\n");
+        mLogger->Log("</dialog>\n\n");
     }
 
 }
@@ -507,7 +508,7 @@ void FF7FieldTextWriter::End()
 {
     if (mLogger)
     {
-        mLogger->LogW("</texts>\n");
+        mLogger->Log("</texts>\n");
     }
     mLogger.reset();
 }
