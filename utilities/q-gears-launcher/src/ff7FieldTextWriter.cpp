@@ -168,16 +168,25 @@ void FF7FieldTextWriter::Begin(std::string fileName)
     bomBytes.push_back(0xFE);
     mLogger->Log(bomBytes);
     */
+    mTagOpen = false;
     mLogger->Log("<texts>\n");
 }
 
 u16 FF7FieldTextWriter::GetU16LE(u32 offset)
 {
+    if (offset+1 >= mData.size())
+    {
+        throw std::out_of_range("");
+    }
     return *reinterpret_cast<u16*>(&mData[offset]);
 }
 
 u8 FF7FieldTextWriter::GetU8(u32 offset)
 {
+    if (offset >= mData.size())
+    {
+        throw std::out_of_range("");
+    }
     return mData[offset];
 }
 
@@ -198,6 +207,14 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
 
     std::vector< unsigned char > dialog; // text line to write out
 
+    // HACK: if this func throws then this iteration generates invalid XML
+    // so close the unclosed XML tag - this func should be made thread safe and/or
+    // fix the fields that fail to convert correctly
+    if (mTagOpen)
+    {
+        mLogger->Log("[ERROR exception]");
+        mLogger->Log("</dialog>\n");
+    }
 
     const u16 dialogCount = GetU16LE(offset_to_sector + offset_to_dialogs);
     for (u16 i = 0; i <dialogCount; ++i)
@@ -212,6 +229,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
 
         AddText(dialog);
         mLogger->Log("<dialog name=\"" + fieldName + "_" + std::to_string(i) + "\">");
+        mTagOpen = true;
 
         for (unsigned char temp = 0x00;; ++offset)
         {
@@ -392,40 +410,42 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                 unsigned char temp2 = GetU8(offset);
 
                 // TODO: I think value must be RGB?
+
+                // TODO: anfrst fails to terminate a colour breaking all of the XML, so colours turned off for now
                 if (temp2 == 0xD4)
                 {
                     AddText(dialog);
-                    mLogger->Log("<colour value=\"red\">");
+                   // mLogger->Log("<colour value=\"red\">");
                 }
                 else if (temp2 == 0xD5)
                 {
                     AddText(dialog);
-                    mLogger->Log("<colour value=\"purple\" >");
+                   // mLogger->Log("<colour value=\"purple\" >");
                 }
                 else if (temp2 == 0xD6)
                 {
                     AddText(dialog);
-                    mLogger->Log("<colour value=\"green\" >");
+                    //mLogger->Log("<colour value=\"green\" >");
                 }
                 else if (temp2 == 0xD7)
                 {
                     AddText(dialog);
-                    mLogger->Log("<colour value=\"cyan\" >");
+                   // mLogger->Log("<colour value=\"cyan\" >");
                 }
                 else if (temp2 == 0xD8)
                 {
                     AddText(dialog);
-                    mLogger->Log("<colour value=\"yellow\">");
+                   // mLogger->Log("<colour value=\"yellow\">");
                 }
                 else if (temp2 == 0xD9)
                 {
                     AddText(dialog);
-                    mLogger->Log("</colour>");
+                   // mLogger->Log("</colour>");
                 }
                 else if (temp2 == 0xDC)
                 {
                     AddText(dialog);
-                    mLogger->Log("<pause_ok >");
+                   // mLogger->Log("<pause_ok >");
                 }
                 else if (temp2 == 0xDD)
                 {
@@ -461,13 +481,22 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                 else
                 {
                     AddText(dialog);
-                    mLogger->Log("[MISSING CHAR " + HexToString(temp, 2, '0') + "]");
+                    if (temp == 0xa9)
+                    {
+                        // I think this one is "..." ?
+                        mLogger->Log("...");
+                    }
+                    else
+                    {
+                        mLogger->Log("[MISSING CHAR " + HexToString(temp, 2, '0') + "]");
+                    }
                 }
             }
         }
 
         AddText(dialog);
         mLogger->Log("</dialog>\n\n");
+        mTagOpen = false;
     }
 
 }

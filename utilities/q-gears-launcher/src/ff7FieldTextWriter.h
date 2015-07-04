@@ -19,4 +19,5 @@ private:
 
     std::unique_ptr<Logger> mLogger;
     std::vector<u8> mData;
+    bool mTagOpen = false;
 };
