@@ -159,7 +159,7 @@ static const unsigned short japanese_chars_fe[256] = {
 void FF7FieldTextWriter::Begin(std::string fileName)
 {
     mData.clear();
-    mLogger = std::make_unique<Logger>(fileName);
+    mLogger.reset(new Logger(fileName));
 
     // Write BOM
     /* FIX ME - need to write data as UTF8
