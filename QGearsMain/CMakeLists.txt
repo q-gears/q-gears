@@ -366,7 +366,8 @@ add_executable(q-gears
   src/Main.cpp
 )
 SET_PROPERTY(TARGET q-gears PROPERTY FOLDER "q-gears")
-
+set(CPACK_PACKAGE_EXECUTABLES q-gears "q-gears")
+set(CPACK_WIX_PROGRAM_MENU_FOLDER "QGears")
 
 if (APPLE)
 target_link_libraries(q-gears "-framework CoreFoundation -framework Cocoa -framework IOKit")

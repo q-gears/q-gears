@@ -1,28 +1,29 @@
 #include "ff7FieldTextWriter.h"
+#include "common/QGearsStringUtil.h"
 
 // TODO: Refactor me - this is based on/copied from DatFile::DumpText
 
 
 
 //////////////////////////////////////////////
-static const unsigned short english_chars[256] = {
+static const unsigned char english_chars[256] = {
     // 0    1       2       3       4       5       6       7       8       9       A       B       C       D       E       F
-    0x2000, 0x2100, 0x2200, 0x2300, 0x2400, 0x2500, 0x2600, 0x2700, 0x2800, 0x2900, 0x2A00, 0x2B00, 0x2C00, 0x2D00, 0x2E00, 0x2F00, // 0x00 - 0x0F
-    0x3000, 0x3100, 0x3200, 0x3300, 0x3400, 0x3500, 0x3600, 0x3700, 0x3800, 0x3900, 0x3A00, 0x3B00, 0x3C00, 0x3D00, 0x3E00, 0x3F00, // 0x10 - 0x1F
-    0x4000, 0x4100, 0x4200, 0x4300, 0x4400, 0x4500, 0x4600, 0x4700, 0x4800, 0x4900, 0x4A00, 0x4B00, 0x4C00, 0x4D00, 0x4E00, 0x4F00, // 0x20 - 0x2F
-    0x5000, 0x5100, 0x5200, 0x5300, 0x5400, 0x5500, 0x5600, 0x5700, 0x5800, 0x5900, 0x5A00, 0x5B00, 0x5C00, 0x5D00, 0x5E00, 0x5F00, // 0x30 - 0x3F
-    0x6000, 0x6100, 0x6200, 0x6300, 0x6400, 0x6500, 0x6600, 0x6700, 0x6800, 0x6900, 0x6A00, 0x6B00, 0x6C00, 0x6D00, 0x6E00, 0x6F00, // 0x40 - 0x4F
-    0x7000, 0x7100, 0x7200, 0x7300, 0x7400, 0x7500, 0x7600, 0x7700, 0x7800, 0x7900, 0x7A00, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x50 - 0x5F
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x60 - 0x6F
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x70 - 0x7F
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x80 - 0x8F
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0x90 - 0x9F
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x2620, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0xA0 - 0xAF
-    0x0000, 0x0000, 0x1C20, 0x1D20, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0xB0 - 0xBF
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0xC0 - 0xCF
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0xD0 - 0xDF
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0D00, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0xE0 - 0xEF
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, // 0xF0 - 0xFF
+    0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F, // 0x00 - 0x0F
+    0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, // 0x10 - 0x1F
+    0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x4E, 0x4F, // 0x20 - 0x2F
+    0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5A, 0x5B, 0x5C, 0x5D, 0x5E, 0x5F, // 0x30 - 0x3F
+    0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, // 0x40 - 0x4F
+    0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7A, 0x00, 0x00, 0x00, 0x00, 0x00, // 0x50 - 0x5F
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0x60 - 0x6F
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0x70 - 0x7F
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0x80 - 0x8F
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0x90 - 0x9F
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0xA0 - 0xAF
+    0x00, 0x00, 0x22, 0x22, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0xB0 - 0xBF
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0xC0 - 0xCF
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0xD0 - 0xDF
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0xE0 - 0xEF
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 0xF0 - 0xFF
 };
 
 static const unsigned short japanese_chars[256] = {
@@ -167,16 +168,25 @@ void FF7FieldTextWriter::Begin(std::string fileName)
     bomBytes.push_back(0xFE);
     mLogger->Log(bomBytes);
     */
+    mTagOpen = false;
     mLogger->Log("<texts>\n");
 }
 
 u16 FF7FieldTextWriter::GetU16LE(u32 offset)
 {
+    if (offset+1 >= mData.size())
+    {
+        throw std::out_of_range("");
+    }
     return *reinterpret_cast<u16*>(&mData[offset]);
 }
 
 u8 FF7FieldTextWriter::GetU8(u32 offset)
 {
+    if (offset >= mData.size())
+    {
+        throw std::out_of_range("");
+    }
     return mData[offset];
 }
 
@@ -197,6 +207,14 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
 
     std::vector< unsigned char > dialog; // text line to write out
 
+    // HACK: if this func throws then this iteration generates invalid XML
+    // so close the unclosed XML tag - this func should be made thread safe and/or
+    // fix the fields that fail to convert correctly
+    if (mTagOpen)
+    {
+        mLogger->Log("[ERROR exception]");
+        mLogger->Log("</dialog>\n");
+    }
 
     const u16 dialogCount = GetU16LE(offset_to_sector + offset_to_dialogs);
     for (u16 i = 0; i <dialogCount; ++i)
@@ -209,9 +227,9 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
             + 0x02 +  // +2 to skip dialog count
             i * 0x02); // *2 because each char is 2 bytes
 
-        mLogger->Log(dialog);
-        dialog.clear();
+        AddText(dialog);
         mLogger->Log("<dialog name=\"" + fieldName + "_" + std::to_string(i) + "\">");
+        mTagOpen = true;
 
         for (unsigned char temp = 0x00;; ++offset)
         {
@@ -223,129 +241,112 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
 
             if (temp == 0xE0 && english == true)
             {
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
             }
             else if (temp == 0xE1 && english == true)
             {
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
+                dialog.push_back(english_chars[0x00]);
             }
             else if (temp == 0xE2 && english == true)
             {
-                dialog.push_back(english_chars[0x0C] >> 8); //dialog.push_back(english_chars[0x0C] & 0xFF);
-                dialog.push_back(english_chars[0x00] >> 8); //dialog.push_back(english_chars[0x00] & 0xFF);
+                dialog.push_back(english_chars[0x0C]);
+                dialog.push_back(english_chars[0x00]);
             }
             else if (temp == 0xE8)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<next_page />");
             }
             else if (temp == 0xEA)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<include name=\"char_cloud\" />");
             }
             else if (temp == 0xEB)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<include name=\"char_barret\" />");
             }
             else if (temp == 0xEC)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character id=\"2\" />");
             }
             else if (temp == 0xED)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character id=\"3\" />");
             }
             else if (temp == 0xEE)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character id=\"4\" />");
             }
             else if (temp == 0xEF)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character id=\"5\" />");
             }
             else if (temp == 0xF0)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character id=\"6\" />");
             }
             else if (temp == 0xF1)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character id=\"7\" />");
             }
             else if (temp == 0xF2)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character id=\"8\" />");
             }
             else if (temp == 0xF3)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character party_id=\"0\" />");
             }
             else if (temp == 0xF4)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character party_id=\"1\" />");
             }
             else if (temp == 0xF5)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<character party_id=\"2\" />");
             }
             else if (temp == 0xF6)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<image sprite=\"ButtonCircle\" />");
             }
             else if (temp == 0xF7)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<image sprite=\"ButtonTriangle\" />");
             }
             else if (temp == 0xF8)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<image sprite=\"ButtonSquare\" />");
             }
             else if (temp == 0xF9)
             {
-                mLogger->Log(dialog);
-                dialog.clear();
+                AddText(dialog);
                 mLogger->Log("<image sprite=\"ButtonCross\" />");
             }
             else if ((temp == 0xFA || temp == 0xFB || temp == 0xFC || temp == 0xFD) && english == false)
@@ -361,8 +362,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     }
                     else
                     {
-                        mLogger->Log(dialog);
-                        dialog.clear();
+                        AddText(dialog);
                         mLogger->Log("[MISSING 0xFA " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
@@ -374,8 +374,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     }
                     else
                     {
-                        mLogger->Log(dialog);
-                        dialog.clear();
+                        AddText(dialog);
                         mLogger->Log("[MISSING 0xFB " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
@@ -387,8 +386,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     }
                     else
                     {
-                        mLogger->Log(dialog);
-                        dialog.clear();
+                        AddText(dialog);
                         mLogger->Log("[MISSING 0xFC " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
@@ -400,8 +398,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     }
                     else
                     {
-                        mLogger->Log(dialog);
-                        dialog.clear();
+                        AddText(dialog);
                         mLogger->Log("[MISSING 0xFD " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
@@ -413,55 +410,49 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                 unsigned char temp2 = GetU8(offset);
 
                 // TODO: I think value must be RGB?
+
+                // TODO: anfrst fails to terminate a colour breaking all of the XML, so colours turned off for now
                 if (temp2 == 0xD4)
                 {
-                    mLogger->Log(dialog);
-                    dialog.clear();
-                    mLogger->Log("<colour value=\"red\">");
+                    AddText(dialog);
+                   // mLogger->Log("<colour value=\"red\">");
                 }
                 else if (temp2 == 0xD5)
                 {
-                    mLogger->Log(dialog);
-                    dialog.clear();
-                    mLogger->Log("<colour value=\"purple\" >");
+                    AddText(dialog);
+                   // mLogger->Log("<colour value=\"purple\" >");
                 }
                 else if (temp2 == 0xD6)
                 {
-                    mLogger->Log(dialog);
-                    dialog.clear();
-                    mLogger->Log("<colour value=\"green\" >");
+                    AddText(dialog);
+                    //mLogger->Log("<colour value=\"green\" >");
                 }
                 else if (temp2 == 0xD7)
                 {
-                    mLogger->Log(dialog);
-                    dialog.clear();
-                    mLogger->Log("<colour value=\"cyan\" >");
+                    AddText(dialog);
+                   // mLogger->Log("<colour value=\"cyan\" >");
                 }
                 else if (temp2 == 0xD8)
                 {
-                    mLogger->Log(dialog);
-                    dialog.clear();
-                    mLogger->Log("<colour value=\"yellow\">");
+                    AddText(dialog);
+                   // mLogger->Log("<colour value=\"yellow\">");
                 }
                 else if (temp2 == 0xD9)
                 {
-                    mLogger->Log(dialog);
-                    dialog.clear();
-                    mLogger->Log("</colour>");
+                    AddText(dialog);
+                   // mLogger->Log("</colour>");
                 }
                 else if (temp2 == 0xDC)
                 {
-                    mLogger->Log(dialog);
-                    dialog.clear();
-                    mLogger->Log("<pause_ok >");
+                    AddText(dialog);
+                   // mLogger->Log("<pause_ok >");
                 }
                 else if (temp2 == 0xDD)
                 {
                     u16 wait = GetU16LE(offset + 1);
                     ++offset;
                     ++offset;
-                    mLogger->Log(dialog);
-                    dialog.clear();
+                    AddText(dialog);
                     mLogger->Log("<pause time=\"" + IntToString(wait) + "\" />");
                 }
                 else
@@ -472,8 +463,7 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
                     }
                     else
                     {
-                        mLogger->Log(dialog);
-                        dialog.clear();
+                        AddText(dialog);
                         mLogger->Log("[MISSING 0xFE " + HexToString(temp2, 2, '0') + "]");
                     }
                 }
@@ -482,24 +472,31 @@ void FF7FieldTextWriter::Write(const std::vector<u8>& scriptSectionBuffer, std::
             {
                 if (japanese_chars[temp] != 0x0000 && english == false)
                 {
-                    dialog.push_back(japanese_chars[temp] >> 8);// dialog.push_back(japanese_chars[temp] & 0xFF);
+                   // dialog.push_back(japanese_chars[temp]);
                 }
                 else if (english_chars[temp] != 0x0000 && english == true)
                 {
-                    dialog.push_back(english_chars[temp] >> 8); //dialog.push_back(english_chars[temp] & 0xFF);
+                    dialog.push_back(english_chars[temp]);
                 }
                 else
                 {
-                    mLogger->Log(dialog);
-                    dialog.clear();
-                    mLogger->Log("[MISSING CHAR " + HexToString(temp, 2, '0') + "]");
+                    AddText(dialog);
+                    if (temp == 0xa9)
+                    {
+                        // I think this one is "..." ?
+                        mLogger->Log("...");
+                    }
+                    else
+                    {
+                        mLogger->Log("[MISSING CHAR " + HexToString(temp, 2, '0') + "]");
+                    }
                 }
             }
         }
 
-        mLogger->Log(dialog);
-        dialog.clear();
+        AddText(dialog);
         mLogger->Log("</dialog>\n\n");
+        mTagOpen = false;
     }
 
 }
@@ -511,4 +508,23 @@ void FF7FieldTextWriter::End()
         mLogger->Log("</texts>\n");
     }
     mLogger.reset();
+}
+
+void FF7FieldTextWriter::AddText(std::vector< unsigned char >& text)
+{
+    if (text.empty())
+    {
+        return;
+    }
+
+    std::string str(reinterpret_cast<char*>(text.data()), text.size());
+
+    str = Ogre::StringUtil::replaceAll(str, "&", "&amp;");
+    str = Ogre::StringUtil::replaceAll(str, "\"", "&quot;");
+    str = Ogre::StringUtil::replaceAll(str, "'", "&apos;");
+    str = Ogre::StringUtil::replaceAll(str, "<", "&lt;");
+    str = Ogre::StringUtil::replaceAll(str, ">", "&gt;");
+  
+    mLogger->Log(str);
+    text.clear();
 }
