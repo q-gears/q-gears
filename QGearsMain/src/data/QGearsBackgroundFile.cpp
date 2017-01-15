@@ -329,6 +329,13 @@ namespace QGears
                         {
                             colour.a = 1;
                         }
+                        // Additive blending: source + 0.25 * dest
+                        if (sprite.blending == 3)
+                        {
+                            colour.r *= 0.25;
+                            colour.g *= 0.25;
+                            colour.b *= 0.25;
+                        }
                         color[data_index] = colour.getAsARGB();
                     }
                 }
